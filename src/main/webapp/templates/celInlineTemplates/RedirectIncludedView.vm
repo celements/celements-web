@@ -1,0 +1,20 @@
+#if($showIFrame)
+  <iframe src="$redExternalURL" class="cel_redirect_iframe" name="cel_redirect_iframe">
+    <p>Ihr Browser kann leider keine eingebetteten Frames anzeigen:
+    Sie k&ouml;nnen die eingebettete Seite &uuml;ber den folgenden Verweis
+    aufrufen: <a href="$redExternalURL">$redExternalURL</a></p>
+  </iframe>
+#else
+  #set($cel_redParams_Map = $util.getHashMap())
+  #foreach($redParam in $redirectedParams.split('&'))
+    #set($redParamSplit = $redParam.split('='))
+    #if($listtool.size($redParamSplit) > 1)
+      #set($!devNull = $cel_redParams_Map.put($listtool.get($redParamSplit, 0), $listtool.get($redParamSplit, 1)))
+    #end
+  #end
+  ##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
+  ##           get not correctly interpreted in an embedded getRenderedContent call.
+  #set($renderDocument = $xwiki.getDocument("$redURL"))
+  $xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocument').getContent()",$doc)
+  ##
+#end ## if($showIFrame)

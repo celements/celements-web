@@ -1,0 +1,40 @@
+<script type="text/javascript">
+function onSave_his() {}
+function onCancel_his() {}
+</script>
+
+<div id="his_langBar" class="editblock" onfocus="setFocus('his_langBar');" onblur="removeFocus('his_langBar');">
+	<form action="" name="his_langBar_form" method="post">
+	$adminMsg.get('cel_tm_view_translation_history'):
+		<select name="language" size="1" style="width:100px;" onchange="document.forms['his_langBar_form'].submit();">
+	        #foreach($dl in $langs)
+		        <option #if($!language == "$dl")selected="selected"#end value="$dl" label="$adminMsg.get("cel_$dl")">$adminMsg.get("cel_$dl")</option>
+			#end
+		</select>
+	</form>
+</div>
+<div id="his_revView" class="editblock" onfocus="setFocus('his_revView');" onblur="removeFocus('his_revView');" style="overflow:auto;height:400px;overflow-x:hidden;">
+	<h2>$adminMsg.get("cel_tm_document_history")</h2>
+	
+		<ul style="list-style-type:none;" >
+#set($minorVersions = (!$xwiki.hasMinorEdit()) || ("$!request.showminor" == 'true'))
+## Revision criteria. The following requests for all versions, filtered by the minorVersions option.
+#set($criteria = $xwiki.criteriaService.revisionCriteriaFactory.createRevisionCriteria('', $minorVersions))
+#set($versions = $util.reverseList($tdoc.getRevisions($criteria)))
+#foreach ($version in $versions)
+#set($origdoc = "")
+#set($newdoc = "")
+#set($nextversion = $version)
+#set($newdoc = $xwiki.getDocument($tdoc, $nextversion))
+#set($loc = "rev=$nextversion")
+
+		<li>$adminMsg.get("cel_version") <!--<a href="$tdoc.getURL('viewrev', $loc)">-->$nextversion<!--</a>-->
+#if($newdoc=="")
+($adminMsg.get("cel_tm_cannotreaddocumentversion") $nextversion)
+#else
+$adminMsg.get("cel_tm_edited_by") $xwiki.getLocalUserName($newdoc.author) $adminMsg.get("cel_tm_on") $xwiki.formatDate($newdoc.date)
+#end
+		</li>
+#end
+		</ul>
+</div>

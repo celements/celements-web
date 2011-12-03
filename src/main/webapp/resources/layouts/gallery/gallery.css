@@ -1,0 +1,103 @@
+/*IMAGE-GALLERY*/
+.celements_galleries .celements_gallery_overview {
+  height: 0px;
+  position:relative;
+  display:inline;
+}
+.celements_galleries  .celements_gallery_overview p.galleryDescription {
+  display: none;
+}
+.celements_gallery_overview .celements_gallery_thumbnail span.celements_gallery_link,
+.celements_gallery_overview .celements_gallery_thumbnail a,
+.celements_gallery_overview .celements_gallery_thumbnail a:hover,
+.celements_gallery_overview .celements_gallery_thumbnail a:visited,
+.celements_gallery_overview .thumb_element a,
+.celements_gallery_overview .thumb_element a:hover,
+.celements_gallery_overview .thumb_element a:visited {
+    display:inline;
+  float:left;
+  height:137px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  overflow:hidden;
+  text-align:center;
+  width:186px;
+  border: 0px none;
+  background-color:transparent;
+/*  background-image:url(landscape.png); */
+  background-repeat:no-repeat;
+  background-position:5px 0px;
+  padding-top:6px;
+  text-decoration:none;
+}
+.celements_gallery_overview a.celements_gallery_link_slideshow,
+.celements_gallery_overview a.celements_gallery_link_slideshow:visited {
+  font-size:13px;
+  line-height:15px;
+  color:#A8A8A8;
+  font-weight:bold;
+  margin-bottom:8px;
+  margin-right:8px;
+  text-decoration:none;
+  border: 0px none;
+  background-image:none;
+  width:auto;
+  height:auto;
+  padding-right:600px;
+}
+a.celements_gallery_link_prev, a.celements_gallery_link_overview,
+a.celements_gallery_link_next, a.celements_gallery_link_prev:visited,
+a.celements_gallery_link_overview:visited, a.celements_gallery_link_next:visited {
+  font-size:13px;
+  line-height:15px;
+  float:left;
+  color:#A8A8A8;
+  font-weight:bold;
+  margin-bottom:8px;
+  margin-right:8px;
+  text-decoration:none;
+  border: 0px none;
+  background-image:none;
+  width:auto;
+  height:auto;
+}
+a.celements_gallery_link_slideshow:hover, a.celements_gallery_link_prev:hover,
+a.celements_gallery_link_overview:hover, a.celements_gallery_link_next:hover {
+  color:#d10000;
+  text-decoration:none;
+  border: 0px none;
+  background-image:none;
+  width:auto;
+  height:auto;
+  margin-bottom:8px;
+  border:none !important;
+}
+a.celements_gallery_link img {
+  border:0px none;
+}
+.celements_gallery_text {
+  display:none;
+}
+.celements_gallery_right {
+  display:none;
+}
+.celements_gallery_left br {
+  display:none;
+}
+.celements_gallery_overview .thumb_element .thumbDescription{
+  display:none;
+}
+.thumb_element .thumbnail img{
+  border:0px none;
+}
+.celements_gallery_thumbnail{
+  position:relative;
+  display:inline;
+  float:left;
+}
+.celements_galery_left{
+  position:relative;
+}
+.celements_galleries{
+  position:relative;
+}

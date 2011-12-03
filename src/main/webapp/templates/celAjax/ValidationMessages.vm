@@ -1,0 +1,14 @@
+{##
+"required" : "$adminMsg.get('cel_form_valid_required')",##
+"validate-number" : "Please enter a valid number in this field.",##
+"validate-digits" : "Please use numbers only in this field. please avoid spaces or other characters such as dots or commas.",##
+"validate-alpha" : "Please use letters only (a-z) in this field.",##
+"validate-alphanum" : "Please use only letters (a-z) or numbers (0-9) only in this field. No spaces or other characters are allowed.",##
+"validate-date" : "Please enter a valid date.",##
+"validate-email" : "Please enter a valid email address. For example fred@domain.com .",##
+"validate-url" : "Please enter a valid URL.",##
+"validate-date-au" : "Please use this date format: dd/mm/yyyy. For example 17/03/2006 for the 17th of March, 2006.",##
+"validate-currency-dollar" : "Please enter a valid $ amount. For example $100.00 .",##
+"validate-selection" : "Please make a selection",##
+"validate-one-required" : "Please select one of the above options."##
+}

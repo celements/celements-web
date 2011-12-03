@@ -1,0 +1,53 @@
+#if("$!request.get('xredirect')" != '')
+#set($xredirect = $!request.getParameter('xredirect'))
+#else
+#set($xredirect = "$doc.getURL('view')")
+#end
+#set($redirectStr = "xredirect=$xredirect")
+#set($cellObj = "")
+#set($cellObj = $celldoc.getObject('Celements.GroupCellClass', false))
+#if("$!cellObj" == '')
+#set($cellObj = $celldoc.newObject("Celements.GroupCellClass"))
+$celldoc.save()
+$response.sendRedirect($doc.getURL('edit', $redirectStr))
+#end
+<div id="GroupCellEdit">
+<h1>Group Cell</h1>
+<a href="$xwiki.getURL($doc.getFullName(), 'cancel', $redirectStr)"##
+ onclick="document.forms.edit.action=this.href;##
+  if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
+  document.forms.edit.submit(); return false;" >Cancel</a>
+<span>&nbsp;|&nbsp;</span>
+<a href="$xwiki.getURL($doc.getFullName(),'save', $redirectStr)"##
+ onclick="document.forms.edit.action=this.href;##
+ if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
+ document.forms.edit.submit(); return false;" >Save</a>
+<form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
+    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+    <input type="hidden" name="xredirect" value="$!xredirect" />
+    <input type="hidden" name="language" value="$!tdoc.language" />
+  #if($celementsweb.getSubMenuItemsForParent($doc.getFullName(), $doc.getSpace()).size() == 0)
+    <div id="groupcell_container">
+    #set($layoutsMap = $celementsweb.getAllPageLayouts())
+    #set($cel_currentRenderLayout = "$!cellObj.getProperty('render_layout').getValue()")
+    <label for="Celements.GroupCellClass_${cellObj.number}_render_layout" style="font-size:7pt">Select Sub-Layout: </label>
+    <select id="Celements.GroupCellClass_${cellObj.number}_render_layout" size="1" style="width:100px;" name="Celements.GroupCellClass_${cellObj.number}_render_layout">
+        <option #if("$!cel_currentRenderLayout" == '') selected="selected" #end value="" label="---">---</option>
+    #foreach($layoutKey in $layoutsMap.keySet())
+    	#if("$!item" != "$doc.space")
+    	  #set($layoutApi = $celementsweb.getPageLayoutApiForName($layoutKey))
+    	  #if("$!layoutsMap.get($layoutKey)" != '')
+            #set($layoutName = $layoutsMap.get($layoutKey))
+    	  #else
+            #set($layoutName = $layoutKey)
+          #end
+          <option #if("$!cel_currentRenderLayout" == "$!layoutKey") selected="selected" #end value="$layoutKey" label="$layoutApi.getPrettyName()">$layoutName</option>
+        #end
+    #end
+    </select>
+    </div>
+  #else
+  <p>Group-Cell: Inhalt wird nur bei Zellen ohne weitere Unter-Zellen berechnet.</p>
+  #end
+</form>
+</div>

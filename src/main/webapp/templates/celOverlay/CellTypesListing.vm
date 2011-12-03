@@ -1,0 +1,5 @@
+#set($cel_loadAdminMenuBar = false)
+#set($showOverlayLanguageBar = false)
+#set($showCloseOverlayButton = true)
+#set($showCelTypes = true)
+#set($celementsLoadInOverlay = "celTemplates/PageTypes.vm") ##template on disk

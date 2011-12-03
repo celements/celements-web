@@ -1,0 +1,71 @@
+#if($xwiki.hasAdminRights())
+  <div id="pagelayoutlist">
+#if("$!request.action" == 'createnew')
+	#if("$!request.spacename" != '')
+	$celementsweb.createNewLayout("$!request.spacename")
+	#else
+	<p style="color:red;">Please enter a non empty layout space name!</p>
+	#end
+	<p><a href="">back to listing</a></p>
+#elseif($isAdmin && ("$!request.action" == 'export') && $celementsweb.layoutExists("$!request.layoutName"))
+    #set($plApi = $celementsweb.getPageLayoutApiForName("$!request.layoutName"))
+#if($plApi.exportLayoutXAR(false))
+	$plApi.getPrettyName() successfully exported to xar.
+#else
+    FAILED to export $plApi.getPrettyName() as xar!
+#end
+#else
+  	<h1>Page Layout Manager</h1>
+  	#set($isLayoutEditorAvailable = $celementsweb.layoutEditorAvailable())
+  	#if(!$isLayoutEditorAvailable)
+  		<p>The celements LayoutEditor is missing. Please get a current version from
+ <a target="_blank" href="http://maven.celements.ch/releases/celLayoutEditor/?C=M;O=D">http://maven.celements.ch/releases/celLayoutEditor/</a>
+ and install it with the <a href="$xwiki.getURL('XWiki.Import', 'import', 'skin=toucan')">Import Manager</a>.</p>
+	#else
+    <p>click Pretty Name to edit</p>
+    <p>Import additional Layouts with the <a href="$xwiki.getURL('XWiki.Import', 'import', 'skin=toucan')">Import Manager</a>.
+    #end
+  #set($layoutsMap = $celementsweb.getAllPageLayouts())
+  #if($layoutsMap.keySet().size() > 0)
+    <table>
+    	<tr>
+            <th class="prettyname">Pretty Name</th>
+            <th class="active">Active</th>
+#if($isAdmin)
+            <th class="actions">Actions</th>
+#end
+	    </tr>
+  #foreach($layoutKey in $layoutsMap.keySet())
+    <tr>
+    #set($pretty_name = $layoutsMap.get($layoutKey))
+    #set($plApi = $celementsweb.getPageLayoutApiForName($layoutKey))
+    <td class="column${velocitycount}">
+    	#if($isLayoutEditorAvailable)
+            #set($editLink = $xwiki.getURL("$!{layoutKey}.WebHome", 'view'))
+    		<a href="$editLink">$!pretty_name</a>
+    	#else
+    	$!pretty_name
+    	#end
+    </td>
+    <td>$plApi.isActive()</td>
+#if($isAdmin)
+    <td><a href="?xpage=overlay&conf=PageLayoutsListing&action=export&layoutName=$!layoutKey">export</a></td>
+#end
+    </tr>
+  #end
+    </table>
+    #else
+    <p>No Page Layouts found.</p>
+    #end
+<h2>Create new Layout</h2>
+    <form action="" method="post">
+    	<input type="hidden" name="action" value="createnew" />
+    	<label for="spacename">Layout Space Name</label>
+    	<input type="text" name="spacename" value="" />
+    	<input type="submit" value="create new" />
+    </form>
+#end
+  </div>
+#else
+You need admin rights to view the complete PageLayout listing.
+#end

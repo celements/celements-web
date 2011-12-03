@@ -1,0 +1,15 @@
+## start a Celements Document
+$xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
+##
+## start the celements body (and lacily finalise the header)
+##ATTENTION: Can not be moved to disk until all overlays are checked (ProgrammingRights issues!)
+$xwiki.includeForm('celements2web:Macros.startCelementsBody', false)
+##
+#set($isCellSkin = true)
+#set($doclang = $tdoc.getLanguage())
+#if("$!doclang" == '')
+  #set($doclang = $tdoc.getDefaultLanguage())
+#end
+<div id="sitecontainer" class="lang_${language} doclang_$doclang">
+<!-- start celements cells -->
+$celementsweb.renderPageLayout()

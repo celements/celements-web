@@ -1,0 +1,32 @@
+{##
+  "close": true,##
+  "draggable": false,##
+  "width": "${menuPanelWidth}px",##
+  "x": "300px",##
+  "y": "300px",##
+  "zindex": 99 },##
+"tabMenuPanelData" : ##
+[{##
+  "id" : "tb1",##
+  "label" : "${adminMsg.get('cel_tm_content')}"##
+},{##
+  "id" : "tb2",##
+  "label" : "${adminMsg.get('cel_tm_navigation')}"##
+#if($doc.getAttachmentList().size() > 0)
+},{##
+  "id" : "tb3",##
+  "label" : "${adminMsg.get('cel_tm_attachments')}"##
+#end
+#if($isAdmin)
+},{##
+  "id" : "tbrights",##
+  "label" : "${adminMsg.get('cel_tm_rights')}"##
+#end
+},{##
+  "id" : "tb4",##
+  "label" : "${adminMsg.get('cel_tm_properties')}"##
+},
+{##
+  "id" : "tb5",##
+  "label" : "${adminMsg.get('cel_tm_history')}"##
+}]

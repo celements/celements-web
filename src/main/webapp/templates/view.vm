@@ -1,0 +1,79 @@
+#set($contextIsFinished = false)
+#if(("$!request.viewer" != '') || ("$!request.skin" != '') || (($xwiki.getSkin().indexOf('.') < 0) && ("$xwiki.getSkin()" != 'cellskin')))
+###
+### Main "view" template
+###
+### General wrapper for view actions
+###
+#if ($request.getParameter("raw").equals("1"))
+  #template("code.vm")
+#else
+  #template("startpage.vm")
+  ## ----------------------------------------------------------------------------------
+  ## Use the "viewer" variable to decide which view template to call. If no
+  ## "viewer" variable is specified, then checks if a "viewer" request parmaeter has
+  ## been specified and use it if found. If it doesn't exist then default to the
+  ## contentview.vm template, used to display the standard view of a document.
+  ## ----------------------------------------------------------------------------------
+  #if("$!viewer" == '')
+    #set($viewer = $request.getParameter('viewer'))
+  #end
+  #if("$!viewer" == '')
+    #set($viewer = 'content')
+  #end
+  #if($viewer == 'content')
+    <div class="minwidthb"></div>
+    <div class="main layoutsubsection">
+    #template("contentview.vm")
+    <div class="clearfloats"></div>
+    #if($displayDocExtra)
+      #template("docextra.vm")
+      <div class="clearfloats"></div>
+    #end
+    </div>## main
+  #else
+    <div class="main layoutsubsection">
+    #template("${viewer}.vm")
+    <div class="clearfloats"></div>
+    </div>## main
+  #end
+  #template("endpage.vm")
+#end
+################### default xwiki-view-template !!!!!
+#else
+## init Celements variables
+#set($isCellSkin = false)
+$xwiki.includeForm("celements2web:Macros.initCelements", false)
+#if(("$context.getUser()" != 'XWiki.XWikiGuest') && $xwiki.exists($context.getUser()))
+#set($userObj = $xwiki.getDocument("$context.getUser()").getObject("XWiki.XWikiUsers", true))
+#if(("$!userObj.getProperty('force_pwd_change').getValue()" == '1') && ("$doc.fullName" != "$context.getUser()"))
+  #set($params = '')
+  #foreach($req in $request.getParameterNames())
+    #set($params = "${params}&$req=$!request.get($req)")
+  #end
+  #set($xred = $xwiki.getURLEncoded($!{xwiki.getURL($doc.fullName,'view',"$params").replace('/xwiki/bin/view/','/').replace('/Content/','/')}))
+  #set($url = $xwiki.getURL($context.getUser(),'view',"xpage=passwd${params}").replace('/xwiki/bin/view/','/').replace('/Content/','/'))
+  #set($url = "${url}&xredirect=$xred")
+  $response.sendRedirect($url)
+#end
+#end
+#if("$!celementsLoadInOverlay" != '')
+$xwiki.celementsweb.includeCSSAfterPreferences(':celRes/celementsOverlay.css')
+#end
+#if($show_frame || ("$context.action" == 'edit'))
+  $xwiki.parseTemplate("frameheader.vm")
+#end
+#if(!$contextIsFinished && !$isCellSkin)
+##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
+##           get not correctly interpreted in an embedded getRenderedContent call.
+$xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocument').getContent()",$doc)
+###if("$!renderDocument" == '')
+##  #set($renderDocument = $tdoc)
+###end
+##$xwiki.celementsweb.renderCelementsDocument($renderDocument)
+##
+#end
+#if($show_frame || ("$context.action" == 'edit'))
+  $xwiki.parseTemplate("framefooter.vm")
+#end
+#end

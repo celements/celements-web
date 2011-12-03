@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ *
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+    <groupId>com.celements</groupId>
+    <artifactId>celementsweb</artifactId>
+    <version>1.42</version>
+  </parent>
+	<modelVersion>4.0.0</modelVersion>	
+	<groupId>com.celements</groupId>
+	<artifactId>celements-web</artifactId>
+	<packaging>war</packaging>
+	<version>2.10.3-SNAPSHOT</version>
+	<name>Celements Webapplication</name>
+  <licenses>
+    <license>
+      <name>LGPL 2.1</name>
+      <url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+	<properties>
+		<platform.core.version>2.10</platform.core.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<catalina.port>10081</catalina.port>
+		<catalina.home.celementsweb-platform>${env.CATALINA_HOME}</catalina.home.celementsweb-platform>
+        <catalina.home.celementsweb>${catalina.home.celementsweb-platform}</catalina.home.celementsweb>
+        <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
+        <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
+        <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
+        <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
+	</properties>
+	<dependencies>
+		<!-- Add here all your dependencies -->		
+		<dependency>
+			<groupId>org.xwiki.enterprise</groupId>
+			<artifactId>xwiki-enterprise-web</artifactId>
+			<version>2.7.2</version>
+			<type>war</type>
+		</dependency>
+    <dependency>
+      <groupId>xalan</groupId>
+      <artifactId>xalan</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>info.informatica</groupId>
+      <artifactId>css4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>info.informatica</groupId>
+      <artifactId>jclf</artifactId>
+    </dependency>
+		<dependency>
+			<groupId>com.xpn.xwiki.platform.plugins</groupId>
+			<artifactId>xwiki-plugin-application-manager</artifactId>
+			<version>1.17</version>
+		</dependency>
+		<dependency>
+			<groupId>com.xpn.xwiki.platform.plugins</groupId>
+			<artifactId>xwiki-plugin-wiki-manager</artifactId>
+			<version>1.24</version>
+		</dependency>
+		<dependency>
+ 			<groupId>com.celements</groupId>
+			<artifactId>tinymce-langs</artifactId>
+			<version>3.4.3.2-celRTE</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.celements</groupId>
+			<artifactId>celements-core</artifactId>
+			<version>1.8-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.celements</groupId>
+			<artifactId>celements-photo</artifactId>
+			<version>1.4-SNAPSHOT</version>
+		</dependency>		
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-blog</artifactId>
+      <version>1.6-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-calendar</artifactId>
+      <version>1.6-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>batik</groupId>
+      <artifactId>batik-rasterizer</artifactId>
+      <version>1.6-1</version>
+      <exclusions>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-awt-util</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-bridge</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-css</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-dom</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-gvt</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-parser</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-script</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-svg-dom</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-transcoder</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-util</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>batik</groupId>
+          <artifactId>batik-xml</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>fop</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>xmlgraphics-commons</artifactId>
+        <version>1.4</version>
+      <scope>provided</scope>
+    </dependency>
+ 	</dependencies>	
+	<build>
+		<finalName>celements-web</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+          <overlays>
+            <overlay>
+              <groupId>com.celements</groupId>
+              <artifactId>tinymce-langs</artifactId>
+              <excludes>
+                <exclude>resources/celRTE/plugins/advimage</exclude>
+              </excludes>
+            </overlay>
+            <overlay>
+              <groupId>org.xwiki.enterprise</groupId>
+              <artifactId>xwiki-enterprise-web</artifactId>
+              <excludes>
+                <exclude>WEB-INF/lib/jclf-2.3.0.jar</exclude>
+                <exclude>WEB-INF/lib/css4j-0.4.0.jar</exclude>
+                <exclude>WEB-INF/lib/xalan-2.5.1.jar</exclude>
+                <exclude>WEB-INF/lib/commons-io-1.3.1.jar</exclude>
+                <exclude>WEB-INF/lib/commons-logging-1.0.4.jar</exclude>
+                <exclude>WEB-INF/lib/commons-logging-api-1.0.4.jar</exclude>
+                <exclude>WEB-INF/lib/batik-rasterizer-1.6.jar</exclude>
+                <exclude>WEB-INF/lib/joda-time-1.4.jar</exclude>
+                <exclude>WEB-INF/lib/easymock-2.5.2.jar</exclude>
+                <exclude>WEB-INF/lib/log4j-1.2.13.jar</exclude>
+                <exclude>WEB-INF/lib/junit-3.8.1.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-plugin-watchlist-*.jar</exclude>
+                <exclude>WEB-INF/lib/google-collections-*.jar</exclude>
+              </excludes>
+            </overlay>
+          </overlays>
+        </configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

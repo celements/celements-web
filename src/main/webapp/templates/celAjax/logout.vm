@@ -1,0 +1,12 @@
+#set($params = "logout=1&xredirect=$celementsweb.getLogoutRedirectURL()")
+#set($redExternalURL = "${doc.getURL('logout', ${params})}")
+#if("$redExternalURL" != "")
+Redirect to $redExternalURL
+## call reset to clear HTTP-HeaderData (otherwise sendRedirect throws an IllegalStateException)
+$response.reset()
+## set context to finish to prevent that not empty content is written to the Body
+$context.setFinished(true)
+#set($contextIsFinished = true)
+## set redirect HTTP-Header
+$response.sendRedirect($redExternalURL)
+#end

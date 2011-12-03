@@ -1,0 +1,57 @@
+<!--iE6.0-->
+    </div>
+    <!-- Right column end -->
+    </div>
+    <!-- #columns end -->
+  </div>
+  <!-- #page end -->
+</div>
+<!-- #content end -->
+#if("$!celementsweb.getSkinConfigObj().getProperty('has_footer').getValue()" != '0')
+<!-- #footer: holds the site footer (logo and links) -->
+<div id="footer">
+  <!-- #bg: applies the site width and footer background -->
+#if($celementsweb.isNavigationEnabled('menu_bottom')))
+  <div id="bg" class="width">
+$celementsweb.includeNavigation('menu_bottom')
+    <!-- #bg end -->
+ </div>
+#end
+  <!-- #bg: applies the site width and footer background -->
+#set($toolFooter = '')
+#set($editDefaultLanguage = '')
+#set($toolFullName = "${doc.space}.FooterRTE")
+#if($celementsweb.isEmptyRTEDocument($toolFullName) && ("$!{celementsweb.getParentSpace()}" != ''))
+#set($toolFullName = "${celementsweb.getParentSpace()}.FooterRTE")
+#end
+#if($hasedit || !$celementsweb.isEmptyRTEDocument($toolFullName))
+#if(!$celementsweb.isEmptyRTEDocument($toolFullName))
+ #set($toolDoc = $xwiki.getDocument($toolFullName))
+ #set($toolFooter = "$!toolDoc.getTranslatedContent()")
+#else
+ #set($editDefaultLanguage = "&language=$default_language")
+ #set($toolFooter = "$adminMsg.get('no_content')") ##MULTILINGUAL MESSAGE CORRECT??
+#end
+#set($contextMenu = '')
+#if($hasedit)
+#set($q = "'")
+#set($adredit_xredirect = "xredirect=$doc.getURL('view')")
+#set($cmenu_pageLink = $xwiki.getURL($toolFullName, 'edit', "$!{adredit_xredirect}$!{editDefaultLanguage}"))
+#set($cmenu_MenuName = $adminMsg.get("cel_edit_tool_$!{toolDoc.name}")) ##MULTILINGUAL MESSAGE
+#set($cmenu_p = "${q}$xwiki.getSkinFile('editPage.gif')${q}")
+$xwiki.includeForm('celements2web:Macros.addContextMenuItem', false)
+## finishing menu item
+$xwiki.includeForm('celements2web:Macros.finishContextMenu', false)
+#end
+#set($toolFooter = $xwiki.renderText("{pre}$!{toolFooter}{/pre}",$doc))
+<div id="footer_rte" $!contextMenu>
+##Richtext element
+$!toolFooter
+ </div><!-- #footer_rte end -->
+#end
+</div><!-- #footer end -->
+#end
+</div><!--sitecontainer-->
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+#set($cellObj = '')
+#set($cellObj = $celldoc.getObject("Celements2.Redirect", false))
+#set($banner_image_link = "$!cellObj.getProperty('redirect').getValue()")
+#set($identifier = "$!{celldoc.getObject('Celements.CellClass').getProperty('idname').getValue()}_banner")
+$xwiki.includeForm('celements2web:Macros.includeBannerHTML', false)

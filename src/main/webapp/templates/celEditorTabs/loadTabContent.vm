@@ -1,0 +1,38 @@
+<div class="cel_contentTab">
+<script language="javascript" type="text/javascript">
+/* intermediate save */
+function simplySave() {
+	// save content
+	if(document.forms.edit){
+	    document.forms.edit.formeditxred.value = '$doc.getURL('edit', "$!cel_tiny_cancel_inurl")';
+        if(doBeforeEditSubmit) {
+          doBeforeEditSubmit();
+        }
+		document.forms.edit.submit();
+ 	} else {
+   		alert("Error: No edit form!");
+  	}
+}
+</script>
+<!-- LOAD CONTENT ACCORDING TO PAGETYPE-SPECIFIC EDIT TEMPLATE -->
+## get edit template
+#set($spec_edit = $!type_props.getProperty("page_edit").getValue())
+#if($!spec_edit != "")
+	#set($editContent = $celementsweb.renderCelementsDocument($doc, 'edit'))
+	#if("$!editContent" != '')
+		$editContent
+	#else
+	<!-- $spec_edit -->
+		Sorry, this edit-tab can not be displayed!<br />
+	## ensure that the close and save button works
+	##TODO if custom-save Event is fired register for parent tab to save if needed.
+#if("$!request.xredirect" != '')
+  #set($cel_tiny_xredirect = "$!request.xredirect")
+#else
+  #set($cel_tiny_xredirect = "$doc.getURL('view')")
+#end
+    <form id="edit" method="post" action="$!cel_tiny_xredirect">
+    </form>
+	#end
+#end
+</div>

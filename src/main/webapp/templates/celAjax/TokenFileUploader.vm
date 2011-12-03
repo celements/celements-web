@@ -1,0 +1,46 @@
+#if("$!request.tfu_mode" == 'getTokenForCurrentUser')
+#set($startUserName = $context.user.indexOf('.') + 1)
+{ "hasUploadRights" : $xwiki.hasAccessLevel('edit'),##
+ "token" : "$!{celementsweb.getNewCelementsTokenForUser()}",##
+ "username" : "$!{context.user.substring($startUserName)}"##
+}
+#elseif("$!request.tfu_mode" == 'filesExistCheck')
+{"filesExistList" : [##
+#set($listOverwriteFiles = [])
+#set($listAllClearedFileNames = [])
+#set($overwriteFiles = '')
+#set($Q = '"')
+#set($delStr = '')
+#foreach($filename in $request.getParameterValues('filename'))
+#set($clearedFileName = "$!xwiki.celementsweb.clearFileName($filename)")
+#if("$!doc.getAttachment($clearedFileName)" != '')
+${delStr}"${clearedFileName}"##	
+#set($overwriteFiles = "${overwriteFiles}${delStr} ${clearedFileName}")
+#set($delStr = ',')
+#set($!devnull = $listOverwriteFiles.add($filename))
+#end
+#set($!devnull = $listAllClearedFileNames.add("{ ${Q}fileName${Q} : ${Q}${filename}${Q} , ${Q}clearedFileName${Q} : ${Q}${clearedFileName}${Q} }"))
+#end
+], "allFileNames" : $listAllClearedFileNames , ##
+"errorMsg" : "$adminMsg.get('cel_ml_overwrite_confirm', ["${overwriteFiles.trim()}"])"}
+#elseif("$!request.tfu_mode" == 'getToken')
+$celementsweb.getNewCelementsTokenForUser()
+#elseif("$!request.tfu_mode" == 'upload')
+#if("$!request.fullName" == '')
+#set($fullName = "$doc.fullName")
+#else
+#set($fullName = "$!request.fullName")
+#end
+#if(("$!request.uploadToken" != '') && ($xwiki.exists("$!fullName") || ("$!context.getUser()" == 'XWiki.XWikiGuest')))
+#set($createIfNotExists = ("$!context.getUser()" == 'XWiki.XWikiGuest'))
+{ "success" : $celementsweb.tokenBasedUpload("$!fullName", 'filepath', $request.get("uploadToken"), $createIfNotExists),##
+  "attfilename" : "$!xwiki.celementsweb.clearFileName($request.get('filename'))",##
+#set($startUserName = $context.user.indexOf('.') + 1)
+ "username" : "$!{context.user.substring($startUserName)}"##
+}
+#else
+uploadToken ["$!request.uploadToken"] missing or Document '$fullName' does not exist. User: "$!context.getUser()"
+#end
+#else
+unkown tfu_mode '$!{request.tfu_mode}'!!!
+#end

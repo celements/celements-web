@@ -1,0 +1,83 @@
+<script type="text/javascript">
+function onSave_att() {}
+function onCancel_att() {}
+</script>
+
+#set($redurl = "$xwiki.getURL($doc.getFullName(), 'edit', 'tab=3')")
+
+<div id="att_contentView" class="editblock">
+	<h2>$adminMsg.get("cel_tm_attachments")</h2>
+<table class="cel_table">
+#if($doc.attachmentList.size() > 0)
+<tr>
+  <th style="text-align:left;width:120px;">&nbsp;</th>
+  <th style="text-align:left;">$adminMsg.get("cel_filename")</th>
+  <th style="text-align:left;width:60px;">&nbsp;</th>
+  <th style="text-align:left;">$adminMsg.get("cel_size")</th>
+  <th style="text-align:left;width:120px;">&nbsp;</th> 
+</tr>
+#foreach ($attach in $doc.attachmentList)
+<tr>
+  <td class="celements2_line" style="text-align:left;">
+  #if ($attach.isImage())
+    <a href="$doc.getAttachmentURL($attach.filename,'download')"><img src="$doc.getAttachmentURL($attach.filename,'download')?celwidth=100&celheight=15" alt="" width="100" height="15" border="0" /></a>
+  #else
+    &nbsp;
+  #end
+  </td>
+  <td class="celements2_line" style="text-align:left;">
+    <a href="$doc.getAttachmentURL($attach.filename,'download')">$attach.filename</a>
+  </td>
+  <td></td>
+  <td class="celements2_line" style="text-align:left;">
+    #set($filegroesse = $attach.filesize)
+    #set($filegroesse_type = "B")
+    #if($filegroesse > 1000)
+  	   #set($filegroesse = ($filegroesse/1000))
+      #set($filegroesse_type = "KB")
+    #end
+    #if($filegroesse > 1000)
+    	 #set($filegroesse = ($filegroesse/1000))
+      #set($filegroesse_type = "MB")
+    #end
+    $filegroesse $filegroesse_type
+  </td>
+  <td class="celements2_line" style="text-align:left;"><a href="$doc.getAttachmentURL("${attach.filename}", "delattachment", "xredirect=$redurl")" onclick="return confirm('$adminMsg.get("cel_tm_confirm_del_attachment")');">$adminMsg.get("cel_delete")</a>
+  </td>
+</tr>
+#set( $counter = $counter + 1)
+#end
+#else
+<tr>
+<td colspan="4">$adminMsg.get('cel_tm_no_attachments').</td>
+</tr>
+#end
+</table>
+<br />
+  	<h2>$adminMsg.get('cel_tm_upload_attachment')</h2>
+<form action="$xwiki.getURL($doc.getFullName(), 'upload')" enctype="multipart/form-data" method="post">
+<script type="text/javascript">
+function update_filename(filename, field){
+  if(document.forms.update && document.forms.update[field])
+    document.forms.update[field].value = filename;
+  return false;
+}
+function updateName(form) {
+var fname = form.filepath.value;  
+if (fname=="") {
+  return false;
+}
+var i = fname.lastIndexOf('\\');
+if (i==-1)
+  i = fname.lastIndexOf('/');
+fname = fname.substring(i+1);
+form.filename.value = fname;
+return true;
+}
+</script>
+  <input type="hidden" name="xredirect" value="$doc.getURL('edit')?tab=3" size="20" />    
+  <input type="hidden" name="filename" value="" size="20" />
+  <input type="file" name="filepath" value="" size="40"  />
+  <input type="submit" value="$adminMsg.get('cel_upload')" onclick="return updateName(this.form)" />  
+</form>
+</div>

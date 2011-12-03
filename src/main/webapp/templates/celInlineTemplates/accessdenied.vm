@@ -1,0 +1,14 @@
+###
+### inline Access denied message
+###
+###
+<div class="main layoutsubsection">
+#if ($xwiki.isReadOnly())
+#xwikimessageboxstart($msg.get("error") $msg.get("readonly"))
+#else
+#xwikimessageboxstart($msg.get("error") $msg.get("notallowed"))
+#end
+$!exception
+#xwikimessageboxend()
+<div class="clearfloats"></div>
+</div>

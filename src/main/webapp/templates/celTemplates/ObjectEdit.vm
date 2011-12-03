@@ -1,0 +1,241 @@
+##INPUT (optional) $cel_editobj_validate [true|false] AND (if true) #setClassForField(<propfieldname>)
+#set($linkParams = '')
+#if(!$cel_embedded_editobj)
+#set($linkParams = 'editor=object')
+#end
+#if("$!xredirect" != '')
+#set($linkParams = "${linkParams}&xredirect=$xredirect")
+#end
+#if("$!cel_editobj_doc" == '')
+ #set($cel_editobj_doc = $doc)
+#end
+#set($removeAddXredirect = $xwiki.getURLEncoded(${cel_editobj_doc.getURL('edit', $linkParams)}))
+#set($formname = "update")
+#set($saveaction = "save")
+#if(!$cel_embedded_editobj && ("$!cel_editobj_classname" == ''))
+  #set($cel_editobj_classname = $request.classname)
+#end
+#if(!$cel_embedded_editobj && ("$!cel_editobj_nb" == ''))
+  #set($cel_editobj_nb = $request.nb)
+#end
+#if(!$cel_embedded_editobj && ("$!cel_editobj_properties" == ''))
+  #set($cel_editobj_properties = $request.property)
+#end
+#if(!$cel_embedded_editobj && ("$!cel_editobj_readonly_properties" == ''))
+  #set($cel_editobj_readonly_properties = $request.readonlyproperty)
+#end
+#set($cel_editobj_readonly_properties = ",$!{cel_editobj_readonly_properties.trim()},")
+#set($cel_editobj_readonly_properties = ${cel_editobj_readonly_properties.replaceAll(',,+',',')})
+#if("$!cel_editobj_externalForm" == '')
+#set($cel_editobj_externalForm = false)
+#end
+#if("$!cel_editobj_title" == '')
+#set($cel_editobj_title = $adminMsg.get('cel_tm_editobj_title'))
+#end
+#set($hasCustomClass = ($cel_editobj_classname && (!$cel_editobj_classname.trim().equals(""))))
+#set($hasCustomObject = ($hasCustomClass && $cel_editobj_nb && (!$cel_editobj_nb.trim().equals(""))))
+#set($hasCustomField = ($hasCustomClass && ("$!{cel_editobj_properties.trim()}" != "")))
+<!-- cel_editobj_classname : $cel_editobj_classname -->
+<!-- cel_editobj_nb : $cel_editobj_nb -->
+<!-- cel_editobj_properties : $cel_editobj_properties -->
+<!-- cel_editobj_readonly_properties : $cel_editobj_readonly_properties -->
+#if($hasCustomClass)
+#set($classes = [$xwiki.getDocument($cel_editobj_classname).getxWikiClass()])
+#else
+#set($classes = $cel_editobj_doc.getxWikiClasses())
+#end
+#set($redirect = $xwiki.getRequestURL())
+#set($xredirect = "$!request.get('xredirect')")
+<div class="clear"></div>
+#if(!$cel_editobj_externalForm)
+    <div id="con_titblock" class="titleblock">$cel_editobj_title</div>
+#end
+#if(!$cel_editobj_externalForm)
+<form id="edit" method="post" action="$cel_editobj_doc.getURL('save')" onsubmit="cancelCancelEdit()">
+#end
+#if($hasobjs)
+<div id="xwikieditcontent">
+#else
+<div class="xwikieditcontent">
+#end
+#set($q = "")
+#if("$xredirect" != '')##
+<input type="hidden" name="xredirect" value="$xredirect" />
+#set($q = "${q}&amp;xredirect=${xredirect}")
+#end##
+#if(!$cel_embedded_editobj && $hasCustomClass)
+#set($q = "${q}&amp;classname=${cel_editobj_classname}")
+#if(!$cel_embedded_editobj && $hasCustomObject)
+#set($q = "${q}&amp;nb=${cel_editobj_nb}")
+#end
+#if(!$cel_embedded_editobj && $hasCustomField)
+#set($q = "${q}&amp;property=${cel_editobj_properties}")
+#end
+#end
+<div class="hidden"><input type="hidden" name="xcontinue" value="$cel_editobj_doc.getURL($context.action, $q)"/></div>
+#if($hasobjs)
+<div id="xwikiobjects" class="accordion">
+#else
+<div class="xwikiobjects accordion">
+#end
+#if("$!cel_editobj_dict_prefix" == '')
+  #set($cel_editobj_dict_property_prefix = ${class.name})
+#else
+  #set($cel_editobj_dict_property_prefix = $cel_editobj_dict_prefix)
+#end
+#foreach($class in $classes)
+#if($cel_editobj_hasObjAddLink)
+#set($classname_dict_key = "${cel_editobj_dict_property_prefix}$class.name")
+#if($adminMsg.get($classname_dict_key) != $classname_dict_key)
+#set($cel_objectedit_addobj_name = $adminMsg.get($classname_dict_key))
+#else
+<!-- classname_dict_key not found : $classname_dict_key -->
+#set($cel_objectedit_addobj_name = "$class.name")
+#end
+#set($cel_objectedit_addobj = $adminMsg.get("cel_objectedit_addsameobject", [$cel_objectedit_addobj_name]))
+<div class="xwikibuttonlink"><a href="$cel_editobj_doc.getURL("objectadd", "classname=${class.name}&amp;xredirect=$removeAddXredirect")">$cel_objectedit_addobj</a></div>
+#end
+#set($props = $class.getProperties())
+#foreach($prop in $props)
+#if ($velocityCount==1)
+#set($firstfield = $prop.name)
+#end
+#end
+#set($first = 1)
+#set($nb = $cel_editobj_doc.getObjectNumbers("${class.name}"))
+#if($hasCustomObject)
+#set($object = $cel_editobj_doc.getObject($class.name, $util.parseInt("$cel_editobj_nb")))
+#if($object)
+#set($objects = [$object])
+#else
+#set($objects = [])
+#warning($adminMsg.get("nosuchobject"))
+#end
+#else
+#set($objects = $cel_editobj_doc.getObjects($class.name))
+#end
+#set($hasobjs = false)
+#set($cel_editobj_obj_count = 0)
+#foreach($obj in $objects)
+#set($cel_editobj_obj_count = $cel_editobj_obj_count + 1)
+#if(!$hasCustomObject)
+#set($hasobjs = !$cel_embedded_editobj)
+#set($classname_dict_key = "${cel_editobj_dict_property_prefix}objectTitle_$class.name")
+#if($adminMsg.get($classname_dict_key) != $classname_dict_key)
+#set($cel_editobj_obj_title = $adminMsg.get($classname_dict_key, [${obj.number}, ${cel_editobj_obj_count}]))
+#else
+<!-- classname_dict_key not found : $classname_dict_key -->
+#set($cel_editobj_obj_title = "<tt><strong>${class.name}[${obj.number}]: </strong>$cel_editobj_doc.display($firstfield, $obj)</tt>")
+#end
+<div id="field_${class.name}_${obj.number}">
+<div id="field_${class.name}_${obj.number}_title" class="accordionTabTitleBar"><h6>$cel_editobj_obj_title</h6></div>
+<div id="field_${class.name}_${obj.number}_content" class="accordionTabContentBox"><div>
+#end
+#if($first == 1)
+<input type="hidden" name="${class.name}_nb" value="$nb" />
+#set($first = 0)
+#end
+#if(!$cel_embedded_editobj)
+<dl>
+#end
+#if($hasCustomField)
+  #set($properties = $util.arrayList)
+  #set($cel_editobj_properties = ",$!{cel_editobj_properties.trim()},")
+  #foreach($prop in $class.properties)
+    #if($cel_editobj_properties.contains(",${prop.name},"))
+      #set($discard = $properties.add($prop))
+    #else
+   <!-- prop filter skipps: $prop.name , $cel_editobj_properties -->
+    #end
+  #end
+#else
+  #set($properties = $class.properties)
+#end
+#foreach($prop in $properties)
+#set($classRef = $services.model.resolveDocument($class.getName()))
+#if($celementsweb.getSuggestBaseClass($classRef, "$!prop.getName()").isPicker())
+$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
+$celementsweb.addExtJSfileOnce(':js/xwiki/xwiki.js', 'file')
+$celementsweb.addExtJSfileOnce(':uicomponents/widgets/list/xlist.js', 'file')
+$celementsweb.addExtJSfileOnce(':js/xwiki/suggest/ajaxSuggest.js', 'file')
+$celementsweb.addExtJSfileOnce(':js/scriptaculous/effects.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
+#end
+#if($cel_embedded_editobj)
+#set($cel_editobj_validationClass = '')
+#if($cel_editobj_validate)
+  #set($cel_editobj_propfullname = "${class.name}_${obj.number}_${prop.name}")
+  #set($cel_editobj_validationClass = " #setClassForField($cel_editobj_propfullname)")
+#end
+<div class="editblock${cel_editobj_validationClass}">
+<dl>
+#end
+#set($prop_dict_key = "${cel_editobj_dict_property_prefix}$prop.name")
+#if($adminMsg.get($prop_dict_key) != $prop_dict_key)
+#set($prettyName = $adminMsg.get($prop_dict_key))
+#else
+<!-- prop_dict_key not found : $prop_dict_key -->
+#set($prettyName = $prop.prettyName)
+#end
+<dt class="label"><label for="${class.name}_${obj.number}_$prop.name">${prettyName}</label></dt>
+<dd>
+  #if($cel_editobj_readonly_properties.contains(",${prop.name},"))
+    $cel_editobj_doc.displayView($prop, "${class.name}_${obj.number}_", $obj)
+  #else
+    #if($cel_editobj_validate)
+      #set($cel_editobj_propfullname = "${class.name}_${obj.number}_${prop.name}")
+      #set($cel_editobj_propnotfound = '$request.get("$cel_editobj_propfullname")')
+      #set($cel_editobj_propasis = $request.get("$cel_editobj_propfullname"))
+      #if("$cel_editobj_propasis" != '$cel_editobj_propasis')
+        $obj.set("${prop.name}", "$request.get($cel_editobj_propfullname)")
+      #end
+    #end
+ ##BUG in xwiki 2.1.2 displayEdit generates sometimes a select and an input tag for the same property.
+#set($displayStr = $cel_editobj_doc.displayEdit($prop, "${class.name}_${obj.number}_" , $obj))
+#if($displayStr.startsWith('<select ') && $displayStr.contains('<input '))
+  #set($displayStr = $displayStr.substring(0, $displayStr.indexOf('<input ')))
+#end
+$displayStr
+  #end
+</dd>
+#if($cel_embedded_editobj)
+</dl>
+</div>
+#end
+#end
+#if(!$cel_embedded_editobj)
+</dl>
+#end
+#if($cel_editobj_hasObjRemoveLink)
+#if($adminMsg.get('cel_objectedit_addsameobject') != 'cel_objectedit_addsameobject')
+#set($classname_dict_key = "${cel_editobj_dict_property_prefix}$class.name")
+#if($adminMsg.get($classname_dict_key) != $classname_dict_key)
+#set($cel_objectedit_removeobj_name = $adminMsg.get($classname_dict_key))
+#else
+<!-- classname_dict_key not found : $classname_dict_key -->
+#set($cel_objectedit_removeobj_name = "$class.name")
+#end
+#set($cel_objectedit_removeobj = $adminMsg.get("cel_objectedit_removeobject", [$cel_objectedit_removeobj_name]))
+#else
+#set($cel_objectedit_removeobj = $adminMsg.get("removethisobject"))
+#end
+<div class="xwikibuttonlink"><a href="$cel_editobj_doc.getURL("objectremove", "classname=${class.name}&amp;classid=${obj.number}&amp;xredirect=$removeAddXredirect")" onclick="return confirm('$adminMsg.get("confirmobjectremove")')">$cel_objectedit_removeobj</a></div>
+#end
+#if(!$hasCustomObject)
+</div></div>
+</div>
+#end
+#end
+#end
+</div>
+</div>
+##<div class="bottombuttons">#template("editactions.vm")</div>
+#if(!$cel_editobj_externalForm)
+</form>
+#end
+#if($hasobjs)
+<script type="text/javascript">
+var obj={div:'xwikiobjects', no:0};
+Event.observe(window,'load',createAccordion.bind(this,obj));
+</script>
+#end

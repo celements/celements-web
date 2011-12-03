@@ -1,0 +1,125 @@
+##INPUT (optional): $celUserDataFieldLogin, $celLoginPage
+#macro(passRecoveryLink)
+#set($celMailsPasswordRecovery = $xwiki.parseTemplate("celMails/PasswordRecoverMailHtmlContent_$!{default_language}.vm"))
+#if(!$celementsweb.isEmptyRTEDocument('Tools.PasswordRecoverMailHtmlContent') || !$celementsweb.isEmptyRTEDocument('celements2web:Tools.PasswordRecoverMailHtmlContent') || !$celementsweb.isEmptyRTEDocument('Tools.PasswordRecoverMailTextContent') || !$celementsweb.isEmptyRTEDocument('celements2web:Tools.PasswordRecoverMailTextContent') || ("$!celMailsPasswordRecovery" != ''))
+  <a href="?xpage=overlay&conf=PwdRetreival&xredirect=$!red">$msg.get('cel_login_forgotpassword')</a>
+#end
+#end
+##
+#if("$!celUserDataFieldLogin" == '')
+#set($celUserDataFieldLogin = "$!xwiki.getXWikiPreference('cellogin')")
+#end
+#if ($context.getUser().equals("XWiki.XWikiGuest"))
+#if(("$!request.get('cellogin')" == '1') && ("$!celUserDataFieldLogin" != ''))
+#if("$!request.get('j_rememberme')" == 'true')
+  #set($rememberme = '1')
+#else
+  #set($rememberme = '0')
+#end
+  #set($url = "$!request.xredirect")
+  #if("$!url" == '')
+  #set($url = "/")
+  #end
+  #set($loginUser = $celementsweb.checkAuth("$request.get('j_username')", "$request.get('j_password')", $rememberme, "$celUserDataFieldLogin"))
+  #if("$!loginUser.getUser()" != '')
+    $context.getResponse().sendRedirect($url)
+  #end
+#end
+<div class="loginscreen">
+#if(!$celementsweb.useXWikiLoginLayout() && (("$!context.getRequest().get('j_username')" != "") || ("$!request.get('redir')" == '1')))
+<div class="cel_oldstyle_login_error" style="font-weight:bold;color:#ff0000">Login Error! Invalid Username/Password</div>
+#end
+#set($formaction = "$xwiki.getURL('XWiki.XWikiLogin','loginsubmit')")
+#if("$!celUserDataFieldLogin" != '')
+  #set($formaction = "")
+  #if("$!celLoginPage" != '')
+    #set($formaction = $xwiki.getURL("$celLoginPage"))
+  #end
+#end
+<form id="loginForm$!{num_login_show}" class="loginform" action="${formaction.replace('/xwiki/bin/view/','/').replace('/Content/','/')}" method="post">
+##
+<input type="hidden" name="cellogin" value="1" />
+#if("$!request.srid" != "")
+<input type="hidden" name="srid" value="$!request.srid"/>
+#end
+#if("$!redDoc" == '')
+  #set($redDoc = $doc)
+#end
+#if("$!request.xredirect" != '')
+    #set($red = "$!request.xredirect")
+#end
+#if(("$!red" == '') && ($redDoc && $redDoc.getObject('Celements2.Redirect')))
+    #set($red = "$xwiki.getURL($redDoc.getObject('Celements2.Redirect').getProperty('redirect').getValue(),'view')")
+#end
+#if("$!red" == '')
+    #set($red = $celementsweb.getLoginRedirectURL())
+#end
+<input type="hidden" name="xredirect" value="$red" />
+##
+#if("$!num_login_show" == '')
+#set($tabindexNum = 0)
+#else
+#set($tabindexNum = $num_login_show * 3)
+#end
+#if("$!request.activated" == '1')
+#xwikimessageboxstart($msg.get("platform.core.noticeMessageType") $msg.get("cel_PasswordSuccessfulChanged"))
+#xwikimessageboxend()
+<br/>
+#end
+#if($celementsweb.useXWikiLoginLayout())
+#xwikimessageboxstart($msg.get("login") "")
+#set($message = $msg.get($xwiki.parseMessage()))
+#if($message)
+<!-- previous login errors -->
+#error($message)
+#end
+<table class="xwikilogintable" summary="$msg.get("loginform")">
+<tr><th><label for="j_username">$msg.get("username"):</label></th>
+<td><input type="text" id="j_username" name="j_username" value=""/></td></tr>
+<tr><th><label for="j_password">$msg.get("password"):</label></th>
+<td><input type="password" id="j_password" name="j_password" value=""/></td></tr>
+<tr><td colspan="2" style="text-align: left;"><input id="rememberme" type="checkbox" name="j_rememberme" value="true"/><label for="rememberme">$msg.get("remembermeonthiscomp")</label></td></tr>
+</table>
+<div class="buttons"><input type="submit" class="button" value="$msg.get("login")"/></div>
+#passRecoveryLink()
+#xwikimessageboxend()
+<script type="text/javascript">
+//<![CDATA[
+  document.forms.loginForm.j_username.focus();
+//]]>
+</script>
+#elseif(("$!celementsloginform" != '') && ($xwiki.exists("$celementsloginform")))
+$xwiki.includeForm("$celementsloginform", false)
+#else ## celementslogin
+<input type="hidden" name="j_rememberme" value="true"  />
+$msg.get('cel_login_username')<br />
+#set($tabindexNum = $tabindexNum + 1)
+<input class="input" type="text" name="j_username" value="" tabindex="$!{tabindexNum}" /><br /><br />
+$msg.get('cel_login_password')<br/>
+#set($tabindexNum = $tabindexNum + 1)
+<input class="input" type="password" name="j_password" value="" tabindex="$!{tabindexNum}" /><br /><br />
+#set($tabindexNum = $tabindexNum + 1)
+<input type="submit" value="login" class="button" tabindex="$!{tabindexNum}" />
+#passRecoveryLink()
+#end
+</form>
+#if("$!num_login_show" == '')
+#set($num_login_show = 1)
+#else
+#set($num_login_show = $num_login_show + 1)
+#end
+</div> <!-- loginscreen -->
+#else
+## already logged in --> show details and logout link
+#if("$!redLogout" == '')
+#set($redLogout = $celementsweb.getLogoutRedirectURL())
+#end
+#set($username = $xwiki.getUserName($context.user))
+#foreach($str in $username.split("[<>]"))
+  #if($velocityCount == 5)
+    #set($username = ${str})
+  #end
+#end
+<div class="logoutlabel">$adminMsg.get('cel_login_loggedinas', ["$username"])</div><!--titel-->
+<a class="logoutbutton" href="$xwiki.getURL('XWiki.XWikiLogout','logout', "logout=1&xredirect=$!redLogout")" class="red">$adminMsg.get('cel_login_logoutbutton', ["$username"])</a>
+#end

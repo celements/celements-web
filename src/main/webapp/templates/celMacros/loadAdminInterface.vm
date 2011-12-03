@@ -1,0 +1,6 @@
+## loadAdminInterface
+## loads the header parts needed to enable the Celements AdminInterface and
+## the contextMenu
+##
+  $xwiki.parseTemplate("celMacros/loadBackend.vm")
+  $xwiki.parseTemplate("celMacros/initContextMenu.vm")

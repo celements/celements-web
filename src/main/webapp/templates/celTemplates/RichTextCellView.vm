@@ -1,0 +1,8 @@
+#if("$request.xpage" != 'rdf')
+<div id="rteContent$!{celldoc.getName()}:$!{celldoc.getFullName()}" class="rteContent cel_cm_rte_content">
+#end
+## because RichText is still the default PageType we need to allow velocity code
+$xwiki.celementsweb.renderDocument($!celldoc.getTranslatedDocument())
+#if("$request.xpage" != 'rdf')
+<!-- IE6 --></div>
+#end

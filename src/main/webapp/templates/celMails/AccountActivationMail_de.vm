@@ -1,0 +1,22 @@
+<br/>
+Guten Tag
+<br/>
+<br/>
+Sie haben sich erfolgreich auf $!context.getRequest().getHeader('host') registriert.
+Als Benutzernamen wurde Ihre E-Mail-Adresse ($!email) festgelegt.
+Klicken Sie bitte auf den folgenden Aktiverungslink um sich einzuloggen und ein
+neues pers&ouml;nliches Passwort festzulegen:
+<br/>
+<br/>
+Link zur Freischaltung: <a href="$!activationLink">$!activationLink</a>
+<br/>
+<br/>
+Bei allf&auml;lligen Fragen stehen wir Ihnen selbstverst&auml;ndlich gerne zur Verf&uuml;gung.
+<br/>
+<br/>
+Freundliche Gr&uuml;sse
+<br/>
+Ihr $!{context.getRequest().getHeader('host').replaceAll('^www.','')} Team<br/>
+<br/>
+<a href="http://$!{context.getRequest().getHeader('host')}">http://$!{context.getRequest().getHeader('host')}</a>
+<hr />

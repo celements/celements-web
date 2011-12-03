@@ -1,0 +1,130 @@
+##
+#macro(outputMenuItems $parentName)
+##macro: "$parentName", "$sp" <br />
+#foreach($item in $celementsweb.getSubNodesForParent("$!parentName", "$sp"))
+  #set($fullname = "$item.fullName")
+  #if($!mode == "FullName")
+    #set($value = $fullname)
+  #elseif($!mode == "Name")
+    #set($startAt = $fullname.indexOf('.') + 1)
+    #set($value = $fullname.substring($startAt, $fullname.length()))
+  #else
+    #set($value = $xwiki.getURL($fullname,'view'))
+  #end
+## check if getMenuName is overwritten
+#if("$!cel_linkpicker_MenuName_Macro" != '')
+#set($menuItemObj = $item)
+$xwiki.includeForm("$cel_linkpicker_MenuName_Macro", false)
+#else
+#set($menuName = $helpNav.getMultilingualMenuNameOnly($item.fullName, $language, false))
+#end
+#if("$!menuName" != '')
+  ## output xhtml
+  <div style="position:relative;left:15px;background-image:url($celementsweb.getSkinFile(':celRes/dotted_line.gif'));background-repeat:repeat-y;margin-top:5px;">
+  <div style="height:20px;vertical-align:middle;overflow:hidden">
+  <img src="$celementsweb.getSkinFile(':celRes/document.gif')" alt="Doc" style="margin-right:5px;"/>
+  <a href="$value" style="font:11px Arial;text-decoration:none;" ##
+  #if($isJSpicker)onclick="javascript:opener.document.forms.${form}['${field}'].value='$value';window.close();"#end ##
+  #if($isPickerMode)onclick="document.forms[0].${fieldname}.value = '$value'; return false;"#end>$!menuName</a><br />
+  </div>
+  ## second, third level
+#end
+#if($celementsweb.getSubNodesForParent("$!parentName", "$sp").size() > 0)
+#outputMenuItems("$item.fullName")
+#end
+#if("$!menuName" != '')
+  </div>
+#end
+#end ## foreach
+#end ## macros outputMenuItems
+##
+#set($helpNav = $celementsweb.createNavigation())
+## MAINPART
+## which space? default: Content
+#if($!context.getRequest().get("space") != "")
+ #set($space = "$!context.getRequest().get('space')")
+#elseif("$!cel_default_LinkPicker_space" != '')
+ #set($space = "$!{cel_default_LinkPicker_space}")
+#else
+ #set($space = "Content")
+#end
+## get parameters
+<div id="cel_linkPicker">
+#set($isPickerMode = ("$!request.picker" == '1') && ("$!request.fieldname" != ''))
+#if($isPickerMode)
+#set($fieldname = "$!request.fieldname")
+#end
+<div style="font:bold 11px Arial;margin:5px;">$adminMsg.get('cel_lpicker_name')</div>
+<div style="font:11px Arial;margin:5px;">$adminMsg.get('cel_lpicker_plzClickNotice')</div>
+##Bitte auf den Namen eines Dokumentes klicken um den entsprechenden Link auszuw&auml;hlen.
+#if($!context.getRequest().get("mode") != "")
+ #set($mode = $!context.getRequest().get("mode"))
+#else
+ #set($mode = "URL")
+#end
+#if($!context.getRequest().get("form") != "")
+ #set($form = $!context.getRequest().get("form"))
+#else
+ #if($debug)<div style="font:11px Arial;color:red;margin:5px;">Error: No form!</div>#end
+ #set($form = "")
+#end
+#if($!context.getRequest().get("field") != "")
+ #set($field = $!context.getRequest().get("field"))
+#else
+ #if($debug)<div style="font:11px Arial;color:red;margin:5px;">Error: No field!</div>#end
+ #set($field = "")
+#end
+#set($isJSpicker = (("$!{form}" != '') && ("$!{field}" != '')))
+##FIX use new celementsweb API to get MenuItems.
+## First Level Menu
+#foreach($sp in $space.split(','))
+<div style="font:bold 11px Arial;margin:5px;margin-top:20px;">$adminMsg.get('cel_lpicker_menuLinksTitle'): $sp</div>
+<div style="position:relative;left:15px;background-image:url($celementsweb.getSkinFile(':celRes/dotted_line.gif'));background-repeat:repeat-y;margin-top:5px;">
+#set($language = $xwiki.getWebPreferenceFor('default_language', "$sp"))
+## use default-language because any menuItem must have a menuName
+## in the default language
+#outputMenuItems('')
+</div>
+#end
+<div style="font:bold 11px Arial;margin:5px;margin-top:20px;">$adminMsg.get('cel_lpicker_otherLinksTitle'):</div>
+#set($xwql = '')
+#foreach($sp in $space.split(','))
+  #if("$!sp" != '')
+    #if("$!xwql" == '')
+      #set ($xwql = "where doc.web='$sp'")
+    #else
+      #set ($xwql = "$xwql or doc.web='$sp'")
+    #end
+  #end
+#end
+#set($menu = [])
+<div style="position:relative;left:15px;background-image:url($celementsweb.getSkinFile(':celRes/dotted_line.gif'));background-repeat:repeat-y;margin-top:5px;">
+#foreach ($item in $services.query.xwql($xwql).execute())
+  #set($cur_doc = $xwiki.getDocument($item))
+  #set($menu_items = $cur_doc.getObjects("Celements2.MenuItem"))
+  #if(($menu_items.size() == 0) && ($cur_doc.getName() != "WebPreferences"))
+    #if($!mode == "FullName")
+      #set($value = $!cur_doc.getFullName())
+    #elseif($!mode == "Name")
+      #set($value = $!cur_doc.getName())
+    #else
+      #set($value = $!cur_doc.getURL('view'))
+    #end   
+    <div style="position:relative;left:15px;background-image:url($celementsweb.getSkinFile(':celRes/dotted_line.gif'));background-repeat:repeat-y;margin-top:5px;">
+    <div style="height:20px;vertical-align:middle;overflow:hidden">
+    <img src="$celementsweb.getSkinFile(':celRes/document.gif')" alt="Doc" style="margin-right:5px;"/>
+    <a href="$value" style="font:11px Arial;text-decoration:none;" ##
+    #if($isJSpicker)onclick="javascript:opener.document.forms.${form}['${field}'].value='$value';window.close();"#end ##
+    #if($isPickerMode)onclick="document.forms[0].${fieldname}.value = '$value'; return false;"#end>$!cur_doc.getFullName()</a><br />
+    </div>
+    #set($parentName = "$!cur_doc.getFullName()")
+    #set($sp = "$!cur_doc.getSpace()")
+##    show: $parentName : $celementsweb.getSubNodesForParent("$!parentName", "$sp").size()<br />
+    #if($celementsweb.getSubNodesForParent("$!parentName", "$sp").size() > 0)
+      #outputMenuItems($parentName)
+    #end
+    </div>
+  #end
+#end
+</div>
+</div>

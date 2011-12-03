@@ -1,0 +1,46 @@
+#if($isAdmin)
+#set($hideondisk = '')
+#if("$!{request.hideondisk}" == '1')
+  #set($hideondisk = "and not str.value like ':%'")
+#else
+  Use parameter hideondisk=1 to hide all ocurrences starting with ':'
+#end
+#set($h = "select doc.fullName, str.value from XWikiDocument as doc, BaseObject as obj, StringProperty as str where doc.translation = 0 and doc.fullName = obj.name and obj.className = 'JavaScript.ExternalFiles' and obj.id = str.id.id and str.id.name = 'filepath' $hideondisk order by str.value, doc.fullName")
+<table>
+  <thead><tr><th>JavaScript.ExternalFiles</th><th></th></tr></thead>
+  <tbody>
+#foreach($x in $xwiki.search($h))
+    <tr>
+  #foreach($y in $x)
+      <td>
+    #if($velocityCount == 1)
+        <a href="$xwiki.getURL($y, 'edit', 'editor=object')">$y</a>
+    #else
+        $y
+    #end
+      </td>
+  #end
+    </tr>
+#end
+  </tbody>
+</table>
+#set($h = "select doc.fullName, str.value from XWikiDocument as doc, BaseObject as obj, StringProperty as str where doc.translation = 0 and doc.fullName = obj.name and obj.className = 'Skins.UserCSS' and obj.id = str.id.id and str.id.name = 'cssname' $hideondisk order by str.value, doc.fullName")
+<table>
+  <thead><tr><th>Skins.UserCSS</th><th></th></tr></thead>
+  <tbody>
+#foreach($x in $xwiki.search($h))
+    <tr>
+  #foreach($y in $x)
+      <td>
+    #if($velocityCount == 1)
+        <a href="$xwiki.getURL($y, 'edit', 'editor=object')">$y</a>
+    #else
+        $y
+    #end
+      </td>
+  #end
+    </tr>
+#end
+  </tbody>
+</table>
+#end

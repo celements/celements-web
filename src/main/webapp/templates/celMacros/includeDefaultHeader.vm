@@ -1,0 +1,37 @@
+## includeDefaultHeader
+## include standard title- and meta-tags for the HTML header.
+## INPUT (optional): $charEncoding 
+## OUTPUT: 
+##
+<title>##
+$celementsweb.getDocHeaderTitle($doc.fullName)##
+</title>
+$!xwiki.getWebPreference("meta")
+#if("$!charEncoding" == '')
+  #set($charEncoding = "$xwiki.encoding")
+#end
+<meta http-equiv="Content-Type" content="text/html; charset=$!charEncoding" />
+#set($webprefDoc = $xwiki.getDocument("${doc.space}.WebPreferences"))
+#set($wikiprefDoc = $xwiki.getDocument("XWiki.XWikiPreferences"))
+#if("$!webprefDoc.getAttachment('favicon.ico')" != '')
+<link rel="shortcut icon" href="$webprefDoc.getAttachmentURL('favicon.ico','skin')" type="image/x-icon"/>
+#elseif("$!wikiprefDoc.getAttachment('favicon.ico')" != '')
+<link rel="shortcut icon" href="$wikiprefDoc.getAttachmentURL('favicon.ico','skin')" type="image/x-icon"/>
+#elseif("$!skin_doc.getAttachment('favicon.ico')" != '')
+<link rel="shortcut icon" href="$skin_doc.getAttachmentURL('favicon.ico','skin')" type="image/x-icon"/>
+#elseif($xwiki.getSkinFile('skinRes/favicon.ico', true).contains('/resources/'))
+<link rel="shortcut icon" href="$xwiki.getSkinFile('skinRes/favicon.ico', true)" type="image/x-icon"/>
+#end
+$!celementsweb.getAllExternalJavaScriptFiles()
+#if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)
+  $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
+  $celementsweb.addExtJSfileOnce(':celJS/adminUi/overlayResize.js')
+#end
+##
+## Hooks for inserting JavaScript skin extensions
+##
+## - Skin file extension hook. Placed first since skin extensions might need to have xwiki or external libraries included first to be able to work properly
+<!-- com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin -->
+## - Skin extension hook
+<!-- com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin -->
+##

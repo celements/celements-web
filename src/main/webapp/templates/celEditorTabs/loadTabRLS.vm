@@ -1,0 +1,30 @@
+<script language="javascript" type="text/javascript">
+function onSave_rls() {
+    // save menu name, redirect and target name
+    var queryString = "rls_required="+document.getElementById('check_rls_required').checked;
+    queryString = queryString+"&rls_editable="+document.getElementById('check_rls_editable').checked;
+    queryString = queryString+"&rls_submenu_allowed="+document.getElementById('check_rls_submenu_allowed').checked;
+    saveWithAjax('${doc.fullName}', '$language', queryString);
+}
+function onCancel_rls() {
+
+}
+</script>
+#if($doc.getObjects('Classes.RlsPageGlobalFlag').size() > 0)
+#set($theRLSGlobalFlag = $doc.getObject('Classes.RlsPageGlobalFlag'))
+#else
+#set($theRLSGlobalFlag = $doc.newObject('Classes.RlsPageGlobalFlag'))
+$doc.save()
+#end
+#set($isRequiredChecked = ("$!theRLSGlobalFlag.getProperty('IsRequired').getValue()" == '1'))
+#set($isEnabledChecked = ("$!theRLSGlobalFlag.getProperty('IsEditable').getValue()" == '1'))
+#set($isSubmenuAllowed = ("$!theRLSGlobalFlag.getProperty('submenu_allowed').getValue()" == '1'))
+<div id="rls_requiredBar" class="editblock">
+    $adminMsg.get('rls_required'): <input type="checkbox" onclick="onSave_rls();" #if($isRequiredChecked)checked="checked"#end id="check_rls_required" onclick="setReadonly();" onfocus="setFocus('check_rls_required');" onblur="removeFocus('check_rls_required');"></input>
+</div>
+<div id="rls_editableBar" class="editblock">
+    $adminMsg.get('rls_editable'): <input type="checkbox" onclick="onSave_rls();" #if($isEnabledChecked)checked="checked"#end id="check_rls_editable" onclick="setReadonly();" onfocus="setFocus('check_rls_editable');" onblur="removeFocus('check_rls_editable');"></input>
+</div>
+<div id="rls_editableBar" class="editblock">
+    $adminMsg.get('rls_submenu_allowed'): <input type="checkbox" onclick="onSave_rls();" #if($isSubmenuAllowed)checked="checked"#end id="check_rls_submenu_allowed" onclick="setReadonly();" onfocus="setFocus('check_rls_submenu_allowed');" onblur="removeFocus('check_rls_submenu_allowed');"></input>
+</div>

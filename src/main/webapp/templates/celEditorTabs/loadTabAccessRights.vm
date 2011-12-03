@@ -1,0 +1,87 @@
+#macro(getAccessRights)
+  #set($rights = '')
+  #if($rightsobj.getProperty('levels').getValue() == 'view')
+    #set($rights = 'view')
+  #end
+  #if($rightsobj.getProperty('levels').getValue().contains('edit'))
+    #set($rights = 'edit')
+  #end
+  #if($rightsobj.getProperty('allow').getValue() == 0)
+    #set($rights = 'none')
+  #end
+#end
+
+#macro(getRealAccessRights $grpOrUser $isUser)
+ #if($celementsweb.hasAccessLevel('view', $grpOrUser, $isUser, $doc.fullName) 
+  && $celementsweb.hasAccessLevel('edit', $grpOrUser, $isUser, $doc.fullName))
+   $!adminMsg.get('cel_tm_rights_edit')
+ #else
+   #if($celementsweb.hasAccessLevel('view', $grpOrUser, $isUser, $doc.fullName))
+     $!adminMsg.get('cel_tm_rights_view')
+   #else
+     $!adminMsg.get('cel_tm_rights_none')
+   #end
+ #end
+#end
+
+<div class="cel_rightsTab">
+#if($celementsweb.isCelementsRights($doc.fullName))
+<span class='cel_lazyloadJS' style='display: none;'>celJS/adminUi/accessRights.js</span>
+<form id="accessRightForm" name="accessRightForm" action="" method="post">
+<input type="hidden" name="update" value="1" />
+<input type="hidden" name="tab" value="tbrights" />
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="SaveAccessRights" />
+    <table class="cel_rightsTable editblock">
+      <thead>
+        <tr> 
+          <th>$!adminMsg.get('cel_tm_rights_group')</th>
+          <th>$!adminMsg.get('cel_tm_rights_rights')</th>
+          <th>$!adminMsg.get('cel_tm_rights_realrights')</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr> 
+          <td>$!adminMsg.get('cel_tm_rights_guestuser')</td>
+          <td> <select class="cel_rightsSelect" id="select_XWiki.XWikiGuest" name="select_XWiki.XWikiGuest">
+  #set($rightsobj = $doc.getObject('XWiki.XWikiRights', 'users', 'XWiki.XWikiGuest', false))
+  #getAccessRights()
+              <option value="">---</option>
+              <option value="view" #if("$!rights" =='view') selected="selected" #end>$!adminMsg.get('cel_tm_rights_view')</option>
+              <option value="edit" #if("$!rights" =='edit') selected="selected" #end>$!adminMsg.get('cel_tm_rights_edit')</option>
+              <option value="none" #if("$!rights" =='none') selected="selected" #end>$!adminMsg.get('cel_tm_rights_none')</option>
+            </select> </td>
+          <td>#getRealAccessRights('XWiki.XWikiGuest' true)</td>
+        </tr>
+      #set($hql = ", BaseObject as obj where obj.name=doc.fullName and obj.className='XWiki.XWikiGroups'")
+      #foreach ($cel_groupName in $xwiki.searchDocuments($hql))
+        #set($cel_groupDisplayName = $cel_groupName.replace('XWiki.',''))
+      <tr> 
+        <td>
+      #set($cel_groupNameKey = "cel_groupname_$cel_groupDisplayName")
+      #if($adminMsg.get($cel_groupNameKey) != $cel_groupNameKey)
+        #set($cel_groupDisplayName = $adminMsg.get($cel_groupNameKey))
+      #end
+      $cel_groupDisplayName
+        </td>
+        <td> <select class="cel_rightsSelect" id="select_$cel_groupName" name="select_$cel_groupName">
+  #set($rightsobj = $doc.getObject('XWiki.XWikiRights', 'groups', $cel_groupName, false))
+  #if("$!rightsobj" == '')
+    #set($rightsobj = $doc.getObject('XWiki.XWikiRights', 'groups', "${cel_groupName},", false))
+  #end
+  #getAccessRights()
+            <option value="">---</option>
+            <option value="view" #if("$!rights" =='view') selected="selected" #end>$!adminMsg.get('cel_tm_rights_view')</option>
+            <option value="edit" #if("$!rights" =='edit') selected="selected" #end>$!adminMsg.get('cel_tm_rights_edit')</option>
+            <option value="none" #if("$!rights" =='none') selected="selected" #end>$!adminMsg.get('cel_tm_rights_none')</option>
+          </select> </td>
+        <td>#getRealAccessRights($cel_groupName false)</td>
+      </tr>
+      #end 
+    </table>
+</form>
+
+#else
+  $!adminMsg.get('cel_tm_rights_invalid')
+#end
+</div>

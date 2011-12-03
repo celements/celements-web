@@ -1,0 +1,13 @@
+#if($xwiki.celementsweb.getVersionMode() == 'celements3')
+	<!-- loadTabRTE -->
+    $xwiki.parseTemplate('celMacros/loadTabRTE.vm')
+#else
+  <form id="edit" method="post" action="$doc.getURL("save")">
+    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+    <input type="hidden" name="xredirect" value="$!request.getParameter("xredirect")" />
+    <input type="hidden" name="language" value="$!tdoc.language" />
+    <div id="htmlarea_container">
+      $xwiki.getTextArea($tdoc.content)
+    </div>
+  </form>
+#end

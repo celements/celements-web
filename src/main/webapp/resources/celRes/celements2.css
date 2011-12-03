@@ -1,0 +1,502 @@
+@import url(http://fonts.googleapis.com/css?family=Terminal+Dosis:400,200,300,500,600,700,800);
+/* Floating Windows Classes */
+@import url(login.css);
+.sheet {
+	position: absolute;
+}
+.wmwindow {
+	position: absolute;
+	padding-top: 14px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	margin: 0px;
+	border: 0px;
+	cursor:move;
+}
+
+.wmwindow_selected {
+	position: absolute;
+	padding-top: 14px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	margin: 0px;
+	border: 0px;
+	cursor:move;
+}
+
+.close {
+	position:absolute;
+	font: bold 10px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+	background-color:#B0B0B0;
+	color: #E3E3C0;
+	border: 1px solid #E3E3C0;
+	margin: 0px;
+	cursor:pointer;
+}
+
+.resize {
+	position:absolute;
+	border: 0px;
+	margin: 0px;
+	font: bold 10px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+	cursor:nw-resize;
+	background-color:#B0B0B0;
+}
+.content_background {
+	position:absolute;
+	padding:3px;
+	border: 1px solid #E3E3C0;
+	background-color:#B0B0B0;
+	overflow: auto;
+	font: bold 10px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+	text-align: left;
+	color: #E3E3C0;
+	cursor:default;
+}
+.content {
+	position:absolute;
+	padding:3px;
+	border: 2px solid #E3E3C0;
+	overflow: auto;
+	font: bold 10px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+	text-align: left;
+	color: #E3E3C0;
+	cursor:default;
+}
+.title {
+	position:absolute;
+	border: 1px solid #E3E3C0;
+	margin: 0px;
+	padding-left:5px;
+	background-color:#B0B0B0;
+	white-space:nowrap;
+	overflow: hidden;
+	font: bold 10px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+	text-align: left;
+	color: #E3E3C0;
+}
+/* Menu Bar Classes */
+div#celements2_menu_bar{
+	position:absolute;
+	top:0;
+	left:0;
+	overflow:auto;
+	width:100%;
+	height:20px;
+	background-color: #3F3F3F;
+  border-bottom: 1px solid #4F4F2F; 
+	text-align:left;
+	z-index:100;
+}
+body > div#celements2_menu_bar {
+	position:fixed;	/*Position fixed for all Browsers except ie6 */
+}
+#celements2_logo{
+	position:absolute;
+	top:0px;
+	left:0px;
+	margin-left:24px;
+}
+#celements2_menu_bar_header{
+	position:absolute;
+	right:175px;
+	/*top:7px;*/
+	top:0px;
+}
+#celements2_menu_bar .celements2_menu_bar_header_item {
+  font-family: "Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+	color: #E3E3C0;
+	display:block;
+	float:left;	
+	/*width:92px;*/
+	width:auto;
+	cursor:pointer;
+	height:19px;
+	padding-left:6px;
+	padding-right:10px;
+	padding-top:3px;
+	position: relative;
+}
+#celements2_menu_bar .celements2_menu_bar_header_item.active {
+  background-color: #C26A19;
+}
+#celements2_menu_bar .celements2_menu_bar_submenu {
+	z-index: 2;
+}
+#celements2_menu_bar .celements2_menu_bar_submenu {
+	display:none;
+	position:absolute;
+	left: 0px;
+}
+#celements2_menu_bar a.celements2_menu_bar_sub_item{
+	margin-top:0px;
+	border-top:1px solid #CCCCCC;
+	padding: 2px 18px 0px 6px;
+	height:auto;
+	width:178px;
+  font-family: "Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+	overflow:hidden;
+	display:block;
+	cursor: pointer;
+	color:#d3d3d3 !important;
+	background-color: rgba(30,30,30, 0.8) !important;
+	text-decoration:none !important;
+	white-space:nowrap;
+}
+#celements2_menu_bar a.celements2_menu_bar_sub_item:hover{
+	border-top:1px solid #CCCCCC;
+	padding: 2px 18px 0px 6px;
+	height:auto;
+	width:178px;
+  font-family: "Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+	overflow:hidden;
+	display:block;
+	cursor: pointer;
+	color:#e3e3e3 !important;
+	background-color: #C26A19 !important;
+	text-decoration:none !important;
+	white-space:nowrap;
+}
+
+/* Context Menu Classes */
+.contextMenu {
+	position:absolute;
+	top:10px;
+	left:10px;
+	width:196px;
+	height:auto;
+	padding:0px;
+	margin:0px;
+	text-align:left;
+	z-index:200;
+}
+.contextMenuCorner{
+	position:absolute;
+	top: 0px;
+	left: 0px;
+	width: 5px;
+	height: 5px;
+	background-color:#3F3F3F;
+	line-height:5px;
+	overflow:hidden;
+}
+.contextMenuHeader {
+	position: relative;
+	top:6px;
+	left:6px;
+	background-color:#080808;
+	width:186px;
+	height:12px;
+	overflow:hidden;
+	font: 700 12px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  font-style: normal;
+  text-transform:uppercase;
+	color: #E3E3C0;
+	text-decoration:none;
+	padding:0px 3px 0px 3px;
+	margin-bottom:2px;
+}
+.contextMenuItem{
+	position:relative;
+	background-color: #3F3F3F;
+	width:192px;
+	height:auto;
+	overflow:hidden;
+	margin-bottom:2px;
+}
+.contextMenuIcon{
+	display:none;
+}
+.contextMenuLink {
+	position: static;
+	top:0px;
+	left:0px;
+	background-color:#3F3F3F;
+	width:175px;
+	height:auto;
+	font-family: "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	font-weight: 700;
+	font-size: 12px;
+	line-height: 16px;
+  letter-spacing: 1px;
+  font-style: normal;
+  word-spacing: 2px;
+	text-transform:none;
+	color: #E3E3C0;
+	text-decoration:none;
+	cursor:pointer;
+	padding:1px 3px 1px 12px;
+	overflow:hidden;
+	text-align:left;
+}
+.contextMenuLinkOver{
+	position: static;
+	top:0px;
+	left:0px;
+  color:#e3e3e3 !important;
+  background-color: #C26A19 !important;
+	width:186px;
+	height:auto;
+  font-family: "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+	text-transform:none;
+	text-decoration:none;	
+	cursor:pointer;
+  padding:1px 3px 1px 12px;
+	overflow:hidden;
+	text-align:left;
+}
+
+/* Form Validation Classes */
+.validation-advice{
+	width:152px;
+	color:#E3E3C0;
+	font-weight:bold;
+	background-color:red;
+	padding:2px;
+}
+/* General Classes */
+.celements2_error{
+	font-weight:bold;
+	color:#ff0000;
+	margin-bottom:10px;
+}
+
+table.celements2_table,
+.celements3_tabMenu .tabMenuPanel .bd .menuTab table {
+	width:100%;
+	border:0px;
+	margin-top:20px;
+	margin-bottom:20px;
+	vertical-align:top;
+}
+table.celements2_table th,
+.celements3_tabMenu .tabMenuPanel .bd .menuTab table th {
+	font-weight:bold;
+	padding-top:5px;
+	padding-bottom:5px;
+	vertical-align:top;
+}
+table.celements2_table td,
+.celements3_tabMenu .tabMenuPanel .bd .menuTab table td {
+	padding-top:5px;
+	padding-bottom:5px;
+	vertical-align:top;
+}
+#celements_attach table.celements2_table td.filename a {
+  display:block;
+  overflow-x:hidden;
+  overflow-y:hidden;
+}
+#celements_attach table.celements2_table th.filename,
+#celements_attach table.celements2_table td.filename,
+#celements_attach table.celements2_table td.filename a {
+  width:200px;
+}
+#celements_attach table.celements2_table th.filename,
+#celements_attach table.celements2_table td.filename {
+	padding-right: 5px;
+}
+.celements2_input_mandatory{
+	font-weight:bold;
+}
+.celements2_input{
+	font:normal 12px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	width:150px;
+	border:1px solid #000000;
+	padding:2px;
+}
+.celements2_input_button{
+	font:bold 12px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	cursor:pointer;
+}
+.celements2_align_right{
+	text-align:right;
+}
+.celements2_page_title{
+	font:600 18px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	color:#999999;
+}
+.celements2_box{
+	background-color:#B0B0B0;
+	border: 1px dashed #999999;
+	padding:5px;
+}
+.editGallery_box {
+  height: 500px;
+  overflow: auto;
+}
+/*.editGallery_table_box {
+  height: 100px;
+  overflow: auto;
+}*/
+.celements2_box_title{
+	width:100%;
+	height:20px;
+	background-color:#666666;
+	color:#f9f9f9;
+	font:600 15px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	margin-bottom:10px;
+}
+.celements2_box_subtitle{
+	width:100%;
+	height:15px;
+	background-color:#AAAAAA;
+	color:#f9f9f9;
+	font:600 13px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	margin:10px 0px 10px 0px;	
+}
+.celements2_help_text{
+	font: 600 12px "Terminal Dosis", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	margin-bottom:10px;	
+}
+.celements2_line{
+	border-bottom:1px solid #000000;
+}
+
+div.menuTab .editblock ul.column_config_options {
+	text-transform: none;
+}
+
+div.menuTab .editblock ul.column_config_options li {
+  display: inline;
+  padding-left: 30px;
+}
+
+div.menuTab .editblock.cel_cal_overview_column_config input,
+div.menuTab .editblock.cel_cal_event_column_config input {
+	width: 400px;
+}
+
+body .cm_highlighted {
+  border: solid 2px green !important;
+}
+.UserAdminInfos table.block td{
+	position:relative;
+}
+.UserAdminInfos .validation-advice{
+	display:inline;
+	left:0px;
+	position:relative;
+}
+div.mask {
+	background-color:black;
+	position:absolute;
+	height:100%;
+	width:100%;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+	display:none;
+	top:0px;
+	left:0px;
+	z-index: 99;
+}
+
+.cel_newsletterImport h1 {
+	color: black;
+    font-size: 16px;
+    font-weight: auto;
+    line-height: auto;
+    margin: auto;
+    padding-bottom: auto;
+    padding-left: auto;
+    padding-top: auto;
+}
+
+.cel_newsletterImport h2 {
+	color: black;
+    font-size: 12px;
+    font-weight: auto;
+}
+
+.cel_newsletterImport th {
+	color: black;
+	background-color:auto;    
+    font-weight: auto;
+    line-height: auto;
+    margin: auto;
+    padding: auto;
+}
+.cel_cm_blog_article .future{
+	background-color:#FF9999;
+}
+
+.celements3_tabMenu .cel_rightsTab table.cel_rightsTable{
+	table-layout:fixed;
+	border-collapse:collapse;
+}
+.celements3_tabMenu .cel_rightsTab table.cel_rightsTable th{
+	border-bottom:1px solid #333;
+	text-align:left;
+	font-weight:bold;
+	padding-bottom:10px;
+}
+.celements3_tabMenu .cel_rightsTab table.cel_rightsTable td{
+	padding-right:15px;
+	padding-top:4px;
+	padding-bottom:4px;
+}
+body.celementsmenubarvisible div.cel_cm_pagedependent_content,
+body.celementsmenubarvisible div.cel_cm_rte_content {
+  min-height: 25px;
+}
+div#celements2_menu_bar div#celements2_logo {
+  font-family: "Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
+  letter-spacing: 0px;
+  word-spacing: 0px;
+  font-style: normal;
+  text-transform: uppercase;
+  color: #D3D3D3;
+  padding-top: 2px;
+  padding-left: 8px;
+}
+div#celements2_menu_bar div#celements2_logo a{
+  color: #D3D3D3 !important;
+  text-decoration: none !important;
+}
+div#celements2_menu_bar div#celements2_logo span.celementsname {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 800;
+  padding-right: 3px;
+}
+div#celements2_menu_bar div#celements2_logo span.websuffix {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
+}

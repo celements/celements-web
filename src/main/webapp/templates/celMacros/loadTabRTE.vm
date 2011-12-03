@@ -1,0 +1,139 @@
+#if("$!tinyMCE_height" == '')
+  #set($tinyMCE_height = 500)
+#end
+#if("$!tinyMCE_width" == '')
+  #set($tinyMCE_width = 590)
+#end
+#if("$!request.xredirect" != '')
+  #set($cel_tiny_xredirect = "$!request.xredirect")
+  #set($cel_tiny_cancel_inurl = "xredirect=$!cel_tiny_xredirect")
+  #set($cel_tiny_cancel = $doc.getURL('cancel', "$cel_tiny_cancel_inurl"))
+#else
+  #set($cel_tiny_cancel = $doc.getURL('cancel'))
+  #set($cel_tiny_cancel_inurl = '')
+  #set($cel_tiny_xredirect = '')
+#end
+#set($contextPath = ${request.contextPath})
+$xwiki.includeForm('celements2web:Macros.includeCelementsRTE', false)
+<script type="text/javascript">
+##
+var cd = null;
+var rte_cancel_option = "$rte_cancel_option";
+##
+function cancelAndClose(ed,h) {
+	// if no changes were made, close right away
+	if (!ed.isDirty() || rte_cancel_option == 'quit') {
+		if(document.forms.edit){
+	    		document.forms.edit.action = "$cel_tiny_cancel";
+			    if(doBeforeCancelSubmit) {
+			      doBeforeCancelSubmit();
+			    }
+	    		document.forms.edit.submit();
+	 	} else {
+	   		alert("Error: No edit form!");
+	  	}
+	} else if (rte_cancel_option == 'ask') {
+		document.getElementById('cancelDialog').style.height = "auto";
+		if (cd == null) {
+			// initialize dialog object
+			var handleQuit = function() {
+				if (this.getData().save_option) {
+					rte_cancel_option = 'quit';
+					var url = "$xwiki.getDocument('Macros.Ajax').getURL()?ajax=save&rteco=quit&skin=celements2web:Skins.HTMLSkin";
+					new Ajax.Request(url, {method: 'get', onSuccess: function(){
+						if (document.forms.edit){
+				    		document.forms.edit.action = "$cel_tiny_cancel";
+						    if(doBeforeCancelSubmit) {
+						      doBeforeCancelSubmit();
+						    }
+				    		document.forms.edit.submit();
+				 		} else {
+				   			alert("Error: No edit form!");
+				  		}
+				  		this.cancel();
+					}});
+					document.getElementById("rte_save_option").checked = false;
+				} else {
+					if (document.forms.edit){
+				    	document.forms.edit.action = "$cel_tiny_cancel";
+					    if(doBeforeCancelSubmit) {
+					      doBeforeCancelSubmit();
+					    }
+				    	document.forms.edit.submit();
+				 	} else {
+				   		alert("Error: No edit form!");
+				  	}
+					this.cancel();
+				}
+		  	} 
+			var handleCancel = function() { 
+				if (this.getData().save_option) {
+					rte_cancel_option = 'cancel';
+					var url = "$xwiki.getDocument('Macros.Ajax').getURL()?ajax=save&rteco=cancel&skin=celements2web:Skins.HTMLSkin";
+					new Ajax.Request(url, {method: 'get'});
+					document.getElementById("rte_save_option").checked = false;				
+				}
+				ed.setContent(h);
+				ed.undoManager.clear();
+				ed.nodeChanged();
+				this.hide();
+			}
+			var handleResume = function() { 
+				document.getElementById("rte_save_option").checked = false;
+				this.hide(); 
+			} 
+			var cancelDialogButtons = [ { text:'$adminMsg.get("cel_rte_quit_wo_saving")', handler:handleQuit }, 
+							  { text:'$adminMsg.get("cel_rte_cancel_all_changes")', handler:handleCancel }, 
+							  { text:'$adminMsg.get("cel_rte_resume_editing")', handler:handleResume, isDefault:true } ]; 
+		
+			cd = new YAHOO.widget.Dialog("cancelDialog");
+			cd.cfg.queueProperty("buttons", cancelDialogButtons);
+			cd.cfg.queueProperty("fixedcenter", true);
+			cd.render();
+			cd.show();
+		} else {
+			// show dialog instance
+			cd.show();
+		}
+	} else if (rte_cancel_option == 'cancel') {
+		ed.setContent(h);
+		ed.undoManager.clear();
+		ed.nodeChanged();
+	} else {
+		alert("something's wrong here");
+	}
+}
+</script>
+
+<div id="con_titblock" class="titleblock"></div>
+
+$xwiki.includeForm('celements2web:Macros.includeRTELanguageSelect', false)
+
+	<form id="edit" method="post" action="$doc.getURL("save")">
+	    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+	    <input type="hidden" id="formeditxred" name="xredirect" value="$!cel_tiny_xredirect" />
+	    <input type="hidden" name="language" value="$!language" />
+<!-- FIX? : $tdoc.fullName , $tdoc.language -->
+#if($celementsweb.getPageType($doc.fullName).hasPageTitle())
+<div id="con_titleEdit" class="editblock">$adminMsg.get('cel_tm_title'):
+    <input id="pagetitle" name="title" class="fullwidth" value="$!xwiki.getFormEncoded($!tdoc.getTitle())" type="text"  onfocus="setFocus('con_titleEdit');" onblur="removeFocus('con_titleEdit');">
+</div>
+#end
+<div id="con_contentEdit" class="editblock">
+		<textarea name="content" onfocus="setFocus('con_contentEdit');" onblur="removeFocus('con_contentEdit');">$xwiki.getXMLEncoded($tdoc.content)</textarea>
+</div>
+	</form>
+
+<div class="yui-skin-sam">
+	<div id="cancelDialog" style="visibility:hidden;height:0px;"> 
+		<div class="hd">$adminMsg.get("cel_rte_howto_proceed")</div> 
+		<div class="bd">
+			<form> 
+ 	            <div class="clear"></div> 
+	            <input id="rte_save_option" type="checkbox" name="save_option" value="1" />
+	            <label for="save_option" style="font-size:7pt">$adminMsg.get("cel_rte_always_perform_option") ($adminMsg.get("cel_rte_editable_in_user_prefs"))</label>
+	        </form>
+	    </div>
+		<div class="ft"></div> 
+	</div>
+</div>

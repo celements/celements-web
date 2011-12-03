@@ -1,0 +1,68 @@
+##
+#macro(includeLinkPicker $origFieldName $images)
+#set($basePageURL = "$!doc.getURL('attach')")
+#set($baseURLencoded = "$!xwiki.getURLEncoded($basePageURL)")
+#set($uploadImgLink =  $!doc.getURL('view',"xpage=celements_ajax&ajax_mode=ImagePicker&baseurl=${baseURLencoded}&origFieldName=${origFieldName}"))
+#if("$!{images}" != '')
+  #set($uploadImgLink = "${uploadImgLink}&$!{images}")
+#end
+#set($xredirect = "xredirect=${xwiki.getURLEncoded($uploadImgLink)}")
+<td><a onclick="javascript:window.open('${uploadImgLink}&$xredirect','Hauptbild', 'left=100,top=200,menubar=no,resizable=yes,toolbar=no,location=no');return false;" href="">upload/select</a></td>
+#end
+
+<span class='cel_lazyloadJS' style='display: none;'>celJS/navigation/imageSelect.js</span>
+
+<div id="nav_langBar" class="editblock" onfocus="setFocus('nav_langBar');" onblur="removeFocus('nav_langBar');">
+<form action="$doc.getURL('edit')" name="nav_langBar_form" method="post">
+		$adminMsg.get('cel_tm_edit_translation'): 
+		<input type="hidden" name="tab" value="2"/>
+		<select name="language" size="1" style="width:100px;" onchange="document.forms['nav_langBar_form'].submit();">
+	        #foreach($dl in $langs)
+	        <option #if($!language == "$dl")selected="selected"#end value="$dl" label="$adminMsg.get("cel_$dl")">$adminMsg.get("cel_$dl")</option>
+			#end
+		</select>
+</form>
+</div>
+<form id="navigation_form" action="$doc.getURL('save')" method="post">
+        <input name="language" type="hidden" value="$!default_language">
+<div id="nav_menunameEdit" class="editblock">
+    #set($theMenuName = $doc.getObject('Celements2.MenuName','lang',"$language", false))
+    #if("$!theMenuName" == '')
+    #set($theMenuName = $doc.newObject('Celements2.MenuName'))
+    $!theMenuName.set('lang',"$!language")
+    $doc.save()
+    #end
+    #set($navObjNb = $theMenuName.getNumber())
+	$adminMsg.get('cel_tm_menu_name'): <input type="text" value="$!theMenuName.getProperty('menu_name').getValue()" id="menuname" name="Celements2.MenuName_${navObjNb}_menu_name" onfocus="setFocus('nav_menunameEdit');" onblur="removeFocus('nav_menunameEdit');"></input><br />
+</div>
+
+#* TODO Finish the new Redirect concept
+#set($theObjs = $doc.getObjects('Celements2.Redirect'))
+#set($theObj = '')
+#if($theObjs.size() > 0)
+#set($theObj = $doc.getObject('Celements2.Redirect'))
+#end
+#set($theMenuItem = $doc.getObject('Celements2.MenuItem'))
+<div id="nav_redirectEdit" class="editblock">
+	#set($isRedirectChecked = ("$!theMenuItem.getProperty('is_redirect').getValue()" == '1'))
+	$adminMsg.get('cel_tm_redirect'): <input type="checkbox" #if($isRedirectChecked)checked="checked"#end id="check_redirect" onfocus="setFocus('nav_redirectEdit');" onblur="removeFocus('nav_redirectEdit');"></input>
+	$adminMsg.get('cel_tm_target'): <input type="text" id="redirect_target"#if(!$isRedirectChecked) readonly="readonly"#end value="$!theObj.getProperty('redirect').getValue()" onfocus="setFocus('nav_redirectEdit');" onblur="removeFocus('nav_redirectEdit');"></input>
+</div>
+*#
+</form>
+
+#if ("$!xwiki.getWebPreference('use_navigation_images')" == "1")
+<form id="nav_imagePicker_form" action="$doc.getURL('save')" method="post">
+<div id="nav_imagePicker" class="editblock">
+<span style="display:none;" id="image_prefix">${doc.fullName}</span>
+  $adminMsg.get('cel_tm_menu_image'): <input type="hidden" value="$!theMenuName.getProperty('image').getValue()" id="image" name="Celements2.MenuName_${navObjNb}_image"></input>
+  #includeLinkPicker("Celements2.MenuName_${navObjNb}_image" '')
+  <br />
+  #if("$!{theMenuName.getProperty('image').getValue()}" != '')
+  <img id="celMenuImagePreview" src="$celementsweb.getSkinFile("$!theMenuName.getProperty('image').getValue()", 'file')?celwidth=200&celheight=200" />
+  #else
+  <img style="display:none;" id="celMenuImagePreview" src="" />
+  #end
+</div>
+</form>
+#end

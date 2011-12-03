@@ -1,0 +1,4 @@
+#set($cel_loadAdminMenuBar = false)
+#set($showOverlayLanguageBar = true)
+#set($showCloseOverlayButton = true)
+#set($celementsLoadInOverlay = "Celements2.MediaLib")

@@ -1,0 +1,16 @@
+$xwiki.includeForm('celements2web:Macros.getContentDblClick', false)
+<div id="xwikicontent" $!dblClick >
+    #if($xwiki.exists("XWiki.DocumentDoesNotExist"))
+      ## Do NOT use include here! Include seems to generate a cycle (recursive include) and causes a heap space overflow
+      $xwiki.getDocument("XWiki.DocumentDoesNotExist").getRenderedContent()
+    #else
+        #xwikimessageboxstart($msg.get("notice") $msg.get("thispagedoesnotexist"))
+        #if($hasedit)
+            #set($url = $doc.getURL("edit", $editparams))
+            $adminMsg.get('cel_youcandoubleclicktoedit', [$url])
+$xwiki.parseTemplate("recyclebinlist.vm")
+        #end
+        #xwikimessageboxend()
+    #end
+<div class="clearfloats"></div>
+</div>

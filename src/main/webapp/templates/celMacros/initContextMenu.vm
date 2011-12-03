@@ -1,0 +1,25 @@
+## initContextMenu
+## loads the header parts needed to enable the contextMenu
+##
+#if(($isContentEditor || $isAdmin || ($celementsweb.getMenuBar().getMenuHeaders().size() > 0)) && ("$context.action" != 'edit') && ("$context.action" != 'inline') && ("$!supress_ContextMenu" != '1'))
+<script type="text/javascript">
+<!--
+##
+#if("$celementsweb.getVersionMode()" != "celements3")
+  cmDefaultItems = new Array(##
+new ContextMenuItem('window.location.href="$xwiki.getURL('Celements2.UserAdmin','view')"',##
+ "User Administration", null),##
+ new ContextMenuItem('window.location.href="$xwiki.getURL('XWiki.XWikiLogout','logout')?xredirect=$xwiki.getURL('${doc.space}.WebHome','view')"', "Logout", null)##
+);
+#end
+
+Event.observe(window, 'load', function() {
+  ##TODO move initialisation to contextmenu.js - init only if body has class
+  ##TODO cel_show_cm - add Administration and Logout menuitems for
+  ##TODO class cel_show_cm to ajaxCMenu config for celements2
+  // set the basic context menu
+  $(document).observe('contextmenu', documentContextClickHandler);
+});
+-->
+</script>
+#end

@@ -1,0 +1,206 @@
+html, body	{
+	margin:0px;
+	padding:0px;
+}
+/*CONTENTRTE*/
+H1, .h1, .celements_gallery_title {
+	font-size:18px;
+	line-height:18px;
+	margin-bottom:18px;
+	font-weight:bold;
+	text-transform:none;
+	color:#797979;
+}
+H2, .h2 {
+	font-size:14px;
+	line-height:14px;
+	margin-bottom:18px;
+	font-weight:bold;
+	text-transform:none;
+	color:#797979;
+}
+H3, .h3 {
+	font-size:13px;
+	line-height:13px;
+	margin-bottom:18px;
+	font-weight:bold;
+	text-transform:none;
+	color:#797979;
+}
+p, .text, dt, dd, span.buttonwrapper {
+	font-size:13px;
+	color:#797979;
+	line-height:20px;
+	font-weight:normal;
+}
+p, .text {
+	margin-bottom:0px;
+}
+	.table {
+	font-size:10px;
+	border-color:#aaaaaa;
+	border-style:solid;
+	border-width:1px;
+	vertical-align:top;
+	padding:8px 8px 16px 8px;
+}
+.table_nofill {
+	font-size:10px;
+	background-color:#aaaaaa;
+	border-color:#aaaaaa;
+	border-style:solid;
+	border-width:1px;
+	vertical-align:top;
+	padding:8px 8px 16px 8px;
+}
+
+.langselect{
+	border-width:1px;
+	border-style:solid;
+	border-color:#aaaaaa;
+	color:#141717;
+	font-size:10px;
+	line-height:10px;
+	font-weight:bold;
+	padding:1px;
+	margin:0px;
+}
+ol, .ol {
+	margin-left:15px;
+}
+ul, .ul {
+	margin-left:10px;
+}
+li {
+	margin-left:7px;
+	margin-top:3px;
+	margin-bottom:2px;
+	color:#7f7f7f;
+	font-size:13px;
+}
+ol a, li a {
+	color:#7f7f7f;
+	text-decoration:none;
+}
+body.mceContentBody {
+	background-color:#f6f5f5;
+}
+/*form dt {
+	position: absolute;
+	width:140px;
+	padding-top:3px;
+	padding-bottom:3px;
+}*/
+form dd {
+	margin-left:30px;
+	/*width:300px;
+	padding-left:140px;
+	padding-top:3px;
+	padding-bottom:3px;*/
+}
+form dd #xwikipassword{
+	margin-bottom:10px;
+}
+.padded{
+	padding-top:8px;
+}
+.padded .button{
+	margin-left:0px;
+}
+span.buttonwrapper {
+	display: block;
+	margin-top: 10px;
+}
+/*Kongress-fix*/
+.reg_button, .reg_button:hover {
+	color:#fff;
+}
+.celements2_box table {
+	color:#fff;
+	font-size:12px;
+}
+.celements2_box table td {
+	padding-bottom:4px;
+	padding-top:4px;
+	font-weight:bold;
+}
+.content_area .celements2_box a, 
+.content_area .celements2_box a:visited {
+	font-weight:normal;
+	font-size:12px;
+	text-decoration:none;
+	color:#fff;
+	border:none;
+}
+.content_area .celements2_box a:hover {
+	font-weight:normal;
+	text-decoration:none;
+	/*color:#4c4c4c;
+	border-bottom:1px dotted #4c4c4c;*/
+	color:#fff;
+	background-color:#4c4c4c;
+}
+.content_area a, .mceContentBody a, 
+.content_area a:visited, .mceContentBody a:visited {
+	color:#80abd7 !important; /* Hack for RTE in Firefox: important must be added in a-tag css ruls for firefox */
+	text-decoration:none !important; /* Hack for RTE in Firefox: important must be added in a-tag css ruls for firefox */
+	/*border-bottom:1px dotted #80abd7;*/
+}
+.content_area a:hover, .mceContentBody a:hover {
+	border-bottom:1px dotted #80abd7;
+}
+.content_area a:active, .mceContentBody a:active{
+	color:#d10000 !important; /* Hack for RTE in Firefox: important must be added in a-tag css ruls for firefox */
+	border-bottom:1px dotted #d10000;
+}
+
+/*Medialib-temporary-quickfix*/
+.content_area .c2_ml_label0, .content_area .c2_ml_label0:visited {
+	display:block;
+	height:19px;
+	padding-top:8px;
+	padding-left:28px;
+	font-weight:bold;
+	text-decoration:none;
+	color:#4c4c4c;
+	border-bottom:1px dotted #FFFFFF;
+}
+.content_area .c2_ml_label1, .content_area .c2_ml_label1:visited {
+	display:block;
+	height:19px;
+	padding-top:8px;
+	padding-left:28px;
+	font-weight:bold;
+	text-decoration:none;
+	background-image:url(aoff.gif);
+	background-repeat:no-repeat;
+	background-position:19px 11px;
+	color:#fff;
+	border:none;
+}
+.content_area .c2_ml_label2, .content_area .c2_ml_label2:visited {
+	display:block;
+	height:17px;
+	padding-top:4px;
+	padding-left:35px;
+	font-weight:normal;
+	text-decoration:none;
+	background-image:url(file.gif);
+	background-repeat:no-repeat;
+	background-position:28px 9px;
+	color:#fff;
+	border:none;
+}
+.content_area .c2_ml_label0:hover, .content_area .c2_ml_label1:hover, .content_area .c2_ml_label2:hover, .content_area .c2_ml_labelactive {
+	background-color:#4c4c4c;
+	color:#fff;
+	/*background-image:url(bga.gif);
+	background-repeat:repeat;*/
+}
+.content_area .c2_ml_label1active, .content_area .c2_ml_label1:hover {
+	background-image:url(aon.gif);
+	background-repeat:no-repeat;
+	background-position:19px 12px;
+	color:#fff;
+	border:none;
+}

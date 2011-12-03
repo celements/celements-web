@@ -1,0 +1,10 @@
+#set($Q ='"')##
+#set($celCMIdClassName = "$!request.celCMIdClassName")##
+#if("$!celCMIdClassName" == '')
+$celementsweb.getAllContextMenuCSSClassesAsJSON()
+#else
+#set($cmiBuilder = $celementsweb.getContextMenuBuilder())
+$cmiBuilder.addElementsCMforClassNames($request.cmiByElements)
+$cmiBuilder.getCMIjson()
+#end
+$response.setStatus(200)

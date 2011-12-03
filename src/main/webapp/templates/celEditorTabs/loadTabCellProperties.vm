@@ -1,0 +1,45 @@
+<div class="cel_pagepropertiesTab">
+#set($cellObj = "")
+#set($cellObj = $doc.getObject("Celements.CellClass", false))
+#if("$!cellObj" == '')
+#set($cellObj = $doc.newObject("Celements.CellClass"))
+$doc.save()
+#end
+<form id="propertiesEdit" method="post" action="$doc.getURL('save')">
+<div id="pro_pagetypeEdit" class="editblock" onfocus="setFocus('pro_pagetypeEdit');" onblur="removeFocus('pro_pagetypeEdit');">
+    $adminMsg.get('cel_tm_page_type'):
+    #set($cel_pageTypeObj = $doc.getObject('Celements2.PageType'))
+    #if("$!cel_pageTypeObj" == '')
+        #set($cel_pageTypeObj = $doc.getObject('Celements2.PageType', true))
+        $doc.save()
+    #end
+    #set($selectedFound = false)
+    <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_type" size="1" style="width:100px;" name="Celements2.PageType_${cel_pageTypeObj.number}_page_type">
+      #foreach($item in $celementsweb.getAvailableCellTypes())
+        #set($pt_doc = $xwiki.getDocument($item))
+         #set($page_type_properties_obj = '')
+         #set($page_type_properties_obj = $pt_doc.getObject('Celements2.PageTypeProperties'))
+        #if(("$!page_type_properties_obj" == '') || ("$!page_type_properties_obj.getProperty('visible').getValue()" == '1'))
+         #if("$!page_type_properties_obj" != '')
+          #set($pretty_name = $!page_type_properties_obj.get('type_name'))
+        #else
+          #set($pretty_name = $pt_doc.getName())
+        #end        
+        <option value="$pt_doc.getName()" #if("$!pt_doc.getName()" == "$!page_type") selected="selected" #set($selectedFound = true)#end label="$!pretty_name">$!pretty_name</option>
+        #end
+      #end
+      #if(!$selectedFound)
+        <option value="$page_type" selected="selected" label="Unknown PageType">Unknown PageType</option>
+      #end
+      </select>
+</div>
+  #set($cel_embedded_editobj = true)
+  #set($cel_editobj_classname = "Celements.CellClass")
+  #set($cel_editobj_nb = $cellObj.getNumber())
+  #set($cel_editobj_properties = "")
+#set($cel_editobj_hasObjRemoveLink = false)
+#set($cel_editobj_externalForm = true)
+  #set($cel_editobj_validate = false)
+  $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
+</form>
+</div> ##cel_pagepropertiesTab

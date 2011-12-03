@@ -1,0 +1,156 @@
+.main.layoutsubsection{
+	width:654px;
+	position:relative;
+}
+#cel_overlaybody{
+	border:1px solid #DDDDDD;
+}
+.c3_import_tabbox{
+	padding-bottom:5px;
+}
+.c3_import_box{
+	margin-bottom:0px;
+}
+.c3_import_box div.celements3_filebase #fileBasePanel .c2_ml_overlay_box #c2_ml_container_shadow,
+.c3_import_box div.celements3_filebase .fileBasePanel .c2_ml_overlay_box .c2_ml_container_shadow {
+	width:650px;
+}
+.c3_import_box .celements3_filebase .yui-panel-container {
+	position:relative;
+	height:100%;
+}
+.c3_import_box .celements3_filebase #fileBasePanel,
+.c3_import_box .celements3_filebase .fileBasePanel {
+	position:relative;
+	height:100%;
+}
+.c3_import_box div.celements3_filebase #fileBasePanel .c2_ml_overlay_box #c2_ml_container_shadow,
+.c3_import_box div.celements3_filebase .fileBasePanel .c2_ml_overlay_box .c2_ml_container_shadow {
+		width:auto;
+}
+.c3_import_box .celements3_filebase .c2_ml_container_shadow{
+	width:652px;
+}
+.c3_import_box .celements3_filebase #c2_ml_container,
+.c3_import_box .celements3_filebase .c2_ml_container{
+		width:648px;
+	position:relative;
+	height:100%;
+}
+.c3_import_box .celements3_filebase .c3_filebase_upload h2{
+	margin-left:13px!important;
+}
+.c3_import_box .celements3_filebase .c3_filebase_upload input.upload{
+	margin-left:105px;
+}
+.c3_import_box .celements3_filebase table {
+	table-layout: auto;
+}
+#closebutton{
+	position:absolute;
+	top:-15px;
+	right:-15px;
+	height:30px;
+	width:30px;
+	background-image:url(close.png);
+	background-position:top left;
+	background-repeat:no-repeat;
+}
+#closebutton:hover{
+	position:absolute;
+	top:-15px;
+	right:-15px;
+	height:30px;
+	width:30px;
+	background-image:url(close-hover.png);
+	background-position:top left;
+	background-repeat:no-repeat;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container td.yui-dt-col-name,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container th.yui-dt-col-name,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-name .yui-dt-liner{
+	width:250px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-name .yui-dt-liner{
+	padding-left:10px;
+	padding-bottom:1px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container td.yui-dt-col-mime_type,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container th.yui-dt-col-mime_type,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-mime_type .yui-dt-liner {
+	width:62px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-mime_type .yui-dt-liner {
+	padding-left:5px;
+	padding-bottom:1px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container td.yui-dt-col-revision,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container th.yui-dt-col-revision,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-revision .yui-dt-liner{
+	width:62px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-revision .yui-dt-liner{
+	padding-left:5px;
+	padding-bottom:1px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container td.yui-dt-col-date,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container th.yui-dt-col-date,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-date .yui-dt-liner {
+	width: 135px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-date .yui-dt-liner {
+	padding-left:5px;
+	padding-bottom:1px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container td.yui-dt-col-del_attachment,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container th.yui-dt-col-del_attachment,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-del_attachment .yui-dt-liner{
+	width:59px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .yui-dt-col-del_attachment .yui-dt-liner{
+	padding-left:5px;
+	padding-bottom:1px;
+}
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container #yui-dt-fixedth-del_attachment{
+	border-right:0px;
+}
+
+.c3_import_tabbox {
+	position:relative;
+}
+
+.c3_import_title{
+  position:relative;
+  background-color:#EEEEEE;
+  border-bottom:1px solid #DDDDDD;
+  cursor:pointer;
+  color:#384554;
+  display:block;
+  magrin-bottom:3px;
+  padding-bottom:1px;
+  padding-left:5px;
+  padding-right:3px;
+  margin-bottom: 3px;
+  font-size:16px;
+  line-height:20px;
+}
+
+#c3_import_preimport_result > p {
+  padding-left: 10px;
+  padding-bottom: 3px;
+  margin-bottom: 0px;
+  color:#384554;
+}
+
+#c3_import_preimport_result {
+  color:#384554;
+  overflow: auto;
+}
+.c3_import_box div.celements3_filebase #fileBasePanel #c2_ml_container #c2_ml_content, 
+.c3_import_box div.celements3_filebase .fileBasePanel #c2_ml_container #c2_ml_content {
+		width: 605px !important;
+}
+.c3_import_box div.celements3_filebase #fileBasePanel #c2_ml_container .c3_import_scrollable,
+.c3_import_box div.celements3_filebase .fileBasePanel #c2_ml_container .c3_import_scrollable {
+	width:794px;
+}

@@ -1,0 +1,74 @@
+$xwiki.parseTemplate("frameheader.vm")
+  <div id="registration">
+  <h1>$msg.get("core.register.title")</h1>
+##OUTPUT: $successful, $err_msg
+#if($xwiki.hasAccessLevel('register', $context.getUser(), 'XWiki.XWikiPreferences'))
+#set($successful = $request.get('email').equals($request.get('cemail')) && ("$!request.get('email').trim()" != ''))
+#set($successful = $successful && ("$!request.get('first_name').trim()" != ''))
+#set($successful = $successful && ("$!request.get('last_name').trim()" != ''))
+#if($successful)
+  #set($loginname = $xwiki.celementsweb.getUsernameForUserData("$request.get('email')", "email"))
+  #set($reg = $celementsweb.createUser())
+  #if($reg && $reg<=0)
+    #if("$!request.xredirect" != '')
+      #set($xredirect = "$!request.xredirect")
+      #if($xredirect.indexOf('?') < 0)
+        #set($xredirect = "${xredirect}?")
+      #end
+      #set($xredirect = "${xredirect}&celRegisterSucess=${reg}")
+      $response.sendRedirect($xredirect)
+    #else
+      #if($reg==-2)
+        #error("$msg.get('core.register.passwordMismatch')")
+      #elseif($reg==-3)
+        #error("$msg.get('core.register.userAlreadyExists')")
+      #elseif($reg==-4)
+        #error("$msg.get('core.register.invalidUsername')")
+      #elseif($reg==-8)
+        #error("$msg.get('core.register.userAlreadyExists')")
+      #else
+        #error("$msg.get('core.register.registerFailed', [$reg])")
+      #end
+    #end
+  #elseif($reg)
+    #set($xwname = $xwiki.celementsweb.getUsernameForUserData("$request.get('email')", "email"))
+    #if("$!request.xredirect" != '')
+      #set($xredirect = "$!request.xredirect")
+      #if($xredirect.indexOf('?') < 0)
+        #set($xredirect = "${xredirect}?")
+      #end
+      #set($xredirect = "${xredirect}&user=$xwname&celRegisterSucess=true")
+      $response.sendRedirect($xredirect)
+    #else
+      #info("$msg.get('core.register.successful', [$xwiki.getUserName($xwname), $request.get('email')])")
+    #end
+  #end
+#else
+  #set($err_msg = "mail1:$request.get('email'), name:$request.get('register_first_name'), lastName:$request.get('register_last_name'), lastName:$request.get('register_company')")
+  #if("$!request.xredirect" != '')
+    #set($xredirect = "$!request.xredirect")
+    #if($xredirect.indexOf('?') < 0)
+      #set($xredirect = "${xredirect}?")
+    #end
+    #set($xredirect = "${xredirect}&celRegisterSucess=-m")
+    $response.sendRedirect($xredirect)
+  #else    
+    #xwikimessageboxstart($msg.get("error") $msg.get("cel_register_missing_fields", ["$!err_msg"]))
+    #xwikimessageboxend()
+  #end
+#end
+#else
+  #if("$!request.xredirect" != '')
+    #set($xredirect = "$!request.xredirect")
+    #if($xredirect.indexOf('?') < 0)
+      #set($xredirect = "${xredirect}?")
+    #end
+    #set($xredirect = "${xredirect}&celRegisterSucess=-na")
+    $response.sendRedirect($xredirect)
+  #else    
+    #xwikimessageboxstart($msg.get("error") $msg.get("notallowed"))
+    #xwikimessageboxend()
+  #end
+#end
+</div>
+$xwiki.parseTemplate("framefooter.vm")

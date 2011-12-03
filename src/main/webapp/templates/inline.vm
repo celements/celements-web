@@ -1,0 +1,34 @@
+#set($contextIsFinished = false)
+#if(("$!request.viewer" != '') || ("$!request.skin" != '') || (($xwiki.getSkin().indexOf('.') < 0) && ("$xwiki.getSkin()" != 'cellskin')))
+	$xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
+	$xwiki.jsfx.use('js/xwiki/actionbuttons/actionButtons.js', true)
+	#if((!$request.editor) || ($request.editor.trim() == ""))
+	  #set($editor = "inline")
+	#else
+	  #set($editor = $request.editor)
+	#end
+	#template("startpage.vm")
+	#template("edit${editor}.vm")
+	#template("endpage.vm")
+#else
+#if($xwiki.celementsweb.getVersionMode() == 'celements3')
+#template("edit.vm")
+#else
+#template("frameheader.vm")
+<form id="edit" method="post" action="$doc.getURL("save")">
+<input type="hidden" name="xredirect" value="$!xredirect" />
+<input type="hidden" name="xnotification" value="$!xnotification" />
+<input type="hidden" name="template" value="$!request.template" />
+<input type="hidden" name="language" value="$!doc.language" />
+#foreach($class in $doc.xWikiClasses)
+#set( $nb = $doc.getObjectNumbers("${class.name}"))
+<input type="hidden" name="${class.name}_nb" value="$nb" />
+#end
+##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
+##           get not correctly interpreted in an embedded getRenderedContent call.
+$xwiki.renderText("$!cdoc.getContent()",$cdoc)
+##
+</form>
+#template("framefooter.vm")
+#end
+#end

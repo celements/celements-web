@@ -1,0 +1,17 @@
+#set($identifier = "$!{celldoc.getObject('Celements.CellClass').getProperty('idname').getValue()}_slideshow")
+#set($cellObj = "")
+#set($cellObj = $celldoc.getObject('XWiki.PhotoAlbumClass'))
+#set($initialdelay = 1000)
+#set($frequency = 5000)
+#if("$!cellObj" != '')
+#set($initialdelay = $cellObj.getProperty('initialdelay').getValue())
+#set($frequency = $cellObj.getProperty('frequency').getValue())
+#end
+#set($slideshow_order = 'desc')
+#set($prefix = "${celldoc.getName()}")
+#set($slideshowModus = 'Gallery')
+#if($xwiki.getDocument("SlideShowGalleries.${doc.space}_${doc.name}_${prefix}").getAttachmentList().size() == 0)
+#set($slideshow_galleryDocName = "SlideShowGalleries.${doc.space}_WebHome_${prefix}")
+#end
+$xwiki.includeForm('celements2web:Macros.getSlideShow', false)
+$imageTag

@@ -1,0 +1,146 @@
+#c3_import_preimport_result .c3_import_row{
+	font-family:'HelveticaNeue-Bold','Helvetica Neue','Arial','sans-serif';
+	font-size: 12px;
+	line-height: 19px;
+	height:20px;
+	background-color:#B0B0B0;
+	color:#FFFFFF;
+	border:1px solid #d9d9d9;
+}
+#c3_import_preimport_result .c3_import_row .c3_import_checkbox{
+	position:relative;
+	float:left;
+	display:inline;
+	width: 69px;
+	overflow:hidden;
+	border-right:1px solid #d9d9d9;
+	border-bottom:1px solid #d9d9d9;
+	height:20px;
+}
+#c3_import_preimport_result .c3_import_row .c3_import_filename{
+	position:relative;
+	float:left;
+	display:inline;
+	width:300px;
+	overflow:hidden;
+	padding-left:10px;
+	border-right:1px solid #d9d9d9;
+	border-bottom:1px solid #d9d9d9;
+	height:20px;
+}
+#c3_import_preimport_result .c3_import_row .c3_import_action{
+	position:relative;
+	float:left;
+	display:inline;
+	width:250px;
+	overflow:hidden;
+	padding-left:10px;
+	border-right:none;
+	border-bottom:1px solid #d9d9d9;
+	height:20px;
+}
+#c3_import_preimport_result .c3_import_list .c3_import_row{
+	font-family:'HelveticaNeue-Bold','Helvetica Neue','Arial','sans-serif';
+	font-size:11px;
+	height:auto;
+	background-color:white;
+	margin-bottom:0px;
+	border:none;
+	color:#FFFFFF;
+	display:block;
+	background-color:#b0b0b0;
+	border-bottom:1px solid #d9d9d9;
+	padding-bottom:0px;
+	position:relative;
+	clear:left;
+}
+#c3_import_preimport_result .c3_import_list{
+	font-family:'HelveticaNeue-Bold','Helvetica Neue','Arial','sans-serif';
+	position:relative;
+	font-size:11px;
+	overflow:hidden;
+	overflow-x:hidden;
+	overflow-y:auto;
+	height:140px;
+	background-color:#b0b0b0;
+}
+#c3_import_preimport_result .c3_import_list .c3_import_row .c3_import_checkbox{
+	position:relative;
+	float:left;
+	display:block;
+	width:60px;
+	border:none;
+	height:auto;
+	padding:0px;
+	z-index:10;
+}
+#c3_import_preimport_result .c3_import_list .c3_import_row .c3_import_checkbox .c3_import_checkbox_element{
+	margin-top:14px;
+	margin-left:24px;
+}
+#c3_import_preimport_result .c3_import_list .c3_import_row .c3_import_filename{
+	position:relative;
+	float:none;
+	display:block;
+	width:300px;
+	margin-left:70px;
+	padding-left:10px;
+	padding-top:10px;
+	border:none;
+	height:auto;
+	overflow:visible;
+	border-left:1px solid #d9d9d9;
+	border-right:1px solid #d9d9d9;
+}
+#c3_import_preimport_result .c3_import_list .c3_import_row .c3_import_filename img{
+	display:block;
+}
+#c3_import_preimport_result .c3_import_list .c3_import_row .c3_import_action{
+	position:absolute;
+	float:none;
+	display:inline;
+	width:150px;
+	top:10px;
+	right:85px;
+	border:none;
+	height:auto;
+	padding:0px;
+	font-size:14px;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+#check_all, #check_none{
+	text-decoration:underline;
+	margin-right:5px;
+	margin-bottom:3px;
+}
+
+#c3_import_button_div {
+	display: block;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.c3_import_checkbox_all_none {
+  display: block;
+	font-size:13px;
+	line-height:20px;
+  padding-left:5px;
+	padding-top: 20px;
+}
+#c3_import_count_total {
+  display:block;
+  position:absolute;
+  right:0;
+  text-align:left;
+  top:0;
+  width:30px;
+}
+#c3_import_count_files {
+  display:block;
+  float:left;
+  padding-right:3px;
+  text-align:right;
+  width:29px;
+}

@@ -1,0 +1,68 @@
+#if("$!request.get('xredirect')" != '')
+#set($xredirect = $!request.getParameter('xredirect'))
+#else
+#set($xredirect = "$doc.getURL('view')")
+#end
+#set($redirectStr = "xredirect=$xredirect")
+#set($cellObj = "")
+#set($cellObj = $celldoc.getObject('Celements2.NavigationConfigClass', false))
+#if("$!cellObj" == '')
+#set($cellObj = $celldoc.newObject("Celements2.NavigationConfigClass"))
+$cellObj.set('menu_element_name', "$cellObj.fullName");
+$celldoc.save()
+$response.sendRedirect($doc.getURL('edit', $redirectStr))
+#end
+<div id="navigationCellEdit">
+<h1>Navigation Cell</h1>
+<a href="$xwiki.getURL($doc.getFullName(), 'cancel', $redirectStr)"##
+ onclick="document.forms.edit.action=this.href;##
+  if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
+  document.forms.edit.submit(); return false;" >Cancel</a>
+<span>&nbsp;|&nbsp;</span>
+<a href="$xwiki.getURL($doc.getFullName(),'save', $redirectStr)"##
+ onclick="document.forms.edit.action=this.href;##
+ if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
+ document.forms.edit.submit(); return false;" >Save</a>
+<form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
+    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+    <input type="hidden" name="xredirect" value="$!xredirect" />
+    <input type="hidden" name="language" value="$!tdoc.language" />
+  #if($celementsweb.getSubMenuItemsForParent($doc.getFullName(), $doc.getSpace()).size() == 0)
+    <div id="editablecode_container">
+#set($cel_embedded_editobj = true)
+#set($cel_editobj_classname = "Celements2.NavigationConfigClass")
+#set($cel_editobj_nb = $cellObj.getNumber())
+#set($cel_editobj_hasObjRemoveLink = false)
+#set($cel_editobj_externalForm = true)
+#set($cel_editobj_properties = 'from_hierarchy_level,to_hierarchy_level')
+#set($cel_editobj_properties = "${cel_editobj_properties},show_inactive_to_level,menu_part")
+#set($cel_editobj_properties = "${cel_editobj_properties},data_type")
+#set($cel_editobj_readonly_properties = '')
+$xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
+ <select name="NavigationConfigClass_${cel_editobj_nb}_data_type" size="1">
+ #set($dataTypes = "pageMenu:Page Menu,languages:Language Menu")
+ #set($allAvailableDataTypes = $dataTypes.split(','))
+ #foreach($item in $allAvailableDataTypes)
+   #set($itemDetails = $item.split(':'))
+   <option value="$itemDetails.get(0)"##
+     #if("$itemDetails.get(0)" == "$!context.getUser()")
+       selected="selected"##
+     #end
+   >$itemDetails.get(1)</option>
+ #end
+ </select>
+<h2>Advanced Settings</h2>
+#set($cel_embedded_editobj = true)
+#set($cel_editobj_classname = "Celements2.NavigationConfigClass")
+#set($cel_editobj_nb = $cellObj.getNumber())
+#set($cel_editobj_hasObjRemoveLink = false)
+#set($cel_editobj_externalForm = true)
+#set($cel_editobj_properties = 'cm_css_class,layout_type')
+#set($cel_editobj_readonly_properties = '')
+$xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
+    </div>
+  #else
+  <p>Group-Cell: Inhalt wird nur bei Zellen ohne weitere Unter-Zellen berechnet.</p>
+  #end
+</form>
+</div>

@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="http://celements2web.demospace.ch/xwiki/bin/skin/XWiki/Celements2Skin/prototype.js"></script>
+<script type="text/javascript" src="/xwiki/bin/skin/Skins/RheumaligaSkin/flowplayer%2D3.1.2.min.js"></script>
+<script type="text/javascript" src="/xwiki/bin/skin/Skins/RheumaligaSkin/flowplayer%2Dconfig.js"></script>
+<script type="text/javascript" src="/xwiki/bin/skin/Skins/RheumaligaSkin/movieplayer.js"></script>
+<link rel="stylesheet" media="all" type="text/css" href="/xwiki/bin/skin/Skins/RheumaligaSkin/rls-elements.css" /> 
+<title></title>
+<script type="text/javascript">
+ Event.observe(window, 'load', function() {
+  setTimeout("$$('body a')[0].show();", 700);
+ });
+</script>
+</head>
+<body style="background-color:black; background-image: none;" class="celanim_inoverlay">
+<a href="$!request.flvfilename" class="$!{request.cssclassname.replaceAll(',',' ')}" style="display:none; ##
+background-color:black !important; margin-left:auto; margin-right:auto; padding:0px;"></a>
+</body>
+</html>

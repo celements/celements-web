@@ -1,0 +1,259 @@
+@import url(http://fonts.googleapis.com/css?family=Terminal+Dosis:400,200,300,500,600,700,800);
+/* tabMenu.css:
+ * tabMenu layout
+ * 31.3.2008 - 9.4.2008
+ * Raphael Lie, Marianne M. Michel, synventis gmbh
+ */
+
+/* over all tab menu styles */
+body div.celements3_tabMenu {
+  margin-right:auto;
+  margin-left:auto;
+}
+body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
+	font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	font-size: 12px;
+	line-height: 17px;
+	font-weight: 500;
+	letter-spacing: 1px;
+	word-spacing: 2px;
+	width: 630px;
+	text-transform: none;
+	color: #3E3E3E;
+}
+
+/* main panel */
+.celements3_tabMenu #tabMenuPanel {
+	background-color: white;
+}
+
+/* panel header */
+.celements3_tabMenu .hd {
+	background-color:#666;
+}
+
+/* tab buttons */
+.celements3_tabMenu .tabButton {
+  margin: 0px;
+  margin-top: 6px;
+  line-height: 0px;
+  font-size: 0px;
+  vertical-align: bottom;
+}
+.celements3_tabMenu .tabButton .yui-button button,
+.celements3_tabMenu .tabButton .cel-button-active button {
+	background-color:#4c4c4c;
+	float:left;
+	padding:4px;
+	padding-left: 8px;
+	padding-right: 8px;
+	border-top:1px solid #C5C5C5;
+	border-left:1px solid #C5C5C5;
+	border-right:1px solid #929292;
+	border-bottom:1px solid #929292;
+	color:#FCD7AA;
+	font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	font-size:12px;
+	line-height:13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  word-spacing: 1px;
+}
+.celements3_tabMenu .tabButton .yui-button button:hover {
+	background-color:#E2831D;
+	border-bottom:1px solid #F0F0F0;
+	color:#3E3E3E;
+}
+.celements3_tabMenu .tabButton .cel-button-active button {
+	background-color:#F0F0F0;
+	border-bottom:1px solid #F0F0F0;
+	color:#3E3E3E;
+}
+.celements3_tabMenu .tabButton .cel-button-focus button {
+	background: none;
+	background-color:#F0F0F0;
+	border-bottom:1px solid #F0F0F0;
+	color:#3E3E3E;
+}
+
+.yui-skin-sam .yui-dialog .ft span.default button {
+  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  background-color: #C26A19;
+	color: #FDD549;
+}
+
+/* save buttons */
+.celements3_tabMenu .saveButton .yui-button button,
+.celements3_tabMenu .saveButton .cel-button-active button {
+	background-color:#4c4c4c;
+	float:right;
+	padding:4px;
+	padding-left:6px;
+	padding-right:6px;
+	border-top:1px solid #C5C5C5;
+	border-left:1px solid #C5C5C5;
+	border-right:1px solid #929292;
+	border-bottom:1px solid #929292;
+	color:#FDD549;
+	font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	font-size:10px;
+	line-height:10px;
+	font-weight:bold;
+}
+.celements3_tabMenu .saveButton .yui-button button:hover {
+	background-color:#E2831D;
+	border-bottom:1px solid #F0F0F0;
+	color:#FDD549;
+}
+.celements3_tabMenu .saveButton .cel-button-active button {
+  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	background-color:#F0F0F0;
+	border-bottom:1px solid #F0F0F0;
+	color:#3E3E3E;
+}
+.celements3_tabMenu .saveButton .cel-button-focus button {
+  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	background: none;
+	background-color:#F0F0F0;
+	border-bottom:1px solid #F0F0F0;
+	color:#3E3E3E;
+}
+/* panel body */
+.celements3_tabMenu .bd {
+	background-color:#F0F0F0;
+	clear:both;
+}
+/* menu tabs */	
+.celements3_tabMenu #tabMenuPanel .menuTab {
+	width: 630px;
+}
+.celements3_tabMenu .editblock {
+  display:block;
+  padding: 10px;
+  padding-left: 13px;
+  padding-right: 13px;
+  border-bottom:1px solid #C5C5C5;
+}
+.celements3_tabMenu .editgrouptitle {
+  display:block;
+  padding:10px;
+  padding-left:10px;
+  padding-right:10px;
+  font-size: 13px;
+  background-color:#B0B0B0;
+}
+
+/* form elements */
+.celements3_tabMenu input,
+.celements3_tabMenu select,
+.celements3_tabMenu textarea {
+  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-weight: 500;
+  letter-spacing: 1px;
+  word-spacing: 1px;
+  border:1px solid #C5C5C5;
+	font-size: 11px;
+	line-height: 12px;
+	padding:1px;
+}
+.celements3_tabMenu input.fullwidth {
+	width:590px;
+}
+.celements3_tabMenu .clear {
+	clear:both;
+	display:block;
+	font-size:1px;
+	height:0pt;
+	line-height:1px;
+	margin:0pt;
+	padding:0pt;
+}
+
+/* overlay */
+#cel_overlay,
+div.mask {
+	background-color:black;
+	/*position:fixed;*/ /* >> Problems with TinyRTE!! */
+	position:absolute;
+	height:100%;
+	width:100%;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+	display:none;
+	top:0px;
+	left:0px;
+	z-index: 99;
+}
+
+/* focus buttons/tabs/fields */
+.celements3_tabMenu .editblock:hover, 
+.celements3_tabMenu .focus {
+	background-color:#F5F5F5;
+}
+.celements3_tabMenu .xwikiobjects dl {
+  margin: 0px;
+}
+.celements3_tabMenu .xwikiobjects h6 {
+  margin-top: 5px;
+  padding-left:5px;
+  background-color:#B0B0B0;
+  display:block;
+  font-size: 12px;
+}
+.yui-skin-sam .yui-dialog .ft span.default button {
+  color:white;
+}
+/* panel close button */
+.celements3_tabMenu .container-close {   
+  position:absolute;
+  top:0px;
+  right:0px;
+} 
+.celements3_tabMenu #tabMenuPanel .hd .actionButton button {
+  padding: 0px;
+  font-size: 13px;
+  line-height: 14px;
+  color:#FDD549;
+  font-weight: 700;
+  letter-spacing: 1px;
+  word-spacing: 1px;
+  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+}
+.celements3_tabMenu #tabMenuPanel .hd .actionButton,
+.celements3_tabMenu .container-close {
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-top:1px solid #C5C5C5;
+  border-left:1px solid #C5C5C5;
+  border-right:1px solid #929292;
+  border-bottom:1px solid #929292;
+  color:#FDD549;
+  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-size: 13px;
+  line-height: 14px;
+  text-indent: 0px;
+  background-color:#C26A19;
+  font-weight: 700;
+  letter-spacing: 1px;
+  word-spacing: 1px;
+}
+.celements3_tabMenu #tabMenuPanel .hd .actionButton {
+  float: right;
+  display: block;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.celements3_tabMenu #tabMenuPanel .hd .actionButton:hover {
+	background-color:#E2831D;
+}
+.celements3_tabMenu #tabMenuPanel .hd div.clearbuttons {
+  clear:both;
+}
+/* modal dialog */
+body .yui-skin-sam .yui-simple-dialog {
+  font-size: 14px;
+  line-height: 16px;
+  width: 400px;
+}

@@ -1,0 +1,46 @@
+#set($starttab = '1')
+#if("$!request.get('tab')" != '')
+#set($starttab = "$!request.get('tab')")
+#end
+#if("$!tinyMCE_width" != '')
+    #set($menuPanelWidth = $xwiki.parseInt($tinyMCE_width) + 50)
+#end
+#if(("$!menuPanelWidth" == '') || ($menuPanelWidth < 630))
+    #set($menuPanelWidth = 630)
+#end
+$celementsweb.addExtJSfileOnce(":celJS/editResize.js")
+<div id="cel_overlay" style="display:block"></div>
+<div class="celements3_tabMenu" style="width:${menuPanelWidth}px">
+##
+## Content
+##
+## Is the document being edited by another user?
+## If yes, warn about it and show a forcing link:
+##
+#set($force = $!request.get('force'))
+#if (($tdoc.getLocked()==true)&&(!$force))
+<div id="tabMenuPanel" style="position:absolute; z-index:99; top:40%; width:${menuPanelWidth}px"> 
+  <div class="layoutsection">
+  $response.setStatus(423)
+  #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
+  #set($forceEditURL = $doc.getURL($context.action, ${newquerystring}))
+  #xwikimessageboxstart($msg.get('notice') "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
+   <a href="$forceEditURL">$msg.get('forcelock')</a>
+  #xwikimessageboxend()
+  </div>
+</div>
+#else
+## display editor
+<div id="tabMenuPanel" style="visibility:hidden"> 
+		<div class="hd"></div>
+		<div class="bd">
+		     <span id="cel_startab" style="display:none;">$starttab</span>
+      ##TODO refactor: remove inline javascript to be able to load tab asynchronously
+      <div class="menuTab tb1-tab#if("$!starttab" == '1') starttab#end" id="tb1-tab" style="width:${menuPanelWidth}px">
+$xwiki.parseTemplate("celEditorTabs/loadTabContent.vm")
+      </div>
+    </div>
+		<div class="ft"></div> 
+	</div>
+#end
+</div>

@@ -1,0 +1,147 @@
+#set($editor = $request.getParameter("editor"))
+#if("$!editor" != '')
+################### default xwiki-edit-template !!!!!
+###
+### Main "edit" template
+###
+### General wrapper for edit actions
+###
+## Since we are in edit mode, the document's permissions should not be needed.
+$xcontext.dropPermissions()
+##
+## Determine what editor to show
+##
+$xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
+#if("$!editor" == '')
+  ## Normally no special characters should exist in the editor parameter, so this is just a protection measure.
+  #set($editor = "$!{escapetool.xml($request.getParameter('editor'))}")
+  #if($editor == '')
+    #if(($xwiki.getUserPreference('editor') == 'Wysiwyg') && ($doc.syntax.toIdString() != 'xwiki/1.0' || !$doc.isAdvancedContent()))
+      #set($editor = 'wysiwyg')
+    #else
+      #set($editor = 'wiki')
+    #end
+  #end
+#end
+##
+## "Compute" the title
+##
+#set($title = $xwiki.parseContent($adminMsg.get("editpageTitle")))
+##
+## Header
+##
+#template("xwikivars.vm")
+#template("layoutvars.vm")
+#template("htmlheader.vm")
+#template("menuedit.vm")
+#template("header.vm")
+#if($editor == 'wiki' || $editor == 'wysiwyg')
+  <form id="edit" method="post" action="$doc.getURL('preview')" >
+  <div class="hidden">
+  ## CSRF prevention
+  <input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" />
+  ## Pass the section number when the form is submitted in order to affect only the specified section.
+  ## We need to test if the section number is present to prevent a NumberFormatException for the empty string.
+  #if("$!{request.section}" != '')
+    <input type="hidden" name="section" value="$!{escapetool.xml($request.section)}" />
+  #end
+  ## This input is used by the full screen widget: it stores the selector of the maximized element, so that the full screen can be restored when coming back from preview.
+  <input type="hidden" name="x-maximized" value="$!{escapetool.xml($request.get('x-maximized'))}"/>
+  </div>
+#end
+##
+## Content
+##
+## Is the document being edited by another user?
+## If yes, warn about it and show a forcing link:
+##
+#set($force = $!request.get('force'))
+#if (($tdoc.getLocked()==true)&&(!$force))
+  <div class="layoutsection">
+  $response.setStatus(423)
+  #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
+  #xwikimessageboxstart($msg.get('notice') "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
+#if($isAdmin)
+  #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
+  <a href="$forceEditURL">$msg.get('forcelock')</a>
+#end	
+  #xwikimessageboxend()
+  </div>
+#else
+  ##################
+  ##   Edit zone  ##
+  ##################
+  <div id="xwikieditor" class="layoutsection">
+  <div id="xwikieditorinner">
+  <div class="leftsidecolumns">
+  <div id="editcolumn" class="editor editor-${editor}">
+  <div class="alleditcontent">
+  <div id="mainEditArea">
+  #if (($editor == 'wiki' || $editor == 'wysiwyg') && !$request.section)
+    #template('editmeta.vm')
+  #end
+  #template("editmodes.vm")
+  #template("edit${editor}.vm")
+  </div> ## mainEditArea
+  </div> ## alleditcontent
+  </div> ## editcolumn
+  <div class="clearfloats"></div>
+  </div> ## leftsidecolumns
+  #template("editpanels.vm")
+  <div class="clearfloats"></div>
+  </div> ## xwikieditorinner
+  </div> ## xwikieditor
+#end
+##
+## Footer
+##
+</div> ## xwikieditor
+#if($editor == "wiki" || $editor == "wysiwyg")
+</form>
+#end
+$xwiki.parseTemplate("footer.vm")
+$xwiki.parseTemplate("htmlfooter.vm")
+################### default xwiki-edit-template !!!!!
+#else
+#if($xwiki.celementsweb.getVersionMode() == 'celements3')
+$xwiki.parseTemplate("view.vm")
+#else
+## init Celements variables
+$xwiki.includeForm("celements2web:Macros.initCelements", false)
+#set($ptatd_render_mode = 'edit')
+#set($overWriteGlobalCelementsValues = false)
+#set($theDoc = $doc)
+$xwiki.includeForm("celements2web:Macros.getPageTypeAndTemplateDoc", false)
+## get the specific edit template
+#set($spec_edit = $ptatd_spec_view)
+##<!-- edit: $ptatd_spec_view -->
+$xwiki.parseTemplate("frameheader.vm")
+#if("$!spec_edit" != '')
+  #if($xwiki.exists($spec_edit))
+##    $xwiki.includeForm($spec_edit, false)
+    #set($overwritePageTypeView = $spec_edit)
+##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
+##           are not correctly interpreted in an embedded getRenderedContent call.
+$xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocument').getContent()",$doc)
+##
+  #else
+    Sorry, This page type can not be edited!<br />
+    <a href="$doc.getURL("view")">Quit edit mode.</a>
+  #end
+#else
+  <form id="edit" method="post" action="$doc.getURL("save")">
+    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+    <input type="hidden" name="xredirect" value="$!request.getParameter("xredirect")" />
+  #if($isValidLanguage && ("$!language" != "$!default_language") && ("$!tdoc.language" == ''))
+    <input type="hidden" name="language" value="$language" />
+  #else
+    <input type="hidden" name="language" value="$!tdoc.language" />
+  #end
+    <div id="htmlarea_container">
+      $xwiki.getTextArea($tdoc.content)
+    </div>
+  </form>
+#end
+$xwiki.parseTemplate("framefooter.vm")
+#end
+#end

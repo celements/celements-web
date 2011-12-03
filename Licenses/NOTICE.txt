@@ -1,0 +1,60 @@
+All code in celements-web is licensed under the LGPL 2.1 License unless stated otherwise.
+- http://www.gnu.org/licenses/lgpl-2.1.txt
+
+tinymce
+LGPL 2.1 License
+http://www.tinymce.com/wiki.php/License
+
+yui and yui3
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
+OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR 
+TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS 
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+- BSD License - http://yuilibrary.com/license/
+
+lytebox
+This work is licensed under a Creative Commons Attribution 3.0 License.
+- http://lytebox.com/license.php
+- http://creativecommons.org/licenses/by/3.0/
+
+prototype.js
+MIT-style license
+- https://raw.github.com/sstephenson/prototype/master/LICENSE
+- For details, see the Prototype web site: http://www.prototypejs.org/
+
+scriptaculous
+MIT license
+- http://madrobby.github.com/scriptaculous/license/
+
+jquery
+MIT or GPLv2 license
+- http://jquery.org/license/
+
+jcrop
+Jcrop is released under the MIT License.
+- http://deepliquid.com/content/Jcrop_License.html
+
+validation.js
+- http://tetlaw.id.au/view/javascript/really-easy-field-validation
+- http://www.opensource.org/licenses/mit-license.php
+
+moofx
+moo.fx is open source, released under the very liberal MIT License,
+so feel free to do anything you want with it
+- http://code.google.com/p/moofx/
+
+flowplayer from Flowplayer, Ltd
+GPLv3
+- http://flowplayer.org/download/free-license-faq.html
+
+highslide
+Highslide JS is licensed under a Creative Commons Attribution-NonCommercial 2.5 License.
+This means you need the author's permission to use Highslide JS on commercial websites.
+- http://highslide.com/#licence
+- http://creativecommons.org/licenses/by-nc/2.5/
+

@@ -1,0 +1,20 @@
+#if($context.getMode()==0)## Visible only in a page
+<div id="footerglobal" class="layoutsection">
+<div class="minwidth"></div>
+<hr/>
+  <div id="xwikilicence">$!copyright</div>
+  #set ($version = $xwiki.getWebPreference("version"))
+  #if ("$!version" == "")
+    #set ($version = $xwiki.getXWikiPreference("version"))
+  #end
+  #if ("$!version" != "")
+    #set ($version = $xwiki.parseContent($version))
+  #else
+    #set ($version = $!xwiki.version)
+  #end
+  <div id="xwikiplatformversion">$version</div>
+  <div id="celementsplatformversion">celements platfom-$!{celementsweb.getCelementsWebCoreVersion()}</div>
+<hr/>
+</div>
+#end
+### TODO: Format the footer for pdf output

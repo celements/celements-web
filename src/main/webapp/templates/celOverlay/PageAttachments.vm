@@ -1,0 +1,7 @@
+#set($cel_loadAdminMenuBar = false)
+#set($showOverlayLanguageBar = false)
+#set($showCloseOverlayButton = true)
+#set($celementsLoadInOverlay = "celTemplates/attachmentsinline.vm")
+#set($hasEdit = $hasedit)
+#set($hasAdmin = $isAdmin)
+#set($redirect = $doc.getURL('view', 'xpage=overlay&conf=PageAttachments'))

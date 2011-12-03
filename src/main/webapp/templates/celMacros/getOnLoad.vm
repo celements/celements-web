@@ -1,0 +1,7 @@
+## getOnLoad
+## get onLoad JavaScript Commands from the attached Object.
+##
+#set($doc_JS_Body = $doc.getObject("JavaScript.Body", 0))
+#if($doc_JS_Body && $doc_JS_Body.get("onload") && $doc_JS_Body.get("onload") != "")
+#set($additionalOnLoad = $!doc_JS_Body.get("onload"))
+#end

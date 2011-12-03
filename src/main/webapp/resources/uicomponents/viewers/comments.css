@@ -1,0 +1,26 @@
+.commentthread{margin:0 0 0 32px;}
+.commentthread fieldset{margin:0!important;padding:0 0 8px 0;border:none;}
+ul.commentreplies,li.reply{margin:0;padding:0;text-indent:0;}
+li.reply{list-style-type:none;}
+* html .reply{border-top:1px solid #FFF;}
+.xwikicomment{padding:0 0 8px;border:none;}
+.commentheader{border-bottom:1px solid #DDD;margin:0;padding:2px 0;}
+.commentheader:hover{background-color:#FFD;}
+.commentauthor{font-size:120%;}
+.commentdate{font-size:80%;}
+.commentcontent{border:none;padding:0 36px 0 32px;margin:0;font-size:100%;font-style:italic;text-align:justify;}
+.commenttools{display:block;float:right;margin-top:-1.2em;}
+.commenttool a{width:16px;height:16px;text-indent:30px;line-height:30px;overflow:hidden;background:transparent left top no-repeat;display:block;float:left;margin:0 0 0 4px;}
+.commentdelete a{background-image:url($xwiki.getSkinFile('icons/silk/cross.gif', true));}
+.commentreply a{background-image:url($xwiki.getSkinFile('icons/silk/comments_add.gif', true));}
+#AddComment{border-top:1px solid #DDD;}
+.commentthread #AddComment legend{display:none;}
+.commentthread #AddComment{border-top:none;}
+#xwikidata #AddComment{width:auto;}
+#AddComment .commentcontainer{padding:4px 32px;background:transparent url($xwiki.getSkinFile('icons/xwiki/rquo.gif', true)) right 4px no-repeat;}
+#AddComment .commentcontainer label{width:24px;height:24px;text-indent:0;font-size:1px;line-height:120px;overflow:hidden;background:transparent url($xwiki.getSkinFile('icons/xwiki/lquo.gif', true)) left top no-repeat;display:inline;float:left;margin-left:-32px;}
+#AddComment .commentcontainer textarea{border:1px solid #DDD;width:100%;}
+* html #AddComment .commentcontainer textarea{width:98%;}
+#AddComment label{font-weight:bold;}
+div.notification{background-color:#FFD;padding:2px 32px;border:1px solid #DDD;font-size:80%;font-style:italic;margin:4px 0;}
+#xwikidata #commentscontent{background:transparent;}

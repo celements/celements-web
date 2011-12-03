@@ -1,0 +1,19 @@
+#if("$!{request.id}" == 'tb1')
+  $xwiki.parseTemplate("celEditorTabs/loadTabContent.vm")
+#elseif("$!{request.id}" == 'tb2')
+  $xwiki.parseTemplate("celEditorTabs/loadTabNavigation.vm")
+#elseif("$!{request.id}" == 'tb3')
+  $xwiki.parseTemplate("celEditorTabs/loadTabAttachments.vm")
+#elseif("$!{request.id}" == 'tbrights')
+  $xwiki.parseTemplate("celEditorTabs/loadTabAccessRights.vm")
+#elseif("$!{request.id}" == 'tb4')
+#if($xwiki.celementsweb.layoutExists($doc.space))
+  $xwiki.parseTemplate("celEditorTabs/loadTabCellProperties.vm")
+#else
+  $xwiki.parseTemplate("celEditorTabs/loadTabProperties.vm")
+#end
+#elseif("$!{request.id}" == 'tb5')
+  $xwiki.parseTemplate("celEditorTabs/loadTabHistory.vm")
+#elseif("$!{request.id}" == 'tb6')
+  $xwiki.parseTemplate("celEditorTabs/loadTabRLS.vm")
+#end

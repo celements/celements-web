@@ -1,0 +1,112 @@
+#macro(addMenuBarItemsFromDocument $header_id $switchDatabase)
+    #set($sql2 = ", BaseObject as obj, IntegerProperty as header_id where obj.name=doc.fullName")
+    #set($sql2 = "${sql2} and obj.className='Celements2.MenuBarSubItem'")
+    #set($sql2 = "${sql2} and obj.id = header_id.id.id")
+    #set($sql2 = "${sql2} and header_id.id.name='header_id'")
+    #set($sql2 = "${sql2} and header_id.value='$header_id'")
+##XXX really needed?!? searchDocuments always executes with distinct!
+##    #set($sql2 = "${sql2} group by doc.name")
+    #set($docsWithSubmenuitems = $xwiki.searchDocuments($sql2))
+    #foreach($doc2_name in $docsWithSubmenuitems)
+      #foreach($item2 in $xwiki.getDocument($doc2_name).getObjects("Celements2.MenuBarSubItem"))
+       #if($item2.getProperty('header_id').getValue() == $header_id)
+        #set($menuLinkScript = "$!item2.getProperty('link').getValue()")
+        #set($menuLinkOnClick = "$!item2.getProperty('onclick').getValue()")
+        #set($menuLinkName = "$!item2.getProperty('name').getValue()")
+        #if($switchDatabase)
+          $context.setDatabase($context.getOriginalDatabase())
+        #end
+        <a class="celements2_menu_bar_sub_item" href="$xwiki.renderText($menuLinkScript, $doc).replace('%2D', '-')" ##
+        #if("$!menuLinkOnClick" != '') onclick="${menuLinkOnClick}" #end>##
+        $adminMsg.get("$!menuLinkName")##
+        </a>
+        #if($switchDatabase)
+          $context.setDatabase("celements2web")
+        #end
+       #end
+      #end
+    #end
+#end
+#macro(addAdminBarMenusFromDocument $menuDocName $switchDatabase)
+  ## get all MenuBarHeaderItem Objects
+  #foreach($item in $xwiki.getDocument($menuDocName).getObjects("Celements2.MenuBarHeaderItem"))
+    <div id="celements2_menu_bar_header$id" class="celements2_menu_bar_header_item">
+    <div>
+    #set($menuName = "$!item.getProperty('name').getValue()")
+    #if($switchDatabase)
+      $context.setDatabase($context.getOriginalDatabase())
+    #end
+    $adminMsg.get("$!menuName")
+    #if($switchDatabase)
+      $context.setDatabase("celements2web")
+    #end
+    </div>
+    ##<div>
+    ##<img class="celements2_arrow" name="celements2_arrow$id" src="$xwiki.getDocument('XWiki.Celements2Skin').getAttachmentURL('sub_0.gif','download')" alt="" /><br />
+    ##</div>
+    <div id="celements2_menu_bar_submenu$id" class="celements2_menu_bar_submenu">
+        #addMenuBarItemsFromDocument($item.getProperty('id').getValue() $switchDatabase)
+    </div>
+    </div>
+    #set($id = $id + 1)
+  #end
+#end
+#macro(addMenuBarMenuForHeaderObject $headerObj)
+  <div id="celements2_menu_bar_header$id" class="celements2_menu_bar_header_item">
+  <div>
+  #set($menuName = "$!headerObj.getProperty('name').getValue()")
+  $adminMsg.get("$!menuName")
+  </div>
+  ##<div>
+  ##<img class="celements2_arrow" name="celements2_arrow$id" src="$xwiki.getDocument('XWiki.Celements2Skin').getAttachmentURL('sub_0.gif','download')" alt="" /><br />
+  ##</div>
+  <div id="celements2_menu_bar_submenu$id" class="celements2_menu_bar_submenu">
+    $context.setDatabase("celements2web")
+    #addMenuBarItemsFromDocument($headerObj.getProperty('header_id').getValue() true)
+    $context.setDatabase($context.getOriginalDatabase())
+    #addMenuBarItemsFromDocument($headerObj.getProperty('header_id').getValue() false)
+  </div>
+  </div>
+  #set($id = $id + 1)
+#end
+<div id="celements2_menu_bar">
+## Logo
+#set($celementsLogoUrl = '')
+#if ("$!xwiki.getDocument('XWiki.Celements2Skin').getAttachment('logo.gif')" != "") 
+  #set($celementsLogoUrl = "$!xwiki.getDocument('XWiki.Celements2Skin').getAttachmentURL('logo.gif','download')")
+#else
+  #set($celementsLogoUrl = "$xwiki.getSkinFile('celRes/Img/logo-grey.gif', true)")
+#end
+<div id="celements2_logo">
+##<img src="$celementsLogoUrl" alt="CELEMENTS WEB" /><br />
+<span class="celements_web_logo"><a target="_blank" href="http://www.celements.ch"><span class="celementsname">Celements</span><span class="websuffix">Web</span></a></span>
+</div>
+## Menu
+<div id="celements2_menu_bar_header">
+#set($id = 0)
+#*
+#if($context.getDatabase() != "celements2web")
+  $context.setDatabase("celements2web")
+  ## get all documents with MenuBarHeaderItem Objects
+  #set($sql = ", BaseObject as obj where obj.name=doc.fullName and obj.className='Celements2.MenuBarHeaderItem' group by doc.name")
+  #foreach($doc_name in $xwiki.searchDocuments($sql))
+  	#set($userObj = $xwiki.getDocument($context.getUser()).getObject('XWiki.XWikiUsers'))
+    #if(("$!doc_name" != 'Celements2.AdminMenu') || ($isAdmin && ($context.getUser().startsWith('xwiki:') || ("$!userObj.getProperty('usertype').getValue()" == 'Advanced'))))
+      #addAdminBarMenusFromDocument($doc_name true)
+    #end
+  #end
+  $context.setDatabase($context.getOriginalDatabase())
+#end
+## get all documents with MenuBarHeaderItem Objects
+#set($sql = ", BaseObject as obj where obj.name=doc.fullName and obj.className='Celements2.MenuBarHeaderItem' group by doc.name")
+#foreach($doc_name in $xwiki.searchDocuments($sql))
+  #addAdminBarMenusFromDocument($doc_name false)
+#end
+*#
+#foreach($menuHeaderObj in $celementsweb.getMenuBar().getMenuHeaders())
+  #if(("$!menuHeaderObj.name" != 'Celements2.AdminMenu') || ($isAdmin && ($context.getUser().startsWith('xwiki:') || ("$!userObj.getProperty('usertype').getValue()" == 'Advanced'))))
+    #addMenuBarMenuForHeaderObject($menuHeaderObj)
+  #end
+#end
+</div>
+</div>

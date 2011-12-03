@@ -1,0 +1,21 @@
+#set($noRecursiveLoginCall = (("$!renderDocument" == '') || ("$!renderDocument.fullName" != 'Tools.Login')))
+#if("$!context.getUser()" != 'XWiki.XWikiGuest')
+  $response.sendRedirect($xwiki.getDocument('Content.WebHome').getExternalURL('view'))
+#else
+  #if($noRecursiveLoginCall && $xwiki.exists('Tools.Login') && $xwiki.hasAccessLevel("view","Tools.Login"))
+    #set($overwriteRenderDocument = 'Tools.Login')
+    #set($hasLocalOverwrite = true)
+  #else
+    #set($overwriteRenderDocument = 'celInlineTemplates/login.vm')
+    #set($hasLocalOverwrite = false)
+  #end
+  $xwiki.parseTemplate("frameheader.vm")
+  #if("$!overwriteRenderDocument" != '')
+  	#if($hasLocalOverwrite)
+      $xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument))
+    #else
+      $xwiki.parseTemplate($overwriteRenderDocument)
+    #end
+  #end
+  $xwiki.parseTemplate("framefooter.vm")
+#end

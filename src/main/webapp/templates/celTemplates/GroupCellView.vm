@@ -1,0 +1,6 @@
+#set($cellObj = "")
+#set($cellObj = $celldoc.getObject('Celements.GroupCellClass', false))
+#set($groupCellLayout = "$!cellObj.getProperty('render_layout').getValue()")
+#if("$!groupCellLayout" != '')
+$celementsweb.renderPageLayout($groupCellLayout)
+#end

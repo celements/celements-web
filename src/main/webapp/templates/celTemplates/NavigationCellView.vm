@@ -1,0 +1,3 @@
+#set($createdNav = $celementsweb.createNavigation())
+$createdNav.loadConfigFromDoc($celldoc.fullName)
+$createdNav.includeNavigation()

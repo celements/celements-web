@@ -1,0 +1,117 @@
+##INPUT (optional) $hasUpload
+##INPUT (optional) $allowedExtentions
+## imports
+<link rel="stylesheet" type="text/css" href="$xwiki.getSkinFile('celRes/mediaLib/celements2medialib.css', true)" />
+$xwiki.parseTemplate("celMacros/DarkBox.vm")
+#if($lazyloadJS)
+<div style='display: none;'>
+  <span class='cel_lazyloadJS'>celJS/prototype.js</span>
+  <span class='cel_lazyloadJS'>celJS/yui/utilities/utilities.js</span>
+  <span class='cel_lazyloadJS'>celJS/yui/datasource/datasource-min.js</span>
+  <span class='cel_lazyloadJS'>celJS/yui/datatable/datatable-min.js</span>
+  <span class='cel_lazyloadJS'>celJS/yui/dragdrop/dragdrop-min.js</span>
+  <span class='cel_lazyloadJS'>celJS/yui/json/json-min.js</span>
+  <span class='cel_lazyloadJS'>celJS/mediaLib/mediaLib.js</span>
+  <span class='cel_lazyloadJS'>celJS/mediaLib/mediaLib-upload.js</span>
+</div>
+#else
+  $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
+  $celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
+  $celementsweb.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
+  $celementsweb.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
+  $celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
+  $celementsweb.addExtJSfileOnce(':celJS/yui/json/json-min.js')
+  $celementsweb.addExtJSfileOnce(':celJS/mediaLib/mediaLib.js')
+  $celementsweb.addExtJSfileOnce(':celJS/mediaLib/mediaLib-upload.js')
+#end
+#if("$!mediaLibId" == "")
+#set($mediaLibId = "c2_ml_content")
+#end
+#if("$!request.xpage" == 'overlay')
+  $celementsweb.addExtJSfileOnce(':celJS/mediaLib/resize.js')
+#end
+## colmn
+#if(("$!initColumns" == '') || ("$!request.get('columns')" != ''))
+  #set($initColumns = "$!request.get('columns')")
+#end
+## init imgsOnly
+#if(("$!imgsOnly" == '') || ("$!request.get('img_only')" != ''))
+  #set($imgsOnly = "$!request.get('img_only')")
+#end
+## get the spaces to show in FileBase
+#set($all_spaces = $xwiki.getSpaces())
+#if(("$!initRoot" == '') || ("$!request.get('root')" != ''))
+  #set($initRoot = "$!request.get('root')")
+#end
+#set($roots = $initRoot)
+#if("$!roots" == '')
+  #foreach($space in $all_spaces)
+    #if(("$!space" != '') && ("$!space" != 'XWiki'))
+      #set($roots = "$!{roots},$space")
+    #end
+  #end
+#end
+## get source document
+#set($srcDoc = $initSrcDoc)
+#if("$!request.get('src_doc')" != '')
+  #set($srcDoc = $xwiki.getDocument("$!request.get('src_doc')"))
+#end
+## parse single doc information
+#if(("$!initSingleDoc" == '') || ("$!request.get('single_doc')" != ''))
+  #set($initSingleDoc = "$!request.get('single_doc')")
+#end
+#set($single_doc_space = '')
+#set($single_doc_doc = '')
+#if("$!initSingleDoc" != '')
+  #set($single_doc = " $!{initSingleDoc}. ")
+  #set($single_doc_space = $single_doc.substring(0, $single_doc.indexOf('.')))
+  #set($single_doc_space = $single_doc_space.trim())
+  #set($single_doc = " .$!{initSingleDoc} ")
+  #set($idx = $single_doc.lastIndexOf('.') +1)
+  #set($single_doc_doc = $single_doc.substring($idx))
+  #set($single_doc_doc = $single_doc_doc.trim())
+#end
+## set inline
+#if(($isInline == '') || ("$!request.get('inline')" != ''))
+  #set($isInline = "$!request.get('inline')")
+#end
+<div class="celements3_filebase" >
+  <div id="${mediaLibId}_fileBasePanel" class="fileBasePanel" style="visibility:hidden">
+    <div class="bd">
+      <div class="c2_ml_overlay_box">
+        <div id="${mediaLibId}_c2_ml_container_shadow" class="c2_ml_container_shadow">
+          <div id="${mediaLibId}_c2_ml_container" class="c2_ml_container">
+            <div id="${mediaLibId}" class="${mediaLibId}"><!--ie6--></div><!--${mediaLibId}-->
+            <div class="boxclear"><!--ie6--></div><!--boxclear-->
+            #if("$!uploadDoc" == '')
+              #set($uploadDoc = $doc)
+            #end
+            #if($hasUpload && $uploadDoc.hasAccessLevel('edit'))
+              <div class="c3_filebase_upload">
+                <h2>$adminMsg.get('cel_tm_upload_attachment')</h2>
+                <div id="${mediaLibId}_progressBar" style="display:none">
+                  <img src='/skin/skins/albatross/icons/ajax%2Dloader.gif' />
+                </div>
+                <form id="${mediaLibId}_cel_filebase_uploadForm" class="ml_upload_form" action="$xwiki.getURL($uploadDoc.getFullName(), 'upload')" enctype="multipart/form-data" method="post" target="${mediaLibId}_cel_filebase_uploadFrame">
+                  <input type="hidden" id="${mediaLibId}_cel_filebase_upload_namechange_message" value="$adminMsg.get('cel_filebase_upload_namechange_message')" />
+                  <input type="hidden" id="${mediaLibId}_uploadDoc" name="uploadDoc" value="$!uploadDoc.getFullName()">
+                  #set($getParams = "xpage=plain&mlname=${mediaLibId}")
+                  <input type="hidden" name="xredirect" value="$xwiki.getURL('Celements2.FileBaseUploaded', 'view', ${getParams})" />
+                  <input type="hidden" name="mlname" class="ml_id_prefix" value="${mediaLibId}" />
+                  <input type="hidden" id="${mediaLibId}_uploadFilename" name="filename" value="" />
+                  #if("$!allowedExtentions" != '')
+                    <input type="hidden" id="${mediaLibId}_cel_filebase_allowed_file_extentions" name="allowedExtentions" value="$!allowedExtentions" />
+                  #end
+                  <input type="file" id="${mediaLibId}_uploadBrowser" class="browser" name="filepath" value="" size="40" />
+                  <input type="submit" class="upload" value="$adminMsg.get('cel_upload')" />
+                </form>
+                <iframe id="${mediaLibId}_cel_filebase_uploadFrame" name="${mediaLibId}_cel_filebase_uploadFrame" src="" style="display:none"></iframe>
+              </div><!--c3_filebase_upload-->
+            #end
+          </div><!--${mediaLibId}_c2_ml_container-->
+        </div><!--${mediaLibId}_c2_ml_container_shadow-->
+      </div><!--c2_ml_overlay_box-->
+    </div><!--fileBasePanel bd-->
+    <div class="ft"></div><!--fileBasePanel ft-->
+  </div><!--fileBasePanel-->
+</div><!--celements3_filebase-->

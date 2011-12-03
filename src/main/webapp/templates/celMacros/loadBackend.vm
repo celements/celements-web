@@ -1,0 +1,36 @@
+## loadBackend
+## loads the header parts needed to enable the Celements AdminInterface
+##
+#if($hasedit || $isContentEditor || $isAdmin || ($celementsweb.getMenuBar().getMenuHeaders().size() > 0))
+#set($celSkin_doc = $xwiki.getDocument("celements2web:XWiki.Celements2Skin"))
+$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
+$celementsweb.addExtJSfileOnce(':celJS/jquery.js', 'file')
+<script type="text/javascript">
+  var $j = jQuery.noConflict();
+</script>
+$celementsweb.includeCSSPage(':celRes/celements2.css')
+##$celementsweb.addExtJSfileOnce("http://www.prototypejs.org/assets/2008/4/22/prototype_update_helper.js")
+$celementsweb.addExtJSfileOnce(':celJS/scriptaculous/effects.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/moofx/moo.fx.js')
+$celementsweb.addExtJSfileOnce(':celJS/moofx/moo.fx.utils.js')
+$celementsweb.addExtJSfileOnce(':celJS/adminUi/div.js')
+$celementsweb.addExtJSfileOnce(':celJS/adminUi/aspects.js')
+##$celementsweb.addExtJSfileOnce(':celJS/adminUi/window.js')
+$celementsweb.addExtJSfileOnce(':celJS/adminUi/admininterface.js')
+$celementsweb.addExtJSfileOnce(':celJS/contextMenu/contextmenu-hover.js')
+$celementsweb.addExtJSfileOnce(':celJS/contextMenu/contextmenu.js')
+$celementsweb.addExtJSfileOnce(':celJS/validation.js')
+$celementsweb.addExtJSfileOnce(':celJS/adminUi/menubar.js')
+$celementsweb.addExtJSfileOnce(':celJS/zendesk/zendeskOverlay.js')
+$celementsweb.includeCSSAfterSkin(':celRes/zendesk/zendeskOverlay.css')
+## keep the following if async with the one in celMacros/startCelementsBody.vm to load getTabMenu!!
+#if(("$celementsweb.getVersionMode()" == "celements3") && (("$context.action" == 'edit') || ("$context.action" == 'inline')))
+$xwiki.parseTemplate("celMacros/DarkBox.vm")
+$celementsweb.addExtJSfileOnce(':celJS/celTabMenu/TabEditor.js')
+$celementsweb.addExtJSfileOnce(':celJS/celTabMenu/celementsTabMenu.js')
+$celementsweb.includeCSSPage(':celRes/celTabMenu/tabMenu.css')
+#set($skinBodyAttributes = "$!{skinBodyAttributes}style='overflow:hidden;'")
+#set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celementseditmode")
+#set($HTMLBodyCSSClasses = $HTMLBodyCSSClasses.trim())
+#end
+#end

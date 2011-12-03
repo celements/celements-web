@@ -1,0 +1,52 @@
+## openInlineOverlay
+##
+## INPUT (optional) : $showOverlayLanguageBar (default: true)
+##
+## start the celements inline Overlay
+#if("$!showOverlayLanguageBar" == '')
+  #set($showOverlayLanguageBar = true)
+#end
+<div class="generalOverlayWrapper $!overlayBodyCssClasses">
+<div class="generalOverlay OverlayBack">
+<!-- IE -->
+</div>
+<div class="generalOverlay">
+<div class="minwidthb"></div>
+<div class="main layoutsubsection">
+  #set($params = '')
+  #foreach($req in $request.getParameterNames())
+    #if("$!req" == 'xredirect')
+      #set($params = "${params}&$req=$xwiki.getURLEncoded($!request.get($req))")
+    #elseif("$!req" != 'language')
+      #set($params = "${params}&$req=$!request.get($req)")
+    #end
+  #end
+#if($showOverlayLanguageBar)
+  <div id="cel_langbar">
+#foreach($lang in $langs)
+    #set($isActiveLang=($lang == $language))
+    #if($isActiveLang)
+        <span class="langitem active">$msg.get("cel_$!{lang}_$!{lang}")</span>
+    #else
+        <a class="langitem" href="?${params}&language=$!{lang}">$msg.get("cel_$!{lang}_$!{lang}")</a>
+    #end
+#end
+        </div>
+      <!--langbar-->
+#end ## $showOverlayLanguageBar
+#if($showCloseOverlayButton)
+#if("$!closeOverlayRedirect" == '')
+  #set($closeOverlayRedirect = $doc.getURL('view'))
+#end
+## TODO look for better solution. closebutton disapears with supersleight
+##<!--[if lte IE 6]>
+##$celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('supersleight-min.js', 'skin'))
+##<![endif]-->
+<a id="closebutton" class="cel_closebutton" href="$closeOverlayRedirect"></a>
+#end
+<style type="text/css">
+#cel_overlaybody {
+  overflow : auto;
+}
+</style>
+<div id="cel_overlaybody">

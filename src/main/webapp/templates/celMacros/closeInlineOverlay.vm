@@ -1,0 +1,18 @@
+## closeInlineOverlay
+##
+## INPUT (optional) : $styleWidth, $styleHeight
+##
+## ends the celements inline Overlay
+      </div>
+<style type="text/css">
+.main.layoutsubsection {
+#if("$!styleWidth" != '')
+  width: ${styleWidth}px;
+#end
+#if("$!styleHeight" != '')
+  height: ${styleHeight}px;
+#end
+}
+</style>
+</div></div>
+</div>

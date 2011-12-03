@@ -1,0 +1,5 @@
+#if("$!request.get('new_nav_order')" != '')
+$xwiki.celementsweb.navReorderSave($doc.fullName, $request.get('new_nav_order'))
+#else
+FAILED: no new_nav_order found in request!
+#end

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN"
+  "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+
+    <!-- Please refer to the installation guide on
+         http://platform.xwiki.org/xwiki/bin/view/AdminGuide/Installation for configuring your
+         database. You'll need to do 2 things:
+         1) Copy your database driver JAR in WEB-INF/lib or in some shared lib directory
+         2) Uncomment the properties below for your specific DB (and comment the default 
+            database configuration if it doesn't match your DB)
+    -->
+
+    <!-- Generic parameters common to all Databases -->
+
+    <property name="show_sql">false</property>
+    <property name="use_outer_join">true</property>
+
+    <property name="dbcp.defaultAutoCommit">false</property>
+    <property name="dbcp.maxActive">50</property>
+    <property name="dbcp.maxIdle">5</property>
+    <property name="dbcp.maxWait">30000</property>
+    <property name="dbcp.whenExhaustedAction">1</property>
+    <property name="dbcp.ps.whenExhaustedAction">1</property>
+    <property name="dbcp.ps.maxActive">20</property>
+    <property name="dbcp.ps.maxWait">120000</property>
+    <property name="dbcp.ps.maxIdle">20</property>
+
+    
+    <!-- database configuration -->
+    
+    <property name="connection.url">${hibernate.cfg.xml.connection.url}</property>
+    <property name="connection.username">${hibernate.cfg.xml.connection.username}</property>
+    <property name="connection.password">${hibernate.cfg.xml.connection.password}</property>
+    <property name="connection.driver_class">${hibernate.cfg.xml.connection.driver_class}</property>
+    <property name="dialect">${hibernate.cfg.xml.dialect}</property>
+    <property name="connection.provider_class">${hibernate.cfg.xml.connection.provider_class}</property>
+    <property name="connection.pool_size">${hibernate.cfg.xml.connection.pool_size}</property>
+    <property name="statement_cache.size">${hibernate.cfg.xml.statement_cache.size}</property>
+    <mapping resource="xwiki.celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
+    <mapping resource="feeds.celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
+    <mapping resource="activitystream.celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
+    <mapping resource="event_class${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
+    <mapping resource="celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
+    <mapping resource="config_type_class${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
+    <mapping resource="config_type_properties_class${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
+    <mapping resource="celements_blog${hibernate.cfg.xml.dbtype_extension}.hbm.xml" />
+    
+  </session-factory>
+</hibernate-configuration>

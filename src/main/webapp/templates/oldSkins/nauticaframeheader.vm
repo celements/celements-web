@@ -1,0 +1,139 @@
+## set RTE width and height
+#set($tinyMCE_width = "$!{celementsweb.getPageType($page_type).getPageTypeProperties().getProperty('rte_width').getValue()}")
+#if("$!tinyMCE_width" == '')
+#set($tinyMCE_width = $xwiki.getWebPreference('editbox_width'))
+#end
+#if("$!tinyMCE_width" == '')
+#set($tinyMCE_width = 545 + 15)
+#end
+## start a Celements Document
+$xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
+##
+## start the celements body (and lacily finalise the header)
+$xwiki.parseTemplate("celMacros/startCelementsBody.vm")
+##
+
+<div id="sitecontainer" class="lang_${language}">
+<!-- #content: holds all except site footer - causes footer to stick to bottom -->
+<div id="content">
+
+  <!-- #header: holds the logo and top links -->
+  <div id="header" class="width">
+
+#if("$!celementsweb.getSkinConfigObj().getProperty('has_logo').getValue()" == '1')
+  <!-- #logoImg: holds the logo image or flash -->
+ <div id="logoImg" class="width logoImg">
+#set($banner_image_link = "$!celementsweb.getSkinConfigObj().getProperty('logoimg_link').getValue()")
+#set($identifier="logoImg")
+$xwiki.includeForm('celements2web:Macros.includeBannerHTML', false)
+ </div>
+#end
+
+
+#if($celementsweb.isNavigationEnabled('menu_topleft'))
+<div id="menuTopLeft" class="menuTopLeft">
+$celementsweb.includeNavigation('menu_topleft')
+<!-- IE6 --></div><!-- IE6 -->
+#end
+
+#if("$!celementsweb.getSkinConfigObj().getProperty('has_rteheader').getValue()" == '1')
+#set($toolHeader = '')
+#set($editDefaultLanguage = '')
+#set($toolFullName = "${doc.space}.HeaderRTE")
+#if($celementsweb.isEmptyRTEDocument($toolFullName) && ("$!{celementsweb.getParentSpace()}" != ''))
+#set($toolFullName = "${celementsweb.getParentSpace()}.HeaderRTE")
+#end
+#if($hasedit || !$celementsweb.isEmptyRTEDocument($toolFullName))
+#if(!$celementsweb.isEmptyRTEDocument($toolFullName))
+ #set($toolDoc = $xwiki.getDocument($toolFullName))
+ #set($toolHeader = "$!toolDoc.getTranslatedContent()")
+#else
+ #set($editDefaultLanguage = "&language=$default_language")
+ #set($toolHeader = "$adminMsg.get('no_content')") ##MULTILINGUAL MESSAGE CORRECT??
+#end
+#set($contextMenu = '')
+#if($hasedit)
+#set($q = "'")
+#set($adredit_xredirect = "xredirect=$doc.getURL('view')")
+#set($cmenu_pageLink = $xwiki.getURL($toolFullName, 'edit', "$!{adredit_xredirect}$!{editDefaultLanguage}"))
+#set($cmenu_MenuName = $adminMsg.get("cel_edit_tool_$!{toolDoc.name}")) ##MULTILINGUAL MESSAGE
+#set($cmenu_p = "${q}$xwiki.getSkinFile('editPage.gif')${q}")
+$xwiki.includeForm('celements2web:Macros.addContextMenuItem', false)
+## finishing menu item
+$xwiki.includeForm('celements2web:Macros.finishContextMenu', false)
+#end
+#set($toolHeader = $xwiki.renderText("{pre}$!{toolHeader}{/pre}",$doc))
+<div id="header_rte" $!contextMenu>
+##Richtext element
+$!toolHeader
+ </div><!-- #header_rte end -->
+#end
+#end
+
+#if($celementsweb.isNavigationEnabled('menu_topright'))
+<div id="menuTopRight" class="menuTopRight">
+$celementsweb.includeNavigation('menu_topright')
+<!-- IE6 --></div><!-- IE6 -->
+#end
+  </div>
+  <!-- #header end -->
+
+#if("$!celementsweb.getSkinConfigObj().getProperty('has_banner').getValue()" == '1')
+  <!-- #headerImg: holds the main header image or flash -->
+ <div id="headerImg" class="width">
+#set($banner_image_link = "$!celementsweb.getSkinConfigObj().getProperty('headerimg_link').getValue()")
+#set($identifier="headerImg")
+###set($bannerElementClass = 'class="width"')
+$xwiki.includeForm('celements2web:Macros.includeBannerHTML', false)
+<!-- IE6 --></div>
+#end
+
+#if("$!celementsweb.getSkinConfigObj().getProperty('has_highlights').getValue()" == '1')
+<!-- #menu: the main large box site menu -->
+ <div id="menu" class="width">
+$celementsweb.includeNavigation('menu_highlights')
+<!-- IE6 --></div>
+#end
+  <!-- #menu end -->
+
+
+
+  <!-- #page: holds the page content -->
+  <div id="page">
+
+
+    <!-- #columns: holds the columns of the page -->
+    <div id="columns" class="widthPad">
+
+#set($showPannelCSSClasses = "")
+#if($showRightPanels == "1")
+  #set($showPannelCSSClasses = "column3visible")
+#end
+
+#if(($showLeftPanels == "1") || ($celementsweb.isNavigationEnabled('menu_leftcolumn')))
+    <!-- Left thumbnail column -->
+  #set($showPannelCSSClasses = "column1visible $!{showPannelCSSClasses}")
+    <div id="column1" class="column1 floatLeft width25 $!{showPannelCSSClasses.trim()}">
+#if($celementsweb.isNavigationEnabled('menu_leftcolumn'))
+<div id="mainNavigation">
+$celementsweb.includeNavigation('menu_leftcolumn')
+</div>
+#end
+ #template("leftpanels.vm")
+ <div class="clearfloats"><!-- IE6 --></div>
+<!--iE6.0-->
+    </div>
+    <!-- Left thumbnails end -->
+#end
+
+#if($showRightPanels == "1")
+    <!-- Right thumbnail column -->
+    <div id="column3" class="column3 floatLeft width25 $!{showPannelCSSClasses.trim()}">
+ #template("rightpanels.vm")
+ <div class="clearfloats"><!-- IE6 --></div>
+<!-- IE6 --></div>
+    <!-- Right thumbnails end -->
+#end
+    <!-- Right column -->
+    <div id="column2" class="column2 floatRight width75 $!{showPannelCSSClasses.trim()}">
+<!--iE6.0-->

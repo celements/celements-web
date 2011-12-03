@@ -1,0 +1,20 @@
+[##
+#set($res = 0)##
+#foreach($field in $request.getParameterValues('fields'))##
+#if($field.matches(".*_\d*_.*"))##
+#set($classname = '')##
+#set($classname = $field.substring(0, $field.indexOf('_')))##
+#set($fieldname = '')##
+#set($fieldname = $field.replace("${classname}_", ""))##
+#set($fieldname = $fieldname.replace("$fieldname.substring(0, $util.add(1, $fieldname.indexOf('_')))", ""))##
+#set($classref = $services.model.resolveDocument($classname))
+#if($celementsweb.getSuggestBaseClass($classref, $fieldname).isPicker())##
+#if($res > 0),#end##
+#set($res = 1)##
+{"id" : "$field", "classname" : "$classname", "fieldname" : "$fieldname"}##
+#end
+#end##
+#end##
+##  TOOD add additional fields when config needed. e.g.
+##, {"emptyMsg" : "nothing found!"}, {"timeout" : 2500}, ...
+]

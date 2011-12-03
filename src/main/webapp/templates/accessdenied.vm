@@ -1,0 +1,18 @@
+###
+### Access denied message
+###
+###
+#if(!$response.containsHeader('WWW-Authenticate'))
+  $response.setStatus(403)
+  ## Otherwise, unauthenticated user with Basic authentication, a 401 status has been set in Java.
+#end
+#if("$!request.ajax" != '')
+$msg.get('notallowed')
+#else
+#set($overwriteRenderDocument = 'celInlineTemplates/accessdenied.vm')
+$xwiki.parseTemplate("frameheader.vm")
+#if("$!overwriteRenderDocument" != '')
+$xwiki.parseTemplate($overwriteRenderDocument)
+#end
+$xwiki.parseTemplate("framefooter.vm")
+#end

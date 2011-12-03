@@ -1,0 +1,123 @@
+#set($space = $request.get('source_space'))
+#if($space.indexOf('.') > 0)
+  #set($space = $space.substring(0, $space.indexOf('.')))
+#end
+#set($edit = "$!request.get('editTag')")
+#if("$!request.get('addTag')" == '1')
+  #macro(iterateName $i)
+    #set($newMenuName = "tag$i")
+    #if($xwiki.exists("${space}.$newMenuName"))
+      #set($k = $i + 1)
+      #iterateName($k)
+    #end
+  #end
+  #set($menuSpace = $space)
+  $xwiki.includeForm('celements2web:Macros.getSubMenuItemsForParent', false)
+  #iterateName($menu.size())
+  #set($newDoc = $xwiki.getDocument("${space}.$newMenuName"))
+  #if($xwiki.isMultiLingual())
+    #set($langs =  $xwiki.split($xwiki.getWebPreferenceFor("language", "$space")," "))
+  #end
+  #set($last_menu_item = '')
+  #if($menu.size() > 0)
+    #set($lastitemNum = $menu.size() - 1)
+    #set($last_menu_item = $menu.get($lastitemNum))
+  #end
+  #if(("$!last_menu_item" != '') && ("$!last_menu_item.getProperty('menu_position').getValue()" != ''))
+    #set($position = $xwiki.parseInt("$!last_menu_item.getProperty('menu_position').getValue()") + 1)
+  #else
+    #set($position = 1)
+  #end
+  #set($menu_item_obj = $newDoc.newObject("Celements2.MenuItem"))
+  $menu_item_obj.set("menu_link", $newMenuName)
+  $menu_item_obj.set("menu_position", $!position)
+  $menu_item_obj.set("menu_parent", '')
+  $menu_item_obj.set('part_name', '')
+  #if($xwiki.isMultiLingual())
+    #foreach($lang in $langs)
+      #set($menu_name_obj = $newDoc.newObject("Celements2.MenuName"))
+      $menu_name_obj.set("lang", $lang)
+      $menu_name_obj.set("menu_name", "$newMenuName")
+    #end
+  #else
+    $menu_item_obj.set("menu_name", "$newMenuName")
+  #end
+  $newDoc.save()
+  $xwiki.celementsweb.flushCache()
+  #set($redir = "source_space=${space}&editTag=$newMenuName")
+  $context.getResponse().sendRedirect("$doc.getURL('view', $redir)")
+#end
+#if("$!request.get('edited')" != '')
+  #set($tagDoc = $xwiki.getDocument("${space}.$request.get('edited')"))
+  #if($xwiki.isMultiLingual())
+    #foreach($lang in $langs)
+      #set($nameObj = $tagDoc.getObject('Celements2.MenuName', 'lang', "$!lang", false))
+      $nameObj.set('menu_name', "$!request.get('tagName')")
+    #end
+  #else
+    #set($nameObj = $tagDoc.getObject('Celements2.MenuName', 'lang', "$!request.get('lang')", false))
+    $nameObj.set('menu_name', "$!request.get('tagName')")
+  #end
+  $tagDoc.save()
+  #set($redirSpace = "source_space=$space")
+  $context.getResponse().sendRedirect("$doc.getURL('view', $redirSpace)")
+#end
+#if("$!request.get('delTag')" != '')
+  $xwiki.celementsweb.flushCache()
+  $!request.get('delTag') $!adminMsg.get('cel_ml_delete_successful')
+#end
+#set($contextMenu = '')
+#if("$!edit" == "")
+  $xwiki.includeForm('celements2web:Macros.getCelementsMenuItemDetails', false)
+  #set($contextMenu = '')
+  #set($cmenu_MenuName = "$!adminMsg.get('cel_ml_add_tag')")
+  #set($cmenu_pageLink = ${doc.getURL("view", "source_space=${space}&addTag=1")})
+  #set($hasOnlyLink = true)
+  $xwiki.includeForm('celements2web:Macros.addContextMenuItem', false)
+  $xwiki.includeForm('celements2web:Macros.finishContextMenu', false)
+#end
+<div $contextMenu class="cel_ml_tagedit" id="cel_ml_tagedit">
+#set($contextMenu = '')
+.
+<ol>
+  #if("$!space" != '')
+    #foreach($docName in $xwiki.getSpaceDocsName("$space"))
+      #set($tagDoc = $xwiki.getDocument("${space}.$docName"))
+      #set($currentMenuItemObj = '')
+      #set($currentMenuItemObj = $tagDoc.getObject('Celements2.MenuItem'))
+      #if("$!currentMenuItemObj" != '')
+        $xwiki.includeForm('celements2web:Macros.getCelementsMenuItemDetails', false)
+        #set($contextMenu = '')
+        #set($idx = $menuLink.lastIndexOf('/') + 1)
+        #set($menuPage = $menuLink.substring($idx))
+        #set($hasOnlyLink = true)
+        #set($cmenu_MenuName = "$!adminMsg.get('cel_ml_edit_tag')")
+        #set($cmenu_pageLink = ${doc.getURL("view", "source_space=${space}&editTag=$menuPage")})
+        $xwiki.includeForm('celements2web:Macros.addContextMenuItem', false)
+        #set($cmenu_MenuName = "$!adminMsg.get('cel_ml_delete_tag')")
+        #set($redirect = $doc.getURL('view', "source_space=${space}&delTag=$menuName"))
+        #set($delDoc = $xwiki.getDocument("${space}.${menuPage}"))
+        #set($delUrl = $delDoc.getURL("delete", "confirm=1&xredirect=$xwiki.getURLEncoded($redirect)"))
+        #set($delWarning = "$!adminMsg.get('cel_ml_delete_msg') $menuName")
+        #set($cmenu_pageLink = "confirmURL(&quot;${delWarning}&quot;, &quot;${delUrl}&quot;);")
+        #set($hasOnlyLink = false)
+        $xwiki.includeForm('celements2web:Macros.addContextMenuItem', false)
+        $xwiki.includeForm('celements2web:Macros.finishContextMenu', false)
+        <li>
+          #if("$!edit" == "$menuPage")
+            <form name="updateMenuitem${edit}" action="" method="post">
+              <input type="hidden" name="source_space" value="$space" />
+              <input type="hidden" name="edited" value="${edit}" />
+              <input type="hidden" name="lang" value="$language" />
+              <input type="text" name="tagName" value="$menuName" />
+              <a href="" onclick="document.forms.updateMenuitem${edit}.submit(); return false;">$!adminMsg.get('cel_submit')</a>
+            </form>
+          #else
+            <div $contextMenu class="cel_ml_tagedit_menuItem" id="${space}.${menuPage}">$menuName</div>
+          #end
+        </li>
+      #end
+    #end
+  #end
+</ol>
+</div>

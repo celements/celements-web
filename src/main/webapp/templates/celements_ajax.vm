@@ -1,0 +1,20 @@
+## init Celements variables
+$xwiki.includeForm("celements2web:Macros.initCelements", false)
+#if("$!request.ajax_mode" == 'BlogAjax')
+$xwiki.includeForm("celements2web:Celements2.NewsletterActions", false)
+#elseif("$!request.ajax_mode" == 'CelTabEditAjax')
+$xwiki.includeForm("celements2web:Macros.Ajax", false)
+#elseif(("$!request.ajax_mode" != '') && $xwiki.exists("Ajax.${request.ajax_mode}") && !$celementsweb.isEmptyRTEDocument("Ajax.${request.ajax_mode}"))
+$xwiki.includeForm("Ajax.${request.ajax_mode}", false)
+#elseif(("$!request.ajax_mode" != '') && $xwiki.exists("celements2web:Ajax.${request.ajax_mode}") && !$celementsweb.isEmptyRTEDocument("celements2web:Ajax.${request.ajax_mode}"))
+## DEPRECATED !!! PLEASE PUT IN celements-web celAjax FOLDER ON DISK
+$xwiki.includeForm("celements2web:Ajax.${request.ajax_mode}", false)
+#else
+#set($ajaxResult = $xwiki.parseTemplate("celAjax/${request.ajax_mode}.vm"))
+#if("$!ajaxResult.trim()" != '')
+$ajaxResult
+#else
+$response.setStatus(501)
+Unkown ajax_mode!
+#end
+#end

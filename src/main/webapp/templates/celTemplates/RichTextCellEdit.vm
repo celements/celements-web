@@ -1,0 +1,41 @@
+#if("$!tinyMCE_height" == '')
+  #set($tinyMCE_height = 500)
+#end
+#if("$!tinyMCE_width" == '')
+  #set($tinyMCE_width = 590)
+#end
+#if("$!request.xredirect" != '')
+  #set($cel_tiny_xredirect = "$!request.xredirect")
+  #set($cel_tiny_cancel_inurl = "xredirect=$!cel_tiny_xredirect")
+  #set($cel_tiny_cancel = $doc.getURL('cancel', "$cel_tiny_cancel_inurl"))
+#else
+  #set($cel_tiny_cancel = $doc.getURL('cancel'))
+  #set($cel_tiny_cancel_inurl = '')
+  #set($cel_tiny_xredirect = '')
+#end
+<h1>RichText Cell</h1>
+#set($contextPath = ${request.contextPath})
+$xwiki.includeForm('celements2web:Macros.includeCelementsRTE', false)
+<div id="con_titblock" class="titleblock"></div>
+$xwiki.includeForm('celements2web:Macros.includeRTELanguageSelect', false)
+<div id="con_contentEdit" class="editblock">
+  <form id="edit" method="post" action="$celldoc.getURL("save")">
+      <input type="hidden" name="template" value="$!celldoc.getTemplate()" />
+      <input type="hidden" id="formeditxred" name="xredirect" value="$!cel_tiny_xredirect" />
+      <input type="hidden" name="language" value="$!language" />
+    <textarea name="content" onfocus="setFocus('con_contentEdit');" onblur="removeFocus('con_contentEdit');">$xwiki.getXMLEncoded($celldoc.getTranslatedDocument().content)</textarea>
+  </form>
+</div>
+<div class="yui-skin-sam">
+  <div id="cancelDialog" style="visibility:hidden;height:0px;"> 
+    <div class="hd">$adminMsg.get("cel_rte_howto_proceed")</div> 
+    <div class="bd">
+      <form> 
+              <div class="clear"></div> 
+              <input id="rte_save_option" type="checkbox" name="save_option" value="1" />
+              <label for="save_option" style="font-size:7pt">$adminMsg.get("cel_rte_always_perform_option") ($adminMsg.get("cel_rte_editable_in_user_prefs"))</label>
+          </form>
+      </div>
+    <div class="ft"></div> 
+  </div>
+</div>

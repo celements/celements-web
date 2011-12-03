@@ -1,0 +1,87 @@
+## loadRTE
+## INPUT: $page_type, $type_props, $content_css_filename
+## INPUT (optional): $content_css_filenameURL (default: computed from $content_css_filename)
+## INPUT (optional): $tinyMCE_height (default 500), $tinyMCE_width (default 453)
+##
+## should we load the rte?
+#set($type = $page_type)
+## get the specific edit template
+#set($load_rte = ($!type_props.getProperty("load_richtext").getValue() == 1))
+##
+#if($hasedit && $context.getAction()=="edit" && ($!doc.getObjects('Celements2.PageType').size() == 0 || $load_rte))
+#set($ptype_rte_height = $type_props.getProperty('rte_height').getValue())
+#set($ptype_rte_width = $type_props.getProperty('rte_width').getValue())
+#if("$!ptype_rte_height" != '')
+  #set($tinyMCE_height = $ptype_rte_height)
+#end
+#if("$!ptype_rte_width" != '')
+  #set($tinyMCE_width = $ptype_rte_width)
+#end
+#if("$!tinyMCE_height" == '')
+  #set($tinyMCE_height = 500)
+#end
+#if("$!tinyMCE_width" == '')
+  #set($tinyMCE_width = 453)
+#end
+<script language="javascript" type="text/javascript" src="${request.contextPath}/tiny_mce/tiny_mce_src.js"></script>
+<script language="javascript" type="text/javascript">
+tinyMCE.init({
+  mode : "textareas",
+  theme : "advanced",
+  save_enablewhendirty : true,
+  plugins : "table,save,cancel,advlink",
+  theme_advanced_layout_manager: "SimpleLayout",
+  theme_advanced_toolbar_location : "top",
+  theme_advanced_toolbar_align : "left",
+  height: "$tinyMCE_height",
+  width: "$tinyMCE_width",
+  #if($skin_doc.getAttachment("$!content_css_filename"))
+  #set($content_css_filenameURL = "$!{content_css_filenameURL},$skin_doc.getAttachmentURL($!content_css_filename,'download')")
+  #end
+  #foreach($cssObj in $xwiki.celementsweb.getRTEContentCSS())
+    #if("$!{cssObj.getCSS()}" != '')
+      #set($content_css_filenameURL = "$!{content_css_filenameURL},$!{cssObj.getCSS()}")
+    #end
+  #end
+  #if("$!content_css_filenameURL" != '')
+  content_css : "$!{content_css_filenameURL.replaceAll('^,', '')}",
+  #end
+  ## lookup the rte_styles field in the XWiki and WebPreference
+  #set($rteStyles = "$!xwiki.getWebPreference('rte_styles')")
+  #if("$!rteStyles" == '')
+  	## default back to the standard fields.
+    #set($rteStyles = 'Titel=h1;Untertitel=h2;Text=text')
+  #end
+  theme_advanced_styles : "$!rteStyles",
+  // disable and re-enable everyting in order to get a customized layout
+  theme_advanced_disable : "bold,italic,strikethrough,anchor,help,underline,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,bullist,numlist,separator,outdent,indent,separator,link,unlink,image,fontselect,fontsizeselect,separator,forecolor,backcolor,separator,charmap,hr,separator,undo,redo,removeformat,visualaid,cleanup,code,sub,sup,styleselect,formatselect",
+  theme_advanced_buttons1_add : "save,cancel,separator,bold,italic,underline,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,bullist,numlist,separator,link,unlink,image,forecolor,backcolor,separator,code",
+  theme_advanced_buttons2_add : "styleselect,fontselect,fontsizeselect",
+  theme_advanced_buttons3_add : "tablecontrols",
+##
+  extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+  wiki_images_path : "$xwiki.getURL($doc.getFullName(), 'download')",
+  #set($attachmentPath = "$xwiki.getURL($doc.getFullName(), 'view')")
+  #set($attachmentDLPath = "$xwiki.getURL($doc.getFullName(), 'download')")
+  #if("$!imagePickerAttPath" != '')
+    #set($attachmentDLPath = $xwiki.getURL("$!imagePickerAttPath", 'download'))
+    #set($attachmentPath = $xwiki.getURL("$!imagePickerAttPath", 'view'))
+  #end
+  wiki_attach_path : "$attachmentPath",
+  wiki_imagedownload_path : "$attachmentDLPath",
+  plugin_cancel_cancelFunction : "tiny_mce_cancel"
+});
+##
+function tiny_mce_cancel(){
+if(document.forms.edit){
+  document.forms.edit.action = "$doc.getURL('cancel')";
+  if(doBeforeCancelSubmit) {
+    doBeforeCancelSubmit();
+  }
+  document.forms.edit.submit();
+} else {
+  alert("Error: no edit form!");
+}
+}
+</script>
+#end

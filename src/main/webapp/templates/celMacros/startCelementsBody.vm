@@ -1,0 +1,49 @@
+## startCelementsBody
+## lacily finalise the celements header and then start the body allowing
+## user specific onLoad JS.
+## INPUT all optional: $skinBodyAttributes, $onLoadJS $HTMLBodyCSSClasses
+## OUTPUT: 
+##
+#if(!$finaliseCelementsDocumentHeaderRUN) ## lacy call
+$xwiki.parseTemplate("celMacros/finaliseCelementsDocumentHeader.vm")
+#end
+</head>
+#foreach($parentFullName in $celementsweb.getDocumentParentsList($doc.fullName, true))
+  #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celdocpath_${parentFullName}")
+  #set($HTMLBodyCSSClasses = $HTMLBodyCSSClasses.trim())
+#end
+#if($cel_loadAdminMenuBar)
+  #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celementsmenubarvisible")
+  #set($HTMLBodyCSSClasses = $HTMLBodyCSSClasses.trim())
+#end
+#if($onLoadJS && ($!onLoadJS != ''))
+  ## make sure it ends with a semicolon. A double semicolon (;;) should do no
+  ## harm because it is a no-op.
+  #set($onLoadJS = "${onLoadJS};")
+#end
+## get page specific onLoad JavaScripts
+$xwiki.parseTemplate("celMacros/getOnLoad.vm")
+#set($onLoadJS = "$!{onLoadJS}$!{additionalOnLoad}")
+<body##
+#if("$!skinBodyAttributes" != '') $!{skinBodyAttributes}#end
+#if("$!HTMLBodyCSSClasses" != '') class="$!{HTMLBodyCSSClasses}"#end##
+#if("$!onLoadJS" != '') onload="$!{onLoadJS}"#end>
+#if("$celementsweb.getVersionMode()" == "celements3")
+#if(("$context.action" == 'edit') || ("$context.action" == 'inline'))
+$xwiki.parseTemplate("celMacros/getTabMenu.vm")
+#elseif($cel_loadAdminMenuBar)
+$xwiki.includeForm('celements2web:Macros.MenuBar', false)
+##programming rights!!! $xwiki.parseTemplate("celMacros/MenuBar.vm")
+#end
+#end
+#if("$!celementsLoadInOverlay" != '')
+$xwiki.parseTemplate("celMacros/openInlineOverlay.vm")
+#if($xwiki.exists("${celementsLoadInOverlay}"))
+$xwiki.includeForm("${celementsLoadInOverlay}",false)
+#elseif((${celementsLoadInOverlay.indexOf('.')} > 0) && ($xwiki.exists("celements2web:${celementsLoadInOverlay}")))
+$xwiki.includeForm("celements2web:${celementsLoadInOverlay}",false)
+#else
+$xwiki.parseTemplate("${celementsLoadInOverlay}")
+#end
+$xwiki.parseTemplate("celMacros/closeInlineOverlay.vm")
+#end

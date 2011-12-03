@@ -1,0 +1,27 @@
+## startCelementsDocument
+## include default html-start tags. Including DOCTYPE.
+## INPUT: $withoutDefaultHeaders (optional)
+## OUTPUT:
+##
+#if(!$withoutDefaultHeaders || ($!withoutDefaultHeaders == ''))
+  #set($withoutDefaultHeaders = false)
+#end
+#if(!$initCelementsWasRun)
+  ## define the celements variables (this is a lacy call)
+  $xwiki.includeForm("celements2web:Macros.initCelements", false)
+#end
+## check favicon.ico
+#if("$doc.fullName" == 'Content.favicon.ico')
+  $context.getResponse().sendRedirect($skin_doc.getAttachmentURL('favicon.ico','skin'))
+#end
+##<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+#if($language && ("$!language" != ""))
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$!language" lang="$!language">
+#else	
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+#end
+<head>
+#if($!withoutDefaultHeaders == false)
+  #template("celMacros/includeDefaultHeader.vm")
+#end

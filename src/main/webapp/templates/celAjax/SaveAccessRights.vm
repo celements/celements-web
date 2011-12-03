@@ -1,0 +1,48 @@
+#macro(setAccessRights)
+  #if("$!rights" == '')
+    $rightsobj.set('levels', '')
+  #end
+  #if("$!rights" == 'view')
+    $rightsobj.set('levels', 'view')
+  #end
+  #if("$!rights" == 'edit')
+    $rightsobj.set('levels', 'view,edit,delete,undelete')
+  #end
+  #if("$!rights" == 'none')
+    $rightsobj.set('allow',0)
+    $rightsobj.set('levels', 'view')
+  #else
+    $rightsobj.set('allow',1)
+  #end
+#end
+
+#if(("$!request.get('update')" == '1') && $isAdmin)
+ ### XWikiGuest 
+ #set($rights = $!request.get('select_XWiki.XWikiGuest'))
+ #set($rightsobj = $doc.getObject('XWiki.XWikiRights', 'users', 'XWiki.XWikiGuest', false))
+ #if ("$!rightsobj" == '' && "$!rights" != '')
+   #set($rightsobj = $doc.newObject('XWiki.XWikiRights'))
+   $rightsobj.set('users', 'XWiki.XWikiGuest')
+ #end
+ #if ("$!rightsobj" != '')
+   #setAccessRights()
+ #end
+
+ ### Groups
+ #set($hql = ", BaseObject as obj where obj.name=doc.fullName and obj.className='XWiki.XWikiGroups'")
+ #foreach ($group in $xwiki.searchDocuments($hql)) 
+   #set($rights = $!request.get("select_$group"))
+   #set($rightsobj = $doc.getObject('XWiki.XWikiRights', 'groups', $group, false))
+   #if ("$!rightsobj" == '' && "$!rights" != '')
+     #set($rightsobj = $doc.newObject('XWiki.XWikiRights'))
+     $rightsobj.set('groups', $group)
+   #end
+   #if ("$!rightsobj" != '')
+     #setAccessRights()
+   #end
+ #end
+ $doc.save()
+ { success : true }
+#else
+ { success : false }
+#end

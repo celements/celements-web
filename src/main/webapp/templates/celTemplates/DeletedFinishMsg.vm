@@ -1,0 +1,9 @@
+{pre}
+#if($message)
+<div id="xwikimessage">$message</div>
+#end
+#xwikimessageboxstart($msg.get("delete") $msg.get("deleted"))
+$xwiki.parseTemplate("recyclebinlist.vm")
+#xwikimessageboxend()
+</div>
+{/pre}

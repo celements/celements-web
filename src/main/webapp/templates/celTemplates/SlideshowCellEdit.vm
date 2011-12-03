@@ -1,0 +1,44 @@
+#if("$!request.get('xredirect')" != '')
+#set($xredirect = $!request.getParameter('xredirect'))
+#else
+#set($xredirect = "$doc.getURL('view')")
+#end
+#set($redirectStr = "xredirect=$xredirect")
+#set($cellObj = "")
+#set($cellObj = $celldoc.getObject('XWiki.PhotoAlbumClass', false))
+#if("$!cellObj" == '')
+#set($cellObj = $celldoc.newObject("XWiki.PhotoAlbumClass"))
+$celldoc.save()
+$response.sendRedirect($doc.getURL('edit', $redirectStr))
+#end
+<div id="slideshowCellEdit">
+<h1>Slideshow Cell</h1>
+<a href="$xwiki.getURL($doc.getFullName(), 'cancel', $redirectStr)"##
+ onclick="document.forms.edit.action=this.href;##
+  if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
+  document.forms.edit.submit(); return false;" >Cancel</a>
+<span>&nbsp;|&nbsp;</span>
+<a href="$xwiki.getURL($doc.getFullName(),'save', $redirectStr)"##
+ onclick="document.forms.edit.action=this.href;##
+ if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
+ document.forms.edit.submit(); return false;" >Save</a>
+<form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
+    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+    <input type="hidden" name="xredirect" value="$!xredirect" />
+    <input type="hidden" name="language" value="$!tdoc.language" />
+  #if($celementsweb.getSubMenuItemsForParent($doc.getFullName(), $doc.getSpace()).size() == 0)
+    <div id="editablecode_container">
+#set($cel_embedded_editobj = true)
+#set($cel_editobj_classname = "XWiki.PhotoAlbumClass")
+#set($cel_editobj_nb = $cellObj.getNumber())
+#set($cel_editobj_hasObjRemoveLink = false)
+#set($cel_editobj_externalForm = true)
+#set($cel_editobj_properties = 'initialdelay,frequency')
+#set($cel_editobj_readonly_properties = '')
+$xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
+    </div>
+  #else
+  <p>Group-Cell: Inhalt wird nur bei Zellen ohne weitere Unter-Zellen berechnet.</p>
+  #end
+</form>
+</div>

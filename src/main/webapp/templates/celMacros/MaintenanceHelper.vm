@@ -1,0 +1,30 @@
+#if($xwiki.hasAdminRights())
+  <div id="maintenanceHelper">
+    <h1>Helper for maintenance tasks</h1>
+    <p>click to execute</p>
+    ##flushCache
+    <p>
+    <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&flushCache=true")">
+        Flush MenuItem Cache
+    </a>
+    #if("$!request.flushCache" == 'true')
+      <br/>
+      $xwiki.flushCache() done.
+    #end
+    </p>
+    ##end: flushCache
+    ##checkClasses
+    <p>
+    <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkClasses=true")">
+        Check Celements Classes
+    </a>
+    #if("$!request.checkClasses" == 'true')
+      <br/>
+      $celementsweb.checkClasses() done.
+    #end
+    </p>
+    ##end: checkClasses
+  </div>
+#else
+You need admin rights to view the mainenance helper.
+#end

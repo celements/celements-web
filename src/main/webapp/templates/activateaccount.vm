@@ -1,0 +1,34 @@
+#if("$!request.get('xredirect')" == '')
+  #set($url = "$!doc.getURL('view', 'xredirect=')")
+  #set($url = "${url}$xwiki.getURLEncoded($xwiki.getURL('Tools.Login','view','activated=1'))")
+  #foreach($req in $request.getParameterNames())
+    #set($url = "${url}&$req=$!request.get($req)")
+  #end
+  $context.getResponse().sendRedirect($url)
+#elseif("$!context.getUser()" != 'XWiki.XWikiGuest')
+  $context.getResponse().sendRedirect("$!request.get('xredirect')")
+#else
+#set($activationCode = $request.get('ac'))
+#set($showForm = true)
+#if("$!activationCode" != '')
+  #set($result = $xwiki.celementsweb.activateAccount("$!activationCode"))
+  #set($accountName = $result.get('username'))
+  #if("$!accountName" != '')
+    #set($showForm = false)
+    Success.
+    #set($pwd = $result.get('password'))
+    #set($auth = $xwiki.checkAuth("$!accountName", "$pwd", '1'))
+  #end
+  #if($showForm)
+    <font color="#ff0000">$msg.get('cel_invalideActivationCode')</font>
+  #end
+#end
+#*
+#if($showForm)
+  <form action="" method="post">
+    Please enter your activation code: <input type="text" name="ac" value="$!activationCode" />
+    <input type="submit" value="activate account" />
+  </form>
+#end
+*#
+#end

@@ -1,0 +1,25 @@
+#set($map = $util.getHashMap())
+#set($devnull = $map.putAll($request.getParameterMap()))
+#set($validationResult = $celementsweb.validateRequest())
+## Handle Validation Results
+#if($validationResult.size() == 0)
+  #set($numSaved = 0)
+  #foreach($d in $celementsweb.updateDocFromMap("$!doc.fullName", $map))
+   #if(!$d.isNew() || ("$!request.createIfNotExists" == 'true'))
+      $d.save()
+      #set($numSaved = $numSaved + 1)
+    #end
+  #end
+ { "successful" : true, "numSavedDocVersions" : $numSaved }
+#else
+  #set($errorMessages = '')
+  #foreach($err in $validationResult.keySet())
+    #if("$validationResult.get($err)" != '')
+      #set($errorMessages = "${errorMessages},${Q}$adminMsg.get($validationResult.get($err))${Q}")
+    #else
+      #set($errorMessages = "${errorMessages},${Q}${err}${Q}")
+    #end
+  #end
+ { "successful" : false, "errorMessages" : [ ${errorMessages.replaceAll('^,','')}##
+ ]}
+#end

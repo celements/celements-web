@@ -1,0 +1,28 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* CSS File for the login Page (has to be done yet */
+
+#loginForm fieldset.xwikimessage th label{
+	font-size:12px;
+	line-height:15px;
+	width:150px;
+	padding-right:10px;
+}
+#loginForm fieldset.xwikimessage td input#j_username, #loginForm fieldset.xwikimessage td input#j_password{
+	width:150px;
+}
+#loginForm fieldset.xwikimessage .buttons input.button{
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:2px;
+	padding-bottom:2px;
+	border:1px solid black;
+	font-size:12px;
+	line-height:15px;
+}
+#loginForm fieldset.xwikimessage a{
+	padding-left:167px;
+	font-weight:normal;
+	text-decoration:underline!important;
+}

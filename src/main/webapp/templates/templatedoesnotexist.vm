@@ -1,0 +1,7 @@
+$response.setStatus(400)
+#set($overwriteRenderDocument = 'celInlineTemplates/templatedoesnotexist.vm')
+$xwiki.parseTemplate("frameheader.vm")
+#if("$!overwriteRenderDocument" != '')
+$xwiki.parseTemplate($overwriteRenderDocument)
+#end
+$xwiki.parseTemplate("framefooter.vm")

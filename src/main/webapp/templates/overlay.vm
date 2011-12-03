@@ -1,0 +1,36 @@
+#set($skinBodyAttributes = " style='overflow:hidden;'")
+##set default settings
+#set($cel_loadAdminMenuBar = false)
+#set($showOverlayLanguageBar = false)
+#set($showCloseOverlayButton = true)
+#set($celementsLoadInOverlay = "$doc.getFullName()")
+#set($overlayWithResize = true)
+#set($closeOverlayRedirect = "$!request.get('xredirect')")
+#set($overlayConfName = "$!{request.get('conf')}")
+#set($overlayBodyCssClasses = "$!{overlayConfName}")
+#if(("$!overlayConfName" != '') && $xwiki.exists("Overlay.$!overlayConfName") && !$celementsweb.isEmptyRTEDocument("Overlay.$!{overlayConfName}"))
+  $xwiki.includeForm("Overlay.$!overlayConfName", false)
+#elseif(("$!overlayConfName" != '') && $xwiki.exists("celements2web:Overlay.$!overlayConfName") && !$celementsweb.isEmptyRTEDocument("celements2web:Overlay.$!{overlayConfName}"))
+## DEPRECATED !!! PLEASE PUT IN celements-web celOverlay FOLDER ON DISK
+  $xwiki.includeForm("celements2web:Overlay.$!overlayConfName", false)
+#else
+#set($overlayResult = '')
+#if("$!overlayConfName" != '')
+#set($overlayResult = $xwiki.parseTemplate("celOverlay/${overlayConfName}.vm"))
+#end
+#if("$!overlayResult.trim()" != '')
+$overlayResult
+#else
+  #set($overlayConfig = $doc.getObject("Classes.OverlayConfigClass"))
+  #if("$!{overlayConfig}" != "")
+    #set($cel_loadAdminMenuBar = ("$!overlayConfig.getProperty('loadAdminMenuBar').getValue()" == "1"))
+    #set($showOverlayLanguageBar = ("$!overlayConfig.getProperty('showOverlayLanguageBar').getValue()" == "1"))
+    #set($showCloseOverlayButton = ("$!overlayConfig.getProperty('showCloseOverlayButton').getValue()" == "1"))
+    #set($celementsLoadInOverlay = "$!overlayConfig.getProperty('documentToLoadInOverlay').getValue()")
+    $celementsweb.includeCSSPage($overlayConfig.getProperty('overlayCSS').getValue())
+  #else
+    $msg.get('cel_overlay_not_available', ["$!overlayConfName"])
+  #end
+#end
+#end
+$xwiki.parseTemplate("view.vm")

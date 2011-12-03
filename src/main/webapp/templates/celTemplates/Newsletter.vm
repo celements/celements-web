@@ -1,0 +1,138 @@
+#if(("$!request.get('sendarticle')" != '') && ($xwiki.exists("$!request.get('sendarticle')")))
+  #set($artDoc = $xwiki.getDocument("$!request.get('sendarticle')"))
+#else
+  #set($artDoc = $doc)
+#end
+#set($artObj = $artDoc.getObject('XWiki.ArticleClass'))
+###set($blogspaceName = "$artDoc.getSpace()")
+##$xwiki.includeForm("celements2web:Macros.getBlogPageByBlogSpace", false)
+#set($blogDocument = $xwiki.celementsblog.getBlogPageByBlogSpace("$artDoc.getSpace()"))
+#set($blogObj = $blogDocument.getObject('Celements2.BlogConfigClass'))
+#if(("$!blogObj" != '') && ($blogObj.getProperty('is_newsletter').getValue() == 1) && $hasAdmin)
+  #set($configObj = $artDoc.getObject('Classes.NewsletterConfigClass'))
+  <div id="newsletter_send_answer">
+  <div class="cel_newsletter_info_title">$adminMsg.get('cel_newsletter_send_history_title')</div>
+  #set($timesSent = $configObj.getProperty('times_sent').getValue())
+  #if(("$!timesSent" != '') && ($timesSent > 0))
+    $adminMsg.get('cel_newsletter_times_sent', ["$timesSent"])
+    $adminMsg.get('cel_newsletter_last_sent', ["$configObj.getProperty('last_sender').getValue()", "$configObj.getProperty('last_sent_date').getValue()", "$configObj.getProperty('last_sent_recipients').getValue()"])
+  #else
+    $adminMsg.get('cel_newsletter_never_sent')
+  #end
+  <div class="cel_newsletter_info_title">$adminMsg.get('cel_newsletter_recipients_title')</div>
+  #set($receiverObj = $xwiki.celementsblog.getNewsletterReceivers())
+  <div class="cel_newsletter_receivers">
+  #if(!$receiverObj.hasReceivers())
+    $adminMsg.get('cel_newsletter_no_recipients')
+  #else
+    #if($receiverObj.hasReceiverGroups())
+      <div class="cel_newsletter_receivers_groups">
+      #if($receiverObj.getGroups().size() == 1)
+        $adminMsg.get('cel_newsletter_user_group')
+      #else
+        $adminMsg.get('cel_newsletter_user_groups')
+      #end
+      <ul>
+      #set($rowClass = "cel_newsletter_row_even")
+      #foreach($recGroupParts in $receiverObj.getGroups())
+        #if("$!rowClass" != "cel_newsletter_row_even")
+          #set($rowClass = "cel_newsletter_row_even")
+        #else
+          #set($rowClass = "cel_newsletter_row_uneven")
+        #end
+        <li class="$!rowClass">
+          #foreach($recGroupPart in $recGroupParts)
+            #if($velocityCount == 1)
+              $recGroupPart
+            #else
+             ($adminMsg.get('cel_newsletter_nr_of_members', ["$recGroupPart"]))
+            #end
+          #end
+        </li>
+      #end
+      </ul>
+      </div>
+    #end
+    #if($receiverObj.hasUsers() || $receiverObj.hasAdresses())
+      #set($size = $receiverObj.getAddresses().size() + $receiverObj.getUsers().size())
+      <div class="cel_newsletter_receivers_single_users">
+      #if($size == 1)
+        $adminMsg.get('cel_newsletter_recipient')
+      #else
+        $adminMsg.get('cel_newsletter_recipients')
+      #end
+      <ul>
+        #set($rowClass = "cel_newsletter_row_even")
+        #foreach($rec in $receiverObj.getUsers())
+          #if("$!rowClass" != "cel_newsletter_row_even")
+            #set($rowClass = "cel_newsletter_row_even")
+          #else
+            #set($rowClass = "cel_newsletter_row_uneven")
+          #end
+          <li class="$!rowClass">
+            #foreach($part in $rec)
+              #if($velocityCount == 1)
+                $part
+              #else
+                (${part})
+              #end
+            #end
+          </li>
+        #end
+        #foreach($rec in $receiverObj.getAddresses())
+          #if("$!rowClass" != "cel_newsletter_row_even")
+            #set($rowClass = "cel_newsletter_row_even")
+          #else
+            #set($rowClass = "cel_newsletter_row_uneven")
+          #end
+          <li class="$!rowClass">$rec</li>
+        #end
+      </ul>
+      </div>
+    #end
+    <div class="cel_newsletter_receivers_form">
+      #set($nrOfRec = "$!{xwiki.celementsblog.getNewsletterReceivers().getNrOfReceivers()}")
+      <input type="hidden" id="cel_newsletter_confirm_send_message" value="$adminMsg.get('cel_newsletter_confirm_send', [$nrOfRec])" />
+      <form id="newsletter_send" action="?" method="post">
+        <input type="hidden" name="doaction" value="sendArticle" />
+        <input type="hidden" name="xpage" value="celements_ajax" />
+        <input type="hidden" name="ajax_mode" value="BlogAjax" />
+        <input type="hidden" name="sendarticle" value="$artDoc.getFullName()" />
+        #set($from = $configObj.getProperty('from_address').getValue())
+        #if("$!from" == '')
+          #set($from = $blogObj.getProperty('from_address').getValue())
+        #end
+        <div class="cel_newsletter_form_description">$adminMsg.get('cel_newsletter_from_address') </div><input type="text" class="cel_newsletter_form_input cel_newsletter_form_input_from required validate-email" name="from" value="$!from" />
+        #set($replyAddress = $configObj.getProperty('reply_to_address').getValue())
+        #if("$!replyAddress" == '')
+          #set($replyAddress = $blogObj.getProperty('reply_to_address').getValue())
+        #end
+        <div class="cel_newsletter_form_description">$adminMsg.get('cel_newsletter_reply_to')</div><input type="text" class="cel_newsletter_form_input cel_newsletter_form_input_reply validate-email" name="reply_to" value="$!replyAddress" />
+        #set($subject = $configObj.getProperty('subject').getValue())
+        #if("$!subject" == '')
+          #set($subject = ${xwiki.celementsblog.getArticle($artDoc).getTitle()})
+        #end
+        <div class="cel_newsletter_form_description">$adminMsg.get('cel_newsletter_subject')</div> <input type="text" class="cel_newsletter_form_input cel_newsletter_form_input_subject required" name="subject" value="$!subject" />
+        <input type="submit" id="newsletterSubmitButton" value="$adminMsg.get('cel_newsletter_submit')" onclick="$('testBox').value='0'; if(!valid.validate()){ return false; }" />
+        <input type="hidden" name="testSend" id="testBox" value="0" />
+        <input type="submit" id="newsletterTestSubmitButton" value="$adminMsg.get('cel_newsletter_test_submit')" onclick="$('testBox').value='1'; if(!valid.validate()){ return false; }" />
+        <span id="testResultBoxSpan">
+          <span id="testResultBox"></span>
+          <span style="display:none">
+            <img src='/skin/skins/albatross/icons/ajax%2Dloader.gif' />
+          </span>
+        </span>
+      </form>
+      <span style="display:none">
+        <img src='/skin/skins/albatross/icons/ajax%2Dloader.gif' />
+      </span>
+      <script type="text/javascript">
+        var valid = new Validation("newsletter_send",{immediate : true , useTitles : true, stopOnFirst : false});
+      </script>
+    </div>
+  #end
+  </div>
+  </div>
+#else
+  $adminMsg.get('cel_newsletter_is_no_newsletter')
+#end

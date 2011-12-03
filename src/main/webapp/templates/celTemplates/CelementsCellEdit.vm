@@ -1,0 +1,28 @@
+<h1>Editable Code Cell</h1>
+#if("$!request.get('xredirect')" != '')
+#set($xredirect = $!request.getParameter('xredirect'))
+#else
+#set($xredirect = "$doc.getURL('view')")
+#end
+#set($redirectStr = "xredirect=$xredirect")
+<a href="$xwiki.getURL($doc.getFullName(), 'cancel', $redirectStr)"##
+ onclick="document.forms.edit.action=this.href;##
+  if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
+  document.forms.edit.submit(); return false;" >Cancel</a>
+<span>&nbsp;|&nbsp;</span>
+<a href="$xwiki.getURL($doc.getFullName(),'save', $redirectStr)"##
+ onclick="document.forms.edit.action=this.href;##
+ if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
+ document.forms.edit.submit(); return false;" >Save</a>
+<form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
+    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+    <input type="hidden" name="xredirect" value="$!xredirect" />
+    <input type="hidden" name="language" value="$!tdoc.language" />
+  #if($celementsweb.getSubMenuItemsForParent($doc.getFullName(), $doc.getSpace()).size() == 0)
+    <div id="editablecode_container">
+      $xwiki.getTextArea($tdoc.content)
+    </div>
+  #else
+  <p>Group-Cell: Inhalt wird nur bei Zellen ohne weitere Unter-Zellen berechnet.</p>
+  #end
+</form>

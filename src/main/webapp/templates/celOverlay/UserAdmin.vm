@@ -1,0 +1,4 @@
+#set($cel_loadAdminMenuBar = false)
+#set($showOverlayLanguageBar = false)
+#set($showCloseOverlayButton = true)
+#set($celementsLoadInOverlay = "Celements2.UserAdmin")

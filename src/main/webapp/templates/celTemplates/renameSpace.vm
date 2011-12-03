@@ -1,0 +1,26 @@
+<div class="cel_renamingSpace">
+<h1> Rename space</h1>
+
+#if(("$!request.from" != '') && ("$!request.to" != ''))
+<h2>Renaming <b>$request.from</b> to <b>$request.to<b/></h2>
+#set($renamedPages = $celementsweb.renameSpace($request.from, $request.to))
+  <ul>
+  #foreach($item in $renamedPages)
+    <li>Renaming $item</li> 
+  #end
+  </ul>
+#else
+<form action="" method="post">
+<div>Source space: <select name="from">
+  <option value="">please select</option>
+#foreach($space in $xwiki.getSpaces())
+  <option value="$xwiki.getXMLEncoded($space)">$xwiki.getXMLEncoded($space)</option>
+#end
+</select>
+</div>
+<div>Target name: <input name="to" value=""/>
+</div>
+<div><input type="submit" value="Rename"/></div>
+</form>
+#end
+</div>

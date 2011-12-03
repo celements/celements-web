@@ -1,0 +1,8 @@
+{ "tab_id" : "support",##
+ "tab_color" : "grey",##
+ "hide_tab" : true,##
+ "title" : "$adminMsg.get('cel_support_title')",##
+ "text" : "$adminMsg.get('cel_support_desctext')",##
+ "tag" : "dropbox",##
+ "url" : "$adminMsg.get('cel_support_host')",##
+ "email" : "$!celementsweb.getEmailAdressForCurrentUser()" }

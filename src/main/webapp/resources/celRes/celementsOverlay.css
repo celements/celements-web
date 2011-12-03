@@ -1,0 +1,234 @@
+.generalOverlay {
+  height:100%;
+  width:100%;
+  z-index: 99;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.OverlayBack {
+  background-color: black;
+  opacity: 0.5;
+  filter:alpha(opacity=50);
+}
+#cel_langbar {
+  margin-bottom: 13px;
+}
+#cel_langbar .langitem {
+  margin-right: 13px;
+}
+.main.layoutsubsection {
+  margin:50px auto auto;
+  padding:30px;
+  background: white;
+  position: relative;
+}
+#closebutton {
+  background-image:url(close.png);
+  background-position:left top;
+  background-repeat:no-repeat;
+  height:30px;
+  position:absolute;
+  right:-15px;
+  top:-15px;
+  width:30px;
+}
+#closebutton:hover {
+background-image:url("close-hover.png");
+background-position:left top;
+background-repeat:no-repeat;
+height:30px;
+position:absolute;
+right:-15px;
+top:-15px;
+width:30px;
+}
+
+/*RLS Newsletter */
+
+.main.layoutsubsection{
+	position:relative;
+	width:800px;
+}
+newsletter_send_answer{
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+#newsletter_send_answer .cel_newsletter_info_title{
+	font-size:16px;
+	line-height:20px;
+	margin-bottom:5px;
+	margin-top:5px;
+	text-decoration:underline;
+}
+
+#newsletter_send_answer .cel_newsletter_receivers_groups{
+	width:370px;
+	height:100px;
+	margin-bottom:15px;
+	float:left;
+	display:block;
+}
+#newsletter_send_answer .cel_newsletter_receivers_groups ul{
+	height:80px;
+	margin-top:5px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	border:1px solid black;
+}
+#newsletter_send_answer .cel_newsletter_receivers_groups ul li.cel_newsletter_row_uneven{
+	padding-left:5px;
+	background-color:#F0F0F0;
+}
+#newsletter_send_answer .cel_newsletter_receivers_groups ul li.cel_newsletter_row_even{
+	padding-left:5px;
+	background-color:#CCCCCC;
+}
+#newsletter_send_answer .cel_newsletter_receivers_single_users{
+	width:370px;
+	height:100px;
+	margin-bottom:15px;
+	float:right;
+	display:block;
+}
+#newsletter_send_answer .cel_newsletter_receivers_single_users ul{
+	height:80px;
+	margin-top:5px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	border:1px solid black;
+}
+#newsletter_send_answer .cel_newsletter_receivers_single_users ul li.cel_newsletter_row_uneven{
+	padding-left:5px;
+	background-color:#F0F0F0;
+}
+#newsletter_send_answer .cel_newsletter_receivers_single_users ul li.cel_newsletter_row_even{
+	padding-left:5px;
+	background-color:#CCCCCC;
+}
+#newsletter_send_answer .cel_newsletter_receivers_form{
+	clear:both;
+}
+#newsletter_send_answer .cel_newsletter_form_description{
+	font-size:16px;
+	line-height:20px;
+	text-decoration:underline;
+}
+#newsletter_send_answer #newsletter_send input{
+	margin-top:10px;
+	margin-bottom:5px;
+	width:250px;
+	display:block;
+}
+#newsletter_send_answer #newsletter_send .cel_newsletter_form_input_subject{
+	width:794px;
+}
+form#newsletter_send input#newsletterSubmitButton {
+	margin-top: 20px;
+  float: left;
+}
+form#newsletter_send input#newsletterTestSubmitButton,
+form#newsletter_send span#testResultBoxSpan {
+	display: block;
+	margin-left: 545px;
+	margin-top: 25px;
+}
+
+/* User admin */
+
+.UserAdminSheet form#update{
+	background-color:#B0B0B0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	line-height:19px;
+}
+.UserAdminSheet form#update table.block{
+	border-collapse:collapse;
+	table-layout:fixed;
+}
+.UserAdminSheet .UserAdminInfos .xwikieditcontent{
+	position:relative;
+}
+.UserAdminSheet .UserAdminInfos table{
+	width:500px;
+}
+.UserAdminSheet form#update #xwikieditcontent{
+	width:auto;
+}
+.UserAdminSheet form#update .UserAdminInfos{
+	position:relative;
+	display:block;
+	float:left;
+	width:500px;
+}
+.UserAdminSheet form#update .UserAdminGroupdata{
+	position:relative;
+	width:250px;
+	display:block;
+	float:left;
+}
+.UserAdminSheet form#update #xwikieditcontent .editblock{
+	position:relative;
+	padding-bottom:2px;
+}
+.UserAdminSheet form#update #xwikieditcontent .editblock dd select{
+	height:20px;
+}
+.UserAdminSheet form#update td.AdminUserName{
+	width:212px;
+	border:none;
+}
+.UserAdminSheet form#update td.AdminUserName input{
+	border:none;
+}
+.UserAdminSheet form#update td.td_loginname{
+	padding-right:10px;
+	text-align:left;
+}
+.UserAdminSheet form#update .UserAdminInfos .editblock{
+	position:relative;
+}
+.UserAdminSheet form#update .editblock label{
+	float:none;
+	width:auto;
+	text-align:right;
+	padding-right:10px;
+	padding-top:1px;
+	width:190px;
+	display:block;
+}
+
+.UserAdminSheet form#update .editblock dl{
+	margin:0px;
+}
+.UserAdminSheet form#update .editblock dd{
+	position:absolute;
+	top:0px;
+	left:200px;
+	margin:0px;
+}
+.UserAdminSheet form#update .clear{
+	clear:both;
+}
+.UserAdminSheet form#update table, .UserAdminSheet form#update table td{
+	line-height:19px;
+	font-size:12px;
+}
+.generalOverlay .layoutsubsection {
+  font-size: 12px;
+  line-height: 14px;
+  font-family: Tahoma,Geneva,Helvetica,Arial,sans-serif;
+}
+.generalOverlay .layoutsubsection #cel_overlaybody {
+  position: relative;
+}
+.generalOverlay .layoutsubsection #cel_overlaybody .changePassword h2 {
+  font-size: 15px;
+  line-height: 18px;
+  margin-bottom: 25px
+}
+.generalOverlay .layoutsubsection #cel_overlaybody .changePassword dl dd {
+  margin-left:160px;
+  position:relative;
+  top:-16px;
+}

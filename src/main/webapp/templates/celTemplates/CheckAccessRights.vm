@@ -1,0 +1,194 @@
+<div class="celements2_box">
+<div class="celements2_box_title">Check Access Rights</div>
+<div class="celements2_box_subtitle">Please select</div>
+#set($user = $!context.getRequest().get("user"))
+#if($!user == "")
+#set($user = $context.user)
+#end
+#set($document = $!context.getRequest().get("document"))
+#if($!document == "")
+#set($document = "Content.WebHome")
+#end
+<form action="" method="post">
+## user selection
+ Show access rights of user 
+ <select name="user" size="1" class="celements2_input">
+  <optgroup label="Current User">
+  #if($context.user == $user)
+   <option value="$context.user" selected="selected">$context.user</option>
+   #else
+   <option value="$context.user">$context.user</option>
+   #end
+  </optgroup>
+ <optgroup label="Special Users">
+  #if("XWiki.XWikiGuest" == $user)
+    <option value="XWiki.XWikiGuest" selected="selected">XWiki.XWikiGuest</option>
+   #else
+ <option value="XWiki.XWikiGuest">XWiki.XWikiGuest</option>
+   #end
+ </optgroup>
+ <optgroup label="Local Users">
+###set($xwql = "select doc.fullName,xuser.company, xuser.last_name, xuser.first_name")
+## query starting with select needs programming rights!
+#set($xwql = "from doc.object(XWiki.XWikiUsers) as xuser")
+#set($xwql = "${xwql} order by xuser.company, xuser.last_name, xuser.first_name")
+ #foreach ($item in $xwiki.queryManager.xwql($xwql).execute())
+   #set($userDoc = $xwiki.getDocument($item))
+   #set($userObj = $userDoc.getObject('XWiki.XWikiUsers'))
+   #set($fname = $userObj.getProperty('first_name').getValue())
+   #set($lname = $userObj.getProperty('last_name').getValue())
+   #set($company = $userObj.getProperty('company').getValue())
+   #set($outStr = '')
+  #if("$!userObj.getProperty('active').getValue()" == '0')#set($outStr = "${outStr}(in-active)")#end
+  #if("$!company" != '')#set($outStr = "${outStr}$!{company},")#end
+  #if("$!lname" != '')#set($outStr = "${outStr}$!{lname},")#end
+  #if("$!fname" != '')#set($outStr = "${outStr}$!{fname},")#end
+  #if("$!{outStr}" == '')#set($outStr = "$userDoc.getName()")#end
+<option value="$item"##
+   #if($item == $user)
+      selected="selected"##
+   #end
+>${outStr}</option>
+ #end
+ </optgroup>
+ </select>
+ for
+## document selection
+ <select name="document" size="1" class="celements2_input">
+ <optgroup label="Spaces">
+ #foreach($spacename in $xwiki.getSpaces())
+ ## get space name
+ #if($spacename == $document)
+ <option value="$spacename" selected="selected">$spacename</option>
+ #else
+  <option value="$spacename">$spacename</option>
+ #end
+ #end
+ </optgroup>
+ #set($space = "")
+  <optgroup label="Documents in Space $doc.space">
+ #foreach ($item in $xwiki.getSpaceDocsName($doc.space))
+   #if($item == $document)
+   <option value="$item" selected="selected">$item</option>
+   #else
+   <option value="$item">$item</option>
+   #end 
+ #end
+ </optgroup>
+ </select>
+ <input type="submit" value="show" />
+</form>
+<br />
+<br />
+## show rights
+#if("$!user" != "" && "$!document" != '')
+<div class="celements2_box_subtitle">Access rights of user "$user" for document "$document".</div>
+<table border="0" cellspacing="2" cellpadding="2">
+<tr>
+<th width="100" style="text-align:left;">&nbsp;</th>
+<th width="50" style="text-align:left;">view</th>
+<th width="50" style="text-align:left;">edit</th>
+<th width="50" style="text-align:left;">delete</th>
+<th width="50" style="text-align:left;">register</th>
+<th width="50" style="text-align:left;">programming</th>
+<th width="50" style="text-align:left;">admin</th>
+</tr>
+#if($document.indexOf(".") <= 0)
+## show space overview
+#set($sql = "where doc.space='$document' and translation = 0 order by doc.name")
+#foreach ($document in $xwiki.searchDocuments($sql))
+<tr>
+<th style="text-align:left;">$document</td>
+#if($xwiki.hasAccessLevel("view", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("view", $user, $document)</td>
+#if($xwiki.hasAccessLevel("edit", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("edit", $user, $document)</td>
+#if($xwiki.hasAccessLevel("delete", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("delete", $user, $document)</td>
+#if($xwiki.hasAccessLevel("register", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("register", $user, $document)</td>
+#if($xwiki.hasAccessLevel("programming", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("programming", $user, $document)</td>
+#if($xwiki.hasAccessLevel("admin", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("admin", $user, $document)</td>
+</tr>
+#end
+#else
+## show document
+<tr>
+<th style="text-align:left;">$document</td>
+#if($xwiki.hasAccessLevel("view", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("view", $user, $document)</td>
+#if($xwiki.hasAccessLevel("edit", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("edit", $user, $document)</td>
+#if($xwiki.hasAccessLevel("delete", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("delete", $user, $document)</td>
+#if($xwiki.hasAccessLevel("register", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("register", $user, $document)</td>
+#if($xwiki.hasAccessLevel("programming", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("programming", $user, $document)</td>
+#if($xwiki.hasAccessLevel("admin", $user, $document))
+#set($style="background-color:green")
+#else
+#set($style="background-color:red")
+#end
+<td style="$style;text-align:left;">$xwiki.hasAccessLevel("admin", $user, $document)</td>
+</tr>
+#end
+</table>
+<br />
+<br />
+<div class="celements2_box_subtitle">Additional info</div>
+User "$user" is a member of the following groups:
+<ul>
+#set($sql = ", BaseObject as obj, StringProperty as me where obj.name=doc.fullName and obj.className='XWiki.XWikiGroups' and obj.id = me.id.id and me.id.name = 'member' and me.value='$user'")
+ #foreach ($item in $xwiki.searchDocuments($sql))
+ <li>$item</li>
+ #end
+ </ul>
+#end
+</div>
