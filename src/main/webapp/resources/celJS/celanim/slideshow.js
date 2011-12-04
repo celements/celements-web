@@ -77,6 +77,7 @@ var initSlideShows = function(slideShowConfigArray) {
       moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
       moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
       slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
+      slideShowImg.absolutize();
       removeImageSize(slideShowImg);
       if (slideShowHasNextImage(slideShowConfig)) {
         tempImg.src = slideShowConfig.nextimgsrc;
@@ -130,6 +131,10 @@ var celSlideShowEffectAfterFinish = function(effect) {
   var fadeimgtemp = $(slideConfig.htmlId + '_tmpImg');
   var fadeimg = $(slideConfig.htmlId);
   fadeimg.src = fadeimgtemp.src;
+  fadeimg.setStyle({
+    'top' : fadeimgtemp.getStyle('top'),
+    'left' : fadeimgtemp.getStyle('left')
+  });
   fadeimg.show();
   fadeimgtemp.hide();
   if (slideShowHasNextImage(slideConfig)) {
@@ -150,6 +155,15 @@ var changeImage = function(elemId) {
   var effectDetails = celSlideShowEffects.get(effectKey) || !celSlideShowEffects.get('fade');
   var effectParameters = $H(effectDetails.params).merge({
     'sync' : true
+  });
+  var tempImg = $(elemId + '_tmpImg');
+  var dim = tempImg.getDimensions();
+  var wrapDiv = tempImg.up('div');
+  var diffHeight = wrapDiv.getHeight() - dim.height;
+  var diffWidth = wrapDiv.getWidth() - dim.width;
+  tempImg.setStyle({
+    'top' : diffHeight / 2 + 'px',
+    'left' : diffWidth / 2 + 'px'
   });
   var duration = effectParameters.get('duration');
   theEffect = effectDetails.effect(elemId + '_tmpImg', effectParameters.toObject());
