@@ -40,11 +40,13 @@ tinyMCE.addI18n('de.celimage_dlg', {
   "tab_advanced" : "Erweitert",
   "tab_appearance" : "Aussehen",
   "tab_general" : "Allgemein",
-  tab_animation :"Animation",
-slideshow : "Bildstrecke",
-hasSlideshow : "mit Bildstrecke",
-gallery : "Bild Album",
-delay : "Bildwechsel nach (Sekunden)",
-defaultEffect : "standard (Fade)",
-effects : "Bildwechsel Effekt"
+  "tab_animation" :"Animation",
+  "tab_imagePicker" : "Picker",
+  slideshow : "Bildstrecke",
+  hasSlideshow : "mit Bildstrecke",
+  gallery : "Bild Album",
+  delay : "Bildwechsel nach (Sekunden)",
+  defaultEffect : "standard (Fade)",
+  effects : "Bildwechsel Effekt",
+  "imagePicker" : "Bildauswahl"
 });

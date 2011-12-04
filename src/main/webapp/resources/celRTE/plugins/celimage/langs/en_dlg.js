@@ -40,11 +40,13 @@ align_textbottom:"Text bottom",
 align_left:"Left",
 align_right:"Right",
 image_list:"Image list",
-tab_animation :"Animation",
+"tab_animation" :"Animation",
+"tab_imagePicker" : "Picker",
 slideshow : "Slideshow",
 hasSlideshow : "has slideshow",
 gallery : "gallery",
 delay : "delay (seconds)",
 defaultEffect : "default (Fade)",
-effects : "effect"
+effects : "effect",
+"imagePicker" : "select image"
 });
