@@ -60,12 +60,12 @@ var initSlideShows = function(slideShowConfigArray) {
         'id' : slideShowConfig.htmlId + '_tmpImg',
         'style' : 'position: absolute; top: 0px; left: 0px;'
        }).hide();
-      tempImg.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
-      tempImg.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
       var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
           'style': 'display: inline-block; position: relative;'
             +' font-size: 0px; line-height: 0px;' }
         ).insert({ top : tempImg });
+      divWrapper.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
+      divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
       var slideShowImg = $(slideShowConfig.htmlId);
       moveStyleToWrapper(divWrapper, slideShowImg, 'float');
       moveStyleToWrapper(divWrapper, slideShowImg, 'margin-top');
@@ -77,6 +77,7 @@ var initSlideShows = function(slideShowConfigArray) {
       moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
       moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
       slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
+      removeImageSize(slideShowImg);
       if (slideShowHasNextImage(slideShowConfig)) {
         tempImg.src = slideShowConfig.nextimgsrc;
       }
@@ -113,14 +114,27 @@ var startSlideShows = function() {
   });
 };
 
+var removeImageSize = function(tempImage) {
+  tempImage.setStyle({
+    'height' : 'auto',
+    'width' : 'auto'
+  });
+  tempImage.writeAttribute({
+    'height' : '',
+    'width' : ''
+  });
+};
+
 var celSlideShowEffectAfterFinish = function(effect) {
   var slideConfig = celSlideShowConfig.get(effect.options.slideShowElemId);
   var fadeimgtemp = $(slideConfig.htmlId + '_tmpImg');
   var fadeimg = $(slideConfig.htmlId);
   fadeimg.src = fadeimgtemp.src;
+  fadeimg.show();
   fadeimgtemp.hide();
   if (slideShowHasNextImage(slideConfig)) {
     fadeimgtemp.src = slideConfig.nextimgsrc;
+    removeImageSize(fadeimgtemp);
     scheduleChangeImage(slideConfig.htmlId);
   }
 };
@@ -128,15 +142,28 @@ var celSlideShowEffectAfterFinish = function(effect) {
 var celSlideShowEffects = new Hash();
 var celSlideShowAddEffect = function (effectKey, effect) {
   effect.params = effect.params || {};
-  effect.params.afterFinish = celSlideShowEffectAfterFinish;
   celSlideShowEffects.set(effectKey, effect);
 };
 
 var changeImage = function(elemId) {
   var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
   var effectDetails = celSlideShowEffects.get(effectKey) || !celSlideShowEffects.get('fade');
-  var effectParameters = $H(effectDetails.params).merge({ 'slideShowElemId' : elemId });
-  effectDetails.effect(elemId + '_tmpImg', effectParameters.toObject());
+  var effectParameters = $H(effectDetails.params).merge({
+    'sync' : true
+  });
+  var duration = effectParameters.get('duration');
+  theEffect = effectDetails.effect(elemId + '_tmpImg', effectParameters.toObject());
+  new Effect.Parallel(
+      [
+        theEffect,
+        new Effect.Fade(elemId, { from : 1, to : 0, sync: true })
+      ],
+      {
+        'duration' : duration,
+        'slideShowElemId' : elemId,
+        'afterFinish' : celSlideShowEffectAfterFinish
+      }
+  );
 };
 
 var slideShowHasNextImage = function(slideConfig) {
