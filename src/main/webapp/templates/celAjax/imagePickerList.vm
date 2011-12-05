@@ -1,49 +1,21 @@
-## init Celements variables
 $response.setStatus(200)
-$xwiki.includeForm("celements2web:Macros.initCelements", false)
 #set($attachments = $xwiki.celementsweb.getAttachmentListSorted($doc, 'AttachmentDescendingChangeDateComparator'))
-<div id="xwikiattachmentscontent" class="xwikidatacontent">
-#set($counter=0)
-<table>
-<tr><th></th><th> <b>$adminMsg.get("cel_rte_filename")</b> </th><th> <b>$adminMsg.get("cel_rte_version")</b> </th>
-<th> <b>$adminMsg.get("cel_rte_author")</b> </th></tr>
+[##
+#set($count = 0)
 #foreach ($attach in $attachments)
-#if(("$!request.images" == '0') || ($attach.isImage() && ("$!request.images" == '1')) || (!$attach.isImage() && ("$!request.images" == '2')))
-<tr>
-<td>
 #if ($attach.isImage())
-#set($resizeParams = 'celwidth=80&celheight=80')
-<img class="imagePickerSource" src="$doc.getAttachmentURL("${attach.filename}", 'download', "$resizeParams")" alt="${attach.filename}" border="0" />
-#end
-</td><td><a class="imagePickerSource" href="$doc.getAttachmentURL("${attach.filename}", "download")">$attach.filename</a></td>
-<td>$attach.version</td><td>$xwiki.getLocalUserName($attach.author)</td>
-</tr>
-#end
-#set( $counter = $counter + 1)
-#end
-</table>
-<br />
-<div id="progressBar" style="display:none">
-  <img src="$celementsweb.getSkinFile(':celRes/ajax-loader.gif', 'file')">
-</div>
-<form id="attach" action="$doc.getURL("upload")" enctype="multipart/form-data" method="post"
-      onsubmit="return updateAttachName(this)" >
-##      onsubmit="if(updateAttachName(this)){verifyDoc()}; return false;" >
-<input type="hidden" name="language" value="$!default_language" />
-<input type="hidden" name="xredirect" value="$!request.get('xredirect')" />
-<p>
-$adminMsg.get("cel_rte_choosetargetfilename"):
-<input type="text" name="filename" value="" size="20" />
-<br /><br />
-$adminMsg.get("cel_rte_choosefiletoupload"):
-<input type="file" name="filepath" value="" size="40"  />
-<br /><br />
-<input type="submit" value="$adminMsg.get('cel_rte_attachthisfile')" />
-</p>
-</form>
-</div>
-<div class="xwikidatafooter2">
-<div class="xwikidatafooter1">&nbsp;</div>
-<div class="xwikidatafooter">&nbsp;</div>
-</div>
-</div>
+#if($count > 0) , #end
+#set($count = $count + 1)
+ { "src" : "$!doc.getAttachmentURL("${attach.filename}", 'download')"##
+ , "filename" : "$!{attach.filename}"##
+ , "attversion" : "$!{attach.version}"##
+ , "lastChangedBy" : "$!{xwiki.getLocalUserName($attach.author)}"##
+ #set($dimensionObj = $xwiki.celementsphoto.getDimension("${doc.fullName};${attach.filename}"))
+ , "maxHeight" : $!dimensionObj.getHeight()##
+ , "maxWidth" : $!dimensionObj.getWidth()##
+ , "fileSize" : "#dynamicsize(${attach.filesize})"##
+ , "mimeType" : "$!{attach.mimeType}"##
+ }##
+#end ## if isImage
+#end ## foreach
+]

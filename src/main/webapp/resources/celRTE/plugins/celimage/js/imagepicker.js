@@ -1,6 +1,7 @@
 var baseurl;
 var imgurl;
 var editor_id;
+var attList = [];
 
 Event.observe(window, 'load', function(){
   baseurl = tinyMCEPopup.getParam("wiki_attach_path");
@@ -24,11 +25,24 @@ var loadAttachmentList = function(baseurl) {
 };
 
 var loadAttachmentListCallback = function(e) {
-  var attachEl = document.getElementById("attachments");
-  attachEl.innerHTML = e;
-  attachEl.select('.imagePickerSource').each(function(elem) {
-      elem.observe('click', clickOnFileAction);
+  if (e.isJSON()) {
+    attList = e.evalJSON();
+    var attachEl = $('attachments');
+    attachEl.update('');
+    $A(attList).each(function(imgElem) {
+      var imgThmb = new Element('img', {
+        'src' : (imgElem.src + '?celheight=100&celwidth=100'),
+        'class' : 'imagePickerSource'
+      });
+      attachEl.insert({ bottom : imgThmb });
     });
+//    attachEl.select('.imagePickerSource').each(function(elem) {
+//        elem.observe('click', clickOnFileAction);
+//      });
+  } else if ((typeof console != 'undefined')
+      && (typeof console.warn != 'undefined')) {
+    console.warn('loadAttachmentListCallback: noJSON!!! ', e);
+  }
 };
 
 var clickOnFileAction = function (event) {
