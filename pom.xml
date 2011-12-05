@@ -27,7 +27,7 @@
 	<parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>1.42</version>
+    <version>1.43</version>
   </parent>
 	<modelVersion>4.0.0</modelVersion>	
 	<groupId>com.celements</groupId>
