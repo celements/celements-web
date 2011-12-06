@@ -61,6 +61,7 @@ var initSlideShows = function(slideShowConfigArray) {
         'style' : 'position: absolute; top: 0px; left: 0px;'
        }).hide();
       var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
+          'class' : 'celanim_slideshow_wrapper',
           'style': 'display: inline-block; position: relative;'
             +' font-size: 0px; line-height: 0px;' }
         ).insert({ top : tempImg });
