@@ -1,4 +1,7 @@
 ##INPUT (optional) $cel_editobj_validate [true|false] AND (if true) #setClassForField(<propfieldname>)
+#if("$!createIfNotExists" == '')
+  #set($createIfNotExists = false)
+#end
 #set($linkParams = '')
 #if(!$cel_embedded_editobj)
 #set($linkParams = 'editor=object')
@@ -107,6 +110,8 @@
 #set($object = $cel_editobj_doc.getObject($class.name, $util.parseInt("$cel_editobj_nb")))
 #if($object)
 #set($objects = [$object])
+#elseif($createIfNotExists)
+#set($objects = [$cel_editobj_doc.newObject($class.name)])
 #else
 #set($objects = [])
 #warning($adminMsg.get("nosuchobject"))
