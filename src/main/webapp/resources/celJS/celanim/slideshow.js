@@ -88,6 +88,8 @@ var initSlideShows = function(slideShowConfigArray) {
       slideShowConfig.imageSrcQuery = slideShowConfig.imageSrcQuery.replace(
           /celheight=(\d+)/, 'celheight=' + celheight).replace(/celwidth=(\d+)/,
               'celwidth=' + celwidth);
+      slideShowImg.src = slideShowImg.src.replace(/(\?.*)$/,
+          slideShowConfig.imageSrcQuery);
       /**  END HACK
        **/
       slideShowImg.absolutize();
