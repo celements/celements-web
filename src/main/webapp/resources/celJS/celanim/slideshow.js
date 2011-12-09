@@ -60,6 +60,7 @@ var initSlideShows = function(slideShowConfigArray) {
         'id' : slideShowConfig.htmlId + '_tmpImg',
         'style' : 'position: absolute; top: 0px; left: 0px;'
        }).hide();
+      tempImg.observe('load', centerImage);
       var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
           'class' : 'celanim_slideshow_wrapper',
           'style': 'display: inline-block; position: relative;'
@@ -165,20 +166,29 @@ var celSlideShowAddEffect = function (effectKey, effect) {
   celSlideShowEffects.set(effectKey, effect);
 };
 
+var getCenteredValue = function(diffValue) {
+  if (diffValue < 0) {
+    return 0;
+  } else {
+    return diffValue / 2;
+  }
+};
+
+var centerImage = function(event) {
+  var tempImg = event.findElement();
+  var dim = tempImg.getDimensions();
+  var wrapDiv = tempImg.up('div');
+  tempImg.setStyle({
+    'top' : getCenteredValue(wrapDiv.getHeight() - dim.height) + 'px',
+    'left' : getCenteredValue(wrapDiv.getWidth() - dim.width) + 'px'
+  });
+};
+
 var changeImage = function(elemId) {
   var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
   var effectDetails = celSlideShowEffects.get(effectKey) || !celSlideShowEffects.get('fade');
   var effectParameters = $H(effectDetails.params).merge({
     'sync' : true
-  });
-  var tempImg = $(elemId + '_tmpImg');
-  var dim = tempImg.getDimensions();
-  var wrapDiv = tempImg.up('div');
-  var diffHeight = wrapDiv.getHeight() - dim.height;
-  var diffWidth = wrapDiv.getWidth() - dim.width;
-  tempImg.setStyle({
-    'top' : diffHeight / 2 + 'px',
-    'left' : diffWidth / 2 + 'px'
   });
   var duration = effectParameters.get('duration');
   theEffect = effectDetails.effect(elemId + '_tmpImg', effectParameters.toObject());
