@@ -78,6 +78,18 @@ var initSlideShows = function(slideShowConfigArray) {
       moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
       moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
       slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
+      /** START HACK: increase height and width by one to fix problem in celements-photo
+       *              which sometimes returns images too small by one in both dimensions.
+       **/
+      var celwidth = parseInt(slideShowConfig.imageSrcQuery.replace(/^.*celwidth=(\d+).*/,
+          '$1')) + 1;
+      var celheight = parseInt(slideShowConfig.imageSrcQuery.replace(
+          /^.*celheight=(\d+).*/, '$1')) + 1;
+      slideShowConfig.imageSrcQuery = slideShowConfig.imageSrcQuery.replace(
+          /celheight=(\d+)/, 'celheight=' + celheight).replace(/celwidth=(\d+)/,
+              'celwidth=' + celwidth);
+      /**  END HACK
+       **/
       slideShowImg.absolutize();
       removeImageSize(slideShowImg);
       if (slideShowHasNextImage(slideShowConfig)) {
