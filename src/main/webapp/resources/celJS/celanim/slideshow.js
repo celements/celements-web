@@ -1,4 +1,4 @@
-Event.observe(window, 'load', function() {
+YAHOO.util.Event.onDOMReady(function() {
   loadSlideShowDataAsync();
 });
 
