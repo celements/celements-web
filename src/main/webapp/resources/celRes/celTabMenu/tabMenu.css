@@ -11,12 +11,10 @@ body div.celements3_tabMenu {
   margin-left:auto;
 }
 body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
-	font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
 	font-size: 12px;
 	line-height: 17px;
-	font-weight: 500;
-	letter-spacing: 1px;
-	word-spacing: 2px;
+	font-weight: 400;
 	width: 630px;
 	text-transform: none;
 	color: #3E3E3E;
@@ -51,16 +49,14 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
 	border-left:1px solid #C5C5C5;
 	border-right:1px solid #929292;
 	border-bottom:1px solid #929292;
-	color:#FCD7AA;
-	font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	color:#CCCCCC;
+	font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
 	font-size:12px;
 	line-height:13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  word-spacing: 1px;
+  font-weight: 400;
 }
 .celements3_tabMenu .tabButton .yui-button button:hover {
-	background-color:#E2831D;
+	background-color:#ff9900;
 	border-bottom:1px solid #F0F0F0;
 	color:#3E3E3E;
 }
@@ -77,9 +73,9 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
 }
 
 .yui-skin-sam .yui-dialog .ft span.default button {
-  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
-  background-color: #C26A19;
-	color: #FDD549;
+  font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  background-color: #ff9900;
+  color:#333333 !important;
 }
 
 /* save buttons */
@@ -94,25 +90,25 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
 	border-left:1px solid #C5C5C5;
 	border-right:1px solid #929292;
 	border-bottom:1px solid #929292;
-	color:#FDD549;
-	font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  color:#333333 !important;
+	font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
 	font-size:10px;
 	line-height:10px;
-	font-weight:bold;
+	font-weight: 400;
 }
 .celements3_tabMenu .saveButton .yui-button button:hover {
-	background-color:#E2831D;
+	background-color:#ff9900;
 	border-bottom:1px solid #F0F0F0;
-	color:#FDD549;
+  color:#333333 !important;
 }
 .celements3_tabMenu .saveButton .cel-button-active button {
-  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
 	background-color:#F0F0F0;
 	border-bottom:1px solid #F0F0F0;
 	color:#3E3E3E;
 }
 .celements3_tabMenu .saveButton .cel-button-focus button {
-  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
 	background: none;
 	background-color:#F0F0F0;
 	border-bottom:1px solid #F0F0F0;
@@ -147,10 +143,8 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
 .celements3_tabMenu input,
 .celements3_tabMenu select,
 .celements3_tabMenu textarea {
-  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
-  font-weight: 500;
-  letter-spacing: 1px;
-  word-spacing: 1px;
+  font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-weight: 400;
   border:1px solid #C5C5C5;
 	font-size: 11px;
 	line-height: 12px;
@@ -213,11 +207,9 @@ div.mask {
   padding: 0px;
   font-size: 13px;
   line-height: 14px;
-  color:#FDD549;
-  font-weight: 700;
-  letter-spacing: 1px;
-  word-spacing: 1px;
-  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  color:#333333 !important;
+  font-weight: 400;
+  font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
 }
 .celements3_tabMenu #tabMenuPanel .hd .actionButton,
 .celements3_tabMenu .container-close {
@@ -228,15 +220,13 @@ div.mask {
   border-left:1px solid #C5C5C5;
   border-right:1px solid #929292;
   border-bottom:1px solid #929292;
-  color:#FDD549;
-  font-family:"Terminal Dosis",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  color:#333333 !important;
+  font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-size: 13px;
   line-height: 14px;
   text-indent: 0px;
-  background-color:#C26A19;
-  font-weight: 700;
-  letter-spacing: 1px;
-  word-spacing: 1px;
+  background-color:#ff9900;
+  font-weight: 400;
 }
 .celements3_tabMenu #tabMenuPanel .hd .actionButton {
   float: right;
@@ -246,7 +236,7 @@ div.mask {
   padding-right: 10px;
 }
 .celements3_tabMenu #tabMenuPanel .hd .actionButton:hover {
-	background-color:#E2831D;
+	background-color:#ff9900;
 }
 .celements3_tabMenu #tabMenuPanel .hd div.clearbuttons {
   clear:both;
