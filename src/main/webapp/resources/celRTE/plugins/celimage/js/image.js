@@ -90,7 +90,11 @@ var CelImageDialog = {
   },
 
   addAutoResizeToURL : function(src, width, height) {
-    return src.replace(/\?.*/, '').strip() + '?celwidth=' + width + '&celheight=' + height;
+    if (src && (src != '')) {
+      return src.replace(/\?.*/, '').strip() + '?celwidth=' + width
+        + '&celheight=' + height;
+    }
+    return '';
   },
 
   getSlideShowId : function(f) {
@@ -504,8 +508,9 @@ var CelImageDialog = {
   },
 
   showPreviewImage : function(u, st) {
-    if (!u) {
-      tinyMCEPopup.dom.setHTML('prev', '');
+    if (!u || (u == '')) {
+      console.debug('first image src: ' + u);
+      tinyMCEPopup.dom.setHTML('prev', '<p>Please select an image first.</p>');
       return;
     }
 
@@ -514,10 +519,11 @@ var CelImageDialog = {
 
     u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
-    if (!st)
+    if (!st) {
       tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="CelImageDialog.updateImageData(this);" onerror="CelImageDialog.resetImageData();" />');
-    else
-      tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="CelImageDialog.updateImageData(this, 1);" />');
+    } else {
+      tinyMCEPopup.dom.setHTML('prev', '<p>Please select an image first.</p>');
+    }
   }
 };
 
