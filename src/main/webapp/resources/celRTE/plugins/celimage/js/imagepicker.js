@@ -63,9 +63,11 @@ var loadAttachmentListCallback = function(e) {
       }).update(imgThmb);
       attachEl.insert({ bottom : imgDiv });
     });
-//    attachEl.select('.imagePickerSource').each(function(elem) {
-//        elem.observe('click', clickOnFileAction);
-//      });
+    attachEl.select('.imagePickerSource').each(function(elem) {
+        if (!elem.hasClassName('selected')) {
+          elem.observe('click', clickOnFileAction);
+        }
+      });
   } else if ((typeof console != 'undefined')
       && (typeof console.warn != 'undefined')) {
     console.warn('loadAttachmentListCallback: noJSON!!! ', e);
@@ -81,6 +83,13 @@ var clickOnFileAction = function (event) {
   if (filename && document.forms[0].src) {
     filename = filename.replace(/^(.+)\?.*/, '$1');
     document.forms[0].src.value = filename;
+    var oldSelection = $$('img.imagePickerSource.selected');
+    if (oldSelection.size() > 0) {
+      oldSelection[0].removeClassName('selected');
+      oldSelection[0].observe('click', clickOnFileAction);
+    }
+    this.addClassName('selected');
+    this.stopObserving('click', clickOnFileAction);
     CelImageDialog.showPreviewImage(filename);
     mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
   }
