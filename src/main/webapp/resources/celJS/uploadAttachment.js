@@ -11,7 +11,7 @@ var checkUploadFileName = function(fileUploadElm) {
      fileUploadElm.hide();
      fileUploadElm.insert({after : new Element('img', {
        'id' : 'attachmentloadingimg',
-       'src' : '$xwiki.getSkinFile("celRes/ajax-loader-small.gif", true)'
+       'src' : '/file/resources/celRes/ajax-loader-small.gif'
      })});
      if($('noAttachments')) {
        $('noAttachments').hide();
