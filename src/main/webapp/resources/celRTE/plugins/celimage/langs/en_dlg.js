@@ -48,5 +48,6 @@ gallery : "gallery",
 delay : "delay (seconds)",
 defaultEffect : "default (Fade)",
 effects : "effect",
-"imagePicker" : "select image"
+"imagePicker" : "select image",
+"select_image_first" : "Please select image first."
 });

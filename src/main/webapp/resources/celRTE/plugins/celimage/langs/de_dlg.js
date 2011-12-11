@@ -48,5 +48,6 @@ tinyMCE.addI18n('de.celimage_dlg', {
   delay : "Bildwechsel nach (Sekunden)",
   defaultEffect : "standard (Fade)",
   effects : "Bildwechsel Effekt",
-  "imagePicker" : "Bildauswahl"
+  "imagePicker" : "Bildauswahl",
+  "select_image_first" : "Bitte zuerst Bild ausw&auml;len."
 });

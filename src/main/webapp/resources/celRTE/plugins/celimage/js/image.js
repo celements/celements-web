@@ -510,7 +510,8 @@ var CelImageDialog = {
   showPreviewImage : function(u, st) {
     if (!u || (u == '')) {
       console.debug('first image src: ' + u);
-      tinyMCEPopup.dom.setHTML('prev', '<p>Please select an image first.</p>');
+      tinyMCEPopup.dom.setHTML('prev', '<p style="padding:20px;">' + tinyMCEPopup.getLang(
+          'celimage_dlg.select_image_first') +'</p>');
       return;
     }
 
@@ -520,9 +521,11 @@ var CelImageDialog = {
     u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
     if (!st) {
-      tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="CelImageDialog.updateImageData(this);" onerror="CelImageDialog.resetImageData();" />');
+      tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
+          + '" border="0" onload="CelImageDialog.updateImageData(this);" onerror="CelImageDialog.resetImageData();" />');
     } else {
-      tinyMCEPopup.dom.setHTML('prev', '<p>Please select an image first.</p>');
+      tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
+          + '" border="0" onload="CelImageDialog.updateImageData(this, 1);" />');
     }
   }
 };
