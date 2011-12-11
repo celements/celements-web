@@ -36,10 +36,10 @@ tinyMCE.addI18n('de.celimage_dlg', {
   "constrain_proportions" : "Seitenverh\u00e4ltnis beibehalten",
   preview : "Vorschau",
   title : "Titel",
-  general : "Allgemein",
+  imageDetails : "Vorschau",
   "tab_advanced" : "Erweitert",
   "tab_appearance" : "Aussehen",
-  "tab_general" : "Allgemein",
+  "tab_imageDetails" : "Vorschau",
   "tab_animation" :"Animation",
   "tab_imagePicker" : "Picker",
   slideshow : "Bildstrecke",
@@ -49,5 +49,6 @@ tinyMCE.addI18n('de.celimage_dlg', {
   defaultEffect : "standard (Fade)",
   effects : "Bildwechsel Effekt",
   "imagePicker" : "Bildauswahl",
-  "select_image_first" : "Bitte zuerst Bild ausw&auml;len."
+  "select_image_first" : "Bitte zuerst Bild ausw&auml;len.",
+  "uploadImage" : "Bild hochladen"
 });

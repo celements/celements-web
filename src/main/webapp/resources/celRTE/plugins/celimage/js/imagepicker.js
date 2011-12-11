@@ -24,17 +24,44 @@ var loadAttachmentList = function(baseurl) {
   });
 };
 
+var getCenteredImagePickerValue = function(diffValue) {
+  if (diffValue < 0) {
+    return 0;
+  } else {
+    return Math.floor(diffValue / 2);
+  }
+};
+
+var centerImagePickerThumb = function(event) {
+  var tempImg = event.findElement();
+  var dim = tempImg.getDimensions();
+  var wrapDiv = tempImg.up('div');
+  tempImg.setStyle({
+    'top' : getCenteredImagePickerValue(wrapDiv.getHeight() - dim.height) + 'px',
+    'left' : getCenteredImagePickerValue(wrapDiv.getWidth() - dim.width) + 'px'
+  });
+};
+
 var loadAttachmentListCallback = function(e) {
   if (e.isJSON()) {
     attList = e.evalJSON();
     var attachEl = $('attachments');
     attachEl.update('');
+    var currentImgSrc = $('src').value;
     $A(attList).each(function(imgElem) {
+      var cssClasses = 'imagePickerSource';
+      if (imgElem.src == currentImgSrc) {
+        cssClasses += ' selected';
+      }
       var imgThmb = new Element('img', {
         'src' : (imgElem.src + '?celheight=100&celwidth=100'),
-        'class' : 'imagePickerSource'
+        'class' : cssClasses
       });
-      attachEl.insert({ bottom : imgThmb });
+      imgThmb.observe('load', centerImagePickerThumb);
+      var imgDiv = new Element('div', {
+        'class' : 'imagePickerWrapper'
+      }).update(imgThmb);
+      attachEl.insert({ bottom : imgDiv });
     });
 //    attachEl.select('.imagePickerSource').each(function(elem) {
 //        elem.observe('click', clickOnFileAction);
@@ -55,7 +82,7 @@ var clickOnFileAction = function (event) {
     filename = filename.replace(/^(.+)\?.*/, '$1');
     document.forms[0].src.value = filename;
     CelImageDialog.showPreviewImage(filename);
-//    mcTabs.displayTab('general_tab','general_panel');
+    mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
   }
 };
 

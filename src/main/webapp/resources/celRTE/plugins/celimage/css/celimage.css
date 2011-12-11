@@ -20,3 +20,23 @@
 input {width: 280px;}
 #constrain, #onmousemovecheck {width:auto;}
 #id, #dir, #lang, #usemap, #longdesc {width:200px;}
+div.imagePickerWrapper {
+  width: 107px;
+  height: 107px;
+  display: inline-block;
+  float: left;
+  position: relative;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  border: 1px solid #D2D2D2;
+  line-height: 0px;
+  font-size: 0px;
+}
+div.imagePickerWrapper img.imagePickerSource {
+  display: block;
+  position: absolute;
+  border: 4px dashed transparent;
+}
+div.imagePickerWrapper img.imagePickerSource.selected {
+  border: 4px dashed #ff9900;
+}

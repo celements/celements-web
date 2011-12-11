@@ -41,7 +41,7 @@ var CelImageDialog = {
       nl.usemap.value = dom.getAttrib(n, 'usemap');
       nl.longdesc.value = dom.getAttrib(n, 'longdesc');
       nl.insert.value = ed.getLang('update');
-      mcTabs.displayTab('general_tab','general_panel');
+      mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
 
       if (ed.settings.inline_styles) {
         // Move attribs to styles
@@ -509,7 +509,6 @@ var CelImageDialog = {
 
   showPreviewImage : function(u, st) {
     if (!u || (u == '')) {
-      console.debug('first image src: ' + u);
       tinyMCEPopup.dom.setHTML('prev', '<p style="padding:20px;">' + tinyMCEPopup.getLang(
           'celimage_dlg.select_image_first') +'</p>');
       return;
