@@ -15,6 +15,9 @@
 #set($removeAddXredirect = $xwiki.getURLEncoded(${cel_editobj_doc.getURL('edit', $linkParams)}))
 #set($formname = "update")
 #set($saveaction = "save")
+#if("$!cel_editobj_reverseList" == '')
+  #set($cel_editobj_reverseList = false)
+#end
 #if(!$cel_embedded_editobj && ("$!cel_editobj_classname" == ''))
   #set($cel_editobj_classname = $request.classname)
 #end
@@ -118,6 +121,9 @@
 #end
 #else
 #set($objects = $cel_editobj_doc.getObjects($class.name))
+#if($cel_editobj_reverseList)
+#set($objects = $util.reverseList($objects))
+#end
 #end
 #set($hasobjs = false)
 #set($cel_editobj_obj_count = 0)
