@@ -9,12 +9,13 @@
 	<script type="text/javascript" src="../../utils/validate.js"></script>
 	<script type="text/javascript" src="../../utils/editable_selects.js"></script>
   <script type="text/javascript" src="js/image.js?version=201112112328"></script>
-  <script type="text/javascript" src="js/imagepicker.js?version=201112120003"></script>
+  <script type="text/javascript" src="js/imagepicker.js?version=201112120134"></script>
   <script type="text/javascript" src="/file/resources/celJS/uploadAttachment.js?version=201111211848"></script>
-	<link href="css/celimage.css?version=201112112345" rel="stylesheet" type="text/css" />
+	<link href="css/celimage.css?version=201112120156" rel="stylesheet" type="text/css" />
 </head>
 <body id="celimage" style="display: none">
-    <form id="imagePickerForm" onsubmit="CelImageDialog.insert();return false;" action=""> 
+<div class="celbeta">Celements Image Picker BETA</div>
+    <form id="imagePickerForm" onsubmit="CelImageDialog.insert();return false;" action="" method="post" enctype="multipart/form-data"> 
 		<div class="tabs">
 			<ul>
         <li id="imagePicker_tab" class="current"><span><a href="javascript:mcTabs.displayTab('imagePicker_tab','imagePicker_panel');" onmousedown="return false;">{#celimage_dlg.tab_imagePicker}</a></span></li>
@@ -27,14 +28,15 @@
 
     <div class="panel_wrapper">
       <div id="imagePicker_panel" class="panel current" style="height: 422px;">
-        <fieldset>
+        <fieldset id="imagePickerUploadAreaFieldset">
             <legend>{#celimage_dlg.uploadImage}</legend>
 <div id="imagePickerUploadArea">
     <div id="progressBar" style="display:none">
 <!-- velocity not interpreted so far... -->
-      <img src="/file/resources/celRes/ajax-loader.gif">
+      <img src="/file/resources/celRes/ajax-loader.gif" />
     </div>
-      <input type="hidden" name="xredirect" value=""> 
+      <input type="hidden" name="xredirect" value="" /> 
+      <input type="hidden" id="celfileuploadToken" name="uploadToken" value="" />
       <input class="celfileupload celSupressAttachmentList" name="filepath" type="file" size="50" />
 </div>
         </fieldset>
@@ -42,9 +44,7 @@
         <fieldset>
             <legend>{#celimage_dlg.imagePicker}</legend>
 
-<div id="attachments" style="height:275px;width:auto;overflow:auto;">
-<!-- velocity not interpreted so far... -->
-<img style="display: block; width: 32px; height:32px; margin-left: auto; margin-right: auto; margin-top: 100px;" src="/file/resources/celRes/ajax-loader.gif" alt="loading..." />
+<div id="attachments" style="height:360px;width:auto;overflow:auto;">
 </div>
         </fieldset>
       </div><!--  end imagePicker_panel  -->

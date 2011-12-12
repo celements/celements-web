@@ -7,10 +7,52 @@ Event.observe(window, 'load', function(){
   baseurl = tinyMCEPopup.getParam("wiki_attach_path");
   imgurl = tinyMCEPopup.getParam("wiki_imagedownload_path");
   editor_id = tinyMCEPopup.getWindowArg('editor_id');
+  $('imagePickerUploadAreaFieldset').hide();
   loadAttachmentList(baseurl);
+  $('imagePickerForm').action = baseurl;
+  getUploadToken();
+  $$('#imagePickerUploadArea .celfileupload').each(function(elem) {
+    elem.observe('celements:uploadfinished', pickerUploadFinshed);
+  });
 });
 
+var getUploadToken = function() {
+  new Ajax.Request(baseurl, {
+    method: 'post',
+    parameters: {
+       xpage : 'celements_ajax',
+       'ajax_mode' : 'TokenFileUploader',
+       'tfu_mode' : 'getTokenForCurrentUser'
+    },
+    onSuccess: function(transport) {
+      jsonStr = transport.responseText;
+      if (jsonStr.isJSON()) {
+        jsonResponse = jsonStr.evalJSON();
+        if (jsonResponse.hasUploadRights) {
+          $('celfileuploadToken').value = jsonResponse.token;
+          $('imagePickerUploadAreaFieldset').show();
+        }
+      }
+    }
+  });
+};
+
+var pickerUploadFinshed = function(event) {
+  var uploadResult = event.memo.uploadResult;
+  if (uploadResult && uploadResult.success && (uploadResult.success == 1)) {
+    loadAttachmentList(baseurl);
+  } else {
+    alert('failed to upload image.');
+  }
+};
+
 var loadAttachmentList = function(baseurl) {
+  var loadingImg = new Element('img', {
+    'src' : '/file/resources/celRes/ajax-loader.gif',
+    'class' : 'attListLoading',
+    'alt' : 'loading...'
+  });
+  $('attachments').update(loadingImg);
   new Ajax.Request(baseurl, {
     method: 'post',
     parameters: {
