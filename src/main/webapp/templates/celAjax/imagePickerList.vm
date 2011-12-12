@@ -9,7 +9,7 @@ $response.setStatus(200)
  { "src" : "$!doc.getAttachmentURL("${attach.filename}", 'download')"##
  , "filename" : "$!{attach.filename}"##
  , "attversion" : "$!{attach.version}"##
- , "lastChangedBy" : "$!{xwiki.getLocalUserName($attach.author)}"##
+ , "lastChangedBy" : "$!{xwiki.getLocalUserName($attach.author, false)}"##
  #set($dimensionObj = $xwiki.celementsphoto.getDimension("${doc.fullName};${attach.filename}"))
  , "maxHeight" : $!dimensionObj.getHeight()##
  , "maxWidth" : $!dimensionObj.getWidth()##
