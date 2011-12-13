@@ -1,8 +1,8 @@
 tinyMCE.addI18n('en.celimage_dlg',{
-tab_general:"General",
+tab_imageDetails:"Preview",
 tab_appearance:"Appearance",
 tab_advanced:"Advanced",
-general:"General",
+imageDetails:"Preview",
 title:"Title",
 preview:"Preview",
 constrain_proportions:"Constrain proportions",
@@ -40,11 +40,15 @@ align_textbottom:"Text bottom",
 align_left:"Left",
 align_right:"Right",
 image_list:"Image list",
-tab_animation :"Animation",
+"tab_animation" :"Animation",
+"tab_imagePicker" : "Picker",
 slideshow : "Slideshow",
 hasSlideshow : "has slideshow",
 gallery : "gallery",
 delay : "delay (seconds)",
 defaultEffect : "default (Fade)",
-effects : "effect"
+effects : "effect",
+"imagePicker" : "select image",
+"select_image_first" : "Please select image first.",
+"uploadImage" : "Upload image"
 });

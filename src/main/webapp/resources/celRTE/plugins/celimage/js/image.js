@@ -41,7 +41,7 @@ var CelImageDialog = {
       nl.usemap.value = dom.getAttrib(n, 'usemap');
       nl.longdesc.value = dom.getAttrib(n, 'longdesc');
       nl.insert.value = ed.getLang('update');
-      mcTabs.displayTab('general_tab','general_panel');
+      mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
 
       if (ed.settings.inline_styles) {
         // Move attribs to styles
@@ -90,7 +90,11 @@ var CelImageDialog = {
   },
 
   addAutoResizeToURL : function(src, width, height) {
-    return src.replace(/\?.*/, '').strip() + '?celwidth=' + width + '&celheight=' + height;
+    if (src && (src != '')) {
+      return src.replace(/\?.*/, '').strip() + '?celwidth=' + width
+        + '&celheight=' + height;
+    }
+    return '';
   },
 
   getSlideShowId : function(f) {
@@ -504,8 +508,9 @@ var CelImageDialog = {
   },
 
   showPreviewImage : function(u, st) {
-    if (!u) {
-      tinyMCEPopup.dom.setHTML('prev', '');
+    if (!u || (u == '')) {
+      tinyMCEPopup.dom.setHTML('prev', '<p style="padding:20px;">' + tinyMCEPopup.getLang(
+          'celimage_dlg.select_image_first') +'</p>');
       return;
     }
 
@@ -514,10 +519,13 @@ var CelImageDialog = {
 
     u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
-    if (!st)
-      tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="CelImageDialog.updateImageData(this);" onerror="CelImageDialog.resetImageData();" />');
-    else
-      tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u + '" border="0" onload="CelImageDialog.updateImageData(this, 1);" />');
+    if (!st) {
+      tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
+          + '" border="0" onload="CelImageDialog.updateImageData(this);" onerror="CelImageDialog.resetImageData();" />');
+    } else {
+      tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
+          + '" border="0" onload="CelImageDialog.updateImageData(this, 1);" />');
+    }
   }
 };
 
