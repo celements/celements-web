@@ -8,19 +8,18 @@
 	<script type="text/javascript" src="../../utils/form_utils.js"></script>
 	<script type="text/javascript" src="../../utils/validate.js"></script>
 	<script type="text/javascript" src="../../utils/editable_selects.js"></script>
-  <script type="text/javascript" src="js/image.js?version=201111231315"></script>
-  <script type="text/javascript" src="js/imagepicker.js?version=201111211800"></script>
+  <script type="text/javascript" src="js/image.js?version=201112112328"></script>
+  <script type="text/javascript" src="js/imagepicker.js?version=201112120134"></script>
   <script type="text/javascript" src="/file/resources/celJS/uploadAttachment.js?version=201111211848"></script>
-	<link href="css/celimage.css?version=201111211837" rel="stylesheet" type="text/css" />
+	<link href="css/celimage.css?version=201112120156" rel="stylesheet" type="text/css" />
 </head>
 <body id="celimage" style="display: none">
-    <form id="imagePickerForm" onsubmit="CelImageDialog.insert();return false;" action=""> 
+<div class="celbeta">Celements Image Picker BETA</div>
+    <form id="imagePickerForm" onsubmit="CelImageDialog.insert();return false;" action="" method="post" enctype="multipart/form-data"> 
 		<div class="tabs">
 			<ul>
-        <li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{#celimage_dlg.tab_general}</a></span></li>
-<!--
         <li id="imagePicker_tab" class="current"><span><a href="javascript:mcTabs.displayTab('imagePicker_tab','imagePicker_panel');" onmousedown="return false;">{#celimage_dlg.tab_imagePicker}</a></span></li>
- -->
+        <li id="imageDetails_tab"><span><a href="javascript:mcTabs.displayTab('imageDetails_tab','imageDetails_panel');" onmousedown="return false;">{#celimage_dlg.tab_imageDetails}</a></span></li>
 				<li id="appearance_tab"><span><a href="javascript:mcTabs.displayTab('appearance_tab','appearance_panel');" onmousedown="return false;">{#celimage_dlg.tab_appearance}</a></span></li>
         <li id="animation_tab"><span><a href="javascript:mcTabs.displayTab('animation_tab','animation_panel');" onmousedown="return false;">{#celimage_dlg.tab_animation}</a></span></li>
         <li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">{#celimage_dlg.tab_advanced}</a></span></li>
@@ -28,9 +27,31 @@
 		</div>
 
     <div class="panel_wrapper">
-      <div id="general_panel" class="panel current" style="height: 422px;">
+      <div id="imagePicker_panel" class="panel current" style="height: 422px;">
+        <fieldset id="imagePickerUploadAreaFieldset">
+            <legend>{#celimage_dlg.uploadImage}</legend>
+<div id="imagePickerUploadArea">
+    <div id="progressBar" style="display:none">
+<!-- velocity not interpreted so far... -->
+      <img src="/file/resources/celRes/ajax-loader.gif" />
+    </div>
+      <input type="hidden" name="xredirect" value="" /> 
+      <input type="hidden" id="celfileuploadToken" name="uploadToken" value="" />
+      <input class="celfileupload celSupressAttachmentList" name="filepath" type="file" size="50" />
+</div>
+        </fieldset>
+
         <fieldset>
-            <legend>{#celimage_dlg.general}</legend>
+            <legend>{#celimage_dlg.imagePicker}</legend>
+
+<div id="attachments" style="height:360px;width:auto;overflow:auto;">
+</div>
+        </fieldset>
+      </div><!--  end imagePicker_panel  -->
+ 
+      <div id="imageDetails_panel" class="panel" style="height: 422px;">
+        <fieldset>
+            <legend>{#celimage_dlg.imageDetails}</legend>
 
             <table class="properties">
               <tr>
@@ -69,30 +90,6 @@
         </fieldset>
  -->
       </div>
- 
-<!--
-      <div id="imagePicker_panel" class="panel current" style="height: 422px;">
-        <fieldset>
-            <legend>{#celimage_dlg.imagePicker}</legend>
-
-<div id="attachments" style="height:275px;width:auto;overflow:auto;">
- -->
-<!-- velocity not interpreted so far... -->
-<!--
-<img src="/file/resources/celRes/ajax-loader.gif" alt="loading..." />
-</div>
-
-<div id="imagePickerUploadArea">
-		<div id="progressBar" style="display:none">
-		  <img src="$celementsweb.getSkinFile(':celRes/ajax-loader.gif', 'file')">
-		</div>
-      <input type="hidden" name="xredirect" value=""> 
-      <input class="celfileupload celSupressAttachmentList" name="filepath" type="file" size="50" />
-</div>
-        </fieldset>
-
-      </div>
- -->
  
 			<div id="appearance_panel" class="panel">
 				<fieldset>
@@ -244,12 +241,6 @@
 			</div>
 		</div>
     </form>
-
-<hr style="clear:both; margin-top:60px" />
-<div id="attachments" style="height:275px;width:590px;overflow:auto;">
-<!-- velocity not interpreted so far... -->
-<img src="/skin/resources/celRes/ajax-loader.gif" alt="loading..." />
-</div>
 
 </body> 
 </html> 

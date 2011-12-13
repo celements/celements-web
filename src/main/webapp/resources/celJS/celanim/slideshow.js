@@ -170,7 +170,7 @@ var getCenteredValue = function(diffValue) {
   if (diffValue < 0) {
     return 0;
   } else {
-    return diffValue / 2;
+    return Math.floor(diffValue / 2);
   }
 };
 
