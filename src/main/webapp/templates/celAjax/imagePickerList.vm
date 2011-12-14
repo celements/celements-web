@@ -4,18 +4,21 @@ $response.setStatus(200)
 #set($count = 0)
 #foreach ($attach in $attachments)
 #if ($attach.isImage())
+ #set($dimensionObj = '')
+ #set($dimensionObj = $xwiki.celementsphoto.getDimension("${doc.fullName};${attach.filename}"))
+#if("$!dimensionObj" != '')
 #if($count > 0) , #end
 #set($count = $count + 1)
  { "src" : "$!doc.getAttachmentURL("${attach.filename}", 'download')"##
  , "filename" : "$!{attach.filename}"##
  , "attversion" : "$!{attach.version}"##
  , "lastChangedBy" : "$!{xwiki.getLocalUserName($attach.author, false)}"##
- #set($dimensionObj = $xwiki.celementsphoto.getDimension("${doc.fullName};${attach.filename}"))
  , "maxHeight" : $!dimensionObj.getHeight()##
  , "maxWidth" : $!dimensionObj.getWidth()##
  , "fileSize" : "#dynamicsize(${attach.filesize})"##
  , "mimeType" : "$!{attach.mimeType}"##
  }##
+#end ## if got dimensions
 #end ## if isImage
 #end ## foreach
 ]
