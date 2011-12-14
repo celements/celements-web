@@ -24,6 +24,7 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<url>https://github.com/celements/celements-web</url>
 	<parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
@@ -42,6 +43,11 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  <scm>
+    <connection>scm:git:git://github.com/celements/celements-web</connection>
+    <developerConnection>scm:git:git@github.com:celements/celements-web.git</developerConnection>
+    <url>https://github.com/celements/celements-web</url>
+  </scm>
 	<properties>
 		<platform.core.version>2.10</platform.core.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
