@@ -178,7 +178,7 @@ $celementsweb.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
   #set($cel_editobj_propfullname = "${class.name}_${obj.number}_${prop.name}")
   #set($cel_editobj_validationClass = " #setClassForField($cel_editobj_propfullname)")
 #end
-<div class="editblock${cel_editobj_validationClass}">
+<div class="editblock${cel_editobj_validationClass} editObjField_${class.name}_${prop.name}">
 <dl>
 #end
 #set($prop_dict_key = "${cel_editobj_dict_property_prefix}$prop.name")
