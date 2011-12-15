@@ -24,31 +24,33 @@ var getSlideShowIds = function() {
 };
 
 var loadSlideShowDataAsync = function() {
-  new Ajax.Request(getCelHost(), {
-    method: 'post',
-    parameters: {
-       'xpage' : 'celements_ajax',
-       'ajax_mode' : 'SlideShowConfig',
-       'celSlideShowIds' : Object.toJSON(getSlideShowIds())
-    },
-    onSuccess: function(transport) {
-      if (transport.responseText.isJSON()) {
-        initSlideShows(transport.responseText.evalJSON());
-        startSlideShows();
-      } else if ((typeof console != 'undefined')
-          && (typeof console.debug != 'undefined')) {
-        console.debug('loadSlideShowDataAsync: noJSON!!! ', transport.responseText);
+  if (getSlideShowIds().size() > 0) {
+    new Ajax.Request(getCelHost(), {
+      method: 'post',
+      parameters: {
+         'xpage' : 'celements_ajax',
+         'ajax_mode' : 'SlideShowConfig',
+         'celSlideShowIds' : Object.toJSON(getSlideShowIds())
+      },
+      onSuccess: function(transport) {
+        if (transport.responseText.isJSON()) {
+          initSlideShows(transport.responseText.evalJSON());
+          startSlideShows();
+        } else if ((typeof console != 'undefined')
+            && (typeof console.debug != 'undefined')) {
+          console.debug('loadSlideShowDataAsync: noJSON!!! ', transport.responseText);
+        }
+      },
+      onFailure : function(transport) {
+        if ((typeof console != 'undefined')
+            && (typeof console.warn != 'undefined')) {
+          console.warn('loadSlideShowDataAsync: failed to execute request for'
+            + ' celSlideShowIds [' + Object.toJSON(getSlideShowIds()) + ']: ',
+            transport.status, transport.statusText);
+        }
       }
-    },
-    onFailure : function(transport) {
-      if ((typeof console != 'undefined')
-          && (typeof console.warn != 'undefined')) {
-        console.warn('loadSlideShowDataAsync: failed to execute request for'
-          + ' celSlideShowIds [' + Object.toJSON(getSlideShowIds()) + ']: ',
-          transport.status, transport.statusText);
-      }
-    }
-  });
+    });
+  }
 };
 
 var celSlideShowConfig = new Hash(); 
