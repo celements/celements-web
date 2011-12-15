@@ -3,7 +3,7 @@
 #set($starttab = "$!request.get('tab')")
 #end
 #if("$!tinyMCE_width" != '')
-    #set($menuPanelWidth = $xwiki.parseInt($tinyMCE_width) + 50)
+    #set($menuPanelWidth = $xwiki.parseInt("$!tinyMCE_width") + 50)
 #end
 #if(("$!menuPanelWidth" == '') || ($menuPanelWidth < 630))
     #set($menuPanelWidth = 630)
