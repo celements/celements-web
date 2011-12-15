@@ -120,7 +120,12 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
 }
 /* menu tabs */	
 .celements3_tabMenu #tabMenuPanel .menuTab {
+/**
 	width: 630px;
+	why do we need a fixed width? the menuTab must grow with the editor_width!
+	fp 15.12.2011
+	**/
+  width: auto;
 }
 .celements3_tabMenu .editblock {
   display:block;
