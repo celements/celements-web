@@ -18,6 +18,7 @@
 #end
 { 
   "mode" : "textareas",
+  "editor_deselector" : "mceNoEditor",
   "language" : "$admin_language",
   "theme" : "advanced",
   ## lookup the additional rte_plugins field in the XWiki and WebPreference
