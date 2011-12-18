@@ -60,7 +60,7 @@
   <br />
   #set($currentImage = "$!theMenuName.getProperty('image').getValue()")
   #if("$!{currentImage}" != '')
-    #set($currentImageURL = $celementsweb.getSkinFile("${currentImage}", 'file'))
+    #set($currentImageURL = $celementsweb.getSkinFile("${currentImage}", 'download'))
   <img id="celMenuImagePreview" src="${currentImageURL}&celwidth=200&celheight=200" />
   #else
   <img style="display:none;" id="celMenuImagePreview" src="" />
