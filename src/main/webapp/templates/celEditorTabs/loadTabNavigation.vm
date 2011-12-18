@@ -58,8 +58,10 @@
   $adminMsg.get('cel_tm_menu_image'): <input type="hidden" value="$!theMenuName.getProperty('image').getValue()" id="image" name="Celements2.MenuName_${navObjNb}_image"></input>
   #includeLinkPicker("Celements2.MenuName_${navObjNb}_image" '')
   <br />
-  #if("$!{theMenuName.getProperty('image').getValue()}" != '')
-  <img id="celMenuImagePreview" src="$celementsweb.getSkinFile("$!theMenuName.getProperty('image').getValue()", 'file')?celwidth=200&celheight=200" />
+  #set($currentImage = "$!theMenuName.getProperty('image').getValue()")
+  #if("$!{currentImage}" != '')
+    #set($currentImageURL = $celementsweb.getSkinFile("${currentImage}", 'file'))
+  <img id="celMenuImagePreview" src="${currentImageURL}&celwidth=200&celheight=200" />
   #else
   <img style="display:none;" id="celMenuImagePreview" src="" />
   #end
