@@ -10,8 +10,12 @@ $xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument))
 #set($pageDoc = $services.cells.getPageDependentTranslatedDocument($tdoc, $cellDocRef))
 #set($isAddPdDiv = ("$request.xpage" != 'rdf') && ("$!pageDoc.fullName" != "$!doc.fullName"))
 #if($isAddPdDiv)
+#set($isInheritable = $services.cells.isInheritable($cellDocRef))
+#set($pageDepDocRef = $services.cells.getPageDependentDocRef($doc.getDocumentReference(), $cellDocRef, false))
+#set($pageDepFN = $services.model.serialize($pageDepDocRef))
 #set($pdCount = $pdCount + 1)
-<div id="cellPDContent$!{pdCount}$!{pageDoc.getName()}:$!{pageDoc.getFullName()}" class="cel_cm_pagedependent_content">
+<div id="cellPDContent$!{pdCount}$!{pageDoc.getName()}:$!isInheritable:$!{pageDepFN}"##
+ class="cel_cm_pagedependent_content">
 #end
 $xwiki.celementsweb.renderCelementsDocument($pageDoc)
 #if($isAddPdDiv)
