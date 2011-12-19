@@ -19,8 +19,8 @@ var CelImageDialog = {
 
     if (n.nodeName == 'IMG') {
       nl.src.value = dom.getAttrib(n, 'src').replace(/\?.*/, '');
-      nl.width.value = dom.getAttrib(n, 'width');
-      nl.height.value = dom.getAttrib(n, 'height');
+      nl.celwidth.value = dom.getAttrib(n, 'width');
+      nl.celheight.value = dom.getAttrib(n, 'height');
       nl.alt.value = dom.getAttrib(n, 'alt');
       nl.title.value = dom.getAttrib(n, 'title');
       nl.marginTop.value = this.getAttrib(n, 'marginTop');
@@ -58,8 +58,8 @@ var CelImageDialog = {
       this.constrain = true;
 
     this.changeAppearance();
-    this.showPreviewImage(this.addAutoResizeToURL(nl.src.value, nl.width.value,
-        nl.height.value), 1);
+    this.showPreviewImage(this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
+        nl.celheight.value), 1);
   },
 
   insert : function(file, title) {
@@ -128,12 +128,12 @@ var CelImageDialog = {
       };
     }
 
-    nl.src.value = this.addAutoResizeToURL(nl.src.value, nl.width.value, nl.height.value);
+    nl.src.value = this.addAutoResizeToURL(nl.src.value, nl.celwidth.value, nl.celheight.value);
 
     tinymce.extend(args, {
       src : nl.src.value,
-      width : nl.width.value,
-      height : nl.height.value,
+      width : nl.celwidth.value,
+      height : nl.celheight.value,
       alt : nl.alt.value,
       title : nl.title.value,
       'class' : getSelectValue(f, 'class_list'),
@@ -367,22 +367,24 @@ var CelImageDialog = {
   resetImageData : function() {
     var f = document.forms[0];
 
-    f.elements.width.value = f.elements.height.value = '';
+    f.elements.celwidth.value = f.elements.celheight.value = '';
   },
 
   updateImageData : function(img, st) {
     var f = document.forms[0];
 
-    if (!st) {
-      f.elements.width.value = img.width;
-      f.elements.height.value = img.height;
-    }
+//Removed because of double adjustment onchange
+//    if (!st) {
+//      f.elements.celwidth.value = img.width;
+//      f.elements.celheight.value = img.height;
+//    }
 
     this.preloadImg = img;
-    if (st && (st == 1)) {
-      this.changeHeight();
-      this.changeWidth();
-    }
+//Removed because of double adjustment onchange
+//    if (st && (st == 1)) {
+//      this.changeHeight();
+//      this.changeWidth();
+//    }
   },
 
   changeAppearance : function() {
@@ -405,12 +407,12 @@ var CelImageDialog = {
       return;
     }
 
-    if (f.width.value == "")
+    if (f.celwidth.value == "")
       return;
 
-    tp = (parseInt(f.width.value) / parseInt(t.preloadImg.width)) * t.preloadImg.height;
-    f.height.value = tp.toFixed(0);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.width.value, f.height.value));
+    tp = (parseInt(f.celwidth.value) / parseInt(t.preloadImg.width)) * t.preloadImg.height;
+    f.celheight.value = Math.floor(tp + 0.5);
+    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value, f.celheight.value));
   },
 
   changeWidth : function() {
@@ -420,12 +422,12 @@ var CelImageDialog = {
       return;
     }
 
-    if (f.height.value == "")
+    if (f.celheight.value == "")
       return;
 
-    tp = (parseInt(f.height.value) / parseInt(t.preloadImg.height)) * t.preloadImg.width;
-    f.width.value = tp.toFixed(0);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.width.value, f.height.value));
+    tp = (parseInt(f.celheight.value) / parseInt(t.preloadImg.height)) * t.preloadImg.width;
+    f.celwidth.value = Math.floor(tp + 0.5);
+    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value, f.celheight.value));
   },
 
   updateStyle : function(ty) {
@@ -514,8 +516,10 @@ var CelImageDialog = {
       return;
     }
 
-    if (!st && tinyMCEPopup.getParam("advimage_update_dimensions_onchange", true))
-      this.resetImageData();
+//Removed because of double adjustment of height and width onchange
+//    if (!st && tinyMCEPopup.getParam("advimage_update_dimensions_onchange", true)) {
+//      this.resetImageData();
+//    }
 
     u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
