@@ -1,0 +1,12 @@
+#set($red_obj = $doc.getObject("Celements2.Redirect"))
+#set($redURL = "$!red_obj.getProperty('redirect').getValue()")
+<div class="celements2_error">Error: Redirect does not exist!</div>
+#if($isContentEditor || $isAdmin)
+<ul>
+#if(("$!red_obj" != '') && ("$!redURL" != ''))
+<li><a href="$xwiki.getURL($redURL,'edit')?language=$!{default_language}">Create page $!xwiki.getURL("$redURL",'edit')</a>
+#end
+#set($default_language = "$!xwiki.getWebPreference('default_language')")
+<li><a href="$doc.getURL('edit', "language=$!{default_language}")">Edit redirect</a>
+</ul>
+#end
