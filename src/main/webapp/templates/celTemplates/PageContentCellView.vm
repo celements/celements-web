@@ -1,4 +1,7 @@
-#if("$!overwriteRenderDocument" != '')
+#set($cellDocRef = $celldoc.getDocumentReference())
+#set($pageDoc = $services.cells.getPageDependentTranslatedDocument($tdoc, $cellDocRef))
+#set($isAddPdDiv = ("$request.xpage" != 'rdf') && ("$!pageDoc.fullName" != "$!doc.fullName"))
+#if(("$!overwriteRenderDocument" != '') && !$isAddPdDiv)
 #if($overwriteRenderDocument.endsWith('.vm'))
 $xwiki.parseTemplate($overwriteRenderDocument)
 #else
@@ -6,9 +9,6 @@ $xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument))
 #end
 #set($overwriteRenderDocument = '')
 #else
-#set($cellDocRef = $celldoc.getDocumentReference())
-#set($pageDoc = $services.cells.getPageDependentTranslatedDocument($tdoc, $cellDocRef))
-#set($isAddPdDiv = ("$request.xpage" != 'rdf') && ("$!pageDoc.fullName" != "$!doc.fullName"))
 #if($isAddPdDiv)
 #set($isInheritable = $services.cells.isInheritable($cellDocRef))
 #set($pageDepDocRef = $services.cells.getPageDependentDocRef($doc.getDocumentReference(), $cellDocRef, false))
