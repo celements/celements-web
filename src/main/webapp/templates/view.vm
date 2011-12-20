@@ -73,7 +73,7 @@ $xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocu
 ##$xwiki.celementsweb.renderCelementsDocument($renderDocument)
 ##
 #end
-#if($show_frame || ("$context.action" == 'edit'))
+#if(!$contextIsFinished && ($show_frame || ("$context.action" == 'edit')))
   $xwiki.parseTemplate("framefooter.vm")
 #end
 #end
