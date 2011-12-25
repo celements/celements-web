@@ -138,7 +138,8 @@ form#newsletter_send span#testResultBoxSpan {
 
 .UserAdminSheet form#update{
 	background-color:#B0B0B0;
-	font-family:Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
 	font-size:12px;
 	line-height:19px;
 }
@@ -217,7 +218,8 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay .layoutsubsection {
   font-size: 12px;
   line-height: 14px;
-  font-family: Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
 }
 .generalOverlay .layoutsubsection #cel_overlaybody {
   position: relative;
