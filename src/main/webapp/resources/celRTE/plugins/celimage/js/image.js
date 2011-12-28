@@ -373,18 +373,12 @@ var CelImageDialog = {
   updateImageData : function(img, st) {
     var f = document.forms[0];
 
-//Removed because of double adjustment onchange
-//    if (!st) {
-//      f.elements.celwidth.value = img.width;
-//      f.elements.celheight.value = img.height;
-//    }
+    if (!st) {
+      f.elements.celwidth.value = img.width;
+      f.elements.celheight.value = img.height;
+    }
 
     this.preloadImg = img;
-//Removed because of double adjustment onchange
-//    if (st && (st == 1)) {
-//      this.changeHeight();
-//      this.changeWidth();
-//    }
   },
 
   changeAppearance : function() {
@@ -412,7 +406,7 @@ var CelImageDialog = {
 
     tp = (parseInt(f.celwidth.value) / parseInt(t.preloadImg.width)) * t.preloadImg.height;
     f.celheight.value = Math.floor(tp + 0.5);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value, f.celheight.value));
+    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value, f.celheight.value), 1);
   },
 
   changeWidth : function() {
@@ -427,7 +421,7 @@ var CelImageDialog = {
 
     tp = (parseInt(f.celheight.value) / parseInt(t.preloadImg.height)) * t.preloadImg.width;
     f.celwidth.value = Math.floor(tp + 0.5);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value, f.celheight.value));
+    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value, f.celheight.value), 1);
   },
 
   updateStyle : function(ty) {
@@ -516,10 +510,9 @@ var CelImageDialog = {
       return;
     }
 
-//Removed because of double adjustment of height and width onchange
-//    if (!st && tinyMCEPopup.getParam("advimage_update_dimensions_onchange", true)) {
-//      this.resetImageData();
-//    }
+    if (!st && tinyMCEPopup.getParam("advimage_update_dimensions_onchange", true)) {
+      this.resetImageData();
+    }
 
     u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
