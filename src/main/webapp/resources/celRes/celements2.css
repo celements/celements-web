@@ -162,7 +162,8 @@ body > div#celements2_menu_bar {
 	overflow:hidden;
 	display:block;
 	cursor: pointer;
-	color:#CCCCCC !important;
+	color:#CCCCCC !important;	
+	background-color: #CCCCCC!important;
 	background-color: rgba(51,51,51, 0.92) !important;
 	text-decoration:none !important;
 	white-space:nowrap;
