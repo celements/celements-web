@@ -7,6 +7,7 @@ var handleDateSelected = function(type, args, pickerDateCal) {
     var selDate = selDates[0];
     var newStartDate = selDate[2] + '.' + selDate[1] + '.' + selDate[0];
     dateField.value = newStartDate;
+    Event.fire(dateField, 'celements:datePicker-dateSelected');
   }
   pickerDateCal.hide();
 };
