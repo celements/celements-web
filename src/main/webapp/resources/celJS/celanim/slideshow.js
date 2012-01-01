@@ -156,8 +156,8 @@ var celSlideShowEffectAfterFinish = function(effect) {
   fadeimg.show();
   fadeimgtemp.hide();
   if (slideShowHasNextImage(slideConfig)) {
-    fadeimgtemp.src = slideConfig.nextimgsrc;
     removeImageSize(fadeimgtemp);
+    fadeimgtemp.src = slideConfig.nextimgsrc;
     scheduleChangeImage(slideConfig.htmlId);
   }
 };
@@ -180,9 +180,17 @@ var centerImage = function(event) {
   var tempImg = event.findElement();
   var dim = tempImg.getDimensions();
   var wrapDiv = tempImg.up('div');
+  var centeredTop = getCenteredValue(wrapDiv.getHeight() - dim.height);
+  var centeredLeft = getCenteredValue(wrapDiv.getWidth() - dim.width);
+  var slideConfig = celSlideShowConfig.get(tempImg.id.replace(/_tmpImg$/,''));
+  if (slideConfig) {
+    console.debug('set centeredTop/centeredLeft to: ', centeredTop, centeredLeft);
+    slideConfig.centeredTop = centeredTop;
+    slideConfig.centeredLeft = centeredLeft;
+  }
   tempImg.setStyle({
-    'top' : getCenteredValue(wrapDiv.getHeight() - dim.height) + 'px',
-    'left' : getCenteredValue(wrapDiv.getWidth() - dim.width) + 'px'
+    'top' : centeredTop + 'px',
+    'left' : centeredLeft + 'px'
   });
 };
 
