@@ -188,7 +188,7 @@ var centerImage = function(event) {
 
 var changeImage = function(elemId) {
   var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
-  var effectDetails = celSlideShowEffects.get(effectKey) || !celSlideShowEffects.get('fade');
+  var effectDetails = celSlideShowEffects.get(effectKey) || celSlideShowEffects.get('fade');
   var effectParameters = $H(effectDetails.params).merge({
     'sync' : true
   });
