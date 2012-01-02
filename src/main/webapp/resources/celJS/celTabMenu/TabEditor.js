@@ -428,7 +428,7 @@ TE.prototype = {
     if(document.forms['edit']) {
       formName = 'edit';
     } else {
-      formName = document.forms[0];
+      formName = document.forms[0].id;
     }
   }
   var oldSaveFormName = formName;
