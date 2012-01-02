@@ -16,7 +16,8 @@ var addDatePickerToField = function(inputField) {
   datePickerIdCount++;
   var dateFieldOffset = inputField.positionedOffset();
   var datePickerCon = new Element('div', {
-    'id' : ('date-picker-container-' + datePickerIdCount),
+    'id' : ('date-picker-container-' + datePickerIdCount)
+  }).setStyle({
     'left' : dateFieldOffset.left + 'px',
     'top' : (dateFieldOffset.top + 15) + 'px',
     'position' : 'absolute'
