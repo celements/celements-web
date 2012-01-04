@@ -7,6 +7,7 @@ var handleDateSelected = function(type, args, pickerDateCal) {
     var selDate = selDates[0];
     var newStartDate = selDate[2] + '.' + selDate[1] + '.' + selDate[0];
     dateField.value = newStartDate;
+    Event.fire(dateField, 'celements:datePicker-dateSelected');
   }
   pickerDateCal.hide();
 };
@@ -15,7 +16,8 @@ var addDatePickerToField = function(inputField) {
   datePickerIdCount++;
   var dateFieldOffset = inputField.positionedOffset();
   var datePickerCon = new Element('div', {
-    'id' : ('date-picker-container-' + datePickerIdCount),
+    'id' : ('date-picker-container-' + datePickerIdCount)
+  }).setStyle({
     'left' : dateFieldOffset.left + 'px',
     'top' : (dateFieldOffset.top + 15) + 'px',
     'position' : 'absolute'

@@ -188,7 +188,7 @@ var centerImage = function(event) {
 
 var changeImage = function(elemId) {
   var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
-  var effectDetails = celSlideShowEffects.get(effectKey) || !celSlideShowEffects.get('fade');
+  var effectDetails = celSlideShowEffects.get(effectKey) || celSlideShowEffects.get('fade');
   var effectParameters = $H(effectDetails.params).merge({
     'sync' : true
   });
@@ -230,4 +230,7 @@ celSlideShowAddEffect('fade', { effect : Effect.Appear, params : { duration: 2.0
 celSlideShowAddEffect('blinddown', { effect : Effect.BlindDown, params : { duration: 2.0 } });
 celSlideShowAddEffect('blindtopleft', { effect : Effect.BlindDown, params : { duration: 2.0,
   scaleX : true, scaleY : true } });
+/**
+ grow is not working with the new Parallel Effect (added to fade out the old image) 
 celSlideShowAddEffect('grow', { effect : Effect.Grow, params : { duration: 2.0 } });
+**/
