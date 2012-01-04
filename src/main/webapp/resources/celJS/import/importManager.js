@@ -9,50 +9,34 @@ function startObservers(event){
   resizeTab();
 }
 
-var tabArray = new Array();
-var linkArray = new Array();
-var sortLinkArray = new Array();
-
 function updateObservers() {
-  sortLinks = $$('.yui-dt-hd a');
-  sortLinks.each(function(sortLink){
-    if(sortLinkArray.indexOf(sortLink) < 0){
-      consoleMsg('new sort link: ' + sortLink);
-      sortLink.observe('click', function(){
-        YAHOO.util.Event.onDOMReady(function() {
-          consoleMsg('test sort');
-          $("c2_ml_content").fire("filepicker:changed");
-        });
-      });
-      sortLinkArray[sortLinkArray.size()] = sortLink;
-    }
+  if((typeof(myDataTable) != 'undefined') && (myDataTable != null)) {
+    myDataTable.subscribe('rowClickEvent', clickObserve);
+  }
+  $$('.c3_import_title').each(function(tab) {
+    tab.stopObserving('click', changeTabEvent);
+    tab.observe('click', changeTabEvent);
   });
-  
-  links = $$('.c3_import_top .c3_file_link');
-  links.each(function(link) {
-    if(linkArray.indexOf(link) < 0){
-      consoleMsg('new link: ' + link);
-      link.observe('click', function(event){
-        preimport(event);
-        showTab($$('.c3_import_middle')[0]);
-      });
-      linkArray[linkArray.size()] = link;
-    }
-  });
-
-  tabs = $$('.c3_import_title');
-  tabs.each(function(tab) {
-    if(tabArray.indexOf(tab) < 0){
-      consoleMsg('new tab: ' + tab);
-      tab.observe('click', changeTabEvent);
-      tabArray[tabArray.size()] = tab;
-    }
-  });
-  
   $$('c3_import_tabbox').each(function(tabbox){
     tabbox.stopObserving()
   });
   resizeTab();
+}
+
+var clickObserve = function(event) {
+  preimport(event);
+  showTab($$('.c3_import_middle')[0]);
+}
+
+var sortObserve = function(event) {
+	alert('sort!');
+  if((typeof($("c2_ml_content")) != undefined) && ($("c2_ml_content") != null)) {
+    $("c2_ml_content").fire("filepicker:changed");
+  } else {
+    YAHOO.util.Event.onDOMReady(function() {
+      $("c2_ml_content").fire("filepicker:changed");
+    });
+  }
 }
 
 /**
