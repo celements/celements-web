@@ -4,7 +4,7 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 ## start a Celements Document
 $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 ## start the celements body (and lacily finalise the header)
-$set($cel_loadAdminMenuBar=false)
+#set($cel_loadAdminMenuBar=false)
 $celementsweb.includeCSSPage(':celRes/imagePicker.css')
 $xwiki.parseTemplate("celMacros/startCelementsBody.vm")
 
