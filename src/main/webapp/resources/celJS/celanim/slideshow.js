@@ -129,8 +129,28 @@ var scheduleChangeImage = function(elemId) {
 
 var startSlideShows = function() {
   celSlideShowConfig.each(function(pair){
-    scheduleChangeImage(pair.key);
+    if ($(pair.key).hasClassName('celanim_manuelstart')) {
+      $(pair.key).observe('click', celSlideShowManuelStartStop);
+    } else {
+      scheduleChangeImage(pair.key);
+    }
   });
+};
+
+var celSlideShowManuelStartStop = function(event) {
+  if (this.id) {
+    if (celSlideShowIsRunning(this.id)) {
+      window.clearTimeout(celSlideShowThreads.get(this.id));
+      celSlideShowThreads.unset(this.id);
+    } else {
+      changeImage(this.id);
+    }
+    event.stop();
+  }
+};
+
+var celSlideShowIsRunning = function(elemId) {
+  return (typeof celSlideShowThreads.get(elemId) != "undefined") 
 };
 
 var removeImageSize = function(tempImage) {
