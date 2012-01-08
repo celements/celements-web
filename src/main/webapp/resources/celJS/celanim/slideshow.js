@@ -129,28 +129,53 @@ var scheduleChangeImage = function(elemId) {
 
 var startSlideShows = function() {
   celSlideShowConfig.each(function(pair){
-    if ($(pair.key).hasClassName('celanim_manuelstart')) {
-      $(pair.key).observe('click', celSlideShowManuelStartStop);
+    var isManualStart = $(pair.key).hasClassName('celanim_manualstart');
+    celSlideShowIsRunningHash.set(pair.key, !isManualStart);
+    if (isManualStart) {
+      var startButtonDiv = new Element('div', { 'class' : 'slideshowButton' });
+      startButtonDiv.setStyle({
+        backgroundImage : 'url("/file/resources/celRes/celanim/buttons500.png")',
+        backgroundRepeat : 'no-repeat',
+        backgroundPosition : '-57px -56px',
+        'height' : '45px',
+        'width' : '45px',
+        'position' : 'absolute',
+        'left' : '50%',
+        'top' : '50%',
+        margin : '-23px 0px 0px -23px'
+      }).hide();
+      $(pair.key).insert({ after : startButtonDiv });
+      $(pair.key).up('div.celanim_slideshow_wrapper').observe('click', celSlideShowManualStartStop);
+      Effect.Appear(startButtonDiv, { duration : 3.0 , to : 0.8 });
     } else {
       scheduleChangeImage(pair.key);
     }
   });
 };
 
-var celSlideShowManuelStartStop = function(event) {
-  if (this.id) {
-    if (celSlideShowIsRunning(this.id)) {
-      window.clearTimeout(celSlideShowThreads.get(this.id));
-      celSlideShowThreads.unset(this.id);
+var celSlideShowManualStartStop = function(event) {
+  var imgElem = this.down('.celanim_slideshow');
+  if (imgElem && imgElem.id) {
+    var elemId = imgElem.id;
+    var startButtonDiv = this.down('.slideshowButton');
+    if (celSlideShowIsRunning(elemId)
+        && (typeof celSlideShowThreads.get(elemId) != "undefined")) {
+      celSlideShowIsRunningHash.set(elemId, false);
+      window.clearTimeout(celSlideShowThreads.get(elemId));
+      celSlideShowThreads.unset(elemId);
+      Effect.Appear(startButtonDiv, { duration : 1.0 , to : 0.9 });
     } else {
-      changeImage(this.id);
+      celSlideShowIsRunningHash.set(elemId, true);
+      changeImage(elemId);
+      Effect.Fade(startButtonDiv, { duration : 1.0 });
     }
     event.stop();
   }
 };
 
+var celSlideShowIsRunningHash = new Hash();
 var celSlideShowIsRunning = function(elemId) {
-  return (typeof celSlideShowThreads.get(elemId) != "undefined") 
+  return (celSlideShowIsRunningHash.get(elemId) == true); 
 };
 
 var removeImageSize = function(tempImage) {
@@ -178,7 +203,9 @@ var celSlideShowEffectAfterFinish = function(effect) {
   if (slideShowHasNextImage(slideConfig)) {
     removeImageSize(fadeimgtemp);
     fadeimgtemp.src = slideConfig.nextimgsrc;
-    scheduleChangeImage(slideConfig.htmlId);
+    if (celSlideShowIsRunning(slideConfig.htmlId)) {
+      scheduleChangeImage(slideConfig.htmlId);
+    }
   }
 };
 
