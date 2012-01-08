@@ -184,7 +184,6 @@ var centerImage = function(event) {
   var centeredLeft = getCenteredValue(wrapDiv.getWidth() - dim.width);
   var slideConfig = celSlideShowConfig.get(tempImg.id.replace(/_tmpImg$/,''));
   if (slideConfig) {
-    console.debug('set centeredTop/centeredLeft to: ', centeredTop, centeredLeft);
     slideConfig.centeredTop = centeredTop;
     slideConfig.centeredLeft = centeredLeft;
   }
