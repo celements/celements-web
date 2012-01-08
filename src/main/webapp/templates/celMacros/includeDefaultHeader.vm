@@ -22,21 +22,16 @@ $!xwiki.getWebPreference("meta")
 #elseif($xwiki.getSkinFile('skinRes/favicon.ico', true).contains('/resources/'))
 <link rel="shortcut icon" href="$xwiki.getSkinFile('skinRes/favicon.ico', true)" type="image/x-icon"/>
 #end
-$!celementsweb.getAllExternalJavaScriptFiles()
 $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
-#set($jqueryScript = $celementsweb.addExtJSfileOnce(':celJS/jquery.js', 'file'))
-#if("$!jqueryScript" != '')
-$jqueryScript
-<script type="text/javascript">
-  var $j = jQuery.noConflict();
-</script>
-#end
+$celementsweb.addExtJSfileOnce(':celJS/jquery.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
 #if($celementsweb.useImageAnimations())
 $celementsweb.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/yahoo/yahoo-min.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/event/event-min.js')
-$celementsweb.addExtJSfileOnce(':celJS/yui/celanim/slideshow.js')
+$celementsweb.addExtJSfileOnce(':celJS/celanim/slideshow.js')
 #end
+$!celementsweb.getAllExternalJavaScriptFiles()
 #if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)
   $celementsweb.addExtJSfileOnce(':celJS/adminUi/overlayResize.js')
 #end
