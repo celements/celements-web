@@ -156,6 +156,30 @@
     #set($rte_invalid_elements = "$!{rte_invalid_elements}tt,u,var")
   #end
   "invalid_elements" : "$rte_invalid_elements",
+  ##
+  #set($spellCheckTest = ",$!{rtePlugins},")
+  #if($spellCheckTest.contains(',spellchecker,'))
+    "spellchecker_languages" : "+English=en-us,French=fr,German=de,Italian=it",
+    "spellchecker_rpc_url" : "/jmyspell-spellchecker",
+  #end
+  #if($celementsweb.useImageAnimations())
+  	"celanim_slideshow" : $!celementsweb.useImageAnimations(),
+    #set($galleriesXWQL = "from doc.object(XWiki.PhotoAlbumClass) as album")
+    #set($galleriesXWQL = "${galleriesXWQL} where doc.translation=0")
+    #set($galleriesXWQL = "${galleriesXWQL} order by doc.title, doc.name")
+    #set($availableGalleries = '')
+    #foreach($galleryFN in $services.query.xwql($galleriesXWQL).execute())
+      #set($galleryDoc = $xwiki.getDocument($galleryFN))
+      #set($galleryName = $galleryDoc.title)
+      #if("$!galleryName" == '')
+        #set($galleryName = $galleryDoc.name)
+      #end
+      #set($availableGalleries = "$!{availableGalleries},${galleryName}=${galleryFN}")
+    #end
+    "gallerylist" : "$availableGalleries.replaceFirst(',','')",
+  #end
+  ##
+  ## file base link, file picker link
   #if(("$!xwiki.getWebPreference('cel_centralfilebase')" != '') && ("$!xwiki.getWebPreference('cel_centralfilebase')" != '-'))
     #set($wiki_filbase_path = "$!xwiki.getWebPreference('cel_centralfilebase')")
   #else
@@ -210,23 +234,5 @@
   #set($filebaseURL = "$!{filebaseURL}&src_doc=${filePickerSpace}.${filePickerDoc}&columns=10")
   #set($filebaseURL = "$!{filebaseURL}&root=${filePickerSpace}&hasUpload=$hasUpload")
   "wiki_filebase_link" : "$!{filebaseURL}",
-  "wiki_filebase_single_doc" : "$isSingle",##
-  #set($spellCheckTest = ",$!{rtePlugins},")
-  #if($spellCheckTest.contains(',spellchecker,'))
-    "spellchecker_languages" : "+English=en-us,French=fr,German=de,Italian=it,Russian=ru",
-  "spellchecker_rpc_url" : "/jmyspell-spellchecker",
-#end
-  #set($galleriesXWQL = "from doc.object(XWiki.PhotoAlbumClass) as album")
-  #set($galleriesXWQL = "${galleriesXWQL} where doc.translation=0")
-  #set($galleriesXWQL = "${galleriesXWQL} order by doc.title, doc.name")
-    #set($availableGalleries = '')
-  #foreach($galleryFN in $services.query.xwql($galleriesXWQL).execute())
-    #set($galleryDoc = $xwiki.getDocument($galleryFN))
-    #set($galleryName = $galleryDoc.title)
-    #if("$!galleryName" == '')
-      #set($galleryName = $galleryDoc.name)
-    #end
-    #set($availableGalleries = "$!{availableGalleries},${galleryName}=${galleryFN}")
-  #end
-  "gallerylist" : "$availableGalleries.replaceFirst(',','')"
+  "wiki_filebase_single_doc" : "$isSingle" ##
 }

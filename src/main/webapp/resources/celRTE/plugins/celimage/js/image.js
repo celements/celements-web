@@ -54,8 +54,14 @@ var CelImageDialog = {
     }
 
     // If option enabled default constrain proportions to checked
-    if (ed.getParam("advimage_constrain_proportions", true))
+    if (ed.getParam("advimage_constrain_proportions", true)) {
       this.constrain = true;
+    }
+
+    if (ed.getParam("celanim_slideshow", false)) {
+      $('animation_panel').show();
+      $('animation_tab').show();
+    }
 
     this.changeAppearance();
     this.showPreviewImage(this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
