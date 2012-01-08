@@ -66,7 +66,7 @@ var initSlideShows = function(slideShowConfigArray) {
       var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
           'class' : 'celanim_slideshow_wrapper',
           'style': 'display: inline-block; position: relative;'
-            +' font-size: 0px; line-height: 0px;' }
+            +' font-size: 0px; line-height: 0px; overflow: hidden; ' }
         ).insert({ top : tempImg });
       divWrapper.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });

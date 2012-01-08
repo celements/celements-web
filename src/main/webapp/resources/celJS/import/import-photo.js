@@ -107,7 +107,8 @@ function changeImportAction(elem) {
 function preimport(event){
   var src = "";
   var filename = "";
-  event.element().siblings().each(function(sibl){
+  var element = event.target.down('.c3_file_link');
+  element.siblings().each(function(sibl){
     if(sibl.name == 'c3_fb_file_src'){
       src = sibl.value;
     } else if(sibl.name == 'c3_fb_full_file_name'){
