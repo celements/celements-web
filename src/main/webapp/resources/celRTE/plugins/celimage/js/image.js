@@ -159,7 +159,7 @@ var CelImageDialog = {
 
     if (nl.isSlideshowManuelStart.checked) {
       args['id'] = this.getSlideShowId(f);
-      args['class'] = (args['class'] + ' celanim_manuelstart').strip();
+      args['class'] = (args['class'] + ' celanim_manualstart').strip();
     }
 
     el = ed.selection.getNode();
@@ -221,7 +221,7 @@ var CelImageDialog = {
     }
 
     if (at == 'isSlideshowManuelStart') {
-      return dom.hasClass(e, 'celanim_manuelstart');
+      return dom.hasClass(e, 'celanim_manualstart');
     }
 
     if (at == 'gallery') {
@@ -250,7 +250,7 @@ var CelImageDialog = {
 
     if (at == 'class') {
       v = dom.getAttrib(e, 'class').replace(/celanim_slideshow/g, ''
-          ).replace(/celanim_manuelstart/g, '');
+          ).replace(/celanim_manualstart/g, '');
       return v.strip();
     }
 
