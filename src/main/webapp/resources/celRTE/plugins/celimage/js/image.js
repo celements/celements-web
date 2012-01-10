@@ -33,6 +33,7 @@ var CelImageDialog = {
       selectByValue(f, 'gallery_list', this.getAttrib(n, 'gallery'), true, true);
       selectByValue(f, 'effect_list', this.getAttrib(n, 'effect'), true, true);
       nl.hasSlideshow.checked = this.getAttrib(n, 'hasSlideshow');
+      nl.isSlideshowManuelStart.checked = this.getAttrib(n, 'isSlideshowManuelStart');
       nl.delay.value = this.getAttrib(n, 'delay');
       nl.style.value = dom.getAttrib(n, 'style');
       nl.id.value = dom.getAttrib(n, 'id');
@@ -54,8 +55,14 @@ var CelImageDialog = {
     }
 
     // If option enabled default constrain proportions to checked
-    if (ed.getParam("advimage_constrain_proportions", true))
+    if (ed.getParam("advimage_constrain_proportions", true)) {
       this.constrain = true;
+    }
+
+    if (ed.getParam("celanim_slideshow", false)) {
+      $('animation_panel').show();
+      $('animation_tab').show();
+    }
 
     this.changeAppearance();
     this.showPreviewImage(this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
@@ -150,6 +157,11 @@ var CelImageDialog = {
       args['class'] = (args['class'] + ' celanim_slideshow').strip();
     }
 
+    if (nl.isSlideshowManuelStart.checked) {
+      args['id'] = this.getSlideShowId(f);
+      args['class'] = (args['class'] + ' celanim_manualstart').strip();
+    }
+
     el = ed.selection.getNode();
 
     if (el && el.nodeName == 'IMG') {
@@ -208,6 +220,10 @@ var CelImageDialog = {
       return dom.hasClass(e, 'celanim_slideshow');
     }
 
+    if (at == 'isSlideshowManuelStart') {
+      return dom.hasClass(e, 'celanim_manualstart');
+    }
+
     if (at == 'gallery') {
       idArgs = dom.getAttrib(e, 'id').split(':');
       if (idArgs.length > 1) {
@@ -233,7 +249,8 @@ var CelImageDialog = {
     }
 
     if (at == 'class') {
-      v = dom.getAttrib(e, 'class').replace(/celanim_slideshow/g, '');
+      v = dom.getAttrib(e, 'class').replace(/celanim_slideshow/g, ''
+          ).replace(/celanim_manualstart/g, '');
       return v.strip();
     }
 

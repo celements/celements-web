@@ -33,7 +33,7 @@
 	<groupId>com.celements</groupId>
 	<artifactId>celements-web</artifactId>
 	<packaging>war</packaging>
-	<version>2.10.7-SNAPSHOT</version>
+	<version>2.10.8-SNAPSHOT</version>
 	<name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -97,7 +97,7 @@
 		<dependency>
 			<groupId>com.celements</groupId>
 			<artifactId>celements-core</artifactId>
-			<version>1.9</version>
+			<version>1.10</version>
 		</dependency>
 		<dependency>
 			<groupId>com.celements</groupId>
@@ -112,7 +112,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-calendar</artifactId>
-      <version>1.8-SNAPSHOT</version>
+      <version>1.8</version>
     </dependency>
     <dependency>
       <groupId>batik</groupId>
