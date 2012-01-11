@@ -163,7 +163,7 @@ body > div#celements2_menu_bar {
 	display:block;
 	cursor: pointer;
 	color:#CCCCCC !important;	
-	background-color: #CCCCCC!important;
+	background-color: rgb(51,51,51) !important;
 	background-color: rgba(51,51,51, 0.92) !important;
 	text-decoration:none !important;
 	white-space:nowrap;
@@ -235,7 +235,8 @@ body > div#celements2_menu_bar {
 .contextMenuItem{
   border-top: 1px solid #5e5e5e;
  	position:relative;
-  background-color: rgba(51,51,51, 0.92);
+  background-color: rgb(51,51,51);
+ 	background-color: rgba(51,51,51, 0.92);
 	width:196px;
 	height:auto;
 	overflow:hidden;
