@@ -34,6 +34,7 @@ var CelImageDialog = {
       selectByValue(f, 'effect_list', this.getAttrib(n, 'effect'), true, true);
       nl.hasSlideshow.checked = this.getAttrib(n, 'hasSlideshow');
       nl.hasOverlay.checked = this.getAttrib(n, 'hasOverlay');
+      nl.hasCloseButton.checked = this.getAttrib(n, 'hasCloseButton');
       nl.isSlideshowManualStart.checked = this.getAttrib(n, 'isSlideshowManualStart');
       nl.delay.value = this.getAttrib(n, 'delay');
       nl.overlayWidth.value = this.getAttrib(n, 'overlayWidth');
@@ -171,6 +172,11 @@ var CelImageDialog = {
       args['class'] = (args['class'] + ' celanim_overlay').strip();
     }
 
+    if (nl.hasCloseButton.checked) {
+      args['id'] = this.getSlideShowId(f);
+      args['class'] = (args['class'] + ' celanim_overlay_addCloseButton').strip();
+    }
+
     el = ed.selection.getNode();
 
     if (el && el.nodeName == 'IMG') {
@@ -232,8 +238,13 @@ var CelImageDialog = {
     if (at == 'isSlideshowManualStart') {
       return dom.hasClass(e, 'celanim_manualstart');
     }
+
     if (at == 'hasOverlay') {
       return dom.hasClass(e, 'celanim_overlay');
+    }
+
+    if (at == 'hasCloseButton') {
+      return dom.hasClass(e, 'celanim_overlay_addCloseButton');
     }
 
     if (at == 'gallery') {
@@ -283,7 +294,7 @@ var CelImageDialog = {
 
     if (at == 'class') {
       v = dom.getAttrib(e, 'class').replace(
-          /(celanim_slideshow|celanim_manualstart|celanim_overlay)/g, '');
+          /(celanim_slideshow|celanim_manualstart|celanim_overlay|celanim_overlay_addCloseButton)/g, '');
       return v.strip();
     }
 

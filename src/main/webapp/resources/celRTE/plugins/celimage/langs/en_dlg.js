@@ -53,5 +53,6 @@ effects : "effect",
 "select_image_first" : "Please select image first.",
 "uploadImage" : "Upload image",
 "overlay" : "Large image in overlay",
-"hasOverlay" : "show large image in overlay (on click)"
+"hasOverlay" : "show large image in overlay (on click)",
+  "hasCloseButton" : "add close button"
 });

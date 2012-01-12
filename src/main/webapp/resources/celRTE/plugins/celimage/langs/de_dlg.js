@@ -53,5 +53,6 @@ tinyMCE.addI18n('de.celimage_dlg', {
   "select_image_first" : "Bitte zuerst Bild ausw&auml;len.",
   "uploadImage" : "Bild hochladen",
   "overlay" : "Bild in Overlay",
-  "hasOverlay" : "Bild bei Klick in Overlay öffnen" 
+  "hasOverlay" : "Bild bei Klick in Overlay öffnen",
+  "hasCloseButton" : "Schliessen button hinzufügen"
 });
