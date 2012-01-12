@@ -128,12 +128,16 @@ var scheduleChangeImage = function(elemId) {
 var startSlideShows = function() {
   celSlideShowConfig.each(function(pair){
     var isManualStart = $(pair.key).hasClassName('celanim_manualstart');
+    var isCelanimOverlay = $(pair.key).hasClassName('cellanim_overlay');
     celSlideShowIsRunningHash.set(pair.key, !isManualStart);
     if (isManualStart) {
       var startButtonDiv = new Element('div', { 'class' : 'slideshowButton' });
       startButtonDiv.hide();
       $(pair.key).insert({ after : startButtonDiv });
-      $(pair.key).up('div.celanim_slideshow_wrapper').observe('click', celSlideShowManualStartStop);
+      if (!isCelanimOverlay) {
+        $(pair.key).up('div.celanim_slideshow_wrapper').observe('click',
+            celSlideShowManualStartStop);
+      }
       Effect.Appear(startButtonDiv, { duration : 3.0 , to : 0.8 });
     } else {
       scheduleChangeImage(pair.key);
