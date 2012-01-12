@@ -185,6 +185,46 @@
 
           </table>
         </fieldset>
+
+        <fieldset>
+          <legend>{#celimage_dlg.overlay}</legend>
+
+          <table border="0" cellpadding="4" cellspacing="0">
+            <tr>
+              <td class="column1"><label id="hasSlideshowlabel" for="hasSlideshow">{#celimage_dlg.hasSlideshow}</label></td> 
+              <td><input id="hasSlideshow" name="hasSlideshow" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="isSlideshowManuelStart" for="isSlideshowManuelStart">{#celimage_dlg.isSlideshowManuelStart}</label></td> 
+              <td><input id="isSlideshowManuelStart" name="isSlideshowManuelStart" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="gallerylabel" for="gallery_list">{#celimage_dlg.gallery}</label></td> 
+              <td>
+                <select id="gallery_list" name="gallery" onchange="CelImageDialog.changeAppearance();"> 
+                </select>
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="delaylabel" for="delay">{#celimage_dlg.delay}</label></td> 
+              <td>
+                <input id="delay" name="delay" type="text" value="" />
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="effectlabel" for="effect_list">{#celimage_dlg.effects}</label></td> 
+              <td>
+                <select id="effect_list" name="effect" onchange="CelImageDialog.changeAppearance();"> 
+                </select>
+              </td> 
+            </tr>
+
+          </table>
+        </fieldset>
       </div>
 
       <div id="advanced_panel" class="panel">
