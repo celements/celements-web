@@ -44,7 +44,7 @@ tinyMCE.addI18n('de.celimage_dlg', {
   "tab_imagePicker" : "Picker",
   slideshow : "Bildstrecke",
   hasSlideshow : "mit Bildstrecke",
-  isSlideshowManuelStart : "Manuel Starten",
+  isSlideshowManualStart : "Manuell Starten",
   gallery : "Bild Album",
   delay : "Bildwechsel nach (Sekunden)",
   defaultEffect : "standard (Fade)",

@@ -33,7 +33,7 @@ var CelImageDialog = {
       selectByValue(f, 'gallery_list', this.getAttrib(n, 'gallery'), true, true);
       selectByValue(f, 'effect_list', this.getAttrib(n, 'effect'), true, true);
       nl.hasSlideshow.checked = this.getAttrib(n, 'hasSlideshow');
-      nl.isSlideshowManuelStart.checked = this.getAttrib(n, 'isSlideshowManuelStart');
+      nl.isSlideshowManualStart.checked = this.getAttrib(n, 'isSlideshowManualStart');
       nl.delay.value = this.getAttrib(n, 'delay');
       nl.style.value = dom.getAttrib(n, 'style');
       nl.id.value = dom.getAttrib(n, 'id');
@@ -157,7 +157,7 @@ var CelImageDialog = {
       args['class'] = (args['class'] + ' celanim_slideshow').strip();
     }
 
-    if (nl.isSlideshowManuelStart.checked) {
+    if (nl.isSlideshowManualStart.checked) {
       args['id'] = this.getSlideShowId(f);
       args['class'] = (args['class'] + ' celanim_manualstart').strip();
     }
@@ -220,7 +220,7 @@ var CelImageDialog = {
       return dom.hasClass(e, 'celanim_slideshow');
     }
 
-    if (at == 'isSlideshowManuelStart') {
+    if (at == 'isSlideshowManualStart') {
       return dom.hasClass(e, 'celanim_manualstart');
     }
 
