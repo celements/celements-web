@@ -168,7 +168,7 @@ var CelImageDialog = {
 
     if (nl.hasOverlay.checked) {
       args['id'] = this.getSlideShowId(f);
-      args['class'] = (args['class'] + ' celanim_overlay').strip();
+      args['class'] = (args['class'] + ' cellanim_overlay').strip();
     }
 
     el = ed.selection.getNode();
@@ -233,7 +233,7 @@ var CelImageDialog = {
       return dom.hasClass(e, 'celanim_manualstart');
     }
     if (at == 'hasOverlay') {
-      return dom.hasClass(e, 'celanim_overlay');
+      return dom.hasClass(e, 'cellanim_overlay');
     }
 
     if (at == 'gallery') {
@@ -283,7 +283,7 @@ var CelImageDialog = {
 
     if (at == 'class') {
       v = dom.getAttrib(e, 'class').replace(
-          /(celanim_slideshow|celanim_manualstart|celanim_overlay)/g, '');
+          /(celanim_slideshow|celanim_manualstart|cellanim_overlay)/g, '');
       return v.strip();
     }
 
