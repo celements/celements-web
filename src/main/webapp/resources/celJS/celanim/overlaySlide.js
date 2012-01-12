@@ -19,6 +19,7 @@ var loadOverlaySlide = function() {
       celanimOverlay_addOpenConfig(elem.id, {
           'src' : imgOverlaySrc,
           'addCloseButton' : $(elem.id).hasClassName('celanim_overlay_addCloseButton'),
+          'captionEval' : 'this.thumb.alt',
           'cssClassNames' : ['borderless', 'floating-caption']
         });
     }
