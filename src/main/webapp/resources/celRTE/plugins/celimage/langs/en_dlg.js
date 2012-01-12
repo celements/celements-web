@@ -51,5 +51,7 @@ defaultEffect : "default (Fade)",
 effects : "effect",
 "imagePicker" : "select image",
 "select_image_first" : "Please select image first.",
-"uploadImage" : "Upload image"
+"uploadImage" : "Upload image",
+"overlay" : "Large image in overlay",
+"hasOverlay" : "show large image in overlay (on click)"
 });

@@ -11,7 +11,7 @@
   <script type="text/javascript" src="js/image.js?version=201201081844"></script>
   <script type="text/javascript" src="js/imagepicker.js?version=201112282031"></script>
   <script type="text/javascript" src="/file/resources/celJS/uploadAttachment.js?version=201111211848"></script>
-	<link href="css/celimage.css?version=201112120156" rel="stylesheet" type="text/css" />
+	<link href="css/celimage.css?version=201201121207" rel="stylesheet" type="text/css" />
 </head>
 <body id="celimage" style="display: none">
 <div class="celbeta">Celements Image Picker BETA</div>
@@ -68,7 +68,7 @@
             <tr>
               <td class="column1"><label id="widthlabel" for="celwidth">{#celimage_dlg.dimensions}</label></td>
               <td class="nowrap">
-                <input name="celwidth" type="text" id="celwidth" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.changeHeight();"/> x 
+                <input name="celwidth" type="text" id="celwidth" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.changeHeight();"/> px x 
                 <input name="celheight" type="text" id="celheight" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.changeWidth();"/> px
               </td>
             </tr>
@@ -156,8 +156,8 @@
             </tr>
 
             <tr>
-              <td class="column1"><label id="isSlideshowManuelStart" for="isSlideshowManuelStart">{#celimage_dlg.isSlideshowManuelStart}</label></td> 
-              <td><input id="isSlideshowManuelStart" name="isSlideshowManuelStart" type="checkbox" value="" /></td> 
+              <td class="column1"><label id="isSlideshowManualStart" for="isSlideshowManualStart">{#celimage_dlg.isSlideshowManualStart}</label></td> 
+              <td><input id="isSlideshowManualStart" name="isSlideshowManualStart" type="checkbox" value="" /></td> 
             </tr>
 
             <tr>
@@ -181,6 +181,26 @@
                 <select id="effect_list" name="effect" onchange="CelImageDialog.changeAppearance();"> 
                 </select>
               </td> 
+            </tr>
+
+          </table>
+        </fieldset>
+
+        <fieldset>
+          <legend>{#celimage_dlg.overlay}</legend>
+
+          <table border="0" cellpadding="4" cellspacing="0">
+            <tr>
+              <td class="column1"><label id="hasOverlay" for="hasOverlay">{#celimage_dlg.hasOverlay}</label></td> 
+              <td><input id="hasOverlay" name="hasOverlay" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="widthlabel" for="overlayWidth">{#celimage_dlg.dimensions}</label></td>
+              <td class="nowrap">
+                <input name="overlayWidth" type="text" id="overlayWidth" value="" size="5" maxlength="5" class="size" /> px x 
+                <input name="overlayHeight" type="text" id="overlayHeight" value="" size="5" maxlength="5" class="size" /> px
+              </td>
             </tr>
 
           </table>
