@@ -33,8 +33,11 @@ var CelImageDialog = {
       selectByValue(f, 'gallery_list', this.getAttrib(n, 'gallery'), true, true);
       selectByValue(f, 'effect_list', this.getAttrib(n, 'effect'), true, true);
       nl.hasSlideshow.checked = this.getAttrib(n, 'hasSlideshow');
+      nl.hasOverlay.checked = this.getAttrib(n, 'hasOverlay');
       nl.isSlideshowManualStart.checked = this.getAttrib(n, 'isSlideshowManualStart');
       nl.delay.value = this.getAttrib(n, 'delay');
+      nl.overlayWidth.value = this.getAttrib(n, 'overlayWidth');
+      nl.overlayHeight.value = this.getAttrib(n, 'overlayHeight');
       nl.style.value = dom.getAttrib(n, 'style');
       nl.id.value = dom.getAttrib(n, 'id');
       nl.dir.value = dom.getAttrib(n, 'dir');
@@ -107,8 +110,9 @@ var CelImageDialog = {
   getSlideShowId : function(f) {
     var nl = f.elements;
     newId = 'S' + new Date().getTime() + ':' + getSelectValue(f, 'gallery') + ':'
-      + nl.delay.value + ':' + getSelectValue(f, 'effect');
-    return newId.replace(/:+/, ':').replace(/:+$/, '');
+      + nl.delay.value + ':' + getSelectValue(f, 'effect') + ':' + nl.overlayWidth.value
+      + ':' + nl.overlayHeight.value;
+    return newId.replace(/:+$/, '');
   },
 
   insertAndClose : function() {
@@ -160,6 +164,11 @@ var CelImageDialog = {
     if (nl.isSlideshowManualStart.checked) {
       args['id'] = this.getSlideShowId(f);
       args['class'] = (args['class'] + ' celanim_manualstart').strip();
+    }
+
+    if (nl.hasOverlay.checked) {
+      args['id'] = this.getSlideShowId(f);
+      args['class'] = (args['class'] + ' celanim_overlay').strip();
     }
 
     el = ed.selection.getNode();
@@ -223,8 +232,12 @@ var CelImageDialog = {
     if (at == 'isSlideshowManualStart') {
       return dom.hasClass(e, 'celanim_manualstart');
     }
+    if (at == 'hasOverlay') {
+      return dom.hasClass(e, 'celanim_overlay');
+    }
 
     if (at == 'gallery') {
+      v = '';
       idArgs = dom.getAttrib(e, 'id').split(':');
       if (idArgs.length > 1) {
         v = idArgs[1];
@@ -233,6 +246,7 @@ var CelImageDialog = {
     }
 
     if (at == 'delay') {
+      v = '';
       idArgs = dom.getAttrib(e, 'id').split(':');
       if (idArgs.length > 2) {
         v = idArgs[2];
@@ -241,6 +255,7 @@ var CelImageDialog = {
     }
 
     if (at == 'effect') {
+      v = '';
       idArgs = dom.getAttrib(e, 'id').split(':');
       if (idArgs.length > 3) {
         v = idArgs[3];
@@ -248,9 +263,27 @@ var CelImageDialog = {
       return v;
     }
 
+    if (at == 'overlayWidth') {
+      v = '';
+      idArgs = dom.getAttrib(e, 'id').split(':');
+      if (idArgs.length > 4) {
+        v = idArgs[4];
+      }
+      return v;
+    }
+
+    if (at == 'overlayHeight') {
+      v = '';
+      idArgs = dom.getAttrib(e, 'id').split(':');
+      if (idArgs.length > 5) {
+        v = idArgs[5];
+      }
+      return v;
+    }
+
     if (at == 'class') {
-      v = dom.getAttrib(e, 'class').replace(/celanim_slideshow/g, ''
-          ).replace(/celanim_manualstart/g, '');
+      v = dom.getAttrib(e, 'class').replace(
+          /(celanim_slideshow|celanim_manualstart|celanim_overlay)/g, '');
       return v.strip();
     }
 
