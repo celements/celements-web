@@ -128,7 +128,7 @@ var scheduleChangeImage = function(elemId) {
 var startSlideShows = function() {
   celSlideShowConfig.each(function(pair){
     var isManualStart = $(pair.key).hasClassName('celanim_manualstart');
-    var isCelanimOverlay = $(pair.key).hasClassName('cellanim_overlay');
+    var isCelanimOverlay = $(pair.key).hasClassName('celanim_overlay');
     celSlideShowIsRunningHash.set(pair.key, !isManualStart);
     if (isManualStart) {
       var startButtonDiv = new Element('div', { 'class' : 'slideshowButton' });
