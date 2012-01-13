@@ -293,8 +293,9 @@ var CelImageDialog = {
     }
 
     if (at == 'class') {
-      v = dom.getAttrib(e, 'class').replace(
-          /(celanim_slideshow|celanim_manualstart|celanim_overlay|celanim_overlay_addCloseButton)/g, '');
+      v = ' ' + dom.getAttrib(e, 'class') + ' ';
+      v = v.replace(
+          / (celanim_slideshow|celanim_manualstart|celanim_overlay|celanim_overlay_addCloseButton) /g, ' ');
       return v.strip();
     }
 
