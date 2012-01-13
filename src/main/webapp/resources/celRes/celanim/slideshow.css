@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.celanim_slideshow_wrapper { 
+  display: inline-block; 
+  position: relative; 
+  font-size: 0px; 
+  line-height: 0px; 
+  overflow: hidden; 
+}
+
+.celanim_slideshow_wrapper .slideshowButton { 
+  background-image: url(buttons500.png);
+  height: 66px !important; 
+  width: 67px !important; 
+  position: absolute; 
+  left: 50%; 
+  top: 50%; 
+  margin-top: -33px; 
+  margin-right: 0px; 
+  margin-bottom: 0px; 
+  margin-left: -33px; 
+  opacity: 0.9; 
+  background-position: -41px -44px !important; 
+  background-repeat: no-repeat; 
+}
+
+.celanim_slideshow_wrapper .slideshowButton:hover { 
+  background-image: url(buttons500-hover.png);
+}
+

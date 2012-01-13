@@ -64,9 +64,7 @@ var initSlideShows = function(slideShowConfigArray) {
        }).hide();
       tempImg.observe('load', centerImage);
       var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
-          'class' : 'celanim_slideshow_wrapper',
-          'style': 'display: inline-block; position: relative;'
-            +' font-size: 0px; line-height: 0px; overflow: hidden; ' }
+          'class' : 'celanim_slideshow_wrapper' }
         ).insert({ top : tempImg });
       divWrapper.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
@@ -133,17 +131,7 @@ var startSlideShows = function() {
     celSlideShowIsRunningHash.set(pair.key, !isManualStart);
     if (isManualStart) {
       var startButtonDiv = new Element('div', { 'class' : 'slideshowButton' });
-      startButtonDiv.setStyle({
-        backgroundImage : 'url("/file/resources/celRes/celanim/buttons500.png")',
-        backgroundRepeat : 'no-repeat',
-        backgroundPosition : '-57px -56px',
-        'height' : '45px',
-        'width' : '45px',
-        'position' : 'absolute',
-        'left' : '50%',
-        'top' : '50%',
-        margin : '-23px 0px 0px -23px'
-      }).hide();
+      startButtonDiv.hide();
       $(pair.key).insert({ after : startButtonDiv });
       $(pair.key).up('div.celanim_slideshow_wrapper').observe('click', celSlideShowManualStartStop);
       Effect.Appear(startButtonDiv, { duration : 3.0 , to : 0.8 });

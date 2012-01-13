@@ -30,6 +30,7 @@ $celementsweb.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/yahoo/yahoo-min.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/event/event-min.js')
 $celementsweb.addExtJSfileOnce(':celJS/celanim/slideshow.js')
+$celementsweb.includeCSSAfterSkin(':celRes/celanim/slideshow.css')
 #end
 $!celementsweb.getAllExternalJavaScriptFiles()
 #if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)
