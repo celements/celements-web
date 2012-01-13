@@ -68,6 +68,10 @@ var celanimOverlay_addOpenConfig = function(elemId, openConfig) {
   }
 };
 
+var celanimOverlay_AfterExpandHandler = function(hsExpander) {
+  $(hsExpander.thumb).fire('celanim_overlay:afterExpand', hsExpander);
+};
+
 var celanimOverlay_OpenInOverlay = function(event) {
   var openConfig = celanimOverlay_openConfig.get(this.id);
   if (openConfig) {
@@ -82,6 +86,7 @@ var celanimOverlay_OpenInOverlay = function(event) {
       hs.outlineType = hsConfig.outlineType || '';
       hs.wrapperClassName = 'no-footer no-move celanim_overlay_wrapper '
         + openConfig.cssClassNames.join(' ');
+      hs.Expander.prototype.onAfterExpand = celanimOverlay_AfterExpandHandler;
       if (hsConfig.celanimOverlayType == 'htmlExpand') {
         hs.htmlExpand(this, hsConfig.toObject());
       } else {
