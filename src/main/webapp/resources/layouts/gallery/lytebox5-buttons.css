@@ -1,0 +1,442 @@
+@charset "UTF-8";
+/* CSS Document */
+
+#lbOuterContainer, 
+#lbImage {
+	border: 0px !important;
+}
+
+#lbOuterContainer, 
+#lbTopContainer {
+	border-top-left-radius: 0px !important;
+	border-top-right-radius: 0px !important;
+	border-bottom-left-radius: 0px !important;
+	border-bottom-right-radius: 0px !important;
+}
+
+#lbNumTop, 
+#lbNumBottom {
+	font-style: normal !important;
+}
+
+
+/* Play Button */
+#lbPlay {
+	background-position: -27px -28px !important;
+	background-repeat: no-repeat !important; 
+	height: 23px;
+	width: 23px;
+}
+
+/* Prev Button */
+#lbPrev {
+	background-position: -198px -140px !important;
+	background-repeat: no-repeat !important; 
+	height: 23px;
+	width: 23px;
+}
+
+/* Next Button */
+#lbNext {
+	background-position: -198px -85px !important;
+	background-repeat: no-repeat !important; 
+	height: 23px;
+	width: 23px;
+}
+
+/* Close Button */
+#lbClose {
+	background-position: -198px -28px !important;
+	background-repeat: no-repeat !important; 
+	height: 23px;
+	width: 23px;
+}
+
+/* Pause Button */
+#lbPause {
+	background-position: -84px -85px !important;
+	background-repeat: no-repeat !important; 
+	height: 23px;
+	width: 23px;
+}
+
+/*---- LAYOUT: BLACK ----*/
+#lbBottomData.black, 
+#lbTopData.black { 
+	color: #515151 !important;
+}
+
+/*--- button: Play ---*/
+#lbPlay.black { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbPlay.black:hover { 
+	background-image: url(img/lytebox5-button-hell.png) !important;
+}
+
+/*--- button: Prev ---*/
+#lbPrev.black { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbPrev.black:hover { 
+	background-image: url(img/lytebox5-button-hell.png) !important;
+}
+#lbPrev.blackOff { 
+	background-image: url(img/lytebox5-button-dunkel.png) !important;
+}
+#lbPrevHov.black:hover { 
+	background-image: url(img/lytebox5-button-black-prev.png) !important;
+}
+
+/*--- button: Next ---*/
+#lbNext.black { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbNext.black:hover { 
+	background-image: url(img/lytebox5-button-hell.png) !important;
+}
+#lbNext.blackOff { 
+	background-image: url(img/lytebox5-button-dunkel.png) !important;
+}
+#lbNextHov.black:hover { 
+	background-image: url(img/lytebox5-button-black-next.png) !important;
+}
+
+/*--- button: Close ---*/
+#lbClose.black { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbClose.black:hover { 
+	background-image: url(img/lytebox5-button-hell.png) !important;
+}
+
+/*--- button: Pause ---*/
+#lbPause.black { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbPause.black:hover { 
+	background-image: url(img/lytebox5-button-hell.png) !important;
+}
+
+/*---- LAYOUT: GREY ----*/
+/*--- button: Play ---*/
+#lbPlay.grey { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbPlay.grey:hover { 
+	background-image: url(img/lytebox5-button-dunkel.png) !important;
+}
+
+/*--- button: Prev ---*/
+#lbPrev.grey { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbPrev.grey:hover { 
+	background-image: url(img/lytebox5-button-dunkel.png) !important;
+}
+#lbPrev.greyOff { 
+	background-image: url(img/lytebox5-button-hell.png) !important;
+}
+#lbPrevHov.grey:hover { 
+	background-image: url(img/lytebox5-button-grey-prev.png) !important;
+}
+
+/*--- button: Next ---*/
+#lbNext.grey { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbNext.grey:hover { 
+	background-image: url(img/lytebox5-button-dunkel.png) !important;
+}
+#lbNext.greyOff { 
+	background-image: url(img/lytebox5-button-hell.png) !important;
+}
+#lbNextHov.grey:hover { 
+	background-image: url(img/lytebox5-button-grey-next.png) !important;
+}
+
+/*--- button: Close ---*/
+#lbClose.grey { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbClose.grey:hover { 
+	background-image: url(img/lytebox5-button-dunkel.png) !important;
+}
+
+/*--- button: Pause ---*/
+#lbPause.grey { 
+	background-image: url(img/lytebox5-button.png) !important;
+}
+#lbPause.grey:hover { 
+	background-image: url(img/lytebox5-button-dunkel.png) !important;
+}
+
+/*---- LAYOUT: RED ----*/
+/*--- button: Play ---*/
+#lbPlay.red { 
+	background-image: url(img/lytebox5-button-red.png) !important;
+}
+#lbPlay.red:hover { 
+	background-image: url(img/lytebox5-button-red-dunkel.png) !important;
+}
+
+/*--- button: Prev ---*/
+#lbPrev.red { 
+	background-image: url(img/lytebox5-button-red.png) !important;
+}
+#lbPrev.red:hover { 
+	background-image: url(img/lytebox5-button-red-dunkel.png) !important;
+}
+#lbPrev.redOff { 
+	background-image: url(img/lytebox5-button-red-hell.png) !important;
+}
+#lbPrevHov.red:hover { 
+	background-image: url(img/lytebox5-button-red-prev.png) !important;
+}
+
+/*--- button: Next ---*/
+#lbNext.red { 
+	background-image: url(img/lytebox5-button-red.png) !important;
+}
+#lbNext.red:hover { 
+	background-image: url(img/lytebox5-button-red-dunkel.png) !important;
+}
+#lbNext.redOff { 
+	background-image: url(img/lytebox5-button-red-hell.png) !important;
+}
+#lbNextHov.red:hover { 
+	background-image: url(img/lytebox5-button-red-next.png) !important;
+}
+
+/*--- button: Close ---*/
+#lbClose.red { 
+	background-image: url(img/lytebox5-button-red.png) !important;
+}
+#lbClose.red:hover { 
+	background-image: url(img/lytebox5-button-red-dunkel.png) !important;
+}
+
+/*--- button: Pause ---*/
+#lbPause.red { 
+	background-image: url(img/lytebox5-button-red.png) !important;
+}
+#lbPause.red:hover { 
+	background-image: url(img/lytebox5-button-red-dunkel.png) !important;
+}
+
+/*---- LAYOUT: GREEN ----*/
+#lbBottomData.green, 
+#lbTopData.black { 
+	color: #006000 !important; 
+}
+
+/*--- button: Play ---*/
+#lbPlay.green { 
+	background-image: url(img/lytebox5-button-green.png) !important;
+}
+#lbPlay.green:hover { 
+	background-image: url(img/lytebox5-button-green-dunkel.png) !important;
+}
+
+/*--- button: Prev ---*/
+#lbPrev.green { 
+	background-image: url(img/lytebox5-button-green.png) !important;
+}
+#lbPrev.green:hover { 
+	background-image: url(img/lytebox5-button-green-dunkel.png) !important;
+}
+#lbPrev.greenOff { 
+	background-image: url(img/lytebox5-button-green-hell.png) !important;
+}
+#lbPrevHov.green:hover { 
+	background-image: url(img/lytebox5-button-green-prev.png) !important;
+}
+
+/*--- button: Next ---*/
+#lbNext.green { 
+	background-image: url(img/lytebox5-button-green.png) !important;
+}
+#lbNext.green:hover { 
+	background-image: url(img/lytebox5-button-green-dunkel.png) !important;
+}
+#lbNext.greenOff { 
+	background-image: url(img/lytebox5-button-green-hell.png) !important;
+}
+#lbNextHov.green:hover { 
+	background-image: url(img/lytebox5-button-green-next.png) !important;
+}
+
+/*--- button: Close ---*/
+#lbClose.green { 
+	background-image: url(img/lytebox5-button-green.png) !important;
+}
+#lbClose.green:hover { 
+	background-image: url(img/lytebox5-button-green-dunkel.png) !important;
+}
+
+/*--- button: Pause ---*/
+#lbPause.green { 
+	background-image: url(img/lytebox5-button-green.png) !important;
+}
+#lbPause.green:hover { 
+	background-image: url(img/lytebox5-button-green-dunkel.png) !important;
+}
+
+/*---- LAYOUT: BLUE ----*/
+/*--- button: Play ---*/
+#lbPlay.blue { 
+	background-image: url(img/lytebox5-button-blue.png) !important;
+}
+#lbPlay.blue:hover { 
+	background-image: url(img/lytebox5-button-blue-dunkel.png) !important;
+}
+
+/*--- button: Prev ---*/
+#lbPrev.blue { 
+	background-image: url(img/lytebox5-button-blue.png) !important;
+}
+#lbPrev.blue:hover { 
+	background-image: url(img/lytebox5-button-blue-dunkel.png) !important;
+}
+#lbPrev.blueOff { 
+	background-image: url(img/lytebox5-button-blue-hell.png) !important;
+}
+#lbPrevHov.blue:hover { 
+	background-image: url(img/lytebox5-button-blue-prev.png) !important;
+}
+
+/*--- button: Next ---*/
+#lbNext.blue { 
+	background-image: url(img/lytebox5-button-blue.png) !important;
+}
+#lbNext.blue:hover { 
+	background-image: url(img/lytebox5-button-blue-dunkel.png) !important;
+}
+#lbNext.blueOff { 
+	background-image: url(img/lytebox5-button-blue-hell.png) !important;
+}
+#lbNextHov.blue:hover { 
+	background-image: url(img/lytebox5-button-blue-next.png) !important;
+}
+
+/*--- button: Close ---*/
+#lbClose.blue { 
+	background-image: url(img/lytebox5-button-blue.png) !important;
+}
+#lbClose.blue:hover { 
+	background-image: url(img/lytebox5-button-blue-dunkel.png) !important;
+}
+
+/*--- button: Pause ---*/
+#lbPause.blue { 
+	background-image: url(img/lytebox5-button-blue.png) !important;
+}
+#lbPause.blue:hover { 
+	background-image: url(img/lytebox5-button-blue-dunkel.png) !important;
+}
+
+/*---- LYOUT: GOLD----*/
+/*--- button: Play ---*/
+#lbPlay.gold { 
+	background-image: url(img/lytebox5-button-gold.png) !important;
+}
+#lbPlay.gold:hover { 
+	background-image: url(img/lytebox5-button-gold-dunkel.png) !important;
+}
+
+/*--- button: Prev ---*/
+#lbPrev.gold { 
+	background-image: url(img/lytebox5-button-gold.png) !important;
+}
+#lbPrev.gold:hover { 
+	background-image: url(img/lytebox5-button-gold-dunkel.png) !important;
+}
+#lbPrev.goldOff { 
+	background-image: url(img/lytebox5-button-gold-hell.png) !important;
+}
+#lbPrevHov.gold:hover { 
+	background-image: url(img/lytebox5-button-gold-prev.png) !important;
+}
+
+/*--- button: Next ---*/
+#lbNext.gold { 
+	background-image: url(img/lytebox5-button-gold.png) !important;
+}
+#lbNext.gold:hover { 
+	background-image: url(img/lytebox5-button-gold-dunkel.png) !important;
+}
+#lbNext.goldOff { 
+	background-image: url(img/lytebox5-button-gold-hell.png) !important;
+}
+#lbNextHov.gold:hover { 
+	background-image: url(img/lytebox5-button-gold-next.png) !important;
+}
+
+/*--- button: Close ---*/
+#lbClose.gold { 
+	background-image: url(img/lytebox5-button-gold.png) !important;
+}
+#lbClose.gold:hover { 
+	background-image: url(img/lytebox5-button-gold-dunkel.png) !important;
+}
+
+/*--- button: Pause ---*/
+#lbPause.gold { 
+	background-image: url(img/lytebox5-button-gold.png) !important;
+}
+#lbPause.gold:hover { 
+	background-image: url(img/lytebox5-button-gold-dunkel.png) !important;
+}
+
+/*---- LAYOUT: ORANGE ----*/
+/*--- button: Play ---*/
+#lbPlay.orange { 
+	background-image: url(img/lytebox5-button-orange.png) !important;
+}
+#lbPlay.orange:hover { 
+	background-image: url(img/lytebox5-button-orange-dunkel.png) !important;
+}
+
+/*--- button: Prev ---*/
+#lbPrev.orange { 
+	background-image: url(img/lytebox5-button-orange.png) !important;
+}
+#lbPrev.orange:hover { 
+	background-image: url(img/lytebox5-button-orange-dunkel.png) !important;
+}
+#lbPrev.orangeOff { 
+	background-image: url(img/lytebox5-button-orange-hell.png) !important;
+}
+#lbPrevHov.orange:hover { 
+	background-image: url(img/lytebox5-button-orange-prev.png) !important;
+}
+
+/*--- button: Next ---*/
+#lbNext.orange { 
+	background-image: url(img/lytebox5-button-orange.png) !important;
+}
+#lbNext.orange:hover { 
+	background-image: url(img/lytebox5-button-orange-dunkel.png) !important;
+}
+#lbNext.orangeOff { 
+	background-image: url(img/lytebox5-button-orange-hell.png) !important;
+}
+#lbNextHov.orange:hover { 
+	background-image: url(img/lytebox5-button-orange-next.png) !important;
+}
+
+/*--- button: Close ---*/
+#lbClose.orange { 
+	background-image: url(img/lytebox5-button-orange.png) !important;
+}
+#lbClose.orange:hover { 
+	background-image: url(img/lytebox5-button-orange-dunkel.png) !important;
+}
+
+/*--- button: Pause ---*/
+#lbPause.orange {
+	background-image: url(img/lytebox5-button-orange.png) !important;
+}
+#lbPause.orange:hover { 
+	background-image: url(img/lytebox5-button-orange-dunkel.png) !important;
+}
