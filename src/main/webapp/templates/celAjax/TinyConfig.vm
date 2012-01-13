@@ -162,10 +162,11 @@
     "spellchecker_languages" : "+English=en-us,French=fr,German=de,Italian=it",
     "spellchecker_rpc_url" : "/jmyspell-spellchecker",
   #end
+  "celanim_slideshow" : $!celementsweb.useImageAnimations(),
   #if($celementsweb.useImageAnimations())
-  	"celanim_slideshow" : $!celementsweb.useImageAnimations(),
     #set($galleriesXWQL = "from doc.object(XWiki.PhotoAlbumClass) as album")
-    #set($galleriesXWQL = "${galleriesXWQL} where doc.translation=0")
+    #set($galleriesXWQL = "${galleriesXWQL} where doc.fullName <> 'XWiki.PhotoAlbumClassTemplate'")
+    #set($galleriesXWQL = "${galleriesXWQL} and doc.translation=0")
     #set($galleriesXWQL = "${galleriesXWQL} order by doc.title, doc.name")
     #set($availableGalleries = '')
     #foreach($galleryFN in $services.query.xwql($galleriesXWQL).execute())
