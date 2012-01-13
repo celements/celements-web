@@ -171,10 +171,7 @@
     #set($availableGalleries = '')
     #foreach($galleryFN in $services.query.xwql($galleriesXWQL).execute())
       #set($galleryDoc = $xwiki.getDocument($galleryFN))
-      #set($galleryName = $galleryDoc.title)
-      #if("$!galleryName" == '')
-        #set($galleryName = $galleryDoc.name)
-      #end
+      #set($galleryName = "$!galleryDoc.title ($!galleryDoc.name)")
       #set($availableGalleries = "$!{availableGalleries},${galleryName}=${galleryFN}")
     #end
     "gallerylist" : "$availableGalleries.replaceFirst(',','')",
