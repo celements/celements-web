@@ -71,8 +71,14 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
         'class' : 'celanim_slideshow_wrapper' }
       ).insert({ top : tempImg });
-    divWrapper.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
-    divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
+    if ($(slideShowConfig.htmlId).up('.highslide-html')) {
+      var overlayHTMLDiv= $(slideShowConfig.htmlId).up('.highslide-html');
+      divWrapper.setStyle({ 'height' : overlayHTMLDiv.getHeight() + 'px' });
+      divWrapper.setStyle({ 'width' : overlayHTMLDiv.getWidth() + 'px' });
+    } else {
+      divWrapper.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
+      divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
+    }
     var slideShowImg = $(slideShowConfig.htmlId);
     moveStyleToWrapper(divWrapper, slideShowImg, 'float');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-top');

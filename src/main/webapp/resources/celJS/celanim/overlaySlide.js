@@ -7,7 +7,6 @@ var loadOverlaySlide = function() {
     celanimOverlay_addOpenConfig(elem.id, {
       'src' : elem.href,
       'objectType' : 'iframe',
-      'celanimOverlayType' : 'htmlExpand',
       'cssClassNames' : ['draggable-header']
     });
   });
@@ -20,6 +19,7 @@ var loadOverlaySlide = function() {
           'src' : imgOverlaySrc,
           'addCloseButton' : $(elem.id).hasClassName('celanim_overlay_addCloseButton'),
           'captionEval' : 'this.thumb.alt',
+          'objectType' : 'image',
           'cssClassNames' : ['borderless', 'floating-caption']
         });
     }
@@ -82,23 +82,62 @@ var celanimOverlay_OpenInOverlay = function(event) {
         align : 'center',
         preserveContent : false
       }).merge(openConfig);
-      hs.graphicsDir = '/file/resources/celJS/highslide/graphics/';
-      hs.outlineType = hsConfig.outlineType || '';
-      hs.wrapperClassName = 'no-footer no-move celanim_overlay_wrapper '
-        + openConfig.cssClassNames.join(' ');
-      hs.Expander.prototype.onAfterExpand = celanimOverlay_AfterExpandHandler;
-      if (hsConfig.celanimOverlayType == 'htmlExpand') {
-        hs.htmlExpand(this, hsConfig.toObject());
-      } else {
-        hs.expand(this, hsConfig.toObject());
-      }
-      event.stop();
+    if (hsConfig.get('objectType') == 'image') {
+      hsConfig = celanimOverlay_HandleImageContent(hsConfig);
+    }
+    hs.graphicsDir = '/file/resources/celJS/highslide/graphics/';
+    hs.outlineType = hsConfig.outlineType || '';
+    hs.wrapperClassName = 'no-footer no-move celanim_overlay_wrapper '
+      + openConfig.cssClassNames.join(' ');
+    hs.height = hsConfig.get('height');
+    hs.width = hsConfig.get('width');
+    hs.Expander.prototype.onAfterExpand = celanimOverlay_AfterExpandHandler;
+    hs.htmlExpand(this, hsConfig.toObject());
+    event.stop();
   } else {
     if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
       console.warn('Skipping open-in-overlay event, because no open config for elemId"'
           + this.id + '" found.');
     }
   }
+};
+
+var celanimOverlay_HandleImageContent = function(hsConfig) {
+  hsConfig.unset('objectType');
+  var overlayContentId = 'celanim_overlay_contentId_image_' + hsConfig.get('id');
+  hsConfig.set('contentId', overlayContentId);
+  var overlayStartImg = celanimOverlay_getOrCreateStartImgElem(overlayContentId,
+      hsConfig);
+  overlayStartImg.src = hsConfig.get('src');
+  hsConfig.unset('src');
+  return hsConfig;
+};
+
+var celanimOverlay_getOrCreateStartImgElem = function(overlayContentId, hsConfig) {
+  var overlayContentElem = celanimOverlay_getOrCreateContentElem(overlayContentId,
+      hsConfig);
+  var overlayStartImg = overlayContentElem.down('img.highslide-image');
+  if (!overlayStartImg) {
+    overlayStartImg = new Element('img', {
+      'class' : 'highslide-image'
+    });
+    overlayContentElem.insert(overlayStartImg);
+  }
+  return overlayStartImg;
+};
+
+var celanimOverlay_getOrCreateContentElem = function(overlayContentId, hsConfig) {
+  var overlayContentElem = $(overlayContentId);
+  if (!overlayContentElem) {
+    overlayContentElem = new Element('div', {
+      'id' : overlayContentId
+    }).setStyle({
+      'width' : hsConfig.get('width') + 'px',
+      'height' : hsConfig.get('height') + 'px'
+    }).hide();
+    $$('body')[0].insert(overlayContentElem);
+  }
+  return overlayContentElem;
 };
 
 var celanimOverlay_addCloseButton = function(openConfig) {
