@@ -44,11 +44,15 @@ image_list:"Image list",
 "tab_imagePicker" : "Picker",
 slideshow : "Slideshow",
 hasSlideshow : "has slideshow",
+isSlideshowManualStart : "manual start",
 gallery : "gallery",
 delay : "delay (seconds)",
 defaultEffect : "default (Fade)",
 effects : "effect",
 "imagePicker" : "select image",
 "select_image_first" : "Please select image first.",
-"uploadImage" : "Upload image"
+"uploadImage" : "Upload image",
+"overlay" : "Large image in overlay",
+"hasOverlay" : "show large image in overlay (on click)",
+  "hasCloseButton" : "add close button"
 });

@@ -3,7 +3,7 @@
 #set($cel_loadAdminMenuBar = false)
 #set($showOverlayLanguageBar = false)
 #set($showCloseOverlayButton = true)
-#set($celementsLoadInOverlay = "$doc.getFullName()")
+#set($celementsLoadInOverlay = "")
 #set($overlayWithResize = true)
 #set($closeOverlayRedirect = "$!request.get('xredirect')")
 #set($overlayConfName = "$!{request.get('conf')}")
@@ -18,7 +18,7 @@
 #if("$!overlayConfName" != '')
 #set($overlayResult = $xwiki.parseTemplate("celOverlay/${overlayConfName}.vm"))
 #end
-#if("$!overlayResult.trim()" != '')
+#if(("$!overlayResult.trim()" != '') || ("$!celementsLoadInOverlay" != ''))
 $overlayResult
 #else
   #set($overlayConfig = $doc.getObject("Classes.OverlayConfigClass"))

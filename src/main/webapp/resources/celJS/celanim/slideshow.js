@@ -56,52 +56,60 @@ var loadSlideShowDataAsync = function() {
 var celSlideShowConfig = new Hash(); 
 var initSlideShows = function(slideShowConfigArray) {
   $A(slideShowConfigArray).each(function(slideShowConfig) {
-    if (slideShowConfig.imageArray && (slideShowConfig.imageArray.size() > 0)) {
-      celSlideShowConfig.set(slideShowConfig.htmlId, slideShowConfig);
-      var tempImg = new Element('img', {
-        'id' : slideShowConfig.htmlId + '_tmpImg',
-        'style' : 'position: absolute; top: 0px; left: 0px;'
-       }).hide();
-      tempImg.observe('load', centerImage);
-      var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
-          'class' : 'celanim_slideshow_wrapper',
-          'style': 'display: inline-block; position: relative;'
-            +' font-size: 0px; line-height: 0px;' }
-        ).insert({ top : tempImg });
+    celSlideShows_initOneSlideShow(slideShowConfig);
+  });
+};
+
+var celSlideShows_initOneSlideShow = function(slideShowConfig) {
+  if (slideShowConfig.imageArray && (slideShowConfig.imageArray.size() > 0)) {
+    celSlideShowConfig.set(slideShowConfig.htmlId, slideShowConfig);
+    var tempImg = new Element('img', {
+      'id' : slideShowConfig.htmlId + '_tmpImg',
+      'style' : 'position: absolute; top: 0px; left: 0px;'
+     }).hide();
+    tempImg.observe('load', centerImage);
+    var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
+        'class' : 'celanim_slideshow_wrapper' }
+      ).insert({ top : tempImg });
+    if ($(slideShowConfig.htmlId).up('.highslide-html')) {
+      var overlayHTMLDiv= $(slideShowConfig.htmlId).up('.highslide-html');
+      divWrapper.setStyle({ 'height' : overlayHTMLDiv.getHeight() + 'px' });
+      divWrapper.setStyle({ 'width' : overlayHTMLDiv.getWidth() + 'px' });
+    } else {
       divWrapper.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
-      var slideShowImg = $(slideShowConfig.htmlId);
-      moveStyleToWrapper(divWrapper, slideShowImg, 'float');
-      moveStyleToWrapper(divWrapper, slideShowImg, 'margin-top');
-      moveStyleToWrapper(divWrapper, slideShowImg, 'margin-bottom');
-      moveStyleToWrapper(divWrapper, slideShowImg, 'margin-left');
-      moveStyleToWrapper(divWrapper, slideShowImg, 'margin-right');
-      moveStyleToWrapper(divWrapper, slideShowImg, 'border-top');
-      moveStyleToWrapper(divWrapper, slideShowImg, 'border-bottom');
-      moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
-      moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
-      slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
-      /** START HACK: increase height and width by one to fix problem in celements-photo
-       *              which sometimes returns images too small by one in both dimensions.
-       **/
-      var celwidth = parseInt(slideShowConfig.imageSrcQuery.replace(/^.*celwidth=(\d+).*/,
-          '$1')) + 1;
-      var celheight = parseInt(slideShowConfig.imageSrcQuery.replace(
-          /^.*celheight=(\d+).*/, '$1')) + 1;
-      slideShowConfig.imageSrcQuery = slideShowConfig.imageSrcQuery.replace(
-          /celheight=(\d+)/, 'celheight=' + celheight).replace(/celwidth=(\d+)/,
-              'celwidth=' + celwidth);
-      slideShowImg.src = slideShowImg.src.replace(/(\?.*)$/,
-          slideShowConfig.imageSrcQuery);
-      /**  END HACK
-       **/
-      slideShowImg.absolutize();
-      removeImageSize(slideShowImg);
-      if (slideShowHasNextImage(slideShowConfig)) {
-        tempImg.src = slideShowConfig.nextimgsrc;
-      }
     }
-  });
+    var slideShowImg = $(slideShowConfig.htmlId);
+    moveStyleToWrapper(divWrapper, slideShowImg, 'float');
+    moveStyleToWrapper(divWrapper, slideShowImg, 'margin-top');
+    moveStyleToWrapper(divWrapper, slideShowImg, 'margin-bottom');
+    moveStyleToWrapper(divWrapper, slideShowImg, 'margin-left');
+    moveStyleToWrapper(divWrapper, slideShowImg, 'margin-right');
+    moveStyleToWrapper(divWrapper, slideShowImg, 'border-top');
+    moveStyleToWrapper(divWrapper, slideShowImg, 'border-bottom');
+    moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
+    moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
+    slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
+    /** START HACK: increase height and width by one to fix problem in celements-photo
+     *              which sometimes returns images too small by one in both dimensions.
+     **/
+    var celwidth = parseInt(slideShowConfig.imageSrcQuery.replace(/^.*celwidth=(\d+).*/,
+        '$1')) + 1;
+    var celheight = parseInt(slideShowConfig.imageSrcQuery.replace(
+        /^.*celheight=(\d+).*/, '$1')) + 1;
+    slideShowConfig.imageSrcQuery = slideShowConfig.imageSrcQuery.replace(
+        /celheight=(\d+)/, 'celheight=' + celheight).replace(/celwidth=(\d+)/,
+            'celwidth=' + celwidth);
+    slideShowImg.src = slideShowImg.src.replace(/(\?.*)$/,
+        slideShowConfig.imageSrcQuery);
+    /**  END HACK
+     **/
+    slideShowImg.absolutize();
+    removeImageSize(slideShowImg);
+    if (slideShowHasNextImage(slideShowConfig)) {
+      tempImg.src = slideShowConfig.nextimgsrc;
+    }
+  }
 };
 
 var moveStyleToWrapper = function(divWrapper, element, styleName) {
@@ -129,8 +137,68 @@ var scheduleChangeImage = function(elemId) {
 
 var startSlideShows = function() {
   celSlideShowConfig.each(function(pair){
-    scheduleChangeImage(pair.key);
+    celSlideShow_startOne(pair.key);
   });
+};
+
+var celSlideShow_startOne = function(elemId) {
+  var isManualStart = $(elemId).hasClassName('celanim_manualstart');
+  var isCelanimOverlay = $(elemId).hasClassName('celanim_overlay');
+  if (isCelanimOverlay) {
+    $(elemId).stopObserving('celanim_overlay:afterExpand', celSlideShow_AfterExpand);
+    $(elemId).observe('celanim_overlay:afterExpand', celSlideShow_AfterExpand);
+  }
+  celSlideShowIsRunningHash.set(elemId, !isManualStart);
+  if (isManualStart) {
+    var startButtonDiv = new Element('div', { 'class' : 'slideshowButton' });
+    startButtonDiv.hide();
+    $(elemId).insert({ after : startButtonDiv });
+    if (!isCelanimOverlay) {
+      $(elemId).up('div.celanim_slideshow_wrapper').observe('click',
+          celSlideShowManualStartStop);
+    }
+    Effect.Appear(startButtonDiv, { duration : 3.0 , to : 0.8 });
+  } else {
+    scheduleChangeImage(elemId);
+  }
+};
+
+var celSlideShow_AfterExpand = function(event) {
+  var overlayExpander = event.memo;
+  var elemId = overlayExpander.thumb.id; 
+  var overlayImg = $$('.celanim_overlay_wrapper img.highslide-image')[0];
+  overlayImg.addClassName('celanim_slideshow');
+  var overlayId = elemId.replace(/^([^:]*):(.*)$/, '$1_overlay:$2');
+  overlayImg.id = overlayId;
+  var newConfig = $H(celSlideShowConfig.get(elemId)).toObject(); // make a copy
+  newConfig.htmlId = overlayId;
+  celSlideShows_initOneSlideShow(newConfig);
+  celSlideShow_startOne(overlayId);
+};
+
+var celSlideShowManualStartStop = function(event) {
+  var imgElem = this.down('.celanim_slideshow');
+  if (imgElem && imgElem.id) {
+    var elemId = imgElem.id;
+    var startButtonDiv = this.down('.slideshowButton');
+    if (celSlideShowIsRunning(elemId)
+        && (typeof celSlideShowThreads.get(elemId) != "undefined")) {
+      celSlideShowIsRunningHash.set(elemId, false);
+      window.clearTimeout(celSlideShowThreads.get(elemId));
+      celSlideShowThreads.unset(elemId);
+      Effect.Appear(startButtonDiv, { duration : 1.0 , to : 0.9 });
+    } else {
+      celSlideShowIsRunningHash.set(elemId, true);
+      changeImage(elemId);
+      Effect.Fade(startButtonDiv, { duration : 1.0 });
+    }
+    event.stop();
+  }
+};
+
+var celSlideShowIsRunningHash = new Hash();
+var celSlideShowIsRunning = function(elemId) {
+  return (celSlideShowIsRunningHash.get(elemId) == true); 
 };
 
 var removeImageSize = function(tempImage) {
@@ -156,9 +224,11 @@ var celSlideShowEffectAfterFinish = function(effect) {
   fadeimg.show();
   fadeimgtemp.hide();
   if (slideShowHasNextImage(slideConfig)) {
-    fadeimgtemp.src = slideConfig.nextimgsrc;
     removeImageSize(fadeimgtemp);
-    scheduleChangeImage(slideConfig.htmlId);
+    fadeimgtemp.src = slideConfig.nextimgsrc;
+    if (celSlideShowIsRunning(slideConfig.htmlId)) {
+      scheduleChangeImage(slideConfig.htmlId);
+    }
   }
 };
 
@@ -180,9 +250,16 @@ var centerImage = function(event) {
   var tempImg = event.findElement();
   var dim = tempImg.getDimensions();
   var wrapDiv = tempImg.up('div');
+  var centeredTop = getCenteredValue(wrapDiv.getHeight() - dim.height);
+  var centeredLeft = getCenteredValue(wrapDiv.getWidth() - dim.width);
+  var slideConfig = celSlideShowConfig.get(tempImg.id.replace(/_tmpImg$/,''));
+  if (slideConfig) {
+    slideConfig.centeredTop = centeredTop;
+    slideConfig.centeredLeft = centeredLeft;
+  }
   tempImg.setStyle({
-    'top' : getCenteredValue(wrapDiv.getHeight() - dim.height) + 'px',
-    'left' : getCenteredValue(wrapDiv.getWidth() - dim.width) + 'px'
+    'top' : centeredTop + 'px',
+    'left' : centeredLeft + 'px'
   });
 };
 

@@ -44,11 +44,15 @@ tinyMCE.addI18n('de.celimage_dlg', {
   "tab_imagePicker" : "Picker",
   slideshow : "Bildstrecke",
   hasSlideshow : "mit Bildstrecke",
+  isSlideshowManualStart : "Manuell Starten",
   gallery : "Bild Album",
   delay : "Bildwechsel nach (Sekunden)",
   defaultEffect : "standard (Fade)",
   effects : "Bildwechsel Effekt",
   "imagePicker" : "Bildauswahl",
   "select_image_first" : "Bitte zuerst Bild ausw&auml;len.",
-  "uploadImage" : "Bild hochladen"
+  "uploadImage" : "Bild hochladen",
+  "overlay" : "Bild in Overlay",
+  "hasOverlay" : "Bild bei Klick in Overlay öffnen",
+  "hasCloseButton" : "Schliessen button hinzufügen"
 });

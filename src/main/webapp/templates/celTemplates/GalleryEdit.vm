@@ -159,10 +159,6 @@ $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('validation.js', 's
  <td class="celements2_text">$msg.get('gallery_picture_width')</td>
  <td><input name="photoWidth" type="text" value="$!albumobj.getProperty("photoWidth").getValue()" class="celements2_input validate-number" /></td>
 </tr>
-<tr>
- <td class="celements2_text">$msg.get('gallery_picture_width')</td>
- <td><input name="photoWidth" type="text" value="$!albumobj.getProperty("photoWidth").getValue()" class="celements2_input validate-number" /></td>
-</tr>
 
 <tr class="galleryDescriptionEdit">
  <td class="celements2_text">$msg.get('gallery_thumbnail_desc')</td>

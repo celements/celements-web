@@ -10,7 +10,9 @@
   margin-left: auto; margin-right: auto;
 }
 #align, #classlist {width:150px;}
-#celwidth, #celheight, #marginTop, #marginBottom, #marginRight, #marginLeft {
+#celwidth, #overlayWidth,
+#celheight, #overlayHeight,
+#marginTop, #marginBottom, #marginRight, #marginLeft {
   vertical-align:middle; width:50px; text-align:center;}
 #marginTop, #marginBottom {margin-left: auto; margin-right: auto; display: block;}
 #marginLeft { float: left; margin-top: 120px;}
