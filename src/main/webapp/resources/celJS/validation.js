@@ -300,7 +300,12 @@ Validation.defaultFunctions = [
         if(Validation.get('IsEmpty').test(v)) return true;
         var regex = /^(\d{2})[\.\/](\d{2})[\.\/](\d{4})$/;
         if(!regex.test(v)) return false;
-        var d = new Date(v.replace(regex, '$2.$1.$3'));
+        var d = new Date(0);
+        d.setDate(RegExp.$1);
+        d.setMonth(parseInt(RegExp.$2) - 1);
+        var yyyy = parseInt(RegExp.$3);
+        if(yyyy < 999) { yyyy += 1900; }
+        d.setYear(yyyy);
         return ( parseInt(RegExp.$2, 10) == (1+d.getMonth()) ) && 
               (parseInt(RegExp.$1, 10) == d.getDate()) && 
               (parseInt(RegExp.$3, 10) == d.getFullYear() );
