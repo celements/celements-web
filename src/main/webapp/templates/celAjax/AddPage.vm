@@ -22,7 +22,9 @@
 	#end
 { "successful" : $newDoc.save() , "fullName" : "${newDocFN}" }
   #else
-{ "successful" : false , "errorMsg" : "Document '${newDocFN}' already exists." }
+{ "successful" : false ,##
+ "fullName" : "${newDocFN}" ,##
+ "errorMsg" : "Document '${newDocFN}' already exists." }
   #end
 #else
 { "successful" : false , "errorMsg" : "Failed to get target space." }
