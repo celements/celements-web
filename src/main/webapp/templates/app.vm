@@ -1,21 +1,13 @@
 ## init Celements variables
-#set($isCellSkin = false)
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
 $xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
+#set($overwriteRenderDocument = 'celInlineTemplates/app.vm')
 $xwiki.parseTemplate("frameheader.vm")
-#if(!$contextIsFinished && !$isCellSkin)
-#if(("$!request.s" != '') && $xwiki.exists("AppScripts.${request.s}") && !$celementsweb.isEmptyRTEDocument("AppScripts.${request.s}"))
-$xwiki.includeForm("AppScripts.${request.s}", false)
-#else
-#set($appResult = $xwiki.parseTemplate("celAppScripts/${request.s}.vm"))
-#if("$!appResult.trim()" != '')
-$appResult
-#else
-$response.setStatus(501)
-Unkown script!
+#if(!$contextIsFinished)
+#if("$!overwriteRenderDocument" != '')
+$xwiki.parseTemplate($overwriteRenderDocument)
 #end
 #end
-#end
-#if(!$contextIsFinished && ($show_frame || ("$context.action" == 'edit')))
-  $xwiki.parseTemplate("framefooter.vm")
+#if(!$contextIsFinished)
+$xwiki.parseTemplate("framefooter.vm")
 #end
