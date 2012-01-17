@@ -2,7 +2,7 @@
 #if("$!request.get('spaceName')" == '')
   #set($spaceName = "$!doc.getSpace()")
 #end
-#if("$!spaceName" == '')
+#if("$!spaceName" != '')
   #if("$!request.get('createCurrentDoc')" == 'true')
     #set($newDocFN = $doc.getFullName())
   #else
