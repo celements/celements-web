@@ -70,7 +70,7 @@
         <!-- Forward to view -->
         <forward
                 name="start"
-                path="/view/Main/WebHome"/>
+                path="/view/Content/WebHome"/>
 
         <forward name="login" path="/templates/login.vm"/> <!-- not enough -->
         <forward name="accessdenied" path="/templates/accessdenied.vm"/>
