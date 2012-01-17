@@ -1,0 +1,29 @@
+#set($spaceName = "$!request.get('spaceName')")
+#if("$!request.get('spaceName')" == '')
+  #set($spaceName = "$!doc.getSpace()")
+#end
+#if("$!spaceName" == '')
+  #if("$!request.get('createIfNotExists')" == 'true')
+    #set($newDocFN = $doc.getFullName())
+  #else
+    #set($docNameBase = "$!request.get('docNameBase')")
+    #if("$!docNameBase" != '')
+  	  #set($newDocFN = $celementsweb.getNextTitledPageFullName("$!spaceName", "$!docNameBase"))
+    #else
+      #set($newDocFN = $celementsweb.getNextUntitledPageFullName("$!spaceName"))
+    #end
+  #end
+  #if(!$xwiki.exists($newDocFN))
+  	#set($newDoc = $xwiki.getDocument($newDocFN))
+  	#if("$!request.get('pageType')" != '')
+  	  #set($pageTypeClassName = $celementsweb.getPageType($page_type).getPageTypeClassFullName())
+  	  #set($pageTypeObj = $newDoc.getObject($pageTypeClassName, true))
+  	  $pageTypeObj.set('page_type', "$!request.get('pageType')")
+	#end
+{ "successful" : $newDoc.save() }
+  #else
+{ "successful" : false , "errorMsg" : "Document '${newDocFN}' already exists." }
+  #end
+#else
+{ "successful" : false , "errorMsg" : "Failed to get target space." }
+#end
