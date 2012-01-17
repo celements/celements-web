@@ -3,7 +3,7 @@
   #set($spaceName = "$!doc.getSpace()")
 #end
 #if("$!spaceName" == '')
-  #if("$!request.get('createIfNotExists')" == 'true')
+  #if("$!request.get('createCurrentDoc')" == 'true')
     #set($newDocFN = $doc.getFullName())
   #else
     #set($docNameBase = "$!request.get('docNameBase')")
@@ -20,7 +20,7 @@
   	  #set($pageTypeObj = $newDoc.getObject($pageTypeClassName, true))
   	  $pageTypeObj.set('page_type', "$!request.get('pageType')")
 	#end
-{ "successful" : $newDoc.save() }
+{ "successful" : $newDoc.save() , "fullName" : "${newDocFN}" }
   #else
 { "successful" : false , "errorMsg" : "Document '${newDocFN}' already exists." }
   #end
