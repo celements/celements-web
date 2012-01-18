@@ -22,9 +22,11 @@ Celements.reorder.DDReorder = {
 
     init: function() {
 		$$('ul.cel_skin_editor_reorder li').each(function(listItem) {
-			var menuItemId = listItem.down('span').id;
-			listItem.id = 'LI' + menuItemId;
-			Celements.reorder.DDReorder.addEmptySublists(menuItemId);
+		  if (!listItem.id) {
+		    var menuItemId = listItem.down('span').id;
+		    listItem.id = 'LI' + menuItemId;
+		  }
+			Celements.reorder.DDReorder.addEmptySublists(listItem.id);
       new Celements.reorder.DDList(listItem.id);
 		});
 		$$('ul.cel_skin_editor_reorder').each(function(listElem) {
@@ -43,9 +45,9 @@ Celements.reorder.DDReorder = {
 //      new YAHOO.util.DDTarget('cel_layout_editor_scrolldown');
     },
 
-    getLevelOfMenuItem : function(menuItemId) {
+    getLevelOfMenuItem : function(listItemId) {
       var count = 0
-      $(menuItemId).ancestors().each(function(parentNode) {
+      $(listItemId).ancestors().each(function(parentNode) {
         if (parentNode.tagName.toLowerCase() == 'ul') {
           count++;
         }
@@ -53,15 +55,16 @@ Celements.reorder.DDReorder = {
       return count;
     },
 
-    addEmptySublists : function(menuItemId) {
+    addEmptySublists : function(listItemId) {
       var _me = Celements.reorder.DDReorder;
-      var currentLevel = _me.getLevelOfMenuItem(menuItemId);
-      if (!$('C' + menuItemId) && (currentLevel >= _me.minLevel) && (currentLevel < _me.maxLevel)) {
+      var currentLevel = _me.getLevelOfMenuItem(listItemId);
+      var subULid = listItemId.replace(/^LI/, 'C');
+      if (!$(subULid) && (currentLevel >= _me.minLevel) && (currentLevel < _me.maxLevel)) {
         var emptyList = new Element('ul', {
-          'id' : 'C' + menuItemId,
+          'id' : subULid,
           'class' : 'cel_skin_editor_reorder'
         });
-        $(menuItemId).insert({after : emptyList});
+        $(listItemId).insert({ bottom : emptyList});
       }
     },
 
