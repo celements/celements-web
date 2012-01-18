@@ -12,23 +12,23 @@ var DDM = YAHOO.util.DragDropMgr;
 
 //////////////////////////////////////////////////////////////////////////////
 // Celements drag and drop reorder
+// -> call Celements.reorder.DDReorder.init() to start reordering
+// -> set minLevel and maxLevel BEFORE calling init().
 //////////////////////////////////////////////////////////////////////////////
 Celements.reorder.DDReorder = {
+    minLevel: 1,
+
+    maxLevel: 99,
+
     init: function() {
 		$$('ul.cel_skin_editor_reorder li').each(function(listItem) {
 			var menuItemId = listItem.down('span').id;
 			listItem.id = 'LI' + menuItemId;
-			if (!$('C' + menuItemId)) {
-				var emptyList = new Element('ul', {
-					'id' : 'C' + menuItemId,
-					'class' : 'cel_skin_editor_reorder'
-				});
-				listItem.down('span').insert({after : emptyList});
-			}
-            new Celements.reorder.DDList(listItem.id);
+			Celements.reorder.DDReorder.addEmptySublists(menuItemId);
+      new Celements.reorder.DDList(listItem.id);
 		});
 		$$('ul.cel_skin_editor_reorder').each(function(listElem) {
-            new YAHOO.util.DDTarget(listElem.id);
+      new YAHOO.util.DDTarget(listElem.id);
 		});
     	$$('.cel_naveditor_button_saveAndContinue').each(function(button) {
       	  button.observe('click', saveNavReorderHandler);
@@ -41,6 +41,28 @@ Celements.reorder.DDReorder = {
       	$('cel_skin_editor_reorder_tree').addClassName('reorderMode');
 //      new YAHOO.util.DDTarget('cel_layout_editor_scrollup');
 //      new YAHOO.util.DDTarget('cel_layout_editor_scrolldown');
+    },
+
+    getLevelOfMenuItem : function(menuItemId) {
+      var count = 0
+      $(menuItemId).ancestors().each(function(parentNode) {
+        if (parentNode.tagName.toLowerCase() == 'ul') {
+          count++;
+        }
+      });
+      return count;
+    },
+
+    addEmptySublists : function(menuItemId) {
+      var _me = Celements.reorder.DDReorder;
+      var currentLevel = _me.getLevelOfMenuItem(menuItemId);
+      if (!$('C' + menuItemId) && (currentLevel >= _me.minLevel) && (currentLevel < _me.maxLevel)) {
+        var emptyList = new Element('ul', {
+          'id' : 'C' + menuItemId,
+          'class' : 'cel_skin_editor_reorder'
+        });
+        $(menuItemId).insert({after : emptyList});
+      }
     },
 
     getOrder: function() {
