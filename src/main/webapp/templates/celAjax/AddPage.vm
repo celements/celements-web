@@ -20,7 +20,8 @@
   	  #set($pageTypeObj = $newDoc.getObject($pageTypeClassName, true))
   	  $pageTypeObj.set('page_type', "$!request.get('pageType')")
 	#end
-{ "successful" : $newDoc.save() , "fullName" : "${newDocFN}" }
+	$newDoc.save()##
+{ "successful" : true , "fullName" : "${newDocFN}" }
   #else
 { "successful" : false ,##
  "fullName" : "${newDocFN}" ,##
