@@ -1,8 +1,8 @@
 /**
  * Navigation Reordering
  */
-if(typeof Celements=="undefined"){var Celements={};};
-if(typeof Celements.reorder=="undefined"){Celements.reorder={};};
+if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
+if(typeof CELEMENTS.reorder=="undefined"){CELEMENTS.reorder={};};
 
 (function() {
 
@@ -11,72 +11,79 @@ var YEvent = YAHOO.util.Event;
 var DDM = YAHOO.util.DragDropMgr;
 
 //////////////////////////////////////////////////////////////////////////////
-// Celements drag and drop reorder
-// -> call Celements.reorder.DDReorder.init() to start reordering
+// CELEMENTS drag and drop reorder
+// -> call CELEMENTS.reorder.DDReorder.init() to start reordering
 // -> set minLevel and maxLevel BEFORE calling init().
 //////////////////////////////////////////////////////////////////////////////
-Celements.reorder.DDReorder = {
-    minLevel: 1,
+CELEMENTS.reorder.DDReorder = function(id) {
+  // constructor
+  this._init(id);
+};
 
-    maxLevel: 99,
+(function() {
+var CDDR = CELEMENTS.reorder.DDReorder;
 
-    init: function() {
+CELEMENTS.reorder.DDReorder.prototype = {
+
+  parentElem : null,
+
+  minLevel: 1,
+
+  maxLevel: 99,
+
+  _init: function(theElem) {
+    var _me = this;
+    _me.parentElem = $(theElem);
+    
 		$$('ul.cel_skin_editor_reorder li').each(function(listItem) {
 		  if (!listItem.id) {
 		    var menuItemId = listItem.down('span').id;
 		    listItem.id = 'LI' + menuItemId;
 		  }
-			Celements.reorder.DDReorder.addEmptySublists(listItem.id);
-      new Celements.reorder.DDList(listItem.id);
+		  _me._addEmptySublists(listItem.id);
+      new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
 		});
 		$$('ul.cel_skin_editor_reorder').each(function(listElem) {
       new YAHOO.util.DDTarget(listElem.id);
 		});
-    	$$('.cel_naveditor_button_saveAndContinue').each(function(button) {
-      	  button.observe('click', saveNavReorderHandler);
-      	});
-    	$$('.cel_naveditor_button_cancel').each(function(button) {
-    	  button.observe('click', cancelNavReorderHandler);
-    	});
-    	  $('cel_skin_editor_reorder_tree').fire('celreorder_reorderMode:start');
-      	$('cel_skin_editor_reorder_tree').addClassName('reorderMode');
+  	_me.parentElem.fire('celreorder_reorderMode:start');
 //      new YAHOO.util.DDTarget('cel_layout_editor_scrollup');
 //      new YAHOO.util.DDTarget('cel_layout_editor_scrolldown');
-    },
+  },
 
-    getLevelOfMenuItem : function(listItemId) {
-      var count = 0
-      $(listItemId).ancestors().each(function(parentNode) {
-        if (parentNode.tagName.toLowerCase() == 'ul') {
-          count++;
-        }
-      });
-      return count;
-    },
-
-    addEmptySublists : function(listItemId) {
-      var _me = Celements.reorder.DDReorder;
-      var currentLevel = _me.getLevelOfMenuItem(listItemId);
-      var subULid = listItemId.replace(/^LI/, 'C');
-      if (!$(subULid) && (currentLevel >= _me.minLevel) && (currentLevel < _me.maxLevel)) {
-        var emptyList = new Element('ul', {
-          'id' : subULid,
-          'class' : 'cel_skin_editor_reorder'
-        });
-        $(listItemId).insert({ bottom : emptyList});
+  _getLevelOfMenuItem : function(listItemId) {
+    var count = 0
+    $(listItemId).ancestors().each(function(parentNode) {
+      if (parentNode.tagName.toLowerCase() == 'ul') {
+        count++;
       }
-    },
+    });
+    return count;
+  },
 
-    getOrder: function() {
-        var parseList = function(childElems) {
-            var listItems = [];
-            childElems.each(function(item) {
-              listItems.push(item.id);
-            });
-            return listItems;
-        };
+  _addEmptySublists : function(listItemId) {
+    var _me = this;
+    var currentLevel = _me._getLevelOfMenuItem(listItemId);
+    var subULid = listItemId.replace(/^LI/, 'C');
+    if (!$(subULid) && (currentLevel >= _me.minLevel) && (currentLevel < _me.maxLevel)) {
+      var emptyList = new Element('ul', {
+        'id' : subULid,
+        'class' : 'cel_skin_editor_reorder'
+      });
+      $(listItemId).insert({ bottom : emptyList});
+    }
+  },
 
-    	var serialList = new Array();
+  getOrder: function() {
+    var parseList = function(childElems) {
+        var listItems = [];
+        childElems.each(function(item) {
+          listItems.push(item.id);
+        });
+        return listItems;
+    };
+
+  	var serialList = new Array();
 		$$('ul.cel_skin_editor_reorder').each(function(listElem) {
 			var childElems = listElem.childElements('li');
 			if (childElems.size() > 0) {
@@ -86,9 +93,9 @@ Celements.reorder.DDReorder = {
 			}
 		});
 		return serialList;
-    },
+  },
 
-    saveOrder : function(callbackFn) {
+  saveOrder : function(callbackFn) {
 	  new Ajax.Request(getCelHost(), {
 	    method: 'post',
 	    parameters: {
@@ -98,27 +105,30 @@ Celements.reorder.DDReorder = {
 	    },
 	    onSuccess: callbackFn
 	  });
-    }
+  }
 
 };
+})();
 
 //////////////////////////////////////////////////////////////////////////////
 // custom drag and drop implementation
 //////////////////////////////////////////////////////////////////////////////
 
-Celements.reorder.DDList = function(id, sGroup, config) {
+CELEMENTS.reorder.DDList = function(id, sGroup, config, ddReorder) {
 
-	Celements.reorder.DDList.superclass.constructor.call(this, id, sGroup, config);
-
-    this.logger = this.logger || YAHOO;
-    var el = this.getDragEl();
-    Dom.setStyle(el, "opacity", 0.55); // The proxy is slightly transparent
-    this.scroll = false; //prevent auto scrolling of the window
-    this.lastList = null;
+  CELEMENTS.reorder.DDList.superclass.constructor.call(this, id, sGroup, config);
+  
+  this.ddReorder = ddReorder;
+  this.logger = this.logger || YAHOO;
+  var el = this.getDragEl();
+  Dom.setStyle(el, "opacity", 0.55); // The proxy is slightly transparent
+  this.scroll = false; //prevent auto scrolling of the window
+  this.lastList = null;
 };
 
-YAHOO.extend(Celements.reorder.DDList, YAHOO.util.DDProxy, {
-
+YAHOO.extend(CELEMENTS.reorder.DDList, YAHOO.util.DDProxy, {
+  ddReorder : null,
+  
     startDrag: function(x, y) {
         this.logger.log(this.id + " startDrag");
 
@@ -158,6 +168,7 @@ YAHOO.extend(Celements.reorder.DDList, YAHOO.util.DDProxy, {
         )
         var proxyid = proxy.id;
         var thisid = this.id;
+        var ddReorder = this.ddReorder;
 
         // Hide the proxy and show the source element when finished with the animation
         a.onComplete.subscribe(function() {
@@ -168,7 +179,7 @@ YAHOO.extend(Celements.reorder.DDList, YAHOO.util.DDProxy, {
                 Dom.setStyle(thisid, "border-top", "");
                 Dom.setStyle(thisid, "position", "");
                 Dom.setStyle(thisid, "overflow", "");
-            	$$('#cel_skin_editor_reorder_tree .dragDropHover').each(function(elem) {
+                ddReorder.parentElem.select('.dragDropHover').each(function(elem) {
             		elem.removeClassName('dragDropHover');
             	});
             });
@@ -213,10 +224,10 @@ YAHOO.extend(Celements.reorder.DDList, YAHOO.util.DDProxy, {
 
     onDragOver: function(e, elems) {
         var srcEl = this.getEl();
-        var treeDiv = $('cel_skin_editor_reorder_tree');
+        var treeDiv = this.ddReorder.parentElem;
         var y = YEvent.getPageY(e);
         var isOutsideArea = ((y < treeDiv.top) || (y > treeDiv.bottom));
-        var destEl = $('cel_skin_editor_reorder_tree');
+        var destEl = this.ddReorder.parentElem;
         $A(elems).each(function(elem) {
           if (elem.cursorIsOver) {
             if ((!isOutsideArea && (elem._domRef.ancestors().size() > destEl.ancestors().size()))
@@ -234,14 +245,15 @@ YAHOO.extend(Celements.reorder.DDList, YAHOO.util.DDProxy, {
         if ($(destEl).hasClassName('cel_layout_editor_scrollArea')) {
           if (celLayoutEditorReorderScrollPoll == null) {
             celLayoutEditorReorderScrollUp = (id == 'cel_layout_editor_scrollup');
-            celLayoutEditorReorderScrollPoll = setInterval(celLayoutEditorReorderScrollSome, 100);
+            var ddReorder = this.ddReorder;
+            celLayoutEditorReorderScrollPoll = setInterval(this._celLayoutEditorReorderScrollSome, 100);
           }
         } else if (isValidDestElem) {
 	        // We are only concerned with list items, we ignore the dragover
 	        // notifications for the list.
 	        if (destEl.nodeName.toLowerCase() == "li") {
 	            var p = destEl.parentNode;
-              if (isMouseBeforeMedium(e, destEl)) {
+              if (this._isMouseBeforeMedium(e, destEl)) {
 	                p.insertBefore(srcEl, destEl); // insert above
 	            } else {
 	                p.insertBefore(srcEl, destEl.nextSibling); // insert below
@@ -249,7 +261,7 @@ YAHOO.extend(Celements.reorder.DDList, YAHOO.util.DDProxy, {
 	            DDM.refreshCache();
 	        } else if (destEl.nodeName.toLowerCase() == "ul") {
 	          if (destEl != srcEl.parentNode) {
-	            if (!isMouseBeforeMedium(e, destEl)) {
+	            if (!this._isMouseBeforeMedium(e, destEl)) {
 	              destEl.insertBefore(srcEl, null); // insert as last
 	            } else {
                 destEl.insertBefore(srcEl, destEl.firstChild); // insert as first
@@ -266,78 +278,27 @@ YAHOO.extend(Celements.reorder.DDList, YAHOO.util.DDProxy, {
         } else if ((typeof console != "undefined") && (typeof console.debug != "undefined")) {
           console.debug('invalid dragOver: ', id, destEl);
         }
+    },
+
+    _isMouseBeforeMedium : function(e, destEl) {
+      var treeDiv = this.ddReorder.parentElem;
+      var destElOffset = destEl.cumulativeOffset();
+      var destElMedium = (destElOffset.top - treeDiv.scrollTop) + (destEl.getHeight() /2);
+      return (YEvent.getPageY(e) < destElMedium);
+    },
+
+    _celLayoutEditorReorderScrollSome : function() {
+//      console.debug('_celLayoutEditorReorderScrollSome', this, ddReorder);
+      if (celLayoutEditorReorderScrollPoll) {
+        var treeDiv = this.ddReorder.parentElem;
+        var scrollOffset = 20;
+        if (celLayoutEditorReorderScrollUp) {
+          scrollOffset = -20;
+        }
+        treeDiv.scrollTop = treeDiv.scrollTop + scrollOffset;
+        window.scrollTo(0,0);
+      }
     }
 });
-
-var isMouseBeforeMedium = function(e, destEl) {
-  var treeDiv = $('cel_skin_editor_reorder_tree');
-  var destElOffset = destEl.cumulativeOffset();
-  var destElMedium = (destElOffset.top - treeDiv.scrollTop) + (destEl.getHeight() /2);
-  return (YEvent.getPageY(e) < destElMedium);
-};
-
-var celLayoutEditorReorderScrollSome = function() {
-  if (celLayoutEditorReorderScrollPoll) {
-    var treeDiv = $('cel_skin_editor_reorder_tree');
-    var scrollOffset = 20;
-    if (celLayoutEditorReorderScrollUp) {
-      scrollOffset = -20;
-    }
-    treeDiv.scrollTop = treeDiv.scrollTop + scrollOffset;
-    window.scrollTo(0,0);
-  }
-};
-
-var saveNavReorderHandler= function(event) {
-	var button = event.findElement();
-	button.stopObserving('click', saveNavReorderHandler);
-    var savingDialog = getCelModalDialog();
-	savingDialog.setHeader("Saving..."); 
-	savingDialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
-	savingDialog.cfg.queueProperty("buttons", null);
-	savingDialog.render();
-	savingDialog.show();
-	Celements.reorder.DDReorder.saveOrder(function(transport) {
-		if (transport.responseText == 'OK') {
-      $('cel_skin_editor_reorder_tree').fire('celreorder_reorderMode:end');
-    	$('cel_skin_editor_reorder_tree').removeClassName('reorderMode');
-    	window.location.reload();
-		} else {
-			if ((typeof console != "undefined") && (typeof console.debug != "undefined")) {
-				console.debug('failed saving reorder: ' + transport.responseText);
-			}
-			alert('Failed saving!');
-		}
-		savingDialog.hide();
-	});
-};
-
-var cancelNavReorderHandler = function(event) {
-  	window.location.reload();
-};
-
-var celementsModalDialog = null;
-getCelModalDialog = function() {
-  if(!celementsModalDialog) {
-	  celementsModalDialog = new YAHOO.widget.SimpleDialog("modal dialog", {
-      width: "300px", 
-      fixedcenter: true, 
-      visible: false, 
-      draggable: false, 
-      close: false, 
-      zindex:4, 
-      modal:true,
-      monitorresize:false,
-      icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
-      constraintoviewport: true
-    } );
-  }
-  //add skin-div to get default yui-skin-sam layouting for the dialog
-  var yuiSamSkinDiv = new Element('div', {'class' : 'yui-skin-sam'});
-  $(document.body).insert(yuiSamSkinDiv);
-  celementsModalDialog.render(yuiSamSkinDiv);
-  return celementsModalDialog;
-};
-
 
 })();
