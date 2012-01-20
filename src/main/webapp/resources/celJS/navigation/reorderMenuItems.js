@@ -38,8 +38,7 @@ Celements.reorder.DDReorder = {
     	$$('.cel_naveditor_button_cancel').each(function(button) {
     	  button.observe('click', cancelNavReorderHandler);
     	});
-      	$('cel_layout_editor_reorder').show();
-      	$('cel_layout_editor_title_cell').hide();
+    	  $('cel_skin_editor_reorder_tree').fire('celreorder_reorderMode:start');
       	$('cel_skin_editor_reorder_tree').addClassName('reorderMode');
 //      new YAHOO.util.DDTarget('cel_layout_editor_scrollup');
 //      new YAHOO.util.DDTarget('cel_layout_editor_scrolldown');
@@ -300,10 +299,9 @@ var saveNavReorderHandler= function(event) {
 	savingDialog.show();
 	Celements.reorder.DDReorder.saveOrder(function(transport) {
 		if (transport.responseText == 'OK') {
-			$('cel_layout_editor_reorder').hide();
-	      	$('cel_layout_editor_title_cell').show();
-	      	$('cel_skin_editor_reorder_tree').removeClassName('reorderMode');
-	      	window.location.reload();
+      $('cel_skin_editor_reorder_tree').fire('celreorder_reorderMode:end');
+    	$('cel_skin_editor_reorder_tree').removeClassName('reorderMode');
+    	window.location.reload();
 		} else {
 			if ((typeof console != "undefined") && (typeof console.debug != "undefined")) {
 				console.debug('failed saving reorder: ' + transport.responseText);
