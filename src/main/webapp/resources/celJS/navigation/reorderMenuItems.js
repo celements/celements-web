@@ -58,7 +58,7 @@ CELEMENTS.reorder.DDReorder.prototype = {
   },
 
   _getLevelOfMenuItem : function(listItemId) {
-    var count = 0
+    var count = 0;
     $(listItemId).ancestors().each(function(parentNode) {
       if (parentNode.tagName.toLowerCase() == 'ul') {
         count++;
@@ -177,7 +177,7 @@ YAHOO.extend(CELEMENTS.reorder.DDList, YAHOO.util.DDProxy, {
             }, 
             0.2, 
             YAHOO.util.Easing.easeOut 
-        )
+        );
         var proxyid = proxy.id;
         var thisid = this.id;
         var ddReorder = this.ddReorder;
