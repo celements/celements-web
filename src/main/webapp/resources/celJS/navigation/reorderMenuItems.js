@@ -196,6 +196,7 @@ YAHOO.extend(CELEMENTS.reorder.DDList, YAHOO.util.DDProxy, {
             	});
             });
         a.animate();
+        ddReorder.parentElem.fire('celreorder_dragDrop:endDrag', thisid);
     },
 
     onDragDrop: function(e, id) {
