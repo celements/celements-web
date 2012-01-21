@@ -102,6 +102,7 @@ CELEMENTS.reorder.DDReorder.prototype = {
   },
 
   saveOrder : function(callbackFn) {
+    var _me = this;
 	  new Ajax.Request(getCelHost(), {
 	    method: 'post',
 	    parameters: {
@@ -109,7 +110,12 @@ CELEMENTS.reorder.DDReorder.prototype = {
 	       ajax_mode : 'CelNavReorderSave',
 	       new_nav_order : Object.toJSON(this.getOrder())
 	    },
-	    onSuccess: callbackFn
+	    onSuccess: function(transport) {
+	      _me.parentElem.fire('celreorder_reorderMode:end');
+	      if (callbackFn) {
+	        callbackFn(transport);
+	      }
+	    }
 	  });
   }
 
