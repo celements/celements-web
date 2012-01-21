@@ -15,9 +15,9 @@ var DDM = YAHOO.util.DragDropMgr;
 // -> call CELEMENTS.reorder.DDReorder.init() to start reordering
 // -> set minLevel and maxLevel BEFORE calling init().
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.reorder.DDReorder = function(id) {
+CELEMENTS.reorder.DDReorder = function(id, minLevel, maxLevel) {
   // constructor
-  this._init(id);
+  this._init(id, minLevel, maxLevel);
 };
 
 (function() {
@@ -31,9 +31,15 @@ CELEMENTS.reorder.DDReorder.prototype = {
 
   maxLevel: 99,
 
-  _init: function(theElem) {
+  _init: function(theElem, minLevel, maxLevel) {
     var _me = this;
     _me.parentElem = $(theElem);
+    if (minLevel) {
+      _me.minLevel = minLevel;
+    }
+    if (maxLevel) {
+      _me.maxLevel = maxLevel;
+    }
     
 		$$('ul.cel_skin_editor_reorder li').each(function(listItem) {
 		  if (!listItem.id) {
