@@ -47,7 +47,8 @@ CELEMENTS.reorder.DDReorder.prototype = {
 		    listItem.id = 'LI' + menuItemId;
 		  }
 		  _me._addEmptySublists(listItem.id);
-      new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
+      var ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
+      _me._addHandleIfPresent(ddElem, listItem);
 		});
 		$$('ul.cel_skin_editor_reorder').each(function(listElem) {
       new YAHOO.util.DDTarget(listElem.id);
@@ -55,6 +56,16 @@ CELEMENTS.reorder.DDReorder.prototype = {
   	_me.parentElem.fire('celreorder_reorderMode:start');
 //      new YAHOO.util.DDTarget('cel_layout_editor_scrollup');
 //      new YAHOO.util.DDTarget('cel_layout_editor_scrolldown');
+  },
+
+  _addHandleIfPresent : function(ddElem, listItem) {
+    var ddHandle = listItem.down('.cel_dd_handle');
+    if (ddHandle) {
+      if (!ddHandle.id) {
+        ddHandle.id = listItem.id + '_ddhandle';
+      }
+      ddElem.setHandleElId(ddHandle.id);
+    }
   },
 
   _getLevelOfMenuItem : function(listItemId) {
