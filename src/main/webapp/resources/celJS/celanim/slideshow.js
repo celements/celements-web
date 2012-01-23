@@ -153,7 +153,10 @@ var celSlideShow_startOne = function(elemId) {
     var startButtonDiv = new Element('div', { 'class' : 'slideshowButton' });
     startButtonDiv.hide();
     $(elemId).insert({ after : startButtonDiv });
-    if (!isCelanimOverlay) {
+    if (isCelanimOverlay) {
+      $(elemId).up('div.celanim_slideshow_wrapper').observe('click',
+          celSlideShowStartOverlay);
+    } else {
       $(elemId).up('div.celanim_slideshow_wrapper').observe('click',
           celSlideShowManualStartStop);
     }
@@ -161,6 +164,10 @@ var celSlideShow_startOne = function(elemId) {
   } else {
     scheduleChangeImage(elemId);
   }
+};
+
+var celSlideShowStartOverlay = function(event) {
+  this.down('img.celanim_slideshow').fire('celanim_overlay:openOverlay', event);
 };
 
 var celSlideShow_AfterExpand = function(event) {

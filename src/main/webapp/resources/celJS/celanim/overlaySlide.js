@@ -54,6 +54,7 @@ var celanimOverlay_addOpenConfig = function(elemId, openConfig) {
         'cursor' : "url(/file/resources/celJS/highslide/graphics/zoomin.cur), pointer"
       });
       $(elemId).observe('click', celanimOverlay_OpenInOverlay);
+      $(elemId).observe('celanim_overlay:openOverlay', celanimOverlay_OpenInOverlay);
     } else {
       if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
         console.warn('Skipping add open config because one of the required config fields'
