@@ -1,13 +1,11 @@
-Event.observe(window, 'load', startObservers);
-
-function startObservers(event){
+var startObserversNewUniqueName = function(){
   updateObservers();
   Event.observe(window, 'resize', resizeTab);
   $$('.c3_import_box')[0].observe('filepicker:changed', updateObservers);
   $('c3_import_box').observe('preimport:changed', preimportChanged);
   showTab($$('.c3_import_box')[0]);
   resizeTab();
-}
+};
 
 function updateObservers() {
   if((typeof(myDataTable) != 'undefined') && (myDataTable != null)) {
@@ -26,10 +24,9 @@ function updateObservers() {
 var clickObserve = function(event) {
   preimport(event);
   showTab($$('.c3_import_middle')[0]);
-}
+};
 
 var sortObserve = function(event) {
-	alert('sort!');
   if((typeof($("c2_ml_content")) != undefined) && ($("c2_ml_content") != null)) {
     $("c2_ml_content").fire("filepicker:changed");
   } else {
@@ -37,7 +34,7 @@ var sortObserve = function(event) {
       $("c2_ml_content").fire("filepicker:changed");
     });
   }
-}
+};
 
 /**
  * ensure that last visible sibling has no border-,padding- and margin-bottom.
@@ -139,3 +136,5 @@ function consoleMsg(msg){
 //    console.debug(msg);
 //  }
 }
+
+Event.observe(window, 'load', startObserversNewUniqueName);
