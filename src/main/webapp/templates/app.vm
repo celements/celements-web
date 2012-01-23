@@ -1,0 +1,13 @@
+## init Celements variables
+$xwiki.includeForm("celements2web:Macros.initCelements", false)
+$xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
+#set($overwriteRenderDocument = 'celInlineTemplates/app.vm')
+$xwiki.parseTemplate("frameheader.vm")
+#if(!$contextIsFinished)
+#if("$!overwriteRenderDocument" != '')
+$xwiki.parseTemplate($overwriteRenderDocument)
+#end
+#end
+#if(!$contextIsFinished)
+$xwiki.parseTemplate("framefooter.vm")
+#end

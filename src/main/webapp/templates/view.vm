@@ -44,19 +44,7 @@
 ## init Celements variables
 #set($isCellSkin = false)
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
-#if(("$context.getUser()" != 'XWiki.XWikiGuest') && $xwiki.exists($context.getUser()))
-#set($userObj = $xwiki.getDocument("$context.getUser()").getObject("XWiki.XWikiUsers", true))
-#if(("$!userObj.getProperty('force_pwd_change').getValue()" == '1') && ("$doc.fullName" != "$context.getUser()"))
-  #set($params = '')
-  #foreach($req in $request.getParameterNames())
-    #set($params = "${params}&$req=$!request.get($req)")
-  #end
-  #set($xred = $xwiki.getURLEncoded($!{xwiki.getURL($doc.fullName,'view',"$params").replace('/xwiki/bin/view/','/').replace('/Content/','/')}))
-  #set($url = $xwiki.getURL($context.getUser(),'view',"xpage=passwd${params}").replace('/xwiki/bin/view/','/').replace('/Content/','/'))
-  #set($url = "${url}&xredirect=$xred")
-  $response.sendRedirect($url)
-#end
-#end
+$xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
 #if("$!celementsLoadInOverlay" != '')
 $xwiki.celementsweb.includeCSSAfterPreferences(':celRes/celementsOverlay.css')
 #end
