@@ -44,7 +44,7 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
   _headingGetLevel : function(headingElem) {
     var headingName = headingElem.tagName || headingElem;
     var startLevel = headingName.toLowerCase().replace(/^h/, '');
-    return parseInt(startLevel);
+    return (parseInt(startLevel) || 7);
   },
 
   _getHeadings : function(maxSubHeading) {
@@ -52,7 +52,7 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
     if (maxSubHeading) {
       var headingLevel = _me._headingGetLevel(maxSubHeading);
       var greaterHeadings = [1,2,3,4,5,6].slice(0, headingLevel);
-      greaterHeadings = 'h' + greaterHeadings.join('.accordeon, h') + '.accordeon';
+      greaterHeadings = 'h' + greaterHeadings.join(', h');
     }
     return greaterHeadings;
   },
@@ -65,17 +65,19 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
     var onlySubHeadings = undefined;
     do {
       var isHeading = false;
+      var isAccordeonHeading = false;
       currentElem = currentElem.next(_me._getHeadings(onlySubHeadings));
       if (currentElem) {
-        isHeading = currentElem.tagName.toLowerCase().startsWith('h')
-            && currentElem.hasClassName('accordeon');
-        var nextSubHeadingFound = false;
+        isHeading = currentElem.tagName.toLowerCase().startsWith('h');
+        isAccordeonHeading = isHeading && currentElem.hasClassName('accordeon');
+        var nextSubHeadingFound = (_me._headingGetLevel(currentElem) > startLevel);
         if (isHeading) {
-          nextSubHeadingFound = (_me._headingGetLevel(currentElem) > startLevel);
           if (nextSubHeadingFound) {
             resultArray.push(currentElem);
-            if (!allSubElements) {
+            if (isAccordeonHeading && !allSubElements) {
               onlySubHeadings = currentElem.tagName;
+            } else {
+              onlySubHeadings = undefined;
             }
           }
         } else {
@@ -115,6 +117,7 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
       transition: Effect.Transitions.sinoidal,
       afterFinish : function() {
         origElem.hide();
+        origElem.removeClassName('active');
         theWrapDiv.replace(elem);
       },
       sync : true
