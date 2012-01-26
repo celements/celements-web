@@ -24,12 +24,19 @@ var CA = CELEMENTS.anim.AccordeonHeading;
 
 CELEMENTS.anim.AccordeonHeading.prototype = {
   htmlElem : undefined,
+
+  openOnlyOnePerLevel : false,
   
   _init : function(elemId) {
     var _me = this;
     _me.htmlElem = $(elemId);
     _me._hideAllBlocksAfter();
     _me._registerOpeningListeners();
+  },
+
+  setOpenOnlyOne : function(newOpenOnlyOne) {
+    var _me = this;
+    _me.openOnlyOnePerLevel = (newOpenOnlyOne == true);
   },
 
   _hideAllBlocksAfter : function() {
@@ -145,6 +152,37 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
     }
   },
 
+  _checkCloseBeforeOpen : function(clickedHeading, isVisible) {
+    var _me = this;
+    parallelEffects = [];
+    if (!isVisible && _me.openOnlyOnePerLevel) {
+      _me.htmlElem.select(clickedHeading.tagName + '.active').each(function(activElem) {
+        parallelEffects.concat(_me._getEffectsForElements(_me.getAllSiblings(activElem,
+            true), true));
+        _me._updateClickedHeading(true, activElem);
+      });
+    }
+    return parallelEffects;
+  },
+
+  _getEffectsForElements : function(allElems, isVisible) {
+    var _me = this;
+    parallelEffects = [];
+    allElems.each(function(elem) {
+      if (elem.visible() == isVisible) {
+        var wrapDiv = elem.wrap('div');
+        if (isVisible) {
+          parallelEffects.push(_me._getHideEffect(wrapDiv, elem));
+        } else {
+          wrapDiv.hide();
+          elem.show();
+          parallelEffects.push(_me._getShowEffect(wrapDiv, elem));
+        }
+      }
+    });
+    return parallelEffects;
+  },
+
   toggleAll : function(allElems, clickedHeading) {
     var _me = this;
     if (allElems.size() > 0) {
@@ -152,19 +190,9 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
       allElems.last().addClassName('accordeon_' + clickedHeading.tagName.toLowerCase()
           + 'Last');
       var isVisible = allElems[0].visible();
-      var parallelEffects = [];
-      allElems.each(function(elem) {
-        if (elem.visible() == isVisible) {
-          var wrapDiv = elem.wrap('div');
-          if (isVisible) {
-            parallelEffects.push(_me._getHideEffect(wrapDiv, elem));
-          } else {
-            wrapDiv.hide();
-            elem.show();
-            parallelEffects.push(_me._getShowEffect(wrapDiv, elem));
-          }
-        }
-      });
+      var parallelEffects = _me._checkCloseBeforeOpen(clickedHeading, isVisible);
+      parallelEffects = parallelEffects.concat(_me._getEffectsForElements(allElems,
+          isVisible));
       new Effect.Parallel(parallelEffects, {
         duration : 1.0,
         afterFinish : function() {
