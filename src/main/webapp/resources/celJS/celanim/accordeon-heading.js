@@ -14,15 +14,15 @@ var YEvent = YAHOO.util.Event;
 // CELEMENTS accordeon heading animation
 // --> there will be a glitsh on slideup in some browsers if you use margins on headings.
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.anim.Accordeon = function(id) {
+CELEMENTS.anim.AccordeonHeading = function(id) {
   // constructor
   this._init(id);
 };
 
 (function() {
-var CA = CELEMENTS.anim.Accordeon;
+var CA = CELEMENTS.anim.AccordeonHeading;
 
-CELEMENTS.anim.Accordeon.prototype = {
+CELEMENTS.anim.AccordeonHeading.prototype = {
   htmlElem : undefined,
   
   _init : function(elemId) {
