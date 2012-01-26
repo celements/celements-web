@@ -98,48 +98,76 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
 
   _toggleHeadingPart : function(event) {
     var _me = this;
-    console.debug('_toggleHeadingPart: ', this);
     event.stop();
     var clickedHeading = event.findElement();
     var nextSiblings = _me.getAllSiblings(clickedHeading);
     if ((nextSiblings.size() > 0) && nextSiblings[0].visible()) {
       nextSiblings = _me.getAllSiblings(clickedHeading, true);
     }
-    _me.toggleAll(nextSiblings);
+    _me.toggleAll(nextSiblings, clickedHeading);
   },
 
-  toggleAll : function(allElems) {
+  _getHideEffect : function(wrapDiv, elem) {
+    var _me = this;
+    var origElem = elem;
+    var theWrapDiv = wrapDiv;
+    return new Effect.SlideUp(theWrapDiv, {
+      transition: Effect.Transitions.sinoidal,
+      afterFinish : function() {
+        origElem.hide();
+        theWrapDiv.replace(elem);
+      },
+      sync : true
+    });
+  },
+
+  _getShowEffect : function(wrapDiv, elem) {
+    var _me = this;
+    var origElem = elem;
+    var theWrapDiv = wrapDiv;
+    return new Effect.SlideDown(theWrapDiv, {
+      transition: Effect.Transitions.sinoidal,
+      afterFinish : function() {
+        theWrapDiv.replace(origElem);
+      },
+      sync : true
+    });
+  },
+
+  _updateClickedHeading : function(isVisible, clickedHeading) {
+    if (isVisible) {
+      clickedHeading.removeClassName('active');
+    } else {
+      clickedHeading.addClassName('active');
+    }
+  },
+
+  toggleAll : function(allElems, clickedHeading) {
+    var _me = this;
     if (allElems.size() > 0) {
+      allElems.last().addClassName('accordeonLast');
+      allElems.last().addClassName('accordeon_' + clickedHeading.tagName.toLowerCase()
+          + 'Last');
       var isVisible = allElems[0].visible();
       var parallelEffects = [];
       allElems.each(function(elem) {
         if (elem.visible() == isVisible) {
           var wrapDiv = elem.wrap('div');
           if (isVisible) {
-            parallelEffects.push(
-              new Effect.SlideUp(wrapDiv, {
-                transition: Effect.Transitions.sinoidal,
-                afterFinish : function() {
-                  elem.hide();
-                  wrapDiv.replace(elem);
-                },
-                sync : true
-            }));
+            parallelEffects.push(_me._getHideEffect(wrapDiv, elem));
           } else {
             wrapDiv.hide();
             elem.show();
-            parallelEffects.push(
-              new Effect.SlideDown(wrapDiv, {
-                transition: Effect.Transitions.sinoidal,
-                afterFinish : function() {
-                  wrapDiv.replace(elem);
-                },
-                sync : true
-            }));
+            parallelEffects.push(_me._getShowEffect(wrapDiv, elem));
           }
         }
       });
-      new Effect.Parallel(parallelEffects, { duration : 1.0 });
+      new Effect.Parallel(parallelEffects, {
+        duration : 1.0,
+        afterFinish : function() {
+          _me._updateClickedHeading(isVisible, clickedHeading);
+        }
+      });
     }
   }
 
