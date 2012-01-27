@@ -1,6 +1,7 @@
 ##Gallery element
 $celementsweb.addExtJSfileOnce(':celJS/lytebox5/lytebox.js', 'file')
 <link rel="stylesheet" href="$celementsweb.getSkinFile(':celJS/lytebox5/lytebox.css', 'file')" type="text/css" media="screen" />
+<link rel="stylesheet" href="$celementsweb.getSkinFile(':layouts/gallery/lytebox5-buttons.css', 'file')" type="text/css" media="screen" />
 #if("$!galleryDoc" == '')
 #if("$!celldoc" != '')
 #set($galleryDoc = $xwiki.getDocument($celldoc.getDocumentReference()))
