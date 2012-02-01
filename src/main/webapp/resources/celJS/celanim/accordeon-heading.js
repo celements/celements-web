@@ -108,7 +108,9 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
   _toggleHeadingPart : function(event) {
     var _me = this;
     event.stop();
-    var clickedHeading = event.findElement();
+    var clickedElem = event.findElement();
+    //go up to next heading element if current clickedElem is no heading element.
+    var clickedHeading = event.findElement(_me._getHeadings(clickedElem));
     var nextSiblings = _me.getAllSiblings(clickedHeading);
     if ((nextSiblings.size() > 0) && nextSiblings[0].visible()) {
       nextSiblings = _me.getAllSiblings(clickedHeading, true);
