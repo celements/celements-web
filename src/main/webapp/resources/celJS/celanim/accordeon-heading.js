@@ -41,10 +41,12 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
 
   _hideAllBlocksAfter : function() {
     var _me = this;
-    _me.htmlElem.select('h1.accordeon').each(function(headingBlock) {
-      _me.getAllSiblings(headingBlock, true).each(function(elem) {
-        elem.hide();
-      });
+    _me.htmlElem.select(_me._getHeadings('h6')).each(function(headingBlock) {
+      if (headingBlock.visible() && headingBlock.hasClassName('accordeon')) {
+        _me.getAllSiblings(headingBlock, true).each(function(elem) {
+          elem.hide();
+        });
+      }
     });
   },
 
