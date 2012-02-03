@@ -32,6 +32,7 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
     _me.htmlElem = $(elemId);
     _me._hideAllBlocksAfter();
     _me._registerOpeningListeners();
+    _me.htmlElem.fire('celanim_accordeon-heading:initFinished', _me.htmlElem);
   },
 
   setOpenOnlyOne : function(newOpenOnlyOne) {
@@ -149,10 +150,13 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
   },
 
   _updateClickedHeading : function(isVisible, clickedHeading) {
+    var _me = this;
     if (isVisible) {
       clickedHeading.removeClassName('active');
+      _me.htmlElem.fire('celanim_accordeon-heading:dropActive', clickedHeading);
     } else {
       clickedHeading.addClassName('active');
+      _me.htmlElem.fire('celanim_accordeon-heading:addActive', clickedHeading);
     }
   },
 
