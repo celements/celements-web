@@ -72,7 +72,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
         'class' : 'celanim_slideshow_wrapper' }
       ).insert({ top : tempImg });
     if ($(slideShowConfig.htmlId).up('.highslide-html')) {
-      var overlayHTMLDiv= $(slideShowConfig.htmlId).up('.highslide-html');
+      var overlayHTMLDiv = $(slideShowConfig.htmlId).up('.highslide-html');
       divWrapper.setStyle({ 'height' : overlayHTMLDiv.getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : overlayHTMLDiv.getWidth() + 'px' });
     } else {
@@ -180,7 +180,8 @@ var celSlideShow_AfterExpand = function(event) {
   var newConfig = $H(celSlideShowConfig.get(elemId)).toObject(); // make a copy
   newConfig.htmlId = overlayId;
   celSlideShows_initOneSlideShow(newConfig);
-  celSlideShow_startOne(overlayId);
+//  celSlideShow_startOne(overlayId);
+  //TODO stop all other slideshows
 };
 
 var celSlideShowManualStartStop = function(event) {
