@@ -70,6 +70,15 @@ var celanimOverlay_addOpenConfig = function(elemId, openConfig) {
 };
 
 var celanimOverlay_AfterExpandHandler = function(hsExpander) {
+  $$('.highslide-html').each(function(overlayHTMLDiv) {
+    var overlayHTMLDiv2 = overlayHTMLDiv.down('div');
+    //FIX size of overlayWrapper after opening second time.
+    var overlayWrapper = overlayHTMLDiv2.up('.highslide-wrapper');
+    overlayWrapper.setStyle({ 'height' : overlayHTMLDiv2.getHeight() + 'px' });
+    overlayWrapper.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+    overlayHTMLDiv.setStyle({ 'height' : overlayHTMLDiv2.getHeight() + 'px' });
+    overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+  });
   $(hsExpander.thumb).fire('celanim_overlay:afterExpand', hsExpander);
 };
 
