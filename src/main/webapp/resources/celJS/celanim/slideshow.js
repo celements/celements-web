@@ -58,6 +58,14 @@ var initSlideShows = function(slideShowConfigArray) {
   $A(slideShowConfigArray).each(function(slideShowConfig) {
     celSlideShows_initOneSlideShow(slideShowConfig);
   });
+  $$('body')[0].stopObserving('celanim_overlay:afterExpandGeneral',
+      celSlideShow_AfterExpandGeneralHandler);
+  $$('body')[0].observe('celanim_overlay:afterExpandGeneral',
+      celSlideShow_AfterExpandGeneralHandler);
+  $$('body')[0].stopObserving('celanim_overlay:afterCloseGeneral',
+      celSlideShow_AfterCloseGeneralHandler);
+  $$('body')[0].observe('celanim_overlay:afterCloseGeneral',
+      celSlideShow_AfterCloseGeneralHandler);
 };
 
 var celSlideShows_initOneSlideShow = function(slideShowConfig) {
@@ -147,6 +155,8 @@ var celSlideShow_startOne = function(elemId) {
   if (isCelanimOverlay) {
     $(elemId).stopObserving('celanim_overlay:afterExpand', celSlideShow_AfterExpand);
     $(elemId).observe('celanim_overlay:afterExpand', celSlideShow_AfterExpand);
+    $(elemId).stopObserving('celanim_overlay:afterClose', celSlideShow_AfterClose);
+    $(elemId).observe('celanim_overlay:afterClose', celSlideShow_AfterClose);
   }
   celSlideShowIsRunningHash.set(elemId, !isManualStart);
   if (isManualStart) {
@@ -180,8 +190,15 @@ var celSlideShow_AfterExpand = function(event) {
   var newConfig = $H(celSlideShowConfig.get(elemId)).toObject(); // make a copy
   newConfig.htmlId = overlayId;
   celSlideShows_initOneSlideShow(newConfig);
-//  celSlideShow_startOne(overlayId);
-  //TODO stop all other slideshows
+  celSlideShow_startOne(overlayId);
+};
+
+var celSlideShow_AfterExpandGeneralHandler = function(event){
+  celSlideShowPauseAllSlideShows();
+};
+
+var celSlideShow_AfterCloseGeneralHandler = function(event) {
+  celSlideShowResumeAllSlideShows();
 };
 
 var celSlideShowManualStartStop = function(event) {
@@ -191,17 +208,40 @@ var celSlideShowManualStartStop = function(event) {
     var startButtonDiv = this.down('.slideshowButton');
     if (celSlideShowIsRunning(elemId)
         && (typeof celSlideShowThreads.get(elemId) != "undefined")) {
-      celSlideShowIsRunningHash.set(elemId, false);
-      window.clearTimeout(celSlideShowThreads.get(elemId));
-      celSlideShowThreads.unset(elemId);
+      celSlideShowStopSlideShow(elemId);
       Effect.Appear(startButtonDiv, { duration : 1.0 , to : 0.9 });
     } else {
-      celSlideShowIsRunningHash.set(elemId, true);
-      changeImage(elemId);
+      celSlideShowStartSlideShow(elemId);
       Effect.Fade(startButtonDiv, { duration : 1.0 });
     }
     event.stop();
   }
+};
+
+var celSlideShowStopSlideShow = function(elemId) {
+  celSlideShowIsRunningHash.set(elemId, false);
+  window.clearTimeout(celSlideShowThreads.get(elemId));
+  celSlideShowThreads.unset(elemId);
+};
+
+var celSlideShowStartSlideShow = function(elemId) {
+  celSlideShowIsRunningHash.set(elemId, true);
+  changeImage(elemId);
+};
+
+var celSlideShowPausedSlideShowIds = new Array();
+var celSlideShowPauseAllSlideShows = function() {
+  celSlideShowThreads.each(function(pair) {
+    celSlideShowStopSlideShow(pair.key);
+    celSlideShowPausedSlideShowIds.push(pair.key);
+  });
+};
+
+var celSlideShowResumeAllSlideShows = function() {
+  celSlideShowPausedSlideShowIds.each(function(elemId) {
+    celSlideShowStartSlideShow(elemId);
+    celSlideShowPausedSlideShowIds.splice(elemId);
+  });
 };
 
 var celSlideShowIsRunningHash = new Hash();

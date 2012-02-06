@@ -79,6 +79,12 @@ var celanimOverlay_AfterExpandHandler = function(hsExpander) {
     overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
   });
   $(hsExpander.thumb).fire('celanim_overlay:afterExpand', hsExpander);
+  $$('body')[0].fire('celanim_overlay:afterExpandGeneral', hsExpander);
+};
+
+var celanimOverlay_AfterCloseHandler = function(hsExpander) {
+  $(hsExpander.thumb).fire('celanim_overlay:afterClose', hsExpander);
+  $$('body')[0].fire('celanim_overlay:afterCloseGeneral', hsExpander);
 };
 
 var celanimOverlay_OpenInOverlay = function(event) {
@@ -101,6 +107,7 @@ var celanimOverlay_OpenInOverlay = function(event) {
     hs.height = hsConfig.get('height');
     hs.width = hsConfig.get('width');
     hs.Expander.prototype.onAfterExpand = celanimOverlay_AfterExpandHandler;
+    hs.Expander.prototype.onAfterClose = celanimOverlay_AfterCloseHandler;
     hs.htmlExpand(this, hsConfig.toObject());
     event.stop();
   } else {
