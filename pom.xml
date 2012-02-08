@@ -97,7 +97,7 @@
 		<dependency>
 			<groupId>com.celements</groupId>
 			<artifactId>celements-core</artifactId>
-			<version>1.12-SNAPSHOT</version>
+			<version>1.12</version>
 		</dependency>
 		<dependency>
 			<groupId>com.celements</groupId>
@@ -112,7 +112,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-calendar</artifactId>
-      <version>1.9-SNAPSHOT</version>
+      <version>1.9</version>
     </dependency>
     <dependency>
       <groupId>batik</groupId>
