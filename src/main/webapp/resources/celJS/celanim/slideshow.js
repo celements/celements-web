@@ -230,9 +230,15 @@ var celSlideShowStartSlideShow = function(elemId) {
 var celSlideShowPausedSlideShowIds = new Array();
 var celSlideShowPauseAllSlideShows = function() {
   celSlideShowThreads.each(function(pair) {
-    celSlideShowStopSlideShow(pair.key);
-    celSlideShowPausedSlideShowIds.push(pair.key);
+    if (!celSlideShow_isInOverlay(pair.key)) {
+      celSlideShowStopSlideShow(pair.key);
+      celSlideShowPausedSlideShowIds.push(pair.key);
+    }
   });
+};
+
+var celSlideShow_isInOverlay = function(elemId) {
+  return (typeof $(elemId).up('.highslide-container') != "undefined");
 };
 
 var celSlideShowResumeAllSlideShows = function() {
