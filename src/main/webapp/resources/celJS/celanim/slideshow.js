@@ -155,8 +155,6 @@ var celSlideShow_startOne = function(elemId) {
   if (isCelanimOverlay) {
     $(elemId).stopObserving('celanim_overlay:afterExpand', celSlideShow_AfterExpand);
     $(elemId).observe('celanim_overlay:afterExpand', celSlideShow_AfterExpand);
-    $(elemId).stopObserving('celanim_overlay:afterClose', celSlideShow_AfterClose);
-    $(elemId).observe('celanim_overlay:afterClose', celSlideShow_AfterClose);
   }
   celSlideShowIsRunningHash.set(elemId, !isManualStart);
   if (isManualStart) {
