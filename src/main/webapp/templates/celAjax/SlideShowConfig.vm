@@ -16,8 +16,8 @@
 #set($attURLList = "$!{attURLList}, ${Q}$galleryDoc.getAttachmentURL($attachment.getFilename(),'download')${Q}")
 #end
 #end
-#end
 $attURLList.replaceFirst(',','')]}##
+#end ## ("$!galleryDoc" != '')
 #end ## elemId.indexOf > -1
 #end
 ##[{"htmlId" : "S2:Content.untitled2:3000:grow", "imageArray" : ["/download/Content/untitled2/diemkatze1.jpg", "/download/Content/untitled2/diemkatze2.jpg"] }]
