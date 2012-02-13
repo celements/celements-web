@@ -7,11 +7,14 @@
 #end
 { "htmlId" : $elemId , "imageArray" : [##
 #set($galleryFN = $elemId.replaceAll('"','').split(':').get(1))
+#set($galleryDoc = '')
 #set($galleryDoc = $xwiki.getDocument($galleryFN))
+#if("$!galleryDoc" != '')
 #set($attURLList = '')
 #foreach($attachment in $celementsweb.getAttachmentListSorted($galleryDoc, 'AttachmentAscendingNameComparator'))
 #if($attachment.isImage())
 #set($attURLList = "$!{attURLList}, ${Q}$galleryDoc.getAttachmentURL($attachment.getFilename(),'download')${Q}")
+#end
 #end
 #end
 $attURLList.replaceFirst(',','')]}##
