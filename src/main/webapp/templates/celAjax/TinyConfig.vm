@@ -17,7 +17,8 @@
   #set($template_external_list_url = "$!skin_doc.getAttachmentURL('template-list.js','download')")
 #end
 { 
-  "mode" : "textareas",
+  "mode" : "specific_textareas",
+  "editor_selector" : "mceEditor"
   "editor_deselector" : "mceNoEditor",
   "language" : "$admin_language",
   "theme" : "advanced",
