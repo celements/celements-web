@@ -425,11 +425,7 @@ TE.prototype = {
  saveAndClose : function(formName) {
   var _me = this;
   if(!formName) {
-    if(document.forms['edit']) {
-      formName = 'edit';
-    } else {
-      formName = document.forms[0].id;
-    }
+    formName = _me.getFirstFormWithId();
   }
   var oldSaveFormName = formName;
   if(document.forms[oldSaveFormName]) {
@@ -443,6 +439,20 @@ TE.prototype = {
   } else {
     alert("Error: No 'edit' form!");
   }
+ },
+ 
+ getFirstFormWithId : function() {
+   if(document.forms['edit']) {
+     formName = 'edit';
+   } else {
+     $A(document.forms).each(function(form) {
+       if(form.id != '') {
+         formName = form.id;
+         throw $break;
+       }
+     });
+   }
+   return formName;
  },
 
  saveAndContinue : function(execCallback) {
