@@ -54,6 +54,7 @@ var celanimOverlay_addOpenConfig = function(elemId, openConfig) {
         'cursor' : "url(/file/resources/celJS/highslide/graphics/zoomin.cur), pointer"
       });
       $(elemId).observe('click', celanimOverlay_OpenInOverlay);
+      $(elemId).observe('celanim_overlay:openOverlay', celanimOverlay_OpenInOverlay);
     } else {
       if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
         console.warn('Skipping add open config because one of the required config fields'
@@ -69,7 +70,21 @@ var celanimOverlay_addOpenConfig = function(elemId, openConfig) {
 };
 
 var celanimOverlay_AfterExpandHandler = function(hsExpander) {
+  $$('.highslide-html').each(function(overlayHTMLDiv) {
+    //FIX width of overlayWrapper after opening second time.
+    //IMPORTANT: do not set height similarly, because sometimes it is only 16px on first opening.
+    var overlayHTMLDiv2 = overlayHTMLDiv.down('div');
+    var overlayWrapper = overlayHTMLDiv2.up('.highslide-wrapper');
+    overlayWrapper.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+    overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+  });
   $(hsExpander.thumb).fire('celanim_overlay:afterExpand', hsExpander);
+  $$('body')[0].fire('celanim_overlay:afterExpandGeneral', hsExpander);
+};
+
+var celanimOverlay_AfterCloseHandler = function(hsExpander) {
+  $(hsExpander.thumb).fire('celanim_overlay:afterClose', hsExpander);
+  $$('body')[0].fire('celanim_overlay:afterCloseGeneral', hsExpander);
 };
 
 var celanimOverlay_OpenInOverlay = function(event) {
@@ -92,6 +107,7 @@ var celanimOverlay_OpenInOverlay = function(event) {
     hs.height = hsConfig.get('height');
     hs.width = hsConfig.get('width');
     hs.Expander.prototype.onAfterExpand = celanimOverlay_AfterExpandHandler;
+    hs.Expander.prototype.onAfterClose = celanimOverlay_AfterCloseHandler;
     hs.htmlExpand(this, hsConfig.toObject());
     event.stop();
   } else {

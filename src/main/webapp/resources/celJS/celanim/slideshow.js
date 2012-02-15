@@ -58,6 +58,14 @@ var initSlideShows = function(slideShowConfigArray) {
   $A(slideShowConfigArray).each(function(slideShowConfig) {
     celSlideShows_initOneSlideShow(slideShowConfig);
   });
+  $$('body')[0].stopObserving('celanim_overlay:afterExpandGeneral',
+      celSlideShow_AfterExpandGeneralHandler);
+  $$('body')[0].observe('celanim_overlay:afterExpandGeneral',
+      celSlideShow_AfterExpandGeneralHandler);
+  $$('body')[0].stopObserving('celanim_overlay:afterCloseGeneral',
+      celSlideShow_AfterCloseGeneralHandler);
+  $$('body')[0].observe('celanim_overlay:afterCloseGeneral',
+      celSlideShow_AfterCloseGeneralHandler);
 };
 
 var celSlideShows_initOneSlideShow = function(slideShowConfig) {
@@ -72,7 +80,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
         'class' : 'celanim_slideshow_wrapper' }
       ).insert({ top : tempImg });
     if ($(slideShowConfig.htmlId).up('.highslide-html')) {
-      var overlayHTMLDiv= $(slideShowConfig.htmlId).up('.highslide-html');
+      var overlayHTMLDiv = $(slideShowConfig.htmlId).up('.highslide-html');
       divWrapper.setStyle({ 'height' : overlayHTMLDiv.getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : overlayHTMLDiv.getWidth() + 'px' });
     } else {
@@ -153,7 +161,10 @@ var celSlideShow_startOne = function(elemId) {
     var startButtonDiv = new Element('div', { 'class' : 'slideshowButton' });
     startButtonDiv.hide();
     $(elemId).insert({ after : startButtonDiv });
-    if (!isCelanimOverlay) {
+    if (isCelanimOverlay) {
+      $(elemId).up('div.celanim_slideshow_wrapper').observe('click',
+          celSlideShowStartOverlay);
+    } else {
       $(elemId).up('div.celanim_slideshow_wrapper').observe('click',
           celSlideShowManualStartStop);
     }
@@ -161,6 +172,10 @@ var celSlideShow_startOne = function(elemId) {
   } else {
     scheduleChangeImage(elemId);
   }
+};
+
+var celSlideShowStartOverlay = function(event) {
+  this.down('img.celanim_slideshow').fire('celanim_overlay:openOverlay', event);
 };
 
 var celSlideShow_AfterExpand = function(event) {
@@ -176,6 +191,14 @@ var celSlideShow_AfterExpand = function(event) {
   celSlideShow_startOne(overlayId);
 };
 
+var celSlideShow_AfterExpandGeneralHandler = function(event){
+  celSlideShowPauseAllSlideShows();
+};
+
+var celSlideShow_AfterCloseGeneralHandler = function(event) {
+  celSlideShowResumeAllSlideShows();
+};
+
 var celSlideShowManualStartStop = function(event) {
   var imgElem = this.down('.celanim_slideshow');
   if (imgElem && imgElem.id) {
@@ -183,17 +206,46 @@ var celSlideShowManualStartStop = function(event) {
     var startButtonDiv = this.down('.slideshowButton');
     if (celSlideShowIsRunning(elemId)
         && (typeof celSlideShowThreads.get(elemId) != "undefined")) {
-      celSlideShowIsRunningHash.set(elemId, false);
-      window.clearTimeout(celSlideShowThreads.get(elemId));
-      celSlideShowThreads.unset(elemId);
+      celSlideShowStopSlideShow(elemId);
       Effect.Appear(startButtonDiv, { duration : 1.0 , to : 0.9 });
     } else {
-      celSlideShowIsRunningHash.set(elemId, true);
-      changeImage(elemId);
+      celSlideShowStartSlideShow(elemId);
       Effect.Fade(startButtonDiv, { duration : 1.0 });
     }
     event.stop();
   }
+};
+
+var celSlideShowStopSlideShow = function(elemId) {
+  celSlideShowIsRunningHash.set(elemId, false);
+  window.clearTimeout(celSlideShowThreads.get(elemId));
+  celSlideShowThreads.unset(elemId);
+};
+
+var celSlideShowStartSlideShow = function(elemId) {
+  celSlideShowIsRunningHash.set(elemId, true);
+  changeImage(elemId);
+};
+
+var celSlideShowPausedSlideShowIds = new Array();
+var celSlideShowPauseAllSlideShows = function() {
+  celSlideShowThreads.each(function(pair) {
+    if (!celSlideShow_isInOverlay(pair.key)) {
+      celSlideShowStopSlideShow(pair.key);
+      celSlideShowPausedSlideShowIds.push(pair.key);
+    }
+  });
+};
+
+var celSlideShow_isInOverlay = function(elemId) {
+  return (typeof $(elemId).up('.highslide-container') != "undefined");
+};
+
+var celSlideShowResumeAllSlideShows = function() {
+  celSlideShowPausedSlideShowIds.each(function(elemId) {
+    celSlideShowStartSlideShow(elemId);
+    celSlideShowPausedSlideShowIds.splice(elemId);
+  });
 };
 
 var celSlideShowIsRunningHash = new Hash();

@@ -1,0 +1,25 @@
+## getContentDblClick
+## compose the ondblclick javaScript for the content part.
+##
+## INPUT (from initCelements): $langs, $default_language
+## INPUT (optional) : $theDoc (default : $doc)
+##
+#set($dblClick = '')
+#if("$!theDoc" == '')
+  #set($getContentDblClickDoc = $doc)
+#else
+  #set($getContentDblClickDoc = $theDoc)
+#end
+##TODO parameterise dblCLick deactivation
+##TODO  to allow e.g. dblClick being disabled by pageType.
+##TODO ensure that dblClick AND ContextMenuItem "Edit Content" are disabled
+##TODO  both if page is not editable.
+#if($hasedit && ($context.getAction() == 'view') && ("$getContentDblClickDoc.web" != 'Celements2') && ("$getContentDblClickDoc.fullName" != 'Tools.EditBanner')  && ("$getContentDblClickDoc.fullName" != 'Tools.Login'))
+  ## Double Click Event
+  #set($editXredirect = "$!request.xredirect")
+  #if("$!editXredirect" == '')
+    #set($editXredirect = "${doc.getURL('view')}")
+  #end
+  #set($editURL = "${celementsweb.getEditURL($getContentDblClickDoc)}&xredirect=${editXredirect}")
+  #set($dblClick = "ondblclick='window.location.href=${Q}$!{editURL}${Q}' onselectstart='javascript:return false;'")
+#end

@@ -7,14 +7,18 @@
 #end
 { "htmlId" : $elemId , "imageArray" : [##
 #set($galleryFN = $elemId.replaceAll('"','').split(':').get(1))
+#set($galleryDoc = '')
 #set($galleryDoc = $xwiki.getDocument($galleryFN))
+#if("$!galleryDoc" != '')
 #set($attURLList = '')
 #foreach($attachment in $celementsweb.getAttachmentListSorted($galleryDoc, 'AttachmentAscendingNameComparator'))
 #if($attachment.isImage())
 #set($attURLList = "$!{attURLList}, ${Q}$galleryDoc.getAttachmentURL($attachment.getFilename(),'download')${Q}")
 #end
 #end
-$attURLList.replaceFirst(',','')]}##
+$attURLList.replaceFirst(',','')##
+#end ## ("$!galleryDoc" != '')
+]}##
 #end ## elemId.indexOf > -1
 #end
 ##[{"htmlId" : "S2:Content.untitled2:3000:grow", "imageArray" : ["/download/Content/untitled2/diemkatze1.jpg", "/download/Content/untitled2/diemkatze2.jpg"] }]
