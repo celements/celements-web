@@ -24,7 +24,7 @@ TE.prototype = {
 
   dirtyFlag : new Hash(),
 
-  editorFormsInitalValues : new Hash(),
+  editorFormsInitialValues : new Hash(),
 
   modalDialog : null,
 
@@ -57,7 +57,7 @@ TE.prototype = {
           elementsValues.set(elem.name, elem.value);
         }
       });
-      _me.editorFormsInitalValues.set(formId, elementsValues);
+      _me.editorFormsInitialValues.set(formId, elementsValues);
     }
   },
 
@@ -574,7 +574,7 @@ TE.prototype = {
  getDirtyFormIds : function() {
    var _me = this;
    var dirtyFormIds = new Array();
-   _me.editorFormsInitalValues.each(function(entry) {
+   _me.editorFormsInitialValues.each(function(entry) {
      var formId = entry.key;
      if (_me.isValidFormId(formId)) {
        var elementsValues = entry.value;
