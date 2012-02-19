@@ -565,9 +565,10 @@ TE.prototype = {
  isDirtyField : function(elementsValues, fieldElem) {
    if (fieldElem.hasClassName('mceEditor') && tinyMCE && tinyMCE.get(fieldElem.id)) {
      return tinyMCE.get(fieldElem.id).isDirty();
-   } else {
+   } else if (!fieldElem.hasClassName('celIgnoreDirty')) {
      return (elementsValues.get(fieldElem.name) != fieldElem.value);
    }
+   return false;
  },
 
  getDirtyFormIds : function() {
