@@ -66,7 +66,7 @@
 #end
 #set($q = "")
 #if("$xredirect" != '')##
-<input type="hidden" name="xredirect" value="$xredirect" />
+<input type="hidden" class="celIgnoreDirty" name="xredirect" value="$xredirect" />
 #set($q = "${q}&amp;xredirect=${xredirect}")
 #end##
 #if(!$cel_embedded_editobj && $hasCustomClass)
@@ -78,7 +78,7 @@
 #set($q = "${q}&amp;property=${cel_editobj_properties}")
 #end
 #end
-<div class="hidden"><input type="hidden" name="xcontinue" value="$cel_editobj_doc.getURL($context.action, $q)"/></div>
+<div class="hidden"><input type="hidden" class="celIgnoreDirty" name="xcontinue" value="$cel_editobj_doc.getURL($context.action, $q)"/></div>
 #if($hasobjs)
 <div id="xwikiobjects" class="accordion">
 #else
@@ -143,7 +143,7 @@
 <div id="field_${class.name}_${obj.number}_content" class="accordionTabContentBox"><div>
 #end
 #if($first == 1)
-<input type="hidden" name="${class.name}_nb" value="$nb" />
+<input type="hidden" class="celIgnoreDirty" name="${class.name}_nb" value="$nb" />
 #set($first = 0)
 #end
 #if(!$cel_embedded_editobj)
