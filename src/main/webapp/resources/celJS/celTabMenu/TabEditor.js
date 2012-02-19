@@ -228,6 +228,9 @@ TE.prototype = {
           if (window.location.search.match(/\&?template=[^\&]+/)) {
             window.location.search = window.location.search.replace(/\&?template=[^\&]+/, '')
           }
+          $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
+        } else {
+          $('tabMenuPanel').fire('tabedit:saveAndContinueButtonFailed', jsonResponses);
         }
       });
     };
@@ -472,6 +475,11 @@ TE.prototype = {
       var failed = _me.showErrorMessages(jsonResponses);
       if ((typeof(execCallback) != 'undefined') && execCallback) {
         execCallback(transport, jsonResponses, failed);
+        if (failed) {
+          $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
+        } else {
+          $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
+        }
       }
     });
   }
