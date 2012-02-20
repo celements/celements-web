@@ -120,7 +120,7 @@ $xwiki.includeForm('celements2web:Macros.includeRTELanguageSelect', false)
 </div>
 #end
 <div id="con_contentEdit" class="editblock">
-		<textarea name="content" onfocus="setFocus('con_contentEdit');" onblur="removeFocus('con_contentEdit');">$xwiki.getXMLEncoded($tdoc.content)</textarea>
+		<textarea class="mceEditor" name="content" onfocus="setFocus('con_contentEdit');" onblur="removeFocus('con_contentEdit');">$xwiki.getXMLEncoded($tdoc.content)</textarea>
 </div>
 	</form>
 
