@@ -585,7 +585,7 @@ TE.prototype = {
              console.debug('getDirtyFormIds first found dirty field: ', elem.name);
            }
            dirtyFormIds.push(formId);
-           return; //prototype each -> continue
+           throw $break;  //prototype each -> break
          }
        });
      } else if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
