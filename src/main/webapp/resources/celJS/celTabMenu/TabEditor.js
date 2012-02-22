@@ -243,11 +243,15 @@ TE.prototype = {
     var closeClickHandler = function() {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         if (!failed) {
-          var redirectValue;
-          if (document.forms[0] && document.forms[0]['xredirect'] &&
-              document.forms[0]['xredirect'][0]) {
-            redirectValue = $F(document.forms[0]['xredirect'][0]);
-          } else {
+          var redirectValue = '';
+          if (document.forms[0] && document.forms[0]['xredirect']) { 
+            if (document.forms[0]['xredirect'][0]) {
+              redirectValue = $F(document.forms[0]['xredirect'][0]);
+            } else {
+              redirectValue = $F(document.forms[0]['xredirect']);
+            }
+          }  
+          if (redirectValue == '')  {
             redirectValue = window.location.pathname.replace(/\/edit\/|\/inline\//,
                 '/view/');
           }
