@@ -88,6 +88,10 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
       divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
     }
     var slideShowImg = $(slideShowConfig.htmlId);
+    $w(slideShowImg.className).without('celanim_slideshow').without('celanim_overlay'
+        ).each(function(className) {
+      divWrapper.addClassName(className);
+    });
     moveStyleToWrapper(divWrapper, slideShowImg, 'float');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-top');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-bottom');
