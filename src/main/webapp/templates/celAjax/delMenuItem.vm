@@ -1,0 +1,38 @@
+##
+## Ajax Script delMenuItem
+##
+## which space? default: Content
+#if($!request.get("space") != "")
+ #set($space = $!request.get("space"))
+#else
+ #set($space = "Content")
+#end
+#if("$!doc.getObject('Celements2.MenuItem',false)" != '')
+  #if("$!context.getRequest().get('redDoc')" == '')
+      #set($parentDocName = "$!doc.getParent()")
+      #if("$!parentDocName" == '')
+        #set($parentDocName = "${space}.WebHome")
+      #end
+  #else
+    #set($parentDocName = "$!context.getRequest().get('redDoc')")
+  #end
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
+$jsonBuilder.openDictionary()
+$jsonBuilder.openProperty('successful')
+#set($mItemRemoved = $services.celementsweb.deleteMenuItem($doc.getDocumentReference()))
+$jsonBuilder.addBoolean($mItemRemoved)
+$jsonBuilder.closeDictionary()
+#if(("$!request.ajax" == '1') || ("$!request.ajax" == 'true'))
+$jsonBuilder.getJSON()
+#else
+  #set($red = $xwiki.getURL($services.model.resolve($parentDocName)))
+  $context.getResponse().sendRedirect($red)
+#end
+#else
+  #if(("$!request.ajax" == '1') || ("$!request.ajax" == 'true'))
+  	No MenuItem found to delete on $doc.getDocumentReference()
+  #else
+    $context.getResponse().sendRedirect($doc.getExternalURL())
+  #end
+#end
+{/pre}
