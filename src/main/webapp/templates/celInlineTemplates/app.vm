@@ -1,11 +1,19 @@
-#if(("$!request.s" != '') && $xwiki.exists("AppScripts.${request.s}") && !$celementsweb.isEmptyRTEDocument("AppScripts.${request.s}"))
+#macro(unkownScriptError)
+$response.setStatus(501)
+Unkown script [$!request.s]!
+#end
+#if("$!request.s" != '')
+#set($appScriptDocRef = $services.model.resolveDocument("AppScripts.${request.s}"))
+#if($xwiki.exists($appScriptDocRef) && !$celementsweb.isEmptyRTEDocument($appScriptDocRef))
 $xwiki.includeForm("AppScripts.${request.s}", false)
 #else
 #set($appResult = $xwiki.parseTemplate("celAppScripts/${request.s}.vm"))
 #if("$!appResult.trim()" != '')
 $appResult
 #else
-$response.setStatus(501)
-Unkown script!
+#unkownScriptError()
 #end
+#end
+#else
+#unkownScriptError()
 #end

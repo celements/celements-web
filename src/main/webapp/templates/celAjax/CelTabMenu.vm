@@ -7,7 +7,8 @@
 #end
 #set($cel_supressBeforeUnload = false)
 {"tabMenuPanelConfig" : ##
-#if($xwiki.exists('Ajax.tabMenuPanelConfig') && !$celementsweb.isEmptyRTEDocument('Ajax.tabMenuPanelConfig'))
+#set($ajaxDocRef = $services.model.resolveDocument('Ajax.tabMenuPanelConfig'))
+#if($xwiki.exists($ajaxDocRef) && !$celementsweb.isEmptyRTEDocument($ajaxDocRef))
 $xwiki.includeForm('Ajax.tabMenuPanelConfig', false)
 #else
 $xwiki.parseTemplate('celAjax/tabMenuPanelConfig.vm')
@@ -26,7 +27,8 @@ $xwiki.parseTemplate('celAjax/tabMenuPanelConfig.vm')
 #if("$!cel_supressBeforeUnload" != '')
  "supressBeforeUnload" : $!{cel_supressBeforeUnload},##
 #end
-#if($xwiki.exists('Ajax.additionalEditorMessages') && !$celementsweb.isEmptyRTEDocument('Ajax.additionalEditorMessages'))
+#set($ajaxDocRef = $services.model.resolveDocument('Ajax.additionalEditorMessages'))
+#if($xwiki.exists($ajaxDocRef) && !$celementsweb.isEmptyRTEDocument($ajaxDocRef))
 #set($addEditorMessages = $xwiki.includeForm('Ajax.additionalEditorMessages', false))
 #else
 #set($addEditorMessages = $xwiki.parseTemplate('celAjax/additionalEditorMessages.vm'))

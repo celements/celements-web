@@ -8,9 +8,15 @@
 #set($closeOverlayRedirect = "$!request.get('xredirect')")
 #set($overlayConfName = "$!{request.get('conf')}")
 #set($overlayBodyCssClasses = "$!{overlayConfName}")
-#if(("$!overlayConfName" != '') && $xwiki.exists("Overlay.$!overlayConfName") && !$celementsweb.isEmptyRTEDocument("Overlay.$!{overlayConfName}"))
+#set($overlayScriptDocRef = '')
+#set($overlayScript2DocRef = '')
+#if("$!overlayConfName" != '')
+#set($overlayScriptDocRef = $services.model.resolveDocument("Overlay.$!{overlayConfName}"))
+#set($overlayScript2DocRef = $services.model.resolveDocument("celements2web:Overlay.$!{overlayConfName}"))
+#end
+#if(("$!overlayScriptDocRef" != '') && $xwiki.exists($overlayScriptDocRef) && !$celementsweb.isEmptyRTEDocument($overlayScriptDocRef))
   $xwiki.includeForm("Overlay.$!overlayConfName", false)
-#elseif(("$!overlayConfName" != '') && $xwiki.exists("celements2web:Overlay.$!overlayConfName") && !$celementsweb.isEmptyRTEDocument("celements2web:Overlay.$!{overlayConfName}"))
+#elseif(("$!overlayScript2DocRef" != '') && $xwiki.exists($overlayScript2DocRef) && !$celementsweb.isEmptyRTEDocument($overlayScript2DocRef))
 ## DEPRECATED !!! PLEASE PUT IN celements-web celOverlay FOLDER ON DISK
   $xwiki.includeForm("celements2web:Overlay.$!overlayConfName", false)
 #else

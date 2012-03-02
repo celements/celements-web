@@ -1,7 +1,11 @@
 ##INPUT (optional): $celUserDataFieldLogin, $celLoginPage
 #macro(passRecoveryLink)
 #set($celMailsPasswordRecovery = $xwiki.parseTemplate("celMails/PasswordRecoverMailHtmlContent_$!{default_language}.vm"))
-#if(!$celementsweb.isEmptyRTEDocument('Tools.PasswordRecoverMailHtmlContent') || !$celementsweb.isEmptyRTEDocument('celements2web:Tools.PasswordRecoverMailHtmlContent') || !$celementsweb.isEmptyRTEDocument('Tools.PasswordRecoverMailTextContent') || !$celementsweb.isEmptyRTEDocument('celements2web:Tools.PasswordRecoverMailTextContent') || ("$!celMailsPasswordRecovery" != ''))
+#set($passwdRecoveryHTMLDocRef = $services.model.resolveDocument('Tools.PasswordRecoverMailHtmlContent'))
+#set($passwdRecoveryHTML2DocRef = $services.model.resolveDocument('celements2web:Tools.PasswordRecoverMailHtmlContent'))
+#set($passwdRecoveryTextDocRef = $services.model.resolveDocument('Tools.PasswordRecoverMailTextContent'))
+#set($passwdRecoveryText2DocRef = $services.model.resolveDocument('celements2web:Tools.PasswordRecoverMailTextContent'))
+#if(!$celementsweb.isEmptyRTEDocument($passwdRecoveryHTMLDocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryHTML2DocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryTextDocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryText2DocRef) || ("$!celMailsPasswordRecovery" != ''))
   <a href="?xpage=overlay&conf=PwdRetreival&xredirect=$!red">$msg.get('cel_login_forgotpassword')</a>
 #end
 #end
