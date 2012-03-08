@@ -18,7 +18,7 @@
 #end
 { 
   "mode" : "specific_textareas",
-  "editor_selector" : "mceEditor"
+  "editor_selector" : "mceEditor",
   "editor_deselector" : "mceNoEditor",
   "language" : "$admin_language",
   "theme" : "advanced",
