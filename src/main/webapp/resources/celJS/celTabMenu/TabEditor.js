@@ -464,6 +464,7 @@ TE.prototype = {
 
  saveAndContinue : function(execCallback) {
   var _me = this;
+  //TODO add possibility to add JS-listener which can do additional 'isDirty' checks
   if (this.isDirty()) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
@@ -474,6 +475,7 @@ TE.prototype = {
     savingDialog.cfg.queueProperty("buttons", null);
     savingDialog.render();
     savingDialog.show();
+    //TODO add possibility to add JS-listener which can execute alternative save actions
     _me.saveAllFormsAjax(function(transport, jsonResponses) {
       savingDialog.hide();
       var failed = _me.showErrorMessages(jsonResponses);
