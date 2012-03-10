@@ -320,11 +320,12 @@ Validation.defaultFunctions = [
 	['validate-selection', null, function(v,elm){
 				return elm.options ? elm.selectedIndex > 0 : !Validation.get('IsEmpty').test(v);
 			}],
-	['validate-one-required', null, function (v,elm) {
-				var p = elm.parentNode;
-				var options = p.getElementsByTagName('INPUT');
-				return $A(options).any(function(elm) {
-					return $F(elm);
-				});
-			}]
+  ['validate-one-required', null, function (v,elm) {
+        var p = elm.parentNode;
+        var options = p.getElementsByTagName('INPUT');
+        return $A(options).any(function(elm) {
+          return $F(elm);
+        });
+      }],
+  ['validate-email-equal', 'email', Validator.methods.equalToField ]
 ];
