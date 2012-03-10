@@ -10,5 +10,6 @@
 "validate-date-au" : "Please use this date format: dd/mm/yyyy. For example 17/03/2006 for the 17th of March, 2006.",##
 "validate-currency-dollar" : "Please enter a valid $ amount. For example $100.00 .",##
 "validate-selection" : "Please make a selection",##
-"validate-one-required" : "Please select one of the above options."##
+"validate-one-required" : "Please select one of the above options.",##
+"validate-email-equal" : "$adminMsg.get('cel_form_valid_email-equal')"##
 }
