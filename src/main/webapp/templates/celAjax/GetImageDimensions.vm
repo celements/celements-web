@@ -2,13 +2,13 @@
 $jsonBuilder.openDictionary()
 #if("$!request.get('imageFullName')" != '')
 #set($dimensionObj = $xwiki.celementsphoto.getDimension($request.get('imageFullName')))
-$jsonBuilder.openStringProperty('filename', "$!request.get('imageFullName')")
+$jsonBuilder.addStringProperty('filename', "$!request.get('imageFullName')")
 $jsonBuilder.openProperty('height')
-$jsonBuilder.addInteger($!dimensionObj.getHeight())
+$jsonBuilder.addInteger($mathtool.toInteger($!dimensionObj.getHeight()))
 $jsonBuilder.openProperty('width')
-$jsonBuilder.addInteger($!dimensionObj.getWidth())
+$jsonBuilder.addInteger($mathtool.toInteger($!dimensionObj.getWidth()))
 #else
-$jsonBuilder.openStringProperty('errormsg', "imageFullName missing!")
+$jsonBuilder.addStringProperty('errormsg', "imageFullName missing!")
 #end
 $jsonBuilder.closeDictionary()
 $jsonBuilder.getJSON()
