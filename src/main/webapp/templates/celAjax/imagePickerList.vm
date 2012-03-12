@@ -1,6 +1,7 @@
 $response.setStatus(200)
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
 #set($attachments = $xwiki.celementsweb.getAttachmentListSorted($doc, 'AttachmentDescendingChangeDateComparator'))
-[##
+$jsonBuilder.openArray()
 #set($count = 0)
 #foreach ($attach in $attachments)
 #if ($attach.isImage())
@@ -9,16 +10,20 @@ $response.setStatus(200)
 #if("$!dimensionObj" != '')
 #if($count > 0) , #end
 #set($count = $count + 1)
- { "src" : "$!doc.getAttachmentURL("${attach.filename}", 'download')"##
- , "filename" : "$!{attach.filename}"##
- , "attversion" : "$!{attach.version}"##
- , "lastChangedBy" : "$!{xwiki.getLocalUserName($attach.author, false)}"##
- , "maxHeight" : $!dimensionObj.getHeight()##
- , "maxWidth" : $!dimensionObj.getWidth()##
- , "fileSize" : "#dynamicsize(${attach.filesize})"##
- , "mimeType" : "$!{attach.mimeType}"##
- }##
+$jsonBuilder.openDictionary()
+$jsonBuilder.openStringProperty('src', "$!doc.getAttachmentURL(${attach.filename}, 'download')")
+$jsonBuilder.openStringProperty('filename', "$!{attach.filename}")
+$jsonBuilder.openStringProperty('attversion', "$!{attach.version}")
+$jsonBuilder.openStringProperty('lastChangedBy', "$!{xwiki.getLocalUserName($attach.author, false)}")
+$jsonBuilder.openProperty('maxHeight')
+$jsonBuilder.addInteger($!dimensionObj.getHeight())
+$jsonBuilder.openProperty('maxWidth')
+$jsonBuilder.addInteger($!dimensionObj.getWidth())
+$jsonBuilder.openStringProperty('fileSize', "#dynamicsize(${attach.filesize})")
+$jsonBuilder.openStringProperty('mimeType', "$!{attach.mimeType}")
+$jsonBuilder.closeDictionary()
 #end ## if got dimensions
 #end ## if isImage
 #end ## foreach
-]
+$jsonBuilder.closeArray()
+$jsonBuilder.getJSON()
