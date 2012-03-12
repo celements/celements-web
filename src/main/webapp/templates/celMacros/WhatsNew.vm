@@ -1,0 +1,117 @@
+#if("$!request.get('count')" != '')
+#set($numEntries = $xwiki.parseInt($request.get('count')))
+#end
+#if("$!numEntries" == '')
+#set($numEntries = 50)
+#end
+#if("$!request.get('more')" == 'true')
+#set($numEntries = $numEntries + 50)
+#end
+#set($defaultParams = "xpage=$!{request.get('xpage')}")
+#set($defaultParams = "${defaultParams}&conf=$!{request.get('conf')}")
+#set($defaultParams = "${defaultParams}&xredirect=$!{request.get('xredirect')}")
+#set($defaultParams = "${defaultParams}&count=$!{numEntries}")
+#set($diff = $request.get('diff'))
+#if(!$diff)
+#set($diff = "0")
+#end
+#set($hasSpaceRestriction = ("$!request.space" != ''))
+<h1> What's New##
+#if($hasSpaceRestriction)
+ in ${request.space}-Space
+#end
+&nbsp;($numEntries)</h1>
+#set($params = "${defaultParams}&diff=$!{diff}&space=$!{doc.getSpace()}&more=true")
+<p><a href="$doc.getURL('view', $params)">show 50 more</a></p>
+#if($hasSpaceRestriction)
+#set($params = "${defaultParams}&diff=$!{diff}")
+<p><a href="$doc.getURL('view', $params)">show all spaces</a></p>
+#else
+#set($params = "${defaultParams}&diff=$!{diff}&space=$!{doc.getSpace()}")
+<p><a href="$doc.getURL('view', $params)">show only $!{doc.getSpace()}-space</a></p>
+#end
+#if($diff == "0")
+#set($params = "${defaultParams}&space=$!{request.space}&diff=1")
+<p><a href="$doc.getURL('view', $params)">show the changes</a></p>
+<p>&nbsp;</p
+#end
+<p>The following documents have been recently created or modified:</p>
+#set ($list = $services.celementsweb.getLastChangedDocuments($numEntries , "$!{request.space}"))
+#if(("$!list" != '' ) && ($list.size() > 0))
+<table class="cel_whatsnew_table">
+<thead>
+#if(!$hasSpaceRestriction)
+<th>Space</th>
+#end
+<th>Link Name</th>
+<th>doc lang</th>
+<th>last changed by</th>
+<th>last changed at</th>
+</thead>
+<tbody>
+#foreach ($row in $list)
+  #set($docFullName = '')
+  #set($docLanguage = '')
+  #foreach ($field in $row)
+    #if ($velocityCount == 1)
+      #set($docFullName = $field)
+    #elseif ($velocityCount == 2)
+      #set($docLanguage = $field)
+    #end
+  #end
+#set($bentryDocRef = $services.model.resolveDocument(${docFullName}))
+#if ($xwiki.hasAccessLevel("view", "${context.database}:${docFullName}"))
+#set($defDoc = $xwiki.getDocument($bentryDocRef))
+#if("$!docLanguage" != '')
+#set($bentrydoc = $defDoc.getTranslatedDocument($docLanguage))
+#else
+#set($bentrydoc = $defDoc)
+#set($docLanguage = $defDoc.defaultLanguage)
+#end
+<tr>
+#if(!$hasSpaceRestriction)
+<td class="docSpace">${bentrydoc.space}</td>
+#end
+<td class="docName"><a href="$bentrydoc.getURL('view')">$bentrydoc.name</a></td>
+<td class="docLanguage">$docLanguage</td>
+<td class="lastChangeBy">${xwiki.getUserName($bentrydoc.author)}</td>
+<td class="lastChangeAt">$xwiki.formatDate($bentrydoc.date,"MMMM dd, yyyy HH:mm:ss")</td>
+#if ($diff == "1")
+<td>
+#set($deltas= $bentrydoc.getLastChanges())
+#foreach($delta in $deltas)
+#set($chunk = $delta.revised)
+#if ($chunk.size()>0)
+<div style="border-left: 8px solid #00FF00">
+#if (($type == "source")||($type == "xml"))
+<pre>
+$xwiki.renderChunk($chunk, true, $tdoc)
+</pre>
+#else
+$xwiki.renderChunk($chunk, $tdoc)
+#end
+</div>
+#end
+#set($chunk = $delta.original)
+#if ($chunk.size()>0)
+<div style="border-left: 8px solid #FF0000">
+#if (($type == "source")||($type == "xml"))
+<pre>
+$xwiki.renderChunk($chunk, true, $tdoc)
+</pre>
+#else
+$xwiki.renderChunk($chunk, $tdoc)
+#end
+</div>
+#end
+#end
+#end  ## if diff == 1
+</tr>
+#end  ## if hasAccessLevel
+#end  ## foreach row in list
+</tbody>
+</table>
+#else
+No Changes found.
+#end
+
