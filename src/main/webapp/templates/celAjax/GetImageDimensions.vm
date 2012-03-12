@@ -1,7 +1,14 @@
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
+$jsonBuilder.openDictionary()
 #if("$!request.get('imageFullName')" != '')
 #set($dimensionObj = $xwiki.celementsphoto.getDimension($request.get('imageFullName')))
-{ "filename" : "$!request.get('imageFullName')" , "height" : $!dimensionObj.getHeight(), ##
- "width" : $!dimensionObj.getWidth() }
+$jsonBuilder.openStringProperty('filename', "$!request.get('imageFullName')")
+$jsonBuilder.openProperty('height')
+$jsonBuilder.addInteger($!dimensionObj.getHeight())
+$jsonBuilder.openProperty('width')
+$jsonBuilder.addInteger($!dimensionObj.getWidth())
 #else
-{ "errormsg" : "imageFullName missing!"}
+$jsonBuilder.openStringProperty('errormsg', "imageFullName missing!")
 #end
+$jsonBuilder.closeDictionary()
+$jsonBuilder.getJSON()
