@@ -65,17 +65,7 @@
         <a href="$doc.getAttachmentURL($attach.filename,'download')">$attach.filename</a>
   </td>
   <td class="celements2_line" style="text-align:left;">
-    #set($filegroesse = $attach.filesize)
-    #set($filegroesse_type = "B")
-    #if($filegroesse > 1000)
-  	   #set($filegroesse = ($filegroesse/1000))
-      #set($filegroesse_type = "KB")
-    #end
-    #if($filegroesse > 1000)
-    	 #set($filegroesse = ($filegroesse/1000))
-      #set($filegroesse_type = "MB")
-    #end
-    $filegroesse $filegroesse_type
+    $services.celementsweb.getHumanReadableSize($attach.filesize, true, $admin_language)
   </td>
   <td class="celements2_line" style="text-align:left;"><a href="$doc.getAttachmentURL("${attach.filename}", 'delattachment')?xredirect=$doc.getURL('edit')" onclick="return confirm('$msg.get("confirmdelattachment")');">$msg.get("delete")</a></td>
 </tr>
