@@ -17,6 +17,8 @@ var CiG = CELEMENTS.images.Gallery;
 CiG.prototype = {
     _collDocRef : undefined,
     _galleryData : undefined,
+    _imagesArray : undefined,
+    _imagesHash : undefined,
 
   _init : function(collDocRef, callbackFN) {
     var _me = this;
@@ -47,6 +49,16 @@ CiG.prototype = {
         if (transport.responseText.isJSON()) {
           var responseObject = transport.responseText.evalJSON();
           _me._galleryData = responseObject;
+          _me._imagesArray = new Array();
+          _me._imagesHash = new Hash();
+          _me._galleryData.imageArray.each(function(imageObj) {
+            var imageId = 'GI:' + _me._collDocRef + ':' + imageObj.filename;
+            var image = new CELEMENTS.images.Image(imageObj, imageId);
+            image.setThumbDimension(_me._galleryData.thumbWidth,
+                _me._galleryData.thumbHeight);
+            var index = _me._imagesArray.push(image);
+            _me._imagesHash.set(imageId, index - 1);
+          });
           if (callbackFN) {
             callbackFN();
           }
@@ -58,10 +70,18 @@ CiG.prototype = {
     });
   },
 
+  getImageForId : function(imageId) {
+    var _me = this;
+    if (typeof _me._imagesHash.get(imageId) != 'undefined') {
+      return _me._imagesArray[_me._imagesHash.get(imageId)];
+    }
+    return undefined;
+  },
+
   getImages : function() {
     var _me = this;
-    if (_me._galleryData) {
-      return _me._galleryData.imageArray;
+    if (_me._imagesArray) {
+      return _me._imagesArray;
     }
     return undefined;
   },
@@ -118,6 +138,110 @@ CiG.prototype = {
       };
     }
     return undefined;
+  }
+
+};
+
+})();
+
+(function() {
+
+CELEMENTS.images.Image = function(imageData, id) {
+  // constructor
+  this._init(imageData, id);
+};
+
+var CiI = CELEMENTS.images.Image;
+
+CiI.prototype = {
+    _imageData : undefined,
+    _thumbDim : undefined,
+    _id : undefined,
+
+  _init : function(imageData, id) {
+    var _me = this;
+    _me._imageData = imageData;
+    _me._id = id;
+  },
+
+  getId : function() {
+    var _me = this;
+    return _me._id;
+  },
+
+  getThumbURL : function() {
+    var _me = this;
+    if (_me.getThumbDimension()) {
+      return _me._getDimURL(_me.getThumbDimension());
+    } else {
+      return _me.getSrc();
+    }
+  },
+
+  getURL : function(maxWidth, maxHeight) {
+    var _me = this;
+    if (maxWidth || maxHeight) {
+      return _me._getDimURL({ 'height' : maxHeight , 'width' : maxWidth });
+    } else {
+      return _me.getSrc();
+    }
+  },
+
+  _getDimURL : function(dimObj) {
+    var height = dimObj.height || '';
+    var width = dimObj.width || '';
+    return (_me.getSrc() + "?celwidth=" + width + "&celheight=" + height);
+  },
+
+  getSrc : function() {
+    var _me = this;
+    return _me._imageData.src;
+  },
+
+  setThumbDimension : function(width, height) {
+    var _me = this;
+    _me._thumbDim = { 'width' : width, 'height' : height };
+  },
+
+  getThumbDimension : function() {
+    var _me = this;
+    if (_me._thumbDim) {
+      return _me._thumbDim;
+    }
+    return undefined;
+  },
+
+  getDimension : function() {
+    var _me = this;
+    return {
+      'width' : _me._imageData.width,
+      'height' : _me._imageData.height
+    };
+  },
+
+  getFilename : function() {
+    var _me = this;
+    return _me._imageData.filename;
+  },
+
+  getLastChangedBy : function() {
+    var _me = this;
+    return _me._imageData.lastChangedBy;
+  },
+
+  getMimeType : function() {
+    var _me = this;
+    return _me._imageData.mimeType;
+  },
+
+  getFileSize : function() {
+    var _me = this;
+    return _me._imageData.fileSize;
+  },
+
+  getVersion : function() {
+    var _me = this;
+    return _me._imageData.attversion;
   }
 
 };
