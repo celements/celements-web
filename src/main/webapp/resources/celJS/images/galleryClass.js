@@ -7,9 +7,9 @@ if(typeof CELEMENTS.images=="undefined"){CELEMENTS.images={};};
 
 (function() {
 
-CELEMENTS.images.Gallery = function(galleryDocRef) {
+CELEMENTS.images.Gallery = function(galleryDocRef, callbackFN) {
   // constructor
-  this._init(galleryDocRef);
+  this._init(galleryDocRef, callbackFN);
 };
 
 var CiG = CELEMENTS.images.Gallery;
@@ -21,7 +21,7 @@ CiG.prototype = {
   _init : function(collDocRef) {
     var _me = this;
     _me._collDocRef = collDocRef;
-    _me._loadData();
+    _me._loadData(callbackFN);
   },
 
   _getGalleryURL : function() {
@@ -35,7 +35,7 @@ CiG.prototype = {
       + colDocRefSplit[0] + '/' + colDocRefSplit[1];
   },
 
-  _loadData : function() {
+  _loadData : function(callbackFN) {
     var _me = this;
     new Ajax.Request(_me._getGalleryURL(), {
       method : "POST",
@@ -47,6 +47,9 @@ CiG.prototype = {
         if (transport.responseText.isJSON()) {
           var responseObject = transport.responseText.evalJSON();
           _me._galleryData = responseObject;
+          if (callbackFN) {
+            callbackFN();
+          }
         } else if ((typeof console != 'undefined')
             && (typeof console.error != 'undefined')) {
           console.error('noJSON!!! ', transport.responseText);
@@ -57,43 +60,64 @@ CiG.prototype = {
 
   getImages : function() {
     var _me = this;
-    return _me._galleryData.imageArray;
+    if (_me._galleryData) {
+      return _me._galleryData.imageArray;
+    }
+    return undefined;
   },
 
   getTitle : function() {
     var _me = this;
-    return _me._galleryData.title;
+    if (_me._galleryData) {
+      return _me._galleryData.title;
+    }
+    return undefined;
   },
 
   getDesc : function() {
     var _me = this;
-    return _me._galleryData.desc;
+    if (_me._galleryData) {
+      return _me._galleryData.desc;
+    }
+    return undefined;
   },
 
   hasOverview : function() {
     var _me = this;
-    return _me._galleryData.hasOverview;
+    if (_me._galleryData) {
+      return _me._galleryData.hasOverview;
+    }
+    return undefined;
   },
 
   getTheme : function() {
     var _me = this;
-    return _me._galleryData.theme;
+    if (_me._galleryData) {
+      return _me._galleryData.theme;
+    }
+    return undefined;
   },
 
   getThumbDimension : function() {
     var _me = this;
-    return {
-      'width' : _me._galleryData.thumbWidth,
-      'height' : _me._galleryData.thumbHeight
-     };
+    if (_me._galleryData) {
+      return {
+        'width' : _me._galleryData.thumbWidth,
+        'height' : _me._galleryData.thumbHeight
+      };
+    }
+    return undefined;
   },
 
   getDimension : function() {
     var _me = this;
-    return {
-      'width' : _me._galleryData.width,
-      'height' : _me._galleryData.height
-     };
+    if (_me._galleryData) {
+      return {
+        'width' : _me._galleryData.width,
+        'height' : _me._galleryData.height
+      };
+    }
+    return undefined;
   }
 
 };
