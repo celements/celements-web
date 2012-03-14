@@ -60,7 +60,7 @@ CiG.prototype = {
             _me._imagesHash.set(imageId, index - 1);
           });
           if (callbackFN) {
-            callbackFN();
+            callbackFN(_me);
           }
         } else if ((typeof console != 'undefined')
             && (typeof console.error != 'undefined')) {
