@@ -188,6 +188,7 @@ CiI.prototype = {
   },
 
   _getDimURL : function(dimObj) {
+    var _me = this;
     var height = dimObj.height || '';
     var width = dimObj.width || '';
     return (_me.getSrc() + "?celwidth=" + width + "&celheight=" + height);
