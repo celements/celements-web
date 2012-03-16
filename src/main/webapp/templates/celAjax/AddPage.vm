@@ -13,15 +13,18 @@
       #set($newDocFN = $celementsweb.getNextUntitledPageFullName("$!spaceName"))
     #end
   #end
-  #if(!$xwiki.exists($newDocFN))
-  	#set($newDoc = $xwiki.getDocument($newDocFN))
+  #set($newDocRef = $services.model.resolveDocument($newDocFN))
+  #if(!$xwiki.exists($newDocRef))
   	#if("$!request.get('pageType')" != '')
-  	  #set($pageTypeClassName = $celementsweb.getPageType($page_type).getPageTypeClassFullName())
-  	  #set($pageTypeObj = $newDoc.getObject($pageTypeClassName, true))
-  	  $pageTypeObj.set('page_type', "$!request.get('pageType')")
+      #set($newDoc = $services.celementsweb.createDocument($newDocRef, $request.get('pageType')))
+  	#else
+      #set($newDoc = $services.celementsweb.createDocument($newDocRef))
 	#end
-	$newDoc.save()##
+    #if("$!newDoc" != '')
 { "successful" : true , "fullName" : "${newDocFN}" }
+    #else
+{ "successful" : false , "fullName" : "${newDocFN}", "errorMsg" : "unkown reason." }
+    #end
   #else
 { "successful" : false ,##
  "fullName" : "${newDocFN}" ,##
