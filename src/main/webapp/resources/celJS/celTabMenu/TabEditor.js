@@ -105,6 +105,9 @@ TE.prototype = {
       event.stop();
     }
   };
+  // set html and body overflow to hidden
+  $$('html')[0].setStyle({ 'overflow' : 'hidden' });
+  $$('body')[0].setStyle({ 'overflow' : 'hidden' });
     // initialize button objects
     var i = 1;
     _me.tabMenuConfig.tabMenuPanelData.each(function(tabData) {
