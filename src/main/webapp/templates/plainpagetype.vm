@@ -4,10 +4,7 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 ## start the celements body (and lacily finalise the header)
 $xwiki.parseTemplate("celMacros/startCelementsBody.vm")
-##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
-##           get not correctly interpreted in an embedded getRenderedContent call.
-##$xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocument').getContent()",$doc)
-$xwiki.celementsweb.renderCelementsDocument($tdoc)
+$xwiki.celementsweb.renderCelementsDocument($doc.documentReference)
 ##
 </body>
 </html>
