@@ -129,7 +129,7 @@
     #set($rte_valid_elements = "$!{rte_valid_elements}+a[href|class|target|onclick|name|id|title],b/strong,br,")
     #set($rte_valid_elements = "$!{rte_valid_elements}caption,#h?[align<center?justify?left?right|class|style|id],")
     #set($rte_valid_elements = "$!{rte_valid_elements}hr[class|width|size|noshade],")
-    #set($rte_valid_elements = "$!{rte_valid_elements}img[width|height|class|align|style|src|border=0|alt|id|title],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}img[width|height|class|align|style|src|border=0|alt|id|title|usemap],")
     #set($rte_valid_elements = "$!{rte_valid_elements}i/em,#p[style|class|name|id],-span[class|style|id|title],")
     #set($rte_valid_elements = "$!{rte_valid_elements}textformat[blockindent|indent|leading|leftmargin|rightmargin|tabstops],")
     #set($rte_valid_elements = "$!{rte_valid_elements}sub[class],sup[class],")
