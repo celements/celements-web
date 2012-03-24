@@ -1,0 +1,22 @@
+#if($xwiki.hasAdminRights())
+  <div id="contextmenulist">
+  	<h1>$listTitle</h1>
+  	<p>click to edit</p>
+    <table>
+  #foreach($item in $services.contextMenu.getAllCMcssClasses())
+    <tr>
+    #set($cmDocRef = $services.model.resolvDocument("CelementsContextMenu.$!item"))
+    #set($cm_doc = $xwiki.getDocument($cmDocRef))
+    #set($editLink = $cm_doc.getURL('edit', "editor=object&xredirect=$!{doc.getURL('view')}"))
+    <td>
+      #if($xwiki.exists($cmDocRef))
+        <a href="$editLink">$!item</a>
+      #end
+    </td>
+    </tr>
+  #end
+    </table>
+  </div>
+#else
+You need admin rights to view the complete Celements Context Menu listing.
+#end
