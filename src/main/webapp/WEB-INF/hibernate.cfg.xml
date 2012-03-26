@@ -40,7 +40,6 @@
     <property name="statement_cache.size">${hibernate.cfg.xml.statement_cache.size}</property>
     <mapping resource="xwiki.celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
     <mapping resource="feeds.celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
-    <mapping resource="activitystream.celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
     <mapping resource="event_class${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
     <mapping resource="celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
     <mapping resource="config_type_class${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
