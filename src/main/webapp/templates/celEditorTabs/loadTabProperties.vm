@@ -34,10 +34,10 @@
       </select>
 </div>
 <div id="pro_pagemasterEdit" class="editblock" onfocus="setFocus('pro_pagemasterEdit');" onblur="removeFocus('pro_pagemasterEdit');">
-	$adminMsg.get('cel_tm_page_master'):
-	#set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
-	#set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
-	#set($cel_currentPageLayout = "$!cel_pageTypeObj.getProperty('page_layout').getValue()")
+    $adminMsg.get('cel_tm_page_master'):
+    #set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
+    #set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
+    #set($cel_currentPageLayout = "$!cel_pageTypeObj.getProperty('page_layout').getValue()")
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_layout" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_layout">
         <option #if("$!cel_currentPageLayout" == '') selected="selected" #end value="" label="$cel_defaultLayout">$cel_defaultLayout</option>
     #foreach($cel_pageLayoutKey in $cel_pageLayouts.keySet())
@@ -45,5 +45,18 @@
     #end
     </select>
 </div>
+#if($context.user.startsWith('xwiki:'))
+#set($cel_editobj_dict_prefix = 'cel_pro_metaTag_' )
+#set($cel_editobj_externalForm = true)  
+#set($cel_embedded_editobj = true)
+#set($cel_editobj_classname = "Classes.MetaTagClass")
+#set($cel_editobj_title = $adminMsg.get('cel_pro_metaTag_edit'))
+#set($cel_editobj_hasObjRemoveLink = true)
+#set($cel_editobj_hasObjAddLink = true)
+#set($cel_editobj_properties = "key,lang,value")
+<div id="pro_metaTagEdit" class="editblock" onfocus="setFocus('pro_metaTagEdit');" onblur="removeFocus('pro_metaTagEdit');">
+  $xwiki.includeForm('celements2web:Templates.ObjectEdit',false)
+</div>
+#end
 </form>
 </div> ##cel_pagepropertiesTab
