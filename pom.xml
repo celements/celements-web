@@ -210,6 +210,7 @@
                 <exclude>WEB-INF/lib/junit-3.8.1.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-plugin-watchlist-*.jar</exclude>
                 <exclude>WEB-INF/lib/google-collections-*.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-plugin-activitystream-*.jar</exclude>
               </excludes>
             </overlay>
           </overlays>
