@@ -36,6 +36,7 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
   line-height: 0px;
   font-size: 0px;
   vertical-align: bottom;
+  float:left;
 }
 .celements3_tabMenu .tabButton .yui-button button,
 .celements3_tabMenu .tabButton .cel-button-active button {
