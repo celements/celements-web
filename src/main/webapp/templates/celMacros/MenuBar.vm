@@ -14,7 +14,7 @@
       #set($menuLinkHref = "$!xwiki.renderText($menuLinkScript, $doc).replace('%2D', '-')")
       #if("$!menuLinkHref" != '')
         <a class="celements2_menu_bar_sub_item" href="$menuLinkHref" ##
-##      #if("$!menuLinkOnClick" != '') onclick="${menuLinkOnClick}" #end ##
+      #if("$!menuLinkOnClick" != '') onclick="${menuLinkOnClick}" #end ##
 >$adminMsg.get("$!menuLinkName")</a>
       #end
       #if($switchDatabase)
