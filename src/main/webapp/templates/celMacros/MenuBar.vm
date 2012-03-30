@@ -81,7 +81,7 @@
 ## Menu
 <div id="celements2_menu_bar_header">
 #set($id = 0)
-#foreach($menuHeaderObj in $celementsweb.getMenuBar().getMenuHeaders())
+#foreach($menuHeaderObj in $services.celMenu.getMenuBar().getMenuHeaders())
   #if(("$!menuHeaderObj.name" != 'Celements2.AdminMenu') || ($isAdmin && ($context.getUser().startsWith('xwiki:') || ("$!userObj.getProperty('usertype').getValue()" == 'Advanced'))))
     #addMenuBarMenuForHeaderObject($menuHeaderObj)
   #end

@@ -1,7 +1,7 @@
 ## loadBackend
 ## loads the header parts needed to enable the Celements AdminInterface
 ##
-#if($hasedit || $isContentEditor || $isAdmin || ($celementsweb.getMenuBar().getMenuHeaders().size() > 0))
+#if($hasedit || $isContentEditor || $isAdmin || ($services.celMenu.getMenuBar().getMenuHeaders().size() > 0))
 #set($celSkin_doc = $xwiki.getDocument("celements2web:XWiki.Celements2Skin"))
 $celementsweb.includeCSSPage(':celRes/celements2.css')
 ##$celementsweb.addExtJSfileOnce("http://www.prototypejs.org/assets/2008/4/22/prototype_update_helper.js")

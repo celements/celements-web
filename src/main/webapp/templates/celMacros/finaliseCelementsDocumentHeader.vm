@@ -8,13 +8,13 @@
   $xwiki.parseTemplate("celMacros/finaliseHeader.vm")
 #if("$celementsweb.getVersionMode()" == "celements3")
 #if("$!cel_loadAdminMenuBar" == '')
-##<!-- celmenubar : $celementsweb.getMenuBar().getMenuHeaders().size() ,## 
-###foreach($menu in $celementsweb.getMenuBar().getMenuHeaders())
+##<!-- celmenubar : $services.celMenu.getMenuBar().getMenuHeaders().size() ,## 
+###foreach($menu in $services.celMenu.getMenuBar().getMenuHeaders())
 ##$menu.name ; ##
 ###end
 ## -->
 #set($cel_loadAdminMenuBar = ("$context.action" != 'edit') && ("$context.action" != 'inline') && ("$!doc.space" != "Celements2") && ("$!request.picker" != '1') && ("$!doc.fullName" != 'Tools.EditBanner'))
-#set($cel_loadAdminMenuBar = ($isContentEditor || $isAdmin || ($celementsweb.getMenuBar().getMenuHeaders().size() > 0)) && $cel_loadAdminMenuBar)
+#set($cel_loadAdminMenuBar = ($isContentEditor || $isAdmin || ($services.celMenu.getMenuBar().getMenuHeaders().size() > 0)) && $cel_loadAdminMenuBar)
 #end
 #else
 $xwiki.parseTemplate("celMacros/loadRTE.vm")
