@@ -1,53 +1,3 @@
-#macro(addMenuBarItemsFromDocument $header_id $switchDatabase)
-  #set($xwql = "from doc.object(Celements2.MenuBarSubItem) as subItem")
-  #set($xwql = "${xwql} where subItem.header_id = :headerId")
-  #set($docsWithSubmenuitems = $services.query.xwql(${xwql}).bindValue("headerId", $header_id).execute())
-  #foreach($doc2_name in $docsWithSubmenuitems)
-    #foreach($item2 in $xwiki.getDocument($doc2_name).getObjects("Celements2.MenuBarSubItem"))
-     #if($item2.getProperty('header_id').getValue() == $header_id)
-      #set($menuLinkScript = "$!item2.getProperty('link').getValue()")
-      #set($menuLinkOnClick = "$!item2.getProperty('onclick').getValue()")
-      #set($menuLinkName = "$!item2.getProperty('name').getValue()")
-      #if($switchDatabase)
-        $context.setDatabase($context.getOriginalDatabase())
-      #end
-      #set($menuLinkHref = "$!xwiki.renderText($menuLinkScript, $doc).replace('%2D', '-')")
-      #if("$!menuLinkHref" != '')
-        <a class="celements2_menu_bar_sub_item" href="$menuLinkHref" ##
-      #if("$!menuLinkOnClick" != '') onclick="${menuLinkOnClick}" #end ##
->$adminMsg.get("$!menuLinkName")</a>
-      #end
-      #if($switchDatabase)
-        $context.setDatabase("celements2web")
-      #end
-     #end
-    #end
-  #end
-#end
-#macro(addAdminBarMenusFromDocument $menuDocName $switchDatabase)
-  ## get all MenuBarHeaderItem Objects
-  #foreach($item in $xwiki.getDocument($menuDocName).getObjects("Celements2.MenuBarHeaderItem"))
-    <div id="celements2_menu_bar_header$id" class="celements2_menu_bar_header_item">
-    <div>
-    #set($menuName = "$!item.getProperty('name').getValue()")
-    #if($switchDatabase)
-      $context.setDatabase($context.getOriginalDatabase())
-    #end
-    $adminMsg.get("$!menuName")
-    #if($switchDatabase)
-      $context.setDatabase("celements2web")
-    #end
-    </div>
-    ##<div>
-    ##<img class="celements2_arrow" name="celements2_arrow$id" src="$xwiki.getDocument('XWiki.Celements2Skin').getAttachmentURL('sub_0.gif','download')" alt="" /><br />
-    ##</div>
-    <div id="celements2_menu_bar_submenu$id" class="celements2_menu_bar_submenu">
-        #addMenuBarItemsFromDocument($item.getProperty('id').getValue() $switchDatabase)
-    </div>
-    </div>
-    #set($id = $id + 1)
-  #end
-#end
 #macro(addMenuBarMenuForHeaderObject $headerObj)
   <div id="celements2_menu_bar_header$id" class="celements2_menu_bar_header_item">
   <div>
@@ -57,11 +7,19 @@
   ##<div>
   ##<img class="celements2_arrow" name="celements2_arrow$id" src="$xwiki.getDocument('XWiki.Celements2Skin').getAttachmentURL('sub_0.gif','download')" alt="" /><br />
   ##</div>
+  #set($headerId = $headerObj.getProperty('header_id').getValue())
   <div id="celements2_menu_bar_submenu$id" class="celements2_menu_bar_submenu">
-    $context.setDatabase("celements2web")
-    #addMenuBarItemsFromDocument($headerObj.getProperty('header_id').getValue() true)
-    $context.setDatabase($context.getOriginalDatabase())
-    #addMenuBarItemsFromDocument($headerObj.getProperty('header_id').getValue() false)
+    #foreach($item2 in $services.celMenu.getSubMenuItems($headerId))
+      #set($menuLinkScript = "$!item2.getProperty('link').getValue()")
+      #set($menuLinkCssClasses = "celements2_menu_bar_sub_item $!item2.getProperty('css_classes').getValue()")
+      #set($menuLinkName = "$!item2.getProperty('name').getValue()")
+      #set($menuLinkHref = "$!xwiki.renderText($menuLinkScript, $doc).replace('%2D', '-')")
+      #if("$!menuLinkHref" != '')
+        <a class="$!{menuLinkCssClasses.trim()}" href="$menuLinkHref">
+        	$adminMsg.get("$!menuLinkName")
+        </a>
+      #end
+    #end
   </div>
   </div>
   #set($id = $id + 1)
@@ -81,7 +39,7 @@
 ## Menu
 <div id="celements2_menu_bar_header">
 #set($id = 0)
-#foreach($menuHeaderObj in $services.celMenu.getMenuBar().getMenuHeaders())
+#foreach($menuHeaderObj in $services.celMenu.getMenuHeaders())
   #if(("$!menuHeaderObj.name" != 'Celements2.AdminMenu') || ($isAdmin && ($context.getUser().startsWith('xwiki:') || ("$!userObj.getProperty('usertype').getValue()" == 'Advanced'))))
     #addMenuBarMenuForHeaderObject($menuHeaderObj)
   #end

@@ -1,7 +1,7 @@
 ## initContextMenu
 ## loads the header parts needed to enable the contextMenu
 ##
-#if(($isContentEditor || $isAdmin || ($services.celMenu.getMenuBar().getMenuHeaders().size() > 0)) && ("$context.action" != 'edit') && ("$context.action" != 'inline') && ("$!supress_ContextMenu" != '1'))
+#if(($isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0)) && ("$context.action" != 'edit') && ("$context.action" != 'inline') && ("$!supress_ContextMenu" != '1'))
 <script type="text/javascript">
 <!--
 ##
