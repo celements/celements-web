@@ -32,8 +32,7 @@ $xwiki.parseTemplate("celMacros/getOnLoad.vm")
 #if(("$context.action" == 'edit') || ("$context.action" == 'inline'))
 $xwiki.parseTemplate("celMacros/getTabMenu.vm")
 #elseif($cel_loadAdminMenuBar)
-$xwiki.includeForm('celements2web:Macros.MenuBar', false)
-##programming rights!!! $xwiki.parseTemplate("celMacros/MenuBar.vm")
+#parse('celMacros/MenuBar.vm')
 #end
 #end
 #if("$!celementsLoadInOverlay" != '')

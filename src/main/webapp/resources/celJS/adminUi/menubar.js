@@ -187,8 +187,17 @@ Event.observe(window, 'load', function(){
     );
     var body_elem = document.getElementsByTagName("body")[0];
     body_elem.style.marginTop = "42px";
+    $$('#celements2_menu_bar_header .celements_menu_bar_support_item').each(function(elem) {
+      elem.stopObserving('click', openZendeskHandler);
+      elem.observe('click', openZendeskHandler);
+    });
   }
   if (typeof my_menu_bar != 'undefined') {
     $$("body")[0].observe('click', my_menu_bar.show_menu_item.bind(my_menu_bar));
   }
 });
+
+var openZendeskHandler = function(event) {
+  event.stop();
+  Cel_Zenbox.show();
+};
