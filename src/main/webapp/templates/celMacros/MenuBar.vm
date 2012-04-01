@@ -16,18 +16,19 @@
       #set($menuLinkHref = "$!xwiki.renderText($menuLinkScript, $doc).replace('%2D', '-')")
       #if("$!menuLinkHref" != '')
         <a class="$!{menuLinkCssClasses.trim()}" href="$menuLinkHref">
-        	$adminMsg.get("$!menuLinkName")
+                $adminMsg.get("$!menuLinkName")
         </a>
       #end
     #end
   </div>
   </div>
   #set($id = $id + 1)
-#end
+#end ## addMenuBarMenuForHeaderObject
+#if("$!context.getUser()" != 'XWiki.XWikiGuest')
 <div id="celements2_menu_bar">
 ## Logo
 #set($celementsLogoUrl = '')
-#if ("$!xwiki.getDocument('XWiki.Celements2Skin').getAttachment('logo.gif')" != "") 
+#if ("$!xwiki.getDocument('XWiki.Celements2Skin').getAttachment('logo.gif')" != "")
   #set($celementsLogoUrl = "$!xwiki.getDocument('XWiki.Celements2Skin').getAttachmentURL('logo.gif','download')")
 #else
   #set($celementsLogoUrl = "$xwiki.getSkinFile('celRes/Img/logo-grey.gif', true)")
@@ -46,3 +47,5 @@
 #end
 </div>
 </div>
+#end
+<!-- was in MenuBar -->
