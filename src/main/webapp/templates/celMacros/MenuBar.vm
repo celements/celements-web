@@ -4,9 +4,6 @@
   #set($menuName = "$!headerObj.getProperty('name').getValue()")
   $adminMsg.get("$!menuName")
   </div>
-  ##<div>
-  ##<img class="celements2_arrow" name="celements2_arrow$id" src="$xwiki.getDocument('XWiki.Celements2Skin').getAttachmentURL('sub_0.gif','download')" alt="" /><br />
-  ##</div>
   #set($headerId = $headerObj.getProperty('header_id').getValue())
   <div id="celements2_menu_bar_submenu$id" class="celements2_menu_bar_submenu">
     #foreach($item2 in $services.celMenu.getSubMenuItems($headerId))
@@ -24,7 +21,6 @@
   </div>
   #set($id = $id + 1)
 #end ## addMenuBarMenuForHeaderObject
-#if("$!context.getUser()" != 'XWiki.XWikiGuest')
 <div id="celements2_menu_bar">
 ## Logo
 #set($celementsLogoUrl = '')
@@ -41,11 +37,7 @@
 <div id="celements2_menu_bar_header">
 #set($id = 0)
 #foreach($menuHeaderObj in $services.celMenu.getMenuHeaders())
-  #if(("$!menuHeaderObj.name" != 'Celements2.AdminMenu') || ($isAdmin && ($context.getUser().startsWith('xwiki:') || ("$!userObj.getProperty('usertype').getValue()" == 'Advanced'))))
-    #addMenuBarMenuForHeaderObject($menuHeaderObj)
-  #end
+  #addMenuBarMenuForHeaderObject($menuHeaderObj)
 #end
 </div>
 </div>
-#end
-<!-- was in MenuBar -->
