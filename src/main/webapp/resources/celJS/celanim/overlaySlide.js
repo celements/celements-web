@@ -18,6 +18,7 @@ var loadOverlaySlide = function() {
       celanimOverlay_addOpenConfig(elem.id, {
           'src' : imgOverlaySrc,
           'addCloseButton' : $(elem.id).hasClassName('celanim_overlay_addCloseButton'),
+          'addNavigation' : $(elem.id).hasClassName('celanim_addNavigation'),
           'captionEval' : 'this.thumb.alt',
           'objectType' : 'image',
           'cssClassNames' : ['borderless', 'floating-caption']
@@ -102,6 +103,9 @@ var celanimOverlay_OpenInOverlay = function(event) {
     }
     hs.graphicsDir = '/file/resources/celJS/highslide/graphics/';
     hs.outlineType = hsConfig.outlineType || '';
+    if (openConfig.addNavigation) {
+      openConfig.cssClassNames.push('celanim_addNavigation');
+    }
     hs.wrapperClassName = 'no-footer no-move celanim_overlay_wrapper '
       + openConfig.cssClassNames.join(' ');
     hs.height = hsConfig.get('height');

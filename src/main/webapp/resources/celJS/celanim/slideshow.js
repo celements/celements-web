@@ -193,6 +193,50 @@ var celSlideShow_AfterExpand = function(event) {
   newConfig.htmlId = overlayId;
   celSlideShows_initOneSlideShow(newConfig);
   celSlideShow_startOne(overlayId);
+  changeImage(overlayId);
+  if ($(overlayId).up('.celanim_addNavigation')) {
+    celSlideShow_addNavigation(overlayId);
+  }
+};
+
+var celSlideShow_addNavigation = function(elemId) {
+  var wrapperElem = $(elemId).up('.highslide-wrapper');
+  var leftNavElem = new Element('div', { 'id' : 'slideShow_navLeft'}).update('<');
+  leftNavElem.setStyle({
+    'position' : 'absolute',
+    'top' : '0px',
+    'left' : '-100px',
+    'height' : (wrapperElem.getHeight() + 'px'),
+    'width': '100px',
+    'background' : 'red'
+  });
+  var rightNavElem = new Element('div', { 'id' : 'slideShow_navRight'}).update('>');
+  rightNavElem.setStyle({
+    'position' : 'absolute',
+    'top' : '0px',
+    'right' : '-100px',
+    'height' : (wrapperElem.getHeight() + 'px'),
+    'width': '100px',
+    'background' : 'red'
+  });
+  wrapperElem.insert({ bottom : leftNavElem});
+  wrapperElem.insert({ bottom : rightNavElem});
+  leftNavElem.observe('click', celSlideShow_PrevImage.bind($(elemId)));
+  rightNavElem.observe('click', celSlideShow_NextImage.bind($(elemId)));
+};
+
+var celSlideShow_PrevImage = function(event) {
+  var elemId = this.id;
+  if (slideShowHasPrevImage(celSlideShowConfig.get(elemId))) {
+    changeImage(elemId);
+  }
+};
+
+var celSlideShow_NextImage = function(event) {
+  var elemId = this.id;
+  if (slideShowHasNextImage(celSlideShowConfig.get(elemId))) {
+    changeImage(elemId);
+  }
 };
 
 var celSlideShow_AfterExpandGeneralHandler = function(event){
@@ -281,8 +325,9 @@ var celSlideShowEffectAfterFinish = function(effect) {
   fadeimgtemp.hide();
   if (slideShowHasNextImage(slideConfig)) {
     removeImageSize(fadeimgtemp);
+    var isNewImage = !fadeimgtemp.src.endsWith(slideConfig.nextimgsrc);
     fadeimgtemp.src = slideConfig.nextimgsrc;
-    if (celSlideShowIsRunning(slideConfig.htmlId)) {
+    if (isNewImage && celSlideShowIsRunning(slideConfig.htmlId)) {
       scheduleChangeImage(slideConfig.htmlId);
     }
   }
@@ -341,13 +386,31 @@ var changeImage = function(elemId) {
 };
 
 var slideShowHasNextImage = function(slideConfig) {
-  if (!slideConfig.nextImg) {
-    slideConfig.nextImg = 1;
+  if (typeof slideConfig.nextImg != 'number') {
+    slideConfig.nextImg = 0;
   } else {
     slideConfig.nextImg = slideConfig.nextImg + 1;
   }
   if (slideConfig.nextImg >= slideConfig.imageArray.size()) {
     slideConfig.nextImg = 0;
+  }
+  if (slideConfig.nextImg >=0) {
+    slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg]
+      + slideConfig.imageSrcQuery;
+    return true;
+  } else {
+    return false;
+  }
+};
+
+var slideShowHasPrevImage = function(slideConfig) {
+  if (typeof slideConfig.nextImg != 'number') {
+    slideConfig.nextImg = 0;
+  } else {
+    slideConfig.nextImg = slideConfig.nextImg - 1;
+  }
+  if (slideConfig.nextImg < 0) {
+    slideConfig.nextImg = slideConfig.imageArray.size() - 1;
   }
   if (slideConfig.nextImg >=0) {
     slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg]
