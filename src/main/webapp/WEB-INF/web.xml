@@ -297,7 +297,7 @@
 
   <error-page>
     <error-code>404</error-code>
-    <location>/Main/DocumentDoesNotExist</location>
+    <location>/DocumentDoesNotExist</location>
   </error-page>
 
   <!-- Struts Tag Library Descriptors -->
