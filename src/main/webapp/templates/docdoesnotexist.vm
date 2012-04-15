@@ -1,3 +1,4 @@
+##@todo check if space is app and then call app template instead.
 $response.setStatus(404)
 #set($overwriteRenderDocument = 'celInlineTemplates/docdoesnotexist.vm')
 $xwiki.parseTemplate("frameheader.vm")
