@@ -1,19 +1,17 @@
 #macro(unkownScriptError)
 $response.setStatus(501)
-Unkown script [$!request.s]!
+Unkown script [$!celAppScript]!
 #end
 #if("$!request.s" != '')
-#set($appScriptDocRef = $services.model.resolveDocument("AppScripts.${request.s}"))
-#if($xwiki.exists($appScriptDocRef) && !$celementsweb.isEmptyRTEDocument($appScriptDocRef))
-$xwiki.includeForm("AppScripts.${request.s}", false)
-#else
-#set($appResult = $xwiki.parseTemplate("celAppScripts/${request.s}.vm"))
-#if("$!appResult.trim()" != '')
+#set($celAppScript = "$!request.s")
+#end
+##DEBUG: $celAppScript<br/>
+#if($services.celementsweb.hasDocAppScript("$!celAppScript"))
+#set($appScriptDocRef = $services.celementsweb.getAppScriptDocRef("$!celAppScript"))
+$xwiki.includeForm($services.model.serialize($appScriptDocRef, "default"), false)
+#elseif($services.celementsweb.isAppScriptAvailable("$!celAppScript"))
+#set($appResult = $xwiki.parseTemplate($services.celementsweb.getAppScriptTemplatePath("$!celAppScript")))
 $appResult
-#else
-#unkownScriptError()
-#end
-#end
 #else
 #unkownScriptError()
 #end
