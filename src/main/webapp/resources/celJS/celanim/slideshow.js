@@ -121,6 +121,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     if (slideShowHasNextImage(slideShowConfig)) {
       tempImg.src = slideShowConfig.nextimgsrc;
     }
+    $(slideShowConfig.htmlId).fire('celanim_slideshow:afterInit', slideShowConfig);
   }
 };
 
