@@ -116,6 +116,8 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
         slideShowConfig.imageSrcQuery);
     /**  END HACK
      **/
+    slideShowConfig.hasRandomStart = $(slideShowConfig.htmlId).hasClassName(
+        'celanim_slideshowRandomStart');
     slideShowImg.absolutize();
     removeImageSize(slideShowImg);
     if (slideShowHasNextImage(slideShowConfig)) {
@@ -388,7 +390,7 @@ var changeImage = function(elemId) {
 
 var slideShowHasNextImage = function(slideConfig) {
   if (typeof slideConfig.nextImg != 'number') {
-    slideConfig.nextImg = 0;
+    slideShowInitFirstImage(slideConfig);
   } else {
     slideConfig.nextImg = slideConfig.nextImg + 1;
   }
@@ -402,6 +404,21 @@ var slideShowHasNextImage = function(slideConfig) {
   } else {
     return false;
   }
+};
+
+var slideShowInitFirstImage = function(slideConfig) {
+  $(slideConfig.htmlId).fire('celanim_slideshow:initFirstImage', slideConfig);
+  if ((typeof slideConfig.nextImg != 'number') || (slideConfig.nextImg < 0)) {
+    if (slideConfig.hasRandomStart) {
+      slideConfig.nextImg = slideShowGetRandomStartNum(slideConfig);
+    } else {
+      slideConfig.nextImg = 0;
+    }
+  }
+};
+
+var slideShowGetRandomStartNum = function(slideConfig) {
+  return Math.round(Math.random() * (slideConfig.imageArray.size() - 1));
 };
 
 var slideShowHasPrevImage = function(slideConfig) {
