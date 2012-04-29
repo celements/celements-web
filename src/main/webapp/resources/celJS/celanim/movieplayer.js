@@ -93,6 +93,10 @@ var celanimLoadSWFplayer = function(playerLink) {
   if (playerLink && !playerLink.hasClassName('celanim_loaded')) {
     playerLink.addClassName('celanim_loaded');
     var movieLink = getCelAnimSWFmovieLink(playerLink.href);
+    //TODO replace swf-object creation with http://code.google.com/p/swfobject/
+    //--> it solves issues at least with IE7!!!
+//    playerContainer.update(new Element('span', { 'id' : 'celanimFlowPlayer_object' }));
+//    swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%", "100%", "9.0.0", "expressInstall.swf");
     var objectElem = new Element('object', {
       'type' : 'application/x-shockwave-flash',
       'data' : movieLink,
