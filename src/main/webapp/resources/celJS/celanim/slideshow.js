@@ -116,11 +116,14 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
         slideShowConfig.imageSrcQuery);
     /**  END HACK
      **/
+    slideShowConfig.hasRandomStart = $(slideShowConfig.htmlId).hasClassName(
+        'celanim_slideshowRandomStart');
     slideShowImg.absolutize();
     removeImageSize(slideShowImg);
     if (slideShowHasNextImage(slideShowConfig)) {
       tempImg.src = slideShowConfig.nextimgsrc;
     }
+    $(slideShowConfig.htmlId).fire('celanim_slideshow:afterInit', slideShowConfig);
   }
 };
 
@@ -196,6 +199,7 @@ var celSlideShow_AfterExpand = function(event) {
   changeImage(overlayId);
   if ($(overlayId).up('.celanim_addNavigation')) {
     celSlideShow_addNavigation(overlayId);
+    $(overlayId).fire('celanim_slideshow:afterAddNavigation', newConfig);
   }
 };
 
@@ -203,21 +207,11 @@ var celSlideShow_addNavigation = function(elemId) {
   var wrapperElem = $(elemId).up('.highslide-wrapper');
   var leftNavElem = new Element('div', { 'id' : 'slideShow_navLeft'}).update('<');
   leftNavElem.setStyle({
-    'position' : 'absolute',
-    'top' : '0px',
-    'left' : '-100px',
-    'height' : (wrapperElem.getHeight() + 'px'),
-    'width': '100px',
-    'background' : 'red'
+    'height' : (wrapperElem.getHeight() + 'px')
   });
   var rightNavElem = new Element('div', { 'id' : 'slideShow_navRight'}).update('>');
   rightNavElem.setStyle({
-    'position' : 'absolute',
-    'top' : '0px',
-    'right' : '-100px',
-    'height' : (wrapperElem.getHeight() + 'px'),
-    'width': '100px',
-    'background' : 'red'
+    'height' : (wrapperElem.getHeight() + 'px')
   });
   wrapperElem.insert({ bottom : leftNavElem});
   wrapperElem.insert({ bottom : rightNavElem});
@@ -387,7 +381,7 @@ var changeImage = function(elemId) {
 
 var slideShowHasNextImage = function(slideConfig) {
   if (typeof slideConfig.nextImg != 'number') {
-    slideConfig.nextImg = 0;
+    slideShowInitFirstImage(slideConfig);
   } else {
     slideConfig.nextImg = slideConfig.nextImg + 1;
   }
@@ -401,6 +395,21 @@ var slideShowHasNextImage = function(slideConfig) {
   } else {
     return false;
   }
+};
+
+var slideShowInitFirstImage = function(slideConfig) {
+  $(slideConfig.htmlId).fire('celanim_slideshow:initFirstImage', slideConfig);
+  if ((typeof slideConfig.nextImg != 'number') || (slideConfig.nextImg < 0)) {
+    if (slideConfig.hasRandomStart) {
+      slideConfig.nextImg = slideShowGetRandomStartNum(slideConfig);
+    } else {
+      slideConfig.nextImg = 0;
+    }
+  }
+};
+
+var slideShowGetRandomStartNum = function(slideConfig) {
+  return Math.round(Math.random() * (slideConfig.imageArray.size() - 1));
 };
 
 var slideShowHasPrevImage = function(slideConfig) {

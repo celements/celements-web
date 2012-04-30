@@ -1,6 +1,11 @@
+#if("$!request.fullName" == '')
+#set($fullName = "$doc.fullName")
+#else
+#set($fullName = "$!request.fullName")
+#end
 #if("$!request.tfu_mode" == 'getTokenForCurrentUser')
 #set($startUserName = $context.user.indexOf('.') + 1)
-{ "hasUploadRights" : $xwiki.hasAccessLevel('edit'),##
+{ "hasUploadRights" : $xwiki.hasAccessLevel('edit', $context.getUser(), $fullName),##
  "token" : "$!{celementsweb.getNewCelementsTokenForUser()}",##
  "username" : "$!{context.user.substring($startUserName)}"##
 }
@@ -26,11 +31,6 @@ ${delStr}"${clearedFileName}"##
 #elseif("$!request.tfu_mode" == 'getToken')
 $celementsweb.getNewCelementsTokenForUser()
 #elseif("$!request.tfu_mode" == 'upload')
-#if("$!request.fullName" == '')
-#set($fullName = "$doc.fullName")
-#else
-#set($fullName = "$!request.fullName")
-#end
 #if(("$!request.uploadToken" != '') && ($xwiki.exists("$!fullName") || ("$!context.getUser()" == 'XWiki.XWikiGuest')))
 #set($createIfNotExists = ("$!context.getUser()" == 'XWiki.XWikiGuest'))
 { "success" : $celementsweb.tokenBasedUpload("$!fullName", 'filepath', $request.get("uploadToken"), $createIfNotExists),##
