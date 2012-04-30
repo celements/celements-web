@@ -199,6 +199,7 @@ var celSlideShow_AfterExpand = function(event) {
   changeImage(overlayId);
   if ($(overlayId).up('.celanim_addNavigation')) {
     celSlideShow_addNavigation(overlayId);
+    $(overlayId).fire('celanim_slideshow:afterAddNavigation', newConfig);
   }
 };
 
@@ -206,21 +207,11 @@ var celSlideShow_addNavigation = function(elemId) {
   var wrapperElem = $(elemId).up('.highslide-wrapper');
   var leftNavElem = new Element('div', { 'id' : 'slideShow_navLeft'}).update('<');
   leftNavElem.setStyle({
-    'position' : 'absolute',
-    'top' : '0px',
-    'left' : '-100px',
-    'height' : (wrapperElem.getHeight() + 'px'),
-    'width': '100px',
-    'background' : 'red'
+    'height' : (wrapperElem.getHeight() + 'px')
   });
   var rightNavElem = new Element('div', { 'id' : 'slideShow_navRight'}).update('>');
   rightNavElem.setStyle({
-    'position' : 'absolute',
-    'top' : '0px',
-    'right' : '-100px',
-    'height' : (wrapperElem.getHeight() + 'px'),
-    'width': '100px',
-    'background' : 'red'
+    'height' : (wrapperElem.getHeight() + 'px')
   });
   wrapperElem.insert({ bottom : leftNavElem});
   wrapperElem.insert({ bottom : rightNavElem});
