@@ -1,0 +1,127 @@
+/**
+ * Accordeon Celements Block
+ * This is the Accordeon effect for block elements.
+ */
+if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
+if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
+
+(function() {
+
+var Dom = YAHOO.util.Dom;
+var YEvent = YAHOO.util.Event;
+
+//////////////////////////////////////////////////////////////////////////////
+// CELEMENTS accordeon animation
+// --> there will be a glitsh on slideup in some browsers if you use margins on headings.
+//////////////////////////////////////////////////////////////////////////////
+CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent) {
+  // constructor
+  cssTitle = cssTitle || '.accordeonTitle';
+  cssContent = cssContent || '.accordeonContent';
+  this._init(id, cssBox);
+};
+
+(function() {
+var AAAE = CELEMENTS.anim.AccordeonEffect;
+
+CELEMENTS.anim.AccordeonEffect.prototype = {
+  htmlElem : undefined,
+
+  cssBox : undefined,
+  cssTitle : undefined,
+  cssContent : undefined,
+
+  _effectRunning : false,
+
+  _init : function(elemId, cssBox, cssTitle, cssContent) {
+    var _me = this;
+    _me.htmlElem = $(elemId);
+    _me.cssBox = cssBox;
+    _me.cssTitle = cssTitle;
+    _me.cssContent = cssContent;
+    var stepsToHide = _me.htmlElem.select(_me.cssBox);
+    stepsToHide.each(function(step) {
+      step.down(_me.cssContent).hide();
+      step.down(_me.cssTitle).observe('click', _me.toggleAccordeon.bind(_me));
+    });
+    _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
+  },
+
+  accordeonHide : function(stepToHide) {
+    return new Effect.SlideUp(stepToHide.down(_me.cssContent), {
+      transition: Effect.Transitions.sinoidal,
+      afterFinish : function() {
+        stepToHide.removeClassName('active');
+        stepToHide.addClassName('inactive');
+      },
+      sync : true
+    });
+  },
+
+  accordeonShow : function(stepToShow) {
+    stepToShow.removeClassName('inactive');
+    stepToShow.addClassName('active');
+    return new Effect.SlideDown(stepToShow.down(_me.cssContent), {
+      transition: Effect.Transitions.sinoidal,
+      sync : true
+    });
+  },
+
+  _accordeonExecute : function(parallelEffects, nextStep) {
+    var _me = this;
+    if (!_me._effectRunning) {
+      _me._effectRunning = true;
+      var stepToShow = nextStep;
+      new Effect.Parallel(parallelEffects, {
+        duration : 1.0,
+        afterFinish : function() {
+          _me.htmlElem.fire('celanim_accordeon-block:accordeonAfterFinish', nextStep);
+          //IE7 Fix!!! Do not remove!!!
+          (function () {
+            stepToShow.setStyle({ visibility : 'visible'});
+            _me._effectRunning = false;
+          }).delay(0.3);
+        }
+      });
+    } else {
+      if ((typeof console != 'undefined')
+          && (typeof console.warn != 'undefined')) {
+        console.warn('accordeonExecute: doubleclick registered! ignoring...');
+      }
+    }
+  },
+
+  isStepVisible : function(step) {
+    return step.down(_me.cssContent).visible();
+  },
+
+  toggleAccordeon : function(event) {
+    var _me = this;
+    event.stop();
+    var step = event.findElement(_me.cssBox);
+    if (_me.isStepVisible(step)) {
+      var accordeonEffects = [];
+      accordeonEffects.push(_me.accordeonHide(step));
+      _me._accordeonExecute(accordeonEffects, step);
+    } else {
+      _me.activateStep(step);
+    }
+  },
+
+  activateStep : function(nextStep) {
+    var _me = this;
+    var activeSteps = _me.htmlElem.select(_me.cssBox);
+    var accordeonEffects = [];
+    activeSteps.each(function(step) {
+      if ((step != nextStep) && (_me.isStepVisible(step))) {
+        accordeonEffects.push(_me.accordeonHide(step));
+      }
+    });
+    accordeonEffects.push(_me.accordeonShow(nextStep));
+    _me._accordeonExecute(accordeonEffects, nextStep);
+  }
+
+};
+})();
+
+})();
