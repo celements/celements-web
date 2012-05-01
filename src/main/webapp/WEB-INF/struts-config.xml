@@ -106,7 +106,7 @@
     </action>
 
         <action path="/app/"
-                type="com.celements.web.AppScriptAction"
+                type="com.celements.appScript.AppScriptAction"
                 name="view"
                 scope="request">
         </action>
