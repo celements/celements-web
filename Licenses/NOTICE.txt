@@ -39,6 +39,10 @@ jcrop
 Jcrop is released under the MIT License.
 - http://deepliquid.com/content/Jcrop_License.html
 
+swfobject
+- http://code.google.com/p/swfobject/
+- http://www.opensource.org/licenses/mit-license.php
+
 validation.js
 - http://tetlaw.id.au/view/javascript/really-easy-field-validation
 - http://www.opensource.org/licenses/mit-license.php
