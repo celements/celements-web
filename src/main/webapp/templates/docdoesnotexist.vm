@@ -1,3 +1,7 @@
+#if($services.celementsweb.isAppScriptRequest())
+#set($celAppScript = $services.celementsweb.getScriptNameFromURL())
+#parse('app.vm')
+#else
 $response.setStatus(404)
 #set($overwriteRenderDocument = 'celInlineTemplates/docdoesnotexist.vm')
 $xwiki.parseTemplate("frameheader.vm")
@@ -5,3 +9,4 @@ $xwiki.parseTemplate("frameheader.vm")
 $xwiki.parseTemplate($overwriteRenderDocument)
 #end
 $xwiki.parseTemplate("framefooter.vm")
+#end
