@@ -1,0 +1,18 @@
+<!-- from login app script !!!! -->
+#if($noRecursiveLoginCall && $xwiki.exists('Tools.Login') && $xwiki.hasAccessLevel("view","Tools.Login"))
+  #set($overwriteRenderDocument = 'Tools.Login')
+  #set($hasLocalOverwrite = true)
+#elseif($noRecursiveLoginCall && $xwiki.exists('Content.login') && $xwiki.hasAccessLevel("view","Content.login"))
+  #set($overwriteRenderDocument = 'Content.login')
+  #set($hasLocalOverwrite = true)
+#else
+  #set($overwriteRenderDocument = 'celInlineTemplates/login.vm')
+  #set($hasLocalOverwrite = false)
+#end
+#if("$!overwriteRenderDocument" != '')
+  #if($hasLocalOverwrite)
+    $xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument))
+  #else
+    $xwiki.parseTemplate($overwriteRenderDocument)
+  #end
+#end
