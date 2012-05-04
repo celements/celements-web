@@ -105,6 +105,12 @@
         <forward name="view" path="/templates/view.vm"></forward>
     </action>
 
+        <action path="/app/"
+                type="com.celements.appScript.AppScriptAction"
+                name="view"
+                scope="request">
+        </action>
+
         <action path="/pdf/"
                 type="com.xpn.xwiki.web.PDFAction"
                 name="pdf"
