@@ -172,6 +172,7 @@ var celFileSelectionChanged = function(event) {
    if (checkUploadFileName(fileUploadElm)) {
      checkAttachmentList(fileUploadElm);
      checkIframeTarget(formElm, fileUploadElm);
+     fileUploadElm.fire('celements:beforeUpload');
      formElm.submit();
   }
 };
