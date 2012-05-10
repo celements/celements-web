@@ -93,7 +93,11 @@ Because Safari has no way to directly access the window object of an iframe elem
 };
 
 var celUploadCallbackHandler = function(event) {
-  var fileUploadInputElem = $($('celementsFormId').value).down('input.celfileupload');
+  var fileUploadInputElems = $($('celementsFormId').value).select('input.celfileupload');
+  var fileUploadInputElem = fileUploadInputElems.pop();
+  while ((fileUploadInputElems.size() > 0) && fileUploadInputElem.visible()) {
+    fileUploadInputElem = fileUploadInputElems.pop();
+  }
   var iframeDoc = getIframeDocument(event.findElement());
   var resultText = iframeDoc.getElementsByTagName('body')[0].innerHTML;
   if((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
