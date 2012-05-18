@@ -83,7 +83,15 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
       var overlayHTMLDiv = $(slideShowConfig.htmlId).up('.highslide-html');
       divWrapper.setStyle({ 'height' : overlayHTMLDiv.getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : overlayHTMLDiv.getWidth() + 'px' });
+      $(slideShowConfig.htmlId).setStyle({
+        'margin-top' : '0',
+        'margin-bottom' : '0',
+        'margin-left' : '0',
+        'margin-right' : '0'
+      });
     } else {
+      //TODO maybe move to onLoad on image
+//      console.debug('copy dimensions: ', $(slideShowConfig.htmlId).getHeight(), $(slideShowConfig.htmlId).getWidth());
       divWrapper.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
     }
@@ -120,6 +128,10 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
         'celanim_slideshowRandomStart');
     slideShowImg.absolutize();
     removeImageSize(slideShowImg);
+    // fix centering of first image
+//    console.debug('recenter image: ',slideShowImg.getHeight(),slideShowImg.getWidth());
+    slideShowImg.observe('load', centerImage);
+    slideShowImg.src = slideShowImg.src;
     if (slideShowHasNextImage(slideShowConfig)) {
       tempImg.src = slideShowConfig.nextimgsrc;
     }
@@ -363,6 +375,10 @@ var getCenteredValue = function(diffValue) {
 
 var centerImage = function(event) {
   var tempImg = event.findElement();
+  celSlideShowInternalCenterImage(tempImg);
+};
+
+var celSlideShowInternalCenterImage = function(tempImg) {
   var dim = tempImg.getDimensions();
   var wrapDiv = tempImg.up('div');
   var centeredTop = getCenteredValue(wrapDiv.getHeight() - dim.height);
