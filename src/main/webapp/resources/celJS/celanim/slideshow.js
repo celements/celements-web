@@ -177,7 +177,11 @@ var celSlideShow_startOne = function(elemId) {
     }
     Effect.Appear(startButtonDiv, { duration : 3.0 , to : 0.8 });
   } else {
-    scheduleChangeImage(elemId);
+    celSlideShowStartSlideShow(elemId);
+  }
+  if ($(elemId).hasClassName('celanim_addNavigation')) {
+    celSlideShow_addNavigation(elemId);
+    $(elemId).fire('celanim_slideshow:afterAddNavigation', celSlideShowConfig.get(elemId));
   }
 };
 
@@ -203,13 +207,20 @@ var celSlideShow_AfterExpand = function(event) {
   }
 };
 
+var celSlideShow_getOuterWrapperElement = function(elemId) {
+  return $(elemId).up('.celanim_overlay_wrapper')
+    || $(elemId).up('.celanim_slideshow_wrapper');
+};
+
 var celSlideShow_addNavigation = function(elemId) {
-  var wrapperElem = $(elemId).up('.highslide-wrapper');
-  var leftNavElem = new Element('div', { 'id' : 'slideShow_navLeft'}).update('<');
+  var wrapperElem = celSlideShow_getOuterWrapperElement(elemId);
+  var leftNavElem = new Element('div').addClassName('celanim_slideShow_navLeft'
+      ).update('<');
   leftNavElem.setStyle({
     'height' : (wrapperElem.getHeight() + 'px')
   });
-  var rightNavElem = new Element('div', { 'id' : 'slideShow_navRight'}).update('>');
+  var rightNavElem = new Element('div').addClassName('celanim_slideShow_navRight'
+      ).update('>');
   rightNavElem.setStyle({
     'height' : (wrapperElem.getHeight() + 'px')
   });
@@ -266,6 +277,8 @@ var celSlideShowStopSlideShow = function(elemId) {
 
 var celSlideShowStartSlideShow = function(elemId) {
   celSlideShowIsRunningHash.set(elemId, true);
+  celSlideShow_getOuterWrapperElement(elemId).removeClassName('celanim_slideshow_paused');
+  celSlideShow_getOuterWrapperElement(elemId).addClassName('celanim_slideshow_running');
   changeImage(elemId);
 };
 
@@ -275,6 +288,10 @@ var celSlideShowPauseAllSlideShows = function() {
     if (!celSlideShow_isInOverlay(pair.key)) {
       celSlideShowStopSlideShow(pair.key);
       celSlideShowPausedSlideShowIds.push(pair.key);
+      celSlideShow_getOuterWrapperElement(pair.key).removeClassName(
+          'celanim_slideshow_running');
+      celSlideShow_getOuterWrapperElement(pair.key).addClassName(
+          'celanim_slideshow_paused');
     }
   });
 };
@@ -287,6 +304,9 @@ var celSlideShowResumeAllSlideShows = function() {
   celSlideShowPausedSlideShowIds.each(function(elemId) {
     celSlideShowStartSlideShow(elemId);
     celSlideShowPausedSlideShowIds.splice(elemId);
+    celSlideShow_getOuterWrapperElement(elemId).removeClassName(
+        'celanim_slideshow_paused');
+    celSlideShow_getOuterWrapperElement(elemId).addClassName('celanim_slideshow_running');
   });
 };
 
