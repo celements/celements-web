@@ -33,7 +33,8 @@ TE.prototype = {
   afterInitListeners : new Array(),
 
   isValidFormId : function(formId) {
-	return (formId != '') && $(formId) && ($(formId).action != '');
+  return (typeof formId == 'string') && (formId != '') && $(formId)
+      && (typeof $(formId).action != 'undefined') && ($(formId).action != '');
   },
 
   addAfterInitListener : function(newListener) {
