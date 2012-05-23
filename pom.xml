@@ -107,7 +107,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-blog</artifactId>
-      <version>1.8</version>
+      <version>1.9-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
