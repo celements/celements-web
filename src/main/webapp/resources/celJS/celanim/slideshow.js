@@ -243,6 +243,7 @@ var celSlideShow_addNavigation = function(elemId) {
 };
 
 var celSlideShow_PrevImage = function(event) {
+  event.stop();
   var elemId = this.id;
   if (slideShowHasPrevImage(celSlideShowConfig.get(elemId))) {
     changeImage(elemId);
@@ -250,8 +251,9 @@ var celSlideShow_PrevImage = function(event) {
 };
 
 var celSlideShow_NextImage = function(event) {
+  event.stop();
   var elemId = this.id;
-  if (slideShowHasNextImage(celSlideShowConfig.get(elemId))) {
+  if (celSlideShowConfig.get(elemId).nextImg >=0) {
     changeImage(elemId);
   }
 };
@@ -357,6 +359,7 @@ var celSlideShowEffectAfterFinish = function(effect) {
       scheduleChangeImage(slideConfig.htmlId);
     }
   }
+  $(slideConfig.htmlId).removeClassName('celanim_isChanging');
 };
 
 var celSlideShowEffects = new Hash();
@@ -395,24 +398,27 @@ var celSlideShowInternalCenterImage = function(tempImg) {
 };
 
 var changeImage = function(elemId) {
-  var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
-  var effectDetails = celSlideShowEffects.get(effectKey) || celSlideShowEffects.get('fade');
-  var effectParameters = $H(effectDetails.params).merge({
-    'sync' : true
-  });
-  var duration = effectParameters.get('duration');
-  theEffect = effectDetails.effect(elemId + '_tmpImg', effectParameters.toObject());
-  new Effect.Parallel(
-      [
-        theEffect,
-        new Effect.Fade(elemId, { from : 1, to : 0, sync: true })
-      ],
-      {
-        'duration' : duration,
-        'slideShowElemId' : elemId,
-        'afterFinish' : celSlideShowEffectAfterFinish
-      }
-  );
+  if (!$(elemId).hasClassName('celanim_isChanging')) {
+    $(elemId).addClassName('celanim_isChanging');
+    var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
+    var effectDetails = celSlideShowEffects.get(effectKey) || celSlideShowEffects.get('fade');
+    var effectParameters = $H(effectDetails.params).merge({
+      'sync' : true
+    });
+    var duration = effectParameters.get('duration');
+    theEffect = effectDetails.effect(elemId + '_tmpImg', effectParameters.toObject());
+    new Effect.Parallel(
+        [
+          theEffect,
+          new Effect.Fade(elemId, { from : 1, to : 0, sync: true })
+        ],
+        {
+          'duration' : duration,
+          'slideShowElemId' : elemId,
+          'afterFinish' : celSlideShowEffectAfterFinish
+        }
+    );
+  }
 };
 
 var slideShowHasNextImage = function(slideConfig) {
@@ -448,7 +454,7 @@ var slideShowGetRandomStartNum = function(slideConfig) {
   return Math.round(Math.random() * (slideConfig.imageArray.size() - 1));
 };
 
-var slideShowHasPrevImage = function(slideConfig) {
+var slideShowMoveToPrevImage = function(slideConfig) {
   if (typeof slideConfig.nextImg != 'number') {
     slideConfig.nextImg = 0;
   } else {
@@ -457,6 +463,11 @@ var slideShowHasPrevImage = function(slideConfig) {
   if (slideConfig.nextImg < 0) {
     slideConfig.nextImg = slideConfig.imageArray.size() - 1;
   }
+};
+
+var slideShowHasPrevImage = function(slideConfig) {
+  slideShowMoveToPrevImage(slideConfig);
+  slideShowMoveToPrevImage(slideConfig);
   if (slideConfig.nextImg >=0) {
     slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg]
       + slideConfig.imageSrcQuery;
@@ -467,6 +478,7 @@ var slideShowHasPrevImage = function(slideConfig) {
 };
 
 // default effects
+celSlideShowAddEffect('none', { effect : Effect.Appear, params : { duration: 0.0 } });
 celSlideShowAddEffect('fade', { effect : Effect.Appear, params : { duration: 2.0 } });
 celSlideShowAddEffect('blinddown', { effect : Effect.BlindDown, params : { duration: 2.0 } });
 celSlideShowAddEffect('blindtopleft', { effect : Effect.BlindDown, params : { duration: 2.0,
