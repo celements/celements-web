@@ -351,6 +351,7 @@ var celSlideShowEffectAfterFinish = function(effect) {
   });
   fadeimg.show();
   fadeimgtemp.hide();
+  $(slideConfig.htmlId).fire('celanim_slideshow:afterChangeImage', slideConfig);
   if (slideShowHasNextImage(slideConfig)) {
     removeImageSize(fadeimgtemp);
     var isNewImage = !fadeimgtemp.src.endsWith(slideConfig.nextimgsrc);
@@ -401,12 +402,14 @@ var changeImage = function(elemId) {
   if (!$(elemId).hasClassName('celanim_isChanging')) {
     $(elemId).addClassName('celanim_isChanging');
     var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
-    var effectDetails = celSlideShowEffects.get(effectKey) || celSlideShowEffects.get('fade');
+    var effectDetails = celSlideShowEffects.get(effectKey) || celSlideShowEffects.get(
+        'fade');
     var effectParameters = $H(effectDetails.params).merge({
       'sync' : true
     });
     var duration = effectParameters.get('duration');
     theEffect = effectDetails.effect(elemId + '_tmpImg', effectParameters.toObject());
+    $(elemId).fire('celanim_slideshow:beforeChangeImage', celSlideShowConfig.get(elemId));
     new Effect.Parallel(
         [
           theEffect,
