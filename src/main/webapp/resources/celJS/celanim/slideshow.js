@@ -245,17 +245,23 @@ var celSlideShow_addNavigation = function(elemId) {
 var celSlideShow_PrevImage = function(event) {
   event.stop();
   var elemId = this.id;
-  if (slideShowHasPrevImage(celSlideShowConfig.get(elemId))) {
+  var slideConfig = celSlideShowConfig.get(elemId);
+  $(elemId).fire('celanim_slideshow:beforeClickPrevImage', slideConfig);
+  if (slideShowHasPrevImage(slideConfig)) {
     changeImage(elemId);
   }
+  $(elemId).fire('celanim_slideshow:afterClickPrevImage', slideConfig);
 };
 
 var celSlideShow_NextImage = function(event) {
   event.stop();
   var elemId = this.id;
-  if (celSlideShowConfig.get(elemId).nextImg >=0) {
+  var slideConfig = celSlideShowConfig.get(elemId);
+  $(elemId).fire('celanim_slideshow:beforeClickNextImage', slideConfig);
+  if (slideConfig.nextImg >=0) {
     changeImage(elemId);
   }
+  $(elemId).fire('celanim_slideshow:afterClickNextImage', slideConfig);
 };
 
 var celSlideShow_AfterExpandGeneralHandler = function(event){
