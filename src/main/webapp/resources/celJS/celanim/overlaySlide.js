@@ -3,7 +3,7 @@ YAHOO.util.Event.onDOMReady(function() {
 });
 
 var loadOverlaySlide = function() {
-  $$('a.celanim_overlay').each(function(elem) {
+  $$('a.celanim_overlay, a.celanim_overlayIframe').each(function(elem) {
     celanimOverlay_addOpenConfig(elem.id, {
       'src' : elem.href,
       'objectType' : 'iframe',
