@@ -109,6 +109,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     moveStyleToWrapper(divWrapper, slideShowImg, 'border-bottom');
     moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
     moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
+    slideShowImg.doImageResize = !slideShowImg.hasClassName('celanim_withoutImageResize');
     slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
     /** START HACK: increase height and width by one to fix problem in celements-photo
      *              which sometimes returns images too small by one in both dimensions.
@@ -120,8 +121,12 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     slideShowConfig.imageSrcQuery = slideShowConfig.imageSrcQuery.replace(
         /celheight=(\d+)/, 'celheight=' + celheight).replace(/celwidth=(\d+)/,
             'celwidth=' + celwidth);
-    slideShowImg.src = slideShowImg.src.replace(/(\?.*)$/,
-        slideShowConfig.imageSrcQuery);
+    if (slideShowImg.doImageResize) {
+      slideShowImg.src = slideShowImg.src.replace(/(\?.*)$/,
+          slideShowConfig.imageSrcQuery);
+    } else {
+      slideShowImg.src = slideShowImg.src.replace(/(\?.*)$/, '');
+    }
     /**  END HACK
      **/
     slideShowConfig.hasRandomStart = $(slideShowConfig.htmlId).hasClassName(
@@ -447,8 +452,10 @@ var slideShowHasNextImage = function(slideConfig) {
     slideConfig.nextImg = 0;
   }
   if (slideConfig.nextImg >=0) {
-    slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg]
-      + slideConfig.imageSrcQuery;
+    slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg];
+    if (slideConfig.doImageResize) {
+      slideConfig.nextimgsrc += slideConfig.imageSrcQuery;
+    }
     return true;
   } else {
     return false;
@@ -485,8 +492,10 @@ var slideShowHasPrevImage = function(slideConfig) {
   slideShowMoveToPrevImage(slideConfig);
   slideShowMoveToPrevImage(slideConfig);
   if (slideConfig.nextImg >=0) {
-    slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg]
-      + slideConfig.imageSrcQuery;
+    slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg];
+    if (slideConfig.doImageResize) {
+      slideConfig.nextimgsrc += slideConfig.imageSrcQuery;
+    }
     return true;
   } else {
     return false;
