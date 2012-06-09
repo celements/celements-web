@@ -3,6 +3,7 @@ YAHOO.util.Event.onDOMReady(function() {
 });
 
 var loadOverlaySlide = function() {
+  $$('body')[0].fire('celanim_overlay:beforeLoadOverlaySlide-Link');
   $$('a.celanim_overlay, a.celanim_overlayIframe').each(function(elem) {
     celanimOverlay_addOpenConfig(elem.id, {
       'src' : elem.href,
@@ -10,6 +11,7 @@ var loadOverlaySlide = function() {
       'cssClassNames' : ['draggable-header']
     });
   });
+  $$('body')[0].fire('celanim_overlay:beforeLoadOverlaySlide-Image');
   $$('img.celanim_overlay').each(function(elem) {
     var imgOverlayDim = celanimOverlay_getDimensionsFromElem(elem);
     if (imgOverlayDim.height && imgOverlayDim.width) {
@@ -25,6 +27,7 @@ var loadOverlaySlide = function() {
         });
     }
   });
+  $$('body')[0].fire('celanim_overlay:afterLoadOverlaySlide');
 };
 
 var celanimOverlay_getDimensionsFromElem = function(elem) {
