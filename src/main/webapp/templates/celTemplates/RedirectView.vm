@@ -32,7 +32,10 @@ $xwiki.parseTemplate("frameheader.vm")
 #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
     $xwiki.parseTemplate("frameheader.vm")
     #if("$!overwriteRenderDocument" != '')
-      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
+## redirectedParams get lost in calling:
+##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
+## or  $xwiki.includeForm($overwriteRenderDocument, false)
+      #parse($overwriteRenderDocument)
     #end
 #set($show_frame = true)
 #end
