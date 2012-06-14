@@ -109,7 +109,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     moveStyleToWrapper(divWrapper, slideShowImg, 'border-bottom');
     moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
     moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
-    slideShowImg.doImageResize = !slideShowImg.hasClassName('celanim_withoutImageResize');
+    slideShowConfig.doImageResize = !slideShowImg.hasClassName('celanim_withoutImageResize');
     slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
     /** START HACK: increase height and width by one to fix problem in celements-photo
      *              which sometimes returns images too small by one in both dimensions.
