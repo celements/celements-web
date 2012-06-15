@@ -121,7 +121,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     slideShowConfig.imageSrcQuery = slideShowConfig.imageSrcQuery.replace(
         /celheight=(\d+)/, 'celheight=' + celheight).replace(/celwidth=(\d+)/,
             'celwidth=' + celwidth);
-    if (slideShowImg.doImageResize) {
+    if (slideShowConfig.doImageResize) {
       slideShowImg.src = slideShowImg.src.replace(/(\?.*)$/,
           slideShowConfig.imageSrcQuery);
     } else {
