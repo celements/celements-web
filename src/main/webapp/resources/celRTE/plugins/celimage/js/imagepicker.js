@@ -2,6 +2,13 @@ var baseurl;
 var imgurl;
 var editor_id;
 var attList = [];
+var startPos = 0;
+var stepNumber = 5;
+var loadingImg = new Element('img', {
+    'src' : '/file/resources/celRes/ajax-loader.gif',
+    'class' : 'attListLoading',
+    'alt' : 'loading...'
+  });
 
 Event.observe(window, 'load', function(){
   baseurl = tinyMCEPopup.getParam("wiki_attach_path");
@@ -40,29 +47,42 @@ var getUploadToken = function() {
 var pickerUploadFinshed = function(event) {
   var uploadResult = event.memo.uploadResult;
   if (uploadResult && uploadResult.success && (uploadResult.success == 1)) {
-    loadAttachmentList(baseurl);
+//TODO Funktionierts auch nach dem upload eines neuen bildes korrekt? -> dieses am anfang einfuegen?
+//    loadAttachmentList(baseurl);
+	  alert('TODO einzelnes bild an richtiger stelle nachladen.');
   } else {
     alert('failed to upload image.');
   }
 };
 
 var loadAttachmentList = function(baseurl) {
-  var loadingImg = new Element('img', {
-    'src' : '/file/resources/celRes/ajax-loader.gif',
-    'class' : 'attListLoading',
-    'alt' : 'loading...'
-  });
-  $('attachments').update(loadingImg);
-  new Ajax.Request(baseurl, {
-    method: 'post',
-    parameters: {
-       xpage : 'celements_ajax',
-       'ajax_mode' : 'imagePickerList',
-       images : '1'
-    },
-    onSuccess: function(transport) {
-      loadAttachmentListCallback(transport.responseText);
-    }
+  var attachEl = document.getElementById("attachments");
+  var scroll = new CELEMENTS.anim.EndlessScroll(attachEl, function(attachEl, callbackFnkt) {
+    $('attachments').insert(loadingImg);
+    new Ajax.Request(baseurl, {
+      method: 'post',
+      parameters: {
+         'xpage' : 'celements_ajax',
+         'ajax_mode' : 'imagePickerList',
+         'images' : '1',
+         'start' : startPos,
+         'nb' : stepNumber
+      },
+      onSuccess: function(transport) {
+        if (transport.responseText.isJSON()) {
+          var json = transport.responseText.evalJSON();
+          loadAttachmentListCallback(json);
+          callbackFnkt(json.length == stepNumber, scroll);
+        } else if ((typeof console != 'undefined') 
+            && (typeof console.debug != 'undefined')) {
+          console.debug('loadSlideShowDataAsync: noJSON!!! ', transport.responseText);
+        }
+      }
+    });
+    startPos += stepNumber;
+  }, {
+    isScrollBlockEle : true,
+    overlap : 50
   });
 };
 
@@ -84,11 +104,9 @@ var centerImagePickerThumb = function(event) {
   });
 };
 
-var loadAttachmentListCallback = function(e) {
-  if (e.isJSON()) {
-    attList = e.evalJSON();
+var loadAttachmentListCallback = function(attList) {
     var attachEl = $('attachments');
-    attachEl.update('');
+    loadingImg.remove();
     var currentImgSrc = $('src').value;
     $A(attList).each(function(imgElem) {
       var cssClasses = 'imagePickerSource';
@@ -110,10 +128,6 @@ var loadAttachmentListCallback = function(e) {
           elem.observe('click', clickOnFileAction);
         }
       });
-  } else if ((typeof console != 'undefined')
-      && (typeof console.warn != 'undefined')) {
-    console.warn('loadAttachmentListCallback: noJSON!!! ', e);
-  }
 };
 
 var clickOnFileAction = function (event) {
