@@ -64,14 +64,14 @@ CELEMENTS.anim.EndlessScroll.prototype = {
       _me.action(_me.htmlElem, _me.reloadDoneCallback);
     }
     if(_me.isScrollBlockEle) {
-      _me._observer = _me.htmlElem.observe('scroll', _me.checkIsScrollBottom);
+      _me._observer = _me.htmlElem.observe('scroll', _me._checkIsScrollBottom);
     } else {
-      _me._observer = Element.observe(window, 'scroll', _me.checkIsScrollBottom);
+      _me._observer = Element.observe(window, 'scroll', _me._checkIsScrollBottom);
     }
     scrollAnims.set(_me.htmlElem, _me);
   },
   
-  checkIsScrollBottom : function(event) {
+  _checkIsScrollBottom : function(event) {
     var _me = scrollAnims.get(event.element());
     var pos = 0;
     if(_me.isScrollBlockEle) {

@@ -47,9 +47,27 @@ var getUploadToken = function() {
 var pickerUploadFinshed = function(event) {
   var uploadResult = event.memo.uploadResult;
   if (uploadResult && uploadResult.success && (uploadResult.success == 1)) {
-//TODO Funktionierts auch nach dem upload eines neuen bildes korrekt? -> dieses am anfang einfuegen?
-//    loadAttachmentList(baseurl);
-	  alert('TODO einzelnes bild an richtiger stelle nachladen.');
+    $('attachments').insert({ top : loadingImg });
+    new Ajax.Request(baseurl, {
+        method: 'post',
+        parameters: {
+           'xpage' : 'celements_ajax',
+           'ajax_mode' : 'imagePickerList',
+           'images' : '1',
+           'start' : 0,
+           'nb' : 1
+        },
+        onSuccess: function(transport) {
+          if (transport.responseText.isJSON()) {
+            var json = transport.responseText.evalJSON();
+            loadAttachmentListCallback(json, false);
+          } else if ((typeof console != 'undefined') 
+              && (typeof console.debug != 'undefined')) {
+            console.debug('loadSlideShowDataAsync: noJSON!!! ', transport.responseText);
+          }
+        }
+      });
+    startPos++;
   } else {
     alert('failed to upload image.');
   }
@@ -71,7 +89,7 @@ var loadAttachmentList = function(baseurl) {
       onSuccess: function(transport) {
         if (transport.responseText.isJSON()) {
           var json = transport.responseText.evalJSON();
-          loadAttachmentListCallback(json);
+          loadAttachmentListCallback(json, true);
           callbackFnkt(json.length == stepNumber, scroll);
         } else if ((typeof console != 'undefined') 
             && (typeof console.debug != 'undefined')) {
@@ -104,7 +122,7 @@ var centerImagePickerThumb = function(event) {
   });
 };
 
-var loadAttachmentListCallback = function(attList) {
+var loadAttachmentListCallback = function(attList, insertBottom) {
     var attachEl = $('attachments');
     loadingImg.remove();
     var currentImgSrc = $('src').value;
@@ -121,7 +139,11 @@ var loadAttachmentListCallback = function(attList) {
       var imgDiv = new Element('div', {
         'class' : 'imagePickerWrapper'
       }).update(imgThmb);
-      attachEl.insert({ bottom : imgDiv });
+      if(insertBottom) {
+        attachEl.insert({ bottom : imgDiv });
+      } else {
+        attachEl.insert({ top : imgDiv });
+      }
     });
     attachEl.select('.imagePickerSource').each(function(elem) {
         if (!elem.hasClassName('selected')) {
