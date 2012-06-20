@@ -3,7 +3,7 @@ var imgurl;
 var editor_id;
 var attList = [];
 var startPos = 0;
-var stepNumber = 5;
+var stepNumber = 25;
 var loadingImg = new Element('img', {
     'src' : '/file/resources/celRes/ajax-loader.gif',
     'class' : 'attListLoading',
@@ -60,7 +60,7 @@ var pickerUploadFinshed = function(event) {
         onSuccess: function(transport) {
           if (transport.responseText.isJSON()) {
             var json = transport.responseText.evalJSON();
-            loadAttachmentListCallback(json, false);
+            loadAttachmentListCallback(json, false, true);
           } else if ((typeof console != 'undefined') 
               && (typeof console.debug != 'undefined')) {
             console.debug('loadSlideShowDataAsync: noJSON!!! ', transport.responseText);
@@ -89,7 +89,7 @@ var loadAttachmentList = function(baseurl) {
       onSuccess: function(transport) {
         if (transport.responseText.isJSON()) {
           var json = transport.responseText.evalJSON();
-          loadAttachmentListCallback(json, true);
+          loadAttachmentListCallback(json, true, false);
           callbackFnkt(json.length == stepNumber, scroll);
         } else if ((typeof console != 'undefined') 
             && (typeof console.debug != 'undefined')) {
@@ -100,7 +100,7 @@ var loadAttachmentList = function(baseurl) {
     startPos += stepNumber;
   }, {
     isScrollBlockEle : true,
-    overlap : 50
+    overlap : 150
   });
 };
 
@@ -122,7 +122,7 @@ var centerImagePickerThumb = function(event) {
   });
 };
 
-var loadAttachmentListCallback = function(attList, insertBottom) {
+var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck) {
     var attachEl = $('attachments');
     loadingImg.remove();
     var currentImgSrc = $('src').value;
@@ -139,6 +139,13 @@ var loadAttachmentListCallback = function(attList, insertBottom) {
       var imgDiv = new Element('div', {
         'class' : 'imagePickerWrapper'
       }).update(imgThmb);
+      if(duplicateCheck) {
+        attachEl.select('.imagePickerWrapper').each(function(imgWrapper) {
+          if(imgWrapper.down('img').src.replace(/(http:\/\/.*?)?(\/.*?)\?.*/g, '$2') == imgElem.src) {
+            imgWrapper.remove();
+          }
+        });
+      }
       if(insertBottom) {
         attachEl.insert({ bottom : imgDiv });
       } else {
