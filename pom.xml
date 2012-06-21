@@ -33,7 +33,7 @@
 	<groupId>com.celements</groupId>
 	<artifactId>celements-web</artifactId>
 	<packaging>war</packaging>
-	<version>2.13.0-SNAPSHOT</version>
+	<version>3.0-SNAPSHOT</version>
 	<name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -61,9 +61,12 @@
 	<dependencies>
 		<!-- Add here all your dependencies -->		
 		<dependency>
+		  <!--TODO: replace direct xwiki-enterprise-web reference with explicit includes
+		   analog to http://nexus.xwiki.org/nexus/content/groups/public/org/xwiki/enterprise/xwiki-enterprise-web/4.1.1/xwiki-enterprise-web-4.1.1.pom
+		    -->
 			<groupId>org.xwiki.enterprise</groupId>
 			<artifactId>xwiki-enterprise-web</artifactId>
-			<version>2.7.2</version>
+			<version>4.1.1</version>
 			<type>war</type>
 		</dependency>
     <dependency>
@@ -97,7 +100,7 @@
 		<dependency>
 			<groupId>com.celements</groupId>
 			<artifactId>celements-core</artifactId>
-			<version>1.26</version>
+			<version>2.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.celements</groupId>
