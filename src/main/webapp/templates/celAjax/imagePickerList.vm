@@ -8,7 +8,7 @@ $response.setStatus(200)
   #set($nb = $util.parseInt("$!request.nb"))
 #end
 #set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
-#set($attachments = $xwiki.celementsweb.getAttachmentListSorted($doc, 'AttachmentDescendingChangeDateComparator', $start, $nb))
+#set($attachments = $xwiki.celementsweb.getAttachmentListSorted($doc, 'AttachmentDescendingChangeDateComparator', true, $start, $nb))
 $jsonBuilder.openArray()
 #foreach ($attach in $attachments)
 #if ($attach.isImage())
