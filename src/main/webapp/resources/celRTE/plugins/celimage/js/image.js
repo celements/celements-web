@@ -315,7 +315,7 @@ var CelImageDialog = {
     if (at == 'class') {
       v = ' ' + dom.getAttrib(e, 'class') + ' ';
       v = v.replace(
-          / (celanim_slideshow|celanim_manualstart|celanim_overlay|celanim_overlay_addCloseButton) /g, ' ');
+          / (celanim_slideshow|celanim_manualstart|celanim_overlay|celanim_overlay_addCloseButton|celanim_slideshowRandomStart|celanim_addNavigation) /g, ' ');
       return v.strip();
     }
 
