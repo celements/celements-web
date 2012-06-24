@@ -255,7 +255,7 @@ var CelImageDialog = {
       return dom.hasClass(e, 'celanim_slideshowRandomStart');
     }
 
-    if (at == 'celanim_addNavigation') {
+    if (at == 'hasSlideshowAddNavigation') {
       return dom.hasClass(e, 'celanim_addNavigation');
     }
 
