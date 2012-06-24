@@ -63,7 +63,6 @@
                       <div id="prev"></div>
                       <input name="marginBottom" type="text" id="marginBottom" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.updateStyle('marginBottom');CelImageDialog.changeAppearance();" onblur="CelImageDialog.updateStyle('marginBottom');CelImageDialog.changeAppearance();" />
                       <br/>
-                      <input name="src" type="hidden" id="src" value="" class="mceFocus" />
                     </td>
               </tr>
             <tr>
@@ -157,8 +156,18 @@
             </tr>
 
             <tr>
-              <td class="column1"><label id="isSlideshowManualStart" for="isSlideshowManualStart">{#celimage_dlg.isSlideshowManualStart}</label></td> 
+              <td class="column1"><label id="isSlideshowManualStartLabel" for="isSlideshowManualStart">{#celimage_dlg.isSlideshowManualStart}</label></td> 
               <td><input id="isSlideshowManualStart" name="isSlideshowManualStart" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="isSlideshowRandomStartLabel" for="isSlideshowRandomStart">{#celimage_dlg.isSlideshowRandomStart}</label></td> 
+              <td><input id="isSlideshowRandomStart" name="isSlideshowRandomStart" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="hasSlideshowAddNavigationLabel" for="hasSlideshowAddNavigation">{#celimage_dlg.hasSlideshowAddNavigation}</label></td> 
+              <td><input id="hasSlideshowAddNavigation" name="hasSlideshowAddNavigation" type="checkbox" value="" /></td> 
             </tr>
 
             <tr>
@@ -221,6 +230,16 @@
             <tr>
               <td class="column1"><label id="idlabel" for="id">{#celimage_dlg.id}</label></td> 
               <td><input id="id" name="id" type="text" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="srclabel" for="src">{#advimage_dlg.src}</label></td>
+              <td colspan="2"><table border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                  <td><input name="src" type="text" id="src" value="" class="mceFocus" onchange="ImageDialog.showPreviewImage(this.value);" /></td> 
+                  <td id="srcbrowsercontainer">&nbsp;</td>
+                </tr>
+                </table></td>
             </tr>
 
             <tr>
