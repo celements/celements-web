@@ -97,12 +97,12 @@
 		<dependency>
 			<groupId>com.celements</groupId>
 			<artifactId>celements-core</artifactId>
-			<version>1.27-SNAPSHOT</version>
+			<version>1.27</version>
 		</dependency>
 		<dependency>
 			<groupId>com.celements</groupId>
 			<artifactId>celements-photo</artifactId>
-			<version>1.9-SNAPSHOT</version>
+			<version>1.9</version>
 		</dependency>
     <dependency>
       <groupId>com.celements</groupId>
