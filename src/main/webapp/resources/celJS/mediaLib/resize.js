@@ -44,7 +44,9 @@ function resizeFileBase(){
   var scrollableSize = filesBoxSize - siblingHeight;
   fileBaseBox.setStyle({ height: Math.max(50, fileBaseBoxSize) + "px" });
   filesBox.setStyle({ height: Math.max(50, filesBoxSize) + "px" });
-  scrollBox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
+  if(scrollBox){
+    scrollBox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
+  }
 //  alert(fileBaseBoxSize + " - " + filesBoxSize + " - " + scrollableSize);
 //  alert(fileBaseBox.getHeight() + " - " + filesBox.getHeight() + " - " + scrollBox.getHeight());
 }
