@@ -138,7 +138,7 @@
     #set($rte_valid_elements = "$!{rte_valid_elements}#td[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|nowrap<nowrap|style|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|width],")
     #set($rte_valid_elements = "$!{rte_valid_elements}#th[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|style|width],")
     #set($rte_valid_elements = "$!{rte_valid_elements}thead[align<center?char?justify?left?right|class|valign<baseline?bottom?middle?top],")
-    #set($rte_valid_elements = "$!{rte_valid_elements}-tr[align<center?char?justify?left?right|bgcolor|class|style|rowspan|valign<baseline?bottom?middle?top],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}-tr[align<center?char?justify?left?right|bgcolor|class|style|rowspan|valign<baseline?bottom?middle?top|id],")
     #set($rte_valid_elements = "$!{rte_valid_elements}-ol[class|type|compact],-ul[class|type|compact],#li")
   #end
   "valid_elements" : "$rte_valid_elements",
