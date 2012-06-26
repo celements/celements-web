@@ -1,4 +1,6 @@
 Event.observe(window, 'load', startResizeObservers);
+var delayExec = null;
+var ieCount = 1;
 
 function startResizeObservers(event){
   Event.observe(window, 'resize', resizeFileBase);
@@ -8,7 +10,14 @@ function startResizeObservers(event){
   window.setTimeout("resizeFileBase()", 1200);
 }
 
-function resizeFileBase(){
+var resizeFileBase = function(delayed) {
+  if(delayed) {
+    delayExec = null;
+  }
+  resizeFileBase();
+}
+
+var resizeFileBase = function(){
   var fileBaseBox = $$('.celements3_filebase')[0];
   var filesBox = $('c2_ml_content');
   var scrollBox = filesBox.down('.c3_import_scrollable');
@@ -46,7 +55,18 @@ function resizeFileBase(){
   filesBox.setStyle({ height: Math.max(50, filesBoxSize) + "px" });
   if(scrollBox){
     scrollBox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
+    if(Prototype.Browser.IE && ieCount > 0) {
+      startDelayed();
+      ieCount--;
+    }
+  } else {
+    startDelayed();
   }
-//  alert(fileBaseBoxSize + " - " + filesBoxSize + " - " + scrollableSize);
-//  alert(fileBaseBox.getHeight() + " - " + filesBox.getHeight() + " - " + scrollBox.getHeight());
+}
+
+var startDelayed = function() {
+  if(delayExec != null) {
+    window.clearTimeout(delayExec);
+  }
+  delayExec = resizeFileBase.delay(.5, true);
 }
