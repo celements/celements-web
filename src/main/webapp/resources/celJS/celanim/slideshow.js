@@ -174,6 +174,9 @@ var startSlideShows = function() {
 };
 
 var celSlideShow_startOne = function(elemId) {
+  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+    console.debug('celSlideShow_startOne: ' + elemId);
+  }
   var isManualStart = $(elemId).hasClassName('celanim_manualstart');
   var isCelanimOverlay = $(elemId).hasClassName('celanim_overlay');
   if (isCelanimOverlay) {
@@ -316,7 +319,7 @@ var celSlideShowStartSlideShow = function(elemId) {
 var celSlideShowPausedSlideShowIds = new Array();
 var celSlideShowPauseAllSlideShows = function() {
   celSlideShowThreads.each(function(pair) {
-    if (!celSlideShow_isInOverlay(pair.key)) {
+    if ($(pair.key) && !celSlideShow_isInOverlay(pair.key)) {
       celSlideShowStopSlideShow(pair.key);
       celSlideShowPausedSlideShowIds.push(pair.key);
       celSlideShow_getOuterWrapperElement(pair.key).removeClassName(
@@ -328,7 +331,10 @@ var celSlideShowPauseAllSlideShows = function() {
 };
 
 var celSlideShow_isInOverlay = function(elemId) {
-  return (typeof $(elemId).up('.highslide-container') != "undefined");
+  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+    console.debug('celSlideShow_isInOverlay: ' + elemId);
+  }
+  return ($(elemId) && (typeof $(elemId).up('.highslide-container') != "undefined"));
 };
 
 var celSlideShowResumeAllSlideShows = function() {
