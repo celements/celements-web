@@ -92,6 +92,9 @@ var celanimOverlay_AfterCloseHandler = function(hsExpander) {
 };
 
 var celanimOverlay_OpenInOverlay = function(event) {
+  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+    console.debug('celanimOverlay_OpenInOverlay: ', this, ', ', event);
+  }
   var openConfig = celanimOverlay_openConfig.get(this.id);
   if (openConfig) {
     var hsConfig = $H({
