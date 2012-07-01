@@ -81,9 +81,38 @@ var celanimOverlay_AfterExpandHandler = function(hsExpander) {
     var overlayWrapper = overlayHTMLDiv2.up('.highslide-wrapper');
     overlayWrapper.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
     overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+    //center image
+    var imgInOverlay = overlayHTMLDiv.down('img.highslide-image');
+    celSlideShowInternalCenterImage(imgInOverlay);
+    imgInOverlay.setStyle({
+      'visibility' : 'visible'
+    });
   });
   $(hsExpander.thumb).fire('celanim_overlay:afterExpand', hsExpander);
   $$('body')[0].fire('celanim_overlay:afterExpandGeneral', hsExpander);
+};
+
+var celanimOverlay_BeforeExpandHandler = function(hsExpander) {
+  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+    console.debug('celanimOverlay_BeforeExpandHandler: ', hsExpander.thumb, ', ', hsExpander);
+  }
+  $$('.highslide-html').each(function(overlayHTMLDiv) {
+    var overlayHTMLDiv2 = overlayHTMLDiv.down('div');
+    var overlayWrapper = overlayHTMLDiv2.up('.highslide-wrapper');
+    overlayWrapper.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+    overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+    //fix height of internal divs
+    var imgInOverlay = overlayHTMLDiv.down('img.highslide-image');
+    overlayHTMLDiv.select('div').each(function(divElem) {
+      divElem.setStyle({'height' : '100%'});
+    });
+    imgInOverlay.setStyle({
+      'position' : 'absolute',
+      'visibility' : 'hidden'
+    });
+  });
+  $(hsExpander.thumb).fire('celanim_overlay:beforeExpand', hsExpander);
+  $$('body')[0].fire('celanim_overlay:beforeExpandGeneral', hsExpander);
 };
 
 var celanimOverlay_AfterCloseHandler = function(hsExpander) {
@@ -116,6 +145,7 @@ var celanimOverlay_OpenInOverlay = function(event) {
       + openConfig.cssClassNames.join(' ');
     hs.height = hsConfig.get('height');
     hs.width = hsConfig.get('width');
+    hs.Expander.prototype.onBeforeExpand = celanimOverlay_BeforeExpandHandler;
     hs.Expander.prototype.onAfterExpand = celanimOverlay_AfterExpandHandler;
     hs.Expander.prototype.onAfterClose = celanimOverlay_AfterCloseHandler;
     hs.htmlExpand(this, hsConfig.toObject());
