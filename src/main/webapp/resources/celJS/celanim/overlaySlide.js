@@ -83,6 +83,9 @@ var celanimOverlay_AfterExpandHandler = function(hsExpander) {
     overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
     //center image
     var imgInOverlay = overlayHTMLDiv.down('img.highslide-image');
+    imgInOverlay.observe('load', centerImage);
+    // load will be only fired if the image is not yet loaded.
+    //Thus we execute centerImage once for if it is already loaded.
     celSlideShowInternalCenterImage(imgInOverlay);
     imgInOverlay.setStyle({
       'visibility' : 'visible'
