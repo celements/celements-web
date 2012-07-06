@@ -1,3 +1,5 @@
+var slideshowIsDebug = false;
+  
 YAHOO.util.Event.onDOMReady(function() {
   loadSlideShowDataAsync();
 });
@@ -37,8 +39,8 @@ var loadSlideShowDataAsync = function() {
           initSlideShows(transport.responseText.evalJSON());
           startSlideShows();
         } else if ((typeof console != 'undefined')
-            && (typeof console.debug != 'undefined')) {
-          console.debug('loadSlideShowDataAsync: noJSON!!! ', transport.responseText);
+            && (typeof console.warn != 'undefined')) {
+          console.warn('loadSlideShowDataAsync: noJSON!!! ', transport.responseText);
         }
       },
       onFailure : function(transport) {
@@ -138,6 +140,11 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     slideShowImg.observe('load', centerImage);
     slideShowImg.src = slideShowImg.src;
     if (slideShowHasNextImage(slideShowConfig)) {
+      if (slideshowIsDebug && (typeof console != 'undefined')
+          && (typeof console.debug != 'undefined')) {
+        console.debug('celSlideShows_initOneSlideShow: set next image to ',
+            slideShowConfig.nextImg, ", ", slideShowConfig.nextimgsrc);
+      }
       tempImg.src = slideShowConfig.nextimgsrc;
     }
     $(slideShowConfig.htmlId).fire('celanim_slideshow:afterInit', slideShowConfig);
@@ -174,7 +181,8 @@ var startSlideShows = function() {
 };
 
 var celSlideShow_startOne = function(elemId) {
-  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
     console.debug('celSlideShow_startOne: ' + elemId);
   }
   var isManualStart = $(elemId).hasClassName('celanim_manualstart');
@@ -219,6 +227,7 @@ var celSlideShow_AfterExpand = function(event) {
   overlayImg.id = overlayId;
   var newConfig = $H(celSlideShowConfig.get(elemId)).toObject(); // make a copy
   newConfig.htmlId = overlayId;
+  newConfig.nextImg = undefined;
   celSlideShows_initOneSlideShow(newConfig);
   celSlideShow_startOne(overlayId);
   changeImage(overlayId);
@@ -331,7 +340,8 @@ var celSlideShowPauseAllSlideShows = function() {
 };
 
 var celSlideShow_isInOverlay = function(elemId) {
-  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
     console.debug('celSlideShow_isInOverlay: ' + elemId);
   }
   return ($(elemId) && (typeof $(elemId).up('.highslide-container') != "undefined"));
@@ -458,6 +468,11 @@ var slideShowHasNextImage = function(slideConfig) {
   }
   if (slideConfig.nextImg >= slideConfig.imageArray.size()) {
     slideConfig.nextImg = 0;
+  }
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug('slideShowHasNextImage: ', slideConfig.htmlId, ", ",
+        slideConfig.nextImg);
   }
   if (slideConfig.nextImg >=0) {
     slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg];
