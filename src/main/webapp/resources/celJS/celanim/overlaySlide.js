@@ -83,13 +83,15 @@ var celanimOverlay_AfterExpandHandler = function(hsExpander) {
     overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
     //center image
     var imgInOverlay = overlayHTMLDiv.down('img.highslide-image');
-    imgInOverlay.observe('load', centerImage);
-    // load will be only fired if the image is not yet loaded.
-    //Thus we execute centerImage once for if it is already loaded.
-    celSlideShowInternalCenterImage(imgInOverlay);
-    imgInOverlay.setStyle({
-      'visibility' : 'visible'
-    });
+    if (imgInOverlay) {
+      imgInOverlay.observe('load', centerImage);
+      // load will be only fired if the image is not yet loaded.
+      //Thus we execute centerImage once for if it is already loaded.
+      celSlideShowInternalCenterImage(imgInOverlay);
+      imgInOverlay.setStyle({
+        'visibility' : 'visible'
+      });
+    }
   });
   $(hsExpander.thumb).fire('celanim_overlay:afterExpand', hsExpander);
   $$('body')[0].fire('celanim_overlay:afterExpandGeneral', hsExpander);
@@ -107,12 +109,16 @@ var celanimOverlay_BeforeExpandHandler = function(hsExpander) {
     //fix height of internal divs
     var imgInOverlay = overlayHTMLDiv.down('img.highslide-image');
     overlayHTMLDiv.select('div').each(function(divElem) {
-      divElem.setStyle({'height' : '100%'});
+      if (!divElem.hasClassName('highslide-header')) {
+        divElem.setStyle({'height' : '100%'});
+      }
     });
-    imgInOverlay.setStyle({
-      'position' : 'absolute',
-      'visibility' : 'hidden'
-    });
+    if (imgInOverlay) {
+      imgInOverlay.setStyle({
+        'position' : 'absolute',
+        'visibility' : 'hidden'
+      });
+    }
   });
   $(hsExpander.thumb).fire('celanim_overlay:beforeExpand', hsExpander);
   $$('body')[0].fire('celanim_overlay:beforeExpandGeneral', hsExpander);
