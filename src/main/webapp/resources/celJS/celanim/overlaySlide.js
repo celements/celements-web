@@ -53,7 +53,6 @@ var celanimOverlay_addOpenConfig = function(elemId, openConfig) {
         openConfigObj.cssClassNames = [];
       }
       celanimOverlay_openConfig.set(elemId, openConfigObj);
-      celanimOverlay_addCloseButton(openConfigObj);
       $(elemId).setStyle({
         'cursor' : "url(/file/resources/celJS/highslide/graphics/zoomin.cur), pointer"
       });
@@ -81,6 +80,18 @@ var celanimOverlay_AfterExpandHandler = function(hsExpander) {
     var overlayWrapper = overlayHTMLDiv2.up('.highslide-wrapper');
     overlayWrapper.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
     overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+    if (overlayWrapper.hasClassName('celanim_hasCloseButton')) {
+      var closeButtonElem = new Element('div', {
+        'class' : 'closebutton',
+        'title' : 'Close'
+      });
+      closeButtonElem.observe('click', function() {
+        hs.close(this);
+      });
+      overlayHTMLDiv.insert({
+        'after' : closeButtonElem
+      });
+    }
     //center image
     var imgInOverlay = overlayHTMLDiv.down('img.highslide-image');
     if (imgInOverlay) {
@@ -150,6 +161,9 @@ var celanimOverlay_OpenInOverlay = function(event) {
     if (openConfig.addNavigation) {
       openConfig.cssClassNames.push('celanim_addNavigation');
     }
+    if (openConfig.addCloseButton) {
+      openConfig.cssClassNames.push('celanim_hasCloseButton');
+    }
     hs.wrapperClassName = 'no-footer no-move celanim_overlay_wrapper '
       + openConfig.cssClassNames.join(' ');
     hs.height = hsConfig.get('height');
@@ -203,16 +217,4 @@ var celanimOverlay_getOrCreateContentElem = function(overlayContentId, hsConfig)
     $$('body')[0].insert(overlayContentElem);
   }
   return overlayContentElem;
-};
-
-var celanimOverlay_addCloseButton = function(openConfig) {
-  if (openConfig && openConfig.addCloseButton) {
-    // The simple semitransparent close button overlay
-    hs.registerOverlay({
-      thumbnailId: openConfig.id,
-      html: '<div class="closebutton" onclick="return hs.close(this)" title="Close"></div>',
-      position: 'top right',
-      fade: 2 // fading the semi-transparent overlay looks bad in IE
-    });
-  }
 };

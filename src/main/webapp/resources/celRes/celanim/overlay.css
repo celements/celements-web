@@ -2,3 +2,14 @@
 .celanim_overlay_wrapper .highslide-html {
   background: black;
 }
+
+.celanim_hasCloseButton .closebutton {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  left: auto;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 4;
+}
