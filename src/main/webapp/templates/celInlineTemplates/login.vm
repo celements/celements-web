@@ -8,7 +8,7 @@
 #if(!$celementsweb.isEmptyRTEDocument($passwdRecoveryHTMLDocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryHTML2DocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryTextDocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryText2DocRef) || ("$!celMailsPasswordRecovery" != ''))
   <a href="?xpage=overlay&conf=PwdRetreival&xredirect=$!red">$msg.get('cel_login_forgotpassword')</a>
 #end
-#end end macro passRecoveryLink
+#end ##end macro passRecoveryLink
 ##
 ## start login script
 #if("$!request.get('ac')" != '')
