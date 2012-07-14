@@ -3,7 +3,8 @@ $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 ##
 ## start the celements body (and lacily finalise the header)
 ##ATTENTION: Can not be moved to disk until all overlays are checked (ProgrammingRights issues!)
-$xwiki.includeForm('celements2web:Macros.startCelementsBody', false)
+##$xwiki.includeForm('celements2web:Macros.startCelementsBody', false)
+#parse("celMacros/startCelementsBody.vm")
 ##
 #set($isCellSkin = true)
 #set($doclang = $tdoc.getLanguage())
