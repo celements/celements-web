@@ -62,4 +62,6 @@ body#celimage .tabs ul li {
 }
 body#celimage .tabs ul li a {
   padding: 0px 10px 0px 10px;
+  height: 18px;
+  display: block;
 }
