@@ -4,6 +4,8 @@ var editor_id;
 var attList = [];
 var startPos = 0;
 var stepNumber = 25;
+var imagePickerMaxDimension = 100;
+
 var loadingImg = new Element('img', {
     'src' : '/file/resources/celRes/ajax-loader.gif',
     'class' : 'attListLoading',
@@ -15,13 +17,17 @@ Event.observe(window, 'load', function(){
   imgurl = tinyMCEPopup.getParam("wiki_imagedownload_path");
   editor_id = tinyMCEPopup.getWindowArg('editor_id');
   $('imagePickerUploadAreaFieldset').hide();
-  loadAttachmentList(baseurl);
   $('imagePickerForm').action = baseurl;
   getUploadToken();
   $$('#imagePickerUploadArea .celfileupload').each(function(elem) {
     elem.observe('celements:uploadfinished', pickerUploadFinshed);
   });
 });
+
+var imagePicker_pickerTabFirstClickHandler = function(event) {
+  this.stopObserving('click', imagePicker_pickerTabFirstClickHandler);
+  loadAttachmentList(baseurl);
+};
 
 var getUploadToken = function() {
   new Ajax.Request(baseurl, {
@@ -112,14 +118,47 @@ var getCenteredImagePickerValue = function(diffValue) {
   }
 };
 
-var centerImagePickerThumb = function(event) {
+var imagePickerFixDimensions = function(dim) {
+  if (dim.height > dim.width) {
+    if (dim.height > imagePickerMaxDimension) {
+      dim.width = Math.round(dim.width / dim.height * imagePickerMaxDimension);
+      dim.height = imagePickerMaxDimension;
+    }
+  } else {
+    if (dim.width > imagePickerMaxDimension) {
+      dim.height = Math.round(dim.height / dim.width * imagePickerMaxDimension);
+      dim.width = imagePickerMaxDimension;
+    }
+  }
+  return dim;
+};
+
+var centerImagePickerThumbHandler = function(event) {
   var tempImg = event.findElement();
-  var dim = tempImg.getDimensions();
-  var wrapDiv = tempImg.up('div');
+  centerImagePickerThumb(tempImg);
+};
+
+var centerImagePickerThumb = function(tempImg) {
   tempImg.setStyle({
-    'top' : getCenteredImagePickerValue(wrapDiv.getHeight() - dim.height) + 'px',
-    'left' : getCenteredImagePickerValue(wrapDiv.getWidth() - dim.width) + 'px'
+    'height' : 'auto',
+    'width' : 'auto'
   });
+  var dim = tempImg.getDimensions();
+  if ((dim.height > 0) && (dim.width > 0)) {
+    dim = imagePickerFixDimensions(dim);
+    tempImg.setStyle({
+      'height' : dim.height + 'px',
+      'width' : dim.width + 'px'
+    });
+    var wrapDiv = tempImg.up('div.imagePickerWrapper');
+    var sourceDiv = tempImg.up('div.imagePickerSource');
+    sourceDiv.setStyle({
+      'top' : getCenteredImagePickerValue(wrapDiv.getHeight() - sourceDiv.getHeight()
+          ) + 'px',
+      'left' : getCenteredImagePickerValue(wrapDiv.getWidth() - sourceDiv.getWidth()
+          ) + 'px'
+    });
+  }
 };
 
 var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck) {
@@ -132,13 +171,15 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck)
         cssClasses += ' selected';
       }
       var imgThmb = new Element('img', {
-        'src' : (imgElem.src + '?celheight=100&celwidth=100'),
-        'class' : cssClasses
+        'src' : (imgElem.src + '?celheight=' + imagePickerMaxDimension + '&celwidth='
+            + imagePickerMaxDimension)
       });
-      imgThmb.observe('load', centerImagePickerThumb);
+      var imgContainerDiv = new Element('div', {
+        'class' : cssClasses
+      }).update(imgThmb);
       var imgDiv = new Element('div', {
         'class' : 'imagePickerWrapper'
-      }).update(imgThmb);
+      }).update(imgContainerDiv);
       if(duplicateCheck) {
         attachEl.select('.imagePickerWrapper').each(function(imgWrapper) {
           if(imgWrapper.down('img').src.replace(/(http:\/\/.*?)?(\/.*?)\?.*/g, '$2') == imgElem.src) {
@@ -151,6 +192,9 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck)
       } else {
         attachEl.insert({ top : imgDiv });
       }
+      imgThmb.observe('load', centerImagePickerThumbHandler);
+      // call centerImage once to center in case already loaded
+      centerImagePickerThumb(imgThmb);
     });
     attachEl.select('.imagePickerSource').each(function(elem) {
         if (!elem.hasClassName('selected')) {
@@ -161,14 +205,15 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck)
 
 var clickOnFileAction = function (event) {
   event.stop();
-  var filename = this.src;
+  var selectElem = this.down('img, a');
+  var filename = selectElem.src;
   if (!filename) {
-    filename = this.href;
+    filename = selectElem.href;
   }
   if (filename && document.forms[0].src) {
     filename = filename.replace(/^(.+)\?.*/, '$1');
     document.forms[0].src.value = filename;
-    var oldSelection = $$('img.imagePickerSource.selected');
+    var oldSelection = $$('.imagePickerSource.selected');
     if (oldSelection.size() > 0) {
       oldSelection[0].removeClassName('selected');
       oldSelection[0].observe('click', clickOnFileAction);

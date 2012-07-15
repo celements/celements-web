@@ -34,12 +34,12 @@ div.imagePickerWrapper {
   line-height: 0px;
   font-size: 0px;
 }
-div.imagePickerWrapper img.imagePickerSource {
+div.imagePickerWrapper div.imagePickerSource {
   display: block;
   position: absolute;
   border: 4px dashed transparent;
 }
-div.imagePickerWrapper img.imagePickerSource.selected {
+div.imagePickerWrapper div.imagePickerSource.selected {
   border: 4px dashed #ff9900;
 }
 img.attListLoading {
@@ -55,4 +55,11 @@ img.attListLoading {
   font-size: 14px;
   line-height: 17px;
   margin-bottom: 8px;
+}
+body#celimage .tabs span,
+body#celimage .tabs ul li {
+  padding: 0px;
+}
+body#celimage .tabs ul li a {
+  padding: 0px 10px 0px 10px;
 }

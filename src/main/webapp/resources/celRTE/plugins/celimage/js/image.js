@@ -58,6 +58,11 @@ var CelImageDialog = {
         if (dom.getAttrib(n, 'border'))
           this.updateStyle('border');
       }
+      $('imagePicker_tab').down('a').observe('click',
+          imagePicker_pickerTabFirstClickHandler);
+    } else {
+      baseurl = tinyMCEPopup.getParam("wiki_attach_path");
+      loadAttachmentList(baseurl);
     }
 
     // If option enabled default constrain proportions to checked
@@ -72,7 +77,7 @@ var CelImageDialog = {
 
     this.changeAppearance();
     this.showPreviewImage(this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
-        nl.celheight.value), 1);
+        nl.celheight.value), nl.celwidth.value, nl.celheight.value, 1);
   },
 
   insert : function(file, title) {
@@ -142,7 +147,8 @@ var CelImageDialog = {
       };
     }
 
-    nl.src.value = this.addAutoResizeToURL(nl.src.value, nl.celwidth.value, nl.celheight.value);
+    nl.src.value = this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
+        nl.celheight.value);
 
     tinymce.extend(args, {
       src : nl.src.value,
@@ -465,7 +471,8 @@ var CelImageDialog = {
   },
 
   changeAppearance : function() {
-    var ed = tinyMCEPopup.editor, f = document.forms[0], img = document.getElementById('alignSampleImg');
+    var ed = tinyMCEPopup.editor, f = document.forms[0], img = document.getElementById(
+        'alignSampleImg');
 
     if (img) {
       if (ed.getParam('inline_styles')) {
@@ -489,7 +496,8 @@ var CelImageDialog = {
 
     tp = (parseInt(f.celwidth.value) / parseInt(t.preloadImg.width)) * t.preloadImg.height;
     f.celheight.value = Math.floor(tp + 0.5);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value, f.celheight.value), 1);
+    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value,
+        f.celheight.value), f.celwidth.value, f.celheight.value, 1);
   },
 
   changeWidth : function() {
@@ -504,7 +512,8 @@ var CelImageDialog = {
 
     tp = (parseInt(f.celheight.value) / parseInt(t.preloadImg.height)) * t.preloadImg.width;
     f.celwidth.value = Math.floor(tp + 0.5);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value, f.celheight.value), 1);
+    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value,
+        f.celheight.value), f.celwidth.value, f.celheight.value, 1);
   },
 
   updateStyle : function(ty) {
@@ -586,7 +595,10 @@ var CelImageDialog = {
   changeMouseMove : function() {
   },
 
-  showPreviewImage : function(u, st) {
+  showPreviewImage : function(u, celWidth, celHeight, st) {
+    var width = celWidth || 0;
+    var height = celHeight || 0;
+
     if (!u || (u == '')) {
       tinyMCEPopup.dom.setHTML('prev', '<p style="padding:20px;">' + tinyMCEPopup.getLang(
           'celimage_dlg.select_image_first') +'</p>');
@@ -599,12 +611,20 @@ var CelImageDialog = {
 
     u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
+    var dimensions = "";
+    if ((width > 0) && (height > 0)) {
+      dimensions = 'width="' + width + '" height="' + height + '"';
+    }
+
     if (!st) {
       tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
-          + '" border="0" onload="CelImageDialog.updateImageData(this);" onerror="CelImageDialog.resetImageData();" />');
+          + '"' + dimensions
+          + ' border="0" onload="CelImageDialog.updateImageData(this);"'
+          + ' onerror="CelImageDialog.resetImageData();" />');
     } else {
       tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
-          + '" border="0" onload="CelImageDialog.updateImageData(this, 1);" />');
+          + '"' + dimensions
+          + ' border="0" onload="CelImageDialog.updateImageData(this, 1);" />');
     }
   }
 };

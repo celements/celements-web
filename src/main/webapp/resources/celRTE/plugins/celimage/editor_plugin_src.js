@@ -47,35 +47,43 @@
     },
 
     loadOrigDimensionsAsync : function(ed, imageFullName) {
-      new Ajax.Request(getCelHost(), {
-        method: 'post',
-        parameters: {
-           'xpage' : 'celements_ajax',
-           'ajax_mode' : 'GetImageDimensions',
-           'imageFullName' : imageFullName
-        },
-        onSuccess: function(transport) {
-          if (transport.responseText.isJSON()) {
-            var resp = transport.responseText.evalJSON();
-            if (resp.width && resp.height) {
-              ed.origData.set(imageFullName, resp);
+      if (imageFullName && (imageFullName != '')) {
+        new Ajax.Request(getCelHost(), {
+          method: 'post',
+          parameters: {
+             'xpage' : 'celements_ajax',
+             'ajax_mode' : 'GetImageDimensions',
+             'imageFullName' : imageFullName
+          },
+          onSuccess: function(transport) {
+            if (transport.responseText.isJSON()) {
+              var resp = transport.responseText.evalJSON();
+              if (resp.width && resp.height) {
+                ed.origData.set(imageFullName, resp);
+              } else if ((typeof console != 'undefined')
+                  && (typeof console.warn != 'undefined')) {
+                console.warn('loadOrigDimensionsAsync: failed!!! ', transport.responseText);
+              }
             } else if ((typeof console != 'undefined')
                 && (typeof console.warn != 'undefined')) {
-              console.warn('loadOrigDimensionsAsync: failed!!! ', transport.responseText);
+              console.warn('loadOrigDimensionsAsync: noJSON!!! ', transport.responseText);
             }
-          } else if ((typeof console != 'undefined')
-              && (typeof console.warn != 'undefined')) {
-            console.warn('loadOrigDimensionsAsync: noJSON!!! ', transport.responseText);
+          },
+          onFailure : function(transport) {
+            if ((typeof console != 'undefined')
+                && (typeof console.warn != 'undefined')) {
+              console.warn('loadOrigDimensionsAsync: failed to execute request: ',
+                  transport.status, transport.statusText);
+            }
           }
-        },
-        onFailure : function(transport) {
-          if ((typeof console != 'undefined')
-              && (typeof console.warn != 'undefined')) {
-            console.warn('loadOrigDimensionsAsync: failed to execute request: ',
-                transport.status, transport.statusText);
-          }
+        });
+      } else {
+        if ((typeof console != 'undefined')
+            && (typeof console.warn != 'undefined')) {
+          console.warn('loadOrigDimensionsAsync: skip request because imageFullName '
+              + 'is empty!!');
         }
-      });
+      }
     },
 
     _resizeHappend : function(ed, e) {
