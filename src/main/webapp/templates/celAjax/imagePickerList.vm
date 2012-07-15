@@ -11,9 +11,7 @@ $response.setStatus(200)
 #set($attachments = $xwiki.celementsweb.getAttachmentListSorted($doc, 'AttachmentDescendingChangeDateComparator', true, $start, $nb))
 $jsonBuilder.openArray()
 #foreach ($attach in $attachments)
-#if ($attach.isImage())
 $services.celementsphoto.addImage($jsonBuilder, $attach)
-#end ## if isImage
 #end ## foreach
 $jsonBuilder.closeArray()
 $jsonBuilder.getJSON()
