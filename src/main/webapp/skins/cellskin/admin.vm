@@ -1,0 +1,3 @@
+#if("$context.action" != 'admin')
+#template("${context.action}.vm")
+#end

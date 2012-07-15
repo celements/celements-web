@@ -1,0 +1,5 @@
+## init Celements variables
+$xwiki.includeForm("celements2web:Macros.initCelements", false)
+$response.setContentType("text/xml")
+$xwiki.celementsweb.renderCelementsDocument($tdoc)
+##

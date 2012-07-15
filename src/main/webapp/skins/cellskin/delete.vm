@@ -1,0 +1,8 @@
+#template("xwikivars.vm")
+#set($skinBodyAttributes = " style='overflow:hidden;'")
+#set($cel_loadAdminMenuBar = false)
+#set($celementsLoadInOverlay = 'Celements2.DeletePage')
+#set($showOverlayLanguageBar = false)
+#set($showCloseOverlayButton = true)
+#set($closeOverlayRedirect = "$!request.get('xredirect')")
+#template("view.vm")

@@ -1,0 +1,22 @@
+#template("frameheader.vm")
+<div id="xwikicontent">
+    #set($message = $xwiki.parseMessage())
+    #if($message)
+    <center>
+        <h2>$message</h2>
+        <br/><br/>
+    </center>
+    #else
+    <center>
+      $msg.get("problemoccured")
+    </center>
+    #end
+<br/><br/>
+#if($context.getUser().startsWith('xwiki:'))
+  $msg.get("detailedinformation"):<br/>
+  <pre class="xwikierror">
+    $exp.getFullMessage()
+  </pre>
+#end
+</div>
+#template("framefooter.vm")

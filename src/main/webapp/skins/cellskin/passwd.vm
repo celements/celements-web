@@ -1,0 +1,5 @@
+#template("xwikivars.vm")
+#set($skinBodyAttributes = " style='overflow:hidden;'")
+#set($cel_loadAdminMenuBar = false)
+#set($celementsLoadInOverlay = 'Celements2.ChangePassword')
+#template("view.vm")
