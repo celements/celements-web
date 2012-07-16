@@ -98,12 +98,12 @@
 		<dependency>
 			<groupId>com.celements</groupId>
 			<artifactId>celements-core</artifactId>
-			<version>1.28</version>
+			<version>1.29-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.celements</groupId>
 			<artifactId>celements-photo</artifactId>
-			<version>1.10</version>
+			<version>1.11-SNAPSHOT</version>
 		</dependency>
     <dependency>
       <groupId>com.celements</groupId>
