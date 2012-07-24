@@ -20,13 +20,10 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
 }
 
 /* main panel */
-.celements3_tabMenu #tabMenuPanel {
-	background-color: white;
-}
-
-/* panel header */
+/* and panel header */
+.celements3_tabMenu #tabMenuPanel,
 .celements3_tabMenu .hd {
-	background-color:#666;
+	background-color: transparent;
 }
 
 /* tab buttons */
