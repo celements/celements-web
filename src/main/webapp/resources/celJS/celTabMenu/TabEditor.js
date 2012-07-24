@@ -142,6 +142,7 @@ TE.prototype = {
     
     if($$('.container-close').size() > 0) {
       _me.initDefaultCloseButton();
+      _me._addClearButtons();
     }
     if(_me.tabMenuConfig.initCloseButton) {
       _me.initCloseButton();
@@ -212,15 +213,19 @@ TE.prototype = {
       'class': 'yui-button yui-push-button actionButton',
       'id': tabData['container']
     });
+    _me._addClearButtons();
+    $('tabMenuPanel').down('.hd').down('div.clearbuttons').insert({ "before" : span });
+    tabData['onclick'] = { fn: clickHandler };
+    _me.actionButtons.set(tabData['id'], new YAHOO.widget.Button(tabData));
+  },
+
+  _addClearButtons : function() {
     if (!$('tabMenuPanel').down('.hd').down('div.clearbuttons')) {
       var clearbuttons = new Element('div', {
         'class': 'clearbuttons'
       });
       $('tabMenuPanel').down('.hd').appendChild(clearbuttons);
     }
-    $('tabMenuPanel').down('.hd').down('div.clearbuttons').insert({ "before" : span });
-    tabData['onclick'] = { fn: clickHandler };
-    _me.actionButtons.set(tabData['id'], new YAHOO.widget.Button(tabData));
   },
 
   initSaveButton : function() {
