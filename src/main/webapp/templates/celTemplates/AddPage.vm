@@ -92,8 +92,6 @@
 		#else
 	    	$menu_item_obj.set("menu_name", $!request.get("menu_name"))
 		#end
-		#set($page_typeObj = $new_doc.newObject("Celements2.PageType"))
-		$page_typeObj.set("page_type", $!page_type)
 		## parent
 		$new_doc.setParent($!request.get('doc_parent'))  
 		## save
@@ -343,7 +341,7 @@
         #set($page_type_properties_obj = '')
         #set($page_type_properties_obj = $cur_doc.getObject('Celements2.PageTypeProperties'))
          #if("$!page_type_properties_obj" != '')
-          #set($pretty_name = $!page_type_properties_obj.get("type_name"))
+          #set($pretty_name = $!page_type_properties_obj.getProperty("type_name").getValue())
         #else
           #set($pretty_name = $cur_doc.getName())
         #end
