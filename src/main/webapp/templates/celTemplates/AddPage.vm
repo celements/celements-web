@@ -1,4 +1,3 @@
-{pre}
 ## AddPage
 ## shows a form which allows to add a new page or move an existing one.
 ## it adds a MenuItem for the new/moved page to the doc_parent Menu
@@ -370,4 +369,3 @@ Validation.add('validate-docname', '$adminMsg.get('cel_tm_validate_warning')', f
  var result = valid.validate();
  #end
 </script>
-{/pre}
