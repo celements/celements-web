@@ -6,7 +6,7 @@
 <title>##
 $celementsweb.getDocHeaderTitle($doc.fullName)##
 </title>
-$!xwiki.getWebPreference("meta")
+$!xwiki.getSpacePreference("meta")
 #if("$!charEncoding" == '')
   #set($charEncoding = "$xwiki.encoding")
 #end

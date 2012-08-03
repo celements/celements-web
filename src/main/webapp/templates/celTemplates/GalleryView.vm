@@ -28,7 +28,7 @@ $celementsweb.addExtJSfileOnce(':celJS/lytebox5/lytebox.js', 'file')
  <h2 class="celements_gallery_title">$!galleryDoc.getTitle()</h2>		##already Multilingual title??
  <p class="celements_gallery_description">$!obj.getProperty("description").getValue()<!--ie6.0--></p>
 #end
-#set($dataLyteOptions = "$!{xwiki.getWebPreference('LyteboxOptions')}")
+#set($dataLyteOptions = "$!{xwiki.getSpacePreference('LyteboxOptions')}")
 #if("$!dataLyteOptions" == '')
     #set($dataLyteOptions = 'slide:true loopslideshow:true group:group1 shownavigation:true')
 #end

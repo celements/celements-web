@@ -16,7 +16,7 @@
   #iterateName($menu.size())
   #set($newDoc = $xwiki.getDocument("${space}.$newMenuName"))
   #if($xwiki.isMultiLingual())
-    #set($langs =  $xwiki.split($xwiki.getWebPreferenceFor("language", "$space")," "))
+    #set($langs =  $xwiki.split($xwiki.getSpacePreferenceFor("language", "$space")," "))
   #end
   #set($last_menu_item = '')
   #if($menu.size() > 0)

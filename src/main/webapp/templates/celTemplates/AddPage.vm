@@ -13,7 +13,7 @@
 	#set($space = "Content")
 #end
 #if($xwiki.isMultiLingual())
-    #set($langs =  $xwiki.split($xwiki.getWebPreferenceFor("language", "$space")," "))
+    #set($langs =  $xwiki.split($xwiki.getSpacePreferenceFor("language", "$space")," "))
 #end
 #set($redirmode = "$!request.get('redirmode')")
 #set($redir = "$!request.get('xredirect')")

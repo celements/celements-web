@@ -6,7 +6,7 @@
 #if(("$!red_obj" != '') && ("$!redURL" != ''))
 <li><a href="$xwiki.getURL($redURL,'edit')?language=$!{default_language}">Create page $!xwiki.getURL("$redURL",'edit')</a>
 #end
-#set($default_language = "$!xwiki.getWebPreference('default_language')")
+#set($default_language = "$!xwiki.getSpacePreference('default_language')")
 <li><a href="$doc.getURL('edit', "language=$!{default_language}")">Edit redirect</a>
 </ul>
 #end

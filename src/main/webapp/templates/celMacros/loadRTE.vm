@@ -47,7 +47,7 @@ tinyMCE.init({
   content_css : "$!{content_css_filenameURL.replaceAll('^,', '')}",
   #end
   ## lookup the rte_styles field in the XWiki and WebPreference
-  #set($rteStyles = "$!xwiki.getWebPreference('rte_styles')")
+  #set($rteStyles = "$!xwiki.getSpacePreference('rte_styles')")
   #if("$!rteStyles" == '')
   	## default back to the standard fields.
     #set($rteStyles = 'Titel=h1;Untertitel=h2;Text=text')
