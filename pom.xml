@@ -213,7 +213,7 @@
                 <exclude>WEB-INF/lib/google-collections-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-plugin-activitystream-*.jar</exclude>
                 <exclude>WEB-INF/lib/poi-*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-office-*.jar</exclude>
+<!--                <exclude>WEB-INF/lib/xwiki-core-office-*.jar</exclude> -->
               </excludes>
             </overlay>
           </overlays>
