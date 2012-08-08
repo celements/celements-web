@@ -73,19 +73,21 @@ var initSlideShows = function(slideShowConfigArray) {
 var celSlideShows_initOneSlideShow = function(slideShowConfig) {
   if (slideShowConfig.imageArray && (slideShowConfig.imageArray.size() > 0)) {
     celSlideShowConfig.set(slideShowConfig.htmlId, slideShowConfig);
+    var slideShowImg = $(slideShowConfig.htmlId);
     var tempImg = new Element('img', {
       'id' : slideShowConfig.htmlId + '_tmpImg',
-      'style' : 'position: absolute; top: 0px; left: 0px;'
+      'style' : 'position: absolute; top: 0px; left: 0px;',
+      'class' : slideShowImg.className
      }).hide();
     tempImg.observe('load', centerImage);
-    var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
+    var divWrapper = slideShowImg.wrap('div', {
         'class' : 'celanim_slideshow_wrapper' }
       ).insert({ top : tempImg });
-    if ($(slideShowConfig.htmlId).up('.highslide-html')) {
-      var overlayHTMLDiv = $(slideShowConfig.htmlId).up('.highslide-html');
+    if (slideShowImg.up('.highslide-html')) {
+      var overlayHTMLDiv = slideShowImg.up('.highslide-html');
       divWrapper.setStyle({ 'height' : overlayHTMLDiv.getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : overlayHTMLDiv.getWidth() + 'px' });
-      $(slideShowConfig.htmlId).setStyle({
+      slideShowImg.setStyle({
         'margin-top' : '0',
         'margin-bottom' : '0',
         'margin-left' : '0',
@@ -93,14 +95,15 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
       });
     } else {
       //TODO maybe move to onLoad on image
-//      console.debug('copy dimensions: ', $(slideShowConfig.htmlId).getHeight(), $(slideShowConfig.htmlId).getWidth());
-      divWrapper.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
-      divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
+//      console.debug('copy dimensions: ', slideShowImg.getHeight(), slideShowImg.getWidth());
+      divWrapper.setStyle({ 'height' : slideShowImg.getHeight() + 'px' });
+      divWrapper.setStyle({ 'width' : slideShowImg.getWidth() + 'px' });
     }
-    var slideShowImg = $(slideShowConfig.htmlId);
     $w(slideShowImg.className).without('celanim_slideshow').without('celanim_overlay'
         ).each(function(className) {
-      divWrapper.addClassName(className);
+          if (!className.startsWith('cel_effekt_')) {
+            divWrapper.addClassName(className);
+          }
     });
     moveStyleToWrapper(divWrapper, slideShowImg, 'float');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-top');
@@ -131,7 +134,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     }
     /**  END HACK
      **/
-    slideShowConfig.hasRandomStart = $(slideShowConfig.htmlId).hasClassName(
+    slideShowConfig.hasRandomStart = slideShowImg.hasClassName(
         'celanim_slideshowRandomStart');
     slideShowImg.absolutize();
     removeImageSize(slideShowImg);
