@@ -74,10 +74,12 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
   if (slideShowConfig.imageArray && (slideShowConfig.imageArray.size() > 0)) {
     celSlideShowConfig.set(slideShowConfig.htmlId, slideShowConfig);
     var slideShowImg = $(slideShowConfig.htmlId);
+    var otherCssClassNames = $w(slideShowImg.className).without('celanim_slideshow'
+        ).without('celanim_overlay');
     var tempImg = new Element('img', {
       'id' : slideShowConfig.htmlId + '_tmpImg',
       'style' : 'position: absolute; top: 0px; left: 0px;',
-      'class' : slideShowImg.className
+      'class' : otherCssClassNames
      }).hide();
     tempImg.observe('load', centerImage);
     var divWrapper = slideShowImg.wrap('div', {
@@ -99,8 +101,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
       divWrapper.setStyle({ 'height' : slideShowImg.getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : slideShowImg.getWidth() + 'px' });
     }
-    $w(slideShowImg.className).without('celanim_slideshow').without('celanim_overlay'
-        ).each(function(className) {
+    otherCssClassNames.each(function(className) {
           if (!className.startsWith('cel_effekt_')) {
             divWrapper.addClassName(className);
           }
