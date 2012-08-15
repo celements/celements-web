@@ -1,3 +1,4 @@
+#set($noRecursiveLoginCall = (("$!renderDocument" == '') || ("$!renderDocument.fullName" != 'Tools.Login')))
 #if($noRecursiveLoginCall && $xwiki.exists('Tools.Login') && $xwiki.hasAccessLevel("view","Tools.Login"))
   #set($overwriteRenderDocument = 'Tools.Login')
   #set($hasLocalOverwrite = true)

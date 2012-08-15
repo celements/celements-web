@@ -82,6 +82,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
       'class' : otherCssClassNames
      }).hide();
     tempImg.observe('load', centerImage);
+    tempImg.observe('load', celSlideshowImageIsLoadedHandler);
     var divWrapper = slideShowImg.wrap('div', {
         'class' : 'celanim_slideshow_wrapper' }
       ).insert({ top : tempImg });
@@ -143,12 +144,14 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
 //    console.debug('recenter image: ',slideShowImg.getHeight(),slideShowImg.getWidth());
     slideShowImg.observe('load', centerImage);
     slideShowImg.src = slideShowImg.src;
+    slideShowConfig.delayFinished = false;
     if (slideShowHasNextImage(slideShowConfig)) {
       if (slideshowIsDebug && (typeof console != 'undefined')
           && (typeof console.debug != 'undefined')) {
         console.debug('celSlideShows_initOneSlideShow: set next image to ',
             slideShowConfig.nextImg, ", ", slideShowConfig.nextimgsrc);
       }
+      slideShowConfig.nextImgIsLoaded = false;
       tempImg.src = slideShowConfig.nextimgsrc;
     }
     $(slideShowConfig.htmlId).fire('celanim_slideshow:afterInit', slideShowConfig);
@@ -174,8 +177,14 @@ var celSlideShowGetPart = function(elemId, num, defaultvalue) {
 
 var celSlideShowThreads = new Hash();
 var scheduleChangeImage = function(elemId) {
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug('scheduleChangeImage: ' + elemId);
+  }
   var timeout = celSlideShowGetPart(elemId, 2, 3);
-  celSlideShowThreads.set(elemId, changeImage.delay(timeout, elemId));
+  var slideConfig = celSlideShowConfig.get(elemId);
+  slideConfig.delayFinished = false;
+  celSlideShowThreads.set(elemId, delayedChangeImage.delay(timeout, elemId));
 };
 
 var startSlideShows = function() {
@@ -234,7 +243,7 @@ var celSlideShow_AfterExpand = function(event) {
   newConfig.nextImg = undefined;
   celSlideShows_initOneSlideShow(newConfig);
   celSlideShow_startOne(overlayId);
-  changeImage(overlayId);
+  manualChangeImage(overlayId);
   if ($(overlayId).up('.celanim_addNavigation')) {
     celSlideShow_addNavigation(overlayId);
     $(overlayId).fire('celanim_slideshow:afterAddNavigation', newConfig);
@@ -265,6 +274,30 @@ var celSlideShow_addNavigation = function(elemId) {
   rightNavElem.observe('click', celSlideShow_NextImage.bind($(elemId)));
 };
 
+var manualChangeImage = function(elemId) {
+  if ($(elemId) && !$(elemId).hasClassName('celanim_isChanging')) {
+    var beforeIsRunning = celSlideShowIsRunning(elemId);
+    if (beforeIsRunning) {
+      // stop current scheduled image change. celSlideShowEffectAfterFinish will
+      // schedule a new one as long as 'celanim_slideshow_running' css class is
+      // not removed.
+      celSlideShowCancelNextChange(elemId);
+    }
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug("manualChangeImage: before changing ", elemId);
+    }
+    var slideConfig = celSlideShowConfig.get(elemId);
+    slideConfig.delayFinished = true;
+    changeImage(elemId);
+  } else {
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.warn != 'undefined')) {
+      console.warn("manualChangeImage: skip because 'celanim_isChanging' ", elemId);
+    }
+  }
+};
+
 var celSlideShow_PrevImage = function(event) {
   event.stop();
   var elemId = this.id;
@@ -272,7 +305,7 @@ var celSlideShow_PrevImage = function(event) {
   celSlideShow_getOuterWrapperElement(elemId).fire(
       'celanim_slideshow:beforeClickPrevImage', slideConfig);
   if (slideShowHasPrevImage(slideConfig)) {
-    changeImage(elemId);
+    manualChangeImage(elemId);
   }
   celSlideShow_getOuterWrapperElement(elemId).fire(
       'celanim_slideshow:afterClickPrevImage', slideConfig);
@@ -285,7 +318,7 @@ var celSlideShow_NextImage = function(event) {
   celSlideShow_getOuterWrapperElement(elemId).fire(
       'celanim_slideshow:beforeClickNextImage', slideConfig);
   if (slideConfig.nextImg >=0) {
-    changeImage(elemId);
+    manualChangeImage(elemId);
   }
   celSlideShow_getOuterWrapperElement(elemId).fire(
       'celanim_slideshow:afterClickNextImage', slideConfig);
@@ -317,15 +350,29 @@ var celSlideShowManualStartStop = function(event) {
 };
 
 var celSlideShowStopSlideShow = function(elemId) {
+  celSlideShowCancelNextChange(elemId);
   celSlideShowIsRunningHash.set(elemId, false);
-  window.clearTimeout(celSlideShowThreads.get(elemId));
-  celSlideShowThreads.unset(elemId);
+  celSlideShow_getOuterWrapperElement(elemId).removeClassName(
+      'celanim_slideshow_running');
+};
+
+var celSlideShowCancelNextChange = function(elemId) {
+  if (typeof celSlideShowThreads.get(elemId) != "undefined") {
+    window.clearTimeout(celSlideShowThreads.get(elemId));
+    celSlideShowThreads.unset(elemId);
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug("celSlideShowCancelNextChange: canceled next change ", elemId);
+    }
+  }
 };
 
 var celSlideShowStartSlideShow = function(elemId) {
   celSlideShowIsRunningHash.set(elemId, true);
   celSlideShow_getOuterWrapperElement(elemId).removeClassName('celanim_slideshow_paused');
   celSlideShow_getOuterWrapperElement(elemId).addClassName('celanim_slideshow_running');
+  var slideConfig = celSlideShowConfig.get(elemId);
+  slideConfig.delayFinished = true;
   changeImage(elemId);
 };
 
@@ -335,8 +382,6 @@ var celSlideShowPauseAllSlideShows = function() {
     if ($(pair.key) && !celSlideShow_isInOverlay(pair.key)) {
       celSlideShowStopSlideShow(pair.key);
       celSlideShowPausedSlideShowIds.push(pair.key);
-      celSlideShow_getOuterWrapperElement(pair.key).removeClassName(
-          'celanim_slideshow_running');
       celSlideShow_getOuterWrapperElement(pair.key).addClassName(
           'celanim_slideshow_paused');
     }
@@ -382,6 +427,11 @@ var celSlideShowEffectAfterFinish = function(effect) {
   var fadeimgtemp = $(slideConfig.htmlId + '_tmpImg');
   var fadeimg = $(slideConfig.htmlId);
   if (fadeimg && fadeimgtemp) {
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug('celSlideShowEffectAfterFinish: ', slideConfig.htmlId, fadeimg.src,
+          fadeimgtemp.src);
+    }
     fadeimg.src = fadeimgtemp.src;
     fadeimg.setStyle({
       'top' : fadeimgtemp.getStyle('top'),
@@ -393,6 +443,7 @@ var celSlideShowEffectAfterFinish = function(effect) {
     if (slideShowHasNextImage(slideConfig)) {
       removeImageSize(fadeimgtemp);
       var isNewImage = !fadeimgtemp.src.endsWith(slideConfig.nextimgsrc);
+      slideConfig.nextImgIsLoaded = false;
       fadeimgtemp.src = slideConfig.nextimgsrc;
       if (isNewImage && celSlideShowIsRunning(slideConfig.htmlId)) {
         scheduleChangeImage(slideConfig.htmlId);
@@ -416,9 +467,28 @@ var getCenteredValue = function(diffValue) {
   }
 };
 
+var celSlideshowImageIsLoadedHandler = function(event) {
+  var tempImg = event.findElement();
+  var elemId = tempImg.id.replace(/_tmpImg$/,'');
+  var slideConfig = celSlideShowConfig.get(elemId);
+  slideConfig.nextImgIsLoaded = true;
+  if (slideConfig.delayFinished) {
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug("celSlideshowImageIsLoadedHandler: delayFinished thus executing"
+          + " changeImage ", elemId);
+    }
+    changeImage(elemId);
+  }
+};
+
 var centerImage = function(event) {
   var tempImg = event.findElement();
   celSlideShowInternalCenterImage(tempImg);
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug("centerImage: done for ", tempImg.id);
+  }
 };
 
 var celSlideShowInternalCenterImage = function(tempImg) {
@@ -437,8 +507,20 @@ var celSlideShowInternalCenterImage = function(tempImg) {
   });
 };
 
+var delayedChangeImage = function(elemId) {
+  var slideConfig = celSlideShowConfig.get(elemId);
+  slideConfig.delayFinished = true;
+  changeImage(elemId);
+};
+
+var isLoadedAndDelayed = function(elemId) {
+  var slideConfig = celSlideShowConfig.get(elemId);
+  return slideConfig.delayFinished && slideConfig.nextImgIsLoaded;
+};
+
 var changeImage = function(elemId) {
-  if ($(elemId) && !$(elemId).hasClassName('celanim_isChanging')) {
+  if ($(elemId) && !$(elemId).hasClassName('celanim_isChanging')
+      && isLoadedAndDelayed(elemId)) {
     $(elemId).addClassName('celanim_isChanging');
     var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
     var effectDetails = celSlideShowEffects.get(effectKey) || celSlideShowEffects.get(
@@ -461,6 +543,12 @@ var changeImage = function(elemId) {
           'afterFinish' : celSlideShowEffectAfterFinish
         }
     );
+  } else {
+    if (slideshowIsDebug && $(elemId) && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug("changeImage: skip for [", elemId, '] because ',
+          !$(elemId).hasClassName('celanim_isChanging'),  isLoadedAndDelayed(elemId));
+    }
   }
 };
 
