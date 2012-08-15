@@ -144,7 +144,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
 //    console.debug('recenter image: ',slideShowImg.getHeight(),slideShowImg.getWidth());
     slideShowImg.observe('load', centerImage);
     slideShowImg.src = slideShowImg.src;
-    slideShowConfig.delayFinished = true;
+    slideShowConfig.delayFinished = false;
     if (slideShowHasNextImage(slideShowConfig)) {
       if (slideshowIsDebug && (typeof console != 'undefined')
           && (typeof console.debug != 'undefined')) {
@@ -177,6 +177,10 @@ var celSlideShowGetPart = function(elemId, num, defaultvalue) {
 
 var celSlideShowThreads = new Hash();
 var scheduleChangeImage = function(elemId) {
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug('scheduleChangeImage: ' + elemId);
+  }
   var timeout = celSlideShowGetPart(elemId, 2, 3);
   var slideConfig = celSlideShowConfig.get(elemId);
   slideConfig.delayFinished = false;
@@ -239,7 +243,7 @@ var celSlideShow_AfterExpand = function(event) {
   newConfig.nextImg = undefined;
   celSlideShows_initOneSlideShow(newConfig);
   celSlideShow_startOne(overlayId);
-  changeImage(overlayId);
+  manualChangeImage(overlayId);
   if ($(overlayId).up('.celanim_addNavigation')) {
     celSlideShow_addNavigation(overlayId);
     $(overlayId).fire('celanim_slideshow:afterAddNavigation', newConfig);
@@ -367,6 +371,8 @@ var celSlideShowStartSlideShow = function(elemId) {
   celSlideShowIsRunningHash.set(elemId, true);
   celSlideShow_getOuterWrapperElement(elemId).removeClassName('celanim_slideshow_paused');
   celSlideShow_getOuterWrapperElement(elemId).addClassName('celanim_slideshow_running');
+  var slideConfig = celSlideShowConfig.get(elemId);
+  slideConfig.delayFinished = true;
   changeImage(elemId);
 };
 
@@ -538,7 +544,7 @@ var changeImage = function(elemId) {
         }
     );
   } else {
-    if (slideshowIsDebug && (typeof console != 'undefined')
+    if (slideshowIsDebug && $(elemId) && (typeof console != 'undefined')
         && (typeof console.debug != 'undefined')) {
       console.debug("changeImage: skip for [", elemId, '] because ',
           !$(elemId).hasClassName('celanim_isChanging'),  isLoadedAndDelayed(elemId));
