@@ -66,7 +66,7 @@ var pickerUploadFinshed = function(event) {
         onSuccess: function(transport) {
           if (transport.responseText.isJSON()) {
             var json = transport.responseText.evalJSON();
-            loadAttachmentListCallback(json, false, true);
+            loadAttachmentListCallback(json, false, true, false);
           } else if ((typeof console != 'undefined') 
               && (typeof console.warn != 'undefined')) {
             console.warn('pickerUploadFinshed: noJSON!!! ', transport.responseText);
@@ -92,16 +92,16 @@ var loadAttachmentList = function(baseurl) {
          'start' : startPos,
          'nb' : stepNumber
       },
-      onSuccess: function(transport) {
+      onComplete: function(transport) {
         if (transport.responseText.isJSON()) {
           var json = transport.responseText.evalJSON();
-          loadAttachmentListCallback(json, true, false);
+          loadAttachmentListCallback(json, true, false, false);
           callbackFnkt(json.length == stepNumber, scroll);
-        if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-          console.log('loadAttachmentList: total loaded [',
-              $$('.imagePickerSource').size() ,'] finished? ',
-              (json.length == stepNumber));
-        }
+          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+            console.log('loadAttachmentList: total loaded [',
+                $$('.imagePickerSource').size() ,'] are there more? ',
+                (json.length == stepNumber));
+          }
         } else if ((typeof console != 'undefined') 
             && (typeof console.warn != 'undefined')) {
           console.warn('loadAttachmentList: noJSON!!! ', transport.responseText);
@@ -166,9 +166,40 @@ var centerImagePickerThumb = function(tempImg) {
   }
 };
 
-var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck) {
+var isLoading = false;
+var insertStack = new Array();
+var goThroughStack = function() {
+  if(!isLoading) {
+    isLoading = true;
+    if(insertStack.length > 0) {
+      var next = insertStack.shift();
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('loadAttachmentList: load from stack. Stack size: ' + insertStack.length);
+      }
+      loadAttachmentListCallback(next[0], next[1], next[2], true);
+    }
+    isLoading = false;
+  } else {
+    goThroughStack.delay(0.1);
+  }
+}
+
+var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck, fromStack) {
+  if(!fromStack) {
+    insertStack.push([attList, insertBottom, duplicateCheck]);
+    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+      console.log('loadAttachmentList: pushed to stack. Stack size: ' + insertStack.length);
+    }
+    goThroughStack();
+  } else {
     var attachEl = $('attachments');
-    loadingImg.remove();
+    try {
+      loadingImg.remove();
+    } catch(err) {
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('error removing loader.', err);
+      }
+    }
     var currentImgSrc = $('src').value;
     $A(attList).each(function(imgElem) {
       var cssClasses = 'imagePickerSource';
@@ -205,7 +236,13 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck)
         if (!elem.hasClassName('selected')) {
           elem.observe('click', clickOnFileAction);
         }
-      });
+    });
+    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+      console.log('loadAttachmentList: total loaded [',
+          $$('.imagePickerSource').size() ,']');
+    }
+    goThroughStack();
+  }
 };
 
 var clickOnFileAction = function (event) {
