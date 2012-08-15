@@ -1,3 +1,5 @@
+var overlaySlideIsDebug = false;
+
 YAHOO.util.Event.onDOMReady(function() {
   loadOverlaySlide();
 });
@@ -109,8 +111,10 @@ var celanimOverlay_AfterExpandHandler = function(hsExpander) {
 };
 
 var celanimOverlay_BeforeExpandHandler = function(hsExpander) {
-  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-    console.debug('celanimOverlay_BeforeExpandHandler: ', hsExpander.thumb, ', ', hsExpander);
+  if (overlaySlideIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug('celanimOverlay_BeforeExpandHandler: ', hsExpander.thumb, ', ',
+        hsExpander);
   }
   $$('.highslide-html').each(function(overlayHTMLDiv) {
     var overlayHTMLDiv2 = overlayHTMLDiv.down('div');
@@ -141,7 +145,8 @@ var celanimOverlay_AfterCloseHandler = function(hsExpander) {
 };
 
 var celanimOverlay_OpenInOverlay = function(event) {
-  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+  if (overlaySlideIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
     console.debug('celanimOverlay_OpenInOverlay: ', this, ', ', event);
   }
   var openConfig = celanimOverlay_openConfig.get(this.id);
