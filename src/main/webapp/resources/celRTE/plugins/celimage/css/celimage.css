@@ -43,7 +43,7 @@ div.imagePickerWrapper div.imagePickerSource {
   border: 4px dashed transparent;
 }
 div.imagePickerWrapper div.imagePickerSource img {
-  background: url(/file/resources/celRes/transpBG.gif?celwidth=8);
+  background: url(/file/resources/celRes/transpBGsmall.gif);
 }
 div.imagePickerWrapper div.imagePickerSource.selected {
   border: 4px dashed #ff9900;
