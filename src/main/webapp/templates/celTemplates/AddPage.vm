@@ -54,9 +54,9 @@
 #set($menu = $xwiki.celementsweb.getSubNodesForParent("$doc_parent", "$space"))
 #if($menu.size() > 0)
   #set($lastitemNum = $menu.size() - 1)
-  #set($next_menu_item_nr = $menu.get($lastitemNum).getPosition())
+  #set($next_menu_item_nr = $menu.get($lastitemNum).getPosition() + 1)
 #else
-#set($next_menu_item_nr = 1)
+#set($next_menu_item_nr = 0)
 #end
 #set($position = $next_menu_item_nr)
 
