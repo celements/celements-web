@@ -9,6 +9,9 @@
 #prev img {
   margin-left: auto; margin-right: auto;
 }
+#prev img#previewImg {
+  background: url(/file/resources/celRes/transpBG.gif);
+}
 #align, #classlist {width:150px;}
 #celwidth, #overlayWidth,
 #celheight, #overlayHeight,
@@ -38,6 +41,9 @@ div.imagePickerWrapper div.imagePickerSource {
   display: block;
   position: absolute;
   border: 4px dashed transparent;
+}
+div.imagePickerWrapper div.imagePickerSource img {
+  background: url(/file/resources/celRes/transpBG.gif?celwidth=8);
 }
 div.imagePickerWrapper div.imagePickerSource.selected {
   border: 4px dashed #ff9900;
