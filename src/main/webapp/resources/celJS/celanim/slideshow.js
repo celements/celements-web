@@ -75,7 +75,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     celSlideShowConfig.set(slideShowConfig.htmlId, slideShowConfig);
     var slideShowImg = $(slideShowConfig.htmlId);
     var otherCssClassNames = $w(slideShowImg.className).without('celanim_slideshow'
-        ).without('celanim_overlay');
+        ).without('celanim_overlay').without('highslide-image');
     var tempImg = new Element('img', {
       'id' : slideShowConfig.htmlId + '_tmpImg',
       'style' : 'position: absolute; top: 0px; left: 0px;',
@@ -242,7 +242,10 @@ var celSlideShow_AfterExpand = function(event) {
   overlayImg.id = overlayId;
   var newConfig = $H(celSlideShowConfig.get(elemId)).toObject(); // make a copy
   newConfig.htmlId = overlayId;
-  newConfig.nextImg = undefined;
+  newConfig.currImgId = undefined;
+  newConfig.preloadCurrentImage = undefined;
+  newConfig.preloadNextImage = undefined;
+  newConfig.preloadPrevImage = undefined;
   celSlideShows_initOneSlideShow(newConfig);
   celSlideShow_startOne(overlayId);
   manualChangeImage(overlayId);
