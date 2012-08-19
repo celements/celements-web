@@ -79,7 +79,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     var tempImg = new Element('img', {
       'id' : slideShowConfig.htmlId + '_tmpImg',
       'style' : 'position: absolute; top: 0px; left: 0px;',
-      'class' : otherCssClassNames
+      'class' : otherCssClassNames.join(' ')
      }).hide();
     tempImg.observe('load', centerImage);
     tempImg.observe('load', celSlideshowImageIsLoadedHandler);
