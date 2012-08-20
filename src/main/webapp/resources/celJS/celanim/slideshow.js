@@ -140,6 +140,7 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
         'celanim_slideshowRandomStart');
     slideShowImg.absolutize();
     removeImageSize(slideShowImg);
+    removeImageSize(tempImg);
     // fix centering of first image
 //    console.debug('recenter image: ',slideShowImg.getHeight(),slideShowImg.getWidth());
     slideShowImg.observe('load', centerImage);
