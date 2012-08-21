@@ -23,18 +23,18 @@
 -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<url>https://github.com/celements/celements-web</url>
-	<parent>
+  <url>https://github.com/celements/celements-web</url>
+  <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
     <version>2.1</version>
   </parent>
-	<modelVersion>4.0.0</modelVersion>	
-	<groupId>com.celements</groupId>
-	<artifactId>celements-web</artifactId>
-	<packaging>war</packaging>
-	<version>2.17.0-SNAPSHOT</version>
-	<name>Celements Webapplication</name>
+  <modelVersion>4.0.0</modelVersion>  
+  <groupId>com.celements</groupId>
+  <artifactId>celements-web</artifactId>
+  <packaging>war</packaging>
+  <version>2.17.0-SNAPSHOT</version>
+  <name>Celements Webapplication</name>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -48,25 +48,25 @@
     <url>https://github.com/celements/celements-web</url>
     <tag>HEAD</tag>
   </scm>
-	<properties>
-		<platform.core.version>2.10</platform.core.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<catalina.port>10081</catalina.port>
-		<catalina.home.celementsweb-platform>${env.CATALINA_HOME}</catalina.home.celementsweb-platform>
+  <properties>
+    <platform.core.version>2.10</platform.core.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <catalina.port>10081</catalina.port>
+    <catalina.home.celementsweb-platform>${env.CATALINA_HOME}</catalina.home.celementsweb-platform>
         <catalina.home.celementsweb>${catalina.home.celementsweb-platform}</catalina.home.celementsweb>
         <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
         <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
         <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
         <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
-	</properties>
-	<dependencies>
-		<!-- Add here all your dependencies -->		
-		<dependency>
-			<groupId>org.xwiki.enterprise</groupId>
-			<artifactId>xwiki-enterprise-web</artifactId>
-			<version>2.7.2</version>
-			<type>war</type>
-		</dependency>
+  </properties>
+  <dependencies>
+    <!-- Add here all your dependencies -->    
+    <dependency>
+      <groupId>org.xwiki.enterprise</groupId>
+      <artifactId>xwiki-enterprise-web</artifactId>
+      <version>2.7.2</version>
+      <type>war</type>
+    </dependency>
     <dependency>
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
@@ -79,32 +79,32 @@
       <groupId>info.informatica</groupId>
       <artifactId>jclf</artifactId>
     </dependency>
-		<dependency>
-			<groupId>com.xpn.xwiki.platform.plugins</groupId>
-			<artifactId>xwiki-plugin-application-manager</artifactId>
-			<version>1.17</version>
-		</dependency>
-		<dependency>
-			<groupId>com.xpn.xwiki.platform.plugins</groupId>
-			<artifactId>xwiki-plugin-wiki-manager</artifactId>
-			<version>1.24</version>
-		</dependency>
-		<dependency>
- 			<groupId>com.celements</groupId>
-			<artifactId>tinymce-langs</artifactId>
-			<version>3.4.3.2-celRTE</version>
-			<type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>com.celements</groupId>
-			<artifactId>celements-core</artifactId>
-			<version>1.30</version>
-		</dependency>
-		<dependency>
-			<groupId>com.celements</groupId>
-			<artifactId>celements-photo</artifactId>
-			<version>1.12</version>
-		</dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-application-manager</artifactId>
+      <version>1.17</version>
+    </dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-wiki-manager</artifactId>
+      <version>1.24</version>
+    </dependency>
+    <dependency>
+       <groupId>com.celements</groupId>
+      <artifactId>tinymce-langs</artifactId>
+      <version>3.4.3.2-celRTE</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-core</artifactId>
+      <version>1.30</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-photo</artifactId>
+      <version>1.13-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-blog</artifactId>
@@ -178,14 +178,14 @@
         <version>1.4</version>
       <scope>provided</scope>
     </dependency>
- 	</dependencies>	
-	<build>
-		<finalName>celements-web</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
+   </dependencies>  
+  <build>
+    <finalName>celements-web</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
           <overlays>
             <overlay>
               <groupId>com.celements</groupId>
@@ -218,7 +218,7 @@
             </overlay>
           </overlays>
         </configuration>
-			</plugin>
-		</plugins>
-	</build>
+      </plugin>
+    </plugins>
+  </build>
 </project>
