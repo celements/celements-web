@@ -10,13 +10,7 @@
 <strong>Aktive:</strong><br/>
 <textarea name="active" id="textarea_active" cols="45" rows="30">
 #set($blogstr = "%$blogname%")
-##set($hql = "select nr.email from Celements.NewsletterReceiverClass as nr where nr.isactive='1' and nr.subscribed like '${blogstr}'")
-#set($xwql = "from doc.object('Celements.NewsletterReceiverClass') as nr where nr.isactive='1' and nr.subscribed like '${blogstr}'")
-##foreach($emailAdr in $xwiki.search($hql))
-#foreach($mailDocName in $services.query.xwql($xwql).execute())
-#set($mailDoc = $xwiki.getDocument($mailDocName))
-#set($mailObj = $mailDoc.getObject('Celements.NewsletterReceiverClass', 'subscribed', "${blogname}", false))
-#set($emailAdr = "$!mailObj.getProperty('email').getValue()")
+#foreach($emailAdr in $services.celblog.getAddresses($services.model.resolveDocument($blogname)))
 $emailAdr
 #end
 </textarea>
