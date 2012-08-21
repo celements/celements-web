@@ -193,6 +193,11 @@
   #end
   "wiki_attach_path" : "$attachmentPath",
   "wiki_imagedownload_path" : "$attachmentDLPath",
+  ##FIXME move to blog-component after adding a linkPicker-api
+  #set($blogPageDoc = $xwiki.celementsblog.getBlogPageByBlogSpace("$doc.space"))
+  #if("$!blogPageDoc" != '')
+    #set($linkPickerSpaces = "$!blogPageDoc.space")
+  #end
   ##FIXME $linkPickerSpace must be given by input parameter depending on rte context
   #set($linkPickerSpace = "$doc.space")
   #if("$!linkPickerSpaces" != '')
