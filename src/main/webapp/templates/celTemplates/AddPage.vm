@@ -305,7 +305,7 @@
 		#end
 		Link ($adminMsg.get('cel_tm_document_name'))</div></td>
 		<td width="50%"><input name='menu_link' type='text' size='30' value='$!request_menu_link' class="celements2_input validate-docname" />
-		<a href="#" id="linkPickerLink" style="display:none;" onclick="javascript:window.open('$xwiki.getURL("Celements2.LinkPicker")?xpage=plain&space=${space}&form=update&field=menu_link&mode=Name','LinkPicker','dependent=yes,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes,width=370,height=450,left=100,top=200');return false;"><img src="$xwiki.celementsweb.getSkinFile('link.gif')" alt="LinkPicker" title="LinkPicker" border="0" style="float:left;margin-left:5px;"/></a>
+		<a href="#" id="linkPickerLink" style="display:none;" onclick="javascript:window.open('$xwiki.getURL("Celements2.LinkPicker")?xpage=plain&space=${space}&form=update&field=menu_link&mode=Name','LinkPicker','dependent=yes,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes,width=370,height=450,left=100,top=200');return false;"><img src="$xwiki.celementsweb.getSkinFile(':celRes/link.gif')" alt="LinkPicker" title="LinkPicker" border="0" style="float:left;margin-left:5px;"/></a>
 #if($filled && !$addPage_isMovable)
 <div class="validation-advice" style="display: block;">$adminMsg.get('cel_tm_error_exists_notmovable')</div>
 #end
