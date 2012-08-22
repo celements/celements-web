@@ -103,12 +103,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-photo</artifactId>
-      <version>1.13-SNAPSHOT</version>
+      <version>1.13</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-blog</artifactId>
-      <version>1.10-SNAPSHOT</version>
+      <version>1.10</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
