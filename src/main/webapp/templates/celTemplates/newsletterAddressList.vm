@@ -1,4 +1,4 @@
-#set($blogname = $xwiki.celementsblog.getBlogPageByBlogSpace($doc.getSpace()))
+#set($blogname = $xwiki.celementsblog.getBlogPageByBlogSpace($doc.getSpace()).getFullName())
 #if (("$!{blogname}" == "") && ("$!doc.getObject('Celements2.BlogConfigClass')" != ""))
   #set($blogname = $doc.getFullName())
 #end
