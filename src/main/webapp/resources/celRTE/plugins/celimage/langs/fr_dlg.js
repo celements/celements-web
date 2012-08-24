@@ -39,7 +39,7 @@ tinyMCE.addI18n('fr.celimage_dlg', {
 	  imageDetails : "Pr\u00e9visualisation",
 	  "tab_advanced" : "Avanc\u00e9",
 	  "tab_appearance" : "Apparence",
-	  "tab_general" : "G\u00e9n\u00e9ral",
+	  "tab_imageDetails" : "Aperçu",
 	  "tab_animation" :"Animation",
 	  "tab_imagePicker" : "Picker",
 	  slideshow : "diaporama",
