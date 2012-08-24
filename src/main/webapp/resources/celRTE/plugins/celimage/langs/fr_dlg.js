@@ -1,4 +1,4 @@
-tinyMCE.addI18n('fr.advimage_dlg', {
+tinyMCE.addI18n('fr.celimage_dlg', {
 	  "image_list" : "Liste d\'images",
 	  "align_right" : "Droite (flottant)",
 	  "align_left" : "Gauche (flottant)",
