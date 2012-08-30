@@ -50,6 +50,10 @@
 ## init Celements variables
 #set($isCellSkin = false)
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
+#set($pagetype_api = $celementsweb.getPageType($doc.fullName))
+#if("$!show_frame" == '')
+  #set($show_frame = $pagetype_api.showFrame())
+#end
 $xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
 #if("$!celementsLoadInOverlay" != '')
 $xwiki.celementsweb.includeCSSAfterPreferences(':celRes/celementsOverlay.css')
