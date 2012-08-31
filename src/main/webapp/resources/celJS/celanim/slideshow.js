@@ -146,8 +146,9 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     slideShowImg.observe('load', centerImage);
     slideShowImg.src = slideShowImg.src;
     slideShowConfig.delayFinished = false;
-    if (celSlideShowHasNext(slideShowConfig)) {
-      var nextImgSrc = slideShowConfig.preloadCurrentImage.src;
+    //XXX is this check needed at all? if gallery is empty or does not exist
+    //XXX we should not start initSlideshow anyway... 
+    if (slideShowConfig && (celSlideShowHasNext(slideShowConfig) > -1)) {
       if (slideshowIsDebug && (typeof console != 'undefined')
           && (typeof console.debug != 'undefined')) {
         console.debug('celSlideShows_initOneSlideShow: set next image to ',
