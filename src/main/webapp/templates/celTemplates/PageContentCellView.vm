@@ -5,7 +5,7 @@
 #if($overwriteRenderDocument.endsWith('.vm'))
 $xwiki.parseTemplate($overwriteRenderDocument)
 #else
-$xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument))
+$service.celementsweb.renderDocument($services.model.resolveDocument($overwriteRenderDocument))
 #end
 #set($overwriteRenderDocument = '')
 #else
