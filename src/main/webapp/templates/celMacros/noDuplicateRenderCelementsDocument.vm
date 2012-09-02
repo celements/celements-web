@@ -6,7 +6,7 @@
 #end
 #set($noRecursionFound = (${renderDocumentRecursionHistory.indexOf(" $!renderDocument.fullName ")} < 0))
 #if($noRecursionFound)
- $xwiki.celementsweb.renderCelementsDocument($renderDocument.getDocumentReference())
+ $services.celementsweb.renderCelementsDocument($renderDocument.getDocumentReference())
  #set($renderDocumentRecursionHistory = "${renderDocumentRecursionHistory}$!{renderDocument.fullName} ")
 #end
 ##

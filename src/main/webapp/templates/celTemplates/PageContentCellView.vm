@@ -17,7 +17,7 @@ $xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument))
 <div id="cellPDContent$!{pdCount}$!{pageDoc.getName()}:$!isInheritable:$!{pageDepFN}"##
  class="cel_cm_pagedependent_content">
 #end
-$xwiki.celementsweb.renderCelementsDocument($pageDoc)
+$services.celementsweb.renderCelementsDocument($pageDoc)
 #if($isAddPdDiv)
 <!-- IE6 --></div>
 #end
