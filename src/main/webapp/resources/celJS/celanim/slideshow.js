@@ -225,9 +225,35 @@ var celSlideShow_startOne = function(elemId) {
     celSlideShowStartSlideShow(elemId);
   }
   if ($(elemId).hasClassName('celanim_addNavigation')) {
+    celSlideShow_InternalAddNavigation(celSlideShowConfig.get(elemId));
+  }
+};
+
+var celSlideShow_InternalAddNavigation = function(slideConfig, maxRetry) {
+  var internalMaxRetry = maxRetry || 20;
+  internalMaxRetry = internalMaxRetry - 1;
+  var elemId = slideConfig.htmlId;
+  var wrapperElement = celSlideShow_getOuterWrapperElement(elemId);
+  if ((wrapperElement.getHeight() <=0) && (wrapperElement.getWidth() <=0)) {
+    /** There is a bug in FF an IE. If an the page is loaded in an iframe it can happen,
+     *  that the dimensions are not yet available in the onLoad event. This can be for an
+     *  image or any other element. THUS the only the work around this issue is to retry
+     *  after some amount of time. We will retry at most 20 times.
+     *  Then we will give up. **/
+    if (internalMaxRetry >= 0) {
+      if (slideshowIsDebug && (typeof console != 'undefined')
+          && (typeof console.log != 'undefined')) {
+        console.log('celSlideShow_InternalAddNavigation: failed to add navigation! retry'
+            + ' in 0.1 seconds. retries left ', internalMaxRetry);
+      }
+      celSlideShow_InternalAddNavigation.delay(0.1, slideConfig, internalMaxRetry);
+    } else {
+      console.error("celSlideShow_InternalAddNavigation: failed to add navigation!"
+          + " maxRetry exhausted. I'm giving up!");
+    }
+  } else {
     celSlideShow_addNavigation(elemId);
-    celSlideShow_getOuterWrapperElement(elemId).fire(
-        'celanim_slideshow:afterAddNavigation', celSlideShowConfig.get(elemId));
+    wrapperElement.fire('celanim_slideshow:afterAddNavigation', slideConfig);
   }
 };
 
@@ -252,8 +278,7 @@ var celSlideShow_AfterExpand = function(event) {
   celSlideShow_startOne(overlayId);
   manualChangeImage(overlayId);
   if ($(overlayId).up('.celanim_addNavigation')) {
-    celSlideShow_addNavigation(overlayId);
-    $(overlayId).fire('celanim_slideshow:afterAddNavigation', newConfig);
+    celSlideShow_InternalAddNavigation(newConfig);
   }
 };
 
@@ -508,20 +533,41 @@ var centerImage = function(event) {
   }
 };
 
-var celSlideShowInternalCenterImage = function(tempImg) {
+var celSlideShowInternalCenterImage = function(tempImg, maxRetry) {
+  var internalMaxRetry = maxRetry || 20;
+  internalMaxRetry = internalMaxRetry - 1;
   var dim = tempImg.getDimensions();
   var wrapDiv = tempImg.up('div');
-  var centeredTop = getCenteredValue(wrapDiv.getHeight() - dim.height);
-  var centeredLeft = getCenteredValue(wrapDiv.getWidth() - dim.width);
-  var slideConfig = celSlideShowConfig.get(tempImg.id.replace(/_tmpImg$/,''));
-  if (slideConfig) {
-    slideConfig.centeredTop = centeredTop;
-    slideConfig.centeredLeft = centeredLeft;
+  if ((wrapDiv.getHeight() <=0) && (wrapDiv.getWidth() <=0)) {
+    /** There is a bug in FF an IE. If an the page is loaded in an iframe it can happen,
+     *  that the dimensions are not yet available in the onLoad event. This can be for an
+     *  image or any other element. THUS the only the work around this issue is to retry
+     *  after some amount of time. We will retry at most 20 times.
+     *  Then we will give up. **/
+    if (internalMaxRetry >= 0) {
+      if (slideshowIsDebug && (typeof console != 'undefined')
+          && (typeof console.log != 'undefined')) {
+        console.log('celSlideShowInternalCenterImage: failed to center image! retry'
+            + ' in 0.1 seconds. retries left ', internalMaxRetry);
+      }
+      celSlideShowInternalCenterImage.delay(0.1, tempImg, internalMaxRetry);
+    } else {
+      console.error("celSlideShowInternalCenterImage: failed to center image!"
+          + " maxRetry exhausted. I'm giving up!");
+    }
+  } else {
+    var centeredTop = getCenteredValue(wrapDiv.getHeight() - dim.height);
+    var centeredLeft = getCenteredValue(wrapDiv.getWidth() - dim.width);
+    var slideConfig = celSlideShowConfig.get(tempImg.id.replace(/_tmpImg$/,''));
+    if (slideConfig) {
+      slideConfig.centeredTop = centeredTop;
+      slideConfig.centeredLeft = centeredLeft;
+    }
+    tempImg.setStyle({
+      'top' : centeredTop + 'px',
+      'left' : centeredLeft + 'px'
+    });
   }
-  tempImg.setStyle({
-    'top' : centeredTop + 'px',
-    'left' : centeredLeft + 'px'
-  });
 };
 
 var delayedChangeImage = function(elemId) {
