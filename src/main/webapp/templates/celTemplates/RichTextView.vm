@@ -20,7 +20,7 @@ $xwiki.includeForm('celements2web:Macros.getContentDblClick', false)
 <h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>
 #end
 ## because RichText is still the default PageType we need to allow velocity code
-#set($rteContent = $xwiki.celementsweb.renderDocument($!contentDoc))
+#set($rteContent = $services.celementsweb.renderDocument($!contentDoc.documentReference, $context.language))
 #set($imgUseMaps = $services.celementsweb.getImageUseMaps($rteContent))
 $rteContent
 #foreach($configName in $imgUseMaps)
