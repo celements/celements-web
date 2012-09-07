@@ -14,4 +14,7 @@ $jsonBuilder.openArray()
 $services.celementsphoto.addImage($jsonBuilder, $attach)
 #end ## foreach
 $jsonBuilder.closeArray()
-$jsonBuilder.getJSON()
+##DEBUG REMOVE LATER
+###set($val = "[{\"val\":\"${context}_${start}_${nb}_${mathtool.getRandom()}\", \"")
+##DEBUG REMOVE LATER
+$jsonBuilder.getJSON()##.replaceAll('\[\{"', $val)

@@ -1,31 +1,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>{#celimage_dlg.dialog_title}</title>
+  <title>{#celimage_dlg.dialog_title}</title>
   <script type="text/javascript" src="/file/resources/celJS/prototype.js"></script>
+  <script type="text/javascript" src="/file/resources/celJS/jquery.js"></script>
+  <script type="text/javascript" src="/file/resources/celJS/jquery-noconflict.js"></script>
   <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
-	<script type="text/javascript" src="../../utils/mctabs.js"></script>
-	<script type="text/javascript" src="../../utils/form_utils.js"></script>
-	<script type="text/javascript" src="../../utils/validate.js"></script>
-	<script type="text/javascript" src="../../utils/editable_selects.js"></script>
+  <script type="text/javascript" src="../../utils/mctabs.js"></script>
+  <script type="text/javascript" src="../../utils/form_utils.js"></script>
+  <script type="text/javascript" src="../../utils/validate.js"></script>
+  <script type="text/javascript" src="../../utils/editable_selects.js"></script>
   <script type="text/javascript" src="js/image.js?version=201207151810"></script>
   <script type="text/javascript" src="js/imagepicker.js?version=201208151617"></script>
+  <script type="text/javascript" src="/file/resources/celJS/jcrop/jquery.Jcrop.min.js"></script>
   <script type="text/javascript" src="/file/resources/celJS/uploadAttachment.js?version=201111211848"></script>
-  <script type="text/javascript" src="/file/resources/celJS/endlessScroll/endlessScroller.js?version=201206221607"></script>
+  <script type="text/javascript" src="/file/resources/celJS/endlessScroll/endlessScroller.js?version=201206221606"></script>
+  <script type="text/javascript" src="/file/resources/celJS/images/cropClass.js?version=201209041142"></script>
+  <link href="/file/resources/celRes/images/crop.css?version=201209061732" rel="stylesheet" type="text/css" />
   <link href="css/celimage.css?version=201208171538" rel="stylesheet" type="text/css" />
+  <link href="/file/resources/celRes/jcrop/jquery.Jcrop.css?version=201209061731" rel="stylesheet" type="text/css" />
 </head>
 <body id="celimage" style="display: none">
 <div class="celbeta">Celements Image Picker BETA</div>
     <form id="imagePickerForm" onsubmit="CelImageDialog.insert();return false;" action="" method="post" enctype="multipart/form-data"> 
-		<div class="tabs">
-			<ul>
+    <div class="tabs">
+      <ul>
         <li id="imagePicker_tab" class="current"><span><a href="javascript:mcTabs.displayTab('imagePicker_tab','imagePicker_panel');" onmousedown="return false;">{#celimage_dlg.tab_imagePicker}</a></span></li>
         <li id="imageDetails_tab"><span><a href="javascript:mcTabs.displayTab('imageDetails_tab','imageDetails_panel');" onmousedown="return false;">{#celimage_dlg.tab_imageDetails}</a></span></li>
-				<li id="appearance_tab"><span><a href="javascript:mcTabs.displayTab('appearance_tab','appearance_panel');" onmousedown="return false;">{#celimage_dlg.tab_appearance}</a></span></li>
+        <li id="appearance_tab"><span><a href="javascript:mcTabs.displayTab('appearance_tab','appearance_panel');" onmousedown="return false;">{#celimage_dlg.tab_appearance}</a></span></li>
         <li id="animation_tab" style="display:none;"><span><a href="javascript:mcTabs.displayTab('animation_tab','animation_panel');" onmousedown="return false;">{#celimage_dlg.tab_animation}</a></span></li>
         <li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">{#celimage_dlg.tab_advanced}</a></span></li>
-			</ul>
-		</div>
+        <li id="crop_tab"><span><a href="javascript:mcTabs.displayTab('crop_tab','crop_panel');" onmousedown="return false;">{#celimage_dlg.tab_crop}</a></span></li>
+      </ul>
+    </div>
 
     <div class="panel_wrapper">
       <div id="imagePicker_panel" class="panel current" style="height: 422px;">
@@ -91,59 +98,55 @@
  -->
       </div>
  
-			<div id="appearance_panel" class="panel">
-				<fieldset>
-					<legend>{#celimage_dlg.tab_appearance}</legend>
+      <div id="appearance_panel" class="panel">
+        <fieldset>
+          <legend>{#celimage_dlg.tab_appearance}</legend>
 
-					<table border="0" cellpadding="4" cellspacing="0">
-						<tr> 
-							<td class="column1"><label id="alignlabel" for="align">{#celimage_dlg.align}</label></td> 
-							<td><select id="align" name="align" onchange="CelImageDialog.updateStyle('align');CelImageDialog.changeAppearance();"> 
-									<option value="">{#not_set}</option> 
-<!--									<option value="baseline">{#celimage_dlg.align_baseline}</option>
-									<option value="top">{#celimage_dlg.align_top}</option>
-									<option value="bottom">{#celimage_dlg.align_bottom}</option>
-									<option value="text-top">{#celimage_dlg.align_texttop}</option>
-									<option value="text-bottom">{#celimage_dlg.align_textbottom}</option>
+          <table border="0" cellpadding="4" cellspacing="0">
+            <tr> 
+              <td class="column1"><label id="alignlabel" for="align">{#celimage_dlg.align}</label></td> 
+              <td><select id="align" name="align" onchange="CelImageDialog.updateStyle('align');CelImageDialog.changeAppearance();"> 
+                  <option value="">{#not_set}</option> 
+<!--                  <option value="baseline">{#celimage_dlg.align_baseline}</option>
+                  <option value="top">{#celimage_dlg.align_top}</option>
+                  <option value="bottom">{#celimage_dlg.align_bottom}</option>
+                  <option value="text-top">{#celimage_dlg.align_texttop}</option>
+                  <option value="text-bottom">{#celimage_dlg.align_textbottom}</option>
  -->
- 									<option value="left">{#celimage_dlg.align_left}</option>
-									<option value="right">{#celimage_dlg.align_right}</option>
+                  <option value="left">{#celimage_dlg.align_left}</option>
+                  <option value="right">{#celimage_dlg.align_right}</option>
                   <option value="middle">{#celimage_dlg.align_middle}</option>
-								</select> 
-							</td>
-							<td rowspan="6" valign="top">
-								<div class="alignPreview">
-									<img id="alignSampleImg" src="img/sample.gif" alt="{#celimage_dlg.example_img}" />
-									Lorem ipsum, Dolor sit amet, consectetuer adipiscing loreum ipsum edipiscing elit, sed diam
-									nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Loreum ipsum
-									edipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-									erat volutpat.
-								</div>
-							</td>
-						</tr>
+                </select> 
+              </td>
+              <td rowspan="6" valign="top">
+                <div class="alignPreview">
+                  <img id="alignSampleImg" src="img/sample.gif" alt="{#celimage_dlg.example_img}" />
+                </div>
+              </td>
+            </tr>
 
-						<tr>
-							<td class="column1"><label id="borderlabel" for="border">{#celimage_dlg.border}</label></td> 
-							<td><input id="border" name="border" type="text" value="" size="3" maxlength="3" class="number" onchange="CelImageDialog.updateStyle('border');CelImageDialog.changeAppearance();" onblur="CelImageDialog.updateStyle('border');CelImageDialog.changeAppearance();" /></td> 
-						</tr>
+            <tr>
+              <td class="column1"><label id="borderlabel" for="border">{#celimage_dlg.border}</label></td> 
+              <td><input id="border" name="border" type="text" value="" size="3" maxlength="3" class="number" onchange="CelImageDialog.updateStyle('border');CelImageDialog.changeAppearance();" onblur="CelImageDialog.updateStyle('border');CelImageDialog.changeAppearance();" /></td> 
+            </tr>
 
-						<tr>
-							<td><label for="class_list">{#class_name}</label></td>
-							<td><select id="class_list" name="class_list" class="mceEditableSelect"><option value=""></option></select></td>
-						</tr>
+            <tr>
+              <td><label for="class_list">{#class_name}</label></td>
+              <td><select id="class_list" name="class_list" class="mceEditableSelect"><option value=""></option></select></td>
+            </tr>
 
-						<tr>
-							<td class="column1"><label id="stylelabel" for="style">{#celimage_dlg.style}</label></td> 
-							<td><input id="style" name="style" type="text" value="" onchange="CelImageDialog.changeAppearance();" /></td> 
-						</tr>
+            <tr>
+              <td class="column1"><label id="stylelabel" for="style">{#celimage_dlg.style}</label></td> 
+              <td><input id="style" name="style" type="text" value="" onchange="CelImageDialog.changeAppearance();" /></td> 
+            </tr>
 
-						<tr>
-							<td class="column1"><label id="classeslabel" for="classes">{#celimage_dlg.classes}</label></td> 
-							<td><input id="classes" name="classes" type="text" value="" onchange="selectByValue(this.form,'classlist',this.value,true);" /></td> 
-						</tr>
-					</table>
-				</fieldset>
-			</div>
+            <tr>
+              <td class="column1"><label id="classeslabel" for="classes">{#celimage_dlg.classes}</label></td> 
+              <td><input id="classes" name="classes" type="text" value="" onchange="selectByValue(this.form,'classlist',this.value,true);" /></td> 
+            </tr>
+          </table>
+        </fieldset>
+      </div>
 
       <div id="animation_panel" class="panel" style="display:none;">
         <fieldset>
@@ -279,17 +282,90 @@
           </table>
         </fieldset>
       </div>
-		</div>
+      
+      <div id="crop_panel" class="panel">
+        <fieldset>
+          <legend>{#celimage_dlg.tab_crop}</legend>
+          <table border="0" cellpadding="4" cellspacing="0" style="height: 360px;">
+            <tr>
+              <td class="column1" style="width: 400px;">
+                <div id="cropContainer" style="width: 390px; height: 350px; overflow: auto;">
+                  <img id="cropImage" src="" style="background: url(/file/resources/celRes/transpBG.gif);" />
+                </div>
+              </td> 
+              <td style="width: 180px;">
+                <div style="width: 170px; height: 170px; overflow: hidden; margin-bottom: 10px; position: relative; background: url(/file/resources/celRes/transpBG.gif);">
+                  <img id="cropZoom" src="" style="position: relative;"/>
+                  <img src="/file/resources/celRes/crop_pointer.png" style="position: absolute; top: 69px; left: 69px;" />
+                </div>
+                <div style="width: 170px; height: 170px;">
+                  <div id="cropPreviewWrapper" style="width: 170px; height: 170px; overflow: hidden;">
+                    <img id="cropPreview" src="" style="position: relative; background: url(/file/resources/celRes/transpBG.gif);" />
+                  </div>
+                </div>
+              </td> 
+            </tr>
+          </table>
+        </fieldset>
 
-		<div class="mceActionPanel">
-			<div style="float: left">
-				<input type="submit" id="insert" name="insert" value="{#insert}" />
-			</div>
+        <fieldset>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <label id="fitToScreen_label" for="fitToScreen">{#celimage_dlg.fitToScreen}</label> 
+                  <select id="fitToScreen" name="fitToScreen">
+                    <option value="0">Fit</option>
+                    <option value="1">100%</option>
+                    <option value=".75">75%</option>
+                    <option value=".5">50%</option>
+                    <option value=".25">25%</option>
+                    <option value=".1">10%</option>
+                  </select>
+                  <input type="submit" id="crop_release" value="{#celimage_dlg.release}"/>
+                </td>
+                <td>
+                  <label id="cropX_label" for="cropX">{#celimage_dlg.cropX}</label>
+                  <input name="cropX" type="text" id="cropX" value="" size="5" maxlength="5" class="cropPx" /> : 
+                  <input name="cropY" type="text" id="cropY" value="" size="5" maxlength="5" class="cropPx" />
+                  <br />
+                  <label id="cropWidth_label" for="cropWidth">{#celimage_dlg.cropWidth}</label>
+                  <input name="cropWidth" type="text" id="cropWidth" value="" size="5" maxlength="5" class="cropPx" />px x 
+                  <input name="cropHeight" type="text" id="cropHeight" value="" size="5" maxlength="5" class="cropPx" />px
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label id="widthlabel" for="celwidth">{#celimage_dlg.asp_ratio}</label>
+                  <label id="widthlabel" for="celwidth">{#celimage_dlg.asp_ratio_fix}</label>
+                  <input name="crop_fixRatio" type="checkbox" id="crop_fixRatio" value="" size="5" maxlength="5" class="cropPx" />
+                  <br />
+                  <label id="widthlabel" for="celwidth">{#celimage_dlg.asp_ratio_ratio}</label> 
+                  <input name="crop_ratio_numerator" type="text" id="crop_ratio_numerator" value="" size="5" maxlength="5" class="cropPx" /> / 
+                  <input name="crop_ratio_denominator" type="text" id="crop_ratio_denominator" value="" size="5" maxlength="5" class="cropPx" /> = 
+                  <input name="crop_ratio" type="text" id="crop_ratio" value="" size="5" maxlength="5" class="cropPx" />
+                </td>
+                <td>
+                  <label id="widthlabel" for="celwidth">{#celimage_dlg.dimensions}</label>
+                  <input name="crop_celwidth" type="text" id="crop_celwidth" value="" size="5" maxlength="5" class="cropPx" disabled="disabled"/> px x 
+                  <input name="crop_celheight" type="text" id="crop_celheight" value="" size="5" maxlength="5" class="cropPx" disabled="disabled"/> px
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+      </div>
+    </div>
 
-			<div style="float: right">
-				<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
-			</div>
-		</div>
+    <div class="mceActionPanel">
+      <div style="float: left">
+        <input type="submit" id="insert" name="insert" value="{#insert}" />
+      </div>
+
+      <div style="float: right">
+        <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+      </div>
+    </div>
     </form>
 
 </body> 
