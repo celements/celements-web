@@ -1,6 +1,7 @@
 var zoomfactor = 5;
 var mainImgZoom = -1;
 var mainImgW, mainImgH;
+var selection = { x : { val : null, rounded : null }, y : { val : null, rounded : null }, w : { val : null, rounded : null }, h : { val : null, rounded : null }};
 var previewW = 170; // review has to be square for calculation to work
 var previewH = 170;
 var jcrop = null;
@@ -33,15 +34,31 @@ var setPreview = function(coords) {
 
 var setInputFields = function(coords) {
   if(animateTo == null) {
-    $('cropX').value = Math.round(coords.x / mainImgZoom);
-    $('cropY').value = Math.round(coords.y / mainImgZoom);
+    if(selection.x.rounded != coords.x) {
+      selection.x.val = Math.round(coords.x / mainImgZoom);
+      $('cropX').value = selection.x.val;
+      selection.x.rounded = selection.x.val;
+    }
+    if(selection.y.rounded != coords.y) {
+      selection.y.val = Math.round(coords.y / mainImgZoom);
+      $('cropY').value = selection.y.val;
+      selection.y.rounded = selection.y.val;
+    }
     //coords.x2
     //coords.y2
-    $('cropWidth').value = Math.round(coords.w / mainImgZoom);
-    $('cropHeight').value = Math.round(coords.h / mainImgZoom);
+    if(selection.w.rounded != coords.w) {
+      selection.w.val = Math.round(coords.w / mainImgZoom);
+      $('cropWidth').value = selection.w.val;
+      selection.w.rounded = selection.w.val;
+    }
+    if(selection.h.rounded != coords.h) {
+      selection.h.val = Math.round(coords.h / mainImgZoom);
+      $('cropHeight').value = selection.h.val;
+      selection.h.rounded = selection.h.val;
+    }
   } else {
-    if((animateTo.x == coords.x) && (animateTo.y == coords.y)
-        && (animateTo.w == coords.w) && (animateTo.h == coords.h)) {
+    if((animateTo[0] == coords.x) && (animateTo[1] == coords.y)
+        && (animateTo[2] == coords.x2) && (animateTo[3] == coords.y2)) {
       animateTo = null;
     }
   }
@@ -102,6 +119,7 @@ var setZoomSize = function() {
       width : ($('cropImage').getWidth() * zoomfactor) + 'px',
       height : ($('cropImage').getHeight() * zoomfactor) + 'px'
     });
+    mainImgZoom = -1;
     sizeSet = true;
   } else {
     sizeSet = false;
@@ -173,7 +191,6 @@ var setMainImageZoom = function() {
   }
   var w = mainImgW*zoom;
   var h = mainImgH*zoom;
-console.log(w, h, zoom, mainImgZoom);
   if(zoom != mainImgZoom) {
     $('cropImage').setStyle({ width : w + 'px', height : h + 'px'});
     loadCropPanel(true);
@@ -206,34 +223,39 @@ var calcAspectRatio = function() {
 var animateTo = null;
 var manualSelect = function(event) {
   var targetPos = new Array();
-  var target100Percent = new Array();
   var x = getNumber('cropX');
   if(x != null) {
-    targetPos.push(x * mainImgZoom);
-    target100Percent.push(Math.floor(x * mainImgZoom) / mainImgZoom);
+    targetPos.push(Math.round(x * mainImgZoom));
   }
   var y = getNumber('cropY');
   if(y != null) {
-    targetPos.push(y * mainImgZoom);
-    target100Percent.push(Math.floor(y * mainImgZoom) / mainImgZoom);
+    targetPos.push(Math.round(y * mainImgZoom));
   }
   var x2 = getNumber('cropWidth');
   if((x != null) && (x2 != null)) {
     x2 += x;
     if(x2 > mainImgW) { x2 = mainImgW; }
-    targetPos.push(x2 * mainImgZoom);
-    target100Percent.push(Math.floor(x2 * mainImgZoom) / mainImgZoom);
+    targetPos.push(Math.round(x2 * mainImgZoom));
   }
   var y2 = getNumber('cropHeight');
   if((y != null) && (y2 != null)) {
     y2 += y;
     if(y2 > mainImgH) { y2 = mainImgH; }
-    targetPos.push(y2 * mainImgZoom);
-    target100Percent.push(Math.floor(y2 * mainImgZoom) / mainImgZoom);
+    targetPos.push(Math.round(y2 * mainImgZoom));
   }
-  if(targetPos.length == 4) {
-    animateTo = target100Percent;
-console.log(animateTo);
+  if((targetPos.length == 4) && ((selection.x.val != x) || (selection.y.val != y) 
+      || (selection.w.val != x2-x) || (selection.h.val != y2-y))) {
+    animateTo = targetPos;
+//TODO bei Eingabe von Hand treten immernoch teilweise Aenderungen der Nummern auf
+    selection.x.val = x;
+    selection.x.rounded = targetPos[0];
+    selection.y.val = y;
+    selection.y.rounded = targetPos[1];
+    selection.w.val = x2 - x;
+    selection.w.rounded = targetPos[2] - targetPos[0];
+    selection.h.val = y2 - y;
+    selection.h.rounded = targetPos[3] - targetPos[1];
+console.log(selection);
     jcrop.animateTo(targetPos);
   }
 };
@@ -255,6 +277,14 @@ var releaseSelection = function() {
   $('cropY').value = '';
   $('cropWidth').value = '';
   $('cropHeight').value = '';
+  selection.x.val = null;
+  selection.x.rounded = null;
+  selection.y.val = null;
+  selection.y.rounded = null;
+  selection.w.val = null;
+  selection.w.rounded = null;
+  selection.h.val = null;
+  selection.h.rounded = null;
 };
 
 var setAspectRatio = function() {
@@ -273,31 +303,20 @@ var setAspectRatio = function() {
   jcrop.focus();
 };
 
-var registerCropInputObservers = function(start) {
-  if(start) {
-    $('cropX').observe('blur', manualSelect);
-    $('cropX').observe('keyup', manualSelect);
-    $('cropY').observe('blur', manualSelect);
-    $('cropY').observe('keyup', manualSelect);
-    $('cropWidth').observe('blur', manualSelect);
-    $('cropWidth').observe('keyup', manualSelect);
-    $('cropHeight').observe('blur', manualSelect);
-    $('cropHeight').observe('keyup', manualSelect);
-//  } else {
-//    $('cropX').stopObserving('blur', manualSelect);
-//    $('cropX').stopObserving('keyup', manualSelect);
-//    $('cropY').stopObserving('blur', manualSelect);
-//    $('cropY').stopObserving('keyup', manualSelect);
-//    $('cropWidth').stopObserving('blur', manualSelect);
-//    $('cropWidth').stopObserving('keyup', manualSelect);
-//    $('cropHeight').stopObserving('blur', manualSelect);
-//    $('cropHeight').stopObserving('keyup', manualSelect);
-  }
+var registerCropInputObservers = function() {
+  $('cropX').observe('blur', manualSelect);
+  $('cropX').observe('keyup', manualSelect);
+  $('cropY').observe('blur', manualSelect);
+  $('cropY').observe('keyup', manualSelect);
+  $('cropWidth').observe('blur', manualSelect);
+  $('cropWidth').observe('keyup', manualSelect);
+  $('cropHeight').observe('blur', manualSelect);
+  $('cropHeight').observe('keyup', manualSelect);
 }
 
 var onLoadInit = function() {
   $('crop_tab').down('a').observe('click', loadCropPanelEvent);
-  registerCropInputObservers(true);
+  registerCropInputObservers();
   $('crop_fixRatio').observe('click', setAspectRatio);
   $('crop_ratio').observe('blur', setAspectRatio);
   $('crop_ratio').observe('keyup', setAspectRatio);
