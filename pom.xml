@@ -60,13 +60,21 @@
         <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
   </properties>
   <dependencies>
-    <!-- Add here all your dependencies -->    
+    <!-- xwiki platform dependency -->    
     <dependency>
       <groupId>org.xwiki.enterprise</groupId>
       <artifactId>xwiki-enterprise-web</artifactId>
       <version>2.7.2</version>
       <type>war</type>
     </dependency>
+    <!-- Add here all your module-web dependencies -->    
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>blog-web</artifactId>
+      <version>1.1-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
+    <!-- Add here all your dependencies -->    
     <dependency>
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
@@ -104,11 +112,6 @@
       <groupId>com.celements</groupId>
       <artifactId>celements-photo</artifactId>
       <version>1.15</version>
-    </dependency>
-    <dependency>
-      <groupId>com.celements</groupId>
-      <artifactId>celements-blog</artifactId>
-      <version>1.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
