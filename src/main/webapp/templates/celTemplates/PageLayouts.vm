@@ -15,14 +15,15 @@
     FAILED to export $plApi.getPrettyName() as xar!
 #end
 #elseif($isAdmin && ("$!request.action" == 'delete') && $celementsweb.layoutExists("$!request.layoutName"))
+#set($layoutKey = "$!{request.layoutName}")
 #if("$!request.confirm" == '1')
-	#if($celementsweb.deleteLayout("$!request.layoutName"))
-		<p>Successfully deleted layout '$!{request.layoutName}'.</p>
+	#if($celementsweb.deleteLayout($layoutKey))
+		<p>Successfully deleted layout '$!layoutKey'.</p>
 	#else
-	    <p>Failed to delete layout '$!{request.layoutName}'!</p>
+	    <p>Failed to delete layout '$!layoutKey'!</p>
 	#end
 #else
-<p>Are you sure you want delete the '$!{request.layoutName}' layout?</p>
+<p>Are you sure you want delete the '$!layoutKey' layout?</p>
 <a class="deleteyes" href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layoutName=$!layoutKey&confirm=1">delete</a>
 <a class="deleteno" href="?xpage=overlay&conf=PageLayoutsListing">do NOT delete</a>
 #end
