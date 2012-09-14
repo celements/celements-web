@@ -1,3 +1,4 @@
+#set($xredirect = "$!request.xredirect")
 #set($filled = $request.get("submitted") == "1")
 #set($complete = true)
 #set($valid = true)
@@ -79,33 +80,10 @@
 </table>
 </div> <!-- editGallery_table_box -->
 <div class="celements2_box_subtitle">$msg.get('gallery_upload_picture')</div>
-#if($xwiki.celementsweb.getVersionMode() == 'celements3')
-  <form action="$doc.getURL('import')" method="post">
-    <input type="hidden" name="xredirect" value="$doc.getURL('edit')" />
-    <input type="submit" value="$msg.get('gallery_import_link')" />
-  </form>
-#else
-<form name="update" action="$xwiki.getURL($doc.getFullName(), 'upload')" enctype="multipart/form-data" method="post" onsubmit="return updateName(this)">
-<script type="text/javascript">
-function updateName(form) {
-var fname = form.filepath.value;  
-if (fname=="") {
-  return false;
-}
-var i = fname.lastIndexOf('\\');
-if (i==-1)
-  i = fname.lastIndexOf('/');
-fname = fname.substring(i+1);
-form.filename.value = fname;
-return true;
-}
-</script>
-  <input type="hidden" name="xredirect" value="$doc.getURL('edit')" size="20" />    
-  <input type="hidden" name="filename" value="" size="20" />
-  <input type="file" name="filepath" value="" size="40"  />
-  <input type="submit" value="Upload" class="celements2_input_button"/>  
-  </form>
-#end
+<form action="$doc.getURL('import')" method="post">
+  <input type="hidden" name="xredirect" value="$doc.getURL('edit', $xredirect)" />
+  <input type="submit" value="$msg.get('gallery_import_link')" />
+</form>
 <div class="celements2_box_subtitle">$msg.get('gallery_gallery_properties')</div>
 $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
 $celementsweb.addExtJSfileOnce(':celJS/validation.js')
@@ -115,7 +93,8 @@ $celementsweb.addExtJSfileOnce(':celJS/validation.js')
 $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('prototype.js', 'skin'))
 $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('validation.js', 'skin'))
 #end*#
-<form id="edit" name="edit" method="post" action="">
+<form id="edit" name="edit" method="post" action="?">
+ <input type="hidden" name="xredirect" value="$xredirect" />
 <input type="hidden" name="submitted" value="1" />
 #set($albumobj = $!doc.getObject("XWiki.PhotoAlbumClass"))
 <table cellspacing="0" cellpadding="0" border="0" class="celements2_table">

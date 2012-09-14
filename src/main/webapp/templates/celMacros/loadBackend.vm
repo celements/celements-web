@@ -19,7 +19,7 @@ $celementsweb.addExtJSfileOnce(':celJS/adminUi/menubar.js')
 $celementsweb.addExtJSfileOnce(':celJS/zendesk/zendeskOverlay.js')
 $celementsweb.includeCSSAfterSkin(':celRes/zendesk/zendeskOverlay.css')
 ## keep the following if async with the one in celMacros/startCelementsBody.vm to load getTabMenu!!
-#if(("$celementsweb.getVersionMode()" == "celements3") && (("$context.action" == 'edit') || ("$context.action" == 'inline')))
+#if(("$context.action" == 'edit') || ("$context.action" == 'inline'))
 $xwiki.parseTemplate("celMacros/DarkBox.vm")
 $celementsweb.addExtJSfileOnce(':celJS/celTabMenu/TabEditor.js')
 $celementsweb.addExtJSfileOnce(':celJS/celTabMenu/celementsTabMenu.js')
