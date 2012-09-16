@@ -1,4 +1,9 @@
-#set($xredirect = "$!request.xredirect")
+#if("$!request.get('xredirect')" != '')
+#set($xredirect = $!request.getParameter('xredirect'))
+#else
+#set($xredirect = "$doc.getURL('view')")
+#end
+#set($redirectStr = "xredirect=$xredirect")
 #set($filled = $request.get("submitted") == "1")
 #set($complete = true)
 #set($valid = true)
@@ -68,7 +73,7 @@
   <td class="celements2_line" style="text-align:left;">
     $services.celementsweb.getHumanReadableSize($attach.filesize, true, $admin_language)
   </td>
-  <td class="celements2_line" style="text-align:left;"><a href="$doc.getAttachmentURL("${attach.filename}", 'delattachment')?xredirect=$doc.getURL('edit')" onclick="return confirm('$msg.get("confirmdelattachment")');">$msg.get("delete")</a></td>
+  <td class="celements2_line" style="text-align:left;"><a href="$doc.getAttachmentURL("${attach.filename}", 'delattachment')?xredirect=$doc.getURL('edit', $redirectStr)" onclick="return confirm('$msg.get("confirmdelattachment")');">$msg.get("delete")</a></td>
 </tr>
 #set( $counter = $counter + 1)
 #end
@@ -81,7 +86,7 @@
 </div> <!-- editGallery_table_box -->
 <div class="celements2_box_subtitle">$msg.get('gallery_upload_picture')</div>
 <form action="$doc.getURL('import')" method="post">
-  <input type="hidden" name="xredirect" value="$doc.getURL('edit', $xredirect)" />
+  <input type="hidden" name="xredirect" value="$doc.getURL('edit', $redirectStr)" />
   <input type="submit" value="$msg.get('gallery_import_link')" />
 </form>
 <div class="celements2_box_subtitle">$msg.get('gallery_gallery_properties')</div>
@@ -94,7 +99,7 @@ $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('prototype.js', 'sk
 $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('validation.js', 'skin'))
 #end*#
 <form id="edit" name="edit" method="post" action="?">
- <input type="hidden" name="xredirect" value="$xredirect" />
+ <input type="hidden" class="celEditorRedirect" name="xredirect" value="$xredirect" />
 <input type="hidden" name="submitted" value="1" />
 #set($albumobj = $!doc.getObject("XWiki.PhotoAlbumClass"))
 <table cellspacing="0" cellpadding="0" border="0" class="celements2_table">
