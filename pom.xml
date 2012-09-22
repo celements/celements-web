@@ -71,7 +71,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>1.1</version>
+      <version>1.2-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- Add here all your dependencies -->    
