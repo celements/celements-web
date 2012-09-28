@@ -1,0 +1,130 @@
+@charset "UTF-8";
+/* CSS Document */
+
+@charset "UTF-8";
+/* CSS Document */
+
+/********************************
+	Layout Manager
+********************************/
+
+body #cel_layout_editor #cel_skin_editor_reorder_tree {
+  width: 580px;
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree ul {
+  min-height: 4px;
+  padding-left: 20px;
+  padding-bottom: 2px;
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree ul li{
+  list-style-image: url("/file/resources/celRes/document.gif");
+  list-style-position: inside;
+  margin: 0px;
+  padding: 0px;
+  line-height: 16px;
+  font-size: 12px;
+  border-left: 1px dotted gray;
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree.reorderMode {
+  border: 1px dashed gray;
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree.reorderMode ul li{
+  cursor: move;
+}
+#pagelayoutlist{
+	font-family:Tahoma,Geneva,Helvetica,Arial,sans-serif;
+}
+#pagelayoutlist h1,
+#pagelayoutlist h2{
+	margin-left:0px;
+	margin-right:0px;
+	margin-top:5px;
+	margin-bottom:5px;
+	padding:0px;
+	color:#000000;
+}
+#pagelayoutlist h1{
+	font-size:20px;
+	line-height:24px;
+}
+#pagelayoutlist h2{
+	font-size:16px;
+	line-height:20px;
+}
+#pagelayoutlist a{
+	color:#000000!important;
+	text-decoration:underline!important;
+}
+#pagelayoutlist table{
+	margin-bottom:15px;
+	border-collapse:collapse;
+}
+#pagelayoutlist th,
+#pagelayoutlist td{
+	text-align:left;
+	padding-right:15px;
+	padding-top:5px;
+}
+#pagelayoutlist th.prettyname{
+	width:400px;
+}
+#pagelayoutlist th{
+	border-bottom:1px solid #000000;
+}
+
+.cel_contentTab h1{
+	font-family:Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	margin:0px;
+	padding:0px;
+	padding-top:5px;
+	padding-bottom:5px;
+	color:#000000;
+}
+.cel_contentTab{
+	margin-left:40px;
+	position:relative;
+}
+.cel_contentTab .editablecode_container textarea{
+	width:90%;
+}
+.cel_pagepropertiesTab{
+	position:relative;
+}
+.cel_pagepropertiesTab #Celements\00002eCellClass_0_css_styles{
+	width:90%;
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.PageContentCell{
+	list-style-image:url("/file/resources/celRes/PageContentCell.gif");
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.BannerCell{
+	list-style-image:url("/file/resources/celRes/BannerCell.gif")
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.NavigationCell{
+	list-style-image:url("/file/resources/celRes/NavigationCell.gif")
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.RichTextCell{
+	list-style-image:url("/file/resources/celRes/RichTextCell.gif")
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.SlideshowCell{
+	list-style-image:url("/file/resources/celRes/SlideShowCell.gif")
+}
+body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.GroupCell{
+	list-style-image:url("/file/resources/celRes/GroupCell.gif")
+}
+#cel_layout_editor{
+	font-family:Tahoma,Geneva,Helvetica,Arial,sans-serif;
+}
+#cel_layout_editor h1,
+#cel_layout_editor h2{
+	margin-left:0px;
+	margin-right:0px;
+	margin-top:5px;
+	margin-bottom:5px;
+	padding:0px;
+	color:#000000;
+	padding-left:15px;
+}
+#cel_layout_editor h1{
+	font-size:20px;
+	line-height:24px;
+}

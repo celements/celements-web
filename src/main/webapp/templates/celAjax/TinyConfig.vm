@@ -77,10 +77,10 @@
   ## default back to the standard fields
   #set($rte_row_1 = $celementsweb.getRTEConfigField('row_1'))
   #if("$!rte_row_1" == '')
-    #set($rte_row_1 = "$!{rte_row_1}save,cancel,separator,bold,italic,underline,separator,")
+    #set($rte_row_1 = "$!{rte_row_1}save,cancel,|,bold,italic,underline,|,")
     #set($rte_row_1 = "$!{rte_row_1}justifyleft,justifycenter,justifyright,justifyfull,")
-    #set($rte_row_1 = "$!{rte_row_1}separator,bullist,numlist,separator,link,unlink,")
-    #set($rte_row_1 = "$!{rte_row_1}image,forecolor,backcolor,separator,code")
+    #set($rte_row_1 = "$!{rte_row_1}|,bullist,numlist,|,link,unlink,")
+    #set($rte_row_1 = "$!{rte_row_1}image,forecolor,backcolor,|,code")
   #elseif("$!rte_row_1" == 'none')
     #set($rte_row_1 = '')
   #end

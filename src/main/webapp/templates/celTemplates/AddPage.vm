@@ -153,26 +153,6 @@
 				<input name='space' type='hidden' value='$!request.get("space")' />
 		
 				<table class="celements2_table">
-######################### if not celements3 #########################
-#if("$celementsweb.getVersionMode()" != 'celements3')
-					<tr>
-						<td width="50%"><div class="celements2_input_mandatory">$adminMsg.get('cel_tm_menu_name')</div></td>
-		          		<td width="50%">
-		      				#if($xwiki.isMultiLingual())
-		      					<table>
-		      					#foreach($lang in $langs)
-		      						<tr><td>$adminMsg.get($lang) :</td>
-		      						<td><input name='menu_name_$lang' type='text' size='30' value='$!request.get("menu_name_$lang")' class="celements2_input"/></td>
-		      						</tr>
-		      					#end
-		      					</table>
-		      				#else
-		      					<input name='menu_name' type='text' size='30' value='$!request.get("menu_name")' class="celements2_input required"/>
-		      				#end
-		      			</td>
-					</tr>
-#end
-####################### end if not celements3 #######################
 					<tr>
 						<td width="50%"><div class="celements2_input_mandatory">Link $adminMsg.get('cel_tm_document_name')</div></td>
 				  		<td width="50%"><input name='menu_link' type='text' size='30' value='$request_menu_link' readonly="readonly" class="celements2_input validate-docname"/></td>
@@ -272,31 +252,6 @@
 	</table>
 	<div id="celements2_addpage_mandatory">
 	<table class="celements2_table">
-######################### if not celements3 #########################
-#if("$celementsweb.getVersionMode()" != 'celements3')
-		<tr><td width="50%">
-		#if($filled && ($!request.get("menu_name") == ""))
-			<div class="celements2_input_mandatory celements2_error">
-		#else
-			<div class="celements2_input_mandatory">
-		#end
-		$adminMsg.get('cel_tm_menu_name')</div>
-		</td>
-		<td width="50%">
-		#if($xwiki.isMultiLingual())
-		<table>
-			#foreach($lang in $langs)
-			<tr>
-			<td>$adminMsg.get($lang) :</td><td><input name='menu_name_$lang' type='text' size='30' value='$!request.get("menu_name_$lang")' class="celements2_input"/></td>
-			</tr>
-			#end
-		</table>
-		#else
-		<input name='menu_name' type='text' size='30' value='$!request.get("menu_name")' class="celements2_input required"/>
-		#end
-		</td></tr>
-#end
-####################### end if not celements3 #######################
 		<tr><td width="50%">
 		#if($filled && (("$!request_menu_link" == "") || (!$addPage_isMovable)))
 			<div class="celements2_input_mandatory clemenets2_error">
@@ -314,15 +269,6 @@
 	</div>
 	<div id="celements2_addpage_optional">
 	<table class="celements2_table">
-######################### if not celements3 #########################
-#if("$celementsweb.getVersionMode()" != 'celements3')
-			<tr><td width="50%">$adminMsg.get('cel_tm_page_title')</td>
-			<td width="50%">
-				<input name='content_title' type='text' size='30' value='$!request.get("content_title")' class="celements2_input"/>
-			</td>
-			</tr>
-#end
-####################### end if not celements3 #######################
 			<tr><td width="50%">$adminMsg.get('cel_tm_page_type')</td>
 			<td width="50%">
 		      <select name="page_type" id="PageType" size="1" class="celements2_input">

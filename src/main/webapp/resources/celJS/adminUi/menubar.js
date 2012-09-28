@@ -167,7 +167,7 @@ MenuBar.prototype = {
  }
 };
 
-Event.observe(window, 'load', function(){
+var initMenuBarListener = function() {
   if($('celements2_menu_bar_header')) {
      // Admin Interface
      my_admin_interface = new AdminInterface();
@@ -195,7 +195,9 @@ Event.observe(window, 'load', function(){
   if (typeof my_menu_bar != 'undefined') {
     $$("body")[0].observe('click', my_menu_bar.show_menu_item.bind(my_menu_bar));
   }
-});
+};
+
+Event.observe(window, 'load', initMenuBarListener);
 
 var openZendeskHandler = function(event) {
   event.stop();
