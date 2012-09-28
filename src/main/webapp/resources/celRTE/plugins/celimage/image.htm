@@ -77,7 +77,7 @@
               <td class="nowrap">
                 <input name="celwidth" type="text" id="celwidth" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.changeHeight();"/> px x 
                 <input name="celheight" type="text" id="celheight" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.changeWidth();"/> px
-                <input type="submit" id="resetMax" value="{#celimage_dlg.resetMax}" />
+                <input type="button" id="resetMax" value="{#celimage_dlg.resetMax}" />
                 <label for="resetMax" id="resetMaxLabel"></label>
               </td>
             </tr>
@@ -345,8 +345,8 @@
                   <input name="cropHeight" type="text" id="cropHeight" value="" size="5" class="cropPx" />px
                 </td>
                 <td>
-                  <input type="submit" id="crop_release" value="{#celimage_dlg.release}"/>
-                  <input type="submit" id="crop_exec" value="{#celimage_dlg.exec}"/>
+                  <input type="button" id="crop_release" value="{#celimage_dlg.release}"/>
+                  <input type="button" id="crop_exec" value="{#celimage_dlg.exec}"/>
                 </td>
               </tr>
             </tbody>
