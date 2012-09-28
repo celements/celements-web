@@ -92,9 +92,6 @@
     },
 
     _reduceDimensionToMaxSize : function(origDim, newDim) {
-//      newDim.height = Math.min(newDim.height, origDim.cropHeight);
-//      newDim.width = Math.min(newDim.width, origDim.cropWidth);
-      
       if (newDim.height > origDim.cropHeight) {
         newDim.height = origDim.cropHeight;
       }
