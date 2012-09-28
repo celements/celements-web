@@ -252,25 +252,35 @@ TE.prototype = {
     var closeClickHandler = function() {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         if (!failed) {
-          var redirectValue = '';
-          if (document.forms[0] && document.forms[0]['xredirect']) { 
-            if (document.forms[0]['xredirect'][0]) {
-              redirectValue = $F(document.forms[0]['xredirect'][0]);
-            } else {
-              redirectValue = $F(document.forms[0]['xredirect']);
-            }
-          }  
-          if (redirectValue == '')  {
-            redirectValue = window.location.pathname.replace(/\/edit\/|\/inline\//,
-                '/view/');
-          }
           window.onbeforeunload = null;
-          window.location.href = redirectValue;
+          window.location.href = _me._getRedirectValue();
         }
       });
     };
     var buttonLabel = _me.tabMenuConfig.closeButtonLabel || 'Close';
     _me.addActionButton(buttonLabel, closeClickHandler);
+  },
+
+  _getRedirectValue : function() {
+    var _me = this;
+    var redirectValue = '';
+    if ($$('input.celEditorRedirect').size() > 0) {
+      redirectValue = $F($$('input.celEditorRedirect')[0]);
+    } else {
+      var firstFormName = _me.getFirstFormWithId() || 0;
+      var firstForm = document.forms[firstFormName];
+      if (firstForm && firstForm['xredirect']) { 
+        if (firstForm['xredirect'][0]) {
+          redirectValue = $F(firstForm['xredirect'][0]);
+        } else {
+          redirectValue = $F(firstForm['xredirect']);
+        }
+      }
+    }
+    if (redirectValue == '')  {
+      redirectValue = window.location.pathname.replace(/\/edit\/|\/inline\//, '/view/');
+    }
+    return redirectValue;
   },
 
   showTabMenu : function(id) {

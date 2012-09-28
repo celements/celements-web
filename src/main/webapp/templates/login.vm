@@ -12,9 +12,14 @@
   $xwiki.parseTemplate("frameheader.vm")
   #if("$!overwriteRenderDocument" != '')
   	#if($hasLocalOverwrite)
-      $xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument))
+      #set($content = $xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument)))
     #else
-      $xwiki.parseTemplate($overwriteRenderDocument)
+      #set($content = $xwiki.parseTemplate($overwriteRenderDocument))
+    #end
+    #if("$!content.trim()" != '')
+      $content
+    #else
+      #parse('celInlineTemplates/login.vm')
     #end
   #end
   $xwiki.parseTemplate("framefooter.vm")

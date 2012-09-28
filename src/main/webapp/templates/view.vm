@@ -49,7 +49,10 @@
 #else
 ## init Celements variables
 #set($isCellSkin = false)
+##only include if legacy celements2web.xar is installed
+#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
+#end
 #set($pagetype_api = $celementsweb.getPageType($doc.fullName))
 #if("$!show_frame" == '')
   #set($show_frame = $pagetype_api.showFrame())

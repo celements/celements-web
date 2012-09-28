@@ -3,6 +3,8 @@
 ## INPUT (optional): $content_css_filenameURL (default: computed from $content_css_filename)
 ## INPUT (optional): $tinyMCE_height (default 500), $tinyMCE_width (default 453)
 ##
+## @deprecated since 2.18.0 please use celAjax/TinyConfig.vm instead
+##
 ## should we load the rte?
 #set($type = $page_type)
 ## get the specific edit template
