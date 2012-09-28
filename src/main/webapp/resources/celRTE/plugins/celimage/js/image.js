@@ -1,4 +1,6 @@
 var CelImageDialog = {
+    isNewImage : null,
+
     preInit : function() {
     var url;
 
@@ -21,6 +23,14 @@ var CelImageDialog = {
       nl.src.value = dom.getAttrib(n, 'src').replace(/\?.*/, '');
       nl.celwidth.value = dom.getAttrib(n, 'width');
       nl.celheight.value = dom.getAttrib(n, 'height');
+      nl.cropX.value = this.getAttrib(n, 'cropX');
+      nl.cropY.value = this.getAttrib(n, 'cropY');
+      nl.cropWidth.value = this.getAttrib(n, 'cropWidth');
+      nl.cropHeight.value = this.getAttrib(n, 'cropHeight');
+      if((nl.cropX.value != '') && (nl.cropY.value != '') && (nl.cropWidth.value != '') 
+          && (nl.cropHeight.value != '')) {
+        nl.isCropped.value = '1';
+      }
       nl.alt.value = dom.getAttrib(n, 'alt');
       nl.title.value = dom.getAttrib(n, 'title');
       nl.marginTop.value = this.getAttrib(n, 'marginTop');
@@ -60,6 +70,14 @@ var CelImageDialog = {
       }
       $('imagePicker_tab').down('a').observe('click',
           imagePicker_pickerTabFirstClickHandler);
+      $('resetMax').observe('click', function(event) {
+        $('celwidth').value = $('resetMaxLabel').innerHTML.replace(/\D*(\d*) x.*/g, '$1');
+        $('celheight').value = $('resetMaxLabel').innerHTML.replace(/.*x (\d*)\D*/g, '$1');
+        CelImageDialog.showPreviewImage(CelImageDialog.replaceCropInURL(
+            CelImageDialog.addAutoResizeToURL($('previewImg').src, $('celwidth').value, 
+            $('celheight').value)), $('celwidth').value, $('celheight').value, 1);
+        event.stop();
+      });
     } else {
       baseurl = tinyMCEPopup.getParam("wiki_attach_path");
       loadAttachmentList(baseurl);
@@ -75,9 +93,14 @@ var CelImageDialog = {
       $('animation_tab').show();
     }
 
+    if (ed.getParam("cel_crop", false)) {
+      $('crop_panel').show();
+      $('crop_tab').show();
+    }
+
     this.changeAppearance();
-    this.showPreviewImage(this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
-        nl.celheight.value), nl.celwidth.value, nl.celheight.value, 1);
+    this.showPreviewImage(this.replaceCropInURL(this.addAutoResizeToURL(nl.src.value, 
+        nl.celwidth.value, nl.celheight.value)), nl.celwidth.value, nl.celheight.value, 1);
   },
 
   insert : function(file, title) {
@@ -106,13 +129,46 @@ var CelImageDialog = {
 
     t.insertAndClose();
   },
-
+  
   addAutoResizeToURL : function(src, width, height) {
     if (src && (src != '')) {
-      return src.replace(/\?.*/, '').strip() + '?celwidth=' + width
-        + '&celheight=' + height;
+      var newSrc = src.replace(/(.*\?.*)(&celwidth=\d*|celwidth=\d*&)(\D?.*)/g, '$1$3');
+      newSrc = newSrc.replace(/(.*\?.*)(&celheight=\d*|celheight=\d*&)(\D?.*)/g, '$1$3');
+      if(newSrc.indexOf('?') < 0) {
+        newSrc += '?';
+      } else if(!newSrc.endsWith('&')) {
+        newSrc += '&';
+      }
+      newSrc += 'celwidth=' + width + '&celheight=' + height;
+      return newSrc;
     }
     return '';
+  },
+  
+  replaceCropInURL : function(src) {
+    if (src && (src != '')) {
+      if($('isCropped').value == '1') {
+        var cropX = $('cropX').value;
+        var cropY = $('cropY').value;
+        var cropW = $('cropWidth').value;
+        var cropH = $('cropHeight').value
+        newSrc = src.replace(/(.*\?.*)(&cropX=\d*|cropX=\d*&)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?.*)(&cropY=\d*|cropY=\d*&)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?.*)(&cropW=\d*|cropW=\d*&)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?.*)(&cropH=\d*|cropH=\d*&)(\D?.*)/g, '$1$3');
+        if(newSrc.indexOf('?') < 0) {
+          newSrc += '?';
+        } else if(!newSrc.endsWith('&')) {
+          newSrc += '&';
+        }
+        newSrc += 'cropX=' + cropX + '&cropY=' + cropY + '&cropW=' + cropW + '&cropH=' 
+            + cropH;
+        return newSrc;
+      } else {
+        return src;
+      }
+    }
+    return src;
   },
 
   getSlideShowId : function(f) {
@@ -149,6 +205,8 @@ var CelImageDialog = {
 
     nl.src.value = this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
         nl.celheight.value);
+    
+    nl.src.value = this.replaceCropInURL(nl.src.value);
 
     tinymce.extend(args, {
       src : nl.src.value,
@@ -273,6 +331,19 @@ var CelImageDialog = {
       return dom.hasClass(e, 'celanim_overlay_addCloseButton');
     }
 
+    if(at == 'cropX') {
+      return e.src.replace(/((^|(.*[\?&]))cropX=(\d*)\D?.*)|.*/g, '$4');
+    }
+    if(at == 'cropY') {
+      return e.src.replace(/((^|(.*[\?&]))cropY=(\d*)\D?.*)|.*/g, '$4');
+    }
+    if(at == 'cropWidth') {
+      return e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4');
+    }
+    if(at == 'cropHeight') {
+      return e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4');
+    }
+    
     if (at == 'gallery') {
       v = '';
       idArgs = dom.getAttrib(e, 'id').split(':');
@@ -461,8 +532,11 @@ var CelImageDialog = {
 
   updateImageData : function(img, st) {
     var f = document.forms[0];
-
     if (!st) {
+      if(this.isNewImage) {
+        $('resetMaxLabel').update(img.width + ' x ' + img.height);
+        this.isNewImage = false;
+      }
       f.elements.celwidth.value = img.width;
       f.elements.celheight.value = img.height;
     }
@@ -496,8 +570,8 @@ var CelImageDialog = {
 
     tp = (parseInt(f.celwidth.value) / parseInt(t.preloadImg.width)) * t.preloadImg.height;
     f.celheight.value = Math.floor(tp + 0.5);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value,
-        f.celheight.value), f.celwidth.value, f.celheight.value, 1);
+    t.showPreviewImage(t.replaceCropInURL(t.addAutoResizeToURL(f.src.value, 
+        f.celwidth.value, f.celheight.value)), f.celwidth.value, f.celheight.value, 1);
   },
 
   changeWidth : function() {
@@ -512,8 +586,8 @@ var CelImageDialog = {
 
     tp = (parseInt(f.celheight.value) / parseInt(t.preloadImg.height)) * t.preloadImg.width;
     f.celwidth.value = Math.floor(tp + 0.5);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value,
-        f.celheight.value), f.celwidth.value, f.celheight.value, 1);
+    t.showPreviewImage(t.replaceCropInURL(t.addAutoResizeToURL(f.src.value, 
+        f.celwidth.value, f.celheight.value)), f.celwidth.value, f.celheight.value, 1);
   },
 
   updateStyle : function(ty) {
@@ -598,7 +672,7 @@ var CelImageDialog = {
   showPreviewImage : function(u, celWidth, celHeight, st) {
     var width = celWidth || 0;
     var height = celHeight || 0;
-
+//TODO if src is new, remove crops
     if (!u || (u == '')) {
       tinyMCEPopup.dom.setHTML('prev', '<p style="padding:20px;">' + tinyMCEPopup.getLang(
           'celimage_dlg.select_image_first') +'</p>');
@@ -611,19 +685,33 @@ var CelImageDialog = {
 
     u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
-    var dimensions = "";
-    if ((width > 0) && (height > 0)) {
-      dimensions = 'width="' + width + '" height="' + height + '"';
+    if($('previewImg') && ($('previewImg').src != '') 
+        && (u.replace(/(.*)\?.*/g, '$1') != $('previewImg').src.replace(/(.*)\?.*/g, '$1'
+        ))) { //image changed
+      $('isCropped').value == '0';
+      $('cropX').value = '';
+      $('cropY').value = '';
+      $('cropWidth').value = '';
+      $('cropHeight').value = '';
     }
 
+    if(this.isNewImage == null) {
+      if(($('cropWidth').value != '') && ($('cropHeight').value != '')) {
+        $('resetMaxLabel').update($('cropWidth').value + ' x ' + $('cropHeight').value);
+      } else {
+        $('resetMaxLabel').update(width + ' x ' + height);
+      }
+      this.isNewImage = false;
+    }
+    
     if (!st) {
       tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
-          + '"' + dimensions
+          + '"' //+ dimensions
           + ' border="0" onload="CelImageDialog.updateImageData(this);"'
           + ' onerror="CelImageDialog.resetImageData();" />');
     } else {
       tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
-          + '"' + dimensions
+          + '"' //+ dimensions
           + ' border="0" onload="CelImageDialog.updateImageData(this, 1);" />');
     }
   }

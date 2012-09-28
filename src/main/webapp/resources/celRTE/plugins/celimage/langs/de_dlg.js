@@ -64,5 +64,7 @@ tinyMCE.addI18n('de.celimage_dlg', {
   "asp_ratio" : "Seitenverhältnis",
   "asp_ratio_fix" : "Fixieren",
   "asp_ratio_ratio" : "Seitenverhältnis",
-  "release" : "Freigeben"
+  "release" : "Zurücksetzen",
+  "exec" : "Anwenden",
+  "resetMax" : "Zurücksetzen"
 });

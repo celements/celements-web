@@ -92,11 +92,14 @@
     },
 
     _reduceDimensionToMaxSize : function(origDim, newDim) {
-      if (newDim.height > origDim.height) {
-        newDim.height = origDim.height;
+//      newDim.height = Math.min(newDim.height, origDim.cropHeight);
+//      newDim.width = Math.min(newDim.width, origDim.cropWidth);
+      
+      if (newDim.height > origDim.cropHeight) {
+        newDim.height = origDim.cropHeight;
       }
-      if (newDim.width > origDim.width) {
-        newDim.width= origDim.width;
+      if (newDim.width > origDim.cropWidth) {
+        newDim.width = origDim.cropWidth;
       }
       return newDim;
     },
@@ -126,7 +129,16 @@
       var imageFullName = this._getImageFullName(e.src);
       if (!ed.origData.get(imageFullName)) {
         this.loadOrigDimensionsAsync(ed, imageFullName);
-        ed.lastSize.set(imageFullName, {width : e.width, height : e.height });
+        var cropW = parseInt(e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4'));
+        if(!cropW || (typeof(cropW) == 'undefined') || (cropW <= 0)) {
+          cropW = e.width;
+        }
+        var cropH = parseInt(e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4'));
+        if(!cropH || (typeof(cropH) == 'undefined') || (cropH <= 0)) {
+          cropH = e.height
+        }
+        ed.lastSize.set(imageFullName, {width : e.width, height : e.height, 
+            cropWidth : cropW, cropHeight : cropH });
       } else if (this._resizeHappend(ed, e)) {
         var origDim = ed.origData.get(imageFullName);
         var newDim = this._reduceDimensionToMaxSize(origDim, { width : e.width,
@@ -146,9 +158,17 @@
         }
       }
     },
-
+    
     addAutoResizeToURL : function(src, width, height) {
-      return src.replace(/\?.*/, '').strip() + '?celwidth=' + width + '&celheight=' + height;
+      var newSrc = src.replace(/(.*\?.*)(&celwidth=\d*|celwidth=\d*&)(\D?.*)/g, '$1$3');
+      newSrc = newSrc.replace(/(.*\?.*)(&celheight=\d*|celheight=\d*&)(\D?.*)/g, '$1$3');
+      if(newSrc.indexOf('?') < 0) {
+        newSrc += '?';
+      } else if(!newSrc.endsWith('&')) {
+        newSrc += '&';
+      }
+      newSrc += 'celwidth=' + width + '&celheight=' + height;
+      return newSrc;
     },
 
     getInfo : function() {

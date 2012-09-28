@@ -10,12 +10,12 @@
   <script type="text/javascript" src="../../utils/form_utils.js"></script>
   <script type="text/javascript" src="../../utils/validate.js"></script>
   <script type="text/javascript" src="../../utils/editable_selects.js"></script>
-  <script type="text/javascript" src="js/image.js?version=201207151810"></script>
-  <script type="text/javascript" src="js/imagepicker.js?version=201208151617"></script>
+  <script type="text/javascript" src="js/image.js?version=201209281659"></script>
+  <script type="text/javascript" src="js/imagepicker.js?version=201209281659"></script>
   <script type="text/javascript" src="/file/resources/celJS/jcrop/jquery.Jcrop.min.js"></script>
   <script type="text/javascript" src="/file/resources/celJS/uploadAttachment.js?version=201111211848"></script>
   <script type="text/javascript" src="/file/resources/celJS/endlessScroll/endlessScroller.js?version=201206221606"></script>
-  <script type="text/javascript" src="/file/resources/celJS/images/cropClass.js?version=201209041152"></script>
+  <script type="text/javascript" src="/file/resources/celJS/images/cropClass.js?version=201209281659"></script>
   <link href="/file/resources/celRes/images/crop.css?version=201209061732" rel="stylesheet" type="text/css" />
   <link href="css/celimage.css?version=201208171538" rel="stylesheet" type="text/css" />
   <link href="/file/resources/celRes/jcrop/jquery.Jcrop.css?version=201209061731" rel="stylesheet" type="text/css" />
@@ -30,7 +30,7 @@
         <li id="appearance_tab"><span><a href="javascript:mcTabs.displayTab('appearance_tab','appearance_panel');" onmousedown="return false;">{#celimage_dlg.tab_appearance}</a></span></li>
         <li id="animation_tab" style="display:none;"><span><a href="javascript:mcTabs.displayTab('animation_tab','animation_panel');" onmousedown="return false;">{#celimage_dlg.tab_animation}</a></span></li>
         <li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">{#celimage_dlg.tab_advanced}</a></span></li>
-        <li id="crop_tab"><span><a href="javascript:mcTabs.displayTab('crop_tab','crop_panel');" onmousedown="return false;">{#celimage_dlg.tab_crop}</a></span></li>
+        <li id="crop_tab" style="display: none;"><span><a href="javascript:mcTabs.displayTab('crop_tab','crop_panel');" onmousedown="return false;">{#celimage_dlg.tab_crop}</a></span></li>
       </ul>
     </div>
 
@@ -77,6 +77,8 @@
               <td class="nowrap">
                 <input name="celwidth" type="text" id="celwidth" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.changeHeight();"/> px x 
                 <input name="celheight" type="text" id="celheight" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.changeWidth();"/> px
+                <input type="submit" id="resetMax" value="{#celimage_dlg.resetMax}" />
+                <label for="resetMax" id="resetMaxLabel"></label>
               </td>
             </tr>
               <tr> 
@@ -283,7 +285,7 @@
         </fieldset>
       </div>
       
-      <div id="crop_panel" class="panel">
+      <div id="crop_panel" class="panel" style="display: none;">
         <fieldset>
           <legend>{#celimage_dlg.tab_crop}</legend>
           <table border="0" cellpadding="4" cellspacing="0" style="height: 360px;">
@@ -294,11 +296,12 @@
                 </div>
               </td> 
               <td style="width: 180px;">
-                <div style="width: 170px; height: 170px; overflow: hidden; margin-bottom: 10px; position: relative; background: url(/file/resources/celRes/transpBG.gif);">
+                <div class="previewContainer" style="width: 170px; height: 170px; overflow: hidden; margin-bottom: 10px; position: relative; background: url(/file/resources/celRes/transpBG.gif);">
                   <img id="cropZoom" src="" style="position: relative;"/>
-                  <img src="/file/resources/celRes/crop_pointer.png" style="position: absolute; top: 69px; left: 69px;" />
+                  <img id="zoomPointer" src="/file/resources/celRes/crop_pointer.png" style="position: absolute; top: 69px; left: 69px;" />
+                  <div id=""></div>
                 </div>
-                <div style="width: 170px; height: 170px;">
+                <div class="previewContainer" style="width: 170px; height: 170px;">
                   <div id="cropPreviewWrapper" style="width: 170px; height: 170px; overflow: hidden;">
                     <img id="cropPreview" src="" style="position: relative; background: url(/file/resources/celRes/transpBG.gif);" />
                   </div>
@@ -307,12 +310,12 @@
             </tr>
           </table>
         </fieldset>
-
         <fieldset>
           <table>
             <tbody>
               <tr>
                 <td>
+                  <input type="hidden" id="isCropped" name="isCropped" value="0" />
                   <label id="fitToScreen_label" for="fitToScreen">{#celimage_dlg.fitToScreen}</label> 
                   <select id="fitToScreen" name="fitToScreen">
                     <option value="0">Fit</option>
@@ -322,33 +325,28 @@
                     <option value=".25">25%</option>
                     <option value=".1">10%</option>
                   </select>
-                  <input type="submit" id="crop_release" value="{#celimage_dlg.release}"/>
                 </td>
                 <td>
-                  <label id="cropX_label" for="cropX">{#celimage_dlg.cropX}</label>
-                  <input name="cropX" type="text" id="cropX" value="" size="5" maxlength="5" class="cropPx" /> : 
-                  <input name="cropY" type="text" id="cropY" value="" size="5" maxlength="5" class="cropPx" />
-                  <br />
-                  <label id="cropWidth_label" for="cropWidth">{#celimage_dlg.cropWidth}</label>
-                  <input name="cropWidth" type="text" id="cropWidth" value="" size="5" maxlength="5" class="cropPx" />px x 
-                  <input name="cropHeight" type="text" id="cropHeight" value="" size="5" maxlength="5" class="cropPx" />px
+                  <label for="crop_ratio">{#celimage_dlg.asp_ratio}</label>
+                  <label id="crop_ratio_label" for="crop_ratio">.</label>
+                  <input style="display:none;" name="crop_ratio" type="text" id="crop_ratio" value="1.0" size="5" class="cropPx" />
+                  <label for="crop_fixRatio">{#celimage_dlg.asp_ratio_fix}</label>
+                  <input name="crop_fixRatio" type="checkbox" id="crop_fixRatio" value="" class="cropPx" />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <label id="widthlabel" for="celwidth">{#celimage_dlg.asp_ratio}</label>
-                  <label id="widthlabel" for="celwidth">{#celimage_dlg.asp_ratio_fix}</label>
-                  <input name="crop_fixRatio" type="checkbox" id="crop_fixRatio" value="" size="5" maxlength="5" class="cropPx" />
+                  <label id="cropX_label" for="cropX">{#celimage_dlg.cropX}</label>
+                  <input name="cropX" type="text" id="cropX" value="" size="5" class="cropPx" /> : 
+                  <input name="cropY" type="text" id="cropY" value="" size="5" class="cropPx" />
                   <br />
-                  <label id="widthlabel" for="celwidth">{#celimage_dlg.asp_ratio_ratio}</label> 
-                  <input name="crop_ratio_numerator" type="text" id="crop_ratio_numerator" value="" size="5" maxlength="5" class="cropPx" /> / 
-                  <input name="crop_ratio_denominator" type="text" id="crop_ratio_denominator" value="" size="5" maxlength="5" class="cropPx" /> = 
-                  <input name="crop_ratio" type="text" id="crop_ratio" value="" size="5" maxlength="5" class="cropPx" />
+                  <label id="cropWidth_label" for="cropWidth">{#celimage_dlg.cropWidth}</label>
+                  <input name="cropWidth" type="text" id="cropWidth" value="" size="5" class="cropPx" />px x 
+                  <input name="cropHeight" type="text" id="cropHeight" value="" size="5" class="cropPx" />px
                 </td>
                 <td>
-                  <label id="widthlabel" for="celwidth">{#celimage_dlg.dimensions}</label>
-                  <input name="crop_celwidth" type="text" id="crop_celwidth" value="" size="5" maxlength="5" class="cropPx" disabled="disabled"/> px x 
-                  <input name="crop_celheight" type="text" id="crop_celheight" value="" size="5" maxlength="5" class="cropPx" disabled="disabled"/> px
+                  <input type="submit" id="crop_release" value="{#celimage_dlg.release}"/>
+                  <input type="submit" id="crop_exec" value="{#celimage_dlg.exec}"/>
                 </td>
               </tr>
             </tbody>
