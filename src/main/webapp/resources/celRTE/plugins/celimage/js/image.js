@@ -110,7 +110,6 @@ var CelImageDialog = {
   _popupResizeHandler : function() {
     var newMaxSize = $j(document).height() - 108;
     $$('.panel_wrapper .panel, .panel_wrapper .current').each(function(panel) {
-      console.log('panel size: ', panel.id, panel.getHeight(), newMaxSize);
       panel.setStyle( { 'height' : newMaxSize + 'px' });
     });
     var newPickerMaxSize = newMaxSize - 62;
@@ -281,7 +280,6 @@ var CelImageDialog = {
     el = ed.selection.getNode();
 
     var imageFullName = _me._getImageFullName(args['src']);
-    console.log('insertAndClose: ', imageFullName, ed.origData.get(imageFullName), ed.lastSize.get(imageFullName));
     ed.origData.unset(imageFullName);
     ed.lastSize.unset(imageFullName);
 
