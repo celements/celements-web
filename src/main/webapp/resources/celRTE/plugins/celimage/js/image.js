@@ -203,7 +203,9 @@ var CelImageDialog = {
   },
 
   insertAndClose : function() {
-    var ed = tinyMCEPopup.editor, f = document.forms[0], nl = f.elements, v, args = {}, el;
+    var _me = this;
+    var ed = tinyMCEPopup.editor, f = document.forms[0];
+    var nl = f.elements, v, args = {}, el;
 
     tinyMCEPopup.restoreSelection();
 
@@ -278,6 +280,11 @@ var CelImageDialog = {
 
     el = ed.selection.getNode();
 
+    var imageFullName = _me._getImageFullName(args['src']);
+    console.log('insertAndClose: ', imageFullName, ed.origData.get(imageFullName), ed.lastSize.get(imageFullName));
+    ed.origData.unset(imageFullName);
+    ed.lastSize.unset(imageFullName);
+
     if (el && el.nodeName == 'IMG') {
       ed.dom.setAttribs(el, args);
     } else {
@@ -288,6 +295,10 @@ var CelImageDialog = {
     }
 
     tinyMCEPopup.close();
+  },
+
+  _getImageFullName : function(imageUrl) {
+    return imageUrl.replace(/.*\/download\/([^\/]+)\/([^\/]+)\/([^\?]+).*/, '$1.$2;$3');
   },
 
   getAttrib : function(e, at) {
