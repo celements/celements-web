@@ -165,11 +165,11 @@ var loadCropPanelEvent = function(event) {
   $('fitToScreen').stopObserving('change', setMainImageZoomEvent);
   $('fitToScreen').observe('change', setMainImageZoomEvent);
   setMainImageZoomDelayed(false);
-}
+};
 
 var setMainImageZoomEvent = function(event) {
   setMainImageZoomDelayed(false);
-}
+};
 
 var setMainImageZoomDelayed = function(fromResize) {
   if(sizeSet) {
@@ -271,7 +271,7 @@ var manualSelectDelayed = function(isResize) {
   } else {
     manualSelectDelayed.delay(.1, isResize);
   }
-}
+};
 
 var animateTo = null;
 var manualSelect = function(isResize) {
@@ -372,7 +372,7 @@ var getNumber = function(id) {
 
 var releaseSelectionEvent = function() {
   releaseSelection(false);
-}
+};
 
 var releaseSelection = function(buttonRelease) {
   if(buttonRelease && (jcrop != null)) {
@@ -397,7 +397,7 @@ var setCropRatioToMainImg = function() {
   } else {
     setCropRatioToMainImg.delay(.1);
   }
-}
+};
 
 var setAspectRatio = function() {
   if($('crop_fixRatio').checked) {
