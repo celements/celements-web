@@ -70,18 +70,19 @@ var CelImageDialog = {
       }
       $('imagePicker_tab').down('a').observe('click',
           imagePicker_pickerTabFirstClickHandler);
-      $('resetMax').observe('click', function(event) {
-        $('celwidth').value = $('resetMaxLabel').innerHTML.replace(/\D*(\d*) x.*/g, '$1');
-        $('celheight').value = $('resetMaxLabel').innerHTML.replace(/.*x (\d*)\D*/g, '$1');
-        CelImageDialog.showPreviewImage(CelImageDialog.replaceCropInURL(
-            CelImageDialog.addAutoResizeToURL($('previewImg').src, $('celwidth').value, 
-            $('celheight').value)), $('celwidth').value, $('celheight').value, 1);
-        event.stop();
-      });
     } else {
       baseurl = tinyMCEPopup.getParam("wiki_attach_path");
       loadAttachmentList(baseurl);
     }
+
+    $('resetMax').observe('click', function(event) {
+      $('celwidth').value = $('resetMaxLabel').innerHTML.replace(/\D*(\d*) x.*/g, '$1');
+      $('celheight').value = $('resetMaxLabel').innerHTML.replace(/.*x (\d*)\D*/g, '$1');
+      CelImageDialog.showPreviewImage(CelImageDialog.replaceCropInURL(
+          CelImageDialog.addAutoResizeToURL($('previewImg').src, $('celwidth').value, 
+          $('celheight').value)), $('celwidth').value, $('celheight').value, 1);
+      event.stop();
+    });
 
     // If option enabled default constrain proportions to checked
     if (ed.getParam("advimage_constrain_proportions", true)) {
