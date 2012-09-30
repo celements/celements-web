@@ -92,11 +92,11 @@
     },
 
     _reduceDimensionToMaxSize : function(origDim, newDim) {
-      if (newDim.height > origDim.cropHeight) {
-        newDim.height = origDim.cropHeight;
+      if (newDim.height > origDim.height) {
+        newDim.height = origDim.height;
       }
-      if (newDim.width > origDim.cropWidth) {
-        newDim.width = origDim.cropWidth;
+      if (newDim.width > origDim.width) {
+        newDim.width= origDim.width;
       }
       return newDim;
     },
@@ -133,13 +133,12 @@
         if(!cropH || (typeof(cropH) == 'undefined') || (cropH <= 0)) {
           cropH = e.height;
         }
-        if (cropW && (cropW <= 0) && cropH && (cropH <= 0)) {
+        if (cropW && (cropW > 0) && cropH && (cropH > 0)) {
           ed.origData.set(imageFullName, { 'width' : cropW , 'height' : cropH});
         } else {
           this.loadOrigDimensionsAsync(ed, imageFullName);
         }
-        ed.lastSize.set(imageFullName, {width : e.width, height : e.height, 
-            cropWidth : cropW, cropHeight : cropH });
+        ed.lastSize.set(imageFullName, {width : e.width, height : e.height });
       } else if (this._resizeHappend(ed, e)) {
         var origDim = ed.origData.get(imageFullName);
         var newDim = this._reduceDimensionToMaxSize(origDim, { width : e.width,
