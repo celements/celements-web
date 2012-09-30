@@ -125,14 +125,18 @@
         return;
       var imageFullName = this._getImageFullName(e.src);
       if (!ed.origData.get(imageFullName)) {
-        this.loadOrigDimensionsAsync(ed, imageFullName);
         var cropW = parseInt(e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropW || (typeof(cropW) == 'undefined') || (cropW <= 0)) {
           cropW = e.width;
         }
         var cropH = parseInt(e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropH || (typeof(cropH) == 'undefined') || (cropH <= 0)) {
-          cropH = e.height
+          cropH = e.height;
+        }
+        if (cropW && (cropW <= 0) && cropH && (cropH <= 0)) {
+          ed.origData.set(imageFullName, { 'width' : cropW , 'height' : cropH});
+        } else {
+          this.loadOrigDimensionsAsync(ed, imageFullName);
         }
         ed.lastSize.set(imageFullName, {width : e.width, height : e.height, 
             cropWidth : cropW, cropHeight : cropH });
