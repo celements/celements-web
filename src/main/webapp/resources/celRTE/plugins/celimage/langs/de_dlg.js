@@ -56,5 +56,15 @@ tinyMCE.addI18n('de.celimage_dlg', {
   "uploadImage" : "Bild hochladen",
   "overlay" : "Bild in Overlay",
   "hasOverlay" : "Bild bei Klick in Overlay öffnen",
-  "hasCloseButton" : "Schliessen button hinzufügen"
+  "hasCloseButton" : "Schliessen button hinzufügen",
+  "tab_crop" : "Ausschnitt",
+  "fitToScreen" : "Original zoomen:",
+  "cropX" : "Startpunkt",
+  "cropWidth" : "Auswahldimension",
+  "asp_ratio" : "Seitenverhältnis",
+  "asp_ratio_fix" : "Fixieren",
+  "asp_ratio_ratio" : "Seitenverhältnis",
+  "release" : "Zurücksetzen",
+  "exec" : "Anwenden",
+  "resetMax" : "Zurücksetzen"
 });
