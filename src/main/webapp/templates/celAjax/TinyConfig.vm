@@ -28,7 +28,7 @@
     ## default back to the standard fields.
     #set($rtePlugins = ",$!rtePlugins")
   #end
-  "plugins" : "safari,save,paste,advlink,template,table,lists,inlinepopups,advimage,autoresize${rtePlugins}",
+  "plugins" : "safari,save,paste,advlink,template,table,lists,inlinepopups,advimage,celimage,autoresize${rtePlugins}",
   "save_enablewhendirty" : false,
   "save_onsavecallback" : "simplySave",
   "save_cancelFunction" : "cancelAndClose",
