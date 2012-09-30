@@ -103,6 +103,19 @@ var CelImageDialog = {
     _me.changeAppearance();
     _me.showPreviewImage(_me.replaceCropInURL(_me.addAutoResizeToURL(nl.src.value, 
         nl.celwidth.value, nl.celheight.value)), nl.celwidth.value, nl.celheight.value, 1);
+    Event.observe(window, 'resize', _me._popupResizeHandler);
+    _me._popupResizeHandler();
+  },
+
+  _popupResizeHandler : function() {
+    var newMaxSize = $j(document).height() - 108;
+    $$('.panel_wrapper .panel, .panel_wrapper .current').each(function(panel) {
+      console.log('panel size: ', panel.id, panel.getHeight(), newMaxSize);
+      panel.setStyle( { 'height' : newMaxSize + 'px' });
+    });
+    var newPickerMaxSize = newMaxSize - 62;
+    $('attachments').setStyle({ 'height' : newPickerMaxSize + 'px' });
+    //TODO add minimal height depending on content
   },
 
   _getMaxWidth : function() {
