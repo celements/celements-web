@@ -164,7 +164,8 @@
     "spellchecker_rpc_url" : "/jmyspell-spellchecker",
   #end
   "celanim_slideshow" : $!celementsweb.useImageAnimations(),
-  "cel_crop" : $!xwiki.getSpacePreference('celcrop'),
+  #set($useCelCrop = ("$!xwiki.getSpacePreference('celcrop')" == '1'))
+  "cel_crop" : $useCelCrop,
   #if($celementsweb.useImageAnimations())
     #set($galleriesXWQL = "from doc.object(XWiki.PhotoAlbumClass) as album")
     #set($galleriesXWQL = "${galleriesXWQL} where doc.fullName <> 'XWiki.PhotoAlbumClassTemplate'")
