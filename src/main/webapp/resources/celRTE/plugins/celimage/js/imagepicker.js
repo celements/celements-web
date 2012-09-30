@@ -262,6 +262,7 @@ var clickOnFileAction = function (event) {
     }
     this.addClassName('selected');
     this.stopObserving('click', clickOnFileAction);
+    CelImageDialog.isNewImage = true;
     CelImageDialog.showPreviewImage(filename);
     mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
   }

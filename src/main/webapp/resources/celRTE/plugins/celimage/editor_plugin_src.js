@@ -20,7 +20,7 @@
         ed.windowManager.open({
           file : url + '/image.htm',
           width : 630 + parseInt(ed.getLang('celimage.delta_width', 0)),
-          height : 530 + parseInt(ed.getLang('celimage.delta_height', 0)),
+          height : 590 + parseInt(ed.getLang('celimage.delta_height', 0)),
           inline : 1
         }, {
           plugin_url : url
@@ -125,7 +125,19 @@
         return;
       var imageFullName = this._getImageFullName(e.src);
       if (!ed.origData.get(imageFullName)) {
-        this.loadOrigDimensionsAsync(ed, imageFullName);
+        var cropW = parseInt(e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4'));
+        if(!cropW || (typeof(cropW) == 'undefined') || (cropW <= 0)) {
+          cropW = e.width;
+        }
+        var cropH = parseInt(e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4'));
+        if(!cropH || (typeof(cropH) == 'undefined') || (cropH <= 0)) {
+          cropH = e.height;
+        }
+        if (cropW && (cropW > 0) && cropH && (cropH > 0)) {
+          ed.origData.set(imageFullName, { 'width' : cropW , 'height' : cropH});
+        } else {
+          this.loadOrigDimensionsAsync(ed, imageFullName);
+        }
         ed.lastSize.set(imageFullName, {width : e.width, height : e.height });
       } else if (this._resizeHappend(ed, e)) {
         var origDim = ed.origData.get(imageFullName);
@@ -146,9 +158,17 @@
         }
       }
     },
-
+    
     addAutoResizeToURL : function(src, width, height) {
-      return src.replace(/\?.*/, '').strip() + '?celwidth=' + width + '&celheight=' + height;
+      var newSrc = src.replace(/(.*\?.*)(&celwidth=\d*|celwidth=\d*&)(\D?.*)/g, '$1$3');
+      newSrc = newSrc.replace(/(.*\?.*)(&celheight=\d*|celheight=\d*&)(\D?.*)/g, '$1$3');
+      if(newSrc.indexOf('?') < 0) {
+        newSrc += '?';
+      } else if(!newSrc.endsWith('&')) {
+        newSrc += '&';
+      }
+      newSrc += 'celwidth=' + width + '&celheight=' + height;
+      return newSrc;
     },
 
     getInfo : function() {

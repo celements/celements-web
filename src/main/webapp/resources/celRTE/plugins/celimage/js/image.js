@@ -1,4 +1,6 @@
 var CelImageDialog = {
+    isNewImage : null,
+
     preInit : function() {
     var url;
 
@@ -9,38 +11,47 @@ var CelImageDialog = {
   },
 
   init : function(ed) {
+    var _me = this;
     var f = document.forms[0], nl = f.elements, ed = tinyMCEPopup.editor, dom = ed.dom, n = ed.selection.getNode();
 
     tinyMCEPopup.resizeToInnerSize();
-    this.fillClassList('class_list');
-    this.fillGalleryList('gallery_list');
-    this.fillEffectList('effect_list');
+    _me.fillClassList('class_list');
+    _me.fillGalleryList('gallery_list');
+    _me.fillEffectList('effect_list');
     TinyMCE_EditableSelects.init();
 
     if (n.nodeName == 'IMG') {
       nl.src.value = dom.getAttrib(n, 'src').replace(/\?.*/, '');
       nl.celwidth.value = dom.getAttrib(n, 'width');
       nl.celheight.value = dom.getAttrib(n, 'height');
+      nl.cropX.value = _me.getAttrib(n, 'cropX');
+      nl.cropY.value = _me.getAttrib(n, 'cropY');
+      nl.cropWidth.value = _me.getAttrib(n, 'cropWidth');
+      nl.cropHeight.value = _me.getAttrib(n, 'cropHeight');
+      if((nl.cropX.value != '') && (nl.cropY.value != '') && (nl.cropWidth.value != '') 
+          && (nl.cropHeight.value != '')) {
+        nl.isCropped.value = '1';
+      }
       nl.alt.value = dom.getAttrib(n, 'alt');
       nl.title.value = dom.getAttrib(n, 'title');
-      nl.marginTop.value = this.getAttrib(n, 'marginTop');
-      nl.marginLeft.value = this.getAttrib(n, 'marginLeft');
-      nl.marginBottom.value = this.getAttrib(n, 'marginBottom');
-      nl.marginRight.value = this.getAttrib(n, 'marginRight');
-      nl.border.value = this.getAttrib(n, 'border');
-      selectByValue(f, 'align', this.getAttrib(n, 'align'));
-      selectByValue(f, 'class_list', this.getAttrib(n, 'class'), true, true);
-      selectByValue(f, 'gallery_list', this.getAttrib(n, 'gallery'), true, true);
-      selectByValue(f, 'effect_list', this.getAttrib(n, 'effect'), true, true);
-      nl.hasSlideshow.checked = this.getAttrib(n, 'hasSlideshow');
-      nl.hasOverlay.checked = this.getAttrib(n, 'hasOverlay');
-      nl.hasCloseButton.checked = this.getAttrib(n, 'hasCloseButton');
-      nl.isSlideshowManualStart.checked = this.getAttrib(n, 'isSlideshowManualStart');
-      nl.isSlideshowRandomStart.checked = this.getAttrib(n, 'isSlideshowRandomStart');
-      nl.hasSlideshowAddNavigation.checked = this.getAttrib(n, 'hasSlideshowAddNavigation');
-      nl.delay.value = this.getAttrib(n, 'delay');
-      nl.overlayWidth.value = this.getAttrib(n, 'overlayWidth');
-      nl.overlayHeight.value = this.getAttrib(n, 'overlayHeight');
+      nl.marginTop.value = _me.getAttrib(n, 'marginTop');
+      nl.marginLeft.value = _me.getAttrib(n, 'marginLeft');
+      nl.marginBottom.value = _me.getAttrib(n, 'marginBottom');
+      nl.marginRight.value = _me.getAttrib(n, 'marginRight');
+      nl.border.value = _me.getAttrib(n, 'border');
+      selectByValue(f, 'align', _me.getAttrib(n, 'align'));
+      selectByValue(f, 'class_list', _me.getAttrib(n, 'class'), true, true);
+      selectByValue(f, 'gallery_list', _me.getAttrib(n, 'gallery'), true, true);
+      selectByValue(f, 'effect_list', _me.getAttrib(n, 'effect'), true, true);
+      nl.hasSlideshow.checked = _me.getAttrib(n, 'hasSlideshow');
+      nl.hasOverlay.checked = _me.getAttrib(n, 'hasOverlay');
+      nl.hasCloseButton.checked = _me.getAttrib(n, 'hasCloseButton');
+      nl.isSlideshowManualStart.checked = _me.getAttrib(n, 'isSlideshowManualStart');
+      nl.isSlideshowRandomStart.checked = _me.getAttrib(n, 'isSlideshowRandomStart');
+      nl.hasSlideshowAddNavigation.checked = _me.getAttrib(n, 'hasSlideshowAddNavigation');
+      nl.delay.value = _me.getAttrib(n, 'delay');
+      nl.overlayWidth.value = _me.getAttrib(n, 'overlayWidth');
+      nl.overlayHeight.value = _me.getAttrib(n, 'overlayHeight');
       nl.style.value = dom.getAttrib(n, 'style');
       nl.id.value = dom.getAttrib(n, 'id');
       nl.dir.value = dom.getAttrib(n, 'dir');
@@ -53,10 +64,10 @@ var CelImageDialog = {
       if (ed.settings.inline_styles) {
         // Move attribs to styles
         if (dom.getAttrib(n, 'align'))
-          this.updateStyle('align');
+          _me.updateStyle('align');
 
         if (dom.getAttrib(n, 'border'))
-          this.updateStyle('border');
+          _me.updateStyle('border');
       }
       $('imagePicker_tab').down('a').observe('click',
           imagePicker_pickerTabFirstClickHandler);
@@ -65,9 +76,18 @@ var CelImageDialog = {
       loadAttachmentList(baseurl);
     }
 
+    $('resetMax').observe('click', function(event) {
+      $('celwidth').value = _me._getMaxWidth();
+      $('celheight').value = _me._getMaxHeight();
+      CelImageDialog.showPreviewImage(CelImageDialog.replaceCropInURL(
+          CelImageDialog.addAutoResizeToURL($('previewImg').src, $('celwidth').value, 
+          $('celheight').value)), $('celwidth').value, $('celheight').value, 1);
+      event.stop();
+    });
+
     // If option enabled default constrain proportions to checked
     if (ed.getParam("advimage_constrain_proportions", true)) {
-      this.constrain = true;
+      _me.constrain = true;
     }
 
     if (ed.getParam("celanim_slideshow", false)) {
@@ -75,9 +95,34 @@ var CelImageDialog = {
       $('animation_tab').show();
     }
 
-    this.changeAppearance();
-    this.showPreviewImage(this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
-        nl.celheight.value), nl.celwidth.value, nl.celheight.value, 1);
+    if (ed.getParam("cel_crop", false)) {
+      $('crop_panel').show();
+      $('crop_tab').show();
+    }
+
+    _me.changeAppearance();
+    _me.showPreviewImage(_me.replaceCropInURL(_me.addAutoResizeToURL(nl.src.value, 
+        nl.celwidth.value, nl.celheight.value)), nl.celwidth.value, nl.celheight.value, 1);
+    Event.observe(window, 'resize', _me._popupResizeHandler);
+    _me._popupResizeHandler();
+  },
+
+  _popupResizeHandler : function() {
+    var newMaxSize = $j(document).height() - 108;
+    $$('.panel_wrapper .panel, .panel_wrapper .current').each(function(panel) {
+      panel.setStyle( { 'height' : newMaxSize + 'px' });
+    });
+    var newPickerMaxSize = newMaxSize - 62;
+    $('attachments').setStyle({ 'height' : newPickerMaxSize + 'px' });
+    //TODO add minimal height depending on content
+  },
+
+  _getMaxWidth : function() {
+    return $('resetMaxLabel').innerHTML.replace(/\D*(\d*) x.*/g, '$1');
+  },
+
+  _getMaxHeight : function() {
+    return $('resetMaxLabel').innerHTML.replace(/.*x (\d*)\D*/g, '$1');
   },
 
   insert : function(file, title) {
@@ -106,13 +151,46 @@ var CelImageDialog = {
 
     t.insertAndClose();
   },
-
+  
   addAutoResizeToURL : function(src, width, height) {
     if (src && (src != '')) {
-      return src.replace(/\?.*/, '').strip() + '?celwidth=' + width
-        + '&celheight=' + height;
+      var newSrc = src.replace(/(.*\?.*)(&celwidth=\d*|celwidth=\d*&)(\D?.*)/g, '$1$3');
+      newSrc = newSrc.replace(/(.*\?.*)(&celheight=\d*|celheight=\d*&)(\D?.*)/g, '$1$3');
+      if(newSrc.indexOf('?') < 0) {
+        newSrc += '?';
+      } else if(!newSrc.endsWith('&')) {
+        newSrc += '&';
+      }
+      newSrc += 'celwidth=' + width + '&celheight=' + height;
+      return newSrc;
     }
     return '';
+  },
+  
+  replaceCropInURL : function(src) {
+    if (src && (src != '')) {
+      if($('isCropped').value == '1') {
+        var cropX = $('cropX').value;
+        var cropY = $('cropY').value;
+        var cropW = $('cropWidth').value;
+        var cropH = $('cropHeight').value
+        newSrc = src.replace(/(.*\?.*)(&cropX=\d*|cropX=\d*&)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?.*)(&cropY=\d*|cropY=\d*&)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?.*)(&cropW=\d*|cropW=\d*&)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?.*)(&cropH=\d*|cropH=\d*&)(\D?.*)/g, '$1$3');
+        if(newSrc.indexOf('?') < 0) {
+          newSrc += '?';
+        } else if(!newSrc.endsWith('&')) {
+          newSrc += '&';
+        }
+        newSrc += 'cropX=' + cropX + '&cropY=' + cropY + '&cropW=' + cropW + '&cropH=' 
+            + cropH;
+        return newSrc;
+      } else {
+        return src;
+      }
+    }
+    return src;
   },
 
   getSlideShowId : function(f) {
@@ -124,7 +202,9 @@ var CelImageDialog = {
   },
 
   insertAndClose : function() {
-    var ed = tinyMCEPopup.editor, f = document.forms[0], nl = f.elements, v, args = {}, el;
+    var _me = this;
+    var ed = tinyMCEPopup.editor, f = document.forms[0];
+    var nl = f.elements, v, args = {}, el;
 
     tinyMCEPopup.restoreSelection();
 
@@ -149,6 +229,8 @@ var CelImageDialog = {
 
     nl.src.value = this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
         nl.celheight.value);
+    
+    nl.src.value = this.replaceCropInURL(nl.src.value);
 
     tinymce.extend(args, {
       src : nl.src.value,
@@ -197,6 +279,10 @@ var CelImageDialog = {
 
     el = ed.selection.getNode();
 
+    var imageFullName = _me._getImageFullName(args['src']);
+    ed.origData.unset(imageFullName);
+    ed.lastSize.unset(imageFullName);
+
     if (el && el.nodeName == 'IMG') {
       ed.dom.setAttribs(el, args);
     } else {
@@ -207,6 +293,10 @@ var CelImageDialog = {
     }
 
     tinyMCEPopup.close();
+  },
+
+  _getImageFullName : function(imageUrl) {
+    return imageUrl.replace(/.*\/download\/([^\/]+)\/([^\/]+)\/([^\?]+).*/, '$1.$2;$3');
   },
 
   getAttrib : function(e, at) {
@@ -273,6 +363,19 @@ var CelImageDialog = {
       return dom.hasClass(e, 'celanim_overlay_addCloseButton');
     }
 
+    if(at == 'cropX') {
+      return e.src.replace(/((^|(.*[\?&]))cropX=(\d*)\D?.*)|.*/g, '$4');
+    }
+    if(at == 'cropY') {
+      return e.src.replace(/((^|(.*[\?&]))cropY=(\d*)\D?.*)|.*/g, '$4');
+    }
+    if(at == 'cropWidth') {
+      return e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4');
+    }
+    if(at == 'cropHeight') {
+      return e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4');
+    }
+    
     if (at == 'gallery') {
       v = '';
       idArgs = dom.getAttrib(e, 'id').split(':');
@@ -461,8 +564,11 @@ var CelImageDialog = {
 
   updateImageData : function(img, st) {
     var f = document.forms[0];
-
     if (!st) {
+      if(this.isNewImage) {
+        $('resetMaxLabel').update(img.width + ' x ' + img.height);
+        this.isNewImage = false;
+      }
       f.elements.celwidth.value = img.width;
       f.elements.celheight.value = img.height;
     }
@@ -491,13 +597,18 @@ var CelImageDialog = {
       return;
     }
 
-    if (f.celwidth.value == "")
-      return;
-
-    tp = (parseInt(f.celwidth.value) / parseInt(t.preloadImg.width)) * t.preloadImg.height;
-    f.celheight.value = Math.floor(tp + 0.5);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value,
-        f.celheight.value), f.celwidth.value, f.celheight.value, 1);
+    var maxWidthValue = parseInt(t._getMaxWidth());
+    var newWidthValue = parseInt(f.celwidth.value);
+    if (isNaN(newWidthValue) || (newWidthValue >= maxWidthValue)
+        || (newWidthValue <= 0)) {
+      f.celwidth.value = maxWidthValue;
+      f.celheight.value = t._getMaxHeight();
+    } else {
+      tp = (newWidthValue / parseInt(t.preloadImg.width)) * t.preloadImg.height;
+      f.celheight.value = Math.floor(tp + 0.5);
+      t.showPreviewImage(t.replaceCropInURL(t.addAutoResizeToURL(f.src.value, 
+          f.celwidth.value, f.celheight.value)), f.celwidth.value, f.celheight.value, 1);
+    }
   },
 
   changeWidth : function() {
@@ -507,13 +618,18 @@ var CelImageDialog = {
       return;
     }
 
-    if (f.celheight.value == "")
-      return;
-
-    tp = (parseInt(f.celheight.value) / parseInt(t.preloadImg.height)) * t.preloadImg.width;
-    f.celwidth.value = Math.floor(tp + 0.5);
-    t.showPreviewImage(t.addAutoResizeToURL(f.src.value, f.celwidth.value,
-        f.celheight.value), f.celwidth.value, f.celheight.value, 1);
+    var maxHeightValue = parseInt(t._getMaxHeight());
+    var newHeightValue = parseInt(f.celheight.value);
+    if (isNaN(newHeightValue) || (newHeightValue >= maxHeightValue)
+        || (newHeightValue <= 0)) {
+      f.celheight.value = maxHeightValue;
+      f.celwidth.value = t._getMaxWidth();
+    } else {
+      tp = (newHeightValue / parseInt(t.preloadImg.height)) * t.preloadImg.width;
+      f.celwidth.value = Math.floor(tp + 0.5);
+      t.showPreviewImage(t.replaceCropInURL(t.addAutoResizeToURL(f.src.value, 
+          f.celwidth.value, f.celheight.value)), f.celwidth.value, f.celheight.value, 1);
+    }
   },
 
   updateStyle : function(ty) {
@@ -598,7 +714,7 @@ var CelImageDialog = {
   showPreviewImage : function(u, celWidth, celHeight, st) {
     var width = celWidth || 0;
     var height = celHeight || 0;
-
+//TODO if src is new, remove crops
     if (!u || (u == '')) {
       tinyMCEPopup.dom.setHTML('prev', '<p style="padding:20px;">' + tinyMCEPopup.getLang(
           'celimage_dlg.select_image_first') +'</p>');
@@ -611,19 +727,33 @@ var CelImageDialog = {
 
     u = tinyMCEPopup.editor.documentBaseURI.toAbsolute(u);
 
-    var dimensions = "";
-    if ((width > 0) && (height > 0)) {
-      dimensions = 'width="' + width + '" height="' + height + '"';
+    if($('previewImg') && ($('previewImg').src != '') 
+        && (u.replace(/(.*)\?.*/g, '$1') != $('previewImg').src.replace(/(.*)\?.*/g, '$1'
+        ))) { //image changed
+      $('isCropped').value == '0';
+      $('cropX').value = '';
+      $('cropY').value = '';
+      $('cropWidth').value = '';
+      $('cropHeight').value = '';
     }
 
+    if(this.isNewImage == null) {
+      if(($('cropWidth').value != '') && ($('cropHeight').value != '')) {
+        $('resetMaxLabel').update($('cropWidth').value + ' x ' + $('cropHeight').value);
+      } else {
+        $('resetMaxLabel').update(width + ' x ' + height);
+      }
+      this.isNewImage = false;
+    }
+    
     if (!st) {
       tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
-          + '"' + dimensions
+          + '"' //+ dimensions
           + ' border="0" onload="CelImageDialog.updateImageData(this);"'
           + ' onerror="CelImageDialog.resetImageData();" />');
     } else {
       tinyMCEPopup.dom.setHTML('prev', '<img id="previewImg" src="' + u
-          + '"' + dimensions
+          + '"' //+ dimensions
           + ' border="0" onload="CelImageDialog.updateImageData(this, 1);" />');
     }
   }
