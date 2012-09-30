@@ -20,7 +20,7 @@
         ed.windowManager.open({
           file : url + '/image.htm',
           width : 630 + parseInt(ed.getLang('celimage.delta_width', 0)),
-          height : 530 + parseInt(ed.getLang('celimage.delta_height', 0)),
+          height : 590 + parseInt(ed.getLang('celimage.delta_height', 0)),
           inline : 1
         }, {
           plugin_url : url
