@@ -108,7 +108,7 @@ var CelImageDialog = {
   },
 
   _popupResizeHandler : function() {
-    var newMaxSize = $j(document).height() - 108;
+    var newMaxSize = $j(window).height() - 108;
     $$('.panel_wrapper .panel, .panel_wrapper .current').each(function(panel) {
       panel.setStyle( { 'height' : newMaxSize + 'px' });
     });
