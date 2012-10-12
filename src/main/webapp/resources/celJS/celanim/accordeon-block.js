@@ -119,6 +119,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     });
     accordeonEffects.push(_me.accordeonShow(nextStep));
     _me._accordeonExecute(accordeonEffects, nextStep);
+    _me.htmlElem.fire('celanim_accordeon-block:activateStepAfterFinish', nextStep);
   }
 
 };
