@@ -1,0 +1,12 @@
+#set($docFN = $services.model.serialize($doc.getDocumentReference()))
+#set($allChildren = $celementsweb.getSubNodesForParent($docFN, $doc.space))
+#if($allChildren.size() > 0)
+#if(("$!context.action" == 'view') && ("$!request.xpage" == ''))
+#set($docRef = $allChildren.get(0).getDocumentReference())
+$response.sendRedirect($xwiki.getURL($docRef))
+#else
+Weiterleitung nur in view-Mode aktiv.
+#end
+#else
+Keine Unterpunkte gefunden.
+#end
