@@ -24,18 +24,17 @@
   "theme" : "advanced",
   ## lookup the additional rte_plugins field in the XWiki and WebPreference
   #set($rtePluginsConfig = $celementsweb.getRTEConfigField('plugins'))
-  #set($rtePluginsPre = "")
+  #set($rtePluginsPre = ["safari","save","paste","advlink","template","table","lists","inlinepopups","advimage","celimage","autoresize"])
   #set($rteOmitPlugins = [])
   #if("$!rtePluginsConfig" != '')
     #foreach($oneRtePlugin in $rtePluginsConfig.split('[,| ]'))
       #if($oneRtePlugin.startsWith('-'))
         #set($!dev = $rteOmitPlugins.add($oneRtePlugin))
       #elseif("$!oneRtePlugin" != '')
-        #set($rtePluginsPre = "$!{rtePluginsPre},$!oneRtePlugin")
+        #set($!dev = $rtePluginsPre.add($oneRtePlugin))
       #end
     #end
   #end
-  #set($rtePluginsPre = "safari,save,paste,advlink,template,table,lists,inlinepopups,advimage,celimage,autoresize${rtePluginsPre}")
   #set($rtePlugins = '')
     #foreach($oneRtePlugin in $rtePluginsPre.split('[,| ]'))
       #if(("$!oneRtePlugin" != '') && !$rteOmitPlugins.contains($oneRtePlugin))
