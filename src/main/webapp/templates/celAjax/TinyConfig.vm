@@ -29,14 +29,14 @@
   #if("$!rtePluginsConfig" != '')
     #foreach($oneRtePlugin in $rtePluginsConfig.split('[,| ]'))
       #if($oneRtePlugin.startsWith('-'))
-        #set($!dev = $rteOmitPlugins.add($oneRtePlugin))
+        #set($!dev = $rteOmitPlugins.add($oneRtePlugin.replaceFirst('-','')))
       #elseif("$!oneRtePlugin" != '')
         #set($!dev = $rtePluginsPre.add($oneRtePlugin))
       #end
     #end
   #end
   #set($rtePlugins = '')
-    #foreach($oneRtePlugin in $rtePluginsPre.split('[,| ]'))
+    #foreach($oneRtePlugin in $rtePluginsPre)
       #if(("$!oneRtePlugin" != '') && !$rteOmitPlugins.contains($oneRtePlugin))
         #set($rtePlugins = "$!{rtePlugins},$!oneRtePlugin")
       #end
