@@ -23,12 +23,26 @@
   "language" : "$admin_language",
   "theme" : "advanced",
   ## lookup the additional rte_plugins field in the XWiki and WebPreference
-  #set($rtePlugins = $celementsweb.getRTEConfigField('plugins'))
-  #if("$!rtePlugins" != '')
-    ## default back to the standard fields.
-    #set($rtePlugins = ",$!rtePlugins")
+  #set($rtePluginsConfig = $celementsweb.getRTEConfigField('plugins'))
+  #set($rtePluginsPre = "")
+  #set($rteOmitPlugins = [])
+  #if("$!rtePluginsConfig" != '')
+    #foreach($oneRtePlugin in $rtePluginsConfig.split('[,| ]'))
+      #if($oneRtePlugin.startsWith('-'))
+        #set($!dev = $rteOmitPlugins.add($oneRtePlugin))
+      #elseif("$!oneRtePlugin" != '')
+        #set($rtePluginsPre = "$!{rtePluginsPre},$!oneRtePlugin")
+      #end
+    #end
   #end
-  "plugins" : "safari,save,paste,advlink,template,table,lists,inlinepopups,advimage,celimage,autoresize${rtePlugins}",
+  #set($rtePluginsPre = "safari,save,paste,advlink,template,table,lists,inlinepopups,advimage,celimage,autoresize${rtePluginsPre}")
+  #set($rtePlugins = '')
+    #foreach($oneRtePlugin in $rtePluginsPre.split('[,| ]'))
+      #if(("$!oneRtePlugin" != '') && !$rteOmitPlugins.contains($oneRtePlugin))
+        #set($rtePlugins = "$!{rtePlugins},$!oneRtePlugin")
+      #end
+    #end
+  "plugins" : "${rtePlugins}",
   "save_enablewhendirty" : false,
   "save_onsavecallback" : "simplySave",
   "save_cancelFunction" : "cancelAndClose",
