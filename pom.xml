@@ -106,12 +106,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.38-SNAPSHOT</version>
+      <version>1.38</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-photo</artifactId>
-      <version>1.17-SNAPSHOT</version>
+      <version>1.17</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
