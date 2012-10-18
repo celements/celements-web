@@ -154,8 +154,8 @@ var CelImageDialog = {
   
   addAutoResizeToURL : function(src, width, height) {
     if (src && (src != '')) {
-      var newSrc = src.replace(/(.*\?.*)(&celwidth=\d*|celwidth=\d*&)(\D?.*)/g, '$1$3');
-      newSrc = newSrc.replace(/(.*\?.*)(&celheight=\d*|celheight=\d*&)(\D?.*)/g, '$1$3');
+      var newSrc = src.replace(/(.*\?)(.*&celwidth=\d*|celwidth=\d*)(\D?.*)/g, '$1$3');
+      newSrc = newSrc.replace(/(.*\?)(.*&celheight=\d*|celheight=\d*)(\D?.*)/g, '$1$3');
       if(newSrc.indexOf('?') < 0) {
         newSrc += '?';
       } else if(!newSrc.endsWith('&')) {
@@ -174,10 +174,10 @@ var CelImageDialog = {
         var cropY = $('cropY').value;
         var cropW = $('cropWidth').value;
         var cropH = $('cropHeight').value
-        newSrc = src.replace(/(.*\?.*)(&cropX=\d*|cropX=\d*&)(\D?.*)/g, '$1$3');
-        newSrc = newSrc.replace(/(.*\?.*)(&cropY=\d*|cropY=\d*&)(\D?.*)/g, '$1$3');
-        newSrc = newSrc.replace(/(.*\?.*)(&cropW=\d*|cropW=\d*&)(\D?.*)/g, '$1$3');
-        newSrc = newSrc.replace(/(.*\?.*)(&cropH=\d*|cropH=\d*&)(\D?.*)/g, '$1$3');
+        newSrc = src.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
         if(newSrc.indexOf('?') < 0) {
           newSrc += '?';
         } else if(!newSrc.endsWith('&')) {
