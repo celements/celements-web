@@ -235,6 +235,7 @@ TE.prototype = {
         if (!failed) {
           //remove template in url query after creating document in inline mode
           if (window.location.search.match(/\&?template=[^\&]+/)) {
+            window.onbeforeunload = null;
             window.location.search = window.location.search.replace(/\&?template=[^\&]+/, '')
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);

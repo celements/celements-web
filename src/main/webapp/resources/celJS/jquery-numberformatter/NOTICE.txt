@@ -1,0 +1,18 @@
+Current Release: 1.2.3 Requires jQuery and jshashtable
+
+This plugin is a number formatting and parsing plugin for jQuery.
+
+Number formatting is likely familiar to anyone who's worked with server-side code like 
+Java or PHP and who has worked with internationalization. People who aren't stuck in the 
+US-centric frame of mind can quickly point out that people in other parts of the world 
+don't format their numbers in the same way as Americans. For example, a number that we 
+would write in the US as "1,250,500.75" would be written differently in different 
+countries: "1.250.500,75" in Germany, "1 250 500,75" in France, and "1'250'500.75" in 
+Switzerland, and "125,0500.75" in Japan. The number is exactly the same, but it's just 
+written using a different format when presented to users of the web application.
+
+I've been working during the 1.2 rewrite to separate the parsing and formatting more. 
+So your now required to parse the text first into a js number, before formatting it back 
+into text. This should hopefully give more control over the process and allow more 
+flexibility of use.
+
