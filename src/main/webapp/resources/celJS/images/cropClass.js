@@ -462,10 +462,10 @@ var executeCrop = function() {
   var cy = $('cropY').value;
   var cw = $('cropWidth').value;
   var ch = $('cropHeight').value;
-  url = url.replace(/(.*\?.*)(&cropX=\d*|cropX=\d*&)(\D?.*)/g, '$1$3');
-  url = url.replace(/(.*\?.*)(&cropY=\d*|cropY=\d*&)(\D?.*)/g, '$1$3');
-  url = url.replace(/(.*\?.*)(&cropW=\d*|cropW=\d*&)(\D?.*)/g, '$1$3');
-  url = url.replace(/(.*\?.*)(&cropH=\d*|cropH=\d*&)(\D?.*)/g, '$1$3');
+  url = url.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
+  url = url.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
+  url = url.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
+  url = url.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
   if((cx != '') && (cy != '') && (cw != '') && (ch != '')) {
     if(url.indexOf('?') < 0) {
       url += '?';
