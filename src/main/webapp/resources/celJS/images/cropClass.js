@@ -456,8 +456,7 @@ var resizeCrop = function() {
   }
 };
 
-var executeCrop = function(event) {
-  event.stop();
+var executeCrop = function() {
   var url = $('previewImg').src;
   var cx = $('cropX').value;
   var cy = $('cropY').value;
@@ -480,7 +479,6 @@ var executeCrop = function(event) {
   $('celheight').value = ch;
   $('previewImg').src = url;
   $('resetMaxLabel').update(cw + ' x ' + ch);
-  mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
 };
 
 var onLoadInit = function() {
@@ -493,7 +491,10 @@ var onLoadInit = function() {
     releaseSelection(true);
     event.stop();
   });
-  $('crop_exec').observe('click', executeCrop);
+  $$('.headerTab').each(function(tab) {
+    tab.observe('click', executeCrop);
+  });
+  $('insert').observe('click', executeCrop);
   Event.observe(window, 'resize', resizeCrop);
   resizeCrop();
 };
