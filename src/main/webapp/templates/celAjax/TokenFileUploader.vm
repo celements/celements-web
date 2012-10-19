@@ -31,8 +31,8 @@ ${delStr}"${clearedFileName}"##
 #elseif("$!request.tfu_mode" == 'getToken')
 $celementsweb.getNewCelementsTokenForUser()
 #elseif("$!request.tfu_mode" == 'upload')
-#if(("$!request.uploadToken" != '') && ($xwiki.exists("$!fullName") || ("$!context.getUser()" == 'XWiki.XWikiGuest')))
-#set($createIfNotExists = ("$!context.getUser()" == 'XWiki.XWikiGuest'))
+#set($createIfNotExists = (("$!context.getUser()" == 'XWiki.XWikiGuest') || ("$!request.celTokenUploadCreateIfNotExists" == 'true')))
+#if(("$!request.uploadToken" != '') && ($xwiki.exists("$!fullName") || $createIfNotExists))
 { "success" : $celementsweb.tokenBasedUpload("$!fullName", 'filepath', $request.get("uploadToken"), $createIfNotExists),##
   "attfilename" : "$!xwiki.celementsweb.clearFileName($request.get('filename'))",##
 #set($startUserName = $context.user.indexOf('.') + 1)
