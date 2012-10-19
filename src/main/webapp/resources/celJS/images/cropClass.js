@@ -127,6 +127,7 @@ var setCropImage = function() {
       $('cropImage').setStyle({ width : '', height : ''});
       $('cropZoom').src = prevSrc;
       $('cropPreview').src = prevSrc;
+      $('crop_fixRatio').checked = false;
       mainImgW = undefined;
       mainImgH = undefined;
       setZoomSize();
@@ -491,9 +492,7 @@ var onLoadInit = function() {
     releaseSelection(true);
     event.stop();
   });
-  $$('.headerTab').each(function(tab) {
-    tab.observe('click', executeCrop);
-  });
+  $j('div.tabs a').live('click', executeCrop);
   $('insert').observe('click', executeCrop);
   Event.observe(window, 'resize', resizeCrop);
   resizeCrop();
