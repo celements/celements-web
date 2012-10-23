@@ -57,15 +57,19 @@ var setPreview = function(coords) {
 
 var setInputFields = function(coords) {
   if(animateTo == null) {
+    var wChanged = false;
+    var hChanged = false;
     if(selection.x.rounded != coords.x) {
       selection.x.val = Math.round(coords.x / mainImgZoom);
       $('cropX').value = selection.x.val;
       selection.x.rounded = selection.x.val;
+      wChanged = true;
     }
     if(selection.y.rounded != coords.y) {
       selection.y.val = Math.round(coords.y / mainImgZoom);
       $('cropY').value = selection.y.val;
       selection.y.rounded = selection.y.val;
+      hChanged = true;
     }
     //coords.x2
     //coords.y2
@@ -82,6 +86,17 @@ var setInputFields = function(coords) {
     if(!$('crop_fixRatio').checked) {
       $('crop_ratio').value = selection.w.rounded / selection.h.rounded;
       $('crop_ratio_label').update((selection.w.rounded / selection.h.rounded).toFixed(2));
+    }
+  } else {
+    if($('crop_fixRatio').checked && (Math.round(selection.y.rounded / mainImgZoom) + Math.round(coords.h / mainImgZoom) >= mainImgH)) {
+      selection.w.val = Math.round(coords.w / mainImgZoom);
+      $('cropWidth').value = selection.w.val;
+      selection.w.rounded = selection.w.val;
+    }
+    if($('crop_fixRatio').checked && (Math.round(selection.x.rounded / mainImgZoom) + Math.round(coords.w / mainImgZoom) >= mainImgW)) {
+      selection.h.val = Math.round(coords.h / mainImgZoom);
+      $('cropHeight').value = selection.h.val;
+      selection.h.rounded = selection.h.val;
     }
   }
 };
