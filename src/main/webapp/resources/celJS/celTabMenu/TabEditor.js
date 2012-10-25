@@ -253,6 +253,7 @@ TE.prototype = {
     var closeClickHandler = function() {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         if (!failed) {
+          //TODO call async 'cancel' to release editor-lock
           window.onbeforeunload = null;
           window.location.href = _me._getRedirectValue();
         }
