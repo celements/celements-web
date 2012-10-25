@@ -64,7 +64,7 @@
 #if($isAdmin)
     <td><a href="?xpage=overlay&conf=PageLayoutsListing&action=export&layoutName=$!layoutKey">export</a></td>
     <td><a href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layoutName=$!layoutKey">
-    	<img src="$celementsweb.getSkinFile(':icons/silk/cross.gif', 'file')" alt="delete"/>
+    	<img src="$celementsweb.getSkinFile(':icons/silk/cross.gif', 'file')" style="border: 0px;" alt="delete"/>
     	</a></td>
 #end
     </tr>
