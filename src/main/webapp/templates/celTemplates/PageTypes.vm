@@ -1,31 +1,25 @@
 #if($xwiki.hasAdminRights())
   #if($showCelTypes)
     #set($listTitle = "Cell Layout Types")
-    #set($typesList = $celementsweb.getAllCellTypes())
+    #set($typesList = $services.pageType.getAllCellTypes())
   #else
     #set($listTitle = "Page Types")
-    #set($typesList = $celementsweb.getAllPageTypes())
+    #set($typesList = $services.pageType.getAllPageTypes())
   #end
   <div id="pagetypelist">
   	<h1>$listTitle</h1>
   	<p>click to edit</p>
     <table>
   #foreach($item in $typesList)
-  	#set($ptApi = $celementsweb.getPageType($item))
-  	<!-- todo replace if working : $ptApi.isVisible() , $ptApi.getPrettyName()  -->
+  	#set($ptConfig = $services.pageType.getPageTypeConfig($item))
+    <!-- todo replace if working : $ptConfig.getName() , $ptConfig.isVisible()
+     , $ptConfig.getPrettyName() -->
     <tr>
     #set($pt_doc = $xwiki.getDocument($item))
-    #set($page_type_properties_obj = '')
-    #set($page_type_properties_obj = $pt_doc.getObject('Celements2.PageTypeProperties'))
-    #if("$!page_type_properties_obj" != '')
-      #set($pretty_name = $!page_type_properties_obj.get('type_name'))
-    #else
-      #set($pretty_name = $pt_doc.getName())
-    #end
     #set($editLink = $pt_doc.getURL('edit', "editor=object&xredirect=$!{doc.getURL('view')}"))
-    <td><a href="$editLink">$!pretty_name</a></td>
+    <td><a href="$editLink">$!ptConfig.getPrettyName()</a></td>
     <td>
-      #if("$!page_type_properties_obj.getProperty('visible').getValue()" == '1')
+      #if($ptConfig.isVisible())
         visible
       #end
       </td>
