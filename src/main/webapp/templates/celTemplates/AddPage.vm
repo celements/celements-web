@@ -278,9 +278,9 @@
       #end
     #set($pageTypeCat = "$!request.pageTypeCat")
     #if("$!pageTypeCat" == 'celltype')
-      #set($pageTypeList = $celementsweb.getAvailableCellTypes())
+      #set($pageTypeList = $services.pageType.getAvailableCellTypes())
     #else
-      #set($pageTypeList = $celementsweb.getAvailablePageTypes())
+      #set($pageTypeList = $services.pageType.getAvailablePageTypes())
     #end
       #foreach($item in $pageTypeList)
         #set($cur_doc = $xwiki.getDocument($item))

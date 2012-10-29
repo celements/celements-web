@@ -10,9 +10,9 @@
     #set($selectedFound = false)
     #set($pageTypeCat = "$!celementsweb.getPageType($doc.fullName).getCategoryString()")
     #if("$!pageTypeCat" == 'celltype')
-      #set($pageTypeList = $celementsweb.getAvailableCellTypes())
+      #set($pageTypeList = $services.pageType.getAvailableCellTypes())
     #else
-      #set($pageTypeList = $celementsweb.getAvailablePageTypes())
+      #set($pageTypeList = $services.pageType.getAvailablePageTypes())
     #end
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_type" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_type">
       #foreach($item in $pageTypeList)

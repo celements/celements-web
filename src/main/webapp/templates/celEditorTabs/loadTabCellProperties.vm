@@ -15,7 +15,7 @@ $doc.save()
     #end
     #set($selectedFound = false)
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_type" size="1" style="width:100px;" name="Celements2.PageType_${cel_pageTypeObj.number}_page_type">
-      #foreach($item in $celementsweb.getAvailableCellTypes())
+      #foreach($item in $services.pageType.getAvailableCellTypes())
         #set($pt_doc = $xwiki.getDocument($item))
          #set($page_type_properties_obj = '')
          #set($page_type_properties_obj = $pt_doc.getObject('Celements2.PageTypeProperties'))
