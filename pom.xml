@@ -122,7 +122,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-calendar</artifactId>
-      <version>1.13</version>
+      <version>1.14-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>batik</groupId>
