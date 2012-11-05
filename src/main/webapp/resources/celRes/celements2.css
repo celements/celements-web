@@ -519,12 +519,52 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 /**********************************
   Editor blocker
 ***********************************/
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker,
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker p {
+  font-family: "Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: 13px;
+  font-weight: 400;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker fieldset {
+  margin: 0px;
+  padding: 6px;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker p.xwikimessage {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker {
   background: white;
   background-color: white;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding: 10px;
 }
+
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons {
-  padding-top: 10px;
+  margin-top: 15px;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons .celbutton {
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #FF9900;
+  color: #333333;
+  border-top: 1px solid #C5C5C5;
+  border-left: 1px solid #C5C5C5;
+  border-right: 1px solid #929292;
+  border-bottom: 1px solid #929292;
+  font-size: 13px;
+  line-height: 14px;
+  text-indent: 0px;
+  background-color: #F90;
+  font-weight: 400;
+  display: inline-block;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons .cancel {
+  float: right;
 }

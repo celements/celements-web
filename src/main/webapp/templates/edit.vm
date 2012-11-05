@@ -62,12 +62,11 @@ $xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
   #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
   #xwikimessageboxstart($msg.get('notice') "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
   <div class="celButtons">
+  <a class="celbutton cancel" href="$doc.getURL('view')">$adminMsg.get('cancel')</a>
 #if($isAdmin)
   #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
   <a class="celbutton forcelock" href="$forceEditURL">$msg.get('forcelock')</a>
-  &nbsp;&nbsp;&nbsp;
 #end	
-  <a class="celbutton cancel" href="$doc.getURL('view')">$adminMsg.get('cancel')</a>
   </div>
   #xwikimessageboxend()
   </div>
