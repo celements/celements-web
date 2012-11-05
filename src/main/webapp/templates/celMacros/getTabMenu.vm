@@ -20,12 +20,19 @@ $celementsweb.addExtJSfileOnce(":celJS/editResize.js")
 #set($force = $!request.get('force'))
 #if (($tdoc.getLocked()==true)&&(!$force))
 <div id="tabMenuPanel" style="position:absolute; z-index:99; top:40%; width:${menuPanelWidth}px"> 
-  <div class="layoutsection">
+  <div class="layoutsection celementsEditorBlocker">
   $response.setStatus(423)
   #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
-  #set($forceEditURL = $doc.getURL($context.action, ${newquerystring}))
   #xwikimessageboxstart($msg.get('notice') "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
-   <a href="$forceEditURL">$msg.get('forcelock')</a>
+  <div class="celButtons">
+#if($isAdmin)
+  #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
+  <a href="$forceEditURL">$msg.get('forcelock')</a>
+#end    
+  <a href="$forceEditURL">$adminMsg.get('forcelock')</a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="$doc.getURL('view')">$adminMsg.get('cancel')</a>
+  </div>
   #xwikimessageboxend()
   </div>
 </div>
