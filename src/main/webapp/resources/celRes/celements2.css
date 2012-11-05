@@ -515,3 +515,16 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 .cel_whatsnew_table {
   width: 100%;
 }
+
+/**********************************
+  Editor blocker
+***********************************/
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker {
+  background: white;
+  background-color: white;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons {
+  padding-top: 10px;
+}
