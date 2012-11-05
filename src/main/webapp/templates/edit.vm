@@ -57,7 +57,7 @@ $xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
 ##
 #set($force = $!request.get('force'))
 #if (($tdoc.getLocked()==true)&&(!$force))
-  <div class="layoutsection">
+  <div class="layoutsection celementsEditorBlocker">
   $response.setStatus(423)
   #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
   #xwikimessageboxstart($msg.get('notice') "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
