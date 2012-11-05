@@ -64,10 +64,10 @@ $xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
   <div class="celButtons">
 #if($isAdmin)
   #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
-  <a href="$forceEditURL">$msg.get('forcelock')</a>
+  <a class="celbutton forcelock" href="$forceEditURL">$msg.get('forcelock')</a>
   &nbsp;&nbsp;&nbsp;
 #end	
-  <a href="$doc.getURL('view')">$adminMsg.get('cancel')</a>
+  <a class="celbutton cancel" href="$doc.getURL('view')">$adminMsg.get('cancel')</a>
   </div>
   #xwikimessageboxend()
   </div>
