@@ -65,6 +65,9 @@ $xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
   #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
   <a href="$forceEditURL">$msg.get('forcelock')</a>
 #end	
+  <a href="$forceEditURL">$adminMsg.get('forcelock')</a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="$doc.getURL('view')">$adminMsg.get('cancel')</a>
   #xwikimessageboxend()
   </div>
 #else
