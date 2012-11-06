@@ -21,18 +21,18 @@
       #set($params = "${params}&$req=$!request.get($req)")
     #end
   #end
-#if($showOverlayLanguageBar)
+#if($showOverlayLanguageBar && ($langs.size() > 1))
   <div id="cel_langbar">
-#foreach($lang in $langs)
+  #foreach($lang in $langs)
     #set($isActiveLang=($lang == $language))
     #if($isActiveLang)
-        <span class="langitem active">$msg.get("cel_$!{lang}_$!{lang}")</span>
+      <span class="langitem active">$msg.get("cel_$!{lang}_$!{lang}")</span>
     #else
-        <a class="langitem" href="?${params}&language=$!{lang}">$msg.get("cel_$!{lang}_$!{lang}")</a>
+      <a class="langitem" href="?${params}&language=$!{lang}">$msg.get("cel_$!{lang}_$!{lang}")</a>
     #end
-#end
-        </div>
-      <!--langbar-->
+  #end
+  </div>
+  <!--langbar-->
 #end ## $showOverlayLanguageBar
 #if($showCloseOverlayButton)
 #if("$!closeOverlayRedirect" == '')
