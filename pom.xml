@@ -77,7 +77,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tickerCell-web</artifactId>
-      <version>0.1</version>
+      <version>0.2-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- Add here all your dependencies -->    
