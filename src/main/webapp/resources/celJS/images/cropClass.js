@@ -508,7 +508,6 @@ var onLoadInit = function() {
     event.stop();
   });
   $j('div.tabs a').live('click', executeCrop);
-  $('insert').observe('click', executeCrop);
   Event.observe(window, 'resize', resizeCrop);
   resizeCrop();
 };
