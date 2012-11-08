@@ -597,6 +597,7 @@ TE.prototype = {
   * @return
   */
  isDirtyField : function(fieldElem, optElementsValues) {
+   var _me = this;
    var formId = fieldElem.up('form').id;
    var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
    if (fieldElem.hasClassName('mceEditor') && tinyMCE && tinyMCE.get(fieldElem.id)) {
