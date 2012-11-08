@@ -589,7 +589,16 @@ TE.prototype = {
    });
  },
 
- isDirtyField : function(elementsValues, fieldElem) {
+ /**
+  * isDirtyField and needs saving
+  * 
+  * @param fieldElem
+  * @param optElementsValues optional hash with initial values of all elements in the form
+  * @return
+  */
+ isDirtyField : function(fieldElem, optElementsValues) {
+   var formId = fieldElem.up('form').id;
+   var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
    if (fieldElem.hasClassName('mceEditor') && tinyMCE && tinyMCE.get(fieldElem.id)) {
      return tinyMCE.get(fieldElem.id).isDirty();
    } else if (!fieldElem.hasClassName('celIgnoreDirty')) {
@@ -607,7 +616,7 @@ TE.prototype = {
        var elementsValues = entry.value;
        _me.updateTinyMCETextAreas(formId);
        $(formId).getElements().each(function(elem) {
-         if (_me.isDirtyField(elementsValues, elem)) {
+         if (_me.isDirtyField(elem, elementsValues)) {
            if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
              console.debug('getDirtyFormIds first found dirty field: ', elem.name);
            }
