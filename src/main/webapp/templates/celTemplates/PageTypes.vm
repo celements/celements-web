@@ -15,7 +15,8 @@
     <!-- todo replace if working : $ptConfig.getName() , $ptConfig.isVisible()
      , $ptConfig.getPrettyName() -->
     <tr>
-    #set($pt_doc = $xwiki.getDocument($item))
+    #set($ptDocRef = $services.model.resolveDocument("PageTypes.$!{ptConfig.getName()}"))
+    #set($pt_doc = $xwiki.getDocument($ptDocRef))
     #set($editLink = $pt_doc.getURL('edit', "editor=object&xredirect=$!{doc.getURL('view')}"))
     <td><a href="$editLink">$!ptConfig.getPrettyName()</a></td>
     <td>
