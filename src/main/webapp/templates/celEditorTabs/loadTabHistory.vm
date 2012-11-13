@@ -32,7 +32,12 @@ function onCancel_his() {}
 #if($newdoc=="")
 ($adminMsg.get("cel_tm_cannotreaddocumentversion") $nextversion)
 #else
-$adminMsg.get("cel_tm_edited_by") $xwiki.getLocalUserName($newdoc.author) $adminMsg.get("cel_tm_on") $xwiki.formatDate($newdoc.date)
+$adminMsg.get("cel_tm_edited_by") $xwiki.getLocalUserName($newdoc.author) $adminMsg.get("cel_tm_on") 
+	#if ("$!newdoc.date" != "") 
+		$!datetool.format('dd.MM.yyyy hh:mm', $newdoc.date)
+	#else
+		N/A
+	#end
 #end
 		</li>
 #end
