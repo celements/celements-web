@@ -71,6 +71,15 @@ var CelImageDialog = {
       }
       $('imagePicker_tab').down('a').observe('click',
           imagePicker_pickerTabFirstClickHandler);
+      if((nl.cropWidth.value != '') && (nl.cropHeight.value != '')) {
+        $('resetMaxLabel').update(nl.cropWidth.value + ' x ' + nl.cropHeight.value);
+      } else {
+        tinymce.plugins.CelementsImagePlugin.prototype.getOrigDimensionsForImg(ed,
+          nl.src.value, function(imageFullName, origDim) { 
+          $('resetMaxLabel').update(origDim.width + ' x ' + origDim.height);
+        });
+      }
+      _me.isNewImage = false;
     } else {
       baseurl = tinyMCEPopup.getParam("wiki_attach_path");
       loadAttachmentList(baseurl);
