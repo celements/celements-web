@@ -177,6 +177,7 @@ var setZoomSize = function() {
 };
 
 var loadCropPanelEvent = function(event) {
+//  console.log('loadCropPanelEvent: initCrop');
   initCrop(false);
   $('fitToScreen').stopObserving('change', setMainImageZoomEvent);
   $('fitToScreen').observe('change', setMainImageZoomEvent);
@@ -391,6 +392,10 @@ var releaseSelectionEvent = function() {
 };
 
 var releaseSelection = function(buttonRelease) {
+  var cw = $('cropWidth').value;
+  var ch = $('cropHeight').value;
+  var celw = $('celwidth').value;
+  var celh = $('celheight').value;
   if(buttonRelease && (jcrop != null)) {
     jcrop.release();
   }
@@ -478,23 +483,33 @@ var executeCrop = function() {
   var cy = $('cropY').value;
   var cw = $('cropWidth').value;
   var ch = $('cropHeight').value;
-  url = url.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
-  url = url.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
-  url = url.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
-  url = url.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
-  if((cx != '') && (cy != '') && (cw != '') && (ch != '')) {
-    if(url.indexOf('?') < 0) {
-      url += '?';
-    } else if(!url.endsWith('&')) {
-      url += '&';
+//  console.log('executeCrop: ', cx,cy,cw,ch, $('isCropped').value);
+  var hasCropValues = (cx != '') && (cy != '') && (cw != '') && (ch != '');
+  //do not touch celwidth and celheight if no crop happend
+  if (hasCropValues && (parseInt(cw) > 0) && (parseInt(ch) > 0)) {
+    url = url.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
+    url = url.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
+    url = url.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
+    url = url.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
+    if((cx != '') && (cy != '') && (cw != '') && (ch != '')) {
+      if(url.indexOf('?') < 0) {
+        url += '?';
+      } else if(!url.endsWith('&')) {
+        url += '&';
+      }
+      url += 'cropX=' + cx + '&cropY=' + cy + '&cropW=' + cw + '&cropH=' + ch;
     }
-    url += 'cropX=' + cx + '&cropY=' + cy + '&cropW=' + cw + '&cropH=' + ch;
+    $('isCropped').value = '1';
+    CelImageDialog.resetMaxDimension();
+    CelImageDialog.showPreviewImage(url, 1);
+  } else if (url.match(/cropX=|cropY=|cropW=|cropH=/)) {
+    url = url.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
+    url = url.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
+    url = url.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
+    url = url.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
+    CelImageDialog.resetMaxDimension();
+    CelImageDialog.showPreviewImage(url, 1);
   }
-  $('isCropped').value = '1';
-  $('celwidth').value = cw;
-  $('celheight').value = ch;
-  $('previewImg').src = url;
-  $('resetMaxLabel').update(cw + ' x ' + ch);
 };
 
 var onLoadInit = function() {
@@ -508,6 +523,7 @@ var onLoadInit = function() {
     event.stop();
   });
   $j('div.tabs a').live('click', executeCrop);
+  $$('body')[0].observe('celImagePicker:prepareForInsertAndClose', executeCrop);
   Event.observe(window, 'resize', resizeCrop);
   resizeCrop();
 };
