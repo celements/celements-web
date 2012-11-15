@@ -46,20 +46,9 @@
         ed.execCommand('mceRepaint', false);
     },
 
-    getOrigDimensionsForImg : function(ed, imgSrc, callbackFN) {
-      var imageFullName = this._getImageFullName(imgSrc);
-      if (!ed.origData.get(imageFullName)) {
-        this.loadOrigDimensionsAsync(ed, imageFullName, callbackFN);
-      } else {
-        var origDim = ed.origData.get(imageFullName);
-        if (callbackFN) {
-          callbackFN(imageFullName, origDim, origDim);
-        }
-      }
-    },
-
     loadOrigDimensionsAsync : function(ed, imageFullName, callbackFN) {
       if (imageFullName && (imageFullName != '')) {
+        callbackFN = callbackFN || function() {};
         new Ajax.Request(getCelHost(), {
           method: 'post',
           parameters: {
@@ -72,9 +61,7 @@
               var resp = transport.responseText.evalJSON();
               if (resp.width && resp.height) {
                 ed.origData.set(imageFullName, resp);
-                if (callbackFN) {
-                  callbackFN(imageFullName, resp);
-                }
+                callbackFN(imageFullName, resp);
               } else if ((typeof console != 'undefined')
                   && (typeof console.warn != 'undefined')) {
                 console.warn('loadOrigDimensionsAsync: failed!!! ', transport.responseText);

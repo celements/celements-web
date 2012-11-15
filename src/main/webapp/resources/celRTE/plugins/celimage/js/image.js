@@ -1,6 +1,6 @@
 var CelImageDialog = {
-    isNewImage : null,
-    isCropped : false,
+    _isNewImage : null,
+    _origDim : new Hash(),
 
     preInit : function() {
     var url;
@@ -32,7 +32,6 @@ var CelImageDialog = {
       if((nl.cropX.value != '') && (nl.cropY.value != '') && (nl.cropWidth.value != '') 
           && (nl.cropHeight.value != '')) {
         nl.isCropped.value = '1';
-        _me.isCropped = true;
       }
       nl.alt.value = dom.getAttrib(n, 'alt');
       nl.title.value = dom.getAttrib(n, 'title');
@@ -74,7 +73,7 @@ var CelImageDialog = {
       $('imagePicker_tab').down('a').observe('click',
           imagePicker_pickerTabFirstClickHandler);
       _me.resetMaxDimension();
-      _me.isNewImage = false;
+      _me._isNewImage = false;
     } else {
       baseurl = tinyMCEPopup.getParam("wiki_attach_path");
       loadAttachmentList(baseurl);
@@ -108,34 +107,48 @@ var CelImageDialog = {
     _me._popupResizeHandler();
   },
 
-  resetMaxDimension : function() {
+  getOrigDimensionsForImg : function(imgSrc, callbackFN) {
+    var _me = this;
+    var ed = tinyMCEPopup.editor;
+    callbackFN = callbackFN || function() {};
+    var imageFullName = _me._getImageFullName(imgSrc);
+    if (!_me._origDim.get(imageFullName)) {
+//      console.log('getOrigDimensionsForImg: load async for ', imageFullName);
+      tinymce.plugins.CelementsImagePlugin.prototype.loadOrigDimensionsAsync(ed,
+          imageFullName, callbackFN);
+    } else {
+//      console.log('getOrigDimensionsForImg: already available for ', imageFullName,
+//          _me._origDim.get(imageFullName));
+      callbackFN(imageFullName, _me._origDim.get(imageFullName));
+    }
+  },
+
+  resetMaxDimension : function(callbackFN) {
+    callbackFN = callbackFN || function(){};
     var _me = this;
     var f = document.forms[0];
     var nl = f.elements;
-    var ed = tinyMCEPopup.editor;
+//    console.log('resetMaxDimension: ', nl.celwidth.value, nl.celheight.value);
     var newIsCropped = (nl.cropWidth.value != '') && (nl.cropHeight.value != '');
     if (newIsCropped) {
       $('resetMaxLabel').update(nl.cropWidth.value + ' x ' + nl.cropHeight.value);
-      _me._updateAfterResettingMaxDimension();
+      _me._updateAfterResettingMaxDimension(newIsCropped);
+      callbackFN();
     } else {
-      tinymce.plugins.CelementsImagePlugin.prototype.getOrigDimensionsForImg(ed,
-          nl.src.value, function(imageFullName, origDim) {
+      _me.getOrigDimensionsForImg(nl.src.value, function(imageFullName, origDim) {
+//          console.log('resetMaxDimension: callback ', imageFullName, origDim);
           $('resetMaxLabel').update(origDim.width + ' x ' + origDim.height);
-          _me._updateAfterResettingMaxDimension();
+          _me._updateAfterResettingMaxDimension(newIsCropped);
+          callbackFN();
       });
     }
   },
 
-  _updateAfterResettingMaxDimension : function() {
+  _updateAfterResettingMaxDimension : function(newIsCropped) {
     var _me = this;
     var f = document.forms[0];
     var nl = f.elements;
-    if (_me.isCropped != newIsCropped) {
-      $('celwidth').value = '';
-      $('celheight').value = '';
-      _me.isCropped = newIsCropped;
-    }
-//    console.log('resetMaxDimension: ', nl.celwidth.value, nl.celheight.value);
+//    console.log('_updateAfterResettingMaxDimension: ', nl.celwidth.value, nl.celheight.value);
     if ((nl.celwidth.value == '') && (nl.celheight.value == '')) {
       nl.celheight.value = _me.getMaxHeight();
       _me.changeWidth();
@@ -182,14 +195,14 @@ var CelImageDialog = {
       if (!f.alt.value) {
         tinyMCEPopup.confirm(tinyMCEPopup.getLang('celimage_dlg.missing_alt'), function(s) {
           if (s)
-            t.insertAndClose();
+            t.startInsertAndClose();
         });
 
         return;
       }
     }
 
-    t.insertAndClose();
+    t.startInsertAndClose();
   },
   
   addAutoResizeToURL : function(src, width, height) {
@@ -241,12 +254,34 @@ var CelImageDialog = {
     return newId.replace(/:+$/, '');
   },
 
-  insertAndClose : function() {
+  startInsertAndClose : function() {
+//    console.debug('startInsertAndClose');
+    var _me = this;
+    var prepareFunctions = new Array();
+    prepareFunctions.push(_me._insertAndClose.bind(_me));
+    $$('body')[0].fire('celImagePicker:collectPrepareForInsertAndClose',
+        prepareFunctions);
+
+    var executeInsertAndCloseFunc = function() {
+//      console.debug('executeInsertAndCloseFunc: ', prepareFunctions.length);
+      var nextFunc = prepareFunctions.pop();
+      if (nextFunc) {
+        nextFunc(executeInsertAndCloseFunc);
+      } else {
+        executeInsertAndCloseFunc();
+      }
+    };
+
+    //start finishing
+//    console.debug('start finishing functions');
+    executeInsertAndCloseFunc();
+  },
+
+  _insertAndClose : function() {
+//    console.debug('insertAndClose now.');
     var _me = this;
     var ed = tinyMCEPopup.editor, f = document.forms[0];
     var nl = f.elements, v, args = {}, el;
-    $$('body')[0].fire('celImagePicker:prepareForInsertAndClose');
-    console.debug('insertAndClose now.');
 
     tinyMCEPopup.restoreSelection();
 
@@ -269,10 +304,10 @@ var CelImageDialog = {
       };
     }
 
-    nl.src.value = this.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
+    nl.src.value = _me.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
         nl.celheight.value);
     
-    nl.src.value = this.replaceCropInURL(nl.src.value);
+    nl.src.value = _me.replaceCropInURL(nl.src.value);
 
     tinymce.extend(args, {
       src : nl.src.value,
@@ -290,32 +325,32 @@ var CelImageDialog = {
     });
 
     if (nl.hasSlideshow.checked) {
-      args['id'] = this.getSlideShowId(f);
+      args['id'] = _me.getSlideShowId(f);
       args['class'] = (args['class'] + ' celanim_slideshow').strip();
     }
 
     if (nl.isSlideshowManualStart.checked) {
-      args['id'] = this.getSlideShowId(f);
+      args['id'] = _me.getSlideShowId(f);
       args['class'] = (args['class'] + ' celanim_manualstart').strip();
     }
 
     if (nl.isSlideshowRandomStart.checked) {
-      args['id'] = this.getSlideShowId(f);
+      args['id'] = _me.getSlideShowId(f);
       args['class'] = (args['class'] + ' celanim_slideshowRandomStart').strip();
     }
 
     if (nl.hasSlideshowAddNavigation.checked) {
-      args['id'] = this.getSlideShowId(f);
+      args['id'] = _me.getSlideShowId(f);
       args['class'] = (args['class'] + ' celanim_addNavigation').strip();
     }
 
     if (nl.hasOverlay.checked) {
-      args['id'] = this.getSlideShowId(f);
+      args['id'] = _me.getSlideShowId(f);
       args['class'] = (args['class'] + ' celanim_overlay').strip();
     }
 
     if (nl.hasCloseButton.checked) {
-      args['id'] = this.getSlideShowId(f);
+      args['id'] = _me.getSlideShowId(f);
       args['class'] = (args['class'] + ' celanim_overlay_addCloseButton').strip();
     }
 
@@ -607,9 +642,9 @@ var CelImageDialog = {
   updateImageData : function(img, st) {
     var f = document.forms[0];
     if (!st) {
-      if(this.isNewImage) {
+      if(this._isNewImage) {
         $('resetMaxLabel').update(img.width + ' x ' + img.height);
-        this.isNewImage = false;
+        this._isNewImage = false;
       }
       f.elements.celwidth.value = img.width;
       f.elements.celheight.value = img.height;
