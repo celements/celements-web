@@ -46,8 +46,9 @@
         ed.execCommand('mceRepaint', false);
     },
 
-    loadOrigDimensionsAsync : function(ed, imageFullName) {
+    loadOrigDimensionsAsync : function(ed, imageFullName, callbackFN) {
       if (imageFullName && (imageFullName != '')) {
+        callbackFN = callbackFN || function() {};
         new Ajax.Request(getCelHost(), {
           method: 'post',
           parameters: {
@@ -60,6 +61,7 @@
               var resp = transport.responseText.evalJSON();
               if (resp.width && resp.height) {
                 ed.origData.set(imageFullName, resp);
+                callbackFN(imageFullName, resp);
               } else if ((typeof console != 'undefined')
                   && (typeof console.warn != 'undefined')) {
                 console.warn('loadOrigDimensionsAsync: failed!!! ', transport.responseText);
@@ -127,11 +129,11 @@
       if (!ed.origData.get(imageFullName)) {
         var cropW = parseInt(e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropW || (typeof(cropW) == 'undefined') || (cropW <= 0)) {
-          cropW = e.width;
+          cropW = null;
         }
         var cropH = parseInt(e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropH || (typeof(cropH) == 'undefined') || (cropH <= 0)) {
-          cropH = e.height;
+          cropH = null;
         }
         if (cropW && (cropW > 0) && cropH && (cropH > 0)) {
           ed.origData.set(imageFullName, { 'width' : cropW , 'height' : cropH});

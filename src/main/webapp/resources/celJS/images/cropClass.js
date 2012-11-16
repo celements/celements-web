@@ -177,6 +177,7 @@ var setZoomSize = function() {
 };
 
 var loadCropPanelEvent = function(event) {
+//  console.log('loadCropPanelEvent: initCrop');
   initCrop(false);
   $('fitToScreen').stopObserving('change', setMainImageZoomEvent);
   $('fitToScreen').observe('change', setMainImageZoomEvent);
@@ -391,6 +392,10 @@ var releaseSelectionEvent = function() {
 };
 
 var releaseSelection = function(buttonRelease) {
+  var cw = $('cropWidth').value;
+  var ch = $('cropHeight').value;
+  var celw = $('celwidth').value;
+  var celh = $('celheight').value;
   if(buttonRelease && (jcrop != null)) {
     jcrop.release();
   }
@@ -473,28 +478,65 @@ var resizeCrop = function() {
 };
 
 var executeCrop = function() {
+  executeCropWithCallback();
+};
+
+var hasCropChanged = function(url, cx, cy, cw, ch) {
+  var cropX = parseInt(url.replace(/((^|(.*[\?&]))cropX=(\d*)\D?.*)|.*/g, '$4'));
+  var cropY = parseInt(url.replace(/((^|(.*[\?&]))cropY=(\d*)\D?.*)|.*/g, '$4'));
+  var cropW = parseInt(url.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4'));
+  var cropH = parseInt(url.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4'));
+  var hasCropChanged = ((cx != cropX) || (cy != cropY) || (cw != cropW) || (ch != cropH));
+//  console.log('hasCropChanged: ', hasCropChanged, url, cx, cy, cw, ch);
+  return hasCropChanged;
+};
+
+var executeCropWithCallback = function(callbackFN) {
+  callbackFN = callbackFN || function() {};
   var url = $('previewImg').src;
   var cx = $('cropX').value;
   var cy = $('cropY').value;
   var cw = $('cropWidth').value;
   var ch = $('cropHeight').value;
-  url = url.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
-  url = url.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
-  url = url.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
-  url = url.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
-  if((cx != '') && (cy != '') && (cw != '') && (ch != '')) {
-    if(url.indexOf('?') < 0) {
-      url += '?';
-    } else if(!url.endsWith('&')) {
-      url += '&';
+//  console.log('executeCrop: ', cx,cy,cw,ch, $('isCropped').value);
+  if (hasCropChanged(url, cx, cy, cw, ch)) {
+    var hasCropValues = (cx != '') && (cy != '') && (cw != '') && (ch != '');
+    //do not touch celwidth and celheight if no crop happend
+    if (hasCropValues && (parseInt(cw) > 0) && (parseInt(ch) > 0)) {
+      url = url.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
+      url = url.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
+      url = url.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
+      url = url.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
+      if(url.indexOf('?') < 0) {
+        url += '?';
+      } else if(!url.endsWith('&')) {
+        url += '&';
+      }
+      url += 'cropX=' + cx + '&cropY=' + cy + '&cropW=' + cw + '&cropH=' + ch;
+      $('isCropped').value = '1';
+      $('celwidth').value = '';
+      $('celheight').value = '';
+      CelImageDialog.resetMaxDimension(function() {
+          CelImageDialog.showPreviewImage(url, 1);
+          callbackFN();
+      });
+    } else if (url.match(/cropX=|cropY=|cropW=|cropH=/)) {
+      url = url.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
+      url = url.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
+      url = url.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
+      url = url.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
+      $('celwidth').value = '';
+      $('celheight').value = '';
+      CelImageDialog.resetMaxDimension(function() {
+        CelImageDialog.showPreviewImage(url, 1);
+        callbackFN();
+      });
+    } else {
+      callbackFN();
     }
-    url += 'cropX=' + cx + '&cropY=' + cy + '&cropW=' + cw + '&cropH=' + ch;
+  } else {
+    callbackFN();
   }
-  $('isCropped').value = '1';
-  $('celwidth').value = cw;
-  $('celheight').value = ch;
-  $('previewImg').src = url;
-  $('resetMaxLabel').update(cw + ' x ' + ch);
 };
 
 var onLoadInit = function() {
@@ -508,6 +550,10 @@ var onLoadInit = function() {
     event.stop();
   });
   $j('div.tabs a').live('click', executeCrop);
+  $$('body')[0].observe('celImagePicker:collectPrepareForInsertAndClose', function(event
+      ) {
+    event.memo.push(executeCropWithCallback);
+  });
   Event.observe(window, 'resize', resizeCrop);
   resizeCrop();
 };
