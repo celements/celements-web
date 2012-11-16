@@ -27,6 +27,7 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
 #set($cel_editobj_externalForm = true)
 #set($cel_editobj_properties = 'space_name,is_inheritable')
 #set($cel_editobj_readonly_properties = '')
+#set($cel_editobj_dict_property_prefix = 'pdcCellEdit_')
 $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
   #else
   <p>Group-Cell: Inhalt wird nur bei Zellen ohne weitere Unter-Zellen berechnet.</p>
