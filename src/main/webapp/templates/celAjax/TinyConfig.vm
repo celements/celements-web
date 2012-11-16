@@ -24,7 +24,8 @@
   "theme" : "advanced",
   ## lookup the additional rte_plugins field in the XWiki and WebPreference
   #set($rtePluginsConfig = $celementsweb.getRTEConfigField('plugins'))
-  #set($rtePluginsPre = ["safari","save","paste","advlink","template","table","lists","inlinepopups","advimage","celimage","autoresize"])
+  ##FP 16.11.2012; remove "autoresize" from rtePluginsPre because there are issues
+  #set($rtePluginsPre = ["safari","save","paste","advlink","template","table","lists","inlinepopups","advimage","celimage"])
   #set($rteOmitPlugins = [])
   #if("$!rtePluginsConfig" != '')
     #foreach($oneRtePlugin in $rtePluginsConfig.split('[,| ]'))
