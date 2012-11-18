@@ -34,7 +34,7 @@ $xwiki.parseTemplate("celMacros/getTabMenu.vm")
 #parse('celMacros/MenuBar.vm')
 #end
 #if("$!celementsLoadInOverlay" != '')
-$xwiki.parseTemplate("celMacros/openInlineOverlay.vm")
+#parse("celMacros/openInlineOverlay.vm")
 #if($xwiki.exists("${celementsLoadInOverlay}"))
 $xwiki.includeForm("${celementsLoadInOverlay}",false)
 #elseif((${celementsLoadInOverlay.indexOf('.')} > 0) && ($xwiki.exists("celements2web:${celementsLoadInOverlay}")))
