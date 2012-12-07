@@ -18,7 +18,7 @@ CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent) {
   // constructor
   cssTitle = cssTitle || '.accordeonTitle';
   cssContent = cssContent || '.accordeonContent';
-  this._init(id, cssBox);
+  this._init(id, cssBox, cssTitle, cssContent);
 };
 
 (function() {
