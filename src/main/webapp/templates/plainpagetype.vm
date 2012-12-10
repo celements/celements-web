@@ -8,5 +8,4 @@ $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 $xwiki.parseTemplate("celMacros/startCelementsBody.vm")
 $xwiki.celementsweb.renderCelementsDocument($doc.documentReference)
 ##
-</body>
-</html>
+#parse('celMacros/finaliseCelementsDocument.vm')
