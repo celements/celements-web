@@ -197,8 +197,7 @@ var getCelHost = function() {
   return celHost;
 };
 
-var contextMenuLoading = true;
-Event.observe(window, 'load', function(){
+var initContextMenuAsync = function() {
   new Ajax.Request(getCelHost(), {
     method: 'post',
     parameters: {
@@ -214,7 +213,7 @@ Event.observe(window, 'load', function(){
       }
     }
   });
-});
+};
 
 var getElemIdsForClassName = function(cssClassName) {
   var elemNames = new Array();
@@ -315,3 +314,6 @@ var documentContextClickHandler = function(event) {
   }
   return true;
 };
+
+var contextMenuLoading = true;
+$j(document).ready(initContextMenuAsync);
