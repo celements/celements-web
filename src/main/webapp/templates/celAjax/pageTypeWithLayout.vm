@@ -1,0 +1,26 @@
+##only include if legacy celements2web.xar is installed
+#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
+$xwiki.includeForm("celements2web:Macros.initCelements", false)
+#end
+#set($isAjaxCall = ("$!request.ajax" == '1'))
+#if(!$isAjaxCall)
+## start a Celements Document
+$xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
+##
+## start the celements body (and lacily finalise the header)
+#parse("celMacros/startCelementsBody.vm")
+##
+#end
+#set($isCellSkin = true)
+#set($doclang = $tdoc.getLanguage())
+#if("$!doclang" == '')
+  #set($doclang = $tdoc.getDefaultLanguage())
+#end
+<div class="lang_${language} doclang_$doclang">
+<!-- start celements cells -->
+$celementsweb.renderPageLayout()
+<!-- end celements cells -->
+</div><!-- main wrapper -->
+#if(!$isAjaxCall)
+#parse('celMacros/finaliseCelementsDocument.vm')
+#end
