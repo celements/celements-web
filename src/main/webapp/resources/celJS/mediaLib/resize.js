@@ -39,6 +39,11 @@ var resizeFileBase = function(){
     });
   }
   
+  //fix für Import Box
+  if($$('.c3_import_box') && ($$('.c3_import_box').length > 0)) {
+	  uploadHeight = uploadHeight - siblingHeight;
+  }
+  
   var winHeight = 0;
   if(typeof(window.innerWidth) == 'number') {
     winHeight = window.innerHeight;
