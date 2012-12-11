@@ -64,11 +64,17 @@ var resizeFileBase = function(){
   filesBox.setStyle({ height: Math.max(50, filesBoxSize) + "px" });
   if(scrollBox){
     scrollBox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
-    if(Prototype.Browser.IE && ieCount > 0) {
+    if (Prototype.Browser.IE && (ieCount > 0)) {
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('found IE browser. Starting delayed fileBaseResize.', ieCount);
+      }
       startDelayed();
       ieCount--;
     }
   } else {
+    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+      console.log('no scrollbox found. Starting delayed fileBaseResize.');
+    }
     startDelayed();
   }
 };
