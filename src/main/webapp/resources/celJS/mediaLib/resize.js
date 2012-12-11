@@ -71,7 +71,7 @@ var resizeFileBase = function(){
   } else {
     startDelayed();
   }
-}
+};
 
 var startDelayed = function() {
   if(delayExec != null) {
