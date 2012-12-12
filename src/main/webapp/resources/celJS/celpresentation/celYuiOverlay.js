@@ -87,6 +87,7 @@ CELEMENTS.presentation.getOverlayObj = function() {
         dialog.setBody('<img style="margin-left: auto; margin-right:auto;"'
            + ' src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
         dialog.cfg.queueProperty("buttons", null);
+        dialog.cfg.setProperty("close", false);
         dialog.render();
         dialog.show();
       }
