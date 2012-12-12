@@ -62,6 +62,8 @@ CELEMENTS.presentation.getOverlayObj = function() {
         var yuiSamSkinDiv = new Element('div', {'class' : 'yui-skin-sam'});
         $(document.body).insert(yuiSamSkinDiv);
         _me.overlayDialog.render(yuiSamSkinDiv);
+        _me.overlayDialog.setBody('<img style="margin-left: auto; margin-right:auto;"'
+            + ' src="/skin/resources/celRes/ajax-loader.gif" />'); 
         $(document.body).fire('cel_yuiOverlay:afterRenderDialog');
         return _me.overlayDialog;
       },
