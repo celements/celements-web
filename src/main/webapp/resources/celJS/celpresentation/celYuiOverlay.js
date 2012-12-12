@@ -1,6 +1,18 @@
 /**
  * Celements presentation overlay class
- * This class allows to simply show an overlay using the YUI simple dialog
+ * This class allows to simply show an overlay using the YUI simple dialog.
+ * 
+ * usage: include before this js-file the following required components
+css files for media="screen"
+:celJS/yui/container/assets/skins/sam/container.css
+:celJS/yui/button/assets/skins/sam/button.css
+external js-files
+:celJS/yui/yahoo/yahoo-min.js
+:celJS/yui/dom/dom-min.js
+:celJS/yui/event/event-min.js
+:celJS/yui/element/element-min.js
+:celJS/yui/button/button-min.js
+:celJS/yui/container/container-min.js
  */
 if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
 if(typeof CELEMENTS.presentation=="undefined"){CELEMENTS.presentation={};};
