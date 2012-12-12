@@ -55,7 +55,7 @@ CELEMENTS.presentation.getOverlayObj = function() {
             fixedcenter: true, 
             visible: false, 
             draggable: false, 
-            close: true, 
+            close: false, 
             zindex:4, 
             modal:true,
             monitorresize:false,
