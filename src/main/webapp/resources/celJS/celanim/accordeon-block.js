@@ -48,6 +48,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   },
 
   accordeonHide : function(stepToHide) {
+    var _me = this;
     return new Effect.SlideUp(stepToHide.down(_me.cssContent), {
       transition: Effect.Transitions.sinoidal,
       afterFinish : function() {
@@ -59,6 +60,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   },
 
   accordeonShow : function(stepToShow) {
+    var _me = this;
     stepToShow.removeClassName('inactive');
     stepToShow.addClassName('active');
     return new Effect.SlideDown(stepToShow.down(_me.cssContent), {
@@ -92,6 +94,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   },
 
   isStepVisible : function(step) {
+    var _me = this;
     return step.down(_me.cssContent).visible();
   },
 
