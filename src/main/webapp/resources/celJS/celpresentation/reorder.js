@@ -1,11 +1,14 @@
 Event.observe(window, 'load', function() {
   $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:start',
-      layoutEditor_startReorderMode);
+      presentationEditor_startReorderMode);
   $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
-      layoutEditor_endReorderMode);
+      presentationEditor_endReorderMode);
+  getCelementsTabEditor().addAfterInitListener(function() {
+    presentationEditor_reorder();
+  });
 });
 
-var layoutEditor_startReorderMode = function(event) {
+var presentationEditor_startReorderMode = function(event) {
   $$('.cel_naveditor_button_cancel').each(function(button) {
     button.observe('click', cancelNavReorderHandler);
   });
@@ -15,7 +18,7 @@ var layoutEditor_startReorderMode = function(event) {
   $('cel_presentation_editor_reorder_tree').addClassName('reorderMode');
 };
 
-var layoutEditor_endReorderMode = function(event) {
+var presentationEditor_endReorderMode = function(event) {
   $$('.cel_naveditor_button_cancel').each(function(button) {
     button.stopObserving('click', cancelNavReorderHandler);
   });
@@ -25,9 +28,9 @@ var layoutEditor_endReorderMode = function(event) {
   $('cel_presentation_editor_reorder_tree').removeClassName('reorderMode');
 };
 
-var layoutEditor_reorderObj = null;
-var layoutEditor_reorder = function() {
-  layoutEditor_reorderObj = new CELEMENTS.reorder.DDReorder(
+var presentationEditor_reorderObj = null;
+var presentationEditor_reorder = function() {
+  presentationEditor_reorderObj = new CELEMENTS.reorder.DDReorder(
       'cel_presentation_editor_reorder_tree', '.cel_presentation_reorder');
   myContextMenu.internal_hide();
 };
@@ -45,7 +48,7 @@ var saveNavReorderHandler = function(event) {
   savingDialog.cfg.queueProperty("buttons", null);
   savingDialog.render();
   savingDialog.show();
-  layoutEditor_reorderObj.saveOrder(function(transport) {
+  presentationEditor_reorderObj.saveOrder(function(transport) {
     if (transport.responseText == 'OK') {
       $('cel_presentation_editor_reorder_tree').fire('celreorder_reorderMode:end');
       window.location.reload();
