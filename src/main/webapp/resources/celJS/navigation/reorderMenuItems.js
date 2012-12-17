@@ -15,9 +15,10 @@ var DDM = YAHOO.util.DragDropMgr;
 // -> call CELEMENTS.reorder.DDReorder.init() to start reordering
 // -> set minLevel and maxLevel BEFORE calling init().
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.reorder.DDReorder = function(id, minLevel, maxLevel) {
+CELEMENTS.reorder.DDReorder = function(id, ulSelector, minLevel, maxLevel) {
   // constructor
-  this._init(id, minLevel, maxLevel);
+  ulSelector = ulSelector || '.cel_skin_editor_reorder';
+  this._init(id, ulSelector, minLevel, maxLevel);
 };
 
 (function() {
@@ -27,13 +28,16 @@ CELEMENTS.reorder.DDReorder.prototype = {
 
   parentElem : null,
 
+  _ulSelector : null,
+
   minLevel: 1,
 
   maxLevel: 99,
 
-  _init: function(theElem, minLevel, maxLevel) {
+  _init: function(theElem, ulSelector, minLevel, maxLevel) {
     var _me = this;
     _me.parentElem = $(theElem);
+    _me._ulSelector = ulSelector;
     if (minLevel) {
       _me.minLevel = minLevel;
     }
@@ -41,7 +45,7 @@ CELEMENTS.reorder.DDReorder.prototype = {
       _me.maxLevel = maxLevel;
     }
     
-		$$('ul.cel_skin_editor_reorder li').each(function(listItem) {
+		$$('ul' + _me._ulSelector + ' li').each(function(listItem) {
 		  if (!listItem.id) {
 		    var menuItemId = listItem.down('span').id;
 		    listItem.id = 'LI' + menuItemId;
@@ -50,7 +54,7 @@ CELEMENTS.reorder.DDReorder.prototype = {
       var ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
       _me._addHandleIfPresent(ddElem, listItem);
 		});
-		$$('ul.cel_skin_editor_reorder').each(function(listElem) {
+		$$('ul' + _me._ulSelector).each(function(listElem) {
       new YAHOO.util.DDTarget(listElem.id);
 		});
   	_me.parentElem.fire('celreorder_reorderMode:start');
@@ -101,7 +105,7 @@ CELEMENTS.reorder.DDReorder.prototype = {
     };
 
   	var serialList = new Array();
-		$$('ul.cel_skin_editor_reorder').each(function(listElem) {
+		$$('ul' + _me._ulSelector).each(function(listElem) {
 			var childElems = listElem.childElements('li');
 			if (childElems.size() > 0) {
 		    	var parentChild = new Hash();

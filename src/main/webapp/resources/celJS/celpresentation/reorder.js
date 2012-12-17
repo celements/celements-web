@@ -27,7 +27,8 @@ var layoutEditor_endReorderMode = function(event) {
 
 var layoutEditor_reorderObj = null;
 var layoutEditor_reorder = function() {
-  layoutEditor_reorderObj = new CELEMENTS.reorder.DDReorder('cel_presentation_editor_reorder_tree');
+  layoutEditor_reorderObj = new CELEMENTS.reorder.DDReorder(
+      'cel_presentation_editor_reorder_tree', '.cel_presentation_reorder');
   myContextMenu.internal_hide();
 };
 
