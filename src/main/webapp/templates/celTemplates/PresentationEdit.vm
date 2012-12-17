@@ -1,0 +1,29 @@
+#set($navObj = $doc.getObject('Celements2.NavigationConfigClass'))
+#set($needsSave = false)
+#if("$!navObj" == '')
+  #set($navObj = $doc.newObject('Celements2.NavigationConfigClass'))
+  $navObj.set('from_hierarchy_level', 1)
+  $navObj.set('to_hierarchy_level', 1)
+  $navObj.set('show_inactive_to_level', 1)
+  $navObj.set('menu_space', "$doc.getName()")
+  $navObj.set('presentation_type', "renderedContent")
+  #set($needsSave = true)
+  $doc.save()
+#end
+<form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
+  <input type="hidden" name="template" value="$!doc.getTemplate()" />
+  <input type="hidden" name="xredirect" value="$!xredirect" />
+  <input type="hidden" name="language" value="$!tdoc.language" />
+  <div id="editablecode_container">
+  #set($cel_embedded_editobj = true)
+  #set($cel_editobj_classname = "Celements2.NavigationConfigClass")
+  #set($cel_editobj_nb = $cellObj.getNumber())
+  #set($cel_editobj_hasObjRemoveLink = false)
+  #set($cel_editobj_externalForm = true)
+  #set($cel_editobj_properties = "menu_space")
+  #if(!$isAdmin)
+    #set($cel_editobj_readonly_properties = 'menu_space')
+  #end
+  $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
+  </div>
+</form>
