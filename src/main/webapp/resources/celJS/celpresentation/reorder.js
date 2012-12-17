@@ -59,6 +59,7 @@ var saveNavReorderHandler = function(event) {
       }
       alert('Failed saving!');
     }
+    $('cel_presentation_editor_reorder_tree').fire('celreorder_reorderMode:start');
     savingDialog.hide();
   });
 };
