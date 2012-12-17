@@ -36,10 +36,12 @@ var presentationEditor_reorder = function() {
 };
 
 var cancelNavReorderHandler = function(event) {
-  window.location.reload();
+  event.stop();
+//  window.location.reload();
 };
 
 var saveNavReorderHandler = function(event) {
+  event.stop();
   var button = event.findElement();
   button.stopObserving('click', saveNavReorderHandler);
     var savingDialog = getCelModalDialog();
