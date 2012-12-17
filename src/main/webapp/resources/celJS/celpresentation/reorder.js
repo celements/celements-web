@@ -51,7 +51,6 @@ var saveNavReorderHandler = function(event) {
   presentationEditor_reorderObj.saveOrder(function(transport) {
     if (transport.responseText == 'OK') {
       $('cel_presentation_editor_reorder_tree').fire('celreorder_reorderMode:end');
-      window.location.reload();
     } else {
       if ((typeof console != "undefined") && (typeof console.debug != "undefined")) {
         console.debug('failed saving reorder: ' + transport.responseText);
