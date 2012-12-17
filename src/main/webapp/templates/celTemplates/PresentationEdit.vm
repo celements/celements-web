@@ -47,6 +47,21 @@
 <span class='cel_lazyloadJS' style='display: none;'>celJS/yui/animation/animation-min.js</span>
 <span class='cel_lazyloadJS' style='display: none;'>celJS/navigation/reorderMenuItems.js</span>
 <span class='cel_lazyloadJS' style='display: none;'>celJS/celpresentation/reorder.js</span>
+$celementsweb.addExtJSfileOnce(':celJS/yui/yahoo/yahoo-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/event/event-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/dom/dom-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/connection/connection-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/json/json-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/button/button-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/container/container-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/animation/animation-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/navigation/reorderMenuItems.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/celpresentation/reorder.js', 'file')
 #set($structNav = $celementsweb.createNavigation())
 $structNav.setMenuPart("")
 ##$structNav.setShowAll(true)
