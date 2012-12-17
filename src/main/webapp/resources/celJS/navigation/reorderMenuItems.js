@@ -96,6 +96,7 @@ CELEMENTS.reorder.DDReorder.prototype = {
   },
 
   getOrder: function() {
+    var _me = this;
     var parseList = function(childElems) {
         var listItems = [];
         childElems.each(function(item) {
