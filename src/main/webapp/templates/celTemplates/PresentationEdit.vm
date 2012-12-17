@@ -17,7 +17,7 @@
   <div id="editablecode_container">
   #set($cel_embedded_editobj = true)
   #set($cel_editobj_classname = "Celements2.NavigationConfigClass")
-  #set($cel_editobj_nb = $cellObj.getNumber())
+  #set($cel_editobj_nb = $navObj.getNumber())
   #set($cel_editobj_hasObjRemoveLink = false)
   #set($cel_editobj_externalForm = true)
   #set($cel_editobj_properties = "menu_space")
