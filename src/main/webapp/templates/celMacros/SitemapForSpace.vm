@@ -1,0 +1,42 @@
+#set($defaultParams = "xpage=$!{request.get('xpage')}")
+#set($defaultParams = "${defaultParams}&conf=$!{request.get('conf')}")
+#set($defaultParams = "${defaultParams}&xredirect=$!{request.get('xredirect')}")
+#set($defaultParams = "${defaultParams}&space=$!{request.get('space')}")
+#set($hasSpaceRestriction = ("$!request.space" != ''))
+#if($hasSpaceRestriction)
+#set($spaceName = "$!request.space")
+#else
+#set($spaceName = "$doc.getDocumentReference().getLastSpaceReference().getName()")
+#end
+<div id="reorderingTitle" style="display:none;">
+<h1>Reordering</h1>
+<p>Bitte mit Drag&amp;Drop die Struktur anpassen!</p>
+<button class="cel_naveditor_button_cancel" >Abbrechen</button>
+<button class="cel_naveditor_button_saveAndContinue" >Speichern</button>  </div>
+</div>
+<div id="cel_presentation_editor_reorder_tree" class="presentation_order_edit">
+$celementsweb.addExtJSfileOnce(':celJS/yui/yahoo/yahoo-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/event/event-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/dom/dom-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/connection/connection-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/json/json-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/button/button-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/container/container-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/animation/animation-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/navigation/reorderMenuItems.js', 'file')
+##$celementsweb.addExtJSfileOnce(':celJS/celpresentation/reorder.js', 'file')
+#set($structNav = $celementsweb.createNavigation())
+$structNav.setMenuPart("")
+$structNav.setShowAll(true)
+$structNav.setHasLink(false)
+$structNav.setPresentationType('sitemap')
+$structNav.setMenuSpace($spaceName)
+$structNav.addUlCSSClass("cel_presentation_reorder")
+$structNav.setCMcssClass("cel_cm_presentationeditor_nodes")
+$structNav.includeNavigation()
+</div>
