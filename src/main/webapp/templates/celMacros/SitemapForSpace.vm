@@ -8,6 +8,14 @@
 #else
 #set($spaceName = "$doc.getDocumentReference().getLastSpaceReference().getName()")
 #end
+<div id="sitemapForSpace">
+<h1>##
+#if($hasSpaceRestriction)
+$adminMsg.get('cel_overlay_title_sitemap_for_space', ["${spaceName}"])##
+#else
+$adminMsg.get('cel_overlay_title_sitemap')##
+#end
+</h1>
 <div id="reorderingTitle" style="display:none;">
 <h1>Reordering</h1>
 <p>Bitte mit Drag&amp;Drop die Struktur anpassen!</p>
@@ -39,4 +47,5 @@ $structNav.setMenuSpace($spaceName)
 $structNav.addUlCSSClass("cel_presentation_reorder")
 $structNav.setCMcssClass("cel_cm_presentationeditor_nodes")
 $structNav.includeNavigation()
+</div>
 </div>
