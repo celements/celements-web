@@ -4,6 +4,6 @@
 #set($contentDoc = $tdoc)
 #end
 <div id="pres$!{contentDoc.getName()}:$!{contentDoc.getFullName()}"##
- class="cm_presentation">
+ class="cel_cm_presentation">
 #parse('celTemplates/NavigationCellView.vm')
 </div>
