@@ -54,7 +54,8 @@ $structNav.includeNavigation()
 #foreach($docFN in $theQuery.execute())
 #set($parentRef = $services.model.resolveDocument($docFN))
 #if(!$spaceParentRefs.contains($parentRef))
-#set($!devNull = $spaceParentRefs.add($parentRef))
+#set($parentDoc = $xwiki.getDocument($parentRef))
+#set($!devNull = $spaceParentRefs.add($parentDoc.parent))
 #end
 #end
 #foreach($parentRef in $spaceParentRefs)
