@@ -49,13 +49,17 @@ $structNav.setCMcssClass("cel_cm_presentationeditor_nodes")
 <h2>Hauptknoten</h2>
 $structNav.includeNavigation()
 #set($spaceParentRefs = [])
-#set($xwql = "where doc.translation=0 and doc.space = :spacename and doc.parent not like :spacenameLike")
+#set($xwql = "where doc.translation=0 and doc.space = :spacename and doc.parent <> '' and doc.parent not null and doc.parent not like :spacenameLike")
 #set($theQuery = $services.query.xwql($xwql).bindValue('spacename', $spaceName).bindValue('spacenameLike', "$!{spaceName}.%"))
 #foreach($docFN in $theQuery.execute())
-#set($parentRef = $services.model.resolveDocument($docFN))
+#set($spaceDocRef = $services.model.resolveDocument($docFN))
+#set($spaceDoc = $xwiki.getDocument($spaceDocRef))
+#set($parentDocFN = $spaceDoc.getParent())
+#if("$!parentDocFN" != '')
+#set($parentRef = $services.model.resolveDocument($parentDocFN))
 #if(!$spaceParentRefs.contains($parentRef))
-#set($parentDoc = $xwiki.getDocument($parentRef))
-#set($!devNull = $spaceParentRefs.add($parentDoc.parent))
+#set($!devNull = $spaceParentRefs.add($parentRef))
+#end
 #end
 #end
 #foreach($parentRef in $spaceParentRefs)
