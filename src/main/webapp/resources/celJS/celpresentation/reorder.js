@@ -3,9 +3,11 @@ Event.observe(window, 'load', function() {
       presentationEditor_startReorderMode);
   $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
       presentationEditor_endReorderMode);
-  getCelementsTabEditor().addAfterInitListener(function() {
-    presentationEditor_reorder();
-  });
+  if (getCelementsTabEditor && getCelementsTabEditor()) {
+    getCelementsTabEditor().addAfterInitListener(function() {
+      presentationEditor_reorder();
+    });
+  }
 });
 
 var presentationEditor_startReorderMode = function(event) {
