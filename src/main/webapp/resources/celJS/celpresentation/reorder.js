@@ -3,7 +3,7 @@ Event.observe(window, 'load', function() {
       presentationEditor_startReorderMode);
   $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
       presentationEditor_endReorderMode);
-  if (getCelementsTabEditor && getCelementsTabEditor()) {
+  if ((typeof getCelementsTabEditor !== 'undefined') && getCelementsTabEditor()) {
     getCelementsTabEditor().addAfterInitListener(function() {
       presentationEditor_reorder();
     });
