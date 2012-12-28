@@ -47,7 +47,7 @@ CELEMENTS.reorder.DDReorder.prototype = {
     
 		$$('ul' + _me._ulSelector + ' li').each(function(listItem) {
 		  if (!listItem.id) {
-		    var menuItemId = listItem.down('span').id;
+		    var menuItemId = (listItem.down('span,a')).id;
 		    listItem.id = 'LI' + menuItemId;
 		  }
 		  _me._addEmptySublists(listItem.id);
