@@ -91,9 +91,9 @@ $xwiki.includeForm("$cel_linkpicker_MenuName_Macro", false)
 #foreach($sp in $space.split(','))
   #if("$!sp" != '')
     #if("$!xwql" == '')
-      #set ($xwql = "where doc.web='$sp'")
+      #set ($xwql = "where doc.space = '$sp'")
     #else
-      #set ($xwql = "$xwql or doc.web='$sp'")
+      #set ($xwql = "$xwql or doc.space = '$sp'")
     #end
   #end
 #end
