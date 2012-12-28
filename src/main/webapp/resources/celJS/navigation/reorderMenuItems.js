@@ -150,6 +150,8 @@ CELEMENTS.reorder.DDList = function(id, sGroup, config, ddReorder) {
   this.logger = this.logger || YAHOO;
   var el = this.getDragEl();
   Dom.setStyle(el, "opacity", 0.55); // The proxy is slightly transparent
+  Dom.addClass(el, "cel_reorderNodes_proxy");
+  Dom.addClass(el, "cel_reorderNodes_parent_" + ddReorder.parentElem.id);
   this.scroll = false; //prevent auto scrolling of the window
   this.lastList = null;
 };
