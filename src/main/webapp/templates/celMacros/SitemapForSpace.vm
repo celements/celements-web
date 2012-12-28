@@ -13,6 +13,9 @@
 #if($includeSpaceNav)
 #set($defaultParams = "${defaultParams}&hasLink=$!{request.get('spaceNav')}")
 #end
+#if($showOutsideStructure)
+#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('showOutStruct')}")
+#end
 #if($forceAllSpaces)
 #set($defaultParams = "${defaultParams}&hasLink=$!{request.get('forceAllSpaces')}")
 #end
@@ -21,6 +24,7 @@
 #set($hasLink = ("$request.hasLink" == '1'))
 #set($includeSpaceNav = ("$request.spaceNav" == '1'))
 #set($forceAllSpaces = ("$request.forceAllSpaces" == '1'))
+#set($showOutsideStructure = ("$request.showOutStruct" == '1'))
 #if($hasSpaceRestriction)
 #set($spaceName = "$!request.space")
 #else
@@ -114,8 +118,40 @@ $structNav.includeNavigation()
 #end
 #end
 #foreach($parentRef in $spaceParentRefs)
+#if($celementsweb.getSubNodesForParentRef($parentRef).size() > 0)
 <h2>Unterknoten für $services.model.serialize($parentRef,'local')</h2>
 $structNav.includeNavigation($parentRef)
 #end
+#end
 </div>
+#if($showOutsideStructure)
+<div id="cel_sitemap_outside_structure" class="sitemapOutsideStructure">
+<h2>$adminMsg.get('cel_lpicker_otherLinksTitle')</h2>
+	<ul>
+#set($xwql = "where doc.translation=0 and doc.space = :spacename")
+#set($theQuery = $services.query.xwql($xwql).bindValue('spacename', $spaceName))
+#foreach($docFN in $theQuery.execute())
+  #if("$!docFN" != '')
+    #set($docRef = $services.model.resolveDocument($docFN))
+    #if(!$celementsweb.isTreeNode($docRef))
+      #set($hasChildren = ($celementsweb.getSubNodesForParentRef($docRef).size() > 0))
+      #set($cssNodeClasses = '')
+      #if($hasChildren)
+        #set($cssNodeClasses = "${cssNodeClasses} cel_nav_hasChildren")
+      #else
+        #set($cssNodeClasses = "${cssNodeClasses} cel_nav_isLeaf")
+      #end
+	  <li><a href="$xwiki.getURL($docRef)" class="$cssNodeClasses.trim()">
+	  	$structNav.getMultilingualMenuName($docFN, $language)
+      	</a>
+      	#if($hasChildren)
+$structNav.includeNavigation($docRef)
+        #end
+	  </li>
+    #end
+  #end
+#end
+	</ul>
+</div>
+#end
 </div>
