@@ -83,7 +83,7 @@ getCelModalDialog = function() {
       visible: false, 
       draggable: false, 
       close: false, 
-      zindex:4, 
+      zindex:101, 
       modal:true,
       monitorresize:false,
       icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
@@ -91,7 +91,9 @@ getCelModalDialog = function() {
     } );
   }
   //add skin-div to get default yui-skin-sam layouting for the dialog
-  var yuiSamSkinDiv = new Element('div', {'class' : 'yui-skin-sam'});
+  var yuiSamSkinDiv = new Element('div'
+    ).addClassName('yui-skin-sam'
+    ).addClassName('cel-reorderSaveDialog');
   $(document.body).insert(yuiSamSkinDiv);
   celementsModalDialog.render(yuiSamSkinDiv);
   return celementsModalDialog;
