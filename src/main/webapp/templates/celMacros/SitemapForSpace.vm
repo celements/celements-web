@@ -5,12 +5,33 @@
 #set($defaultParams = "${defaultParams}&hasLink=$!{request.get('hasLink')}")
 #set($hasSpaceRestriction = ("$!request.space" != ''))
 #set($hasLink = ("$request.hasLink" == '1'))
+#set($includeSpaceNav = ("$request.spaceNav" == '1'))
+#set($forceAllSpaces = ("$request.forceAllSpaces" == '1'))
 #if($hasSpaceRestriction)
 #set($spaceName = "$!request.space")
 #else
 #set($spaceName = "$doc.getDocumentReference().getLastSpaceReference().getName()")
 #end
 <div id="sitemapForSpace">
+#if($includeSpaceNav)
+#if($isAdmin && $forceAllSpaces)
+#set($excludeSpaceList = '')
+#else
+#set($excludeSpaceList = "and doc.space not in ('XWiki'")
+#set($excludeSpaceList = "${excludeSpaceList}, 'PageTypes'")
+#set($excludeSpaceList = "${excludeSpaceList})")
+#end
+#set($sql = "where doc.translation=0 and doc.name <> 'WebPreferences' $excludeSpaceList")
+#set($spaceList = $xwiki.searchSpacesNames($sql, 0, 0, []))
+<div id="spaceNavigation">
+	<label for="spaceSelect">Bereich wechseln zu:</label>
+	<select id="spaceSelector" name="spaceSelect">
+#foreach($spaceName in $spaceList)
+		<option label="$spaceName" value="$spaceName">$spaceName</option>
+#end
+	</select>
+</div>
+#end
 <h1>##
 #if($hasSpaceRestriction)
 $adminMsg.get('cel_overlay_title_sitemap_for_space', ["${spaceName}"])##

@@ -40,4 +40,15 @@
 
   $j(document).ready(registerOnSiteEditLinks);
 
+  /****
+   * Space selector
+   */
+  var spaceSelectorChangeHandler = function(event) {
+    window.location.href = this.value;
+  };
+
+  $j(document).ready(function() {
+    $('spaceSelector').observe('change', spaceSelectorChangeHandler);
+  });
+
 })(window);
