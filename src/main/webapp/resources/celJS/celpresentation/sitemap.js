@@ -1,11 +1,22 @@
 (function(window, undefined) {
 
+  var checkReorderModeBrowseAway = function(theLink) {
+    var parentDiv = theLink.up('ul').up();
+    var isInReorderMode = parentDiv.hasClassName('reorderMode');
+    return (!isInReorderMode || confirm('Sie sind am neu ordnen der Knoten.'
+        + ' Nicht gespeicherte Änderungen gehen verloren.'));
+  };
+
+  var checkIsCreateTrans = function(theLink) {
+    var langName = theLink.innerHTML;
+    return (!theLink.hasClassName('transNotExists')
+        || confirm('Möchten Sie wirklich eine Übersetzung für \'' + langName
+            + '\' erstellen?'));
+  };
+
   var pageLinkClickHandler = function(event) {
     event.stop();
     var theLink = this;
-    var parentDiv = theLink.up('ul').up();
-    var isInReorderMode = parentDiv.hasClassName('reorderMode');
-    console.log('parent ul classes: ', parentDiv.getAttribute('class'), isInReorderMode);
     var linkUrl = theLink.href;
     var xredirect = 'xredirect=' + encodeURIComponent(
         window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
@@ -14,9 +25,10 @@
     } else {
       linkUrl += '&' + xredirect;
     }
-    if (!isInReorderMode || confirm('Sie sind am neu ordnen der Knoten.'
-        + ' Nicht gespeicherte Änderungen gehen verloren.')) {
-        window.location.href = linkUrl;
+    if (!theLink.up('.docLangs')) {
+      window.open(linkUrl);
+    } else if (checkIsCreateTrans(theLink) && checkReorderModeBrowseAway(theLink)) {
+          window.location.href = linkUrl;
       }
   };
 
