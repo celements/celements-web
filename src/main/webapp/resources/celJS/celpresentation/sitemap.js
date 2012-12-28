@@ -7,7 +7,8 @@
     var isInReorderMode = parentDiv.hasClassName('reorderMode');
     console.log('parent ul classes: ', parentDiv.getAttribute('class'), isInReorderMode);
     var linkUrl = theLink.href;
-    var xredirect = 'xredirect=' + encodeURI(window.location.href);
+    var xredirect = 'xredirect=' + encodeURIComponent(
+        window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
     if (!linkUrl.match(/\?/)) {
       linkUrl += '?' + xredirect;
     } else {
