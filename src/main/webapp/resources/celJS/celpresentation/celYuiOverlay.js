@@ -71,7 +71,9 @@ CELEMENTS.presentation.getOverlayObj = function() {
           _me.overlayDialog.cfg.setProperty('width', dialogWidth);
         }
         //add skin-div to get default yui-skin-sam layouting for the dialog
-        var yuiSamSkinDiv = new Element('div', {'class' : 'yui-skin-sam'});
+        var yuiSamSkinDiv = new Element('div'
+          ).addClassName('yui-skin-sam'
+          ).addClassName('cel-YuiOverlay');
         $(document.body).insert(yuiSamSkinDiv);
         _me.overlayDialog.render(yuiSamSkinDiv);
         _me.overlayDialog.setBody('<img style="margin-left: auto; margin-right:auto;"'
