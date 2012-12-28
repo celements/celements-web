@@ -35,7 +35,9 @@
 #set($excludeSpaceList = "${excludeSpaceList}, 'PageTypes'")
 #set($excludeSpaceList = "${excludeSpaceList})")
 #end
-#set($sql = "where doc.translation=0 and doc.name <> 'WebPreferences' $excludeSpaceList")
+#set($sql = ", BaseObject as bobj")
+#set($sql = "${sql} where bobj.name=doc.fullName and bobj.className = 'Celements2.MenuItem'")
+#set($sql = "${sql} and doc.translation=0 and doc.name <> 'WebPreferences' $excludeSpaceList")
 #set($spaceList = $xwiki.searchSpacesNames($sql, 0, 0, []))
 <div id="spaceNavigation">
 	<label for="spaceSelect">Bereich wechseln zu:</label>
