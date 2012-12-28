@@ -1,8 +1,22 @@
+#macro(getDefaultParams overwriteSpaceName)
 #set($defaultParams = "xpage=$!{request.get('xpage')}")
 #set($defaultParams = "${defaultParams}&conf=$!{request.get('conf')}")
 #set($defaultParams = "${defaultParams}&xredirect=$!{request.get('xredirect')}")
+#if("$!overwriteSpaceName" == '')
 #set($defaultParams = "${defaultParams}&space=$!{request.get('space')}")
+#else
+#set($defaultParams = "${defaultParams}&space=$!{overwriteSpaceName}")
+#end
+#if($hasLink)
 #set($defaultParams = "${defaultParams}&hasLink=$!{request.get('hasLink')}")
+#end
+#if($includeSpaceNav)
+#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('spaceNav')}")
+#end
+#if($forceAllSpaces)
+#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('forceAllSpaces')}")
+#end
+#end  ## end getDefaultParams macros
 #set($hasSpaceRestriction = ("$!request.space" != ''))
 #set($hasLink = ("$request.hasLink" == '1'))
 #set($includeSpaceNav = ("$request.spaceNav" == '1'))
@@ -27,7 +41,8 @@
 	<label for="spaceSelect">Bereich wechseln zu:</label>
 	<select id="spaceSelector" name="spaceSelect">
 #foreach($spaceName in $spaceList)
-		<option label="$spaceName" value="$spaceName">$spaceName</option>
+	#getDefaultParams($spaceName)
+		<option label="$spaceName" value="$doc.getURL('view', $defaultParams)">$spaceName</option>
 #end
 	</select>
 </div>
