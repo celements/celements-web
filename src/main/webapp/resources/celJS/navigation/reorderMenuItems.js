@@ -171,6 +171,7 @@ YAHOO.extend(CELEMENTS.reorder.DDList, YAHOO.util.DDProxy, {
         Dom.setStyle(clickEl, "border-top", "2px solid red");
         Dom.setStyle(clickEl, "position", "absolute");
         Dom.setStyle(clickEl, "overflow", "hidden");
+        Dom.addClass(clickEl, "cel_reorderNodes_placeholder");
 
         dragEl.innerHTML = clickEl.innerHTML;
 
