@@ -18,18 +18,18 @@
     event.stop();
     var theLink = this;
     var linkUrl = theLink.href;
-    var xredirect = 'xredirect=' + encodeURIComponent(
-        window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
-    if (!linkUrl.match(/\?/)) {
-      linkUrl += '?' + xredirect;
-    } else {
-      linkUrl += '&' + xredirect;
-    }
     if (!theLink.up('.docLangs')) {
       window.open(linkUrl);
     } else if (checkIsCreateTrans(theLink) && checkReorderModeBrowseAway(theLink)) {
-          window.location.href = linkUrl;
+      var xredirect = 'xredirect=' + encodeURIComponent(
+          window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
+      if (!linkUrl.match(/\?/)) {
+        linkUrl += '?' + xredirect;
+      } else {
+        linkUrl += '&' + xredirect;
       }
+      window.location.href = linkUrl;
+    }
   };
 
   var registerOnSiteEditLinks = function() {
