@@ -15,7 +15,7 @@
     }
     if (!isInReorderMode || confirm('Sie sind am neu ordnen der Knoten.'
         + ' Nicht gespeicherte Änderungen gehen verloren.')) {
-        window.location.href = linkURL;
+        window.location.href = linkUrl;
       }
   };
 
