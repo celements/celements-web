@@ -32,6 +32,7 @@ var presentationEditor_endReorderMode = function(event) {
   });
   if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
     $('reorderingTitle').hide();
+    window.location.reload();
   }
   $('cel_presentation_editor_reorder_tree').removeClassName('reorderMode');
 };
@@ -45,7 +46,9 @@ var presentationEditor_reorder = function() {
 
 var cancelNavReorderHandler = function(event) {
   event.stop();
-//  window.location.reload();
+  if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
+    window.location.reload();
+  }
 };
 
 var saveNavReorderHandler = function(event) {
