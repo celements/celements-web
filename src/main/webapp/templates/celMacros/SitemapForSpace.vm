@@ -33,6 +33,12 @@
 #else
 #set($excludeSpaceList = "and doc.space not in ('XWiki'")
 #set($excludeSpaceList = "${excludeSpaceList}, 'PageTypes'")
+#set($allPageLayouts = $celementsweb.getAllPageLayouts())
+#foreach($layoutSpaceName in $allPageLayouts.keySet())
+#if("$layoutSpaceName" != "$!spaceName")
+#set($excludeSpaceList = "${excludeSpaceList}, '$!layoutSpaceName'")
+#end
+#end
 #set($excludeSpaceList = "${excludeSpaceList})")
 #end
 #set($sql = ", BaseObject as bobj")
