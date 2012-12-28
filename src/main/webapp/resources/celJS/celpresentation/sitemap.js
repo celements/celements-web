@@ -33,7 +33,6 @@
   };
 
   var registerOnSiteEditLinks = function() {
-    console.log('editLinks: ', $$('.presentation_order_edit ul li a'));
     $$('.presentation_order_edit ul li a').each(function(pageLink) {
       pageLink.observe('click', pageLinkClickHandler);
     });
