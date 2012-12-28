@@ -210,6 +210,7 @@ YAHOO.extend(CELEMENTS.reorder.DDList, YAHOO.util.DDProxy, {
                 Dom.setStyle(thisid, "border-top", "");
                 Dom.setStyle(thisid, "position", "");
                 Dom.setStyle(thisid, "overflow", "");
+                Dom.removeClass(thisid, "cel_reorderNodes_placeholder");
                 ddReorder.parentElem.select('.dragDropHover').each(function(elem) {
             		elem.removeClassName('dragDropHover');
             	});
