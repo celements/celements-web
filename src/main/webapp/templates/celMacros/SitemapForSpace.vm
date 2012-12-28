@@ -16,7 +16,7 @@ $adminMsg.get('cel_overlay_title_sitemap_for_space', ["${spaceName}"])##
 $adminMsg.get('cel_overlay_title_sitemap')##
 #end
 </h1>
-<div id="reorderingTitle" style="display:none;">
+<div id="reorderingTitle" class="celReorderToggle" style="display:none;">
 <h1>Reordering</h1>
 <p>Bitte mit Drag&amp;Drop die Struktur anpassen!</p>
 <button class="cel_naveditor_button_cancel" >Abbrechen</button>

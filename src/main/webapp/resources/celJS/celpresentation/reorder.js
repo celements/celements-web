@@ -17,6 +17,9 @@ var presentationEditor_startReorderMode = function(event) {
   $$('.cel_naveditor_button_saveAndContinue').each(function(button) {
     button.observe('click', saveNavReorderHandler);
   });
+  if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
+    $('reorderingTitle').show();
+  }
   $('cel_presentation_editor_reorder_tree').addClassName('reorderMode');
 };
 
@@ -27,6 +30,9 @@ var presentationEditor_endReorderMode = function(event) {
   $$('.cel_naveditor_button_saveAndContinue').each(function(button) {
     button.stopObserving('click', saveNavReorderHandler);
   });
+  if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
+    $('reorderingTitle').hide();
+  }
   $('cel_presentation_editor_reorder_tree').removeClassName('reorderMode');
 };
 
