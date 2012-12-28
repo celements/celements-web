@@ -1,4 +1,4 @@
-#macro(getDefaultParams overwriteSpaceName)
+#macro(getDefaultParams $overwriteSpaceName)
 #set($defaultParams = "xpage=$!{request.get('xpage')}")
 #set($defaultParams = "${defaultParams}&conf=$!{request.get('conf')}")
 #set($defaultParams = "${defaultParams}&xredirect=$!{request.get('xredirect')}")
