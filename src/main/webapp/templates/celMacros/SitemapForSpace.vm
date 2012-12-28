@@ -46,6 +46,7 @@ $structNav.setPresentationType('sitemap')
 $structNav.setMenuSpace($spaceName)
 $structNav.addUlCSSClass("cel_presentation_reorder")
 $structNav.setCMcssClass("cel_cm_presentationeditor_nodes")
+<!-- isEmptyMainMenu: $structNav.isEmptyMainMenu() -->
 #if(!$structNav.isEmptyMainMenu())
 <h2>Hauptknoten</h2>
 $structNav.includeNavigation()
