@@ -56,7 +56,7 @@ CELEMENTS.presentation.getOverlayObj = function() {
             visible: false, 
             draggable: false, 
             close: false, 
-            zindex:4, 
+            zindex: 4, 
             modal:true,
             monitorresize:false,
             icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
@@ -71,11 +71,13 @@ CELEMENTS.presentation.getOverlayObj = function() {
           _me.overlayDialog.cfg.setProperty('width', dialogWidth);
         }
         //add skin-div to get default yui-skin-sam layouting for the dialog
-        var yuiSamSkinDiv = new Element('div', {'class' : 'yui-skin-sam'});
+        var yuiSamSkinDiv = new Element('div'
+          ).addClassName('yui-skin-sam'
+          ).addClassName('cel-YuiOverlay');
         $(document.body).insert(yuiSamSkinDiv);
         _me.overlayDialog.render(yuiSamSkinDiv);
         _me.overlayDialog.setBody('<img style="margin-left: auto; margin-right:auto;"'
-            + ' src="/skin/resources/celRes/ajax-loader.gif" />'); 
+            + ' src="/skin/resources/celRes/ajax-loader.gif" />');
         $(document.body).fire('cel_yuiOverlay:afterRenderDialog');
         return _me.overlayDialog;
       },
@@ -90,6 +92,7 @@ CELEMENTS.presentation.getOverlayObj = function() {
         dialog.cfg.setProperty("close", false);
         dialog.render();
         dialog.show();
+        $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
       }
 
       //TODO add methods for presentation overlay with navigation
