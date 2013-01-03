@@ -51,7 +51,11 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     var _me = this;
     return new Effect.SlideUp(stepToHide.down(_me.cssContent), {
       transition: Effect.Transitions.sinoidal,
+      beforeStart : function() {
+        stepToHide.fire('celanim_accordeon-block:accordeonBeforeHide', stepToHide);
+      },
       afterFinish : function() {
+        stepToHide.fire('celanim_accordeon-block:accordeonAfterHide', stepToHide);
         stepToHide.removeClassName('active');
         stepToHide.addClassName('inactive');
       },
@@ -65,6 +69,12 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     stepToShow.addClassName('active');
     return new Effect.SlideDown(stepToShow.down(_me.cssContent), {
       transition: Effect.Transitions.sinoidal,
+      beforeStart : function() {
+        stepToShow.fire('celanim_accordeon-block:accordeonBeforeShow', stepToShow);
+      },
+      afterFinish : function() {
+        stepToShow.fire('celanim_accordeon-block:accordeonAfterShow', stepToShow);
+      },
       sync : true
     });
   },
@@ -76,6 +86,9 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
       var stepToShow = nextStep;
       new Effect.Parallel(parallelEffects, {
         duration : 1.0,
+        beforeStart : function() {
+          _me.htmlElem.fire('celanim_accordeon-block:accordeonBeforeStart', nextStep);
+        },
         afterFinish : function() {
           _me.htmlElem.fire('celanim_accordeon-block:accordeonAfterFinish', nextStep);
           //IE7 Fix!!! Do not remove!!!
