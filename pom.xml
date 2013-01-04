@@ -33,7 +33,7 @@
   <groupId>com.celements</groupId>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>2.22.0-SNAPSHOT</version>
+  <version>2.25.0-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -49,7 +49,7 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <platform.core.version>2.20</platform.core.version>
+    <platform.core.version>2.24</platform.core.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <catalina.port>10081</catalina.port>
     <catalina.home.celementsweb-platform>${env.CATALINA_HOME}</catalina.home.celementsweb-platform>
@@ -71,13 +71,13 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>1.3</version>
+      <version>1.4</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tickerCell-web</artifactId>
-      <version>0.2</version>
+      <version>0.3</version>
       <type>war</type>
     </dependency>
     <!-- Add here all your dependencies -->    
@@ -112,7 +112,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.40-SNAPSHOT</version>
+      <version>1.45-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>

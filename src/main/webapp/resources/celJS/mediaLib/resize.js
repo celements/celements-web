@@ -22,6 +22,15 @@ var resizeFileBase = function(){
   var filesBox = $('c2_ml_content');
   var scrollBox = filesBox.down('.c3_import_scrollable');
   
+  var titleHeight = 0;
+  if($$('.c3_import_title') && ($$('.c3_import_title').length > 0)) {
+    $$('.c3_import_title').each(function(titleElem){
+	  titleHeight += titleElem.getHeight();
+	  titleHeight += parseInt(titleElem.getStyle('margin-top'));
+	  titleHeight += parseInt(titleElem.getStyle('margin-bottom'));
+	});   
+  }
+  
   var uploadHeight = 0;
   if($$('.c3_filebase_upload') && ($$('.c3_filebase_upload').length > 0)) {
     uploadHeight = $$('.c3_filebase_upload')[0].offsetHeight;
@@ -38,7 +47,7 @@ var resizeFileBase = function(){
       }
     });
   }
-  
+    
   var winHeight = 0;
   if(typeof(window.innerWidth) == 'number') {
     winHeight = window.innerHeight;
@@ -48,21 +57,27 @@ var resizeFileBase = function(){
     winHeight = document.body.clientHeight;
   }
   
-  var fileBaseBoxSize = winHeight - mainBorders;
+  var fileBaseBoxSize = winHeight - mainBorders - titleHeight;
   var filesBoxSize = fileBaseBoxSize - uploadHeight;
   var scrollableSize = filesBoxSize - siblingHeight;
   fileBaseBox.setStyle({ height: Math.max(50, fileBaseBoxSize) + "px" });
   filesBox.setStyle({ height: Math.max(50, filesBoxSize) + "px" });
   if(scrollBox){
     scrollBox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
-    if(Prototype.Browser.IE && ieCount > 0) {
+    if (Prototype.Browser.IE && (ieCount > 0)) {
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('found IE browser. Starting delayed fileBaseResize.', ieCount);
+      }
       startDelayed();
       ieCount--;
     }
   } else {
+    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+      console.log('no scrollbox found. Starting delayed fileBaseResize.');
+    }
     startDelayed();
   }
-}
+};
 
 var startDelayed = function() {
   if(delayExec != null) {

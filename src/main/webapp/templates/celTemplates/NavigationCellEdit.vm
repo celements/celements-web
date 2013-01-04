@@ -40,15 +40,15 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
 #set($cel_editobj_readonly_properties = '')
 $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
  <select name="NavigationConfigClass_${cel_editobj_nb}_data_type" size="1">
- #set($dataTypes = "pageMenu:Page Menu,languages:Language Menu")
- #set($allAvailableDataTypes = $dataTypes.split(','))
- #foreach($item in $allAvailableDataTypes)
-   #set($itemDetails = $item.split(':'))
-   <option value="$itemDetails.get(0)"##
-     #if("$itemDetails.get(0)" == "$!context.getUser()")
+ #set($allAvailableDataTypes = [])
+ #set($!devNull = $allAvailableDataTypes.add({'key' : '', 'label' : 'Page Menu'}))
+ #set($!devNull = $allAvailableDataTypes.add({'key' : 'languages', 'label' : 'Language Menu'}))
+ #foreach($dataType in $allAvailableDataTypes)
+   <option value="$dataType.get('key')"##
+     #if("$dataType.get('key')" == "$!context.getUser()")
        selected="selected"##
      #end
-   >$itemDetails.get(1)</option>
+   >$dataType.get('label')</option>
  #end
  </select>
 <h2>Advanced Settings</h2>

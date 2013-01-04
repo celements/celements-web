@@ -18,7 +18,7 @@ CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent) {
   // constructor
   cssTitle = cssTitle || '.accordeonTitle';
   cssContent = cssContent || '.accordeonContent';
-  this._init(id, cssBox);
+  this._init(id, cssBox, cssTitle, cssContent);
 };
 
 (function() {
@@ -48,9 +48,14 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   },
 
   accordeonHide : function(stepToHide) {
+    var _me = this;
     return new Effect.SlideUp(stepToHide.down(_me.cssContent), {
       transition: Effect.Transitions.sinoidal,
+      beforeStart : function() {
+        stepToHide.fire('celanim_accordeon-block:accordeonBeforeHide', stepToHide);
+      },
       afterFinish : function() {
+        stepToHide.fire('celanim_accordeon-block:accordeonAfterHide', stepToHide);
         stepToHide.removeClassName('active');
         stepToHide.addClassName('inactive');
       },
@@ -59,10 +64,17 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   },
 
   accordeonShow : function(stepToShow) {
+    var _me = this;
     stepToShow.removeClassName('inactive');
     stepToShow.addClassName('active');
     return new Effect.SlideDown(stepToShow.down(_me.cssContent), {
       transition: Effect.Transitions.sinoidal,
+      beforeStart : function() {
+        stepToShow.fire('celanim_accordeon-block:accordeonBeforeShow', stepToShow);
+      },
+      afterFinish : function() {
+        stepToShow.fire('celanim_accordeon-block:accordeonAfterShow', stepToShow);
+      },
       sync : true
     });
   },
@@ -74,6 +86,9 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
       var stepToShow = nextStep;
       new Effect.Parallel(parallelEffects, {
         duration : 1.0,
+        beforeStart : function() {
+          _me.htmlElem.fire('celanim_accordeon-block:accordeonBeforeStart', nextStep);
+        },
         afterFinish : function() {
           _me.htmlElem.fire('celanim_accordeon-block:accordeonAfterFinish', nextStep);
           //IE7 Fix!!! Do not remove!!!
@@ -92,6 +107,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   },
 
   isStepVisible : function(step) {
+    var _me = this;
     return step.down(_me.cssContent).visible();
   },
 

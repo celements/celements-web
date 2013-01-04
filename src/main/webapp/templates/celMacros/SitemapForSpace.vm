@@ -1,0 +1,157 @@
+#macro(getDefaultParams $overwriteSpaceName)
+#set($defaultParams = "xpage=$!{request.get('xpage')}")
+#set($defaultParams = "${defaultParams}&conf=$!{request.get('conf')}")
+#set($defaultParams = "${defaultParams}&xredirect=$!{request.get('xredirect')}")
+#if("$!overwriteSpaceName" == '')
+#set($defaultParams = "${defaultParams}&space=$!{request.get('space')}")
+#else
+#set($defaultParams = "${defaultParams}&space=$!{overwriteSpaceName}")
+#end
+#if($hasLink)
+#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('hasLink')}")
+#end
+#if($includeSpaceNav)
+#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('spaceNav')}")
+#end
+#if($showOutsideStructure)
+#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('showOutStruct')}")
+#end
+#if($forceAllSpaces)
+#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('forceAllSpaces')}")
+#end
+#end  ## end getDefaultParams macros
+#set($hasSpaceRestriction = ("$!request.space" != ''))
+#set($hasLink = ("$request.hasLink" == '1'))
+#set($includeSpaceNav = ("$request.spaceNav" == '1'))
+#set($forceAllSpaces = ("$request.forceAllSpaces" == '1'))
+#set($showOutsideStructure = ("$request.showOutStruct" == '1'))
+#if($hasSpaceRestriction)
+#set($spaceName = "$!request.space")
+#else
+#set($spaceName = "$doc.getDocumentReference().getLastSpaceReference().getName()")
+#end
+<div id="sitemapForSpace">
+#if($includeSpaceNav)
+#if($isAdmin && $forceAllSpaces)
+#set($excludeSpaceList = '')
+#else
+#set($excludeSpaceList = "and doc.space not in ('XWiki'")
+#set($excludeSpaceList = "${excludeSpaceList}, 'PageTypes'")
+#set($allPageLayouts = $celementsweb.getAllPageLayouts())
+#foreach($layoutSpaceName in $allPageLayouts.keySet())
+#if("$layoutSpaceName" != "$!spaceName")
+#set($excludeSpaceList = "${excludeSpaceList}, '$!layoutSpaceName'")
+#end
+#end
+#set($excludeSpaceList = "${excludeSpaceList})")
+#end
+#set($sql = ", BaseObject as bobj")
+#set($sql = "${sql} where bobj.name=doc.fullName and bobj.className = 'Celements2.MenuItem'")
+#set($sql = "${sql} and doc.translation=0 and doc.name <> 'WebPreferences' $excludeSpaceList")
+#set($spaceList = $xwiki.searchSpacesNames($sql, 0, 0, []))
+<div id="spaceNavigation">
+	<label for="spaceSelect">Bereich wechseln zu:</label>
+	<select id="spaceSelector" name="spaceSelect">
+#foreach($spaceName in $spaceList)
+	#getDefaultParams($spaceName)
+		<option label="$spaceName" value="$doc.getURL('view', $defaultParams)">$spaceName</option>
+#end
+	</select>
+</div>
+#end
+<h1>##
+#if($hasSpaceRestriction)
+$adminMsg.get('cel_overlay_title_sitemap_for_space', ["${spaceName}"])##
+#else
+$adminMsg.get('cel_overlay_title_sitemap')##
+#end
+</h1>
+<div id="reorderingTitle" class="celReorderToggle" style="display:none;">
+<h1>Reordering</h1>
+<p>Bitte mit Drag&amp;Drop die Struktur anpassen!</p>
+<button class="cel_naveditor_button_cancel" >Abbrechen</button>
+<button class="cel_naveditor_button_saveAndContinue" >Speichern</button>  </div>
+</div>
+<div id="cel_presentation_editor_reorder_tree" class="presentation_order_edit">
+$celementsweb.addExtJSfileOnce(':celJS/yui/yahoo/yahoo-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/event/event-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/dom/dom-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/connection/connection-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/json/json-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/button/button-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/container/container-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/animation/animation-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/navigation/reorderMenuItems.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/celpresentation/reorder.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/celpresentation/sitemap.js', 'file')
+#set($structNav = $celementsweb.createNavigation())
+$structNav.setMenuPart("")
+$structNav.setShowAll(true)
+$structNav.setHasLink($hasLink)
+$structNav.setPresentationType('sitemap')
+$structNav.setMenuSpace($spaceName)
+$structNav.addUlCSSClass("cel_presentation_reorder")
+$structNav.setCMcssClass("cel_cm_presentationeditor_nodes")
+#if(!$structNav.isEmptyMainMenu())
+<h2>Hauptknoten</h2>
+$structNav.includeNavigation()
+#else
+<p>Keine Hauptknoten in '${spaceName}'</p>
+#end
+#set($spaceParentRefs = [])
+#set($xwql = "where doc.translation=0 and doc.space = :spacename and doc.parent <> '' and doc.parent is not null and doc.parent not like :spacenameLike")
+#set($theQuery = $services.query.xwql($xwql).bindValue('spacename', $spaceName).bindValue('spacenameLike', "$!{spaceName}.%"))
+#foreach($docFN in $theQuery.execute())
+#set($spaceDocRef = $services.model.resolveDocument($docFN))
+#set($spaceDoc = $xwiki.getDocument($spaceDocRef))
+#set($parentDocFN = $spaceDoc.getParent())
+#if("$!parentDocFN" != '')
+#set($parentRef = $services.model.resolveDocument($parentDocFN))
+#if(!$spaceParentRefs.contains($parentRef))
+#set($!devNull = $spaceParentRefs.add($parentRef))
+#end
+#end
+#end
+#foreach($parentRef in $spaceParentRefs)
+#if($celementsweb.getSubNodesForParentRef($parentRef).size() > 0)
+<h2>Unterknoten für $services.model.serialize($parentRef,'local')</h2>
+$structNav.includeNavigation($parentRef)
+#end
+#end
+</div>
+#if($showOutsideStructure)
+<div id="cel_sitemap_outside_structure" class="sitemapOutsideStructure">
+<h2>$adminMsg.get('cel_lpicker_otherLinksTitle')</h2>
+	<ul>
+#set($xwql = "where doc.translation=0 and doc.space = :spacename")
+#set($theQuery = $services.query.xwql($xwql).bindValue('spacename', $spaceName))
+#foreach($docFN in $theQuery.execute())
+  #if("$!docFN" != '')
+    #set($docRef = $services.model.resolveDocument($docFN))
+    #if(!$celementsweb.isTreeNode($docRef))
+      #set($hasChildren = ($celementsweb.getSubNodesForParentRef($docRef).size() > 0))
+      #set($cssNodeClasses = '')
+      #if($hasChildren)
+        #set($cssNodeClasses = "${cssNodeClasses} cel_nav_hasChildren")
+      #else
+        #set($cssNodeClasses = "${cssNodeClasses} cel_nav_isLeaf")
+      #end
+	  <li><a href="$xwiki.getURL($docRef)" class="$cssNodeClasses.trim()">
+	  	$structNav.getMultilingualMenuName($docFN, $language)
+      	</a>
+      	#if($hasChildren)
+$structNav.includeNavigation($docRef)
+        #end
+	  </li>
+    #end
+  #end
+#end
+	</ul>
+</div>
+#end
+</div>

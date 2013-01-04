@@ -150,8 +150,6 @@ $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('validation.js', 's
 
 
 </table>
-<input type="submit" value="Save" class="celements2_submit" />
-<input type="button" value="Cancel" class="celements2_submit" onclick="javascript:window.location.href='$doc.getURL("view")'"/>
 </form>
 <script type="text/javascript">
  var valid = new Validation('edit', {immediate : true});

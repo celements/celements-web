@@ -1,0 +1,76 @@
+#set($navObj = $doc.getObject('Celements2.NavigationConfigClass'))
+#set($needsSave = false)
+#if("$!navObj" == '')
+  #set($navObj = $doc.newObject('Celements2.NavigationConfigClass'))
+  $navObj.set('from_hierarchy_level', 1)
+  $navObj.set('to_hierarchy_level', 1)
+  $navObj.set('show_inactive_to_level', 1)
+  $navObj.set('menu_space', "$doc.getName()")
+  $navObj.set('presentation_type', "renderedContent")
+  #set($needsSave = true)
+  $doc.save()
+#end
+<form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
+  <input type="hidden" name="template" value="$!doc.getTemplate()" />
+  <input type="hidden" name="xredirect" value="$!xredirect" />
+  <input type="hidden" name="language" value="$!tdoc.language" />
+  <div id="editablecode_container">
+  #set($cel_embedded_editobj = true)
+  #set($cel_editobj_classname = "Celements2.NavigationConfigClass")
+  #set($cel_editobj_nb = $navObj.getNumber())
+  #set($cel_editobj_hasObjRemoveLink = false)
+  #set($cel_editobj_externalForm = true)
+  #set($cel_editobj_properties = "menu_space")
+  #if(!$isAdmin)
+    #set($cel_editobj_readonly_properties = 'menu_space')
+  #end
+  $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
+  </div>
+  <div>
+<h1>Reordering</h1>
+<p>Bitte mit Drag&amp;Drop die Struktur anpassen!</p>
+<button class="cel_naveditor_button_cancel" >Abbrechen</button>
+<button class="cel_naveditor_button_saveAndContinue" >Speichern</button>  </div>
+  <div id="cel_presentation_editor_reorder_tree" class="presentation_order_edit">
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/yahoo/yahoo-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/event/event-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/yahoo-dom-event/yahoo-dom-event.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/dom/dom-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/element/element-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/connection/connection-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/json/json-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/dragdrop/dragdrop-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/element/element-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/button/button-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/container/container-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/utilities/utilities.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/yui/animation/animation-min.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/navigation/reorderMenuItems.js</span>
+<span class='cel_lazyloadJS' style='display: none;'>celJS/celpresentation/reorder.js</span>
+$celementsweb.addExtJSfileOnce(':celJS/yui/yahoo/yahoo-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/event/event-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/dom/dom-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/connection/connection-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/json/json-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/button/button-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/container/container-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/yui/animation/animation-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/navigation/reorderMenuItems.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/celpresentation/reorder.js', 'file')
+#set($structNav = $celementsweb.createNavigation())
+$structNav.setMenuPart("")
+##$structNav.setShowAll(true)
+$structNav.setShowInactiveToLevel(1)
+$structNav.setHasLink(false)
+$structNav.setPresentationType('sitemap')
+$structNav.setMenuSpace($navObj.getProperty('menu_space').getValue())
+$structNav.addUlCSSClass("cel_presentation_reorder")
+$structNav.setCMcssClass("cel_cm_presentationeditor_nodes")
+$structNav.includeNavigation()
+  </div>
+</form>

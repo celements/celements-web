@@ -1,0 +1,13 @@
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
+$jsonBuilder.openArray()
+#set($docRef = $doc.getDocumentReference())
+#set($parent = $services.model.serialize($docRef, 'local'))
+#set($helpNav = $celementsweb.createNavigation())
+$helpNav.loadConfigFromDoc($docRef)
+#set($menuSpace = "${helpNav.getMenuSpace()}-$docRef.getName()")
+#foreach($subSlideNode in $celementsweb.getSubNodesForParent($parent, $menuSpace))
+#set($subSlideFN = $services.model.serialize($subSlideNode.getDocumentReference(), 'local'))
+$jsonBuilder.addString($subSlideFN)
+#end
+$jsonBuilder.closeArray()
+$jsonBuilder.getJSON()

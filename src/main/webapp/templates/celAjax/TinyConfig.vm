@@ -10,11 +10,11 @@
 #set($xwikiPref_template_url = "$!xwiki.getDocument('XWiki.XWikiPreferences').getAttachment('template-list.js')")
 #set($webPref_template_url = "$!xwiki.getDocument('${doc.space}.WebPreferences').getAttachment('template-list.js')")
 #if ("$!webPref_template_url" != '')
-  #set($template_external_list_url = "$!xwiki.getDocument('${doc.space}.WebPreferences').getAttachmentURL('template-list.js','download')")
+  #set($template_external_list_url = $!services.celementsweb.getSkinFile("${doc.space}.WebPreferences;template-list.js", 'file'))
 #elseif ("$!xwikiPref_template_url" != '')
-  #set($template_external_list_url = "$!xwiki.getDocument('XWiki.XWikiPreferences').getAttachmentURL('template-list.js','download')")
+  #set($template_external_list_url = $!services.celementsweb.getSkinFile('XWiki.XWikiPreferences;template-list.js', 'file'))
 #else
-  #set($template_external_list_url = "$!skin_doc.getAttachmentURL('template-list.js','download')")
+  #set($template_external_list_url = $!services.celementsweb.getSkinFile("$service.model.serialize($skin_doc.documentReference, 'default');template-list.js", 'file'))
 #end
 { 
   "mode" : "specific_textareas",
@@ -24,7 +24,8 @@
   "theme" : "advanced",
   ## lookup the additional rte_plugins field in the XWiki and WebPreference
   #set($rtePluginsConfig = $celementsweb.getRTEConfigField('plugins'))
-  #set($rtePluginsPre = ["safari","save","paste","advlink","template","table","lists","inlinepopups","advimage","celimage","autoresize"])
+  ##FP 16.11.2012; remove "autoresize" from rtePluginsPre because there are issues
+  #set($rtePluginsPre = ["safari","save","paste","advlink","template","table","lists","inlinepopups","advimage","contextmenu","celimage"])
   #set($rteOmitPlugins = [])
   #if("$!rtePluginsConfig" != '')
     #foreach($oneRtePlugin in $rtePluginsConfig.split('[,| ]'))
@@ -60,7 +61,7 @@
   "document_base_url" : "/",
   "inline_styles" : true,
   "accessibility_warnings" : false,
-  #set($content_css_filenameURL = '')
+  #set($content_css_filenameURL = "$celementsweb.getSkinFile(':celRes/celements2-content.css', 'file')")
   #foreach($cssObj in $xwiki.celementsweb.getRTEContentCSS())
   #if("$!{cssObj.getCSS()}" != '')
       #set($content_css_filenameURL = "$!{content_css_filenameURL},$!{cssObj.getCSS()}")
