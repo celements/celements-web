@@ -29,3 +29,6 @@
   background-image: url(buttons500-hover.png);
 }
 
+.highslide-html div.celanim_slideshow_wrapper .highslide-image {
+  border: none;
+}

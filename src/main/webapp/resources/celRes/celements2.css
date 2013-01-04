@@ -512,6 +512,7 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 .celdocpath_Celements2\.FileBaseTags {
   background-color: white!important;
 }
+
 .cel_whatsnew_table {
   width: 100%;
 }
@@ -567,4 +568,85 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons .cancel {
   float: right;
+}
+
+/* CSS for Sitemap */
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder {
+	width: 550px;
+}
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder ul,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder ul {
+  width: auto;
+  padding-left: 18px;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li,
+body > .cel_reorderNodes_proxy {
+	position: relative;
+	padding: 2px 0px;
+	font-size: 12px;
+	line-height: 15px;
+	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	font-style: normal;
+	color: black;
+	
+	list-style-image: url("/file/resources/celRes/document.gif");
+	list-style-position: inside;
+	border-left: 1px dotted gray;
+}
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_even,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_even {
+	background-color: #e1e1e1;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs {
+	text-align: right;
+	position: absolute;
+	top: 1px;
+	right: 0px;
+}
+body > .cel_reorderNodes_proxy .docLangs,
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs {
+	display: none;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a {
+	display: block;
+	float: left;
+	width: 20px;
+	padding-top: 1px;
+	color: white;
+	text-align: center;
+	border: 1px solid black;
+	text-decoration: none;
+	background-color: #555;
+}
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a + a,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a + a {
+	margin-left: 1px;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.defaultLanguage,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.defaultLanguage {
+	font-weight: bold;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.transNotExists,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.transNotExists {
+	background-color: white;
+	color: black;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a:hover,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a:hover {
+	background-color: #ccc;
+}
+
+body div.mask {
+	z-index: 100 !important;
 }
