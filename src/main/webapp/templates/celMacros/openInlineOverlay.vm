@@ -37,6 +37,9 @@
 #if($showCloseOverlayButton)
 #if("$!closeOverlayRedirect" == '')
   #set($closeOverlayRedirect = $doc.getURL('view'))
+  #if("$!closeOverlayRedirect" == '')
+    #set($closeOverlayRedirect = '/')
+  #end
 #end
 ## TODO look for better solution. closebutton disapears with supersleight
 ##<!--[if lte IE 6]>
