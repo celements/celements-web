@@ -43,7 +43,7 @@ CELEMENTS.presentation.getOverlayObj = function() {
   CELEMENTS.presentation.Overlay.prototype = {
       _overlayDialog : null,
       _defaultConfig : {
-        "width" : dialogWidth, 
+        "width" : "300px", 
         fixedcenter: true, 
         visible: false, 
         draggable: false, 
@@ -65,6 +65,7 @@ CELEMENTS.presentation.getOverlayObj = function() {
         var _me = this;
         var dialogWidth = width || "300px";
         if(!_me.__overlayDialog) {
+          _me._dialogConfig.width = dialogWidth;
           _me._overlayDialog = new YAHOO.widget.SimpleDialog("modal dialog",
               _me._dialogConfig);
           _me._overlayDialog.hideEvent.subscribe(function() {
