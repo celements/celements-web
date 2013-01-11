@@ -118,6 +118,13 @@ var celanimLoadSWFplayer = function(playerLink) {
 
 var getCelAnimObject = function() {
   var celAnimObject = [
+    { 
+    'name' : 'vimeo',
+    'matchStr' : '^https?:\/\/vimeo.com\/.*?',
+    'replaceStr' : 'http://vimeo.com/moogaloop.swf?clip_id=',
+    'cssClass' : 'celanim_vimeo',
+    'replaceOnLoad' : true
+    },
     { 'name' : 'youtube',
     'matchStr' : '^http:\/\/www.youtube.com\/.*?[\/=]',
     'replaceStr' : 'http://www.youtube.com/v/',
