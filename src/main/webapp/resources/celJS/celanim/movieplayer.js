@@ -1,4 +1,4 @@
-Event.observe(window, 'load', function() {
+$j(document).ready(function() {
   registerCelAnimMoviePlayer();
 });
 
