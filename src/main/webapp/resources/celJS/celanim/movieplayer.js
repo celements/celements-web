@@ -1,4 +1,8 @@
-Event.observe(window, 'load', function(e) {
+Event.observe(window, 'load', function() {
+  registerCelAnimMoviePlayer();
+});
+
+var registerCelAnimMoviePlayer = function() {
   initMoviePlayerCssClasses(['celanim_mp3_flowplayer',
                              'celanim_flowplayer', 'celanim_overlay_flowplayer',
                              'celanim_flowplayer2', 'celanim_overlay_flowplayer2',
@@ -10,7 +14,7 @@ Event.observe(window, 'load', function(e) {
   initFlowPlayerAudioLinks('a.celanim_flowplayerAudioStart');
   initOverlayLinks('a.celanim_overlay');
   initCelAnimSWFPlayer();
-});
+};
 
 var initCelAnimSWFPlayer = function() {
   if ($$('a.celanim_swfplayer').size() > 0) {
