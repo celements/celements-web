@@ -115,14 +115,14 @@
     #set($rte_row_3 = '')
   #end
   #if($rte_supress_cancel)
-    #set($rte_row_1 = "$!{rte_row_1.replaceAll('cancel,?','')}")
-    #set($rte_row_2 = "$!{rte_row_2.replaceAll('cancel,?','')}")
-    #set($rte_row_3 = "$!{rte_row_3.replaceAll('cancel,?','')}")
+    #set($rte_row_1 = "$!{rte_row_1.replaceAll('cancel,?(\|,|separator,)?','')}")
+    #set($rte_row_2 = "$!{rte_row_2.replaceAll('cancel,?(\|,|separator,)?','')}")
+    #set($rte_row_3 = "$!{rte_row_3.replaceAll('cancel,?(\|,|separator,)?','')}")
   #end
   #if($rte_supress_save)
-    #set($rte_row_1 = "$!{rte_row_1.replaceAll('save,?','')}")
-    #set($rte_row_2 = "$!{rte_row_2.replaceAll('save,?','')}")
-    #set($rte_row_3 = "$!{rte_row_3.replaceAll('save,?','')}")
+    #set($rte_row_1 = "$!{rte_row_1.replaceAll('save,?(\|,|separator,)?','')}")
+    #set($rte_row_2 = "$!{rte_row_2.replaceAll('save,?(\|,|separator,)?','')}")
+    #set($rte_row_3 = "$!{rte_row_3.replaceAll('save,?(\|,|separator,)?','')}")
   #end
   ## get other rte preferences
   #set($rte_cancel_option = "$!userObj.getProperty('rte_cancel_option').getValue()")
