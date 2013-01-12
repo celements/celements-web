@@ -40,8 +40,10 @@ $celementsweb.addExtJSfileOnce(":celJS/editResize.js")
 		<div class="hd"></div>
 		<div class="bd">
 		     <span id="cel_startab" style="display:none;">$starttab</span>
+##FP;12.01.2013; Remove fix computed with in id="tb1-tab" because it is not clear
+##               why it is needed and it leads to problems in RLS-Kurs-Editor 
       ##TODO refactor: remove inline javascript to be able to load tab asynchronously
-      <div class="menuTab tb1-tab#if("$!starttab" == '1') starttab#end" id="tb1-tab" style="width:${menuPanelWidth}px">
+      <div class="menuTab tb1-tab#if("$!starttab" == '1') starttab#end" id="tb1-tab">
 $xwiki.parseTemplate("celEditorTabs/loadTabContent.vm")
       </div>
     </div>
