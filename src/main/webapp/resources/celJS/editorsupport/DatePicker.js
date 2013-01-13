@@ -29,6 +29,16 @@ var addDatePickerToField = function(inputField) {
         title : 'Bitte ein Datum w&auml;hlen:',
         close : true
   });
+  var inputFieldValue = $F($(inputField));
+  if (inputFieldValue && (inputFieldValue != '')) {
+    var dateStr = inputFieldValue.split('\.');
+    var curDay = dateStr[0];
+    var curMonth = dateStr[1];
+    var curYear = dateStr[2];
+    pickerDateCal.setYear(curYear);
+    pickerDateCal.setMonth(curMonth - 1);
+    pickerDateCal.select(new Date(curMonth + '/' + curDay + '/' + curYear));
+  }
   //TODO move to ajax
   pickerDateCal.cfg.setProperty("MONTHS_SHORT",   ["Jan", "Feb", "M\u00E4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]); 
   pickerDateCal.cfg.setProperty("MONTHS_LONG",    ["Januar", "Februar", "M\u00E4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]); 
