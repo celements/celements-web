@@ -15,7 +15,7 @@
 #elseif ("$!xwikiPref_template_url" != '')
   #set($template_external_list_url = $!services.celementsweb.getSkinFile('XWiki.XWikiPreferences;template-list.js', 'file'))
 #else
-  #set($template_external_list_url = $!services.celementsweb.getSkinFile("$service.model.serialize($skin_doc.documentReference, 'default');template-list.js", 'file'))
+  #set($template_external_list_url = $!services.celementsweb.getSkinFile("$services.model.serialize($skin_doc.documentReference, 'default');template-list.js", 'file'))
 #end
 { 
   "mode" : "specific_textareas",
