@@ -5,9 +5,15 @@ var handleDateSelected = function(type, args, pickerDateCal) {
   var selDates = args[0];
   if ((selDates.length > 0) && dateField) {
     var selDate = selDates[0];
-    var newStartDate = selDate[2] + '.' + selDate[1] + '.' + selDate[0];
-    dateField.value = newStartDate;
-    Event.fire(dateField, 'celements:datePicker-dateSelected');
+    var dateSelectedEvent = Event.fire(dateField, 'celements:datePicker-dateSelected', {
+      'selDate' : selDate,
+      'date' : new Date(selDate[1] + '/' + selDate[2] + '/' + selDate[0]),
+      'dateField' : dateField
+    });
+    if (!dateSelectedEvent.stopped) {
+      var newStartDate = selDate[2] + '.' + selDate[1] + '.' + selDate[0];
+      dateField.value = newStartDate;
+    }
   }
   pickerDateCal.hide();
 };
