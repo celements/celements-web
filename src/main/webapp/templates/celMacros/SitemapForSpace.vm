@@ -119,7 +119,7 @@ $structNav.includeNavigation()
 #end
 #foreach($parentRef in $spaceParentRefs)
 #if($celementsweb.getSubNodesForParentRef($parentRef).size() > 0)
-<h2>Unterknoten für $services.model.serialize($parentRef,'local')</h2>
+<h2>Unterknoten f&uuml;r $services.model.serialize($parentRef,'local')</h2>
 $structNav.includeNavigation($parentRef)
 #end
 #end
