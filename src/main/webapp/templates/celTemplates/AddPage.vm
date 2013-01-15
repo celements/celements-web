@@ -75,6 +75,10 @@
 	    	## TODO: multilingual
 	    	#set($title = $!request.get("menu_name"))
 		#end
+		#if("$!request.get('page_layout')" != '')
+		  #set($pageTypeObj = $new_doc.getObject('Celements2.PageType'))
+		  $pageTypeObj.set('page_layout', "$!request.get('page_layout')")
+		#end
 		
 		## objects
 		#set($menu_item_obj = $new_doc.newObject("Celements2.MenuItem"))
@@ -271,7 +275,8 @@
 	</div>
 	<div id="celements2_addpage_optional">
 	<table class="celements2_table">
-			<tr><td width="50%">$adminMsg.get('cel_tm_page_type')</td>
+			<tr>
+			<td width="50%">$adminMsg.get('cel_tm_page_type')</td>
 			<td width="50%">
 		      <select name="page_type" id="PageType" size="1" class="celements2_input">
 		      #set($defaultPageType = "$!request.get('page_type')")
@@ -298,6 +303,21 @@
       </select>
       </td>
       </tr>
+    #set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
+    #if($cel_pageLayouts.keySet().size() > 1)
+      <tr>
+      <td>$adminMsg.get('cel_tm_page_master')</td>
+      <td>
+    #set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
+    <select size="1" name="page_layout">
+        <option selected="selected" value="" label="$cel_defaultLayout">$cel_defaultLayout</option>
+    #foreach($cel_pageLayoutKey in $cel_pageLayouts.keySet())
+        <option value="$cel_pageLayoutKey" label="$cel_pageLayouts.get($cel_pageLayoutKey)">$cel_pageLayouts.get($cel_pageLayoutKey)</option>
+    #end
+    </select>
+      </td>
+      </tr>
+      #end
     </table>
     </div>
       <input type="button" value="$adminMsg.get('cel_cancel')" onclick="javascript:window.history.back()" class="celements2_input_button"/>
