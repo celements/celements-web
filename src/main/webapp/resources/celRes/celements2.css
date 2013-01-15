@@ -598,7 +598,12 @@ body > .cel_reorderNodes_proxy {
 }
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_even,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_even {
-	background-color: #e1e1e1;
+  background-color: #e1e1e1;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_odd,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_odd {
+  background-color: white;
 }
 
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs,
