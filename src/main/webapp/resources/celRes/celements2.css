@@ -660,6 +660,7 @@ body div.mask {
 body #sitecontainer .cel_content_part {
 	background: white;
 }
+body #sitecontainer .cel_content_part,
 body #sitecontainer .cel_content_part p,
 body #sitecontainer .cel_content_part span,
 body #sitecontainer .cel_content_part a {
