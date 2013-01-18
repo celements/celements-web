@@ -657,12 +657,12 @@ body div.mask {
 }
 
 /** CSS for .cel_content_part **/
-body .cel_content_part {
+body #sitecontainer .cel_content_part {
 	background: white;
 }
-body .cel_content_part p,
-body .cel_content_part span,
-body .cel_content_part a {
+body #sitecontainer .cel_content_part p,
+body #sitecontainer .cel_content_part span,
+body #sitecontainer .cel_content_part a {
 	font-size: 12px;
 	line-height: 14px;
 	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
@@ -670,10 +670,10 @@ body .cel_content_part a {
 	color: black;
 	margin: 10px 0px;
 }
-body .cel_content_part a:hover {
+body #sitecontainer .cel_content_part a:hover {
 	color: grey;
 }
-body .cel_content_part table th,
-body .cel_content_part table td {
+body #sitecontainer .cel_content_part table th,
+body #sitecontainer .cel_content_part table td {
 	text-align: left;
 }
