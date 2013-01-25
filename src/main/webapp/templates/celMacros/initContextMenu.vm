@@ -5,12 +5,6 @@
 <script type="text/javascript">
 <!--
 ##
-  cmDefaultItems = new Array(##
-new ContextMenuItem('window.location.href="$xwiki.getURL('Celements2.UserAdmin','view')"',##
- "User Administration", null),##
- new ContextMenuItem('window.location.href="$xwiki.getURL('XWiki.XWikiLogout','logout')?xredirect=$xwiki.getURL('${doc.space}.WebHome','view')"', "Logout", null)##
-);
-
 Event.observe(window, 'load', function() {
   ##TODO move initialisation to contextmenu.js - init only if body has class
   ##TODO cel_show_cm - add Administration and Logout menuitems for
