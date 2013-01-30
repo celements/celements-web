@@ -61,6 +61,14 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
             element.cumulativeOffset().left, element.getWidth(), 1, cssClass);
       },
 
+      removeOutlinesForElement : function(element) {
+        var _me = this;
+        element = $(element);
+        $$('.cel_outline' + element.id).each(function(element) {
+          element.remove();
+        });
+      },
+
       removeAllOutlines : function() {
         var _me = this;
         $$('.cel_outline').each(function(element) {
