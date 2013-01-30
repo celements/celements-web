@@ -31,34 +31,26 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
 
     CELEMENTS.layout.ContextMenuHover.prototype = {
       _outliner : null,
-      _oldHighlighted : null,
       _CMHighlightMouseOutBinded : null,
-      _highlightCellBinded : null,
 
       _init : function(outliner) {
         var _me = this;
         _me._outliner = outliner || new CELEMENTS.layout.Outliner();
         _me._CMHighlightMouseOutBinded = _me._CMHighlightMouseOut.bind(_me);
-        _me._highlightCellBinded = _me._highlightCell.bind(_me);
         Event.observe(window, 'celcontextmenu:loadingfinished',
             _me.addContextMenuHover.bind(_me));
       },
 
       _highlightCell : function(event) {
-        var _me = this;
-        var onCell = event.findElement();
-        console.log('_highlightCell: out? ', onCell, !_me._isInsideHighlighted(onCell));
-        if (onCell && contextMenuItemDataForElemId.get(onCell.id)) {
-          if (_me._oldHighlighted) {
-            _me._UNhighlightCell(_me._oldHighlighted);
-            _me._oldHighlighted = null;
-          }
-          if(event.shiftKey && !onCell.hasClassName('cm_outline_highlighted')) {
+        var _me = this._me;
+        if (event.shiftKey) {
+          event.stop();
+          var onCell = $(this.elemId);
+          if ((typeof onCell !== 'undefined') && onCell
+              && !onCell.hasClassName('cm_outline_highlighted')) {
+            _me._UNhighlightAllCell();
             onCell.addClassName('cm_outline_highlighted');
             _me._outliner.outlineElement(onCell);
-            onCell.stopObserving('mouseout', _me._CMHighlightMouseOutBinded);
-            onCell.observe('mouseout', _me._CMHighlightMouseOutBinded);
-            _me._oldHighlighted = onCell;
           }
         }
       },
@@ -66,30 +58,35 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
       _isInsideHighlighted : function(element, highlightedCell) {
         var _me = this;
         element = $(element);
-        var insideHighlightedCell = element.up('.cm_outline_highlighted');
-        return (insideHighlightedCell && (!highlightedCell
-            || (insideHighlightedCell == highlightedCell)));
+        if (element) {
+          var insideHighlightedCell = element.up('.cm_outline_highlighted');
+          return ((typeof insideHighlightedCell !== 'undefined') && insideHighlightedCell
+              && (!highlightedCell || (insideHighlightedCell == highlightedCell)));
+        }
+        return false;
       },
 
       _CMHighlightMouseOut : function(event) {
         var _me = this;
         var onCell = event.findElement();
-        onCell.stopObserving('mouseout', _me._CMHighlightMouseOutBinded);
         var reltg = (event.relatedTarget) ? event.relatedTarget : event.toElement;
-        if(onCell && onCell.hasClassName('cm_outline_highlighted')
-            && !_me._isInsideHighlighted(reltg, onCell)) {
-          console.log('_CMHighlightMouseOut: remove ', onCell, reltg,
-              _me._isInsideHighlighted(reltg), _me._isInsideHighlighted(reltg, onCell));
-          _me._UNhighlightCell(onCell);
-        } else if (_me._isInsideHighlighted(reltg, onCell)) {
-          console.log('_CMHighlightMouseOut: add listener to ', reltg);
-          reltg.stopObserving('mouseout', _me._CMHighlightMouseOutBinded);
-          reltg.observe('mouseover', _me._CMHighlightMouseOutBinded);
-        } else {
-          console.log('_CMHighlightMouseOut: out? ', _me._isInsideHighlighted(reltg));
+        var insideHighlightedCellFrom = onCell.up('.cm_outline_highlighted');
+        if (_me._isInsideHighlighted(onCell) && (!_me._isInsideHighlighted(reltg)
+            || (insideHighlightedCellFrom != reltg.up('.cm_outline_highlighted')))) {
+          _me._UNhighlightCell(insideHighlightedCellFrom);
+        } else if (!_me._isInsideHighlighted(onCell)
+            && !_me._isInsideHighlighted(reltg)) {
+          _me._UNhighlightAllCell();
         }
       },
-    
+
+      _keyUpListener : function(event) {
+        var _me = this;
+        if (!event.shiftKey) {
+          _me._UNhighlightAllCell();
+        }
+      },
+
       _UNhighlightCell : function(theCell) {
         var _me = this;
         if(theCell.hasClassName('cm_outline_highlighted')) {
@@ -99,12 +96,28 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
         theCell.stopObserving('mouseout', _me._CMHighlightMouseOutBinded);
       },
     
+      _UNhighlightAllCell : function() {
+        var _me = this;
+        $$('.cm_outline_highlighted').each(function(theCell) {
+          _me._outliner.removeOutlinesForElement(theCell);
+          theCell.removeClassName('cm_outline_highlighted');
+          theCell.stopObserving('mouseout', _me._CMHighlightMouseOutBinded);
+        });
+      },
+    
       addContextMenuHover : function() {
         var _me = this;
+        $(document.body).stopObserving('mouseout', _me._CMHighlightMouseOutBinded);
+        $(document.body).observe('mouseout', _me._CMHighlightMouseOutBinded);
+        $(document.body).observe('keyup', _me._keyUpListener.bind(_me));
         contextMenuItemDataForElemId.keys().each(function(elemId) {
           if($(elemId)) {
-            $(elemId).stopObserving('mouseover', _me._highlightCellBinded);
-            $(elemId).observe('mouseover', _me._highlightCellBinded);
+            var highlightCellBinded = _me._highlightCell.bind({
+              '_me' : _me,
+              'elemId' : elemId
+            });
+            $(elemId).stopObserving('mouseover', highlightCellBinded);
+            $(elemId).observe('mouseover', highlightCellBinded);
           }
         });
       }
