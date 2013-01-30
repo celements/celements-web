@@ -409,9 +409,6 @@ div.menuTab .editblock.cel_cal_event_column_config input {
 	width: 400px;
 }
 
-body .cm_highlighted {
-  border: solid 2px green !important;
-}
 .UserAdminInfos table.block td{
 	position:relative;
 }
