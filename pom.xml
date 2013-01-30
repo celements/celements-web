@@ -223,6 +223,7 @@
                 <exclude>WEB-INF/lib/joda-time-1.4.jar</exclude>
                 <exclude>WEB-INF/lib/easymock-2.5.2.jar</exclude>
                 <exclude>WEB-INF/lib/log4j-1.2.13.jar</exclude>
+                <exclude>WEB-INF/lib/log4j-1.2.14.jar</exclude>
                 <exclude>WEB-INF/lib/junit-3.8.1.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-plugin-watchlist-*.jar</exclude>
                 <exclude>WEB-INF/lib/google-collections-*.jar</exclude>
