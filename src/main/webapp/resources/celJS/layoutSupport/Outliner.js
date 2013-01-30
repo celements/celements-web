@@ -14,6 +14,8 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
   (function() {
 
     CELEMENTS.layout.Outliner.prototype = {
+      _outline_Width : 2,
+
       _init : function() {
         var _me = this;
       },
@@ -49,16 +51,21 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
       outlineElement : function(cssClass, element) {
         var _me = this;
         element = $(element);
-        var elemRightBorderLeft = element.cumulativeOffset().left + element.getWidth() -1;
+        var elemRightBorderLeft = element.cumulativeOffset().left + element.getWidth()
+            - _me._outline_Width;
         _me._addOutlineElement(element.id, '-RightBorder', element.cumulativeOffset().top,
-            elemRightBorderLeft, 1, element.getHeight(), cssClass);
-        var elemBottomBorderTop = element.cumulativeOffset().top + element.getHeight() -1;
+            elemRightBorderLeft, _me._outline_Width, element.getHeight(), cssClass);
+        var elemBottomBorderTop = element.cumulativeOffset().top + element.getHeight()
+            - _me._outline_Width;
         _me._addOutlineElement(element.id, '-BottomBorder', elemBottomBorderTop,
-            element.cumulativeOffset().left, element.getWidth(), 1, cssClass);
+            element.cumulativeOffset().left, element.getWidth(), _me._outline_Width,
+            cssClass);
         _me._addOutlineElement(element.id, '-LeftBorder', element.cumulativeOffset().top,
-            element.cumulativeOffset().left, 1, element.getHeight(), cssClass);
+            element.cumulativeOffset().left, _me._outline_Width, element.getHeight(),
+            cssClass);
         _me._addOutlineElement(element.id, '-TopBorder', element.cumulativeOffset().top,
-            element.cumulativeOffset().left, element.getWidth(), 1, cssClass);
+            element.cumulativeOffset().left, element.getWidth(), _me._outline_Width,
+            cssClass);
       },
 
       removeOutlinesForElement : function(element) {
