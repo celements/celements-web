@@ -94,7 +94,8 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
 
       addFocus : function(element) {
         var _me = this;
-        $$('.cel_outline_' + $(element).id).each(function(outlineElem) {
+        $$('.cel_outline_' + _me._makeSafeForCSS($(element).id)).each(
+            function(outlineElem) {
           outlineElem.addClassName('cel_outline_focus');
           outlineElem.setStyle({
             'background' : 'lime',
@@ -105,7 +106,8 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
 
       removeFocus : function(element) {
         var _me = this;
-        $$('.cel_outline_' + $(element).id).each(function(outlineElem) {
+        $$('.cel_outline_' + _me._makeSafeForCSS($(element).id)).each(
+            function(outlineElem) {
           outlineElem.removeClassName('cel_outline_focus');
           outlineElem.setStyle({
             'background' : 'green',
