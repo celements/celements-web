@@ -48,7 +48,12 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
         });
       },
 
-      outlineElement : function(cssClass, element) {
+      outlineElement : function(element) {
+        var _me = this;
+        _me.outlineElementAddClass(undefined, element);
+      },
+
+      outlineElementAddClass : function(cssClass, element) {
         var _me = this;
         element = $(element);
         var elemRightBorderLeft = element.cumulativeOffset().left + element.getWidth()
@@ -68,10 +73,14 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
             cssClass);
       },
 
+      _makeSafeForCSS : function(name) {
+        return name.replace(/([:\.])/g, '\\$1');
+      },
+
       removeOutlinesForElement : function(element) {
         var _me = this;
         element = $(element);
-        $$('.cel_outline' + element.id).each(function(element) {
+        $$('.cel_outline_' + _me._makeSafeForCSS(element.id)).each(function(element) {
           element.remove();
         });
       },
