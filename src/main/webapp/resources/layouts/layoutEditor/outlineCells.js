@@ -43,7 +43,7 @@ if(typeof CELEMENTS.layout.editor=="undefined"){CELEMENTS.layout.editor={};};
 
       _outlineAllCells_intern : function() {
         var _me = this;
-        $$('.cel_cell').each(_me._outliner.outlineElement.curry('cel_cellOutline'
+        $$('.cel_cell').each(_me._outliner.outlineElementAddClass.curry('cel_cellOutline'
             ).bind(_me._outliner));
       },
 
