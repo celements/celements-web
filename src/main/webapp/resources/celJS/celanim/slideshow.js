@@ -131,13 +131,10 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
 //    moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
     slideShowConfig.doImageResize = !slideShowImg.hasClassName('celanim_withoutImageResize');
     slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
-    /** START HACK: increase height and width by one to fix problem in celements-photo
-     *              which sometimes returns images too small by one in both dimensions.
-     **/
     var celwidth = parseInt(slideShowConfig.imageSrcQuery.replace(/^.*celwidth=(\d+).*/,
-        '$1')) + 1;
+        '$1'));
     var celheight = parseInt(slideShowConfig.imageSrcQuery.replace(
-        /^.*celheight=(\d+).*/, '$1')) + 1;
+        /^.*celheight=(\d+).*/, '$1'));
     var borderHorizontal = parseInt(slideShowImg.getStyle('borderLeftWidth'));
     borderHorizontal += parseInt(slideShowImg.getStyle('borderRightWidth'));
     var borderVertical = parseInt(slideShowImg.getStyle('borderTopWidth'));
