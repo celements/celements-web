@@ -1,0 +1,115 @@
+#macro(get_id)
+#set ($sql = ", BaseObject as obj, IntegerProperty as rep_id where obj.name=doc.fullName and doc.web = '$gallerySpace' and obj.className='XWiki.PhotoAlbumClass' and obj.id = rep_id.id.id and rep_id.id.name = 'id' order by rep_id.value desc")
+#set($albums = $xwiki.searchDocuments($sql))
+#if($albums.size() > 0)
+#set($last_album = $albums.get(0))
+#set($last_id = $xwiki.getDocument($last_album).getObject('XWiki.PhotoAlbumClass').getProperty('id').getValue())
+#set($next_id = $last_id + 1)
+#else
+#set($next_id = 0)
+#end
+#end
+#set($gallerySpace = "$!request.get('space')")
+#if("$!gallerySpace" == '')
+  #set($gallerySpace = 'Photos')
+#end
+#set($filled = $request.get("submitted") == "1")
+#set($complete = true)
+#set($valid = true)
+#if($filled && $complete && $valid)
+ #set($new_doc = $xwiki.getDocument("${gallerySpace}.Gallery$!request.get('id')"))
+ ## set album title
+ $new_doc.setTitle($!request.get("title"))
+ ## set page type
+ #set($pagetype_obj = $new_doc.newObject("Celements2.PageType"))
+ $pagetype_obj.set("page_type", "Gallery")
+ ## create album object
+ #set($album_obj = $new_doc.newObject("XWiki.PhotoAlbumClass"))
+ $album_obj.set("thumbWidth", $!request.get("thumbWidth"))
+ $album_obj.set("height", $!request.get("height"))
+ $album_obj.set("height2", $!request.get("height2"))
+ $album_obj.set("photoWidth", $!request.get("photoWidth"))
+ $album_obj.set("description", $!request.get("description")) 
+ $album_obj.set("id", $xwiki.parseInt($!request.get("id")))
+ $new_doc.save()
+ ## redirect to edit album
+ $context.getResponse().sendRedirect($new_doc.getURL("edit"))
+#else
+$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
+$celementsweb.addExtJSfileOnce(':celJS/validation.js')
+#set($templateDocFN = "$!request.get('galleryTemplate')")
+#set($templateObj = '')
+#if("$!templateDocFN" != '')
+  #set($templateDoc = $xwiki.getDocument($services.model.resolveDocument($templateDocFN)))
+  #set($templateObj = $doc.getObject('XWiki.PhotoAlbumClass'))
+#end
+<div class="celements2_box">
+<div class="celements2_box_title">$msg.get("gallery_album_create")</div>
+<form id="create" name="create" method="post" action="">
+<input type="hidden" name="submitted" value="1" />
+#get_id()
+<input type="hidden" name="id" value="$!next_id" />
+<table cellspacing="0" cellpadding="0" border="0" class="celements2_table">
+<tr>
+ <td class="celements2_text">$msg.get("gallery_album_title")</td>
+ <td><input name="title" type="text" value="$!request.get('title')" class="celements2_input" /></td>
+</tr>
+<tr>
+ <td class="celements2_text">$msg.get("gallery_album_description")</td>
+ <td><textarea name="description" class="celements2_input" >$!request.get('description')</textarea></td>
+</tr>
+<tr>
+ <td class="celements2_text">$msg.get("gallery_thumbnail_width")</td>
+ #if("$!request.get('thumbWidth')" != '')
+  #set($thumbWidth = $!request.get('thumbWidth'))
+ #elseif("$!templateObj.getProperty('thumbWidth').getValue()" != '')
+  #set($thumbWidth = "$!templateObj.getProperty('thumbWidth').getValue()")
+ #else
+  #set($thumbWidth = 170)
+ #end
+ <td><input name="thumbWidth" type="text" value="$!thumbWidth" class="celements2_input validate-number" /></td>
+</tr>
+<tr> <td class="celements2_text">$msg.get("gallery_thumbnail_height")</td>
+ #if("$!request.get('height')" != '')
+  #set($height = $!request.get('height'))
+ #elseif("$!templateObj.getProperty('height').getValue()" != '')
+  #set($height = "$!templateObj.getProperty('height').getValue()")
+ #else
+  #set($height = 119)
+ #end
+ <td><input name="height" type="text" value="$!height" class="celements2_input validate-number" /></td>
+</tr>
+<tr>
+ <td class="celements2_text">$msg.get("gallery_picture_height")</td>
+ #if("$!request.get('height2')" != '')
+  #set($height2 = $!request.get('height2'))
+ #elseif("$!templateObj.getProperty('height2').getValue()" != '')
+  #set($height2 = "$!templateObj.getProperty('height2').getValue()")
+ #else
+  #set($height2 = 500)
+ #end
+ <td><input name="height2" type="text" value="$!height2" class="celements2_input validate-number" /></td>
+</tr>
+<tr>
+ <td class="celements2_text">$msg.get("gallery_picture_width")</td>
+ #if("$!request.get('photoWidth')" != '')
+  #set($photoWidth = $!request.get('photoWidth'))
+ #elseif("$!templateObj.getProperty('photoWidth').getValue()" != '')
+  #set($photoWidth = "$!templateObj.getProperty('photoWidth').getValue()")
+ #else
+  #set($photoWidth = 500)
+ #end
+ <td><input name="photoWidth" type="text" value="$!photoWidth" class="celements2_input validate-number" /></td>
+</tr>
+</table>
+<input type="submit" value="$msg.get('gallery_album_create')" />
+</form>
+<script type="text/javascript">
+ var valid = new Validation('create', {immediate : true});
+ ## if not complete or valid run the js validation
+ #if($filled && (!$complete || !$valid))
+ var result = valid.validate();
+ #end
+</script>
+</div>
+#end

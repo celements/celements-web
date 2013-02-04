@@ -141,7 +141,7 @@ $structNav.includeNavigation($parentRef)
       #else
         #set($cssNodeClasses = "${cssNodeClasses} cel_nav_isLeaf")
       #end
-	  <li><a href="$xwiki.getURL($docRef)" class="$cssNodeClasses.trim()">
+	  <li><a target="_blank" href="$xwiki.getURL($docRef)" class="$cssNodeClasses.trim()">
 	  	$structNav.getMultilingualMenuName($docFN, $language)
       	</a>
       	#if($hasChildren)

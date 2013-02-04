@@ -70,6 +70,14 @@ var initSlideShows = function(slideShowConfigArray) {
       celSlideShow_AfterCloseGeneralHandler);
 };
 
+var celSlideShows_copyBorder = function(borderName, fromElement, toElement) {
+  var newBorderStyle = {};
+  newBorderStyle[borderName + 'Width'] = fromElement.getStyle(borderName + 'Width');
+  newBorderStyle[borderName + 'Color'] = fromElement.getStyle(borderName + 'Color');
+  newBorderStyle[borderName + 'Style'] = fromElement.getStyle(borderName + 'Style');
+  toElement.setStyle(newBorderStyle);
+};
+
 var celSlideShows_initOneSlideShow = function(slideShowConfig) {
   if (slideShowConfig.imageArray && (slideShowConfig.imageArray.size() > 0)) {
     celSlideShowConfig.set(slideShowConfig.htmlId, slideShowConfig);
@@ -83,6 +91,10 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
      }).hide();
     tempImg.observe('load', centerImage);
     tempImg.observe('load', celSlideshowImageIsLoadedHandler);
+    celSlideShows_copyBorder('borderLeft', slideShowImg, tempImg);
+    celSlideShows_copyBorder('borderRight', slideShowImg, tempImg);
+    celSlideShows_copyBorder('borderTop', slideShowImg, tempImg);
+    celSlideShows_copyBorder('borderBottom', slideShowImg, tempImg);
     var divWrapper = slideShowImg.wrap('div', {
         'class' : 'celanim_slideshow_wrapper' }
       ).insert({ top : tempImg });
@@ -112,19 +124,23 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-bottom');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-left');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-right');
-    moveStyleToWrapper(divWrapper, slideShowImg, 'border-top');
-    moveStyleToWrapper(divWrapper, slideShowImg, 'border-bottom');
-    moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
-    moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
+// adding border to Wrapper leads to problems with double borders. Thus removed.
+//    moveStyleToWrapper(divWrapper, slideShowImg, 'border-top');
+//    moveStyleToWrapper(divWrapper, slideShowImg, 'border-bottom');
+//    moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
+//    moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
     slideShowConfig.doImageResize = !slideShowImg.hasClassName('celanim_withoutImageResize');
     slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
-    /** START HACK: increase height and width by one to fix problem in celements-photo
-     *              which sometimes returns images too small by one in both dimensions.
-     **/
     var celwidth = parseInt(slideShowConfig.imageSrcQuery.replace(/^.*celwidth=(\d+).*/,
-        '$1')) + 1;
+        '$1'));
     var celheight = parseInt(slideShowConfig.imageSrcQuery.replace(
-        /^.*celheight=(\d+).*/, '$1')) + 1;
+        /^.*celheight=(\d+).*/, '$1'));
+    var borderHorizontal = parseInt(slideShowImg.getStyle('borderLeftWidth'));
+    borderHorizontal += parseInt(slideShowImg.getStyle('borderRightWidth'));
+    var borderVertical = parseInt(slideShowImg.getStyle('borderTopWidth'));
+    borderVertical += parseInt(slideShowImg.getStyle('borderBottomWidth'));
+    celwidth -= borderHorizontal;
+    celheight -= borderVertical;
     slideShowConfig.imageSrcQuery = slideShowConfig.imageSrcQuery.replace(
         /celheight=(\d+)/, 'celheight=' + celheight).replace(/celwidth=(\d+)/,
             'celwidth=' + celwidth);
