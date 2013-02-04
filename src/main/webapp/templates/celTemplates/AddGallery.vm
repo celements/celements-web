@@ -37,7 +37,12 @@
 #else
 $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
 $celementsweb.addExtJSfileOnce(':celJS/validation.js')
-#set($templateObj = $doc.getObject('XWiki.PhotoAlbumClass'))
+#set($templateDocFN = "$!request.get('galleryTemplate')")
+#set($templateObj = '')
+#if("$!templateDocFN" != '')
+  #set($templateDoc = $xwiki.getDocument($services.model.resolveDocument($templateDocFN)))
+  #set($templateObj = $doc.getObject('XWiki.PhotoAlbumClass'))
+#end
 <div class="celements2_box">
 <div class="celements2_box_title">$msg.get("gallery_album_create")</div>
 <form id="create" name="create" method="post" action="">
