@@ -125,6 +125,11 @@
       <version>1.14</version>
     </dependency>
     <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>xwiki-platform-search-lucene</artifactId>
+      <version>2.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>1.7</version>
@@ -225,6 +230,8 @@
                 <exclude>WEB-INF/lib/log4j-1.2.13.jar</exclude>
                 <exclude>WEB-INF/lib/log4j-1.2.14.jar</exclude>
                 <exclude>WEB-INF/lib/junit-3.8.1.jar</exclude>
+                <exclude>WEB-INF/lib/lucene-core-2.*.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-plugin-lucene-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-plugin-watchlist-*.jar</exclude>
                 <exclude>WEB-INF/lib/google-collections-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-plugin-activitystream-*.jar</exclude>
