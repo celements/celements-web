@@ -1,5 +1,6 @@
 /* HELPERS */
 var cmDefaultItems = new Array();
+var cmOutliner = null;
 
 function contextMouseOver(n){
   classAttribute = n.getAttributeNode('class');
@@ -105,7 +106,7 @@ function ContextMenu(){
       if(document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft < w)
         x = x - w;
     }
-*/    
+*/
     if(!me.menuDiv) {
       me.menuDiv = new Element('div', {
         'id' : 'contextMenu',
@@ -122,7 +123,9 @@ function ContextMenu(){
     //  me.menuDiv.setSize(h,w);
     }
     me.populate();
-
+    
+    getCmOutliner().outlineElement(e.element());
+    
     return false;
   };
   
@@ -144,6 +147,7 @@ function ContextMenu(){
 
   this.hide = function(e){
     me.internal_hide();
+    getCmOutliner().removeAllOutlines(e.element());
     e.stop();
   };
   
@@ -306,6 +310,13 @@ var contextKeydownExecuter = function(ev, nodeId) {
    }
    return cmi_action_found;
 };
+
+var getCmOutliner = function() {
+  if(cmOutliner == null) {
+    cmOutliner = new CELEMENTS.layout.Outliner;
+  }
+  return cmOutliner;
+}
 
 var documentContextClickHandler = function(event) {
   if (!event.shiftKey && !myContextMenu.show(event, cmDefaultItems)) {
