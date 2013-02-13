@@ -84,14 +84,16 @@ function ContextMenu(){
   this.config = new Array();
   this.menuDiv = null;
   
-  this.show = function(e, config){
-
+  this.show = function(e, config, contextClickElementId){
+    if ((typeof contextClickElementId != 'undefined') && $(contextClickElementId)) {
+      getCmOutliner().outlineElement($(contextClickElementId));
+    }
     $(document).observe('mousedown', me.hide);
     
     me.config = me.config.concat(config);
     
     var mouseCoord = me.getMousePos(e);
-    
+
     var y = mouseCoord[1] - 6;
     var x = mouseCoord[0] - 3;
     
@@ -123,9 +125,7 @@ function ContextMenu(){
     //  me.menuDiv.setSize(h,w);
     }
     me.populate();
-    
-    getCmOutliner().outlineElement(e.element());
-    
+        
     return false;
   };
   
@@ -290,7 +290,8 @@ var contextClickHandler = function(event) {
                   // is installed. event.element() returns the clicked element
   if (!event.shiftKey && (contextClickElement.id != "")
       && contextMenuItemDataForElemId.get(contextClickElement.id)) {
-    myContextMenu.show(event, contextMenuItemDataForElemId.get(contextClickElement.id));
+    myContextMenu.show(event, contextMenuItemDataForElemId.get(contextClickElement.id),
+        contextClickElement.id);
   }
 };
 
