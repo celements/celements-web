@@ -1,0 +1,33 @@
+$response.setStatus(404)
+<div id="xwikicontent">
+    #set($message = $xwiki.parseMessage())
+    #if($message)
+    <center>
+        <h2>$message</h2>
+        <br/><br/>
+    </center>
+    #else
+    <center>
+      $msg.get("problemoccured")
+    </center>
+    #end
+<br/><br/>
+#if($exp && $context.getUser().startsWith('xwiki:'))
+#set($requestHost = "$!context.getRequest().getHeader('host')")
+#set($requestPath = "$!context.getRequest().getRequestURI()")
+#set($requestQueryStr = "$!context.getRequest().getQueryString()")
+#set($requestAction = $context.action)
+<!--
+space: $doc.space
+docname: $doc.name
+host: $requestHost
+path: $requestPath
+query: $requestQueryStr
+action: $requestAction
+-->
+  $msg.get("detailedinformation"):<br/>
+  <pre class="xwikierror">
+    $escapetool.xml($exp.getFullMessage())
+  </pre>
+#end
+</div>
