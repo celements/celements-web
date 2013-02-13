@@ -1,3 +1,6 @@
+#if("$!rteHasTitle" == '')
+  #set($rteHasTitle = $celementsweb.getPageType($doc.fullName).hasPageTitle())
+#end
 #if("$!tinyMCE_height" == '')
   #set($tinyMCE_height = 500)
 #end
@@ -114,7 +117,7 @@ $xwiki.includeForm('celements2web:Macros.includeRTELanguageSelect', false)
 	    <input type="hidden" id="formeditxred" name="xredirect" value="$!cel_tiny_xredirect" />
 	    <input type="hidden" name="language" value="$!language" />
 <!-- FIX? : $tdoc.fullName , $tdoc.language -->
-#if($celementsweb.getPageType($doc.fullName).hasPageTitle())
+#if($rteHasTitle)
 <div id="con_titleEdit" class="editblock">$adminMsg.get('cel_tm_title'):
     <input id="pagetitle" name="title" class="fullwidth" value="$!xwiki.getFormEncoded($!tdoc.getTitle())" type="text"  onfocus="setFocus('con_titleEdit');" onblur="removeFocus('con_titleEdit');">
 </div>
