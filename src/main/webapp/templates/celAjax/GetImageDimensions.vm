@@ -1,7 +1,7 @@
 #set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
 $jsonBuilder.openDictionary()
 #if("$!request.get('imageFullName')" != '')
-#set($dimensionObj = $xwiki.celementsphoto.getDimension($request.get('imageFullName')))
+#set($dimensionObj = $services.celementsphoto.getDimension($request.get('imageFullName')))
 $jsonBuilder.addStringProperty('filename', "$!request.get('imageFullName')")
 $jsonBuilder.openProperty('height')
 $jsonBuilder.addInteger($mathtool.toInteger($!dimensionObj.getHeight()))
