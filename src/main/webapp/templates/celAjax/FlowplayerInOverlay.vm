@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script type="text/javascript" src="http://celements2web.demospace.ch/xwiki/bin/skin/XWiki/Celements2Skin/prototype.js"></script>
-<script type="text/javascript" src="/xwiki/bin/skin/Skins/RheumaligaSkin/flowplayer%2D3.1.2.min.js"></script>
-<script type="text/javascript" src="/xwiki/bin/skin/Skins/RheumaligaSkin/flowplayer%2Dconfig.js"></script>
-<script type="text/javascript" src="/xwiki/bin/skin/Skins/RheumaligaSkin/movieplayer.js"></script>
-<link rel="stylesheet" media="all" type="text/css" href="/xwiki/bin/skin/Skins/RheumaligaSkin/rls-elements.css" /> 
+<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/prototype.js', 'file')"></script>
+<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/flowplayer/flowplayer-3.2.6.min.js', 'file')"></script>
+##TODO refactor movieplayer.js that it can be used with file-action
+<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/celanim/movieplayer.js', 'skin')"></script>
+<link rel="stylesheet" media="all" type="text/css" href="/skin/Skins/RheumaligaSkin/rls-elements.css" /> 
 <title></title>
 <script type="text/javascript">
  Event.observe(window, 'load', function() {

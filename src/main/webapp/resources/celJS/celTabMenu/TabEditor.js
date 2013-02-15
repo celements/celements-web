@@ -55,7 +55,14 @@ TE.prototype = {
           if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
         	console.debug('initValue for: ' + elem.name, elem.value);
           }
-          elementsValues.set(elem.name, elem.value);
+          var isInputElem = (elem.tagName.toLowerCase() == 'input');
+          var elemValue = elem.value;
+          if (isInputElem && (elem.type.toLowerCase() == 'radio')) {
+            elemValue = elem.getValue() || elementsValues.get(elem.name) || null;
+          } else if (isInputElem && (elem.type.toLowerCase() == 'checkbox')) {
+            elemValue = elem.checked;
+          }
+          elementsValues.set(elem.name, elemValue);
         }
       });
       _me.editorFormsInitialValues.set(formId, elementsValues);
@@ -142,6 +149,7 @@ TE.prototype = {
     
     if($$('.container-close').size() > 0) {
       _me.initDefaultCloseButton();
+      _me._addClearButtons();
     }
     if(_me.tabMenuConfig.initCloseButton) {
       _me.initCloseButton();
@@ -212,15 +220,19 @@ TE.prototype = {
       'class': 'yui-button yui-push-button actionButton',
       'id': tabData['container']
     });
+    _me._addClearButtons();
+    $('tabMenuPanel').down('.hd').down('div.clearbuttons').insert({ "before" : span });
+    tabData['onclick'] = { fn: clickHandler };
+    _me.actionButtons.set(tabData['id'], new YAHOO.widget.Button(tabData));
+  },
+
+  _addClearButtons : function() {
     if (!$('tabMenuPanel').down('.hd').down('div.clearbuttons')) {
       var clearbuttons = new Element('div', {
         'class': 'clearbuttons'
       });
       $('tabMenuPanel').down('.hd').appendChild(clearbuttons);
     }
-    $('tabMenuPanel').down('.hd').down('div.clearbuttons').insert({ "before" : span });
-    tabData['onclick'] = { fn: clickHandler };
-    _me.actionButtons.set(tabData['id'], new YAHOO.widget.Button(tabData));
   },
 
   initSaveButton : function() {
@@ -230,6 +242,7 @@ TE.prototype = {
         if (!failed) {
           //remove template in url query after creating document in inline mode
           if (window.location.search.match(/\&?template=[^\&]+/)) {
+            window.onbeforeunload = null;
             window.location.search = window.location.search.replace(/\&?template=[^\&]+/, '')
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
@@ -247,25 +260,36 @@ TE.prototype = {
     var closeClickHandler = function() {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         if (!failed) {
-          var redirectValue = '';
-          if (document.forms[0] && document.forms[0]['xredirect']) { 
-            if (document.forms[0]['xredirect'][0]) {
-              redirectValue = $F(document.forms[0]['xredirect'][0]);
-            } else {
-              redirectValue = $F(document.forms[0]['xredirect']);
-            }
-          }  
-          if (redirectValue == '')  {
-            redirectValue = window.location.pathname.replace(/\/edit\/|\/inline\//,
-                '/view/');
-          }
+          //TODO call async 'cancel' to release editor-lock
           window.onbeforeunload = null;
-          window.location.href = redirectValue;
+          window.location.href = _me._getRedirectValue();
         }
       });
     };
     var buttonLabel = _me.tabMenuConfig.closeButtonLabel || 'Close';
     _me.addActionButton(buttonLabel, closeClickHandler);
+  },
+
+  _getRedirectValue : function() {
+    var _me = this;
+    var redirectValue = '';
+    if ($$('input.celEditorRedirect').size() > 0) {
+      redirectValue = $F($$('input.celEditorRedirect')[0]);
+    } else {
+      var firstFormName = _me.getFirstFormWithId() || 0;
+      var firstForm = document.forms[firstFormName];
+      if (firstForm && firstForm['xredirect']) { 
+        if (firstForm['xredirect'][0]) {
+          redirectValue = $F(firstForm['xredirect'][0]);
+        } else {
+          redirectValue = $F(firstForm['xredirect']);
+        }
+      }
+    }
+    if (redirectValue == '')  {
+      redirectValue = window.location.pathname.replace(/\/edit\/|\/inline\//, '/view/');
+    }
+    return redirectValue;
   },
 
   showTabMenu : function(id) {
@@ -572,11 +596,32 @@ TE.prototype = {
    });
  },
 
- isDirtyField : function(elementsValues, fieldElem) {
+ /**
+  * isDirtyField and needs saving
+  * 
+  * @param fieldElem
+  * @param optElementsValues optional hash with initial values of all elements in the form
+  * @return
+  */
+ isDirtyField : function(fieldElem, optElementsValues) {
+   var _me = this;
+   var formId = fieldElem.up('form').id;
+   var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
    if (fieldElem.hasClassName('mceEditor') && tinyMCE && tinyMCE.get(fieldElem.id)) {
      return tinyMCE.get(fieldElem.id).isDirty();
    } else if (!fieldElem.hasClassName('celIgnoreDirty')) {
-     return (elementsValues.get(fieldElem.name) != fieldElem.value);
+     var isInputElem = (fieldElem.tagName.toLowerCase() == 'input');
+     var elemValue = fieldElem.value;
+     if (isInputElem && (fieldElem.type.toLowerCase() == 'radio')) {
+       if (fieldElem.checked) {
+         elemValue = fieldElem.getValue();
+       } else {
+         return false;
+       }
+     } else if (isInputElem && (fieldElem.type.toLowerCase() == 'checkbox')) {
+       elemValue = fieldElem.checked;
+     }
+     return (elementsValues.get(fieldElem.name) != elemValue);
    }
    return false;
  },
@@ -590,7 +635,7 @@ TE.prototype = {
        var elementsValues = entry.value;
        _me.updateTinyMCETextAreas(formId);
        $(formId).getElements().each(function(elem) {
-         if (_me.isDirtyField(elementsValues, elem)) {
+         if (_me.isDirtyField(elem, elementsValues)) {
            if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
              console.debug('getDirtyFormIds first found dirty field: ', elem.name);
            }

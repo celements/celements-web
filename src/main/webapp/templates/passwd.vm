@@ -1,6 +1,7 @@
 #template("xwikivars.vm")
 #set($skinBodyAttributes = " style='overflow:hidden;'")
 #set($cel_loadAdminMenuBar = false)
+#set($overlayBodyCssClasses = 'celPasswordChange')
 #if($xwiki.exists($services.model.resolveDocument('Celements2.ChangePassword')))
 #set($celementsLoadInOverlay = 'Celements2.ChangePassword')
 #elseif($xwiki.exists($services.model.resolveDocument('celements2web:Celements2.ChangePassword')))

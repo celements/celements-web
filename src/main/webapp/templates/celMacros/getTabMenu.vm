@@ -20,12 +20,17 @@ $celementsweb.addExtJSfileOnce(":celJS/editResize.js")
 #set($force = $!request.get('force'))
 #if (($tdoc.getLocked()==true)&&(!$force))
 <div id="tabMenuPanel" style="position:absolute; z-index:99; top:40%; width:${menuPanelWidth}px"> 
-  <div class="layoutsection">
+  <div class="layoutsection celementsEditorBlocker">
   $response.setStatus(423)
   #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
-  #set($forceEditURL = $doc.getURL($context.action, ${newquerystring}))
   #xwikimessageboxstart($msg.get('notice') "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
-   <a href="$forceEditURL">$msg.get('forcelock')</a>
+  <div class="celButtons">
+  <a class="celbutton cancel" href="$doc.getURL('view')">$adminMsg.get('cancel')</a>
+#if($isAdmin)
+  #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
+  <a class="celbutton forcelock" href="$forceEditURL">$msg.get('forcelock')</a>
+#end    
+  </div>
   #xwikimessageboxend()
   </div>
 </div>
@@ -35,8 +40,10 @@ $celementsweb.addExtJSfileOnce(":celJS/editResize.js")
 		<div class="hd"></div>
 		<div class="bd">
 		     <span id="cel_startab" style="display:none;">$starttab</span>
+##FP;12.01.2013; Remove fix computed with in id="tb1-tab" because it is not clear
+##               why it is needed and it leads to problems in RLS-Kurs-Editor 
       ##TODO refactor: remove inline javascript to be able to load tab asynchronously
-      <div class="menuTab tb1-tab#if("$!starttab" == '1') starttab#end" id="tb1-tab" style="width:${menuPanelWidth}px">
+      <div class="menuTab tb1-tab#if("$!starttab" == '1') starttab#end" id="tb1-tab">
 $xwiki.parseTemplate("celEditorTabs/loadTabContent.vm")
       </div>
     </div>

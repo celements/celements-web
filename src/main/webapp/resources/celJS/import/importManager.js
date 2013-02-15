@@ -41,17 +41,12 @@ var sortObserve = function(event) {
  * @return
  */
 function resizeTab(){
-  var closedtabheight = 0;
-  $$('.c3_import_box').each(function(box){
-    //consoleMsg('closedtabheight = ' + closedtabheight + ' / boxheight = ' + box.offsetHeight + ' -> ' + box.className);
-    if(closedtabheight > 0){
-      closedtabheight = Math.min(box.offsetHeight, closedtabheight);
-    } else{
-      closedtabheight = box.offsetHeight;
-    }
-  });
-  //consoleMsg('tabtitlesheight = ' + $$('.c3_import_box').size() + ' * ' + closedtabheight);
-  var tabtitlesheight = $$('.c3_import_box').size() * closedtabheight;
+  var tabtitlesheight = 0;
+  $$('.c3_import_title').each(function(titleElem){
+    tabtitlesheight += titleElem.getHeight();
+    tabtitlesheight += parseInt(titleElem.getStyle('margin-top'));
+    tabtitlesheight += parseInt(titleElem.getStyle('margin-bottom'));
+  });   
   var mainpadding = parseInt($$('.main')[0].getStyle('padding-top'));
   var mainmargin = parseInt($$('.main')[0].getStyle('margin-top'));
   var mainborders = 2 * (mainpadding + mainmargin);
@@ -92,7 +87,7 @@ function resizeTab(){
       scrollbox.setStyle({ height: Math.max(50, newScrollableHeight) + "px" });
     }
     box.setStyle({ height: Math.max(50, tabboxsize) + "px" });
-  })
+  });
 }
 
 function changeTabEvent(event) {

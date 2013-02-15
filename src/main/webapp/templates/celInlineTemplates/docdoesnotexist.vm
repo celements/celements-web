@@ -1,5 +1,5 @@
 $xwiki.includeForm('celements2web:Macros.getContentDblClick', false)
-<div id="xwikicontent" $!dblClick >
+<div id="xwikicontent" class="cel_content_part cel_docdoesnotexist" $!dblClick >
     #if($xwiki.exists("XWiki.DocumentDoesNotExist"))
       ## Do NOT use include here! Include seems to generate a cycle (recursive include) and causes a heap space overflow
       $xwiki.getDocument("XWiki.DocumentDoesNotExist").getRenderedContent()

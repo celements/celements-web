@@ -1,5 +1,7 @@
+#set($celNewButtons = $services.celementsweb.useNewButtons())
+#set($celOldButtons = !$celNewButtons)
 {##
-  "close": true,##
+  "close": $!{celOldButtons},##
   "draggable": false,##
   "width": "${menuPanelWidth}px",##
   "x": "300px",##
@@ -29,4 +31,6 @@
 {##
   "id" : "tb5",##
   "label" : "${adminMsg.get('cel_tm_history')}"##
-}]
+}], ##
+"initCloseButton" : $!{celNewButtons},##
+"initSaveButton" : $!{celNewButtons}

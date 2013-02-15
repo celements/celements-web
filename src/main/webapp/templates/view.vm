@@ -49,7 +49,14 @@
 #else
 ## init Celements variables
 #set($isCellSkin = false)
+##only include if legacy celements2web.xar is installed
+#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
+#end
+#set($pagetype_api = $celementsweb.getPageType($doc.fullName))
+#if("$!show_frame" == '')
+  #set($show_frame = $pagetype_api.showFrame())
+#end
 $xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
 #if("$!celementsLoadInOverlay" != '')
 $xwiki.celementsweb.includeCSSAfterPreferences(':celRes/celementsOverlay.css')
@@ -58,13 +65,8 @@ $xwiki.celementsweb.includeCSSAfterPreferences(':celRes/celementsOverlay.css')
   $xwiki.parseTemplate("frameheader.vm")
 #end
 #if(!$contextIsFinished && !$isCellSkin)
-##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
-##           get not correctly interpreted in an embedded getRenderedContent call.
-$xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocument').getContent()",$doc)
-###if("$!renderDocument" == '')
-##  #set($renderDocument = $tdoc)
-###end
-##$xwiki.celementsweb.renderCelementsDocument($renderDocument)
+## render page content for old skins ('old' = no CelkSkin and no xwiki Skin from disk)
+#parse('celMacros/noDuplicateRenderCelementsDocument.vm')
 ##
 #end
 #if(!$contextIsFinished && ($show_frame || ("$context.action" == 'edit')))

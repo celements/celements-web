@@ -1,4 +1,4 @@
-tinyMCE.addI18n('ru.advimage_dlg', {
+tinyMCE.addI18n('ru.celimage_dlg', {
   "image_list" : "\u0421\u043f\u0438\u0441\u043e\u043a \u043a\u0430\u0440\u0442\u0438\u043d\u043e\u043a",
   "align_right" : "\u041f\u043e \u043f\u0440\u0430\u0432\u043e\u043c\u0443 \u043a\u0440\u0430\u044e",
   "align_left" : "\u041f\u043e \u043b\u0435\u0432\u043e\u043c\u0443 \u043a\u0440\u0430\u044e",

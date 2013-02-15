@@ -1,3 +1,5 @@
+var overlaySlideIsDebug = false;
+
 YAHOO.util.Event.onDOMReady(function() {
   loadOverlaySlide();
 });
@@ -53,7 +55,6 @@ var celanimOverlay_addOpenConfig = function(elemId, openConfig) {
         openConfigObj.cssClassNames = [];
       }
       celanimOverlay_openConfig.set(elemId, openConfigObj);
-      celanimOverlay_addCloseButton(openConfigObj);
       $(elemId).setStyle({
         'cursor' : "url(/file/resources/celJS/highslide/graphics/zoomin.cur), pointer"
       });
@@ -81,9 +82,61 @@ var celanimOverlay_AfterExpandHandler = function(hsExpander) {
     var overlayWrapper = overlayHTMLDiv2.up('.highslide-wrapper');
     overlayWrapper.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
     overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+    if (overlayWrapper.hasClassName('celanim_hasCloseButton')) {
+      var closeButtonElem = new Element('div', {
+        'class' : 'closebutton',
+        'title' : 'Close'
+      });
+      closeButtonElem.observe('click', function() {
+        hs.close(this);
+      });
+      overlayHTMLDiv.insert({
+        'after' : closeButtonElem
+      });
+    }
+    //center image
+    var imgInOverlay = overlayHTMLDiv.down('img.highslide-image');
+    if (imgInOverlay) {
+      imgInOverlay.observe('load', centerImage);
+      // load will be only fired if the image is not yet loaded.
+      //Thus we execute centerImage once for if it is already loaded.
+      celSlideShowInternalCenterImage(imgInOverlay);
+      imgInOverlay.setStyle({
+        'visibility' : 'visible'
+      });
+    }
   });
   $(hsExpander.thumb).fire('celanim_overlay:afterExpand', hsExpander);
   $$('body')[0].fire('celanim_overlay:afterExpandGeneral', hsExpander);
+};
+
+var celanimOverlay_BeforeExpandHandler = function(hsExpander) {
+  if (overlaySlideIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug('celanimOverlay_BeforeExpandHandler: ', hsExpander.thumb, ', ',
+        hsExpander);
+  }
+  $$('.highslide-html').each(function(overlayHTMLDiv) {
+    var overlayHTMLDiv2 = overlayHTMLDiv.down('div');
+    var overlayWrapper = overlayHTMLDiv2.up('.highslide-wrapper');
+    overlayWrapper.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+    overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
+    //fix height of internal divs
+    var imgInOverlay = overlayHTMLDiv.down('img.highslide-image');
+    overlayHTMLDiv.select('div').each(function(divElem) {
+      if (!divElem.hasClassName('highslide-header')) {
+        divElem.setStyle({'height' : '100%'});
+      }
+    });
+    if (imgInOverlay) {
+      imgInOverlay.setStyle({
+        'position' : 'absolute',
+        'visibility' : 'hidden'
+      });
+    }
+  });
+  $(hsExpander.thumb).fire('celanim_overlay:beforeExpand', hsExpander);
+  $$('body')[0].fire('celanim_overlay:beforeExpandGeneral', hsExpander);
 };
 
 var celanimOverlay_AfterCloseHandler = function(hsExpander) {
@@ -92,6 +145,10 @@ var celanimOverlay_AfterCloseHandler = function(hsExpander) {
 };
 
 var celanimOverlay_OpenInOverlay = function(event) {
+  if (overlaySlideIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug('celanimOverlay_OpenInOverlay: ', this, ', ', event);
+  }
   var openConfig = celanimOverlay_openConfig.get(this.id);
   if (openConfig) {
     var hsConfig = $H({
@@ -109,10 +166,14 @@ var celanimOverlay_OpenInOverlay = function(event) {
     if (openConfig.addNavigation) {
       openConfig.cssClassNames.push('celanim_addNavigation');
     }
+    if (openConfig.addCloseButton) {
+      openConfig.cssClassNames.push('celanim_hasCloseButton');
+    }
     hs.wrapperClassName = 'no-footer no-move celanim_overlay_wrapper '
       + openConfig.cssClassNames.join(' ');
     hs.height = hsConfig.get('height');
     hs.width = hsConfig.get('width');
+    hs.Expander.prototype.onBeforeExpand = celanimOverlay_BeforeExpandHandler;
     hs.Expander.prototype.onAfterExpand = celanimOverlay_AfterExpandHandler;
     hs.Expander.prototype.onAfterClose = celanimOverlay_AfterCloseHandler;
     hs.htmlExpand(this, hsConfig.toObject());
@@ -161,16 +222,4 @@ var celanimOverlay_getOrCreateContentElem = function(overlayContentId, hsConfig)
     $$('body')[0].insert(overlayContentElem);
   }
   return overlayContentElem;
-};
-
-var celanimOverlay_addCloseButton = function(openConfig) {
-  if (openConfig && openConfig.addCloseButton) {
-    // The simple semitransparent close button overlay
-    hs.registerOverlay({
-      thumbnailId: openConfig.id,
-      html: '<div class="closebutton" onclick="return hs.close(this)" title="Close"></div>',
-      position: 'top right',
-      fade: 2 // fading the semi-transparent overlay looks bad in IE
-    });
-  }
 };

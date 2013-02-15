@@ -14,6 +14,19 @@
 #else
     FAILED to export $plApi.getPrettyName() as xar!
 #end
+#elseif($isAdmin && ("$!request.action" == 'delete') && $celementsweb.layoutExists("$!request.layoutName"))
+#set($layoutKey = "$!{request.layoutName}")
+#if("$!request.confirm" == '1')
+	#if($celementsweb.deleteLayout($layoutKey))
+		<p>Successfully deleted layout '$!layoutKey'.</p>
+	#else
+	    <p>Failed to delete layout '$!layoutKey'!</p>
+	#end
+#else
+<p>Are you sure you want delete the '$!layoutKey' layout?</p>
+<a class="deleteyes" href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layoutName=$!layoutKey&confirm=1">delete</a>
+<a class="deleteno" href="?xpage=overlay&conf=PageLayoutsListing">do NOT delete</a>
+#end
 #else
   	<h1>Page Layout Manager</h1>
   	#set($isLayoutEditorAvailable = $celementsweb.layoutEditorAvailable())
@@ -50,6 +63,9 @@
     <td>$plApi.isActive()</td>
 #if($isAdmin)
     <td><a href="?xpage=overlay&conf=PageLayoutsListing&action=export&layoutName=$!layoutKey">export</a></td>
+    <td><a href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layoutName=$!layoutKey">
+    	<img src="$celementsweb.getSkinFile(':icons/silk/cross.gif', 'file')" style="border: 0px;" alt="delete"/>
+    	</a></td>
 #end
     </tr>
   #end

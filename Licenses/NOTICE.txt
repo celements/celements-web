@@ -39,6 +39,23 @@ jcrop
 Jcrop is released under the MIT License.
 - http://deepliquid.com/content/Jcrop_License.html
 
+jquery-numberformatter
+- http://code.google.com/p/jquery-numberformatter/
+- http://www.opensource.org/licenses/mit-license.php
+
+jshashtable
+- http://code.google.com/p/jshashtable/
+- http://www.apache.org/licenses/LICENSE-2.0
+
+jquery-format
+The jQuery Format plugin is currently available for use in all personal or commercial
+projects under both MIT and GPL licenses. This means that you can choose the license
+that best suits your project, and use it accordingly.
+- http://www.asual.com/jquery/format/
+- https://github.com/asual/jquery-format
+- http://www.opensource.org/licenses/mit-license.php
+
+
 swfobject
 - http://code.google.com/p/swfobject/
 - http://www.opensource.org/licenses/mit-license.php

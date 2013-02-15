@@ -150,7 +150,9 @@ div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container #
 .c3_import_box div.celements3_filebase .fileBasePanel #c2_ml_container #c2_ml_content {
 		width: 605px !important;
 }
+/** removed to fix not visible scrollbar in import manager
 .c3_import_box div.celements3_filebase #fileBasePanel #c2_ml_container .c3_import_scrollable,
 .c3_import_box div.celements3_filebase .fileBasePanel #c2_ml_container .c3_import_scrollable {
 	width:794px;
 }
+**/

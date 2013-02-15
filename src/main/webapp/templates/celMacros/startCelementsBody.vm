@@ -28,15 +28,13 @@ $xwiki.parseTemplate("celMacros/getOnLoad.vm")
 #if("$!skinBodyAttributes" != '') $!{skinBodyAttributes}#end
 #if("$!HTMLBodyCSSClasses" != '') class="$!{HTMLBodyCSSClasses}"#end##
 #if("$!onLoadJS" != '') onload="$!{onLoadJS}"#end>
-#if("$celementsweb.getVersionMode()" == "celements3")
 #if(("$context.action" == 'edit') || ("$context.action" == 'inline'))
 $xwiki.parseTemplate("celMacros/getTabMenu.vm")
 #elseif($cel_loadAdminMenuBar)
 #parse('celMacros/MenuBar.vm')
 #end
-#end
 #if("$!celementsLoadInOverlay" != '')
-$xwiki.parseTemplate("celMacros/openInlineOverlay.vm")
+#parse("celMacros/openInlineOverlay.vm")
 #if($xwiki.exists("${celementsLoadInOverlay}"))
 $xwiki.includeForm("${celementsLoadInOverlay}",false)
 #elseif((${celementsLoadInOverlay.indexOf('.')} > 0) && ($xwiki.exists("celements2web:${celementsLoadInOverlay}")))

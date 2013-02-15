@@ -1,4 +1,4 @@
-tinyMCE.addI18n('it.advimage_dlg', {
+tinyMCE.addI18n('it.celimage_dlg', {
   "image_list" : "Lista immagini",
   "align_right" : "A destra",
   "align_left" : "A sinistra",

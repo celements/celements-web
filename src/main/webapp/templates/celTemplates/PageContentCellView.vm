@@ -5,7 +5,7 @@
 #if($overwriteRenderDocument.endsWith('.vm'))
 $xwiki.parseTemplate($overwriteRenderDocument)
 #else
-$xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument))
+$services.celementsweb.renderDocument($services.model.resolveDocument($overwriteRenderDocument))
 #end
 #set($overwriteRenderDocument = '')
 #else
@@ -16,9 +16,11 @@ $xwiki.celementsweb.renderDocument($xwiki.getDocument($overwriteRenderDocument))
 #set($pdCount = $pdCount + 1)
 <div id="cellPDContent$!{pdCount}$!{pageDoc.getName()}:$!isInheritable:$!{pageDepFN}"##
  class="cel_cm_pagedependent_content">
+<div class="cellPDContent-body">
 #end
-$xwiki.celementsweb.renderCelementsDocument($pageDoc)
+$services.celementsweb.renderCelementsDocument($pageDoc)
 #if($isAddPdDiv)
+<!-- IE6 --></div>
 <!-- IE6 --></div>
 #end
 #end

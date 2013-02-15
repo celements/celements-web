@@ -51,7 +51,7 @@
 *#
 </form>
 
-#if ("$!xwiki.getWebPreference('use_navigation_images')" == "1")
+#if ("$!xwiki.getSpacePreference('use_navigation_images')" == "1")
 <form id="nav_imagePicker_form" action="$doc.getURL('save')" method="post">
 <div id="nav_imagePicker" class="editblock">
 <span style="display:none;" id="image_prefix">${doc.fullName}</span>

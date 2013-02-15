@@ -409,9 +409,6 @@ div.menuTab .editblock.cel_cal_event_column_config input {
 	width: 400px;
 }
 
-body .cm_highlighted {
-  border: solid 2px green !important;
-}
 .UserAdminInfos table.block td{
 	position:relative;
 }
@@ -512,6 +509,174 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 .celdocpath_Celements2\.FileBaseTags {
   background-color: white!important;
 }
+
 .cel_whatsnew_table {
   width: 100%;
+}
+
+/**********************************
+  Editor blocker
+***********************************/
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker,
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker p {
+  font-family: "Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  line-height: 13px;
+  font-weight: 400;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker fieldset {
+  margin: 0px;
+  padding: 6px;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker p.xwikimessage {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker {
+  background: white;
+  background-color: white;
+  padding: 10px;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons {
+  margin-top: 15px;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons .celbutton {
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #FF9900;
+  color: #333333;
+  border-top: 1px solid #C5C5C5;
+  border-left: 1px solid #C5C5C5;
+  border-right: 1px solid #929292;
+  border-bottom: 1px solid #929292;
+  font-size: 13px;
+  line-height: 14px;
+  text-indent: 0px;
+  background-color: #F90;
+  font-weight: 400;
+  display: inline-block;
+}
+
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons .cancel {
+  float: right;
+}
+
+/* CSS for Sitemap */
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder {
+	width: 550px;
+}
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder ul,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder ul {
+  width: auto;
+  padding-left: 18px;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li,
+body > .cel_reorderNodes_proxy {
+	position: relative;
+	padding: 2px 0px;
+	font-size: 12px;
+	line-height: 15px;
+	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	font-style: normal;
+	color: black;
+	
+	list-style-image: url("/file/resources/celRes/document.gif");
+	list-style-position: inside;
+	border-left: 1px dotted gray;
+}
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_even,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_even {
+  background-color: #e1e1e1;
+}
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_odd,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_odd {
+  background-color: white;
+}
+.generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
+.yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
+.generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_odd,
+.yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_odd {
+  background-color: transparent;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs {
+	text-align: right;
+	position: absolute;
+	top: 1px;
+	right: 0px;
+}
+body > .cel_reorderNodes_proxy .docLangs,
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs {
+	display: none;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a {
+	display: block;
+	float: left;
+	width: 20px;
+	padding-top: 1px;
+	color: white;
+	text-align: center;
+	border: 1px solid black;
+	text-decoration: none;
+	background-color: #555;
+}
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a + a,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a + a {
+	margin-left: 1px;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.defaultLanguage,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.defaultLanguage {
+	font-weight: bold;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.transNotExists,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.transNotExists {
+	background-color: white;
+	color: black;
+}
+
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a:hover,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a:hover {
+	background-color: #ccc;
+}
+
+body div.mask {
+	z-index: 100 !important;
+}
+
+/** CSS for .cel_content_part **/
+body #sitecontainer .cel_content_part {
+	background: white;
+}
+body #sitecontainer .cel_content_part,
+body #sitecontainer .cel_content_part p,
+body #sitecontainer .cel_content_part span,
+body #sitecontainer .cel_content_part a {
+	font-size: 12px;
+	line-height: 14px;
+	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+	font-style: normal;
+	color: black;
+	margin: 10px 0px;
+}
+body #sitecontainer .cel_content_part a:hover {
+	color: grey;
+}
+body #sitecontainer .cel_content_part table th,
+body #sitecontainer .cel_content_part table td {
+	text-align: left;
 }

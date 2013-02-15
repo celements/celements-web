@@ -47,37 +47,42 @@ function onCancel_att() {}
 </tr>
 #set( $counter = $counter + 1)
 #end
-#else
-<tr>
-<td colspan="4">$adminMsg.get('cel_tm_no_attachments').</td>
-</tr>
+#else  
+  <tr>
+    <td colspan="4">$adminMsg.get('cel_tm_no_attachments').</td>
+  </tr>
 #end
 </table>
 <br />
-  	<h2>$adminMsg.get('cel_tm_upload_attachment')</h2>
-<form action="$xwiki.getURL($doc.getFullName(), 'upload')" enctype="multipart/form-data" method="post">
-<script type="text/javascript">
-function update_filename(filename, field){
+<h2>$adminMsg.get('cel_tm_upload_attachment')</h2>
+#if ($doc.isNew())
+  <br/>
+  $adminMsg.get('cel_tm_save_first')
+#else  
+  <form action="$xwiki.getURL($doc.getFullName(), 'upload')" enctype="multipart/form-data" method="post">
+  <script type="text/javascript">
+  function update_filename(filename, field){
   if(document.forms.update && document.forms.update[field])
     document.forms.update[field].value = filename;
   return false;
-}
-function updateName(form) {
-var fname = form.filepath.value;  
-if (fname=="") {
-  return false;
-}
-var i = fname.lastIndexOf('\\');
-if (i==-1)
-  i = fname.lastIndexOf('/');
-fname = fname.substring(i+1);
-form.filename.value = fname;
-return true;
-}
-</script>
+  }
+  function updateName(form) {
+  var fname = form.filepath.value;  
+  if (fname=="") {
+    return false;
+  }
+  var i = fname.lastIndexOf('\\');
+  if (i==-1)
+    i = fname.lastIndexOf('/');
+  fname = fname.substring(i+1);
+  form.filename.value = fname;
+  return true;
+  }
+  </script>
   <input type="hidden" name="xredirect" value="$doc.getURL('edit')?tab=3" size="20" />    
   <input type="hidden" name="filename" value="" size="20" />
   <input type="file" name="filepath" value="" size="40"  />
   <input type="submit" value="$adminMsg.get('cel_upload')" onclick="return updateName(this.form)" />  
-</form>
+  </form>
+#end
 </div>

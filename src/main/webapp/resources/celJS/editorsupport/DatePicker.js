@@ -5,9 +5,15 @@ var handleDateSelected = function(type, args, pickerDateCal) {
   var selDates = args[0];
   if ((selDates.length > 0) && dateField) {
     var selDate = selDates[0];
-    var newStartDate = selDate[2] + '.' + selDate[1] + '.' + selDate[0];
-    dateField.value = newStartDate;
-    Event.fire(dateField, 'celements:datePicker-dateSelected');
+    var dateSelectedEvent = Event.fire(dateField, 'celements:datePicker-dateSelected', {
+      'selDate' : selDate,
+      'date' : new Date(selDate[1] + '/' + selDate[2] + '/' + selDate[0]),
+      'dateField' : dateField
+    });
+    if (!dateSelectedEvent.stopped) {
+      var newStartDate = selDate[2] + '.' + selDate[1] + '.' + selDate[0];
+      dateField.value = newStartDate;
+    }
   }
   pickerDateCal.hide();
 };
@@ -29,6 +35,16 @@ var addDatePickerToField = function(inputField) {
         title : 'Bitte ein Datum w&auml;hlen:',
         close : true
   });
+  var inputFieldValue = $F($(inputField));
+  if (inputFieldValue && (inputFieldValue != '')) {
+    var dateStr = inputFieldValue.split('\.');
+    var curDay = dateStr[0];
+    var curMonth = dateStr[1];
+    var curYear = dateStr[2];
+    pickerDateCal.setYear(curYear);
+    pickerDateCal.setMonth(curMonth - 1);
+    pickerDateCal.select(new Date(curMonth + '/' + curDay + '/' + curYear));
+  }
   //TODO move to ajax
   pickerDateCal.cfg.setProperty("MONTHS_SHORT",   ["Jan", "Feb", "M\u00E4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]); 
   pickerDateCal.cfg.setProperty("MONTHS_LONG",    ["Januar", "Februar", "M\u00E4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]); 

@@ -57,14 +57,17 @@ $xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
 ##
 #set($force = $!request.get('force'))
 #if (($tdoc.getLocked()==true)&&(!$force))
-  <div class="layoutsection">
+  <div class="layoutsection celementsEditorBlocker">
   $response.setStatus(423)
   #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
   #xwikimessageboxstart($msg.get('notice') "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
+  <div class="celButtons">
+  <a class="celbutton cancel" href="$doc.getURL('view')">$adminMsg.get('cancel')</a>
 #if($isAdmin)
   #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
-  <a href="$forceEditURL">$msg.get('forcelock')</a>
+  <a class="celbutton forcelock" href="$forceEditURL">$msg.get('forcelock')</a>
 #end	
+  </div>
   #xwikimessageboxend()
   </div>
 #else
@@ -103,45 +106,5 @@ $xwiki.parseTemplate("footer.vm")
 $xwiki.parseTemplate("htmlfooter.vm")
 ################### default xwiki-edit-template !!!!!
 #else
-#if($xwiki.celementsweb.getVersionMode() == 'celements3')
 $xwiki.parseTemplate("view.vm")
-#else
-## init Celements variables
-$xwiki.includeForm("celements2web:Macros.initCelements", false)
-#set($ptatd_render_mode = 'edit')
-#set($overWriteGlobalCelementsValues = false)
-#set($theDoc = $doc)
-$xwiki.includeForm("celements2web:Macros.getPageTypeAndTemplateDoc", false)
-## get the specific edit template
-#set($spec_edit = $ptatd_spec_view)
-##<!-- edit: $ptatd_spec_view -->
-$xwiki.parseTemplate("frameheader.vm")
-#if("$!spec_edit" != '')
-  #if($xwiki.exists($spec_edit))
-##    $xwiki.includeForm($spec_edit, false)
-    #set($overwritePageTypeView = $spec_edit)
-##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
-##           are not correctly interpreted in an embedded getRenderedContent call.
-$xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocument').getContent()",$doc)
-##
-  #else
-    Sorry, This page type can not be edited!<br />
-    <a href="$doc.getURL("view")">Quit edit mode.</a>
-  #end
-#else
-  <form id="edit" method="post" action="$doc.getURL("save")">
-    <input type="hidden" name="template" value="$!doc.getTemplate()" />
-    <input type="hidden" name="xredirect" value="$!request.getParameter("xredirect")" />
-  #if($isValidLanguage && ("$!language" != "$!default_language") && ("$!tdoc.language" == ''))
-    <input type="hidden" name="language" value="$language" />
-  #else
-    <input type="hidden" name="language" value="$!tdoc.language" />
-  #end
-    <div id="htmlarea_container">
-      $xwiki.getTextArea($tdoc.content)
-    </div>
-  </form>
-#end
-$xwiki.parseTemplate("framefooter.vm")
-#end
 #end

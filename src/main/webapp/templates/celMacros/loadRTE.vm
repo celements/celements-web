@@ -3,6 +3,8 @@
 ## INPUT (optional): $content_css_filenameURL (default: computed from $content_css_filename)
 ## INPUT (optional): $tinyMCE_height (default 500), $tinyMCE_width (default 453)
 ##
+## @deprecated since 2.18.0 please use celAjax/TinyConfig.vm instead
+##
 ## should we load the rte?
 #set($type = $page_type)
 ## get the specific edit template
@@ -47,7 +49,7 @@ tinyMCE.init({
   content_css : "$!{content_css_filenameURL.replaceAll('^,', '')}",
   #end
   ## lookup the rte_styles field in the XWiki and WebPreference
-  #set($rteStyles = "$!xwiki.getWebPreference('rte_styles')")
+  #set($rteStyles = "$!xwiki.getSpacePreference('rte_styles')")
   #if("$!rteStyles" == '')
   	## default back to the standard fields.
     #set($rteStyles = 'Titel=h1;Untertitel=h2;Text=text')

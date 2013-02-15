@@ -1,3 +1,5 @@
+var slideshowIsDebug = false;
+  
 YAHOO.util.Event.onDOMReady(function() {
   loadSlideShowDataAsync();
 });
@@ -37,8 +39,8 @@ var loadSlideShowDataAsync = function() {
           initSlideShows(transport.responseText.evalJSON());
           startSlideShows();
         } else if ((typeof console != 'undefined')
-            && (typeof console.debug != 'undefined')) {
-          console.debug('loadSlideShowDataAsync: noJSON!!! ', transport.responseText);
+            && (typeof console.warn != 'undefined')) {
+          console.warn('loadSlideShowDataAsync: noJSON!!! ', transport.responseText);
         }
       },
       onFailure : function(transport) {
@@ -68,22 +70,39 @@ var initSlideShows = function(slideShowConfigArray) {
       celSlideShow_AfterCloseGeneralHandler);
 };
 
+var celSlideShows_copyBorder = function(borderName, fromElement, toElement) {
+  var newBorderStyle = {};
+  newBorderStyle[borderName + 'Width'] = fromElement.getStyle(borderName + 'Width');
+  newBorderStyle[borderName + 'Color'] = fromElement.getStyle(borderName + 'Color');
+  newBorderStyle[borderName + 'Style'] = fromElement.getStyle(borderName + 'Style');
+  toElement.setStyle(newBorderStyle);
+};
+
 var celSlideShows_initOneSlideShow = function(slideShowConfig) {
   if (slideShowConfig.imageArray && (slideShowConfig.imageArray.size() > 0)) {
     celSlideShowConfig.set(slideShowConfig.htmlId, slideShowConfig);
+    var slideShowImg = $(slideShowConfig.htmlId);
+    var otherCssClassNames = $w(slideShowImg.className).without('celanim_slideshow'
+        ).without('celanim_overlay').without('highslide-image');
     var tempImg = new Element('img', {
       'id' : slideShowConfig.htmlId + '_tmpImg',
-      'style' : 'position: absolute; top: 0px; left: 0px;'
+      'style' : 'position: absolute; top: 0px; left: 0px;',
+      'class' : otherCssClassNames.join(' ')
      }).hide();
     tempImg.observe('load', centerImage);
-    var divWrapper = $(slideShowConfig.htmlId).wrap('div', {
+    tempImg.observe('load', celSlideshowImageIsLoadedHandler);
+    celSlideShows_copyBorder('borderLeft', slideShowImg, tempImg);
+    celSlideShows_copyBorder('borderRight', slideShowImg, tempImg);
+    celSlideShows_copyBorder('borderTop', slideShowImg, tempImg);
+    celSlideShows_copyBorder('borderBottom', slideShowImg, tempImg);
+    var divWrapper = slideShowImg.wrap('div', {
         'class' : 'celanim_slideshow_wrapper' }
       ).insert({ top : tempImg });
-    if ($(slideShowConfig.htmlId).up('.highslide-html')) {
-      var overlayHTMLDiv = $(slideShowConfig.htmlId).up('.highslide-html');
+    if (slideShowImg.up('.highslide-html')) {
+      var overlayHTMLDiv = slideShowImg.up('.highslide-html');
       divWrapper.setStyle({ 'height' : overlayHTMLDiv.getHeight() + 'px' });
       divWrapper.setStyle({ 'width' : overlayHTMLDiv.getWidth() + 'px' });
-      $(slideShowConfig.htmlId).setStyle({
+      slideShowImg.setStyle({
         'margin-top' : '0',
         'margin-bottom' : '0',
         'margin-left' : '0',
@@ -91,33 +110,37 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
       });
     } else {
       //TODO maybe move to onLoad on image
-//      console.debug('copy dimensions: ', $(slideShowConfig.htmlId).getHeight(), $(slideShowConfig.htmlId).getWidth());
-      divWrapper.setStyle({ 'height' : $(slideShowConfig.htmlId).getHeight() + 'px' });
-      divWrapper.setStyle({ 'width' : $(slideShowConfig.htmlId).getWidth() + 'px' });
+//      console.debug('copy dimensions: ', slideShowImg.getHeight(), slideShowImg.getWidth());
+      divWrapper.setStyle({ 'height' : slideShowImg.getHeight() + 'px' });
+      divWrapper.setStyle({ 'width' : slideShowImg.getWidth() + 'px' });
     }
-    var slideShowImg = $(slideShowConfig.htmlId);
-    $w(slideShowImg.className).without('celanim_slideshow').without('celanim_overlay'
-        ).each(function(className) {
-      divWrapper.addClassName(className);
+    otherCssClassNames.each(function(className) {
+          if (!className.startsWith('cel_effekt_')) {
+            divWrapper.addClassName(className);
+          }
     });
     moveStyleToWrapper(divWrapper, slideShowImg, 'float');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-top');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-bottom');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-left');
     moveStyleToWrapper(divWrapper, slideShowImg, 'margin-right');
-    moveStyleToWrapper(divWrapper, slideShowImg, 'border-top');
-    moveStyleToWrapper(divWrapper, slideShowImg, 'border-bottom');
-    moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
-    moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
+// adding border to Wrapper leads to problems with double borders. Thus removed.
+//    moveStyleToWrapper(divWrapper, slideShowImg, 'border-top');
+//    moveStyleToWrapper(divWrapper, slideShowImg, 'border-bottom');
+//    moveStyleToWrapper(divWrapper, slideShowImg, 'border-right');
+//    moveStyleToWrapper(divWrapper, slideShowImg, 'border-left');
     slideShowConfig.doImageResize = !slideShowImg.hasClassName('celanim_withoutImageResize');
     slideShowConfig.imageSrcQuery = slideShowImg.src.replace(/.*(\?.*)$/, '$1');
-    /** START HACK: increase height and width by one to fix problem in celements-photo
-     *              which sometimes returns images too small by one in both dimensions.
-     **/
     var celwidth = parseInt(slideShowConfig.imageSrcQuery.replace(/^.*celwidth=(\d+).*/,
-        '$1')) + 1;
+        '$1'));
     var celheight = parseInt(slideShowConfig.imageSrcQuery.replace(
-        /^.*celheight=(\d+).*/, '$1')) + 1;
+        /^.*celheight=(\d+).*/, '$1'));
+    var borderHorizontal = parseInt(slideShowImg.getStyle('borderLeftWidth'));
+    borderHorizontal += parseInt(slideShowImg.getStyle('borderRightWidth'));
+    var borderVertical = parseInt(slideShowImg.getStyle('borderTopWidth'));
+    borderVertical += parseInt(slideShowImg.getStyle('borderBottomWidth'));
+    celwidth -= borderHorizontal;
+    celheight -= borderVertical;
     slideShowConfig.imageSrcQuery = slideShowConfig.imageSrcQuery.replace(
         /celheight=(\d+)/, 'celheight=' + celheight).replace(/celwidth=(\d+)/,
             'celwidth=' + celwidth);
@@ -129,16 +152,27 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
     }
     /**  END HACK
      **/
-    slideShowConfig.hasRandomStart = $(slideShowConfig.htmlId).hasClassName(
+    slideShowConfig.hasRandomStart = slideShowImg.hasClassName(
         'celanim_slideshowRandomStart');
     slideShowImg.absolutize();
     removeImageSize(slideShowImg);
+    removeImageSize(tempImg);
     // fix centering of first image
 //    console.debug('recenter image: ',slideShowImg.getHeight(),slideShowImg.getWidth());
     slideShowImg.observe('load', centerImage);
     slideShowImg.src = slideShowImg.src;
-    if (slideShowHasNextImage(slideShowConfig)) {
-      tempImg.src = slideShowConfig.nextimgsrc;
+    slideShowConfig.delayFinished = false;
+    //XXX is this check needed at all? if gallery is empty or does not exist
+    //XXX we should not start initSlideshow anyway... 
+    if (slideShowConfig && (celSlideShowHasNext(slideShowConfig) > -1)) {
+      if (slideshowIsDebug && (typeof console != 'undefined')
+          && (typeof console.debug != 'undefined')) {
+        console.debug('celSlideShows_initOneSlideShow: set next image to ',
+            celSlideShowGetCurrentImageId(slideShowConfig), ", ",
+            slideShowConfig.preloadCurrentImage.src);
+      }
+      slideShowConfig.nextImgIsLoaded = false;
+      tempImg.src = slideShowConfig.preloadCurrentImage.src;
     }
     $(slideShowConfig.htmlId).fire('celanim_slideshow:afterInit', slideShowConfig);
   }
@@ -163,8 +197,14 @@ var celSlideShowGetPart = function(elemId, num, defaultvalue) {
 
 var celSlideShowThreads = new Hash();
 var scheduleChangeImage = function(elemId) {
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug('scheduleChangeImage: ' + elemId);
+  }
   var timeout = celSlideShowGetPart(elemId, 2, 3);
-  celSlideShowThreads.set(elemId, changeImage.delay(timeout, elemId));
+  var slideConfig = celSlideShowConfig.get(elemId);
+  slideConfig.delayFinished = false;
+  celSlideShowThreads.set(elemId, delayedChangeImage.delay(timeout, elemId));
 };
 
 var startSlideShows = function() {
@@ -174,6 +214,10 @@ var startSlideShows = function() {
 };
 
 var celSlideShow_startOne = function(elemId) {
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug('celSlideShow_startOne: ' + elemId);
+  }
   var isManualStart = $(elemId).hasClassName('celanim_manualstart');
   var isCelanimOverlay = $(elemId).hasClassName('celanim_overlay');
   if (isCelanimOverlay) {
@@ -197,9 +241,35 @@ var celSlideShow_startOne = function(elemId) {
     celSlideShowStartSlideShow(elemId);
   }
   if ($(elemId).hasClassName('celanim_addNavigation')) {
+    celSlideShow_InternalAddNavigation(celSlideShowConfig.get(elemId));
+  }
+};
+
+var celSlideShow_InternalAddNavigation = function(slideConfig, maxRetry) {
+  var internalMaxRetry = maxRetry || 20;
+  internalMaxRetry = internalMaxRetry - 1;
+  var elemId = slideConfig.htmlId;
+  var wrapperElement = celSlideShow_getOuterWrapperElement(elemId);
+  if ((wrapperElement.getHeight() <=0) && (wrapperElement.getWidth() <=0)) {
+    /** There is a bug in FF an IE. If an the page is loaded in an iframe it can happen,
+     *  that the dimensions are not yet available in the onLoad event. This can be for an
+     *  image or any other element. THUS the only the work around this issue is to retry
+     *  after some amount of time. We will retry at most 20 times.
+     *  Then we will give up. **/
+    if (internalMaxRetry >= 0) {
+      if (slideshowIsDebug && (typeof console != 'undefined')
+          && (typeof console.log != 'undefined')) {
+        console.log('celSlideShow_InternalAddNavigation: failed to add navigation! retry'
+            + ' in 0.1 seconds. retries left ', internalMaxRetry);
+      }
+      celSlideShow_InternalAddNavigation.delay(0.1, slideConfig, internalMaxRetry);
+    } else {
+      console.error("celSlideShow_InternalAddNavigation: failed to add navigation!"
+          + " maxRetry exhausted. I'm giving up!");
+    }
+  } else {
     celSlideShow_addNavigation(elemId);
-    celSlideShow_getOuterWrapperElement(elemId).fire(
-        'celanim_slideshow:afterAddNavigation', celSlideShowConfig.get(elemId));
+    wrapperElement.fire('celanim_slideshow:afterAddNavigation', slideConfig);
   }
 };
 
@@ -216,12 +286,15 @@ var celSlideShow_AfterExpand = function(event) {
   overlayImg.id = overlayId;
   var newConfig = $H(celSlideShowConfig.get(elemId)).toObject(); // make a copy
   newConfig.htmlId = overlayId;
+  newConfig.currImgId = undefined;
+  newConfig.preloadCurrentImage = undefined;
+  newConfig.preloadNextImage = undefined;
+  newConfig.preloadPrevImage = undefined;
   celSlideShows_initOneSlideShow(newConfig);
   celSlideShow_startOne(overlayId);
-  changeImage(overlayId);
+  manualChangeImage(overlayId);
   if ($(overlayId).up('.celanim_addNavigation')) {
-    celSlideShow_addNavigation(overlayId);
-    $(overlayId).fire('celanim_slideshow:afterAddNavigation', newConfig);
+    celSlideShow_InternalAddNavigation(newConfig);
   }
 };
 
@@ -249,14 +322,43 @@ var celSlideShow_addNavigation = function(elemId) {
   rightNavElem.observe('click', celSlideShow_NextImage.bind($(elemId)));
 };
 
+var celSlideShowIsNotChanging = function(elemId) {
+  return ($(elemId) && !$(elemId).hasClassName('celanim_isChanging'));
+}; 
+
+var manualChangeImage = function(elemId) {
+  if (celSlideShowIsNotChanging(elemId)) {
+    var beforeIsRunning = celSlideShowIsRunning(elemId);
+    if (beforeIsRunning) {
+      // stop current scheduled image change. celSlideShowEffectAfterFinish will
+      // schedule a new one as long as 'celanim_slideshow_running' css class is
+      // not removed.
+      celSlideShowCancelNextChange(elemId);
+    }
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug("manualChangeImage: before changing ", elemId);
+    }
+    var slideConfig = celSlideShowConfig.get(elemId);
+    slideConfig.delayFinished = true;
+    changeImage(elemId);
+  } else {
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.warn != 'undefined')) {
+      console.warn("manualChangeImage: skip because 'celanim_isChanging' ", elemId);
+    }
+  }
+};
+
 var celSlideShow_PrevImage = function(event) {
   event.stop();
   var elemId = this.id;
   var slideConfig = celSlideShowConfig.get(elemId);
   celSlideShow_getOuterWrapperElement(elemId).fire(
       'celanim_slideshow:beforeClickPrevImage', slideConfig);
-  if (slideShowHasPrevImage(slideConfig)) {
-    changeImage(elemId);
+  if (celSlideShowIsNotChanging(elemId) && celSlideShowMoveToPrev(slideConfig)) {
+    celSlideShowSetTempImgSrc(slideConfig);
+    manualChangeImage(elemId);
   }
   celSlideShow_getOuterWrapperElement(elemId).fire(
       'celanim_slideshow:afterClickPrevImage', slideConfig);
@@ -268,8 +370,9 @@ var celSlideShow_NextImage = function(event) {
   var slideConfig = celSlideShowConfig.get(elemId);
   celSlideShow_getOuterWrapperElement(elemId).fire(
       'celanim_slideshow:beforeClickNextImage', slideConfig);
-  if (slideConfig.nextImg >=0) {
-    changeImage(elemId);
+  if (celSlideShowIsNotChanging(elemId) && celSlideShowMoveToNext(slideConfig)) {
+    celSlideShowSetTempImgSrc(slideConfig);
+    manualChangeImage(elemId);
   }
   celSlideShow_getOuterWrapperElement(elemId).fire(
       'celanim_slideshow:afterClickNextImage', slideConfig);
@@ -301,26 +404,38 @@ var celSlideShowManualStartStop = function(event) {
 };
 
 var celSlideShowStopSlideShow = function(elemId) {
+  celSlideShowCancelNextChange(elemId);
   celSlideShowIsRunningHash.set(elemId, false);
-  window.clearTimeout(celSlideShowThreads.get(elemId));
-  celSlideShowThreads.unset(elemId);
+  celSlideShow_getOuterWrapperElement(elemId).removeClassName(
+      'celanim_slideshow_running');
+};
+
+var celSlideShowCancelNextChange = function(elemId) {
+  if (typeof celSlideShowThreads.get(elemId) != "undefined") {
+    window.clearTimeout(celSlideShowThreads.get(elemId));
+    celSlideShowThreads.unset(elemId);
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug("celSlideShowCancelNextChange: canceled next change ", elemId);
+    }
+  }
 };
 
 var celSlideShowStartSlideShow = function(elemId) {
   celSlideShowIsRunningHash.set(elemId, true);
   celSlideShow_getOuterWrapperElement(elemId).removeClassName('celanim_slideshow_paused');
   celSlideShow_getOuterWrapperElement(elemId).addClassName('celanim_slideshow_running');
+  var slideConfig = celSlideShowConfig.get(elemId);
+  slideConfig.delayFinished = true;
   changeImage(elemId);
 };
 
 var celSlideShowPausedSlideShowIds = new Array();
 var celSlideShowPauseAllSlideShows = function() {
   celSlideShowThreads.each(function(pair) {
-    if (!celSlideShow_isInOverlay(pair.key)) {
+    if ($(pair.key) && !celSlideShow_isInOverlay(pair.key)) {
       celSlideShowStopSlideShow(pair.key);
       celSlideShowPausedSlideShowIds.push(pair.key);
-      celSlideShow_getOuterWrapperElement(pair.key).removeClassName(
-          'celanim_slideshow_running');
       celSlideShow_getOuterWrapperElement(pair.key).addClassName(
           'celanim_slideshow_paused');
     }
@@ -328,7 +443,11 @@ var celSlideShowPauseAllSlideShows = function() {
 };
 
 var celSlideShow_isInOverlay = function(elemId) {
-  return (typeof $(elemId).up('.highslide-container') != "undefined");
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug('celSlideShow_isInOverlay: ' + elemId);
+  }
+  return ($(elemId) && (typeof $(elemId).up('.highslide-container') != "undefined"));
 };
 
 var celSlideShowResumeAllSlideShows = function() {
@@ -357,27 +476,39 @@ var removeImageSize = function(tempImage) {
   });
 };
 
+var celSlideShowSetTempImgSrc = function(slideConfig) {
+  var fadeimgtemp = $(slideConfig.htmlId + '_tmpImg');
+  slideConfig.nextImgIsLoaded = false;
+  fadeimgtemp.src = slideConfig.preloadCurrentImage.src;
+};
+
 var celSlideShowEffectAfterFinish = function(effect) {
   var slideConfig = celSlideShowConfig.get(effect.options.slideShowElemId);
   var fadeimgtemp = $(slideConfig.htmlId + '_tmpImg');
   var fadeimg = $(slideConfig.htmlId);
-  fadeimg.src = fadeimgtemp.src;
-  fadeimg.setStyle({
-    'top' : fadeimgtemp.getStyle('top'),
-    'left' : fadeimgtemp.getStyle('left')
-  });
-  fadeimg.show();
-  fadeimgtemp.hide();
-  $(slideConfig.htmlId).fire('celanim_slideshow:afterChangeImage', slideConfig);
-  if (slideShowHasNextImage(slideConfig)) {
-    removeImageSize(fadeimgtemp);
-    var isNewImage = !fadeimgtemp.src.endsWith(slideConfig.nextimgsrc);
-    fadeimgtemp.src = slideConfig.nextimgsrc;
-    if (isNewImage && celSlideShowIsRunning(slideConfig.htmlId)) {
-      scheduleChangeImage(slideConfig.htmlId);
+  if (fadeimg && fadeimgtemp) {
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug('celSlideShowEffectAfterFinish: ', slideConfig.htmlId, fadeimg.src,
+          fadeimgtemp.src);
     }
+    fadeimg.src = fadeimgtemp.src;
+    fadeimg.setStyle({
+      'top' : fadeimgtemp.getStyle('top'),
+      'left' : fadeimgtemp.getStyle('left')
+    });
+    fadeimg.show();
+    fadeimgtemp.hide();
+    $(slideConfig.htmlId).fire('celanim_slideshow:afterChangeImage', slideConfig);
+    if (celSlideShowIsRunning(slideConfig.htmlId)) {
+      if (celSlideShowHasNext(slideConfig)) {
+          scheduleChangeImage(slideConfig.htmlId);
+      } else {
+        celSlideShowStopSlideShow(slideConfig.htmlId);
+      }
+    }
+    $(slideConfig.htmlId).removeClassName('celanim_isChanging');
   }
-  $(slideConfig.htmlId).removeClassName('celanim_isChanging');
 };
 
 var celSlideShowEffects = new Hash();
@@ -394,29 +525,83 @@ var getCenteredValue = function(diffValue) {
   }
 };
 
+var celSlideshowImageIsLoadedHandler = function(event) {
+  var tempImg = event.findElement();
+  var elemId = tempImg.id.replace(/_tmpImg$/,'');
+  var slideConfig = celSlideShowConfig.get(elemId);
+  slideConfig.nextImgIsLoaded = true;
+  if (slideConfig.delayFinished) {
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug("celSlideshowImageIsLoadedHandler: delayFinished thus executing"
+          + " changeImage ", elemId);
+    }
+    changeImage(elemId);
+  }
+};
+
 var centerImage = function(event) {
   var tempImg = event.findElement();
   celSlideShowInternalCenterImage(tempImg);
+  if (slideshowIsDebug && (typeof console != 'undefined')
+      && (typeof console.debug != 'undefined')) {
+    console.debug("centerImage: done for ", tempImg.id);
+  }
 };
 
-var celSlideShowInternalCenterImage = function(tempImg) {
+var celSlideShowInternalCenterImage = function(tempImg, maxRetry) {
+  var internalMaxRetry = maxRetry || 20;
+  internalMaxRetry = internalMaxRetry - 1;
   var dim = tempImg.getDimensions();
   var wrapDiv = tempImg.up('div');
-  var centeredTop = getCenteredValue(wrapDiv.getHeight() - dim.height);
-  var centeredLeft = getCenteredValue(wrapDiv.getWidth() - dim.width);
-  var slideConfig = celSlideShowConfig.get(tempImg.id.replace(/_tmpImg$/,''));
-  if (slideConfig) {
-    slideConfig.centeredTop = centeredTop;
-    slideConfig.centeredLeft = centeredLeft;
+  if ((wrapDiv.getHeight() <=0) && (wrapDiv.getWidth() <=0)) {
+    /** There is a bug in FF an IE. If an the page is loaded in an iframe it can happen,
+     *  that the dimensions are not yet available in the onLoad event. This can be for an
+     *  image or any other element. THUS the only the work around this issue is to retry
+     *  after some amount of time. We will retry at most 20 times.
+     *  Then we will give up. **/
+    if (internalMaxRetry >= 0) {
+      if (slideshowIsDebug && (typeof console != 'undefined')
+          && (typeof console.log != 'undefined')) {
+        console.log('celSlideShowInternalCenterImage: failed to center image! retry'
+            + ' in 0.1 seconds. retries left ', internalMaxRetry);
+      }
+      celSlideShowInternalCenterImage.delay(0.1, tempImg, internalMaxRetry);
+    } else {
+      console.error("celSlideShowInternalCenterImage: failed to center image!"
+          + " maxRetry exhausted. I'm giving up!");
+    }
+  } else {
+    var centeredTop = getCenteredValue(wrapDiv.getHeight() - dim.height);
+    var centeredLeft = getCenteredValue(wrapDiv.getWidth() - dim.width);
+    var slideConfig = celSlideShowConfig.get(tempImg.id.replace(/_tmpImg$/,''));
+    if (slideConfig) {
+      slideConfig.centeredTop = centeredTop;
+      slideConfig.centeredLeft = centeredLeft;
+    }
+    tempImg.setStyle({
+      'top' : centeredTop + 'px',
+      'left' : centeredLeft + 'px'
+    });
   }
-  tempImg.setStyle({
-    'top' : centeredTop + 'px',
-    'left' : centeredLeft + 'px'
-  });
+};
+
+var delayedChangeImage = function(elemId) {
+  var slideConfig = celSlideShowConfig.get(elemId);
+  slideConfig.delayFinished = true;
+  if (celSlideShowIsNotChanging(elemId) && celSlideShowMoveToNext(slideConfig)) {
+    celSlideShowSetTempImgSrc(slideConfig);
+    changeImage(elemId);
+  }
+};
+
+var isLoadedAndDelayed = function(elemId) {
+  var slideConfig = celSlideShowConfig.get(elemId);
+  return slideConfig.delayFinished && slideConfig.nextImgIsLoaded;
 };
 
 var changeImage = function(elemId) {
-  if ($(elemId) && !$(elemId).hasClassName('celanim_isChanging')) {
+  if (celSlideShowIsNotChanging(elemId) && isLoadedAndDelayed(elemId)) {
     $(elemId).addClassName('celanim_isChanging');
     var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
     var effectDetails = celSlideShowEffects.get(effectKey) || celSlideShowEffects.get(
@@ -439,67 +624,128 @@ var changeImage = function(elemId) {
           'afterFinish' : celSlideShowEffectAfterFinish
         }
     );
-  }
-};
-
-var slideShowHasNextImage = function(slideConfig) {
-  if (typeof slideConfig.nextImg != 'number') {
-    slideShowInitFirstImage(slideConfig);
   } else {
-    slideConfig.nextImg = slideConfig.nextImg + 1;
-  }
-  if (slideConfig.nextImg >= slideConfig.imageArray.size()) {
-    slideConfig.nextImg = 0;
-  }
-  if (slideConfig.nextImg >=0) {
-    slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg];
-    if (slideConfig.doImageResize) {
-      slideConfig.nextimgsrc += slideConfig.imageSrcQuery;
+    if (slideshowIsDebug && $(elemId) && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug("changeImage: skip for [", elemId, '] because ',
+          !$(elemId).hasClassName('celanim_isChanging'),  isLoadedAndDelayed(elemId));
     }
-    return true;
-  } else {
-    return false;
   }
 };
 
-var slideShowInitFirstImage = function(slideConfig) {
+var celSlideShowInitFirstImage = function(slideConfig) {
   $(slideConfig.htmlId).fire('celanim_slideshow:initFirstImage', slideConfig);
-  if ((typeof slideConfig.nextImg != 'number') || (slideConfig.nextImg < 0)) {
+  if ((typeof(slideConfig.currImgId) != 'number') || (slideConfig.currImgId < 0)) {
     if (slideConfig.hasRandomStart) {
-      slideConfig.nextImg = slideShowGetRandomStartNum(slideConfig);
+      celSlideShowSetCurrentImgId(slideConfig, slideShowGetRandomStartNum(slideConfig));
     } else {
-      slideConfig.nextImg = 0;
+      celSlideShowSetCurrentImgId(slideConfig, 0);
     }
   }
+};
+
+var celSlideShowGetCurrentImageId = function(slideConfig) {
+  if (typeof(slideConfig.currImgId) != 'number') {
+    celSlideShowInitFirstImage(slideConfig);
+  }
+  return slideConfig.currImgId;
+};
+
+var celSlideShowGetNextId = function(slideConfig) {
+  var nextImgId = celSlideShowGetCurrentImageId(slideConfig) + 1;
+  if (nextImgId >= slideConfig.imageArray.size()) {
+    if (slideConfig.doNotCycling) {
+      nextImgId = null;
+    } else {
+      nextImgId = 0;
+    }
+  }
+  return nextImgId;
+};
+
+var celSlideShowGetPrevId = function(slideConfig) {
+  var prevImgId = celSlideShowGetCurrentImageId(slideConfig) - 1;
+  if (prevImgId < 0) {
+    if (slideConfig.doNotCycling) {
+      prevImgId = null;
+    } else {
+      prevImgId = slideConfig.imageArray.size() - 1;
+    }
+  }
+  return prevImgId;
+};
+
+var celSlideShowHasNext = function(slideConfig) {
+  var nextImgId = celSlideShowGetNextId(slideConfig);
+  return ((nextImgId != null)
+      && (nextImgId != celSlideShowGetCurrentImageId(slideConfig)));
+};
+
+var celSlideShowHasPrev = function(slideConfig) {
+  var prevImgId = celSlideShowGetPrevId(slideConfig);
+  return ((prevImgId != null)
+      && (prevImgId != celSlideShowGetCurrentImageId(slideConfig)));
+};
+
+var celSlideShowMoveToNext = function(slideConfig) {
+  if (celSlideShowHasNext(slideConfig)) {
+    celSlideShowSetCurrentImgId(slideConfig, celSlideShowGetNextId(slideConfig));
+    return true;
+  }
+  return false;
+};
+
+var celSlideShowMoveToPrev = function(slideConfig) {
+  if (celSlideShowHasPrev(slideConfig)) {
+    celSlideShowSetCurrentImgId(slideConfig, celSlideShowGetPrevId(slideConfig));
+    return true;
+  }
+  return false;
+};
+
+var celSlideShowSetCurrentImgId = function(slideConfig, newImgId) {
+  slideConfig.currImgId = newImgId;
+  var newCurrentImage = new Image();
+  newCurrentImage.src = celSlideShowGetImgSrcForId(slideConfig, newImgId);
+  slideConfig.preloadCurrentImage = newCurrentImage;
+  if (celSlideShowHasPrev(slideConfig)) {
+    var newPrevImage = new Image();
+    var newPrevId = celSlideShowGetPrevId(slideConfig);
+    newPrevImage.src = celSlideShowGetImgSrcForId(slideConfig, newPrevId);
+    slideConfig.preloadPrevImage = newPrevImage;
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug('celSlideShowSetCurrentImgId preloading prev: ', newPrevId, ", ",
+          newPrevImage.src);
+    }
+  } else {
+    slideConfig.preloadPrevImage = undefined;
+  }
+  if (celSlideShowHasNext(slideConfig)) {
+    var newNextImage = new Image();
+    var newNextId = celSlideShowGetNextId(slideConfig);
+    newNextImage.src = celSlideShowGetImgSrcForId(slideConfig, newNextId);
+    slideConfig.preloadNextImage = newNextImage;
+    if (slideshowIsDebug && (typeof console != 'undefined')
+        && (typeof console.debug != 'undefined')) {
+      console.debug('celSlideShowSetCurrentImgId preloading next: ', newNextId, ", ",
+          newNextImage.src);
+    }
+  } else {
+    slideConfig.preloadNextImage = undefined;
+  }
+};
+
+var celSlideShowGetImgSrcForId = function(slideConfig, newImgId) {
+  var imgSrc = slideConfig.imageArray[newImgId];
+  if (slideConfig.doImageResize) {
+    imgSrc += slideConfig.imageSrcQuery;
+  }
+  return imgSrc;
 };
 
 var slideShowGetRandomStartNum = function(slideConfig) {
   return Math.round(Math.random() * (slideConfig.imageArray.size() - 1));
-};
-
-var slideShowMoveToPrevImage = function(slideConfig) {
-  if (typeof slideConfig.nextImg != 'number') {
-    slideConfig.nextImg = 0;
-  } else {
-    slideConfig.nextImg = slideConfig.nextImg - 1;
-  }
-  if (slideConfig.nextImg < 0) {
-    slideConfig.nextImg = slideConfig.imageArray.size() - 1;
-  }
-};
-
-var slideShowHasPrevImage = function(slideConfig) {
-  slideShowMoveToPrevImage(slideConfig);
-  slideShowMoveToPrevImage(slideConfig);
-  if (slideConfig.nextImg >=0) {
-    slideConfig.nextimgsrc = slideConfig.imageArray[slideConfig.nextImg];
-    if (slideConfig.doImageResize) {
-      slideConfig.nextimgsrc += slideConfig.imageSrcQuery;
-    }
-    return true;
-  } else {
-    return false;
-  }
 };
 
 // default effects

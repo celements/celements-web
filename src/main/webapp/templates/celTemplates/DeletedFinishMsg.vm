@@ -1,4 +1,3 @@
-{pre}
 #if($message)
 <div id="xwikimessage">$message</div>
 #end
@@ -6,4 +5,3 @@
 $xwiki.parseTemplate("recyclebinlist.vm")
 #xwikimessageboxend()
 </div>
-{/pre}

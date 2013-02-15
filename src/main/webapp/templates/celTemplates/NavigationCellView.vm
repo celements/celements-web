@@ -1,3 +1,4 @@
 #set($createdNav = $celementsweb.createNavigation())
-$createdNav.loadConfigFromDoc($celldoc.fullName)
+$createdNav.loadConfigFromDoc($celldoc.documentReference)
 $createdNav.includeNavigation()
+<div class="navigation-clear"><!-- IE6 --></div>

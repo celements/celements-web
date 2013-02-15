@@ -1,4 +1,6 @@
 Event.observe(window, 'load', startResizeObservers);
+var delayExec = null;
+var ieCount = 1;
 
 function startResizeObservers(event){
   Event.observe(window, 'resize', resizeFileBase);
@@ -8,10 +10,26 @@ function startResizeObservers(event){
   window.setTimeout("resizeFileBase()", 1200);
 }
 
-function resizeFileBase(){
+var resizeFileBase = function(delayed) {
+  if(delayed) {
+    delayExec = null;
+  }
+  resizeFileBase();
+}
+
+var resizeFileBase = function(){
   var fileBaseBox = $$('.celements3_filebase')[0];
   var filesBox = $('c2_ml_content');
   var scrollBox = filesBox.down('.c3_import_scrollable');
+  
+  var titleHeight = 0;
+  if($$('.c3_import_title') && ($$('.c3_import_title').length > 0)) {
+    $$('.c3_import_title').each(function(titleElem){
+	  titleHeight += titleElem.getHeight();
+	  titleHeight += parseInt(titleElem.getStyle('margin-top'));
+	  titleHeight += parseInt(titleElem.getStyle('margin-bottom'));
+	});   
+  }
   
   var uploadHeight = 0;
   if($$('.c3_filebase_upload') && ($$('.c3_filebase_upload').length > 0)) {
@@ -29,7 +47,7 @@ function resizeFileBase(){
       }
     });
   }
-  
+    
   var winHeight = 0;
   if(typeof(window.innerWidth) == 'number') {
     winHeight = window.innerHeight;
@@ -39,12 +57,31 @@ function resizeFileBase(){
     winHeight = document.body.clientHeight;
   }
   
-  var fileBaseBoxSize = winHeight - mainBorders;
+  var fileBaseBoxSize = winHeight - mainBorders - titleHeight;
   var filesBoxSize = fileBaseBoxSize - uploadHeight;
   var scrollableSize = filesBoxSize - siblingHeight;
   fileBaseBox.setStyle({ height: Math.max(50, fileBaseBoxSize) + "px" });
   filesBox.setStyle({ height: Math.max(50, filesBoxSize) + "px" });
-  scrollBox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
-//  alert(fileBaseBoxSize + " - " + filesBoxSize + " - " + scrollableSize);
-//  alert(fileBaseBox.getHeight() + " - " + filesBox.getHeight() + " - " + scrollBox.getHeight());
+  if(scrollBox){
+    scrollBox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
+    if (Prototype.Browser.IE && (ieCount > 0)) {
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('found IE browser. Starting delayed fileBaseResize.', ieCount);
+      }
+      startDelayed();
+      ieCount--;
+    }
+  } else {
+    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+      console.log('no scrollbox found. Starting delayed fileBaseResize.');
+    }
+    startDelayed();
+  }
+};
+
+var startDelayed = function() {
+  if(delayExec != null) {
+    window.clearTimeout(delayExec);
+  }
+  delayExec = resizeFileBase.delay(.5, true);
 }

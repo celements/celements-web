@@ -1,0 +1,76 @@
+#template("frameheader.vm")
+<div id="celements_attach" class="celements2_box">
+<div class="celements2_box_title">Attachments</div>
+<table cellpadding="0" cellspacing="0" border="0" class="celements2_table">
+<tr>
+  <th class="celements2_line preview" style="text-align:left;width:120px;">&nbsp;</th>
+  <th class="celements2_line filename" style="text-align:left;">$msg.get("filename")</th>
+  <th class="celements2_line size" style="text-align:left;">$msg.get("size")</th>
+  <th class="celements2_line delete" style="text-align:left;">&nbsp;</th> 
+</tr>
+#if($doc.attachmentList.size() > 0)
+#foreach ($attach in $doc.attachmentList)
+<tr>
+  <td class="celements2_line preview" style="text-align:left;">
+  #if ($attach.isImage())
+    <a href="$doc.getAttachmentURL($attach.filename,'download')"><img src="$doc.getAttachmentURL($attach.filename,'download')?celwidth=100&celheight=15" alt="" width="100" height="15" border="0" /></a>
+  #else
+    &nbsp;
+  #end
+  </td>
+  <td class="celements2_line filename" style="text-align:left;">
+        <a href="$doc.getAttachmentURL($attach.filename,'download')">$attach.filename</a>
+  </td>
+  <td class="celements2_line size" style="text-align:left;">
+    #set($filegroesse = $attach.filesize)
+    #set($filegroesse_type = "B")
+    #if($filegroesse > 1000)
+  	   #set($filegroesse = ($filegroesse/1000))
+      #set($filegroesse_type = "KB")
+    #end
+    #if($filegroesse > 1000)
+    	 #set($filegroesse = ($filegroesse/1000))
+      #set($filegroesse_type = "MB")
+    #end
+    $filegroesse $filegroesse_type
+  </td>
+  <td class="celements2_line delete" style="text-align:left;"><a href="$doc.getAttachmentURL("${attach.filename}", "delattachment")" onclick="return confirm('$msg.get("confirmdelattachment")');">$msg.get("delete")</a></td>
+</tr>
+#set( $counter = $counter + 1)
+#end
+#else
+<tr>
+<td colspan="4">No attachments.</td>
+</tr>
+#end
+</table>
+<br />
+
+<form action="$xwiki.getURL($doc.getFullName(), 'upload')" enctype="multipart/form-data" method="post">
+<script type="text/javascript">
+function update_filename(filename, field){
+  if(document.forms.update && document.forms.update[field])
+    document.forms.update[field].value = filename;
+  return false;
+}
+function updateName(form) {
+var fname = form.filepath.value.replace('_','-');
+if (fname=="") {
+  return false;
+}
+var i = fname.lastIndexOf('\\');
+if (i==-1)
+  i = fname.lastIndexOf('/');
+fname = fname.substring(i+1);
+form.filename.value = fname;
+return true;
+}
+</script>
+  <div class="celements2_box_title">Upload attachment</div>
+  <input type="hidden" name="xredirect" value="$doc.getURL('attach')" size="20" />    
+  <input type="hidden" name="filename" value="" size="20" />
+  <input type="file" name="filepath" value="" size="40"  />
+  <input type="submit" value="Upload" onclick="return updateName(this.form)" class="celements2_input_button"/>  
+  </form>
+</div>
+#template("framefooter.vm")

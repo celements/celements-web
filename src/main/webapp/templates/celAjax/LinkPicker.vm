@@ -80,7 +80,7 @@ $xwiki.includeForm("$cel_linkpicker_MenuName_Macro", false)
 #foreach($sp in $space.split(','))
 <div style="font:bold 11px Arial;margin:5px;margin-top:20px;">$adminMsg.get('cel_lpicker_menuLinksTitle'): $sp</div>
 <div style="position:relative;left:15px;background-image:url($celementsweb.getSkinFile(':celRes/dotted_line.gif'));background-repeat:repeat-y;margin-top:5px;">
-#set($language = $xwiki.getWebPreferenceFor('default_language', "$sp"))
+#set($language = $xwiki.getSpacePreferenceFor('default_language', "$sp"))
 ## use default-language because any menuItem must have a menuName
 ## in the default language
 #outputMenuItems('')
@@ -91,9 +91,9 @@ $xwiki.includeForm("$cel_linkpicker_MenuName_Macro", false)
 #foreach($sp in $space.split(','))
   #if("$!sp" != '')
     #if("$!xwql" == '')
-      #set ($xwql = "where doc.web='$sp'")
+      #set ($xwql = "where doc.space = '$sp'")
     #else
-      #set ($xwql = "$xwql or doc.web='$sp'")
+      #set ($xwql = "$xwql or doc.space = '$sp'")
     #end
   #end
 #end

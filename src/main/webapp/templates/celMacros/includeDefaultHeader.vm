@@ -6,7 +6,7 @@
 <title>##
 $celementsweb.getDocHeaderTitle($doc.fullName)##
 </title>
-$!xwiki.getWebPreference("meta")
+$!xwiki.getSpacePreference("meta")
 #if("$!charEncoding" == '')
   #set($charEncoding = "$xwiki.encoding")
 #end
@@ -22,12 +22,15 @@ $!xwiki.getWebPreference("meta")
 #elseif($xwiki.getSkinFile('skinRes/favicon.ico', true).contains('/resources/'))
 <link rel="shortcut icon" href="$xwiki.getSkinFile('skinRes/favicon.ico', true)" type="image/x-icon"/>
 #end
+## always load celements.css to prevent unequal behaviour if logged in or not
+$celementsweb.includeCSSPage(':celRes/celements2.css')
 $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
 $celementsweb.addExtJSfileOnce(':celJS/jquery.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/initCelements.js', 'file')
-#if($celementsweb.useImageAnimations())
 $celementsweb.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
+$celementsweb.addExtJSfileOnce(':celJS/validation.js')
+#if($celementsweb.useImageAnimations())
 $celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js')
 $celementsweb.addExtJSfileOnce(':celJS/highslide/highslide-full.min.js')
 $celementsweb.addExtJSfileOnce(':celJS/celanim/overlaySlide.js')

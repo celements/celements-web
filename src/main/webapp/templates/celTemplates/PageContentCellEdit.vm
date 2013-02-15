@@ -14,15 +14,6 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
 #end
 <div id="navigationCellEdit">
 <h1>Page Dependend Content Cell</h1>
-<a href="$xwiki.getURL($doc.getFullName(), 'cancel', $redirectStr)"##
- onclick="document.forms.edit.action=this.href;##
-  if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
-  document.forms.edit.submit(); return false;" >Cancel</a>
-<span>&nbsp;|&nbsp;</span>
-<a href="$xwiki.getURL($doc.getFullName(),'save', $redirectStr)"##
- onclick="document.forms.edit.action=this.href;##
- if (document.forms.edit.onsubmit) document.forms.edit.onsubmit();##
- document.forms.edit.submit(); return false;" >Save</a>
 <form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
     <input type="hidden" name="template" value="$!doc.getTemplate()" />
     <input type="hidden" name="xredirect" value="$!xredirect" />
@@ -36,6 +27,7 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
 #set($cel_editobj_externalForm = true)
 #set($cel_editobj_properties = 'space_name,is_inheritable')
 #set($cel_editobj_readonly_properties = '')
+#set($cel_editobj_dict_property_prefix = 'pdcCellEdit_')
 $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
   #else
   <p>Group-Cell: Inhalt wird nur bei Zellen ohne weitere Unter-Zellen berechnet.</p>

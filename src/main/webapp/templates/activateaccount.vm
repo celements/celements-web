@@ -1,6 +1,10 @@
 #if("$!request.get('xredirect')" == '')
+  #set($afterLoginLandingPage = "$!xwiki.getXWikiPreference('afterLoginLandingPage')")
+  #if("$!afterLoginLandingPage" == '')
+    #set($afterLoginLandingPage = "Content.login")
+  #end
   #set($url = "$!doc.getURL('view', 'xredirect=')")
-  #set($url = "${url}$xwiki.getURLEncoded($xwiki.getURL('Tools.Login','view','activated=1'))")
+  #set($url = "${url}$xwiki.getURLEncoded($xwiki.getURL($afterLoginLandingPage,'view','activated=1'))")
   #foreach($req in $request.getParameterNames())
     #set($url = "${url}&$req=$!request.get($req)")
   #end

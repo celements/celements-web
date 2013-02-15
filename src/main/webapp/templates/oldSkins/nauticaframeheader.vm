@@ -1,7 +1,7 @@
 ## set RTE width and height
 #set($tinyMCE_width = "$!{celementsweb.getPageType($page_type).getPageTypeProperties().getProperty('rte_width').getValue()}")
 #if("$!tinyMCE_width" == '')
-#set($tinyMCE_width = $xwiki.getWebPreference('editbox_width'))
+#set($tinyMCE_width = $xwiki.getSpacePreference('editbox_width'))
 #end
 #if("$!tinyMCE_width" == '')
 #set($tinyMCE_width = 545 + 15)
