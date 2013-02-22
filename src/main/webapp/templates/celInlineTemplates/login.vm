@@ -91,11 +91,7 @@
 <div class="buttons"><input type="submit" class="button" value="$msg.get("login")"/></div>
 #passRecoveryLink()
 #xwikimessageboxend()
-<script type="text/javascript">
-//<![CDATA[
-  document.forms.loginForm.j_username.focus();
-//]]>
-</script>
+$celementsweb.addExtJSfileOnce(':celJS/login.js', 'file')
 #elseif(("$!celementsloginform" != '') && ($xwiki.exists("$celementsloginform")))
 $xwiki.includeForm("$celementsloginform", false)
 #else ## celementslogin
