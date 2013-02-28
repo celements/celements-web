@@ -680,3 +680,11 @@ body #sitecontainer .cel_content_part table th,
 body #sitecontainer .cel_content_part table td {
 	text-align: left;
 }
+
+/* Import Manager */
+.cel_contentTab .editGallery_box input[type="submit"],
+#cel_overlaybody #check_none,
+#cel_overlaybody #check_all,
+#cel_overlaybody #c3_import_button {
+	cursor: pointer;
+}
