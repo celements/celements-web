@@ -97,26 +97,47 @@ var celanimLoadSWFplayer = function(playerLink) {
   if (playerLink && !playerLink.hasClassName('celanim_loaded')) {
     playerLink.addClassName('celanim_loaded');
     var movieLink = getCelAnimSWFmovieLink(playerLink.href);
-    //TODO replace swf-object creation with http://code.google.com/p/swfobject/
-    //--> it solves issues at least with IE7!!!
-//    playerContainer.update(new Element('span', { 'id' : 'celanimFlowPlayer_object' }));
-//    swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%", "100%", "9.0.0", "expressInstall.swf");
-    var objectElem = new Element('object', {
-      'type' : 'application/x-shockwave-flash',
-      'data' : movieLink,
-      'style' : 'height: 100%; width: 100%;'
-      });
-    objectElem.insert(new Element('param', { 'name' : 'movie', 'value' : movieLink}));
-    objectElem.insert(new Element('param', { 'name' : 'allowScriptAccess',
-      'value' : 'sameDomain'}));
-    objectElem.insert(new Element('param', { 'name' : 'quality', 'value' : 'best'}));
-    objectElem.insert(new Element('param', { 'name' : 'scale', 'value' : 'showall'}));
-//      wmode=opaque --> prevent flash appear before overlay elements
-//      Flash movies can appear on top of Overlay instances in IE and Gecko-based browsers.
-//      To fix this problem, set the "wmode" of the Flash movie to either "transparent" or "opaque".
-//       For more information see the Adobe TechNote http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_15523 on this issue.
-    objectElem.insert(new Element('param', { 'name' : 'wmode', 'value' : 'opaque'}));
-    playerLink.update(objectElem);
+    if (swfobject.hasFlashPlayerVersion("9.0.0")) {
+      //FP; 28.2.2013; replaced swf-object creation with http://code.google.com/p/swfobject/
+      //--> it solves issues at least with IE7!!!
+//      playerContainer.update(new Element('span', { 'id' : 'celanimFlowPlayer_object' }));
+//      swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%", "100%", "9.0.0", "expressInstall.swf");
+      playerLink.update(new Element('span', { 'id' : 'celanimFlowPlayer_object' }));
+//    var objectElem = new Element('object', {
+//    'type' : 'application/x-shockwave-flash',
+//    'data' : movieLink,
+//    'style' : 'height: 100%; width: 100%;'
+//    });
+  //objectElem.insert(new Element('param', { 'name' : 'movie', 'value' : movieLink}));
+  //objectElem.insert(new Element('param', { 'name' : 'allowScriptAccess',
+//    'value' : 'sameDomain'}));
+  //objectElem.insert(new Element('param', { 'name' : 'quality', 'value' : 'best'}));
+  //objectElem.insert(new Element('param', { 'name' : 'scale', 'value' : 'showall'}));
+      var params = {};
+      params['movie'] = movieLink;
+      params['allowScriptAccess'] = 'sameDomain';
+      params['quality'] = 'best';
+      params['scale'] = 'showall';
+//    wmode=opaque --> prevent flash appear before overlay elements
+//    Flash movies can appear on top of Overlay instances in IE and Gecko-based browsers.
+//    To fix this problem, set the "wmode" of the Flash movie to either "transparent" or "opaque".
+//     For more information see the Adobe TechNote http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_15523 on this issue.
+  //objectElem.insert(new Element('param', { 'name' : 'wmode', 'value' : 'opaque'}));
+      params['wmode'] = 'opaque';
+      flashvars = {};
+      flashvars['allowScriptAccess'] = 'sameDomain';
+      flashvars['quality'] = 'best';
+      flashvars['scale'] = 'showall';
+      flashvars['wmode'] = 'opaque';
+      // more details on embedSWF function on http://code.google.com/p/swfobject/wiki/api
+      swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%", "100%", "9.0.0",
+          "expressInstall.swf", flashvars, params);
+//      playerLink.update(objectElem);
+      playerLink.fire('celanim_player:flashplayerloaded', { 'movielink' : movieLink });
+    }
+    else {
+      playerLink.fire('celanim_player:noflashplayerfound', { 'movielink' : movieLink });
+    }
   }
 };
 
