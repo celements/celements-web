@@ -1,1 +1,3 @@
-var $j = jQuery.noConflict();
+(function(window, undefined) {
+  $j = jQuery.noConflict();
+})(window);
