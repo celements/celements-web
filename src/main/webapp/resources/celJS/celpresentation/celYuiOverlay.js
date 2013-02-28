@@ -55,10 +55,12 @@ CELEMENTS.presentation.getOverlayObj = function() {
         constraintoviewport: true
       },
       _dialogConfig : undefined,
+      _bindOpenHandler : undefined;
 
       _init : function(configObj) {
         var _me = this;
-        _me._dialogConfig = $H(_me._defaultConfig).merge(configObj).toObject(); 
+        _me._dialogConfig = $H(_me._defaultConfig).merge(configObj).toObject();
+        _me._bindOpenHandler = _me._openHandler.bind(_me);
       },
 
       getOverlayDialog : function(width) {
@@ -99,9 +101,75 @@ CELEMENTS.presentation.getOverlayObj = function() {
         dialog.render();
         dialog.show();
         $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
-      }
+      },
 
-      //TODO add methods for presentation overlay with navigation
+      _openHandler : function(event) {
+        var _me = this;
+        event.stop();
+        var link = event.findElement();
+        var width = parseInt(link.id.split(':')[4]) + 5;
+        var height = link.id.split(':')[5];
+        var overlayURL = link.href;
+        var openConfig = {
+            'link' : link,
+            'overlayURL' : overlayURL,
+            'width' : width,
+            'height' : height
+          };
+        var openDialogEvent = $(document.body).fire('cel_yuiOverlay:openDialog',
+            openConfig);
+        if (!openDialogEvent.stopped) {
+          _me._defaultOpenDialog(openConfig);
+        }
+      },
+
+      registerOpenHandler : function(openCssSelector) {
+        var _me = this;
+        openCssSelector = openCssSelector || '.cel_yuiOverlay';
+        $$(openCssSelector).each(function(elem){
+          elem.stopObserving('click', _me._bindOpenHandler);
+          elem.observe('click', _me._bindOpenHandler);
+        });
+      },
+
+      _defaultOpenDialog : function(openConfig) {
+        var _me = this;
+        var dialogWidth = openConfig.width || '720';
+        var dialog = _me.getOverlayDialog(dialogWidth + 'px');
+        var height = openConfig.height;
+        var dialogHeight = '';
+        if ((height != undefined) && (height != '')) {
+          dialogHeight = 'style="height:' + height + "px;'";
+        }
+        dialog.setHeader('&nbsp;'); 
+        dialog.setBody('<div id="yuiOverlayContainer"' + dialogHeight
+            + '><img style="margin-left: auto; margin-right:auto;"'
+            + ' src="/file/resources/celRes/ajax-loader.gif" /></div>'); 
+        dialog.render();
+        dialog.show();
+        $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
+        var bodyElem = $$('body')[0];
+        bodyElem.setStyle({ 'overflow' : 'hidden' });
+        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
+        $('yuiOverlayContainer').fire('cel_yuiOverlay:afterShowDialog');
+        var loadContentEvent = $('yuiOverlayContainer').fire(
+            'cel_yuiOverlay:loadFirstContent', openConfig);
+        if (!loadContentEvent.stopped) {
+          new Ajax.Request(openConfig.overlayURL, {
+            method: 'post',
+            parameters: {
+              'xpage' : 'celements_ajax',
+              'ajax_mode' : 'pageTypeWithLayout',
+              'ajax' : '1'
+            },
+            onSuccess: function(transport) {
+              var yuiOverlayContainer = $('yuiOverlayContainer');
+              yuiOverlayContainer.update(transport.responseText);
+              yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
+            }
+          });
+        }
+      }
 
   };
 })();
