@@ -51,7 +51,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         zindex: 101, 
         modal:true,
         monitorresize:false,
-        icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
+//        icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
+        icon: null, 
         constraintoviewport: true
       },
       _dialogConfig : undefined,
