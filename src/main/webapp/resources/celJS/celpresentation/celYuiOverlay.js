@@ -90,6 +90,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         } else {
           _me._overlayDialog.cfg.setProperty('width', _me._dialogConfig.width);
         }
+        console.log('getOverlayDialog: ', _me._dialogConfig.width,
+            _me._dialogConfig.height);
         var dialogHeight = '';
         if ((_me._dialogConfig.height != undefined) && (_me._dialogConfig.height != '')) {
           dialogHeight = 'style="height:' + _me._dialogConfig.height + ";'";
