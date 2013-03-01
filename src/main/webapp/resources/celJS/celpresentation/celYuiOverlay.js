@@ -143,6 +143,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       },
 
       openCelPageInOverlay : function(openConfig) {
+        var _me = this;
         if (typeof openConfig === 'string') {
           openConfig = {
             'overlayURL' : openConfig  
