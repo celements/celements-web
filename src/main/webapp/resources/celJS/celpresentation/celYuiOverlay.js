@@ -120,6 +120,25 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
       },
 
+      openCelPageInOverlay : function(openConfig) {
+        if (typeof openConfig === 'string') {
+          openConfig = {
+            'overlayURL' : overlayURL  
+          };
+        }
+        if (openConfig.overlayURL != '') {
+          var openDialogEvent = $(document.body).fire('cel_yuiOverlay:openDialog',
+              openConfig);
+          if (!openDialogEvent.stopped) {
+            _me._defaultOpenDialog(openConfig);
+          }
+        } else {
+          if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+            console.error('Calling overlay without overlayURL!');
+          }
+        }
+      },
+
       _openHandler : function(event) {
         var _me = this;
         event.stop();
@@ -133,11 +152,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
             'width' : width,
             'height' : height
           };
-        var openDialogEvent = $(document.body).fire('cel_yuiOverlay:openDialog',
-            openConfig);
-        if (!openDialogEvent.stopped) {
-          _me._defaultOpenDialog(openConfig);
-        }
+        _me.openCelPageInOverlay(openConfig);
       },
 
       registerOpenHandler : function(openCssSelector) {
