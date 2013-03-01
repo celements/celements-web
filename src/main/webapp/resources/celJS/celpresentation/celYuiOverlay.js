@@ -66,7 +66,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       getOverlayDialog : function(width) {
         var _me = this;
-        var dialogWidth = width || "300px";
+        var dialogWidth = width || _me._dialogConfig || _me._defaultConfig;
         if(!_me.__overlayDialog) {
           _me._dialogConfig.width = dialogWidth;
           _me._overlayDialog = new YAHOO.widget.SimpleDialog("modal dialog",
@@ -85,10 +85,26 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           ).addClassName('cel-YuiOverlay');
         $(document.body).insert(yuiSamSkinDiv);
         _me._overlayDialog.render(yuiSamSkinDiv);
-        _me._overlayDialog.setBody('<img style="margin-left: auto; margin-right:auto;"'
-            + ' src="/skin/resources/celRes/ajax-loader.gif" />');
+        _me._overlayDialog.setBody('<img style="display:block; margin-left: auto;'
+            + 'margin-right:auto;" src="/skin/resources/celRes/ajax-loader.gif" />');
         $(document.body).fire('cel_yuiOverlay:afterRenderDialog');
         return _me._overlayDialog;
+      },
+
+      open: function() {
+        var _me = this;
+        var dialog = _me.getOverlayDialog();
+        dialog.render();
+        dialog.show();
+        $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
+      },
+
+      close: function() {
+        var _me = this;
+        var dialog = _me.getOverlayDialog();
+        dialog.hide;
+        //destroy to prevent problems after following orientation changes on iPhone/iPad
+        dialog.destroy();
       },
 
       showProgressDialog : function(headerText) {
