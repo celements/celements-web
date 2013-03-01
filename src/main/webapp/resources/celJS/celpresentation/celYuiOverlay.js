@@ -60,15 +60,22 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _init : function(configObj) {
         var _me = this;
         configObj = configObj || {};
-        _me._dialogConfig = $H(_me._defaultConfig).merge(configObj).toObject();
+        _me.updateOpenConfig(configObj);
         _me._bindOpenHandler = _me._openHandler.bind(_me);
       },
 
-      getOverlayDialog : function(width) {
+      getWidth : function() {
+        return _me._dialogConfig.width || _me._defaultConfig.width;
+      },
+
+      getHeight : function() {
+        return _me._dialogConfig.height || _me._defaultConfig.height;
+      },
+
+      getOverlayDialog : function(openConfig) {
         var _me = this;
-        var dialogWidth = width || _me._dialogConfig || _me._defaultConfig;
+        _me.updateOpenConfig(openConfig);
         if(!_me.__overlayDialog) {
-          _me._dialogConfig.width = dialogWidth;
           _me._overlayDialog = new YAHOO.widget.SimpleDialog("modal dialog",
               _me._dialogConfig);
           _me._overlayDialog.hideEvent.subscribe(function() {
@@ -77,18 +84,29 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
             bodyElem.fire('cel_yuiOverlay:hideEvent');
           });
         } else {
-          _me._overlayDialog.cfg.setProperty('width', dialogWidth);
+          _me._overlayDialog.cfg.setProperty('width', _me._dialogConfig.width);
         }
+        var dialogHeight = '';
+        if ((_me._dialogConfig.height != undefined) && (_me._dialogConfig.height != '')) {
+          dialogHeight = 'style="height:' + _me._dialogConfig.height + ";'";
+        }
+        dialog.setHeader('&nbsp;'); 
+        _me._overlayDialog.setBody('<div id="yuiOverlayContainer"' + dialogHeight
+            + '><img style="display:block; margin-left: auto; margin-right:auto;"'
+            + ' src="/file/resources/celRes/ajax-loader.gif" /></div>'); 
         //add skin-div to get default yui-skin-sam layouting for the dialog
         var yuiSamSkinDiv = new Element('div'
           ).addClassName('yui-skin-sam'
           ).addClassName('cel-YuiOverlay');
         $(document.body).insert(yuiSamSkinDiv);
         _me._overlayDialog.render(yuiSamSkinDiv);
-        _me._overlayDialog.setBody('<img style="display:block; margin-left: auto;'
-            + 'margin-right:auto;" src="/skin/resources/celRes/ajax-loader.gif" />');
         $(document.body).fire('cel_yuiOverlay:afterRenderDialog');
         return _me._overlayDialog;
+      },
+
+      updateOpenConfig : function(configObj) {
+        var _me = this;
+        _me._dialogConfig = $H(_me._defaultConfig).merge(configObj).toObject();
       },
 
       open: function() {
@@ -97,6 +115,10 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         dialog.render();
         dialog.show();
         $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
+        var bodyElem = $$('body')[0];
+        bodyElem.setStyle({ 'overflow' : 'hidden' });
+        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
+        $('yuiOverlayContainer').fire('cel_yuiOverlay:afterShowDialog');
       },
 
       close: function() {
@@ -149,8 +171,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var openConfig = {
             'link' : link,
             'overlayURL' : overlayURL,
-            'width' : width,
-            'height' : height
+            'width' : width + 'px',
+            'height' : height + 'px'
           };
         _me.openCelPageInOverlay(openConfig);
       },
@@ -166,20 +188,9 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       _defaultOpenDialog : function(openConfig) {
         var _me = this;
-        var dialogWidth = openConfig.width || '720';
-        var dialog = _me.getOverlayDialog(dialogWidth + 'px');
-        var height = openConfig.height;
-        var dialogHeight = '';
-        if ((height != undefined) && (height != '')) {
-          dialogHeight = 'style="height:' + height + "px;'";
-        }
-        dialog.setHeader('&nbsp;'); 
-        dialog.setBody('<div id="yuiOverlayContainer"' + dialogHeight
-            + '><img style="margin-left: auto; margin-right:auto;"'
-            + ' src="/file/resources/celRes/ajax-loader.gif" /></div>'); 
-        dialog.render();
-        dialog.show();
-        $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
+        openConfig['width'] = openConfig.width || '720px';
+        _me.updateOpenConfig(openConfig);
+        var dialog = _me.open(openConfig);
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'hidden' });
         bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
