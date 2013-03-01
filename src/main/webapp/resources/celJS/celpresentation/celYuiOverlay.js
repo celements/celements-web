@@ -79,7 +79,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       getOverlayDialog : function(openConfig) {
         var _me = this;
         _me.updateOpenConfig(openConfig);
-        if(!_me.__overlayDialog) {
+        if(!_me._overlayDialog) {
           _me._overlayDialog = new YAHOO.widget.SimpleDialog("modal dialog",
               _me._dialogConfig);
           _me._overlayDialog.hideEvent.subscribe(function() {
@@ -196,19 +196,12 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         });
       },
 
-      _defaultOpenDialog : function(openConfig) {
+      _loadFirstContent : function() {
         var _me = this;
-        openConfig['width'] = openConfig.width || '720px';
-        _me.updateOpenConfig(openConfig);
-        var dialog = _me.open(openConfig);
-        var bodyElem = $$('body')[0];
-        bodyElem.setStyle({ 'overflow' : 'hidden' });
-        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
-        $('yuiOverlayContainer').fire('cel_yuiOverlay:afterShowDialog');
         var loadContentEvent = $('yuiOverlayContainer').fire(
-            'cel_yuiOverlay:loadFirstContent', openConfig);
+            'cel_yuiOverlay:loadFirstContent', _me._dialogConfig);
         if (!loadContentEvent.stopped) {
-          new Ajax.Request(openConfig.overlayURL, {
+          new Ajax.Request(_me._dialogConfig.overlayURL, {
             method: 'post',
             parameters: {
               'xpage' : 'celements_ajax',
@@ -224,6 +217,18 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         } else {
           yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
         }
+      },
+
+      _defaultOpenDialog : function(openConfig) {
+        var _me = this;
+        openConfig['width'] = openConfig.width || '720px';
+        _me.updateOpenConfig(openConfig);
+        var dialog = _me.open();
+        var bodyElem = $$('body')[0];
+        bodyElem.setStyle({ 'overflow' : 'hidden' });
+        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
+        $('yuiOverlayContainer').fire('cel_yuiOverlay:afterShowDialog');
+        _me._loadFirstContent();
       }
 
   };
