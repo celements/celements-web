@@ -30,9 +30,9 @@ if(typeof CELEMENTS.presentation=="undefined"){CELEMENTS.presentation={};};
 
 var cpoInstance = null;
 
-CELEMENTS.presentation.getOverlayObj = function() {
+CELEMENTS.presentation.getOverlayObj = function(configObj) {
   if (!cpoInstance) {
-    cpoInstance = new CELEMENTS.presentation.Overlay();
+    cpoInstance = new CELEMENTS.presentation.Overlay(configObj);
   }
   return cpoInstance;
 };
@@ -48,17 +48,18 @@ CELEMENTS.presentation.getOverlayObj = function() {
         visible: false, 
         draggable: false, 
         close: false, 
-        zindex: 4, 
+        zindex: 101, 
         modal:true,
         monitorresize:false,
         icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
         constraintoviewport: true
       },
       _dialogConfig : undefined,
-      _bindOpenHandler : undefined;
+      _bindOpenHandler : undefined,
 
       _init : function(configObj) {
         var _me = this;
+        configObj = configObj || {};
         _me._dialogConfig = $H(_me._defaultConfig).merge(configObj).toObject();
         _me._bindOpenHandler = _me._openHandler.bind(_me);
       },
