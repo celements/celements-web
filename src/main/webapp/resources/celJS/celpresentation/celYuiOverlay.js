@@ -33,6 +33,9 @@ var cpoInstance = null;
 CELEMENTS.presentation.getOverlayObj = function(configObj) {
   if (!cpoInstance) {
     cpoInstance = new CELEMENTS.presentation.Overlay(configObj);
+  } else {
+    configObj = configObj || {};
+    cpoInstance.updateOpenConfig(configObj);
   }
   return cpoInstance;
 };
