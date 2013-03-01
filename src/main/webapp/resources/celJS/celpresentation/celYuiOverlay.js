@@ -128,6 +128,9 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         dialog.hide;
         //destroy to prevent problems after following orientation changes on iPhone/iPad
         dialog.destroy();
+        if ($('modal dialog_mask')) {
+          $('modal dialog_mask').remove();
+        }
       },
 
       showProgressDialog : function(headerText) {
