@@ -112,7 +112,9 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       updateOpenConfig : function(configObj) {
         var _me = this;
-        _me._dialogConfig = $H(_me._defaultConfig).merge(configObj).toObject();
+        _me._dialogConfig = $H(_me._defaultConfig).merge(_me._dialogConfig
+            ).merge(configObj).toObject();
+        console.log('updateOpenConfig: ', configObj, _me._dialogConfig);
       },
 
       open: function() {
