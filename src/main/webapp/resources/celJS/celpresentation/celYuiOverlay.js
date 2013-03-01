@@ -90,7 +90,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         if ((_me._dialogConfig.height != undefined) && (_me._dialogConfig.height != '')) {
           dialogHeight = 'style="height:' + _me._dialogConfig.height + ";'";
         }
-        dialog.setHeader('&nbsp;'); 
+        _me._overlayDialog.setHeader('&nbsp;'); 
         _me._overlayDialog.setBody('<div id="yuiOverlayContainer"' + dialogHeight
             + '><img style="display:block; margin-left: auto; margin-right:auto;"'
             + ' src="/file/resources/celRes/ajax-loader.gif" /></div>'); 
