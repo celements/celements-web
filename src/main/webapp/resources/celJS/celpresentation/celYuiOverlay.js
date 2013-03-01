@@ -218,10 +218,10 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
             onSuccess: function(transport) {
               var yuiOverlayContainer = $('yuiOverlayContainer');
               yuiOverlayContainer.update(transport.responseText);
-              yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
             }
           });
         }
+        yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
       }
 
   };
