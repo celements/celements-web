@@ -18,7 +18,12 @@ $pdfdoc.use("XWiki.PDFClass")
     #set($pageDocRef = $services.model.resolveDocument($page))
 ##   #set($pageDoc = $xwiki.getDocument($page))
 ##   $pageDoc.getRenderedContent()
+#if($services.celementsweb.isAppScriptOverwriteDocRef($pageDocRef))
+#set($celAppScript = $services.celementsweb.getScriptNameFromDocRef($pageDocRef))
+#parse('celInlineTemplates/app.vm')
+#else
  $services.celementsweb.renderCelementsDocument($pageDocRef)
+#end
    #if($request.includechilds)
     #set($clevel = $util.parseInt($request.includechilds))
     #includeChilds($page  $withPageBreaks)
@@ -29,8 +34,13 @@ $pdfdoc.use("XWiki.PDFClass")
  #end
 #else
 <div id="xwikicontent">
+#if($services.celementsweb.isAppScriptRequest())
+#set($celAppScript = $services.celementsweb.getScriptNameFromURL())
+#parse('celInlineTemplates/app.vm')
+#else
 ##$cdoc.getRenderedContent()
  $services.celementsweb.renderCelementsDocument($cdoc.getDocumentReference())
+#end
 </div>
  #if($request.includechilds)
   #set($clevel = $util.parseInt($request.includechilds))
