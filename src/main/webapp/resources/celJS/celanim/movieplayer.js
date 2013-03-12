@@ -134,9 +134,32 @@ var celanimLoadSWFplayer = function(playerLink) {
           "expressInstall.swf", flashvars, params);
 //      playerLink.update(objectElem);
       playerLink.fire('celanim_player:flashplayerloaded', { 'movielink' : movieLink });
-    }
-    else {
-      playerLink.fire('celanim_player:noflashplayerfound', { 'movielink' : movieLink });
+    } else {
+      var noFlashEv = playerLink.fire('celanim_player:noflashplayerfound', {
+        'movielink' : movieLink
+      });
+      if (!noFlashEv.stopped) {
+        //IMPORTANT: this solution only works on iPhones / iPads
+        var objectElem = new Element('object', {
+          'type' : 'application/x-shockwave-flash',
+          'data' : movieLink,
+          'style' : 'height: 100%; width: 100%;'
+          });
+        objectElem.insert(new Element('param', { 'name' : 'movie', 'value' : movieLink}));
+        objectElem.insert(new Element('param', { 'name' : 'allowScriptAccess',
+          'value' : 'sameDomain'}));
+        objectElem.insert(new Element('param', { 'name' : 'quality', 'value' : 'best'}));
+        objectElem.insert(new Element('param', { 'name' : 'scale', 'value' : 'showall'}));
+  //        wmode=opaque --> prevent flash appear before overlay elements
+  //        Flash movies can appear on top of Overlay instances in IE and Gecko-based browsers.
+  //        To fix this problem, set the "wmode" of the Flash movie to either "transparent" or "opaque".
+  //         For more information see the Adobe TechNote http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_15523 on this issue.
+        objectElem.insert(new Element('param', { 'name' : 'wmode', 'value' : 'opaque'}));
+        playerLink.update(objectElem);
+        playerLink.fire('celanim_player:replacementForFlashloaded', {
+          'movielink' : movieLink
+        });
+      }
     }
   }
 };
