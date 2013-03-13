@@ -136,6 +136,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         if ($('modal dialog_mask')) {
           $('modal dialog_mask').remove();
         }
+        _me._overlayDialog = null;
       },
 
       showProgressDialog : function(headerText) {
