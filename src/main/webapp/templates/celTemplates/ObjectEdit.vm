@@ -215,11 +215,13 @@ $displayStr
 </dd>
 #if($cel_embedded_editobj)
 </dl>
+<div class="editblockclear"><!-- IE6 --></div>
 </div>
 #end
 #end
 #if(!$cel_embedded_editobj)
 </dl>
+<div class="editblockclear"><!-- IE6 --></div>
 #end
 #if($cel_editobj_hasObjRemoveLink)
 #if($adminMsg.get('cel_objectedit_addsameobject') != 'cel_objectedit_addsameobject')
