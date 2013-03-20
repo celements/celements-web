@@ -24,7 +24,31 @@
     #end
     </p>
     ##end: checkClasses
+    ##check lucene queue
+    <p>
+    <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=true")">
+        Check Lucene Queue
+    </a>
+    #if("$!request.checkLuceneQueue" == 'true')
+      <br/>
+      Queue Size: $xwiki.lucene.getQueueSize()<br/>
+      Lucene Doc Count: $xwiki.lucene.getLuceneDocCount()
+      <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=rebuildNow")">
+        Rebuild complete index now
+      </a>
+    #elseif("$!request.checkLuceneQueue" == 'rebuildNow')
+      #set($result = $xwiki.lucene.rebuildIndex())
+      #if($result == -1)
+        You are missing Admin Rights!
+      #elseif($result == -2)
+        Rebuild already running!
+      #else
+        got result = $result -&gt; assuming that rebuild started...
+      #end
+    #end
+    </p>
+    ##end: check lucene queue
   </div>
 #else
-You need admin rights to view the mainenance helper.
+You need admin rights to view the maintenance helper.
 #end
