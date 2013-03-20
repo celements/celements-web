@@ -37,6 +37,7 @@
         Rebuild complete index now
       </a>
     #elseif("$!request.checkLuceneQueue" == 'rebuildNow')
+      <br/>
       #set($result = $xwiki.lucene.rebuildIndex())
       #if($result == -1)
         You are missing Admin Rights!
