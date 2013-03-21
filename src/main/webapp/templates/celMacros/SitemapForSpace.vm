@@ -11,13 +11,13 @@
 #set($defaultParams = "${defaultParams}&hasLink=$!{request.get('hasLink')}")
 #end
 #if($includeSpaceNav)
-#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('spaceNav')}")
+#set($defaultParams = "${defaultParams}&spaceNav=$!{request.get('spaceNav')}")
 #end
 #if($showOutsideStructure)
-#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('showOutStruct')}")
+#set($defaultParams = "${defaultParams}&showOutStruct=$!{request.get('showOutStruct')}")
 #end
 #if($forceAllSpaces)
-#set($defaultParams = "${defaultParams}&hasLink=$!{request.get('forceAllSpaces')}")
+#set($defaultParams = "${defaultParams}&forceAllSpaces=$!{request.get('forceAllSpaces')}")
 #end
 #end  ## end getDefaultParams macros
 #set($hasSpaceRestriction = ("$!request.space" != ''))
