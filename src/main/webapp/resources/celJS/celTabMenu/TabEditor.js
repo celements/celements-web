@@ -589,7 +589,8 @@ TE.prototype = {
    document.forms[formId].select('textarea.mceEditor').each(function(formfield) {
    if (tinyMCE && tinyMCE.get(formfield.id)) {
        if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-         console.debug('updateTinyMCETextAreas: ', formfield.name, tinyMCE.get(formfield.id).getContent());
+         console.debug('updateTinyMCETextAreas: ', formfield.name,
+             tinyMCE.get(formfield.id).getContent());
        }
        formfield.value = tinyMCE.get(formfield.id).getContent();
    }
@@ -608,7 +609,10 @@ TE.prototype = {
    var formId = fieldElem.up('form').id;
    var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
    if (fieldElem.hasClassName('mceEditor') && tinyMCE && tinyMCE.get(fieldElem.id)) {
-     return tinyMCE.get(fieldElem.id).isDirty();
+     //FIXME sometimes isDirty from tinyMCE is wrong... thus we compare the .getContent
+     //FIXME with the editorFormsInitialValues instead.
+//     return tinyMCE.get(fieldElem.id).isDirty();
+     return (elementsValues.get(fieldElem.name) != tinyMCE.get(fieldElem.id).getContent());
    } else if (!fieldElem.hasClassName('celIgnoreDirty')) {
      var isInputElem = (fieldElem.tagName.toLowerCase() == 'input');
      var elemValue = fieldElem.value;
