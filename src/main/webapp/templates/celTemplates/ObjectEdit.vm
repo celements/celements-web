@@ -39,6 +39,7 @@
 #set($cel_editobj_title = $adminMsg.get('cel_tm_editobj_title'))
 #end
 #set($hasCustomClass = ($cel_editobj_classname && (!$cel_editobj_classname.trim().equals(""))))
+#set($hasCustomObjectList = ($cel_editobj_objects && ("$!cel_editobj_objects" != '') && ($cel_editobj_objects.size() > 0)))
 #set($hasCustomObject = ($hasCustomClass && $cel_editobj_nb && (!$cel_editobj_nb.trim().equals(""))))
 #set($hasCustomField = ($hasCustomClass && ("$!{cel_editobj_properties.trim()}" != "")))
 <!-- cel_editobj_classname : $cel_editobj_classname -->
@@ -109,6 +110,10 @@
 #end
 #set($first = 1)
 #set($nb = $cel_editobj_doc.getObjectNumbers("${class.name}"))
+#if($hasCustomObjectList)
+#set($objects = $cel_editobj_objects)
+#set($cel_editobj_objects = '')
+#else
 #if($hasCustomObject)
 #set($object = $cel_editobj_doc.getObject($class.name, $util.parseInt("$cel_editobj_nb")))
 #if($object)
@@ -125,6 +130,7 @@
 #set($objects = $util.reverseList($objects))
 #end
 #end
+#end ## #if($cel_editobj_objects && ("$!cel_editobj_objects" != ''))
 #set($hasobjs = false)
 #set($cel_editobj_obj_count = 0)
 #foreach($obj in $objects)
