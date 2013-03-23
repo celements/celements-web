@@ -71,7 +71,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>1.8-SNAPSHOT</version>
+      <version>1.8</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -112,7 +112,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.49-SNAPSHOT</version>
+      <version>1.49</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -132,7 +132,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>xwiki-platform-search-lucene</artifactId>
-      <version>2.2-SNAPSHOT</version>
+      <version>2.2</version>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
