@@ -36,7 +36,7 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
 #set($cel_editobj_externalForm = true)
 #set($cel_editobj_properties = 'from_hierarchy_level,to_hierarchy_level')
 #set($cel_editobj_properties = "${cel_editobj_properties},show_inactive_to_level,menu_part")
-#set($cel_editobj_properties = "${cel_editobj_properties},data_type,menu_space")
+#set($cel_editobj_properties = "${cel_editobj_properties},menu_space")
 #set($cel_editobj_readonly_properties = '')
 $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
  <select name="Celements2.NavigationConfigClass_${cel_editobj_nb}_data_type" size="1">
