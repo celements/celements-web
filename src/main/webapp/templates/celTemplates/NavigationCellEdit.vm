@@ -39,7 +39,7 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
 #set($cel_editobj_properties = "${cel_editobj_properties},data_type,menu_space")
 #set($cel_editobj_readonly_properties = '')
 $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
- <select name="NavigationConfigClass_${cel_editobj_nb}_data_type" size="1">
+ <select name="Celements2.NavigationConfigClass_${cel_editobj_nb}_data_type" size="1">
  #set($allAvailableDataTypes = [])
  #set($!devNull = $allAvailableDataTypes.add({'key' : '', 'label' : 'Page Menu'}))
  #set($!devNull = $allAvailableDataTypes.add({'key' : 'languages', 'label' : 'Language Menu'}))
