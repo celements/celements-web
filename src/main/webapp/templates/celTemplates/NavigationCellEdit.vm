@@ -29,6 +29,7 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
     <input type="hidden" name="language" value="$!tdoc.language" />
   #if($celementsweb.getSubMenuItemsForParent($doc.getFullName(), $doc.getSpace()).size() == 0)
     <div id="editablecode_container">
+#set($cel_editobj_dict_prefix = 'cel_navcell_edit_' )
 #set($cel_embedded_editobj = true)
 #set($cel_editobj_classname = "Celements2.NavigationConfigClass")
 #set($cel_editobj_nb = $cellObj.getNumber())
@@ -39,18 +40,41 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
 #set($cel_editobj_properties = "${cel_editobj_properties},menu_space")
 #set($cel_editobj_readonly_properties = '')
 $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
+<div class="xwikieditcontent">
+<div class="xwikiobjects accordion">
+      <div class="editblock editObjField_Celements2.NavigationConfigClass_cm_css_class">
+<dl>
+<!-- prop_dict_key not found : ${cel_editobj_dict_property_prefix}cm_css_class -->
+<dt class="label"><label for="Celements2.NavigationConfigClass_0_cm_css_class">$adminMsg.get('cel_navcell_edit_data_type')</label></dt>
+<dd>
  <select name="Celements2.NavigationConfigClass_${cel_editobj_nb}_data_type" size="1">
  #set($allAvailableDataTypes = [])
  #set($!devNull = $allAvailableDataTypes.add({'key' : '', 'label' : 'Page Menu'}))
  #set($!devNull = $allAvailableDataTypes.add({'key' : 'languages', 'label' : 'Language Menu'}))
  #foreach($dataType in $allAvailableDataTypes)
    <option value="$dataType.get('key')"##
-     #if("$dataType.get('key')" == "$!context.getUser()")
+     #if("$dataType.get('key')" == "$!cellObj.getProperty('data_type').getValue()")
        selected="selected"##
      #end
    >$dataType.get('label')</option>
  #end
  </select>
+  </dd>
+</dl>
+<div class="editblockclear"><!-- IE6 --></div>
+</div>
+<div class="editblock editObjField_Celements2.NavigationConfigClass_layout_type">
+<dl>
+<!-- prop_dict_key not found : ${cel_editobj_dict_property_prefix}layout_type -->
+<dt class="label"><label for="Celements2.NavigationConfigClass_0_layout_type">Navigation Layout Type (empty for html list)</label></dt>
+<dd>
+       <input size="30" id="Celements2.NavigationConfigClass_0_layout_type" value="" name="Celements2.NavigationConfigClass_0_layout_type" type="text">
+  </dd>
+</dl>
+<div class="editblockclear"><!-- IE6 --></div>
+</div>
+</div>
+</div>
 <h2>Advanced Settings</h2>
 #set($cel_embedded_editobj = true)
 #set($cel_editobj_classname = "Celements2.NavigationConfigClass")
