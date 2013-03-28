@@ -6,7 +6,9 @@
   #set($url = "$!doc.getURL('view', 'xredirect=')")
   #set($url = "${url}$xwiki.getURLEncoded($xwiki.getURL($afterLoginLandingPage,'view','activated=1'))")
   #foreach($req in $request.getParameterNames())
-    #set($url = "${url}&$req=$!request.get($req)")
+    #if("$!req" != 'ac')
+      #set($url = "${url}&$req=$!request.get($req)")
+    #end
   #end
 #elseif("$!context.getUser()" != 'XWiki.XWikiGuest')
   $context.getResponse().sendRedirect("$!request.get('xredirect')")
@@ -17,6 +19,7 @@
   #else
     #set($url = "${url}?activated=1")
   #end
+#end
   #set($activationCode = $request.get('ac'))
   #set($showForm = true)
   #if("$!activationCode" != '')
@@ -41,4 +44,3 @@
   </form>
 #end
 *#
-#end
