@@ -1,0 +1,12 @@
+#set($xredirect = "$!request.get('xredirect')")
+#if("$!xredirect" == '')
+#set($xredirect = $doc.getURL('view'))
+#end
+<form id="edit" method="post" action="$doc.getURL("save")">
+    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+    <input type="hidden" name="xredirect" value="$!xredirect" />
+    <input type="hidden" name="language" value="$!tdoc.language" />
+    <div id="editablecode_container">
+      $xwiki.getTextArea($tdoc.content)
+    </div>
+</form>
