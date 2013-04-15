@@ -29,6 +29,18 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
 #set($cel_editobj_readonly_properties = '')
 #set($cel_editobj_dict_property_prefix = 'pdcCellEdit_')
 $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
+#set($depCellSpace = $cellObj.getProperty('space_name').getValue())
+#if("$!depCellSpace" != '')
+#set($currLayoutRef = $celldoc.getDocumentReference().getLastSpaceReference())
+#set($pdcLayoutDefDocRef = $services.cells.getLayoutDefaultDocRef($currLayoutRef, $depCellSpace))
+<p>
+<a href="$xwiki.getURL($services.model.serialize($pdcLayoutDefDocRef, 'local'), 'edit', "xredirect=$!xredirect")">
+edit layout default content
+</a>
+</p>
+#else
+Please add a pdc-space-suffix for being able to add a layout default content.
+#end
   #else
   <p>Group-Cell: Inhalt wird nur bei Zellen ohne weitere Unter-Zellen berechnet.</p>
   #end
