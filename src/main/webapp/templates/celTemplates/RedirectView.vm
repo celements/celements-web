@@ -28,6 +28,7 @@ $xwiki.parseTemplate("frameheader.vm")
     #set($showIFrame = false)
   #else
     #set($redExternalURL = "$!{redURL}?$!red_obj.get('querystr')")
+    #set($redExternalURL = "$!redExternalURL.replaceAll('\?$','')")
     #set($showIFrame = true)
   #end
   #if("$!showIncluded" == '1')

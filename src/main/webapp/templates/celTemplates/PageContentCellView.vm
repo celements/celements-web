@@ -1,6 +1,6 @@
 #set($cellDocRef = $celldoc.getDocumentReference())
-#set($pageDoc = $services.cells.getPageDependentTranslatedDocument($tdoc, $cellDocRef))
-#set($isAddPdDiv = ("$request.xpage" != 'rdf') && ("$!pageDoc.fullName" != "$!doc.fullName"))
+#set($pageDocRef = $services.cells.getPageDependentDocRef($cellDocRef))
+#set($isAddPdDiv = ("$request.xpage" != 'rdf') && ($pageDocRef != $doc.documentReference))
 #if(("$!overwriteRenderDocument" != '') && !$isAddPdDiv)
 #if($overwriteRenderDocument.endsWith('.vm'))
 $xwiki.parseTemplate($overwriteRenderDocument)
@@ -13,12 +13,13 @@ $services.celementsweb.renderDocument($services.model.resolveDocument($overwrite
 #set($isInheritable = $services.cells.isInheritable($cellDocRef))
 #set($pageDepDocRef = $services.cells.getPageDependentDocRef($doc.getDocumentReference(), $cellDocRef, false))
 #set($pageDepFN = $services.model.serialize($pageDepDocRef))
+#set($pdSpaceSuffix = $services.cells.getDepCellSpaceSuffix($cellDocRef))
 #set($pdCount = $pdCount + 1)
-<div id="cellPDContent$!{pdCount}$!{pageDoc.getName()}:$!isInheritable:$!{pageDepFN}"##
+<div id="cellPDContent$!{pdCount}$!{pageDocRef.getName()}:$!{isInheritable}:$!{pdSpaceSuffix}:$!{pageDepFN}"##
  class="cel_cm_pagedependent_content">
 <div class="cellPDContent-body">
 #end
-$services.celementsweb.renderCelementsDocument($pageDoc)
+$services.celementsweb.renderCelementsDocument($pageDocRef)
 #if($isAddPdDiv)
 <!-- IE6 --></div>
 <!-- IE6 --></div>
