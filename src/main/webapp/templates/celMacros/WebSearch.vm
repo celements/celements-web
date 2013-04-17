@@ -1,0 +1,145 @@
+## Generic Celements Search
+##
+## INPUT (optional): $websearch_ouput_results (default: {internal array for output items})
+##
+#macro(outputSearchResults $websearch_results)
+  #if($websearch_results.size() > 0)
+  #set($countSearchResults = $countSearchResults + $websearch_results.size())
+  #set($websearch_ouput_results_map = $util.getHashMap())
+  #set($websearch_ouput_results = $util.getArrayList())
+  #foreach ($item in $websearch_results)
+    #set($inBlackList = ($item.fullName.endsWith('.WebPreferences')) || ($docBlackList.indexOf(",$item.fullName,") > -1))
+    #set($hasAccessViewRights = $xwiki.hasAccessLevel("view", $context.user, "${context.database}:${item.fullName}"))
+    #if($hasAccessViewRights && !$inBlackList)
+          #set($!res = $websearch_ouput_results_map.put($item.fullName, $item))
+          #set($!res = $websearch_ouput_results.add($item.fullName))
+    #end
+  #end ## foreach resultitem.fullName
+  
+  #if(("$!outputMacroFullName" != '') && $xwiki.exists("$outputMacroFullName"))
+    $xwiki.includeForm($outputMacroFullName, false)
+  #else
+  <ul>
+  #foreach ($item in $websearch_ouput_results)
+    #set($luceneItem = $websearch_ouput_results_map.get($item))
+    #set($bentrydoc = $xwiki.getDocument($item))
+    <li class="result_item">
+      #set($pageLink = "/${bentrydoc.web}/${bentrydoc.name}")
+  ##      #if("${bentrydoc.language}" != "${context.language}")
+  ##        <a href="${pageLink}?language=${bentrydoc.language}">
+  ##      #else
+      #set($bgcolor = 'red')
+      #if($util.parseDouble("$!luceneItem.score") > $util.parseDouble("0.5"))
+        #set($bgcolor = 'green')
+      #elseif($util.parseDouble("$!luceneItem.score") > $util.parseDouble("0.1"))
+        #set($bgcolor = 'orange')
+      #end
+      <span class="result_ranking_color" style="display: none; width: 20px; background-color: ${bgcolor};">&nbsp;</span>
+      <span class="result_ranking_score" style="display: none;">${mathtool.roundTo(2, $mathtool.mul(100, $util.parseDouble("$!luceneItem.score")))}</span>
+      <a href="${pageLink}">
+  ##      #end
+      #if("$bentrydoc.web" == 'Content')
+        $bentrydoc.name
+      #else
+        $bentrydoc.fullName.replaceAll('\.',": ")
+      #end
+      </a>
+      <span class="result_date">$msg.get('search_result_last_change'): $datetool.format($formatDate, $bentrydoc.date, $services.celementsweb.getLocal($language))</span>
+    </li>
+  ## [TODO] Output the first x characters of the HTML escaped document content
+  ## $xwiki.getShortRefererText($referer, 100)
+  #end ## if $outputMacroFullName does not exist
+    </ul>
+    #end ## foreach resultitem
+  #end
+#end
+  ## This is the content of the creative switzerland Search (and Results) Page
+  ## It is imported in the content of the Content.WebSearch document
+  <div id="websearch">
+  #if("$msg.get('cel_search_page_title')" != 'cel_search_page_title')
+    <h1>$msg.get('cel_search_page_title')</h1>
+  #end
+  #set($formatDate = "d. MMMM yyyy")
+  #set ($text = "$!request.get('text')" )
+  #if("$!request.get('spaces')" != '')
+    #set($spaces = "$!request.get('spaces')")
+    #set($spaces = $spaces.replaceAll(';', ' '))
+  #end
+  #set($negSpaces = '')
+  #if("$!spaces" == '')
+      #set ($negSpaces = "XWiki Templates Tools Celements2 Macros LocalMacros Ajax Overlay" )
+  #end
+  #if("$!linkedDocsOnly" == '')
+      #set($linkedDocsOnly = true)
+  #end
+  #if("$!searchInTextFields" == '')
+      #set($searchInTextFields = false)
+  #end
+    #set($docBlackList = "$!docBlackList")
+  <div class="websearch_form">
+  <form action="WebSearch">
+    <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="20" class="search_input">
+  </form>
+  </div>
+  #if($text != "")
+    #set($query = $services.lucene.createQuery())
+    #if("$!spaces" != '')
+      #set($spacesList = $util.getArrayList())
+      #foreach($spc in $spaces.split(' '))
+        #set($devNull = $spacesList.add(${services.lucene.createRestriction('space', "${Q}${spc}${Q}")}))
+      #end
+      #set($devNull = $query.addOrRestrictionList($spacesList))
+    #else
+      #foreach($spc in $negSpaces.split(' '))
+        #set($devNull = $query.addRestriction(${services.lucene.createRestriction('space', "${Q}${spc}${Q}").setNegate(true)}))
+      #end
+    #end
+    #set($devNull = $query.addRestriction(${services.lucene.createRestriction('type', "attachment").setNegate(true)}))
+    #if("$!searchpackages" == '')
+      #set($searchpackages = 'content,menu,blog')
+    #end
+    #set($searchpackages = ",$!{searchpackages},")
+    #set($otherRestrList = $util.getArrayList())
+    #if($searchpackages.indexOf(',content,') >= 0)
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('ft', "$!text").setFuzzy()}))
+    #end
+    #if($searchpackages.indexOf(',menu,') >= 0)
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Celements2.MenuName.menu_name', "$!text").setFuzzy()}))
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('title', "$!text").setFuzzy()}))
+    #end
+    #if($searchpackages.indexOf(',blog,') >= 0)
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.title', "$!text").setFuzzy()}))
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.extract', "$!text").setFuzzy()}))
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.content', "$!text").setFuzzy()}))
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.publishdate', "$!text").setFuzzy()}))
+    #end
+    #set($devNull = $query.addOrRestrictionList($otherRestrList))
+    #set($luceneQuery = "${query.getQueryString()}")
+    #set($results = $xwiki.lucene.getSearchResults($luceneQuery, "default,de"))
+    #set($resultList = $results.getResults())
+    #set ($start = 0)
+    #set ($nb = 50)
+    <!-- 
+    Sql: $luceneQuery
+    Sql start: $start
+    Sql nb: $nb
+    spaces: $spaces
+    -->
+    <div class="results">
+  #if("$msg.get('cel_search_results_title')" != 'cel_search_results_title')
+  <h2>$msg.get('cel_search_results_title')</h2>
+  #end
+    #set($countSearchResults = 0)
+    <!-- resultList.size : $resultList.size() -->
+    #outputSearchResults($resultList)
+    #if($countSearchResults == 0)
+    #if($xwiki.exists('Tools.WebSearch_nothingFound'))
+      #set($ws_nf_content = $xwiki.getDocument("Tools.WebSearch_nothingFound").getContent())
+      $xwiki.renderText("{pre}$!{ws_nf_content}{/pre}",$doc)
+    #else
+    Sorry, your search did not match any documents.
+    #end
+    #end
+  </div>
+  #end
+  </div>
