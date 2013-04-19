@@ -16,7 +16,7 @@ $xwiki.includeForm('celements2web:Macros.getContentDblClick', false)
 <div id="rteContent$!{contentDoc.getName()}:$!{contentDoc.getFullName()}"##
  class="rteContent cel_cm_rte_content$!{additionalCSS}" $!dblClick>
 #end
-#if(($celementsweb.getPageType($doc.fullName).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
+#if(($celementsweb.getPageType($contentDoc.fullName).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
 <h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>
 #end
 ## because RichText is still the default PageType we need to allow velocity code
