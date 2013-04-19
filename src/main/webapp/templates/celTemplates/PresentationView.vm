@@ -5,5 +5,9 @@
 #end
 <div id="pres$!{contentDoc.getName()}:$!{contentDoc.getFullName()}"##
  class="cel_cm_presentation">
+ #set($contentDocPageTypeRef = $services.pageType.getPageTypeRef($contentDoc.documentReference))
+#if(($services.pageType.getPageTypeConfig($contentDocPageTypeRef).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
+<h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>
+#end
 #parse('celTemplates/NavigationCellView.vm')
 </div>
