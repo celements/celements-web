@@ -18,16 +18,41 @@
 #if("$!gallerySpace" == '')
   #set($gallerySpace = 'Photos')
 #end
+#set($newGalleryLinkName = "$!request.get('galleryLinkName')")
+#if("$!newGalleryLinkName" == '')
+ #if("$!adminMsg.get('cel_image_gallery_titled_name')" != 'cel_image_gallery_titled_name')
+  #set($titledGalleryName = $adminMsg.get('cel_image_gallery_titled_name'))
+ #else
+  #set($titledGalleryName = "Gallery")
+ #end
+ #set($newGalleryLinkFN = $xwiki.celementsweb.getNextTitledPageFullName("$!gallerySpace", "$!titledGalleryName"))
+ #set($newGalleryLinkName = $services.model.resolveDocument($newGalleryLinkFN).getName())
+#end
 #set($filled = $request.get("submitted") == "1")
 #set($complete = true)
 #set($valid = true)
 #if($filled && $complete && $valid)
- #set($new_doc = $xwiki.getDocument("${gallerySpace}.Gallery$!request.get('id')"))
+ #set($newGalleryDocRef = $services.model.createDocumentReference('', "$!{gallerySpace}", "$!{newGalleryLinkName}"))
+ #set($new_doc = $services.celementsweb.createDocument($newGalleryDocRef, 'Gallery'))
  ## set album title
  $new_doc.setTitle($!request.get("title"))
- ## set page type
- #set($pagetype_obj = $new_doc.newObject("Celements2.PageType"))
- $pagetype_obj.set("page_type", "Gallery")
+ ## should we add menu item?
+ #if("$!request.get('addMenuItem')" == 'true')
+  ## determine position
+  #set($menu_parent = $!request.get("menu_parent"))
+  #set($menu = $xwiki.celementsweb.getSubNodesForParent("$doc_parent", "$space"))
+  #if($menu.size() > 0)
+    #set($lastitemNum = $menu.size() - 1)
+    #set($next_menu_item_nr = $menu.get($lastitemNum).getPosition() + 1)
+  #else
+  #set($next_menu_item_nr = 0)
+  #end
+  #set($position = $next_menu_item_nr)
+  ## add menu item
+  #set($menu_item_obj = $new_doc.getObject("Celements2.MenuItem", true))
+  $menu_item_obj.set("menu_position", $!position)
+  $menu_item_obj.set('part_name', $!request.get('menuPart'))
+ #end
  ## create album object
  #set($album_obj = $new_doc.newObject("XWiki.PhotoAlbumClass"))
  $album_obj.set("thumbWidth", $!request.get("thumbWidth"))
@@ -37,6 +62,7 @@
  $album_obj.set("description", $!request.get("description")) 
  $album_obj.set("id", $xwiki.parseInt($!request.get("id")))
  $new_doc.save()
+ $xwiki.celementsweb.flushCache()
  ## redirect to edit album
  $context.getResponse().sendRedirect($new_doc.getURL("edit", "xredirect=$!xredirect"))
 #else
@@ -53,9 +79,15 @@ $celementsweb.addExtJSfileOnce(':celJS/validation.js')
 <form id="create" name="create" method="post" action="">
 <input type="hidden" name="submitted" value="1" />
 <input type="hidden" name="xredirect" value="$!xredirect" />
+<input type="hidden" name="menuPart" value="$!request.get('menuPart')" />
+<input type="hidden" name="addMenuItem" value="$!request.get('addMenuItem')" />
 #get_id()
 <input type="hidden" name="id" value="$!next_id" />
 <table cellspacing="0" cellpadding="0" border="0" class="celements2_table">
+<tr>
+ <td class="celements2_text">$msg.get("cel_tm_document_name")</td>
+ <td><input name="galleryLinkName" type="text" value="$!newGalleryLinkName" class="celements2_input validate-docname" /></td>
+</tr>
 <tr>
  <td class="celements2_text">$msg.get("gallery_album_title")</td>
  <td><input name="title" type="text" value="$!request.get('title')" class="celements2_input" /></td>
@@ -111,6 +143,10 @@ $celementsweb.addExtJSfileOnce(':celJS/validation.js')
 <input type="submit" value="$msg.get('gallery_album_create')" />
 </form>
 <script type="text/javascript">
+## remove as soon as new validation.js of 2.30.0 is installed
+Validation.add('validate-docname', '$adminMsg.get('cel_tm_validate_warning')', function (v) {
+    return !Validation.get('IsEmpty').test(v) &&  !/\W/.test(v.replace(/-/g, ''))
+});
  var valid = new Validation('create', {immediate : true});
  ## if not complete or valid run the js validation
  #if($filled && (!$complete || !$valid))
