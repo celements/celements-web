@@ -6,6 +6,7 @@
 #if("$!overwriteCmCssClass" == '')
 #set($overwriteCmCssClass = 'cel_cm_presentation')
 #end
+#set($overwriteCMcssClass = $overwriteCmCssClass)
 <div id="pres$!{contentDoc.getName()}:$!{contentDoc.getFullName()}"##
  class="$!{overwriteCmCssClass}">
  #set($contentDocPageTypeRef = $services.pageType.getPageTypeRef($contentDoc.documentReference))
