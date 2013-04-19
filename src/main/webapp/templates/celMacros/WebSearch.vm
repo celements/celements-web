@@ -98,6 +98,9 @@
     #if("$!searchpackages" == '')
       #set($searchpackages = 'content,menu,blog')
     #end
+    #if($linkedDocsOnly)
+      #set($devNull = $query.addRestriction(${services.lucene.createObjectRestriction('Celements2.MenuItem')}))
+    #end
     #set($searchpackages = ",$!{searchpackages},")
     #set($otherRestrList = $util.getArrayList())
     #if($searchpackages.indexOf(',content,') >= 0)
