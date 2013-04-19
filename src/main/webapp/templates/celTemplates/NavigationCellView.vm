@@ -1,5 +1,8 @@
 #set($createdNav = $celementsweb.createNavigation())
 $createdNav.loadConfigFromDoc($celldoc.documentReference)
+#if("$!overwriteNavPresentationType" != '')
+$createdNav.setPresentationType($overwriteNavPresentationType)
+#end
 #if("$!overwriteNavCMcssClass" != '')
 $createdNav.setCMcssClass($overwriteNavCMcssClass)
 #end
