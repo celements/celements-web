@@ -3,12 +3,11 @@
 #else   
 #set($contentDoc = $tdoc)
 #end
-#if("$!overwriteCmCssClass" == '')
-#set($overwriteCmCssClass = 'cel_cm_presentation')
+#if("$!overwritePresCmCssClass" == '')
+#set($overwritePresCmCssClass = 'cel_cm_presentation')
 #end
-#set($overwriteCMcssClass = $overwriteCmCssClass)
 <div id="pres$!{contentDoc.getName()}:$!{contentDoc.getFullName()}"##
- class="$!{overwriteCmCssClass}">
+ class="$!{overwritePresCmCssClass}">
  #set($contentDocPageTypeRef = $services.pageType.getPageTypeRef($contentDoc.documentReference))
 #if(($services.pageType.getPageTypeConfig($contentDocPageTypeRef).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
 <h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>

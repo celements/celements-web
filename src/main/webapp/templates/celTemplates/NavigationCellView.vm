@@ -1,7 +1,7 @@
 #set($createdNav = $celementsweb.createNavigation())
 $createdNav.loadConfigFromDoc($celldoc.documentReference)
-#if("$!overwriteCMcssClass" != '')
-$createdNav.setCMcssClass($overwriteCMcssClass)
+#if("$!overwriteNavCMcssClass" != '')
+$createdNav.setCMcssClass($overwriteNavCMcssClass)
 #end
 #if("$!emptyDictKeySuffix" != '')
 $createdNav.setEmptyDictKeySuffix($emptyDictKeySuffix)
