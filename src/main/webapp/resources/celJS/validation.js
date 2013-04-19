@@ -35,7 +35,7 @@ Validator.prototype = {
 			this._test = test;
 		} else {
 			this.options = $H(test);
-			this._test = function(){return true};
+			this._test = function(){return true;};
 		}
 		this.error = error || 'Validation failed.';
 		this.className = className;
@@ -45,27 +45,30 @@ Validator.prototype = {
 			return Validator.methods[p.key] ? Validator.methods[p.key](v,elm,p.value) : true;
 		}));
 	}
-}
+};
 Validator.methods = {
-	pattern : function(v,elm,opt) {return Validation.get('IsEmpty').test(v) || opt.test(v)},
-	minLength : function(v,elm,opt) {return v.length >= opt},
-	maxLength : function(v,elm,opt) {return v.length <= opt},
-	min : function(v,elm,opt) {return v >= parseFloat(opt)}, 
-	max : function(v,elm,opt) {return v <= parseFloat(opt)},
+	pattern : function(v,elm,opt) {return Validation.get('IsEmpty').test(v) || opt.test(v);},
+	minLength : function(v,elm,opt) {return v.length >= opt;},
+	maxLength : function(v,elm,opt) {return v.length <= opt;},
+	min : function(v,elm,opt) {return v >= parseFloat(opt);}, 
+	max : function(v,elm,opt) {return v <= parseFloat(opt);},
 	notOneOf : function(v,elm,opt) {return $A(opt).all(function(value) {
 		return v != value;
-	})},
+	});},
 	oneOf : function(v,elm,opt) {return $A(opt).any(function(value) {
 		return v == value;
-	})},
-	is : function(v,elm,opt) {return v == opt},
-	isNot : function(v,elm,opt) {return v != opt},
-	equalToField : function(v,elm,opt) {return v == $F(opt)},
-	notEqualToField : function(v,elm,opt) {return v != $F(opt)},
+	});},
+	is : function(v,elm,opt) {return v == opt;},
+	isNot : function(v,elm,opt) {return v != opt;},
+	equalToField : function(v,elm,opt) {return v == $F(opt);},
+	notEqualToField : function(v,elm,opt) {return v != $F(opt);},
 	include : function(v,elm,opt) {return $A(opt).all(function(value) {
 		return Validation.get(value).test(v,elm);
-	})}
-}
+	});},
+	validDocName : function (v) {
+    return !Validation.get('IsEmpty').test(v) && !/\W/.test(v.replace(/-/g, ''));
+  }
+};
 
 var Validation = Class.create();
 
@@ -103,7 +106,9 @@ Validation.prototype = {
 			result = Form.getElements(this.form).collect(function(elm) { return Validation.validate(elm,{useTitle : useTitles, onElementValidate : callback}); }).all();
 		}
 		if(!result && this.options.focusOnError) {
-			Form.getElements(this.form).findAll(function(elm){return $(elm).hasClassName('validation-failed')}).first().focus()
+			Form.getElements(this.form).findAll(function(elm){
+			  return $(elm).hasClassName('validation-failed');
+			}).first().focus();
 		}
 		this.options.onFormValidate(result, this.form);
 		return result;
@@ -111,7 +116,7 @@ Validation.prototype = {
 	reset : function() {
 		Form.getElements(this.form).each(Validation.reset);
 	}
-}
+};
 
 Object.extend(Validation, {
 	validate : function(elm, options){
@@ -136,7 +141,7 @@ Object.extend(Validation, {
 				var advice = Validation.getAdvice(name, elm);
 				if(advice == null) {
 					var errorMsg = useTitle ? ((elm && elm.title) ? elm.title : v.error) : v.error;
-					advice = '<div class="validation-advice" id="advice-' + name + '-' + Validation.getElmID(elm) +'" style="display:none">' + errorMsg + '</div>'
+					advice = '<div class="validation-advice" id="advice-' + name + '-' + Validation.getElmID(elm) +'" style="display:none">' + errorMsg + '</div>';
 					switch (elm.type.toLowerCase()) {
 						case 'checkbox':
 						case 'radio':
@@ -171,7 +176,7 @@ Object.extend(Validation, {
 			return true;
 		}
 		} catch(e) {
-			throw(e)
+			throw(e);
 		}
 	},
 	isVisible : function(elm) {
@@ -272,20 +277,20 @@ Validation.defaultFunctions = [
 				return Validation.get('IsEmpty').test(v) ||  !/[^\d]/.test(v);
 			}],
 	['validate-alpha', null, function (v) {
-				return Validation.get('IsEmpty').test(v) ||  /^[a-zA-Z]+$/.test(v)
+				return Validation.get('IsEmpty').test(v) ||  /^[a-zA-Z]+$/.test(v);
 			}],
 	['validate-alphanum', null, function(v) {
-				return Validation.get('IsEmpty').test(v) ||  !/\W/.test(v)
+				return Validation.get('IsEmpty').test(v) ||  !/\W/.test(v);
 			}],
 	['validate-date', null, function(v) {
 				var test = new Date(v);
 				return Validation.get('IsEmpty').test(v) || !isNaN(test);
 			}],
 	['validate-email', null, function (v) {
-				return Validation.get('IsEmpty').test(v) || /\w{1,}[@][\w\-]{1,}([.]([\w\-]{1,}))+$/.test(v)
+				return Validation.get('IsEmpty').test(v) || /\w{1,}[@][\w\-]{1,}([.]([\w\-]{1,}))+$/.test(v);
 			}],
 	['validate-url', null, function (v) {
-				return Validation.get('IsEmpty').test(v) || /^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i.test(v)
+				return Validation.get('IsEmpty').test(v) || /^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i.test(v);
 			}],
 	['validate-date-au', null, function(v) {
 				if(Validation.get('IsEmpty').test(v)) return true;
@@ -315,7 +320,7 @@ Validation.defaultFunctions = [
 				// [$]1###+[.##]
 				// [$]0.##
 				// [$].##
-				return Validation.get('IsEmpty').test(v) ||  /^\$?\-?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}\d*(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/.test(v)
+				return Validation.get('IsEmpty').test(v) ||  /^\$?\-?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}\d*(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/.test(v);
 			}],
 	['validate-selection', null, function(v,elm){
 				return elm.options ? elm.selectedIndex > 0 : !Validation.get('IsEmpty').test(v);
@@ -327,5 +332,6 @@ Validation.defaultFunctions = [
           return $F(elm);
         });
       }],
-  ['validate-email-equal', 'email', Validator.methods.equalToField ]
+  ['validate-email-equal', 'email', Validator.methods.equalToField ],
+  ['validate-docname', null, Validator.methods.validDocName ]
 ];

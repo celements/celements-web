@@ -13,5 +13,6 @@ $jsonBuilder.addStringProperty('validate-currency-dollar', 'Please enter a valid
 $jsonBuilder.addStringProperty('validate-selection', 'Please make a selection')
 $jsonBuilder.addStringProperty('validate-one-required', 'Please select one of the above options.')
 $jsonBuilder.addStringProperty('validate-email-equal', "$!adminMsg.get('cel_form_valid_email-equal')")
+$jsonBuilder.addStringProperty('validate-docname', "$adminMsg.get('cel_tm_validate_warning')")
 $jsonBuilder.closeDictionary()
 $jsonBuilder.getJSON()
