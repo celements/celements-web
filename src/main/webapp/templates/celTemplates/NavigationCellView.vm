@@ -2,12 +2,15 @@
 $createdNav.loadConfigFromDoc($celldoc.documentReference)
 #if("$!overwriteNavPresentationType" != '')
 $createdNav.setPresentationType($overwriteNavPresentationType)
+#set($overwriteNavPresentationType = '')
 #end
 #if("$!overwriteNavCMcssClass" != '')
 $createdNav.setCMcssClass($overwriteNavCMcssClass)
+#set($overwriteNavCMcssClass = '')
 #end
 #if("$!emptyDictKeySuffix" != '')
 $createdNav.setEmptyDictKeySuffix($emptyDictKeySuffix)
+#set($emptyDictKeySuffix = '')
 #end
 $createdNav.includeNavigation()
 <div class="navigation-clear"><!-- IE6 --></div>
