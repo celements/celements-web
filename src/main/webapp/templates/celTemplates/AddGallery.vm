@@ -8,6 +8,11 @@
 #else
 #set($next_id = 0)
 #end
+#end ## end macro
+#if("$!request.get('xredirect')" != '')
+#set($xredirect = $!request.getParameter('xredirect'))
+#else
+#set($xredirect = "$doc.getURL('view')")
 #end
 #set($gallerySpace = "$!request.get('space')")
 #if("$!gallerySpace" == '')
@@ -33,7 +38,7 @@
  $album_obj.set("id", $xwiki.parseInt($!request.get("id")))
  $new_doc.save()
  ## redirect to edit album
- $context.getResponse().sendRedirect($new_doc.getURL("edit"))
+ $context.getResponse().sendRedirect($new_doc.getURL("edit", "xredirect=$!xredirect"))
 #else
 $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
 $celementsweb.addExtJSfileOnce(':celJS/validation.js')
@@ -47,6 +52,7 @@ $celementsweb.addExtJSfileOnce(':celJS/validation.js')
 <div class="celements2_box_title">$msg.get("gallery_album_create")</div>
 <form id="create" name="create" method="post" action="">
 <input type="hidden" name="submitted" value="1" />
+<input type="hidden" name="xredirect" value="$!xredirect" />
 #get_id()
 <input type="hidden" name="id" value="$!next_id" />
 <table cellspacing="0" cellpadding="0" border="0" class="celements2_table">
