@@ -172,10 +172,9 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         }
       },
 
-      _openHandler : function(event) {
+      _openHandler : function(link, event) {
         var _me = this;
         event.stop();
-        var link = event.findElement();
         var width = parseInt(link.id.split(':')[4]) + 5;
         var height = link.id.split(':')[5];
         var overlayURL = link.href;
@@ -192,8 +191,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var _me = this;
         openCssSelector = openCssSelector || '.cel_yuiOverlay';
         $$(openCssSelector).each(function(elem){
-          elem.stopObserving('click', _me._bindOpenHandler);
-          elem.observe('click', _me._bindOpenHandler);
+          elem.stopObserving('click', _me._bindOpenHandler.curry(elem));
+          elem.observe('click', _me._bindOpenHandler.curry(elem));
         });
       },
 
