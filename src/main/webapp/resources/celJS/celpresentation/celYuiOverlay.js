@@ -54,6 +54,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         zindex: 101, 
         modal:true,
         monitorresize:false,
+        suppressDimFromId:false,
 //        icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
         icon: null, 
         constraintoviewport: true
@@ -69,10 +70,18 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       },
 
       getWidth : function() {
+        var _me = this;
         return _me._dialogConfig.width || _me._defaultConfig.width;
       },
 
+      getSuppressDimFromId : function() {
+        var _me = this;
+        return _me._dialogConfig.suppressDimFromId
+            || _me._defaultConfig.suppressDimFromId;
+      },
+
       getHeight : function() {
+        var _me = this;
         return _me._dialogConfig.height || _me._defaultConfig.height;
       },
 
@@ -175,15 +184,18 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _openHandler : function(link, event) {
         var _me = this;
         event.stop();
-        var width = parseInt(link.id.split(':')[4]) + 5;
-        var height = link.id.split(':')[5];
+        //TODO implement configProvider
         var overlayURL = link.href;
         var openConfig = {
             'link' : link,
-            'overlayURL' : overlayURL,
-            'width' : width + 'px',
-            'height' : height + 'px'
+            'overlayURL' : overlayURL
           };
+        if (!_me.getSuppressDimFromId()) {
+          var width = parseInt(link.id.split(':')[4]) + 5;
+          var height = link.id.split(':')[5];
+          openConfig['width'] = width + 'px';
+          openConfig['height'] = height + 'px';
+        }
         _me.openCelPageInOverlay(openConfig);
       },
 
@@ -221,7 +233,6 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       _defaultOpenDialog : function(openConfig) {
         var _me = this;
-        openConfig['width'] = openConfig.width || '720px';
         _me.updateOpenConfig(openConfig);
         var dialog = _me.open();
         var bodyElem = $$('body')[0];
