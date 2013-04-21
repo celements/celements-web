@@ -137,8 +137,14 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
         /^.*celheight=(\d+).*/, '$1'));
     var borderHorizontal = parseInt(slideShowImg.getStyle('borderLeftWidth'));
     borderHorizontal += parseInt(slideShowImg.getStyle('borderRightWidth'));
+    if (isNaN(borderHorizontal)) {
+      borderHorizontal = 0;
+    }
     var borderVertical = parseInt(slideShowImg.getStyle('borderTopWidth'));
     borderVertical += parseInt(slideShowImg.getStyle('borderBottomWidth'));
+    if (isNaN(borderVertical)) {
+      borderVertical = 0;
+    }
     celwidth -= borderHorizontal;
     celheight -= borderVertical;
     slideShowConfig.imageSrcQuery = slideShowConfig.imageSrcQuery.replace(
