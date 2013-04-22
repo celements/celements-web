@@ -1,0 +1,22 @@
+##TODO First try, needs to be done / checked properly
+<br/>
+Buon giorno
+<br/>
+<br/>
+Si ha registrato efficacemente sullo sito $!context.getRequest().getHeader('host')
+Il vostro indirizzo e-mail ($!email) sara usato come nome login.
+Cliccando sul link, potrà accedere al sito e scegliere la Sua password personale:
+<br/>
+<br/>
+Link per l'attivazione: <a href="$!activationLink">$!activationLink</a>
+<br/>
+<br/>
+Per ulteriori chiarimenti non esitate a contattarci.
+<br/>
+<br/>
+Cordiali saluti,
+<br/>
+Il vostro team $!{context.getRequest().getHeader('host').replaceAll('^www.','')}<br/>
+<br/>
+<a href="http://$!{context.getRequest().getHeader('host')}">http://$!{context.getRequest().getHeader('host')}</a>
+<hr />

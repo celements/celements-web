@@ -1,0 +1,22 @@
+##TODO First try, needs to be done / checked properly
+<br/>
+Bonjour
+<br/>
+<br/>
+Vous vous avez enregistré avec succès sur $!context.getRequest().getHeader('host')
+L'identifiant pour le site serra votre adresse e-mail ($!email)
+Cliquez sur ce lien pour ouvrir une session et choisir un mot de passe:
+<br/>
+<br/>
+Lien d'activation: <a href="$!activationLink">$!activationLink</a>
+<br/>
+<br/>
+Si vous avez de question complémentaire n'hésitez pas à nous contacter.
+<br/>
+<br/>
+Sincèrement
+<br/>
+La votre équipe $!{context.getRequest().getHeader('host').replaceAll('^www.','')}<br/>
+<br/>
+<a href="http://$!{context.getRequest().getHeader('host')}">http://$!{context.getRequest().getHeader('host')}</a>
+<hr />

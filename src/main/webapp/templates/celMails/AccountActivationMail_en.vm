@@ -1,0 +1,21 @@
+<br/>
+Dear Madam / Sir
+<br/>
+<br/>
+You registered successfully on $!context.getRequest().getHeader('host').
+Your email address ($!email) will be your login name.
+Click on the following activation link to login and set your personal password.
+<br/>
+<br/>
+Activation link: <a href="$!activationLink">$!activationLink</a>
+<br/>
+<br/>
+Feel free to contact us if you have any questions regarding your registration.
+<br/>
+<br/>
+Kind regards
+<br/>
+Your $!{context.getRequest().getHeader('host').replaceAll('^www.','')} team<br/>
+<br/>
+<a href="http://$!{context.getRequest().getHeader('host')}">http://$!{context.getRequest().getHeader('host')}</a>
+<hr />
