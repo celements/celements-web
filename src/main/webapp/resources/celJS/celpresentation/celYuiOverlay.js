@@ -94,7 +94,12 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           _me._overlayDialog.hideEvent.subscribe(function() {
             var bodyElem = $$('body')[0];
             bodyElem.setStyle({ 'overflow' : 'auto' });
-            bodyElem.fire('cel_yuiOverlay:hideEvent');
+            var closeEvent = bodyElem.fire('cel_yuiOverlay:hideEvent');
+            if (!closeEvent.stopped) {
+              $$('body div.cel-YuiOverlay').each(function(dialogWrapper) {
+                dialogWrapper.remove();
+              });
+            }
           });
         } else {
           _me._overlayDialog.cfg.setProperty('width', _me._dialogConfig.width);
