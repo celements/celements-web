@@ -1,3 +1,8 @@
+#set($overwriteLayoutRef = '')
+#if("$!request.overwriteLayout" != '')
+#set($pageLayoutMainDocRef = $services.model.createDocumentReference('', "$!request.overwriteLayout", ''))
+#set($overwriteLayoutRef = $pageLayoutMainDocRef.getLastSpaceReference())
+#end
 ##only include if legacy celements2web.xar is installed
 #if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
@@ -18,7 +23,11 @@ $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 #end
 <div class="lang_${language} doclang_$doclang">
 <!-- start celements cells -->
+#if("$!overwriteLayoutRef" != '')
+$celementsweb.renderPageLayout($overwriteLayoutRef)
+#else
 $celementsweb.renderPageLayout()
+#end
 <!-- end celements cells -->
 </div><!-- main wrapper -->
 #if(!$isAjaxCall)
