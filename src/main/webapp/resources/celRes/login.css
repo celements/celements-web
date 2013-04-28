@@ -58,6 +58,11 @@
   font-style: normal;
   color: #333333;
 }
+#loginForm fieldset legend {
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+  color: #333333;
+}
 #loginForm fieldset.xwikimessage table.xwikilogintable tr + tr + tr td {
   padding: 0px;
   padding-left: 120px;
