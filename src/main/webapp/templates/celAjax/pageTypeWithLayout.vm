@@ -16,6 +16,10 @@ $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 #parse("celMacros/startCelementsBody.vm")
 ##
 #end
+#if($services.celementsweb.isAppScriptRequest())
+#set($celAppScript = $services.celementsweb.getScriptNameFromURL())
+#set($overwriteRenderDocument = 'celInlineTemplates/app.vm')
+#end
 #set($isCellSkin = true)
 #set($doclang = $tdoc.getLanguage())
 #if("$!doclang" == '')
