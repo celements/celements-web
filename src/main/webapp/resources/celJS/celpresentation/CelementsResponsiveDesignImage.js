@@ -1,6 +1,6 @@
 /**
- * Celements presentation FluidDesignImage
- * This is the Celements presentation FluidDesignImage controller.
+ * Celements presentation ResponsiveDesignImage
+ * This is the Celements presentation ResponsiveDesignImage controller.
  */
 if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
 if(typeof CELEMENTS.presentation=="undefined"){CELEMENTS.presentation={};};
@@ -8,18 +8,18 @@ if(typeof CELEMENTS.presentation=="undefined"){CELEMENTS.presentation={};};
 (function() {
 
 //////////////////////////////////////////////////////////////////////////////
-// Celements presentation FluidDesignImage
+// Celements presentation ResponsiveDesignImage
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.presentation.FluidDesignImage = function(containerId, wrapperId) {
+CELEMENTS.presentation.ResponsiveDesignImage = function(containerId, wrapperId) {
   containerId = containerId || 'sitecontainer';
   // constructor
   this._init(containerId, wrapperId);
 };
 
 (function() {
-  var CPCYOSS = CELEMENTS.presentation.FluidDesignImage;
+  var CPRDI = CELEMENTS.presentation.ResponsiveDesignImage;
 
-  CELEMENTS.presentation.FluidDesignImage.prototype = {
+  CELEMENTS.presentation.ResponsiveDesignImage.prototype = {
       _htmlContainerId : undefined,
       _htmlContainer : undefined,
       _htmlContainerWrapper : undefined,
@@ -114,7 +114,7 @@ CELEMENTS.presentation.FluidDesignImage = function(containerId, wrapperId) {
             'backgroundPosition' : 'center center',
             'backgroundRepeat' : 'no-repeat'
           });
-          _me._htmlContainer.fire('cel_fluidDesign:afterImageSrcChange', {
+          _me._htmlContainer.fire('cel_ResponsiveDesign:afterImageSrcChange', {
             'img' : contentImg
            });
         }
