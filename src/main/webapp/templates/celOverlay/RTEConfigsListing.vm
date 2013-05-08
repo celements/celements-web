@@ -1,0 +1,5 @@
+#set($cel_loadAdminMenuBar = false)
+#set($showOverlayLanguageBar = false)
+#set($showCloseOverlayButton = true)
+#set($showCelTypes = false)
+#set($celementsLoadInOverlay = "celTemplates/RTEConfigsListing.vm") ##template on disk
