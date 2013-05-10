@@ -1,5 +1,13 @@
 <div id="recylceBinList">
-<h1>Recycle Bin</h1>
+<h1>Recycle Bin ##
+#if("$request.deleteNow" == 'older30Days')
+#set($deletedDocumentVersions = $services.celementsweb.permanentlyEmptyTrash(30))
+Deleted $deletedDocumentVersions document versions in total.
+#else
+#set($allDeletedDocuments = $services.celementsweb.getDeletedDocuments())
+#if($allDeletedDocuments.size() > 0)
+($allDeletedDocuments.size() documents)</h1>
+Permanently delete all deleted documents which are more than 30 days in the trash <a href="&deleteNow=older30Days">empty older 30 days now</a>
 <p>$msg.get("core.recyclebin.showlistmsg")</p>
 <table class="centered">
  <thead>
@@ -11,7 +19,7 @@
   </tr>
  </thead>
  <tbody>
- #foreach($item in $services.celementsweb.getDeletedDocuments())
+ #foreach($item in $allDeletedDocuments)
  #set($ddList = $xwiki.getDeletedDocuments($item, ''))
  #set($dd = $ddList.get(0))
   <tr>
@@ -31,4 +39,12 @@
  #end
  </tbody>
 </table>
+#else
+</h1>
+<p>
+##TODO move to dictionary
+Everything's clean. No trashed document found.
+</p>
+#end
+#end
 </div>
