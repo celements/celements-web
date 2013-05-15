@@ -3,7 +3,9 @@
 #if($xwiki.hasAdminRights())
 #if("$request.deleteNow" == 'older30Days')
 #set($deletedDocumentVersions = $services.celementsweb.permanentlyEmptyTrash(30))
-Deleted $deletedDocumentVersions document versions in total.
+</h1>
+<p>Deleted $deletedDocumentVersions document versions in total.</p>
+<p><a href="?xpage=overlay&conf=FullRecylceBin">back to recycle bin</a>
 #else
 #set($allDeletedDocuments = $services.celementsweb.getDeletedDocuments('ddoc.date desc', false))
 #if($allDeletedDocuments.size() > 0)
