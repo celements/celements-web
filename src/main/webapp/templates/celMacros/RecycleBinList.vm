@@ -1,5 +1,6 @@
 <div id="recylceBinList">
 <h1>Recycle Bin ##
+#if($xwiki.hasAdminRights())
 #if("$request.deleteNow" == 'older30Days')
 #set($deletedDocumentVersions = $services.celementsweb.permanentlyEmptyTrash(30))
 Deleted $deletedDocumentVersions document versions in total.
@@ -46,5 +47,8 @@ Permanently delete all deleted documents which are more than 30 days in the tras
 Everything's clean. No trashed document found.
 </p>
 #end
+#end
+#else
+<p>You need to be an admin to view the recycle bin.</p>
 #end
 </div>
