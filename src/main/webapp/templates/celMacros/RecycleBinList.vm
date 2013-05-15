@@ -16,8 +16,8 @@ Permanently delete all deleted documents which are more than 30 days in the tras
  <thead>
   <tr>
    <th>Document</td>
+   <th>num deleted<br/>versions</td>
    <th>$msg.get("core.recyclebin.deleter")</td>
-   <th>num versions</td>
    <th>$msg.get("core.recyclebin.deleteDate")</td>
    <th colspan="2">$msg.get("core.recyclebin.actions")</th>
   </tr>
@@ -31,10 +31,10 @@ Permanently delete all deleted documents which are more than 30 days in the tras
    <td>$ddList.size()</td>
    <td>$xwiki.getLocalUserName($dd.getDeleter())</td>
    <td><a href="$doc.getURL("view", "viewer=recyclebin&id=$dd.getId()")">$xwiki.formatDate($dd.getDate())</a></td>
-   <td>#if($dd.canUndelete()) <a href="$xwiki.getURL($tdoc.getFullName(), "undelete", "id=$dd.getId()$!xredirect")">$msg.get("core.recyclebin.restore")</a> #end</td>
+   <td>#if($dd.canUndelete() && !$xwiki.exists($dd.getFullName())) <a href="$xwiki.getURL($dd.getFullName(), "undelete", "id=$dd.getId()$!xredirect")">$msg.get("core.recyclebin.restore")</a> #end</td>
    <td>
     #if($isSuperAdmin && $dd.canDelete())
-     <a href="$xwiki.getURL($tdoc.getFullName(), "delete", "id=$dd.getId()$!xredirect")"
+     <a href="$xwiki.getURL($dd.getFullName(), "delete", "id=$dd.getId()$!xredirect")"
       onclick="if (confirm('$msg.get("core.recyclebin.completelyDeleteConfirm")')) {this.href += '&amp;confirm=1'; return true;} return false;">
       $msg.get("core.recyclebin.delete")
      </a>
