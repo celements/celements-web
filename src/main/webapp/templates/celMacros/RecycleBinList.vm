@@ -53,6 +53,7 @@ Everything's clean. No trashed document found.
 #end
 #end
 #else
+</h1>
 <p>You need to be an admin to view the recycle bin.</p>
 #end
 </div>
