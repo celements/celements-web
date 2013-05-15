@@ -4,7 +4,7 @@
 #set($deletedDocumentVersions = $services.celementsweb.permanentlyEmptyTrash(30))
 Deleted $deletedDocumentVersions document versions in total.
 #else
-#set($allDeletedDocuments = $services.celementsweb.getDeletedDocuments())
+#set($allDeletedDocuments = $services.celementsweb.getDeletedDocuments('ddoc.date desc'))
 #if($allDeletedDocuments.size() > 0)
 ($allDeletedDocuments.size() documents)</h1>
 Permanently delete all deleted documents which are more than 30 days in the trash <a href="&deleteNow=older30Days">empty older 30 days now</a>
