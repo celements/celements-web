@@ -25,7 +25,8 @@ Permanently delete all deleted documents which are more than 30 days in the tras
  <tbody>
  #foreach($item in $allDeletedDocuments)
  #set($ddList = $xwiki.getDeletedDocuments($item, ''))
- #set($dd = $ddList.get(0))
+ #if($ddList > 0)
+   #set($dd = $ddList.get(0))
   <tr>
    <td><a href="$xwiki.getURL($dd.getFullName(), 'view')">$dd.getFullName()</a></td>
    <td>$ddList.size()</td>
@@ -41,6 +42,9 @@ Permanently delete all deleted documents which are more than 30 days in the tras
     #end
    </td>
   </tr>
+  #else
+  <!-- no deleted versions found for $item !!! -->
+  #end
  #end
  </tbody>
 </table>
