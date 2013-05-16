@@ -29,12 +29,8 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 <td>
 #if ($attach.isImage())
 <a href="$doc.getAttachmentURL("${attach.filename}", 'download')" onclick="if(self.clickOnFileAction) return clickOnFileAction('$attach.filename'); else document.forms[0].${fieldname}.value = imgurl + '/$attach.filename'; return false;" >
-#if(${attach.filename.toLowerCase().endsWith('.jpg')} || ${attach.filename.toLowerCase().endsWith('.jpeg')})
 #set($resizeParams = 'celwidth=80&celheight=80')
-#else
-#set($resizeParams = 'height=80')
-#end
-<img src="$doc.getAttachmentURL("${attach.filename}", 'download', "$resizeParams")" alt="${attach.filename}" border="0" />
+<img src="$doc.getAttachmentURL("${attach.filename}", 'download', "${resizeParams}&version=${attach.version}")" alt="${attach.filename}" border="0" />
 </a>
 #end
 </td><td><a href="$doc.getAttachmentURL("${attach.filename}", "download")" onclick="if(self.clickOnFileAction) return clickOnFileAction('$attach.filename'); else document.forms[0].${fieldname}.value = imgurl + '/$attach.filename'; return false;" >$attach.filename</a></td>

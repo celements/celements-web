@@ -1,3 +1,8 @@
+#set($overwriteLayoutRef = '')
+#if("$!request.overwriteLayout" != '')
+#set($pageLayoutMainDocRef = $services.model.createDocumentReference('', "$!request.overwriteLayout", ''))
+#set($overwriteLayoutRef = $pageLayoutMainDocRef.getLastSpaceReference())
+#end
 ## start a Celements Document
 $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 ##
@@ -13,4 +18,8 @@ $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 #end
 <div id="sitecontainer" class="lang_${language} doclang_$doclang">
 <!-- start celements cells -->
+#if("$!overwriteLayoutRef" != '')
+$celementsweb.renderPageLayout($overwriteLayoutRef)
+#else
 $celementsweb.renderPageLayout()
+#end

@@ -1,5 +1,7 @@
-## init Celements variables
+##only include if legacy celements2web.xar is installed
+#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
+#end
 $xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
 #set($overwriteRenderDocument = 'celInlineTemplates/app.vm')
 $xwiki.parseTemplate("frameheader.vm")

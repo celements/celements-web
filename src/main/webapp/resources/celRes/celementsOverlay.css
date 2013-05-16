@@ -225,13 +225,27 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay .layoutsubsection #cel_overlaybody {
   position: relative;
 }
+.generalOverlay #cel_overlaybody h1 {
+  font-size: 18px;
+  line-height: 21px;
+  margin-bottom: 25px
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+  color: black;
+}
 .generalOverlay .layoutsubsection #cel_overlaybody .changePassword h2 {
   font-size: 15px;
   line-height: 18px;
   margin-bottom: 25px
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+  color: black;
 }
 .generalOverlay .layoutsubsection #cel_overlaybody .changePassword dl dd {
   margin-left:160px;
   position:relative;
   top:-16px;
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+  color: black;
 }
