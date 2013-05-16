@@ -118,7 +118,7 @@
     #end
     #set($devNull = $query.addOrRestrictionList($otherRestrList))
     #set($luceneQuery = "${query.getQueryString()}")
-    #set($results = $xwiki.lucene.getSearchResults($luceneQuery, "default,de"))
+    #set($results = $xwiki.lucene.getSearchResults($luceneQuery, "default,${language}"))
     #set($resultList = $results.getResults())
     #set ($start = 0)
     #set ($nb = 50)
