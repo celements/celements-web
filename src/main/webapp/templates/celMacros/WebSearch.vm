@@ -126,7 +126,6 @@
     #end
     #set($devNull = $query.addOrRestrictionList($otherRestrList))
     #set($luceneQuery = "${query.getQueryString()}")
-    ##FIXME default,de !?! shouldn't be it default,${default_language}
     #set($results = $xwiki.lucene.getSearchResults($luceneQuery, "default,${language}"))
     #set($resultList = $results.getResults())
     #set ($start = 0)
