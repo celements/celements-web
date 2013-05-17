@@ -119,6 +119,11 @@
       #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.content', "$!text").setFuzzy()}))
       #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.publishdate', "$!text").setFuzzy()}))
     #end
+    #if($searchpackages.indexOf(',chronoblog,') >= 0)
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.project', "$!text").setFuzzy()}))
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.description', "$!text").setFuzzy()}))
+      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.date', "$!text")}))
+    #end
     #set($devNull = $query.addOrRestrictionList($otherRestrList))
     #set($luceneQuery = "${query.getQueryString()}")
     ##FIXME default,de !?! shouldn't be it default,${default_language}
