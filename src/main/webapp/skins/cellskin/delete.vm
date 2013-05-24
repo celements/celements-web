@@ -4,5 +4,8 @@
 #set($celementsLoadInOverlay = 'celInlineTemplates/delete.vm')
 #set($showOverlayLanguageBar = false)
 #set($showCloseOverlayButton = true)
+#set($closeOverlayRedirect = "$!request.get('xcancel')")
+#if("$!closeOverlayRedirect" == '')
 #set($closeOverlayRedirect = "$!request.get('xredirect')")
+#end
 #template("view.vm")
