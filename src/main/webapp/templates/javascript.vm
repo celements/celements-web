@@ -123,7 +123,7 @@ function cancelCancelEdit() {
 }
 Event.observe(window, "unload", cancelEdit);
 Event.observe(window, "pagehide", cancelEdit);
-Event.observe(document, "dom:loaded", prepareCancelEdit);
+$j(document).ready(prepareCancelEdit);
 // ]]>
 </script>
 #end
