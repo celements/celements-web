@@ -43,8 +43,10 @@ $xwiki.jsfx.use('uicomponents/suggest/suggest.js', true)
    $xwiki.ssfx.use('uicomponents/search/searchSuggest.css', true)
   #end
 #end
-<script type="text/javascript" src="$xwiki.getSkinFile("js/prototype/prototype.js", true)"></script>
-<script type="text/javascript" src="$xwiki.getSkinFile("js/xwiki/xwiki.js", true)"></script>
+<script type="text/javascript" src="$services.celementsweb.getSkinFile(':js/prototype/prototype.js')"></script>
+<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/jquery.js', 'file')"></script>
+<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/jquery-noconflict.js', 'file')"></script>
+<script type="text/javascript" src="$services.celementsweb.getSkinFile(':js/xwiki/xwiki.js')"></script>
 <script type="text/javascript">
 // <![CDATA[
 XWiki.webapppath = "${xwiki.webAppPath}";
