@@ -35,7 +35,7 @@ var XWiki = (function(XWiki){
      * FIXME: right now disabled for IE6 - until the rich UI is fully debugged for this browser
      */
     if (!browser.isIE6x) {
-      document.observe("dom:loaded", function(){
+      Event.observe(window, "load", function(){
         $$("#packagelistcontainer ul.xlist li.xitem a.package").invoke("observe", "click", function(event) {
             var a = event.element(), file = a.href.substring(a.href.indexOf("&file=") + 6);
 
