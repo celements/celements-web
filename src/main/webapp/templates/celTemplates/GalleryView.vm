@@ -11,18 +11,27 @@ $celementsweb.addExtJSfileOnce(':celJS/lytebox5/lytebox.js', 'file')
 #end
 #set($obj = $galleryDoc.getObject("XWiki.PhotoAlbumClass"))
 #set($thumbWidth = $!galleryDoc.display("thumbWidth", "view",$obj))
-#if($thumbWidth == "")
+#if("$!thumbWidth" == "")
 #set($thumbWidth = 170)
+#end
+#set($thumbHeight = $!galleryDoc.display("height", "view",$obj))
+#if("$!thumbHeight" == "")
+#set($thumbHeight = 170)
+#end
+#set($thumbWidthStr = "$!{thumbWidth}px")
+#set($thumbHeightStr = "$!{thumbHeight}px")
+##
+#set($diaWidth = $!obj.getProperty('photoWidth').getValue())
+#if("$!diaWidth" == "")
+#set($diaWidth = 700)
+#end
+#set($diaHeight = $!obj.getProperty('height2').getValue())
+#if("$!diaHeight" == "")
+#set($diaHeight = 700)
 #end
 #if("$!comparator" == '')
   #set($comparator = 'AttachmentAscendingNameComparator')
 #end
-#set($thumbHeight = $!galleryDoc.display("height", "view",$obj))
-#if($thumbHeight == "")
-#set($thumbHeight = 170)
-#end
-#set($thumbWidthStr = $thumbWidth + 'px')
-#set($thumbHeightStr = $thumbHeight + 'px')
 #if("$!withoutEnclosingDiv" != '1')
 <div id="Gallery${galleryDoc.getName()}:${galleryDoc}" class="celements_gallery_overview cel_cm_gallery">
  <h2 class="celements_gallery_title">$!galleryDoc.getTitle()</h2>		##already Multilingual title??
@@ -30,7 +39,7 @@ $celementsweb.addExtJSfileOnce(':celJS/lytebox5/lytebox.js', 'file')
 #end
 #set($dataLyteOptions = "$!{xwiki.getSpacePreference('LyteboxOptions')}")
 #if("$!dataLyteOptions" == '')
-    #set($dataLyteOptions = 'slide:true loopslideshow:true group:group1 shownavigation:true')
+    #set($dataLyteOptions = 'slide:true loopslideshow:true group:group1 shownavigation:true animateOverlay:false')
 #end
 #if("$!obj" != '')
   #set($lyteboxTheme = $obj.getProperty('theme').getValue())
@@ -59,7 +68,10 @@ var lyteboxTheme = '$lyteboxTheme';
 	 #set($thumbDescription = '')
   #end
   #if("$!withoutLitebox" != '1')
-    <a id="startLytebox" class="celements_gallery_link_slideshow lytebox" href="$galleryDoc.getAttachmentURL($diaShow_attachmentList.get(0).filename,"download")"##
+  ##IMPORTANT: we need to add filename=xxx.jpg at the end of the URL so that lytbox
+  ##           recognises that we show images!!!
+    <a id="startLytebox" class="celements_gallery_link_slideshow lytebox" ##
+    href="$galleryDoc.getAttachmentURL($diaShow_attachmentList.get(0).filename,"download")?celwidth=$!{diaWidth}&celheight=$!{diaHeight}&filename=$escapetool.url($attach.filename)"##
  data-lyte-options="beforeend:doBeforeEnd $!{dataLyteOptions}"##
  title="$thumbDescription" >Slideshow<!--ie6.0--></a>
   #end
@@ -82,7 +94,9 @@ var lyteboxTheme = '$lyteboxTheme';
   #if("$!withoutEnclosingDiv" != '1')
    	<div class="thumb_element">
   #end
-<a class="thumbnail lytebox" href="$galleryDoc.getAttachmentURL($attach.filename,"download")"##
+  ##IMPORTANT: we need to add filename=xxx.jpg at the end of the URL so that lytbox
+  ##           recognises that we show images!!!
+<a class="thumbnail lytebox" href="$galleryDoc.getAttachmentURL($attach.filename,"download")?celwidth=$!{diaWidth}&celheight=$!{diaHeight}&filename=$escapetool.url($attach.filename)"##
  data-lyte-options="$!{dataLyteOptions}"##
  title="$thumbDescription" style="width:$thumbWidthStr; height:$thumbHeightStr;">
 #if(!$withoutThumbnails)
@@ -118,7 +132,7 @@ var lyteboxTheme = '$lyteboxTheme';
 var doBeforeEnd = function(arg) {
   history.back();
 };
-Event.observe(window, 'load', function() {
+$j(document).ready(function() {
 	myLytebox.start(document.getElementById('startLytebox'), true, false);
 });
 </script>
