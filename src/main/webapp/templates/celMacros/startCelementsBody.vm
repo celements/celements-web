@@ -8,7 +8,11 @@
 $xwiki.parseTemplate("celMacros/finaliseCelementsDocumentHeader.vm")
 #end
 </head>
-#foreach($parentFullName in $celementsweb.getDocumentParentsList($doc.fullName, true))
+#set($docList = $celementsweb.getDocumentParentsList($doc.fullName, true))
+#if($docList.isEmpty())
+  #set($docList = ["$services.model.serialize($doc.documentReference, 'local')"])
+#end
+#foreach($parentFullName in $docList)
   #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celdocpath_${parentFullName}")
   #set($HTMLBodyCSSClasses = $HTMLBodyCSSClasses.trim())
 #end
