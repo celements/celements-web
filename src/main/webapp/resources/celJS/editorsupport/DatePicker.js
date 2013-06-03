@@ -37,7 +37,8 @@ var addDatePickerToField = function(inputField) {
   });
   var inputFieldValue = $F($(inputField));
   if (inputFieldValue && (inputFieldValue != '')) {
-    var dateStr = inputFieldValue.split('\.');
+    var dateSpliter = new RegExp('[-./]');
+    var dateStr = inputFieldValue.split(dateSpliter);
     var curDay = dateStr[0];
     var curMonth = dateStr[1];
     var curYear = dateStr[2];
