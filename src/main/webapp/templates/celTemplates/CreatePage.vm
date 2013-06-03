@@ -68,7 +68,7 @@
     
 	<div class="celements2_box">
 	  <div class="celements2_box_title">$adminMsg.get('cel_ctm_addpage')</div>
-      <div class="celements2_error">$msg.get('cel_tm_warning_doc_exists_already', ["$!{request_menu_link}"])</div>
+      <div class="celements2_error">$msg.get('cel_tm_error_doc_exists_already', ["$!{request_menu_link}"])</div>
 	</div>
 
 ## Empty form or not properly filled
