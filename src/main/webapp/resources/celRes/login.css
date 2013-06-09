@@ -23,6 +23,10 @@
 #loginForm fieldset.xwikimessage table.xwikilogintable td input#j_password {
 	width:200px;
 }
+#loginForm fieldset.xwikimessage table.xwikilogintable tr.username td,
+#loginForm fieldset.xwikimessage table.xwikilogintable tr.username th {
+  padding-bottom: 3px;
+}
 #loginForm fieldset.xwikimessage .buttons {
   position: relative;
   height: 25px;
