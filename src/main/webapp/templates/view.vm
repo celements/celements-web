@@ -1,5 +1,7 @@
 #set($contextIsFinished = false)
-#set($isXWikiSkinRequested = (("$!request.viewer" != '') || ("$!request.skin" != '') || (($xwiki.getSkin().indexOf('.') < 0) && ("$xwiki.getSkin()" != 'cellskin'))))
+#set($isXWikiSkinRequested = (("$!request.viewer" != '') || ("$!request.skin" != ''))) 
+#set($isXWikiSkinRequested = ($isXWikiSkinRequested || (($xwiki.getSkin().indexOf('.') < 0) && ("$xwiki.getSkin()" != 'cellskin'))))
+#set($isXWikiSkinRequested = ($isXWikiSkinRequested || (($xwiki.getBaseSkin() != 'celements2web:Skins.BaseSkin') && ($xwiki.getBaseSkin() != 'cellskin'))))
 ## #if($context.user.startsWith('xwiki:') && $isXWikiSkinRequested)
 #if($isXWikiSkinRequested)
 ###
