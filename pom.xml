@@ -70,13 +70,13 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>1.11.1</version>
+      <version>1.12-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -117,7 +117,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.59-SNAPSHOT</version>
+      <version>1.59</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
