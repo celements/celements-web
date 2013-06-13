@@ -1,0 +1,25 @@
+#set($xredirect = "$!request.get('xredirect')")
+#if("$!xredirect" == '')
+#set($xredirect = $doc.getURL('view'))
+#end
+<link rel="stylesheet" href="$services.celementsweb.getSkinFile(':celJS/codemirror/lib/codemirror.css', 'file')">
+<span class='cel_lazyloadJS' style='display: none;'>celJS/codemirror/lib/codemirror.js</span>
+$celementsweb.addExtJSfileOnce(':celJS/codemirror/lib/codemirror.js', 'file')
+<span class='cel_lazyloadJS' style='display: none;'>celJS/codemirror/addon/edit/closebrackets.js</span>
+$celementsweb.addExtJSfileOnce(':celJS/codemirror/addon/edit/closebrackets.js', 'file')
+<span class='cel_lazyloadJS' style='display: none;'>celJS/codemirror/mode/css/css.js</span>
+$celementsweb.addExtJSfileOnce(':celJS/codemirror/mode/css/css.js', 'file')
+
+<form id="edit" method="post" action="$doc.getURL("save")">
+    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+    <input type="hidden" name="xredirect" value="$!xredirect" />
+    <input type="hidden" name="language" value="$!tdoc.language" />
+    <div id="editablecode_container">
+    <textarea id="cssContent" name="content">##
+$xwiki.getXMLEncoded($doc.getTranslatedDocument().content)</textarea>
+##TODO move to js file and execute onload OR onTabReady
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("cssContent"), {});
+    </script>
+    </div>
+</form>

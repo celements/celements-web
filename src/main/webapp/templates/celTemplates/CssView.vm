@@ -1,0 +1,9 @@
+#if("$!celldoc" != '')
+#set($contentDoc = $celldoc)
+#else   
+#set($contentDoc = $tdoc)
+#end
+@charset "UTF-8";
+/* CSS Document */
+#set($rteContent = $services.celementsweb.renderDocument($!contentDoc.documentReference, $default_language))
+$rteContent
