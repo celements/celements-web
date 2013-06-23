@@ -27,10 +27,11 @@
   $xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
   </div>
   <div>
-<h1>Reordering</h1>
-<p>Bitte mit Drag&amp;Drop die Struktur anpassen!</p>
-<button class="cel_naveditor_button_cancel" >Abbrechen</button>
-<button class="cel_naveditor_button_saveAndContinue" >Speichern</button>  </div>
+    <h1>$adminMsg.get('cel_presentation_reordering_title')</h1>
+    <p>$adminMsg.get('cel_presentation_reordering_hint')</p>
+    <button class="cel_naveditor_button_cancel">$adminMsg.get('cel_cancel')</button>
+    <button class="cel_naveditor_button_saveAndContinue">$adminMsg.get('cel_save')</button>
+  </div>
   <div id="cel_presentation_editor_reorder_tree" class="presentation_order_edit">
 <span class='cel_lazyloadJS' style='display: none;'>celJS/yui/yahoo/yahoo-min.js</span>
 <span class='cel_lazyloadJS' style='display: none;'>celJS/yui/event/event-min.js</span>
