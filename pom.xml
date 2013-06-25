@@ -48,7 +48,7 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <platform.core.version>2.31</platform.core.version>
+    <platform.core.version>2.33</platform.core.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <catalina.port>10081</catalina.port>
     <catalina.home.celementsweb-platform>${env.CATALINA_HOME}</catalina.home.celementsweb-platform>
@@ -76,7 +76,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>1.2-SNAPSHOT</version>
+      <version>1.2</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -117,7 +117,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.61-SNAPSHOT</version>
+      <version>1.61</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -127,7 +127,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-calendar</artifactId>
-      <version>1.16-SNAPSHOT</version>
+      <version>1.16</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
