@@ -3,7 +3,7 @@
 
 /* CSS File for the login Page (has to be done yet */
 
-#loginForm fieldset.xwikimessage {
+#loginForm .cetered {
   background: white;
   width: 500px;
   padding: 10px;
@@ -13,6 +13,11 @@
     padding: 10px;
     width: 530px;
 }
+/* geändert laut Ticket #5637
+#loginForm fieldset.xwikimessage {
+  background: white;
+  width: 500px;
+}*/
 #loginForm fieldset.xwikimessage table.xwikilogintable th label {
 	font-size:12px;
 	line-height:15px;

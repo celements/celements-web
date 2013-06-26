@@ -212,31 +212,43 @@ form#newsletter_send span#testResultBoxSpan {
 	clear:both;
 }
 .UserAdminSheet form#update table, .UserAdminSheet form#update table td{
-	line-height:19px;
 	font-size:12px;
-}
-.generalOverlay .layoutsubsection {
-  font-size: 12px;
-  line-height: 14px;
-  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-  font-style: normal;
-  color: black;
+	line-height:19px;
 }
 .generalOverlay .layoutsubsection #cel_overlaybody {
   position: relative;
 }
-.generalOverlay #cel_overlaybody h1 {
-  font-size: 18px;
-  line-height: 21px;
-  margin-bottom: 25px
+.generalOverlay .layoutsubsection,
+.generalOverlay .layoutsubsection p {
+  font-size: 12px;
+  line-height: 16px;
   font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
   color: black;
 }
+.generalOverlay #cel_overlaybody h1,
+.generalOverlay #cel_overlaybody h2,
+.generalOverlay #cel_overlaybody h3 {
+  font-size: 18px;
+  line-height: 21px;
+  margin-bottom: 25px;
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+  color: black;
+}
+.generalOverlay #cel_overlaybody h2 {
+  font-size: 16px;
+  line-height: 19px;
+}
+.generalOverlay #cel_overlaybody h3 {
+  font-size: 14px;
+  line-height: 17px;
+}
+
 .generalOverlay .layoutsubsection #cel_overlaybody .changePassword h2 {
   font-size: 15px;
   line-height: 18px;
-  margin-bottom: 25px
+  margin-bottom: 25px;
   font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
   color: black;
@@ -248,4 +260,32 @@ form#newsletter_send span#testResultBoxSpan {
   font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
   color: black;
+}
+
+/* Tabellen */
+.generalOverlay #cel_overlaybody #recylceBinList table,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table th,
+.generalOverlay #cel_overlaybody #recylceBinList table td,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table th,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table td,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table th,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table td {
+	padding: 4px;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table th,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table th,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table th {
+	padding: 2px;
+	text-align: left;
+	border-bottom: 2px solid black;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table .tr_odd td,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .tr_odd td,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table .tr_odd td { 
+	background-color: #E1E1E1;
 }
