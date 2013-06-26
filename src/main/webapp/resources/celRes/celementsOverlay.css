@@ -316,8 +316,8 @@ form#newsletter_send span#testResultBoxSpan {
 }
 .generalOverlay #cel_overlaybody #recylceBinList table .column_deleter,
 .generalOverlay #cel_overlaybody #recylceBinList table .column_deldate {
-	width: 100px;
+	width: 110px;
 }
 .generalOverlay #cel_overlaybody #recylceBinList table .column_actions {
-	width: 235px;
+	width: 215px;
 }
