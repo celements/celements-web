@@ -1,6 +1,9 @@
-#if(!$xwiki.hasProgrammingRights())
-This document requires programming rights and needs to be saved by an administrator of this Wiki!
-#else
+<div id="recylceBinAttachmentList">
+<h1>Attachment Recycle Bin ##
+#if($xwiki.hasAdminRights())
+#set($allDeletedAttachments = $services.celementsweb.getDeletedAttachments())
+#if($allDeletedAttachments.size() > 0)
+($allDeletedAttachments.size() documents)</h1>
 #set($dateFormat = 'yyyy MMMM d, HH:mm')
   #set($deletedAttachments = $xwiki.search('select count(datt.id) from DeletedAttachment as datt').get(0))
   #if($deletedAttachments == 0)
@@ -8,11 +11,11 @@ This document requires programming rights and needs to be saved by an administra
     {{info}}$msg.get('xe.index.trash.attachments.empty'){{/info}}
 
   #else
-  #macro(displayDeletedAttachment $id)
+  #macro(displayDeletedAttachment $id $oddEven)
     #set($datt = $xwiki.getDeletedAttachment("$id"))
     #set($originalAttachment = $datt.getAttachment())
     #set($originalDocument = $xwiki.getDocument($datt.docName))
-    <tr>
+    <tr class="tr_${oddEven}">
       <td><a href="$originalDocument.getAttachmentRevisionURL($originalAttachment.filename, $originalAttachment.version, "rid=${datt.id}").replaceAll('&', '&amp;')">$datt.filename</a></td>
       <td><a href="$originalDocument.getURL()">$originalDocument.displayTitle (${originalDocument.fullName})</a></td>
       <td>$xwiki.formatDate($datt.getDate(), $dateFormat)</td>
@@ -34,10 +37,26 @@ This document requires programming rights and needs to be saved by an administra
       <th scope="col" class="xwiki-livetable-display-header-text">$msg.get('xe.index.trash.attachments.actions')</th>
     </tr></thead>
     <tbody class="xwiki-livetable-display-body">
-    #foreach($item in $services.celementsweb.getDeletedAttachments())
-      #displayDeletedAttachment($item)
+    #foreach($item in $allDeletedAttachments)
+      #if($velocityCount % 2 == 1)
+        #set($oddEven = "odd")
+      #else
+        #set($oddEven = "even")
+      #end
+      #displayDeletedAttachment($item $oddEven)
     #end
     </tbody>
   </table>
   #end ## deletedAttachments != 0
+#else
+</h1>
+<p>
+##TODO move to dictionary
+Everything's clean. No trashed attachment found.
+</p>
 #end
+#else
+</h1>
+<p>You need to be an admin to view the attachment recycle bin.</p>
+#end
+</div>
