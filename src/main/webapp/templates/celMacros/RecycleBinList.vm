@@ -1,34 +1,63 @@
 <div id="recylceBinList">
-<h1>Recycle Bin</h1>
-<p>$msg.get("core.recyclebin.showlistmsg")</p>
+<h1>Recycle Bin ##
+#if($xwiki.hasAdminRights())
+#if("$request.deleteNow" == 'older30Days')
+#set($deletedDocumentVersions = $services.celementsweb.permanentlyEmptyTrash(30))
+</h1>
+<p>Deleted $deletedDocumentVersions document versions in total.</p>
+<p><a href="?xpage=overlay&conf=FullRecylceBin">back to recycle bin</a>
+#else
+#set($allDeletedDocuments = $services.celementsweb.getDeletedDocuments('ddoc.date desc', false))
+#if($allDeletedDocuments.size() > 0)
+($allDeletedDocuments.size() documents)</h1>
+Permanently delete all deleted documents which are more than 30 days in the trash <a href="?xpage=overlay&conf=FullRecylceBin&deleteNow=older30Days">empty older 30 days now</a>
+<p>$msg.get('core.recyclebin.showlistmsg')</p>
 <table class="centered">
  <thead>
   <tr>
    <th>Document</td>
-   <th>$msg.get("core.recyclebin.deleter")</td>
-   <th>$msg.get("core.recyclebin.deleteDate")</td>
-   <th colspan="2">$msg.get("core.recyclebin.actions")</th>
+   <th>num deleted<br/>versions</td>
+   <th>$msg.get('core.recyclebin.deleter')</td>
+   <th>$msg.get('core.recyclebin.deleteDate')</td>
+   <th colspan="2">$msg.get('core.recyclebin.actions')</th>
   </tr>
  </thead>
  <tbody>
- #foreach($item in $services.celementsweb.getDeletedDocuments())
+ #foreach($item in $allDeletedDocuments)
  #set($ddList = $xwiki.getDeletedDocuments($item, ''))
- #set($dd = $ddList.get(0))
+ #if($ddList > 0)
+   #set($dd = $ddList.get(0))
   <tr>
-   <td>$dd.getFullName()</td>
+   <td><a href="$xwiki.getURL($dd.getFullName(), 'view')">$dd.getFullName()</a></td>
+   <td>$ddList.size()</td>
    <td>$xwiki.getLocalUserName($dd.getDeleter())</td>
-   <td><a href="$doc.getURL("view", "viewer=recyclebin&id=$dd.getId()")">$xwiki.formatDate($dd.getDate())</a></td>
-   <td>#if($dd.canUndelete()) <a href="$xwiki.getURL($tdoc.getFullName(), "undelete", "id=$dd.getId()$!xredirect")">$msg.get("core.recyclebin.restore")</a> #end</td>
+   <td><a href="$xwiki.getURL($dd.getFullName(), 'view', "viewer=recyclebin&id=$dd.getId()")">$xwiki.formatDate($dd.getDate())</a></td>
+   <td>#if($dd.canUndelete() && !$xwiki.exists($dd.getFullName())) <a href="$xwiki.getURL($dd.getFullName(), 'undelete', "id=$dd.getId()$!xredirect")">$msg.get('core.recyclebin.restore')</a> #end</td>
    <td>
     #if($isSuperAdmin && $dd.canDelete())
-     <a href="$xwiki.getURL($tdoc.getFullName(), "delete", "id=$dd.getId()$!xredirect")"
+     <a href="$xwiki.getURL($dd.getFullName(), 'delete', "id=$dd.getId()$!xredirect")"
       onclick="if (confirm('$msg.get("core.recyclebin.completelyDeleteConfirm")')) {this.href += '&amp;confirm=1'; return true;} return false;">
-      $msg.get("core.recyclebin.delete")
+      $msg.get('core.recyclebin.delete')
      </a>
     #end
    </td>
   </tr>
+  #else
+  <!-- no deleted versions found for $item !!! -->
+  #end
  #end
  </tbody>
 </table>
+#else
+</h1>
+<p>
+##TODO move to dictionary
+Everything's clean. No trashed document found.
+</p>
+#end
+#end
+#else
+</h1>
+<p>You need to be an admin to view the recycle bin.</p>
+#end
 </div>

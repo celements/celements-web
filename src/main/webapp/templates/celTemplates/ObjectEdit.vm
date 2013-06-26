@@ -142,7 +142,7 @@
 #set($cel_editobj_obj_title = $adminMsg.get($classname_dict_key, [${obj.number}, ${cel_editobj_obj_count}]))
 #else
 <!-- classname_dict_key not found : $classname_dict_key -->
-#set($cel_editobj_obj_title = "<tt><strong>${class.name}[${obj.number}]: </strong>$cel_editobj_doc.display($firstfield, $obj)</tt>")
+#set($cel_editobj_obj_title = "<tt><strong>${class.name}[${obj.number}]: </strong>$!obj.getProperty($firstfield).getValue()</tt>")
 #end
 <div id="field_${class.name}_${obj.number}">
 <div id="field_${class.name}_${obj.number}_title" class="accordionTabTitleBar"><h6>$cel_editobj_obj_title</h6></div>

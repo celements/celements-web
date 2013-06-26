@@ -6,6 +6,12 @@
 #loginForm .cetered {
   background: white;
   width: 500px;
+  padding: 10px;
+}
+.loginscreen {
+    background: white;
+    padding: 10px;
+    width: 530px;
 }
 /* geändert laut Ticket #5637
 #loginForm fieldset.xwikimessage {
@@ -21,6 +27,10 @@
 #loginForm fieldset.xwikimessage table.xwikilogintable td input#j_username,
 #loginForm fieldset.xwikimessage table.xwikilogintable td input#j_password {
 	width:200px;
+}
+#loginForm fieldset.xwikimessage table.xwikilogintable tr.username td,
+#loginForm fieldset.xwikimessage table.xwikilogintable tr.username th {
+  padding-bottom: 3px;
 }
 #loginForm fieldset.xwikimessage .buttons {
   position: relative;

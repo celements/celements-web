@@ -1,4 +1,4 @@
-document.observe("dom:loaded",function(){$$("#xwikiobjects a.delete").each(function(B){B.observe("click",function(C){B.blur();
+$j(document).ready(function(){$$("#xwikiobjects a.delete").each(function(B){B.observe("click",function(C){B.blur();
 C.stop();
 if(!B.disabled){new XWiki.widgets.ConfirmedAjaxRequest(B.href,{onCreate:function(){B.disabled=true
 },onSuccess:function(){var D=B.up(".xobject");
@@ -74,5 +74,5 @@ B.addClassName("collapsed")
 $("xclassContent").childElements().each(function(B){if(B._expandedBeforeDrag){B.removeClassName("collapsed")
 }})
 }});
-document.observe("dom:loaded",function(){if($("xclassContent")){new XWiki.editors.XPropertyOrdering()
+$j(document).ready(function(){if($("xclassContent")){new XWiki.editors.XPropertyOrdering()
 }});

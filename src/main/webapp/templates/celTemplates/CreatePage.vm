@@ -1,0 +1,169 @@
+## CreatePage
+## shows a form which allows to create a new page.
+##
+## INPUT (optional): $request.newDocBaseTitle
+## 
+## which space? default: Content
+#if($!request.get("space") != "")
+	#set($space = $!request.get("space"))
+#else
+	#set($space = "$!celementsweb.defaultSpace")
+#end
+#set($redirmode = "$!request.get('redirmode')")
+#set($redir = "$!request.get('xredirect')")
+#set($request_menu_link = "$!request.get('menu_link')")
+#if(("$!request.get('forceUntitled')" == '1') && ("$!request_menu_link" == ''))
+  #if("$!request.newDocBaseTitle" != '')
+    #set($request_menu_link = $!celementsweb.getNextTitledPageFullName(${space}, "$!request.newDocBaseTitle"))
+    #set($request_menu_link = $request_menu_link.split('\.').get(1))
+  #else
+    #set($request_menu_link = "$!celementsweb.getNextUntitledPageName(${space})")
+  #end
+#end
+## check input
+#set($filled = ($request.get('submitted') == '1'))
+#set($complete = ($request_menu_link != ""))
+#set($newDocFN = "${space}.$request_menu_link")
+#set($newDocRef = $services.model.resolveDocument($newDocFN))
+#set($exists = $xwiki.exists($newDocRef))
+## check for valid Document Name
+#set($valid = ($request_menu_link == $xwiki.getFormEncoded($request_menu_link)))
+
+## completely new page
+#if($filled && $complete && $valid && !$exists)
+    #set($page_type = $!request.get('page_type'))
+    #if("$!page_type" != '')
+      #set($new_doc = $services.celementsweb.createDocument($newDocRef, $page_type))
+    #else
+      #set($new_doc = $services.celementsweb.createDocument($newDocRef))
+    #end
+    #if("$!new_doc" != '')
+        ## page-layout
+		#if("$!request.get('page_layout')" != '')
+		  #set($pageTypeObj = $new_doc.getObject('Celements2.PageType'))
+		  $pageTypeObj.set('page_layout', "$!request.get('page_layout')")
+		#end
+		## save
+		$new_doc.save()
+		## send redirect
+	    #if("$!redirmode" != '')
+	    #if("$!redirmode" == 'newpageview')
+	      #set($redir = "$!{xwiki.getURL($new_doc.getFullName(),'view')}")
+	    #elseif("$!redirmode" == 'newpageedit')
+	      #set($redirXredirect = 'isCreate=1')
+	      #if("$!redir" != '')
+	        #set($redirXredirect = "$!{redirXredirect}&xredirect=$xwiki.getURLEncoded($redir)")
+	      #end
+	      #set($redir = "$!{xwiki.getURL($new_doc.getFullName(),'edit', $!redirXredirect)}")
+	    	#else
+	        	#set($redir = "$!{xwiki.getURL($new_doc.getFullName(),'edit')}?tab=tb2")
+		    #end
+	    #end
+		$context.getResponse().sendRedirect($redir)
+    #else
+<!-- "successful" : false , "fullName" : "${newDocFN}", "errorMsg" : "unkown reason." -->
+    #end
+## existing page
+#elseif($filled && $complete && $valid && $exists)
+    
+	<div class="celements2_box">
+	  <div class="celements2_box_title">$adminMsg.get('cel_ctm_addpage')</div>
+      <div class="celements2_error">$msg.get('cel_tm_error_doc_exists_already', ["$!{request_menu_link}"])</div>
+	</div>
+
+## Empty form or not properly filled
+#else
+    #if ("$!request_menu_link" == '')
+        #set($request_menu_link = "$!celementsweb.getNextUntitledPageName(${space})")
+    #end
+	<div class="celements2_box">
+	<div class="celements2_box_title">$adminMsg.get('cel_ctm_addpage')</div>
+	#if($filled && (!$complete || !$valid))
+		<div class="celements2_error">$adminMsg.get('cel_tm_error_correct_field')</div>
+	#end
+
+	<form id="update" method="post" action="">
+    <input name='submitted' type='hidden' value='1' />
+    <input name='space' type='hidden' value='$!request.get("space")' />
+
+	<div id="celements2_addpage_mandatory">
+	<table class="celements2_table">
+		<tr><td width="50%">
+		#if($filled && ("$!request_menu_link" == ""))
+			<div class="celements2_input_mandatory clemenets2_error">
+        #else
+			<div class="celements2_input_mandatory">
+		#end
+		Link ($adminMsg.get('cel_tm_document_name'))</div></td>
+		<td width="50%"><input name='menu_link' type='text' size='30' value='$!request_menu_link' class="celements2_input validate-docname" />
+		<a href="#" id="linkPickerLink" style="display:none;" onclick="javascript:window.open('$xwiki.getURL("Celements2.LinkPicker")?xpage=plain&space=${space}&form=update&field=menu_link&mode=Name','LinkPicker','dependent=yes,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes,width=370,height=450,left=100,top=200');return false;">
+			<img src="$xwiki.celementsweb.getSkinFile(':celRes/link.gif')" alt="LinkPicker" title="LinkPicker" border="0" style="float:left;margin-left:5px;"/>
+	    </a>
+#if($filled)
+<div class="validation-advice" style="display: block;">$adminMsg.get('cel_tm_error_exists_notmovable')</div>
+#end
+		</td></tr>
+	</table>
+	</div>
+	<div id="celements2_addpage_optional">
+	<table class="celements2_table">
+			<tr>
+			<td width="50%">$adminMsg.get('cel_tm_page_type')</td>
+			<td width="50%">
+		      <select name="page_type" id="PageType" size="1" class="celements2_input">
+		      #set($defaultPageType = "$!request.get('page_type')")
+      #if("$!defaultPageType" == '')
+          #set($defaultPageType = 'RichText')
+      #end
+    #set($pageTypeCat = "$!request.pageTypeCat")
+    #if("$!pageTypeCat" == 'celltype')
+      #set($pageTypeList = $services.pageType.getAvailableCellTypes())
+    #else
+      #set($pageTypeList = $services.pageType.getAvailablePageTypes())
+    #end
+      #foreach($item in $pageTypeList)
+        #set($cur_doc = $xwiki.getDocument($item))
+        #set($page_type_properties_obj = '')
+        #set($page_type_properties_obj = $cur_doc.getObject('Celements2.PageTypeProperties'))
+         #if("$!page_type_properties_obj" != '')
+          #set($pretty_name = $!page_type_properties_obj.getProperty("type_name").getValue())
+        #else
+          #set($pretty_name = $cur_doc.getName())
+        #end
+        <option value="$cur_doc.getName()" #if("$!cur_doc.getName()" == "$!defaultPageType") selected="selected" #end>$!pretty_name</option>
+      #end      
+      </select>
+      </td>
+      </tr>
+    #set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
+    #if($cel_pageLayouts.keySet().size() > 1)
+      <tr>
+      <td>$adminMsg.get('cel_tm_page_master')</td>
+      <td>
+    #set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
+    <select size="1" name="page_layout">
+        <option selected="selected" value="" label="$cel_defaultLayout">$cel_defaultLayout</option>
+    #foreach($cel_pageLayoutKey in $cel_pageLayouts.keySet())
+        <option value="$cel_pageLayoutKey" label="$cel_pageLayouts.get($cel_pageLayoutKey)">$cel_pageLayouts.get($cel_pageLayoutKey)</option>
+    #end
+    </select>
+      </td>
+      </tr>
+      #end
+    </table>
+    </div>
+      <input type="button" value="$adminMsg.get('cel_cancel')" onclick="javascript:window.history.back()" class="celements2_input_button"/>
+      <input type="submit" value="$adminMsg.get('cel_create_page')"  class="celements2_input_button"/>
+  </form>
+  </div>
+#end
+<script type="text/javascript">
+Validation.add('validate-docname', '$adminMsg.get('cel_tm_validate_warning')', function (v) {
+	return !Validation.get('IsEmpty').test(v) &&  !/\W/.test(v.replace(/-/g, ''))
+});
+ var valid = new Validation('update', {immediate : true});
+ ## if not complete or valid run the js validation
+ #if($filled && (!$complete || !$valid))
+ var result = valid.validate();
+ #end
+</script>

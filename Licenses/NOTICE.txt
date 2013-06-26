@@ -64,6 +64,13 @@ validation.js
 - http://tetlaw.id.au/view/javascript/really-easy-field-validation
 - http://www.opensource.org/licenses/mit-license.php
 
+CodeMirror
+CodeMirror is a JavaScript component that provides a code editor in the browser.
+When a mode is available for the language you are coding in, it will color your
+code, and optionally help with indentation.
+- http://codemirror.net/
+- MIT-style : http://codemirror.net/LICENSE
+
 moofx
 moo.fx is open source, released under the very liberal MIT License,
 so feel free to do anything you want with it

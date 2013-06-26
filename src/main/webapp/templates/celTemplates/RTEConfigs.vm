@@ -1,0 +1,19 @@
+#if($xwiki.hasAdminRights())
+  #set($listTitle = "RTE Config Types")
+  #set($rteConfigsList = $celementsweb.getRTEConfigsList())
+  <div id="rteConfigsList">
+    <h1>$listTitle</h1>
+    <p>click to edit</p>
+    <table>
+  #foreach($rteConfigRef in $rteConfigsList)
+    <tr>
+      #set($rteConfigDoc = $xwiki.getDocument($rteConfigRef))
+      #set($editLink = $rteConfigDoc.getURL('edit', "editor=object&xredirect=$!{doc.getURL('view')}"))
+      <td><a href="$editLink">$!rteConfigRef.getName()</a></td>
+    </tr>
+  #end
+    </table>
+  </div>
+#else
+You need admin rights to view the complete PageType listing.
+#end
