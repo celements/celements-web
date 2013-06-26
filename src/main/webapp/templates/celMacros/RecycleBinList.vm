@@ -1,5 +1,5 @@
 <div id="recylceBinList">
-<h1>Recycle Bin ##
+<h1>Document Recycle Bin ##
 #if($xwiki.hasAdminRights())
 #if("$request.deleteNow" == 'older30Days')
 #set($deletedDocumentVersions = $services.celementsweb.permanentlyEmptyTrash(30))
@@ -23,11 +23,17 @@ Permanently delete all deleted documents which are more than 30 days in the tras
   </tr>
  </thead>
  <tbody>
+ #set($oddEven = "even")
  #foreach($item in $allDeletedDocuments)
  #set($ddList = $xwiki.getDeletedDocuments($item, ''))
- #if($ddList > 0)
+ #if(!$ddList.isEmpty())
    #set($dd = $ddList.get(0))
-  <tr>
+  #if("$!oddEven" == "even")
+    #set($oddEven = "odd")
+  #else
+    #set($oddEven = "even")
+  #end
+  <tr class="tr_${oddEven}">
    <td><a href="$xwiki.getURL($dd.getFullName(), 'view')">$dd.getFullName()</a></td>
    <td>$ddList.size()</td>
    <td>$xwiki.getLocalUserName($dd.getDeleter())</td>
