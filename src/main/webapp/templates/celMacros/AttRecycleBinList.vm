@@ -8,7 +8,7 @@
   #set($deletedAttachments = $xwiki.search('select count(datt.id) from DeletedAttachment as datt').get(0))
   #if($deletedAttachments == 0)
 
-    {{info}}$msg.get('xe.index.trash.attachments.empty'){{/info}}
+    {{info}}$adminMsg.get('xe.index.trash.attachments.empty'){{/info}}
 
   #else
   #macro(displayDeletedAttachment $id $oddEven)
@@ -22,7 +22,7 @@
       <td>$xwiki.getLocalUserName($datt.getDeleter())</td>
       <td class="itemActions">
         #if($datt.canDelete())
-          <a href="${originalDocument.getAttachmentURL($datt.filename, 'delattachment', "trashId=${datt.id}&amp;xredirect=$util.encodeURI($!request.getRequestURI())?$util.encodeURI($!request.getQueryString())")}" class="tool delete" title="$msg.get('xe.index.trash.attachments.actions.delete.tooltip')">$msg.get('xe.index.trash.attachments.delete.text')</a>
+          <a href="${originalDocument.getAttachmentURL($datt.filename, 'delattachment', "trashId=${datt.id}&amp;xredirect=$util.encodeURI($!request.getRequestURI())?$util.encodeURI($!request.getQueryString())")}" class="tool delete" title="$adminMsg.get('xe.index.trash.attachments.actions.delete.tooltip')">$adminMsg.get('xe.index.trash.attachments.delete.text')</a>
         #end
       </td>
     </tr>
@@ -30,11 +30,11 @@
 ##
   <table id="searchResults" class="xwiki-livetable xwiki-livetable-display">
     <thead class="xwiki-livetable-display-header"><tr>
-      <th scope="col" class="xwiki-livetable-display-header-text selected asc">$msg.get('xe.index.trash.attachments.datt.filename')</th>
-      <th scope="col" class="xwiki-livetable-display-header-text">$msg.get('xe.index.trash.attachments.datt.docName')</th>
-      <th scope="col" class="xwiki-livetable-display-header-text">$msg.get('xe.index.trash.attachments.datt.date')</th>
-      <th scope="col" class="xwiki-livetable-display-header-text">$msg.get('xe.index.trash.attachments.datt.deleter')</th>
-      <th scope="col" class="xwiki-livetable-display-header-text">$msg.get('xe.index.trash.attachments.actions')</th>
+      <th class="column_filename">$adminMsg.get('xe.index.trash.attachments.datt.filename')</th>
+      <th class="column_docName">$adminMsg.get('xe.index.trash.attachments.datt.docName')</th>
+      <th class="column_deldate">$adminMsg.get('xe.index.trash.attachments.datt.date')</th>
+      <th class="column_deleter">$adminMsg.get('xe.index.trash.attachments.datt.deleter')</th>
+      <th class="column_actions">$adminMsg.get('xe.index.trash.attachments.actions')</th>
     </tr></thead>
     <tbody class="xwiki-livetable-display-body">
     #foreach($item in $allDeletedAttachments)

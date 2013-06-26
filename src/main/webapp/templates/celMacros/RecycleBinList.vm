@@ -11,15 +11,15 @@
 #if($allDeletedDocuments.size() > 0)
 ($allDeletedDocuments.size() documents)</h1>
 Permanently delete all deleted documents which are more than 30 days in the trash <a href="?xpage=overlay&conf=FullRecylceBin&deleteNow=older30Days">empty older 30 days now</a>
-<p>$msg.get('core.recyclebin.showlistmsg')</p>
+<p>$adminMsg.get('core.recyclebin.showlistmsg')</p>
 <table class="centered">
  <thead>
   <tr>
-   <th>Document</td>
-   <th>num deleted<br/>versions</td>
-   <th>$msg.get('core.recyclebin.deleter')</td>
-   <th>$msg.get('core.recyclebin.deleteDate')</td>
-   <th colspan="2">$msg.get('core.recyclebin.actions')</th>
+   <th class="column_docName">$adminMsg.get('core.recyclebin.docname')</td>
+   <th class="column_numDelVersions">$adminMsg.get('core.recyclebin.numDelVersions')</td>
+   <th class="column_deleter">$adminMsg.get('core.recyclebin.deleter')</td>
+   <th class="column_deldate">$adminMsg.get('core.recyclebin.deleteDate')</td>
+   <th class="column_actions" colspan="2">$adminMsg.get('core.recyclebin.actions')</th>
   </tr>
  </thead>
  <tbody>
@@ -38,12 +38,12 @@ Permanently delete all deleted documents which are more than 30 days in the tras
    <td>$ddList.size()</td>
    <td>$xwiki.getLocalUserName($dd.getDeleter())</td>
    <td><a href="$xwiki.getURL($dd.getFullName(), 'view', "viewer=recyclebin&id=$dd.getId()")">$xwiki.formatDate($dd.getDate())</a></td>
-   <td>#if($dd.canUndelete() && !$xwiki.exists($dd.getFullName())) <a href="$xwiki.getURL($dd.getFullName(), 'undelete', "id=$dd.getId()$!xredirect")">$msg.get('core.recyclebin.restore')</a> #end</td>
+   <td>#if($dd.canUndelete() && !$xwiki.exists($dd.getFullName())) <a href="$xwiki.getURL($dd.getFullName(), 'undelete', "id=$dd.getId()$!xredirect")">$adminMsg.get('core.recyclebin.restore')</a> #end</td>
    <td>
     #if($isSuperAdmin && $dd.canDelete())
      <a href="$xwiki.getURL($dd.getFullName(), 'delete', "id=$dd.getId()$!xredirect")"
-      onclick="if (confirm('$msg.get("core.recyclebin.completelyDeleteConfirm")')) {this.href += '&amp;confirm=1'; return true;} return false;">
-      $msg.get('core.recyclebin.delete')
+      onclick="if (confirm('$adminMsg.get("core.recyclebin.completelyDeleteConfirm")')) {this.href += '&amp;confirm=1'; return true;} return false;">
+      $adminMsg.get('core.recyclebin.delete')
      </a>
     #end
    </td>
