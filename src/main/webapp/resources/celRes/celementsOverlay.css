@@ -263,18 +263,22 @@ form#newsletter_send span#testResultBoxSpan {
 }
 
 /* Tabellen */
-.generalOverlay #cel_overlaybody #recylceBinList table {
+.generalOverlay #cel_overlaybody #recylceBinList table,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table {
 	width: 100%;
 	border-collapse: collapse;
 }
-.generalOverlay #cel_overlaybody #recylceBinList table th {
+.generalOverlay #cel_overlaybody #recylceBinList table th,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table th,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table th {
+	padding: 2px;
 	text-align: left;
 	border-bottom: 2px solid black;
 }
-.generalOverlay #cel_overlaybody #recylceBinList table th + th
-.generalOverlay #cel_overlaybody #recylceBinList table td + td {
-	border-left: 1px solid black;
-}
-.generalOverlay #cel_overlaybody #recylceBinList table tbody tr.odd td { 
+.generalOverlay #cel_overlaybody #recylceBinList table .tr_odd td,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .tr_odd td,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table .tr_odd td { 
+	padding: 2px;
 	background-color: #E1E1E1;
 }
