@@ -15,11 +15,11 @@ Permanently delete all deleted documents which are more than 30 days in the tras
 <table class="centered">
  <thead>
   <tr>
-   <th>Document</td>
-   <th>num deleted<br/>versions</td>
-   <th>$adminMsg.get('core.recyclebin.deleter')</td>
-   <th>$adminMsg.get('core.recyclebin.deleteDate')</td>
-   <th colspan="2">$adminMsg.get('core.recyclebin.actions')</th>
+   <th class="column_docName">$adminMsg.get('core.recyclebin.docname')</td>
+   <th class="column_numDelVersions">$adminMsg.get('core.recyclebin.numDelVersions')</td>
+   <th class="column_deleter">$adminMsg.get('core.recyclebin.deleter')</td>
+   <th class="column_deldate">$adminMsg.get('core.recyclebin.deleteDate')</td>
+   <th class="column_actions" colspan="2">$adminMsg.get('core.recyclebin.actions')</th>
   </tr>
  </thead>
  <tbody>
