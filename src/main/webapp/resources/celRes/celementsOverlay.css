@@ -261,3 +261,20 @@ form#newsletter_send span#testResultBoxSpan {
   font-style: normal;
   color: black;
 }
+
+/* Tabellen */
+.generalOverlay #cel_overlaybody #recylceBinList table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table th {
+	text-align: left;
+	border-bottom: 2px solid black;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table th + th
+.generalOverlay #cel_overlaybody #recylceBinList table td + td {
+	border-left: 1px solid black;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table tbody tr.odd td { 
+	background-color: #E1E1E1;
+}
