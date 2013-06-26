@@ -49,6 +49,7 @@
 <th>last changed at</th>
 </thead>
 <tbody>
+#set($oddEven = "even")
 #foreach ($row in $list)
   #set($docFullName = '')
   #set($docLanguage = '')
@@ -68,7 +69,13 @@
 #set($bentrydoc = $defDoc)
 #set($docLanguage = $defDoc.defaultLanguage)
 #end
-<tr>
+
+#if("$!oddEven" == "even")
+  #set($oddEven = "odd")
+#else
+  #set($oddEven = "even")
+#end
+<tr class="tr_${oddEven}">
 #if(!$hasSpaceRestriction)
 <td class="docSpace">${bentrydoc.space}</td>
 #end
