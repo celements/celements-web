@@ -270,6 +270,14 @@ form#newsletter_send span#testResultBoxSpan {
 	border-collapse: collapse;
 }
 .generalOverlay #cel_overlaybody #recylceBinList table th,
+.generalOverlay #cel_overlaybody #recylceBinList table td,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table th,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table td,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table th,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table td {
+	padding: 4px;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table th,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table th,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table th {
 	padding: 2px;
@@ -279,6 +287,5 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #recylceBinList table .tr_odd td,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .tr_odd td,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table .tr_odd td { 
-	padding: 2px;
 	background-color: #E1E1E1;
 }
