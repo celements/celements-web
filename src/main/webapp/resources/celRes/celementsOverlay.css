@@ -266,7 +266,7 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #recylceBinList table,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table {
-	width: 100%;
+	width: 785px;
 	border-collapse: collapse;
 }
 .generalOverlay #cel_overlaybody #recylceBinList table th,
@@ -288,4 +288,36 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .tr_odd td,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table .tr_odd td { 
 	background-color: #E1E1E1;
+}
+
+/* WIDTH for Attachment Recycle Bin */
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_filename {
+	width:245px;
+}
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_docName {
+	width: 200px;
+}
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_deldate {
+	width: 120px;
+}
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_deleter {
+	width: 100px;
+}
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_actions {
+	width: 120px;
+}
+
+/* WIDTH for Document Recycle Bin */
+.generalOverlay #cel_overlaybody #recylceBinList table .column_docName {
+	width: 220px;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table .column_numDelVersions {
+	width: 130px;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table .column_deleter,
+.generalOverlay #cel_overlaybody #recylceBinList table .column_deldate {
+	width: 110px;
+}
+.generalOverlay #cel_overlaybody #recylceBinList table .column_actions {
+	width: 215px;
 }
