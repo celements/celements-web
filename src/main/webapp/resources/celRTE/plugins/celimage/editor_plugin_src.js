@@ -11,8 +11,7 @@
 
   tinymce.create('tinymce.plugins.CelementsImagePlugin', {
     init : function(ed, url) {
-      // Register commands
-      ed.addCommand('mceCelImage', function() {
+      var mceCelImageCommand = function() {
         // Internal image object like a flash placeholder
         if (ed.dom.getAttrib(ed.selection.getNode(), 'class').indexOf('mceItem') != -1)
           return;
@@ -25,7 +24,11 @@
         }, {
           plugin_url : url
         });
-      });
+      };
+
+      // Register commands
+      ed.addCommand('mceAdvImage', mceCelImageCommand);
+      ed.addCommand('mceCelImage', mceCelImageCommand);
 
       // Register buttons
       ed.addButton('image', {
