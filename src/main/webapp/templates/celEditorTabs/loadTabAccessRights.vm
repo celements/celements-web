@@ -25,6 +25,36 @@
 #end
 
 <div class="cel_rightsTab">
+
+## #if($services.celementsRight.publicationActivated($doc.documentReference))
+##	
+##    ##cel_tm_rights_publication=Publikationszeitraum
+##    ##cel_tm_rights_publication_always=Immer
+##    ##cel_tm_rights_publication_add=Hinzufügen
+##    ##cel_tm_rights_publication_remove=Entfernen
+##    ##cel_tm_rights_publication_from=Von
+##    ##cel_tm_rights_publication_until=Bis
+##    ###cel_tm_rights_publication_published=Publiziert
+##    ##cel_tm_rights_publication_unpublished=Nicht publiziert
+##	
+##	<h1>$!adminMsg.get('cel_tm_rights_publication')</h1>
+##	<form id="publicationForm" name="publicationForm" action="" method="post">
+##        <input type="hidden" name="update" value="1" />
+##        <input type="hidden" name="tab" value="tbrights" />
+##        <input type="hidden" name="xpage" value="celements_ajax" />
+##        <input type="hidden" name="ajax_mode" value="SavePublication" />
+##	
+##	 #set($publiObj = $doc.getObject('Classes.DocumentPublication'))
+##		
+##	 #if("$!publicObj" != "")
+##		##TODO
+##	 #else
+##		$!adminMsg.get('cel_tm_rights_publication_always')
+##	 #end		     
+##	</form>	
+## #end
+		
+<h1>$!adminMsg.get('cel_tm_rights_rights')</h1>
 #if($celementsweb.isCelementsRights($doc.fullName))
 <span class='cel_lazyloadJS' style='display: none;'>celJS/adminUi/accessRights.js</span>
 <form id="accessRightForm" name="accessRightForm" action="" method="post">
