@@ -98,24 +98,20 @@ TE.prototype = {
     var starttabId = '';
     var celstartab = '';
     if ($('cel_startab')) {
-    celstartab = $('cel_startab').innerHTML;
+      celstartab = $('cel_startab').innerHTML;
     }
     var tabClickHandler = function(event) {
-    event = $(event);
-    if (event.target) { 
-      var elem = event.target;
-    } else if (event.srcElement) {
-      var elem = event.srcElement; 
-    }
-    var elemId = elem.id.substring(0, elem.id.length - 7);
-    if (elemId && $(elemId + '-button')) {
-      _me.getTab(elemId);
-      event.stop();
-    }
-  };
-  // set html and body overflow to hidden
-  $$('html')[0].setStyle({ 'overflow' : 'hidden' });
-  $$('body')[0].setStyle({ 'overflow' : 'hidden' });
+      event = $(event);
+      var elem = event.elemens();
+      var elemId = elem.id.substring(0, elem.id.length - 7);
+      if (elemId && $(elemId + '-button')) {
+        _me.getTab(elemId);
+        event.stop();
+      }
+    };
+    // set html and body overflow to hidden
+    $$('html')[0].setStyle({ 'overflow' : 'hidden' });
+    $$('body')[0].setStyle({ 'overflow' : 'hidden' });
     // initialize button objects
     var i = 1;
     _me.tabMenuConfig.tabMenuPanelData.each(function(tabData) {
