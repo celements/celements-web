@@ -239,7 +239,7 @@ TE.prototype = {
           //remove template in url query after creating document in inline mode
           if (window.location.search.match(/\&?template=[^\&]+/)) {
             window.onbeforeunload = null;
-            window.location.search = window.location.search.replace(/\&?template=[^\&]+/, '')
+            window.location.search = window.location.search.replace(/\&?template=[^\&]+/, '');
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
         } else {
@@ -519,7 +519,7 @@ TE.prototype = {
    var _me = this;
    var errorMessages = new Array();
    jsonResponses.each(function(response) {
-     var formId = response.key;
+//     var formId = response.key;
      var formSaveResponse = response.value;
      if (!formSaveResponse.successful) {
        errorMessages.push(formSaveResponse.errorMessages);
