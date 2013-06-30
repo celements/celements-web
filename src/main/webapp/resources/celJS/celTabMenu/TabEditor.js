@@ -129,15 +129,15 @@ TE.prototype = {
     _me.tmd.render();
 
     if (starttabId == '') {
-    var starttablist = $$('.celements3_tabMenu .starttab');
-    if (starttablist.size() > 0) {
-      starttabId = starttablist[0].id.substring(0, starttablist[0].id.length - 4);
-      starttablist[0].select('form').each(function(formelem) {
-        _me.retrieveInitalValues(formelem.id);
-      });
-    } else if(_me.tabMenuConfig.tabMenuPanelData.size() > 0) {
-      var starttabId = _me.tabMenuConfig.tabMenuPanelData[0]['id'];
-    }
+      var starttablist = $$('.celements3_tabMenu .starttab');
+      if (starttablist.size() > 0) {
+        starttabId = starttablist[0].id.substring(0, starttablist[0].id.length - 4);
+        starttablist[0].select('form').each(function(formelem) {
+          _me.retrieveInitalValues(formelem.id);
+        });
+      } else if(_me.tabMenuConfig.tabMenuPanelData.size() > 0) {
+        starttabId = _me.tabMenuConfig.tabMenuPanelData[0]['id'];
+      }
     }
     if(starttabId != null) {
       _me.showTabMenu(starttabId);
