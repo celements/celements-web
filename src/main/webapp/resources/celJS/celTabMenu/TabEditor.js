@@ -102,7 +102,7 @@ TE.prototype = {
     }
     var tabClickHandler = function(event) {
       event = $(event);
-      var elem = event.elemens();
+      var elem = event.element();
       var elemId = elem.id.substring(0, elem.id.length - 7);
       if (elemId && $(elemId + '-button')) {
         _me.getTab(elemId);
