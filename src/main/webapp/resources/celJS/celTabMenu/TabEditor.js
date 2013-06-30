@@ -45,7 +45,18 @@ TE.prototype = {
     }
   },
 
-  retrieveInitalValues : function(formId) {
+  retrieveInitalValues :  function(formId) {
+    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+      console.log('deprecated call for "retrieveInitalValues" instead'
+          + ' use "retrieveInitialValues".');
+      if ((typeof console.trace != 'undefined')) {
+        console.trace();
+      }
+    }
+    retrieveInitialValues(formId);
+  },
+
+  retrieveInitialValues : function(formId) {
     var _me = this;
     if (_me.isValidFormId(formId)) {
       var elementsValues = new Hash();
@@ -78,7 +89,6 @@ TE.prototype = {
       'marginRight' : 'auto'
     });
     var tabMenuPanelWidth = $('tabMenuPanel').getWidth();
-    console.log('width tabMenuPanel : ', $('tabMenuPanel'));
     var loadingElem = new Element('div', {
       'id' : 'celementsLoadingIndicator'
     }).update(loaderimg).setStyle({
@@ -155,7 +165,6 @@ TE.prototype = {
     // initialize button objects
     var i = 1;
     _me.tabMenuConfig.tabMenuPanelData.each(function(tabData) {
-      console.log('init tab button for: ', tabData);
       tabData['container'] = 'buttonSpan' + i;
       var span = new Element('span', { 'class': 'yui-button yui-push-button tabButton', 'id': tabData['container'] });
       $('tabMenuPanel').down('.hd').appendChild(span);
@@ -174,7 +183,7 @@ TE.prototype = {
       if (starttablist.size() > 0) {
         starttabId = starttablist[0].id.substring(0, starttablist[0].id.length - 4);
         starttablist[0].select('form').each(function(formelem) {
-          _me.retrieveInitalValues(formelem.id);
+          _me.retrieveInitialValues(formelem.id);
         });
       } else if(_me.tabMenuConfig.tabMenuPanelData.size() > 0) {
         starttabId = _me.tabMenuConfig.tabMenuPanelData[0]['id'];
@@ -387,12 +396,22 @@ TE.prototype = {
            //TODO following fired event. -> Workaround: execute registered method once after registration.
            $(tabBodyId).fire('tabedit:tabchange');
            $(tabBodyId).select('form').each(function(formelem) {
-             _me.retrieveInitalValues(formelem.id);
+             if (formelem && formelem.id) {
+               _me.retrieveInitialValues(formelem.id);
+             }
            });
          }
       });
     } else {
-      console.log('tab already loaded: ', tabBodyId, $(tabBodyId), ' check new?');
+      $(tabBodyId).select('form').each(function(formelem) {
+        if (formelem && formelem.id && !_me.editorFormsInitialValues.get(formelem.id)) {
+          if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+            console.debug('tab already loaded: ', tabBodyId, $(tabBodyId),
+                ' but is new retrieveInitialValues.');
+          }
+          _me.retrieveInitialValues(formelem.id);
+        }
+      });
     }
     $(tabBodyId).show();
     if (!asyncLoading) {
@@ -443,7 +462,7 @@ TE.prototype = {
     if(Prototype.Browser.IE) {
         newEle.onreadystatechange = function () {
           if (this.readyState === 'loaded' || this.readyState === 'complete') {
-          scriptLoaded();
+            scriptLoaded();
           }
         };
       } else if (Prototype.Browser.Gecko || Prototype.Browser.WebKit) {
@@ -751,7 +770,7 @@ TE.prototype = {
      var remainingDirtyFormIds = allDirtyFormIds;
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
-         _me.retrieveInitalValues(formId);
+         _me.retrieveInitialValues(formId);
        }
        if (remainingDirtyFormIds.size() > 0) {
          if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
