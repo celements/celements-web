@@ -53,7 +53,7 @@ TE.prototype = {
       $(formId).getElements().each(function(elem) {
         if (!elementsValues.get(elem.name) || (elementsValues.get(elem.name) == '')) {
           if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-        	console.debug('initValue for: ' + elem.name, elem.value);
+            console.debug('initValue for: ' + elem.name, elem.value);
           }
           var isInputElem = (elem.tagName.toLowerCase() == 'input');
           var elemValue = elem.value;
@@ -69,8 +69,48 @@ TE.prototype = {
     }
   },
 
+  _insertLoadingIndicator : function() {
+    var loaderimg = new Element('img', {
+      'src': '/file/resources/celRes/ajax-loader.gif'
+    }).setStyle({
+      'display' : 'block',
+      'marginLeft' : 'auto',
+      'marginRight' : 'auto'
+    });
+    var tabMenuPanelWidth = $('tabMenuPanel').getWidth();
+    console.log('width tabMenuPanel : ', $('tabMenuPanel'));
+    var loadingElem = new Element('div', {
+      'id' : 'celementsLoadingIndicator'
+    }).update(loaderimg).setStyle({
+      'backgroundColor' : '#F0F0F0',
+      'position' : 'absolute',
+      'paddingTop' : '35px',
+      'width' : tabMenuPanelWidth + 'px',
+      'paddingBottom' : '30px'
+    });
+    var textLoading = new Element('p').update('loading ...').setStyle({
+      'text-align' : 'center'
+    });
+    loadingElem.insert(textLoading);
+    $$('.celements3_tabMenu')[0].insert({
+      top : loadingElem
+    });
+    $('tabMenuPanel').hide();
+    $$('html')[0].setStyle({
+      'height' : '100%',
+      'margin' : '0',
+      'padding' : '0'
+    });
+    $$('body')[0].setStyle({
+      'height' : '100%',
+      'margin' : '0',
+      'padding' : '0'
+    });
+  },
+
   initTabMenu : function() {
     var tabEditor = this;
+    tabEditor._insertLoadingIndicator();
     new Ajax.Request(getTMCelHost(), {
       method: 'post',
       parameters: {
@@ -115,6 +155,7 @@ TE.prototype = {
     // initialize button objects
     var i = 1;
     _me.tabMenuConfig.tabMenuPanelData.each(function(tabData) {
+      console.log('init tab button for: ', tabData);
       tabData['container'] = 'buttonSpan' + i;
       var span = new Element('span', { 'class': 'yui-button yui-push-button tabButton', 'id': tabData['container'] });
       $('tabMenuPanel').down('.hd').appendChild(span);
@@ -162,6 +203,12 @@ TE.prototype = {
     window.onbeforeunload = _me.checkBeforeUnload;
     _me.initDone = true;
     _me.afterInitListeners.each(_me._execOneListener);
+    new Effect.Parallel([
+       new Effect.Appear('tabMenuPanel', { sync: true }), 
+       new Effect.Fade('celementsLoadingIndicator', { sync: true }) 
+    ], { 
+       duration: 0.5
+    });
   },
 
   _execOneListener : function(listener) {
@@ -302,14 +349,20 @@ TE.prototype = {
     var tabBodyId = tabId + '-tab';
     var div = $(tabBodyId);
     var asyncLoading = false;
-    if((div == null) || ((reload != 'undefined') && reload)) {
-      if(div == null) {
+    if ((div == null) || ((reload != 'undefined') && reload)) {
+      if (div == null) {
         var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
-        div = new Element('div', { 'class': 'menuTab ' + tabBodyId, 'id': tabBodyId, 'style': 'width: ' + width });
+        div = new Element('div', {
+          'class': 'menuTab ' + tabBodyId,
+          'id': tabBodyId,
+          'style': 'width: ' + width
+        });
       }
       var loaderspan = new Element('span', { 'class': 'tabloader' });
       div.update(loaderspan);
-      var loaderimg = new Element('img', { 'src': '/skin/resources/celRes/ajax-loader.gif' });
+      var loaderimg = new Element('img', {
+        'src': '/file/resources/celRes/ajax-loader.gif'
+      });
       loaderspan.update(loaderimg);
       $('tabMenuPanel').down('.bd').appendChild(div);
       var lang = '';
@@ -338,6 +391,8 @@ TE.prototype = {
            });
          }
       });
+    } else {
+      console.log('tab already loaded: ', tabBodyId, $(tabBodyId), ' check new?');
     }
     $(tabBodyId).show();
     if (!asyncLoading) {

@@ -8,6 +8,8 @@
 body div.celements3_tabMenu {
   margin-right:auto;
   margin-left:auto;
+  position: relative;
+  z-index: 99; /** needed because cel_overlay is on z-index: 99; **/
 }
 body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
 	font-family:"Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
