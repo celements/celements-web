@@ -1,16 +1,19 @@
 <div id="recylceBinList">
-<h1>Document Recycle Bin ##
+<h1>$adminMsg.get('cel_recyclebin_title') ##
 #if($xwiki.hasAdminRights())
 #if("$request.deleteNow" == 'older30Days')
 #set($deletedDocumentVersions = $services.celementsweb.permanentlyEmptyTrash(30))
 </h1>
-<p>Deleted $deletedDocumentVersions document versions in total.</p>
-<p><a href="?xpage=overlay&conf=FullRecylceBin">back to recycle bin</a>
+<p>$adminMsg.get('cel_recyclebin_deleted', ["$deletedDocumentVersions"])</p>
+<p><a href="?xpage=overlay&conf=FullRecylceBin">$adminMsg.get('cel_recyclebin_deleted_backlink')</a>
 #else
 #set($allDeletedDocuments = $services.celementsweb.getDeletedDocuments('ddoc.date desc', false))
 #if($allDeletedDocuments.size() > 0)
-($allDeletedDocuments.size() documents)</h1>
-Permanently delete all deleted documents which are more than 30 days in the trash <a href="?xpage=overlay&conf=FullRecylceBin&deleteNow=older30Days">empty older 30 days now</a>
+($adminMsg.get('cel_recyclebin_title_numDocuments', ["$allDeletedDocuments.size()"]))</h1>
+<p>$adminMsg.get('cel_recyclebin_delete_hint')<br/>
+$adminMsg.get('cel_recyclebin_delete_warning')<br/> 
+<a href="?xpage=overlay&conf=FullRecylceBin&deleteNow=older30Days">
+$adminMsg.get('cel_recyclebin_delete_now_link')</a></p>
 <p>$adminMsg.get('core.recyclebin.showlistmsg')</p>
 <table class="centered">
  <thead>
@@ -56,14 +59,11 @@ Permanently delete all deleted documents which are more than 30 days in the tras
 </table>
 #else
 </h1>
-<p>
-##TODO move to dictionary
-Everything's clean. No trashed document found.
-</p>
+<p>$adminMsg.get('cel_recyclebin_empty')</p>
 #end
 #end
 #else
 </h1>
-<p>You need to be an admin to view the recycle bin.</p>
+<p>$adminMsg.get('cel_recyclebin_no_adminrights')</p>
 #end
 </div>
