@@ -1,0 +1,339 @@
+{pre}
+#macro(redirect)
+  #set($redirUser = $context.getUser())
+  #if("$!request.get('update')" != "" && $!xwiki.exists($request.get("update")))
+    #set($redirUser = $request.get("update"))
+  #end
+  #foreach($d in $celementsweb.updateDocFromMap($redirUser, $request.getParameterMap()))
+    $d.save()
+  #end
+  ## compose redirect url
+  #set($xredirectURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin&user=$redirUser").replaceAll('^/xwiki/bin/view/','/').replaceAll('^/Content/','/')})
+   ## send redirect
+   $response.sendRedirect($xredirectURL)
+#end
+ #set($user = $context.getUser())
+ #set($celUserDataFieldLogin = $xwiki.getXWikiPreference('cellogin'))
+ #set($emailLoginActive = ($celUserDataFieldLogin.matches('(.*,)?email(,.*)?')))
+ ## do not use isAdminUser here. Because only if the user is in the AdminGroup
+ ## she/he should be recognised as an Aministrator!
+## $xwiki.includeForm('celements2web:Macros.isAdminUser', false)
+#set($isAdmin = (($isAdmin && $xwiki.getUser($context.getUser()).isUserInGroup('XWiki.XWikiAdminGroup')) || $isSuperAdmin))
+ ## update form submitted?
+ #if("$!request.get('update')" != "" && $!xwiki.exists($request.get("update")))
+   #set($user = $request.get("update"))
+   Update $user<br /><br />
+   #if($isAdmin)
+     ## DO THIS only if the user is Admin. Otherwise he will remove its one edit rights.
+     ## update group memberships
+     ## remove user from all groups except XWikiAllGroup
+     #set($xwql = "from doc.object('XWiki.XWikiGroups') as mem")
+     #set($xwql = "$!{xwql} where mem.member=:username")
+     #set($oldGroupsList = $services.query.xwql($xwql).bindValue('username', $user).execute())
+     #set($!dev = $!oldGroupsList.remove('XWiki.XWikiAllGroup'))
+     #foreach ($item in $oldGroupsList)
+      #if($xwiki.hasAccessLevel("edit", $item))
+       #set($cur_doc = $xwiki.getDocument($item))
+       #foreach($cur_obj in $cur_doc.getObjects("XWiki.XWikiGroups"))
+        #if($cur_obj.get("member")==$user)
+         $cur_doc.removeObject($cur_obj)
+        #end
+       #end
+       $cur_doc.save()
+      #end
+     #end
+     ## add user to groups
+    #set($newGroupsList = $util.getArrayList())
+    #foreach($groupName in $request.getParameterValues("groups"))
+    #if($xwiki.exists($groupName))
+    #set($!dev = $!newGroupsList.add($groupName))
+    #end
+    #end
+     #set($!dev = $!newGroupsList.remove('XWiki.XWikiAllGroup'))
+     #foreach($group in $newGroupsList)
+      #if($xwiki.exists($group))
+       #set($group_doc = $xwiki.getDocument($group))
+       #set($group_obj = $group_doc.newObject("XWiki.XWikiGroups"))
+       $group_obj.set("member","$user")
+       $group_doc.save()
+      #end
+    #end
+  #end  ##if $isAdmin
+    ## update access rights
+    ## remove user access rights
+    ## DO THIS only if the user is Admin. Otherwise he will remove its one edit rights.
+    #if($isAdmin)
+      #set($cur_doc = $xwiki.getDocument($user))
+      #foreach($cur_obj in $cur_doc.getObjects("XWiki.XWikiRights"))
+       #if($cur_obj)
+        $cur_doc.removeObject($cur_obj)
+       #end
+      #end
+      $cur_doc.save()
+      ## Allow user to edit his userdoc
+      #set($curdoc = $xwiki.getDocument($user))    
+      #set($rightsobj = $curdoc.newObject('XWiki.XWikiRights'))
+      $rightsobj.set('users',$user)
+      $rightsobj.set('levels','view,edit,delete')
+      $rightsobj.set('allow',1)       
+      ## Allow contenteditors to edit the userdoc if the user is not a contenteditor or an admin
+      #if(!$isContentEditor && !$isAdmin)
+       #set($rightsobj = $curdoc.newObject('XWiki.XWikiRights'))
+       $rightsobj.set('groups','XWiki.ContentEditorsGroup')
+       $rightsobj.set('levels','view,edit,delete')
+       $rightsobj.set('allow',1)
+      #else
+       #set($rightsobj = $curdoc.newObject('XWiki.XWikiRights'))
+       $rightsobj.set('groups','XWiki.ContentEditorsGroup')
+       $rightsobj.set('levels','view')
+       $rightsobj.set('allow',1)      
+      #end
+      $curdoc.save()
+    #end
+   
+   ## save user data
+   #if("$!request.get('extendedHasSave')" != '1')
+     #redirect()
+   #elseif($xwiki.exists('LocalMacros.extendUserAdmin'))
+     $xwiki.includeForm('LocalMacros.extendUserAdmin', false)
+   #end
+ #end
+ ## user selected?
+ ## if no user is given in the request show the user itself
+ ## show allways the user itself if the user is no Administrator
+ #if(!$isAdmin || ("$!request.get('user')" == ''))
+   #set($show_user = true)
+   #set($user = $context.getUser())
+ #elseif(("$!request.get('user')" != '') && ("$!request.get('user')" != '---'))
+   #set($show_user = true)
+   #set($user = $!request.get("user"))
+ #else
+   #set($show_user = false)
+ #end
+<div class="UserAdminSheet cel_overlay_scrollable">   
+ ## Show user selection
+<div class="celements2_box">
+ #if($isAdmin)
+ <div class="celements2_box_title">Users</div>
+ #set($actionURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin").replaceAll('^/xwiki/bin/view/','/').replaceAll('^/Content/','/')})
+ <form id="userselect" action="$!actionURL" method="post">
+ <select name="user" style="width:300px;" size="1" class="celements2_input"##
+ onchange="##
+$('userselect').submit()">
+   <option value="---">---</option>
+ #set($userList = $util.arrayList)
+#set($xwql = "from doc.object(XWiki.XWikiUsers) as usr")
+#set($xwql = "${xwql} order by usr.last_name, usr.first_name")
+ #foreach ($item in $services.query.xwql($xwql).execute())
+   #set($itemdoc = $xwiki.getDocument($item))
+   #set($cobj = $itemdoc.getObject("XWiki.XWikiUsers",0))
+   #set($company = $itemdoc.display("company","view",$cobj))
+   #if("$!company" == '')
+    #set($!res = $userList.add($item))
+   #end
+ #end
+#set($xwql = "from doc.object(XWiki.XWikiUsers) as usr")
+#set($xwql = "${xwql} order by usr.company, usr.last_name, usr.first_name")
+ #foreach ($item in $services.query.xwql($xwql).execute())
+   #set($itemdoc = $xwiki.getDocument($item))
+   #set($cobj = $itemdoc.getObject("XWiki.XWikiUsers",0))
+   #set($company = $itemdoc.display("company","view",$cobj))
+   #if("$!company" != '')
+    #set($!res = $userList.add($item))
+   #end
+ #end
+ #foreach ($item in $userList)
+  ## display user only if we have view right
+  #if($xwiki.hasAccessLevel("view", $item))
+   #set($itemdoc = $xwiki.getDocument($item))
+   #set($cobj = $itemdoc.getObject("XWiki.XWikiUsers",0))
+   #set($fname = $itemdoc.display("first_name","view",$cobj))
+   #set($lname = $itemdoc.display("last_name","view",$cobj))
+   #set($company = $itemdoc.display("company","view",$cobj))
+<option value="$item"##
+#if($item == $user)
+ selected="selected"##
+#end
+#set($userFieldValue = "#if($!company != '')${company},#end #if($!lname != '')$!{lname},#end $!{fname}")
+#if("$!userFieldValue.trim()" == '')#set($userFieldValue = "$itemdoc.getName()")#end
+>#if($!cobj.getProperty("active").getValue() != 1)(in-active)#end $userFieldValue</option>
+  #end
+ #end
+ </select>
+## <input type="submit" value="Show"  class="celements2_input_button"/>&nbsp;
+ #set($xredirectURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin&user=$user").replaceAll('^/xwiki/bin/view/','/').replaceAll('^/Content/','/')})
+ #set($xredirectURL = $escapetool.url($xredirectURL))
+ #set($addUserURL = "${doc.getURL('view', 'xpage=overlay&conf=Register')}&xredirect=$!xredirectURL")
+ <a style="margin-left:50px;" href="$addUserURL">$adminMsg.get('cel_add_user')</a>
+ #if($show_user && $xwiki.exists($user))
+ #set($cel_user_doc = $xwiki.getDocument($user))
+ #set($delUserURL = "${cel_user_doc.getURL('delete')}?xredirect=$!xredirectURL")
+   &nbsp;<a style="float:right;margin-right:10px;" href="$delUserURL">$adminMsg.get('cel_delete_user')</a>
+ #end
+ </form>
+ <br />
+ <br />
+ #end
+ #if($show_user && $xwiki.hasAccessLevel("view", $user, $user))
+ #set($cel_editobj_doc = $xwiki.getDocument($user))
+ #set($user_obj = $cel_editobj_doc.getObject('XWiki.XWikiUsers'))
+ #set($isLDAPuser = ("$!cel_editobj_doc.getObject('XWiki.LDAPProfileClass')" != ''))
+ #set($has_edit = $xwiki.hasAccessLevel("edit", $user, $user))
+ #if($emailLoginActive)
+ #set($userLogin = $!user_obj.get('email'))
+ #else
+ #set($userLogin = $cel_editobj_doc.getName())
+ #end
+ <div class="celements2_box_title">$adminMsg.get('cel_useradmin_title',["$userLogin"])</div>
+   <form id="update" name="update" action="" method="post">
+ #set($xredirectURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin&user=$user").replaceAll('^/xwiki/bin/view/','/').replaceAll('^/Content/','/')})
+   <input type="hidden" name="xredirect" value="$xredirectURL" />
+   <input type="hidden" name="XWiki.XWikiUsers_nb" value="1" />
+   <input type="hidden" name="update" value="$user" />
+   <input type="hidden" name="xwikiname" value="$!xwiki.getDocument($user).getName()" />
+<div class="UserAdminInfos">   
+          #set($cel_embedded_editobj = true)
+          #set($cel_editobj_classname = "XWiki.XWikiUsers")
+          #set($cel_editobj_nb = $cel_editobj_doc.getObject('XWiki.XWikiUsers', false).getNumber())
+          #set($cel_editobj_hasObjRemoveLink = false)
+          #set($cel_editobj_externalForm = true)
+          #set($cel_editobj_dict_prefix = 'cel_useradmin_edit_')
+  <table class="block" cellspacing="5px" width="100%">
+  
+  <tbody>
+  <tr>
+   <td colspan="1"><div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_userdata')</div></td>
+  </tr>
+  #if($isAdmin)
+  <tr>
+    <td style="vertical-align:top;" class="celements2_input_mandatory td_loginname">
+<div class="clear"></div>
+<div id="xwikieditcontent">
+<div id="xwikiobjects" class="accordion">
+                <div class="editblock">
+<dl>
+<dt class="label"><label for="xwikiname">Login Name</label></dt>
+<dd>
+     $!xwiki.getDocument($user).getName()
+  </dd>
+</dl>
+</div>
+</div>
+</div>
+  </tr>
+  #end
+  #if(!$isLDAPuser)
+  <tr>
+    #if($has_edit && $isAdmin)
+    <td style="vertical-align:top;" class="celements2_input_mandatory" colspan="1">
+      #set($cel_editobj_properties = 'password')
+      #set($cel_editobj_readonly_properties = '')
+      $xwiki.includeForm('celements2web:Templates.ObjectEdit',false)
+    #else
+    <td style="vertical-align:top;" class="celements2_input_mandatory" colspan="1">
+      #set($params = "xpage=passwd&xredirect=${doc.getURL()}")
+     <a href="$doc.getURL('view', $params)">$adminMsg.get('cel_useradmin_password_change')</a>
+    #end
+    </td>
+  </tr>
+  #end ## nopassword change for LDAP users
+  <tr>
+    <td style="vertical-align:top;" colspan="1" class="celements2_input_mandatory">
+          #set($cel_editobj_properties = 'active,first_name,last_name,email,force_pwd_change,company,department,city,country')
+    #if($has_edit && $isAdmin && !$isLDAPuser)
+          #set($cel_editobj_readonly_properties = '')
+    #else
+          #set($cel_editobj_readonly_properties = 'active')
+    #end
+    #if(!$has_edit || $isLDAPuser)
+      #set($cel_editobj_readonly_properties = "${cel_editobj_readonly_properties},first_name,last_name,email,company,department,city,country")
+    #end
+      #set($cel_editobj_readonly_properties = "${cel_editobj_readonly_properties.replaceAll('^,','')}")
+      <!-- cel_editobj_readonly_properties : $cel_editobj_readonly_properties , $cel_editobj_classname , $cel_editobj_nb -->
+          $xwiki.includeForm('celements2web:Templates.ObjectEdit',false)
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align:top;" colspan="1">
+<div class="clear"></div>
+<div id="xwikieditcontent">
+<div class="hidden"><input type="hidden" name="xcontinue" value="$doc.getURL('view')"/></div>
+<div id="xwikiobjects" class="accordion">
+                <div class="editblock">
+<dl>
+<dt class="label"><label for="XWiki.XWikiUsers_0_admin_language">$adminMsg.get('cel_useradmin_edit_admin_language')</label></dt>
+<dd>
+#set($celAdminLanguages = $celementsweb.getSupportedAdminLanguages())
+#set($userAdminLanguage = $cel_editobj_doc.getObject('XWiki.XWikiUsers', false).getProperty('admin_language').getValue())
+ <select id='XWiki.XWikiUsers_0_admin_language' name="XWiki.XWikiUsers_0_admin_language" style="width:100px;" size="1">
+   <option value="">---</option>
+   #foreach($celAdminLang in $celAdminLanguages)
+   <option#if("$userAdminLanguage" == "$celAdminLang") selected="selected"#end value="${celAdminLang}">$adminMsg.get("cel_${celAdminLang}_${celAdminLang}")</option>
+   #end
+   </select>
+  </dd>
+</dl>
+</div>
+</div>
+</div>
+    </td>
+  </tr>
+  </tbody>
+  </table>
+ #if($xwiki.exists('LocalMacros.extendUserAdmin'))
+   $xwiki.includeForm('LocalMacros.extendUserAdmin', false)
+   <div class="clear"><!--iE6.0--></div>
+ #end
+  <!-- TODO: add force_pwd_change --> 
+</div><!--UserAdminInfos"-->  
+<div class="UserAdminGroupdata">
+   <div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_groupdata')</div>
+   <div class="UserAdminGroups">
+  #set($xwql = "from doc.object('XWiki.XWikiGroups') as mem")
+  #set($xwql = "$!{xwql} where doc.translation = 0 and mem.member=''")
+  #set($xwql = "$!{xwql} order by doc.fullName")
+  #set($groupsList = $services.query.xwql($xwql).execute())
+  #set($!dev = $!groupsList.remove('XWiki.XWikiAllGroup'))
+  #set($!dev = $!groupsList.remove('XWiki.XWikiAllGroup'))
+  #set($!dev = $!groupsList.remove('XWiki.XWikiGroupTemplate'))
+  #set($!dev = $!groupsList.remove('XWiki.XWikiGroupTemplate'))
+##  #set ($sql = ", BaseObject as obj where obj.name=doc.fullName and obj.className='XWiki.XWikiGroups' order by doc.fullName")
+  #foreach ($item in $groupsList)
+   ## do not display special groups
+   #if($item != "XWiki.XWikiGroupTemplate")
+     #set($isUserInGroup = $xwiki.getUser($user).isUserInGroup("$item"))
+     #set($show_group = ($isUserInGroup || $isAdmin)) ## Admin fix
+     ## display group only if we have edit rights in order to prevent privilege escalation
+     #if($xwiki.hasAccessLevel("edit", $item) && $show_group && ("$item" != 'XWiki.XWikiAllGroup'))
+       #if($has_edit)<input type="checkbox"##
+#if(!$isAdmin)
+ disabled="disabled"##
+#end
+#set($cel_groupName = $xwiki.getDocument($item).getName())
+#set($cel_groupNameKey = "cel_groupname_$cel_groupName")
+#if($adminMsg.get($cel_groupNameKey) != $cel_groupNameKey)
+#set($cel_groupName = $adminMsg.get($cel_groupNameKey))
+#end
+ name="groups" value="$item" #if($isUserInGroup) checked="checked" #end/>#end $cel_groupName<br />
+    #end
+   #end
+  #end    
+     </div><!--UserAdminGroups-->
+ </div><!--UserAdminGroupdata-->
+ <div class="clear"><!--iE6.0--></div>
+  <br />
+  #if($has_edit)
+   <input type="submit" value="$adminMsg.get('cel_save')" class="celements2_input_button" />
+  #end
+  </form>
+ #end
+ </div>
+ <script type="text/javascript">
+ var valid = new Validation('update', {immediate : true});
+ ## if not complete or valid run the js validation
+ #if($changed && (!$complete || !$valid))
+ var result = valid.validate();
+ #end
+</script>
+</div>
+{/pre}
