@@ -206,7 +206,7 @@ $('userselect').submit()">
   <tr>
    <td colspan="1"><div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_userdata')</div></td>
   </tr>
-  #if($isAdmin)
+  #if($services.celementsweb.getUserAdminShowLoginName())
   <tr>
     <td style="vertical-align:top;" class="celements2_input_mandatory td_loginname">
 <div class="clear"></div>
