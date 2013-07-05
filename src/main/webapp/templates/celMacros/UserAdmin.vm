@@ -1,4 +1,4 @@
-#macro(redirect)
+#macro(redirect $skipRedirect)
   #set($redirUser = $context.getUser())
   #if("$!request.get('update')" != "" && $!xwiki.exists($request.get("update")))
     #set($redirUser = $request.get("update"))
@@ -8,8 +8,10 @@
   #end
   ## compose redirect url
   #set($xredirectURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin&user=$redirUser").replaceAll('^/xwiki/bin/view/','/').replaceAll('^/Content/','/')})
+  #if(!$skipRedirect)
    ## send redirect
    $response.sendRedirect($xredirectURL)
+  #end
 #end
  #set($user = $context.getUser())
  #set($celUserDataFieldLogin = $xwiki.getXWikiPreference('cellogin'))
@@ -92,8 +94,9 @@
    
    ## save user data
    #if("$!request.get('extendedHasSave')" != '1')
-     #redirect()
+     #redirect(false)
    #elseif($xwiki.exists('LocalMacros.extendUserAdmin'))
+     #redirect(true)
      $xwiki.includeForm('LocalMacros.extendUserAdmin', false)
    #end
  #end
