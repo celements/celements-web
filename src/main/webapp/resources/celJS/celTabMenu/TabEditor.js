@@ -121,6 +121,9 @@ TE.prototype = {
   initTabMenu : function() {
     var tabEditor = this;
     if (!$('tabMenuPanel').down('.xwikimessage')) {
+      $('tabMenuPanel').observe('tabedit:tabchange', function(event) {
+        console.log('tabchange: ', event.memo);
+      });
       tabEditor._insertLoadingIndicator();
       new Ajax.Request(getTMCelHost(), {
         method: 'post',
@@ -214,12 +217,18 @@ TE.prototype = {
     window.onbeforeunload = _me.checkBeforeUnload;
     _me.initDone = true;
     _me.afterInitListeners.each(_me._execOneListener);
-    new Effect.Parallel([
+    var displayNowEffect = new Effect.Parallel([
        new Effect.Appear('tabMenuPanel', { sync: true }), 
        new Effect.Fade('celementsLoadingIndicator', { sync: true }) 
     ], { 
-       duration: 0.5
+       duration: 0.5,
+       sync: true
     });
+    var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow',
+        displayNowEffect);
+    if (!defaultShowEvent.stopped) {
+      displayNowEffect.start();
+    }
   },
 
   _execOneListener : function(listener) {
@@ -396,7 +405,9 @@ TE.prototype = {
            //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
            //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
            //TODO following fired event. -> Workaround: execute registered method once after registration.
-           $(tabBodyId).fire('tabedit:tabchange');
+           $(tabBodyId).fire('tabedit:tabchange', {
+             'newTabId' : tabBodyId
+           });
            $(tabBodyId).select('form').each(function(formelem) {
              if (formelem && formelem.id) {
                _me.retrieveInitialValues(formelem.id);
@@ -417,7 +428,9 @@ TE.prototype = {
     }
     $(tabBodyId).show();
     if (!asyncLoading) {
-      $(tabBodyId).fire('tabedit:tabchange');
+      $(tabBodyId).fire('tabedit:tabchange', {
+        'newTabId' : tabBodyId
+      });
     }
     _me.setButtonActive(tabId);
   },
@@ -434,8 +447,8 @@ TE.prototype = {
         } else {
           scriptPath += '?';
         }
-        scriptPath += "version=$xwiki.celementsweb.getLastStartupTimeStamp()";
-        scriptPath = '/skin/resources/' + scriptPath;
+        scriptPath += "version=" + _me.tabMenuConfig.startupTimeStamp;
+        scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
         if(!_me.scriptIsLoaded(scriptPath)) {
           scripts.push( { isUrl: true, value: scriptPath } );
 //          var newEle = new Element('script', { type: 'text/javascript', src: scriptPath });

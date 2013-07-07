@@ -16,7 +16,25 @@ var initCelRTE = function() {
   });
 };
 
+var finishedCelRTE_tinyMCE_Load = false;
+
+var celFinishTinyMCEStart = function() {
+  finishedCelRTE_tinyMCE_Load = true;
+  $$('body')[0].fire('celRTE:finishedInit');
+};
+
+var delayedEditorOpeningHandler = function(event) {
+  if (!finishedCelRTE_tinyMCE_Load) {
+    event.stop();
+    $$('body')[0].observe('celRTE:finishedInit', function() {
+      event.memo.start();
+    });
+  }
+};
+
 $j(document).ready(function() {
+  $('tabMenuPanel').observe('tabedit:finishedLoadingDisplayNow',
+      delayedEditorOpeningHandler);
   getCelementsTabEditor().addAfterInitListener(function() {
     initCelRTE();
     if(typeof(resize) != 'undefined') {
