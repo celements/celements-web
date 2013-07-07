@@ -1,5 +1,8 @@
-$celementsweb.addExtJSfileOnce("${xwiki.getSkinFile('celRTE/tiny_mce_src.js', true)}?version=$xwiki.celementsweb.getLastStartupTimeStamp()")
-<script language="javascript" type="text/javascript">
+$celementsweb.addExtJSfileOnce("${xwiki.getSkinFile('celRTE/tiny_mce_src.js', true)}?version=${xwiki.celementsweb.getLastStartupTimeStamp()}")
+<span class='cel_lazyloadJS' style='display: none;'>celRTE/tiny_mce_src.js</span>
+$celementsweb.addExtJSfileOnce(":celJS/celTabMenu/loadTinyMCE-async.js")
+<span class='cel_lazyloadJS' style='display: none;'>celJS/celTabMenu/loadTinyMCE-async.js</span>
+#*<script language="javascript" type="text/javascript">
 ##TODO change to use 'new tinymce.Editor(targetId,' like in showMCEeditor in celementsEdit.js from nextproto
 ##TODO change tabs to be asynchronously loaded. close tabe on tabswitch...
 var initCelRTE = function() {
@@ -14,8 +17,7 @@ var initCelRTE = function() {
       if (tinyConfigJSON.isJSON()) {
         tinyMCE.init(tinyConfigJSON.evalJSON());
       } else {
-        console.debug('TinyConfig is no json!');
-        console.debug(tinyConfigJSON);
+        console.error('TinyConfig is no json!', tinyConfigJSON);
       }
     }
   });
@@ -29,3 +31,4 @@ YAHOO.util.Event.onContentReady("tb1", function () {
   }
 });
 </script>
+*#
