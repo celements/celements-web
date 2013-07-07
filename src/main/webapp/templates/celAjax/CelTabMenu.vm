@@ -15,6 +15,8 @@ $xwiki.parseTemplate('celAjax/tabMenuPanelConfig.vm')
 #end
 , "unsavedChangesOnCloseMessage" :##
 "$!adminMsg.get('cel_tm_unsavedChangesOnCloseMessage')",##
+"jsPathPrefix" : "${services.celementsweb.getAttachmentURLPrefix()}",
+"startupTimeStamp" : "${xwiki.celementsweb.getLastStartupTimeStamp()}",
 "savingDialogHeader" : "$adminMsg.get('cel_tm_saving_dialog_header')",##
 "savingDialogWarningHeader" : "$adminMsg.get('cel_tm_saving_dialog_warning_header')",##
 "savingDialogMessage" : "$adminMsg.get('cel_tm_saving_dialog_unsaved_changes')",##
