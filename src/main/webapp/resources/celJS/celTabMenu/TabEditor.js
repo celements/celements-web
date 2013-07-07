@@ -121,9 +121,6 @@ TE.prototype = {
   initTabMenu : function() {
     var tabEditor = this;
     if (!$('tabMenuPanel').down('.xwikimessage')) {
-      $('tabMenuPanel').observe('tabedit:tabchange', function(event) {
-        console.log('tabchange: ', event.memo);
-      });
       tabEditor._insertLoadingIndicator();
       new Ajax.Request(getTMCelHost(), {
         method: 'post',
