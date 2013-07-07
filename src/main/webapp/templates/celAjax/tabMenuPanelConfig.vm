@@ -32,5 +32,6 @@
   "id" : "tb5",##
   "label" : "${adminMsg.get('cel_tm_history')}"##
 }], ##
+"startupTimeStamp" : "${xwiki.celementsweb.getLastStartupTimeStamp()}",
 "initCloseButton" : $!{celNewButtons},##
 "initSaveButton" : $!{celNewButtons}
