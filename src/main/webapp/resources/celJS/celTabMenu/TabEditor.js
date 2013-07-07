@@ -120,25 +120,27 @@ TE.prototype = {
 
   initTabMenu : function() {
     var tabEditor = this;
-    tabEditor._insertLoadingIndicator();
-    new Ajax.Request(getTMCelHost(), {
-      method: 'post',
-      parameters: {
-       xpage : 'celements_ajax',
-       ajax_mode : 'CelTabMenu',
-       tm_mode : "getTabMenuConfig"
-      },
-      onSuccess: function(transport) {
-        if (transport.responseText.isJSON()) {
-          tabEditor.tabMenuSetup(transport.responseText.evalJSON());
-        } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-          console.debug('failed to get CelTabMenu config: no valid JSON!', transport);
-        } else {
-          alert('Failed to load editor. Please try to reload the page and if it happens '
-        		 + 'again, contact support. ');
+    if (!$('tabMenuPanel').down('.xwikimessage')) {
+      tabEditor._insertLoadingIndicator();
+      new Ajax.Request(getTMCelHost(), {
+        method: 'post',
+        parameters: {
+         xpage : 'celements_ajax',
+         ajax_mode : 'CelTabMenu',
+         tm_mode : "getTabMenuConfig"
+        },
+        onSuccess: function(transport) {
+          if (transport.responseText.isJSON()) {
+            tabEditor.tabMenuSetup(transport.responseText.evalJSON());
+          } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+            console.debug('failed to get CelTabMenu config: no valid JSON!', transport);
+          } else {
+            alert('Failed to load editor. Please try to reload the page and if it happens '
+               + 'again, contact support. ');
+          }
         }
-      }
-    });
+      });
+    }
   },
 
   tabMenuSetup : function(tabMenuConf) {
