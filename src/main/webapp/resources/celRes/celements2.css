@@ -641,7 +641,7 @@ body > .cel_reorderNodes_proxy .docLangs,
 	text-decoration: none;
 	background-color: #555;
 }
-.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a + a
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a + a,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a + a,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a + a {
 	margin-left: 1px;
