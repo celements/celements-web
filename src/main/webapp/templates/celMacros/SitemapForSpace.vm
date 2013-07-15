@@ -158,7 +158,7 @@ $structNav.includeNavigation($parentRef)
 <div class="docLangs">
 #set($outsideDocTransList = $outsideDoc.getTranslationList())
 #foreach($outsideLang in $xwiki.celementsweb.getAllowedLanguages())
-#set($editLink = $xwiki.getURL($docFN, 'edit', "language=$!{outsideDoc.getDefaultLanguage()}"))
+#set($editLink = $xwiki.getURL($docFN, 'edit', "language=$!{outsideLang}"))
 #set($outsideCssClass = '')
 #if("$!outsideLang" == "$!{outsideDoc.getDefaultLanguage()}")
 #set($outsideCssClass = "$!{outsideCssClass} defaultLanguage transExists")
