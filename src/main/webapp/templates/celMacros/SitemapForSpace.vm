@@ -130,22 +130,50 @@ $structNav.includeNavigation($parentRef)
 	<ul>
 #set($xwql = "where doc.translation=0 and doc.space = :spacename")
 #set($theQuery = $services.query.xwql($xwql).bindValue('spacename', $spaceName))
+#set($outsideOddEven = 'cel_nav_even')
 #foreach($docFN in $theQuery.execute())
   #if("$!docFN" != '')
-    #set($docRef = $services.model.resolveDocument($docFN))
-    #if(!$celementsweb.isTreeNode($docRef))
-      #set($hasChildren = ($celementsweb.getSubNodesForParentRef($docRef).size() > 0))
+    #set($outsideDocRef = $services.model.resolveDocument($docFN))
+    #if(!$celementsweb.isTreeNode($outsideDocRef))
+      #set($outsideDoc = $xwiki.getDocument($outsideDocRef))
+      #set($hasChildren = ($celementsweb.getSubNodesForParentRef($outsideDocRef).size() > 0))
+      #if("$!outsideOddEven" == 'cel_nav_odd')
+        #set($outsideOddEven = 'cel_nav_even')
+      #else
+        #set($outsideOddEven = 'cel_nav_odd')
+      #end
       #set($cssNodeClasses = '')
+      #set($cssNodeClasses = "${cssNodeClasses} ${outsideOddEven}")
       #if($hasChildren)
         #set($cssNodeClasses = "${cssNodeClasses} cel_nav_hasChildren")
       #else
         #set($cssNodeClasses = "${cssNodeClasses} cel_nav_isLeaf")
       #end
-	  <li><a target="_blank" href="$xwiki.getURL($docRef)" class="$cssNodeClasses.trim()">
+      #set($nodeSpace = $outsideDocRef.getLastSpaceReference().getName())
+	  <li class="$cssNodeClasses.trim()">
+	  <a id="OutsideN1:$!{nodeSpace}:$!{docFN}" target="_blank" href="$xwiki.getURL($outsideDocRef)"##
+	   class="cel_cm_sitemap_outsidenode $cssNodeClasses.trim()">
 	  	$structNav.getMultilingualMenuName($docFN, $language)
       	</a>
+<div class="docLangs">
+#set($outsideDocTransList = $outsideDoc.getTranslationList())
+#foreach($outsideLang in $xwiki.celementsweb.getAllowedLanguages())
+#set($editLink = $xwiki.getURL($docFN, 'edit', "language=$!{outsideDoc.getDefaultLanguage()}"))
+#set($outsideCssClass = '')
+#if("$!outsideLang" == "$!{outsideDoc.getDefaultLanguage()")
+#set($outsideCssClass = "$!{outsideCssClass} defaultLanguage transExists")
+#elseif($outsideDocTransList.contains("$!outsideLang"))
+#set($outsideCssClass = "$!{outsideCssClass} transExists")
+#else
+#set($outsideCssClass = "$!{outsideCssClass} transNotExists")
+#end
+<a class="$!{outsideCssClass.trim()}" href="${editLink}"##
+ title="$!adminMsg.get("cel_$!{outsideLang}")">##
+$!{outsideLang}</a>
+#end
+</div><!-- IE6 -->
       	#if($hasChildren)
-$structNav.includeNavigation($docRef)
+$structNav.includeNavigation($outsideDocRef)
         #end
 	  </li>
     #end
