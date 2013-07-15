@@ -161,11 +161,11 @@ $structNav.includeNavigation($parentRef)
 #set($editLink = $xwiki.getURL($docFN, 'edit', "language=$!{outsideLang}"))
 #set($outsideCssClass = '')
 #if("$!outsideLang" == "$!{outsideDoc.getDefaultLanguage()}")
-#set($outsideCssClass = "$!{outsideCssClass} defaultLanguage transExists")
+#set($outsideCssClass = "$!{outsideCssClass} defaultLanguage transExists")
 #elseif($outsideDocTransList.contains("$!outsideLang"))
 #set($outsideCssClass = "$!{outsideCssClass} transExists")
 #else
-#set($outsideCssClass = "$!{outsideCssClass} transNotExists")
+#set($outsideCssClass = "$!{outsideCssClass} transNotExists")
 #end
 <a class="$!{outsideCssClass.trim()}" href="${editLink}"##
  title="$!adminMsg.get("cel_$!{outsideLang}")">##
