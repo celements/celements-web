@@ -567,16 +567,19 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 }
 
 /* CSS for Sitemap */
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder {
 	width: 550px;
 }
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul ul,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder ul,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder ul {
   width: auto;
   padding-left: 18px;
 }
 
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li,
 body > .cel_reorderNodes_proxy {
@@ -592,21 +595,26 @@ body > .cel_reorderNodes_proxy {
 	list-style-position: inside;
 	border-left: 1px dotted gray;
 }
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li.cel_nav_even,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_even,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_even {
   background-color: #e1e1e1;
 }
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li.cel_nav_odd,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_odd,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_odd {
   background-color: white;
 }
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li.cel_nav_even,
 .generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
 .yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li.cel_nav_odd,
 .generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_odd,
 .yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_odd {
   background-color: transparent;
 }
 
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs {
 	text-align: right;
@@ -620,6 +628,7 @@ body > .cel_reorderNodes_proxy .docLangs,
 	display: none;
 }
 
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a {
 	display: block;
@@ -632,22 +641,26 @@ body > .cel_reorderNodes_proxy .docLangs,
 	text-decoration: none;
 	background-color: #555;
 }
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a + a
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a + a,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a + a {
 	margin-left: 1px;
 }
 
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.defaultLanguage,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.defaultLanguage,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.defaultLanguage {
 	font-weight: bold;
 }
 
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.transNotExists,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.transNotExists,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.transNotExists {
 	background-color: white;
 	color: black;
 }
 
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a:hover,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a:hover,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a:hover {
 	background-color: #ccc;
