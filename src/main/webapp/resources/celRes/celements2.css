@@ -605,10 +605,8 @@ body > .cel_reorderNodes_proxy {
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_odd {
   background-color: white;
 }
-.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li.cel_nav_even,
 .generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
 .yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
-.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li.cel_nav_odd,
 .generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_odd,
 .yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_odd {
   background-color: transparent;
