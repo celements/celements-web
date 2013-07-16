@@ -24,7 +24,8 @@ var celFinishTinyMCEStart = function() {
 };
 
 var delayedEditorOpeningHandler = function(event) {
-  if (!finishedCelRTE_tinyMCE_Load) {
+  var mceEditorAreaAvailable = ($$('#tabMenuPanel .mceEditor').size() > 0);
+  if (!finishedCelRTE_tinyMCE_Load && mceEditorAreaAvailable) {
     event.stop();
     $$('body')[0].observe('celRTE:finishedInit', function() {
       event.memo.start();
