@@ -30,6 +30,7 @@
      ## remove user from all groups except XWikiAllGroup
      #set($xwql = "from doc.object('XWiki.XWikiGroups') as mem")
      #set($xwql = "$!{xwql} where mem.member=:username")
+     #set($xwql = "$!{xwql} group by doc.fullName")
      #set($oldGroupsList = $services.query.xwql($xwql).bindValue('username', $user).execute())
      #set($!dev = $!oldGroupsList.remove('XWiki.XWikiAllGroup'))
      #foreach ($item in $oldGroupsList)
@@ -300,12 +301,11 @@ $('userselect').submit()">
    <div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_groupdata')</div>
    <div class="UserAdminGroups">
   #set($xwql = "from doc.object('XWiki.XWikiGroups') as mem")
-  #set($xwql = "$!{xwql} where doc.translation = 0 and mem.member=''")
+  #set($xwql = "$!{xwql} where doc.translation = 0")
+  #set($xwql = "$!{xwql} group by doc.fullName")
   #set($xwql = "$!{xwql} order by doc.fullName")
   #set($groupsList = $services.query.xwql($xwql).execute())
   #set($!dev = $!groupsList.remove('XWiki.XWikiAllGroup'))
-  #set($!dev = $!groupsList.remove('XWiki.XWikiAllGroup'))
-  #set($!dev = $!groupsList.remove('XWiki.XWikiGroupTemplate'))
   #set($!dev = $!groupsList.remove('XWiki.XWikiGroupTemplate'))
 ##  #set ($sql = ", BaseObject as obj where obj.name=doc.fullName and obj.className='XWiki.XWikiGroups' order by doc.fullName")
   #foreach ($item in $groupsList)
