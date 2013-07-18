@@ -116,7 +116,7 @@
  ## Show user selection
 <div class="celements2_box">
  #if($isAdmin)
- <div class="celements2_box_title">Users</div>
+ <div class="celements2_box_title">$adminMsg.get('cel_admin_useradmin')</div>
  #set($actionURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin").replaceAll('^/xwiki/bin/view/','/').replaceAll('^/Content/','/')})
  <form id="userselect" action="$!actionURL" method="post">
  <select name="user" style="width:300px;" size="1" class="celements2_input"##
