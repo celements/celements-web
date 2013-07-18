@@ -164,15 +164,15 @@ $('userselect').submit()">
  </select>
 ## <input type="submit" value="Show"  class="celements2_input_button"/>&nbsp;
  #set($xredirectURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin&user=$user")})
- #set($xredirectURL = $escapetool.url($xredirectURL))
- #set($addUserURL = "${doc.getURL('view', 'xpage=overlay&conf=Register')}&xredirect=$!xredirectURL")
+ #set($xredirectURLesp = $escapetool.url($xredirectURL))
+ #set($addUserURL = "${doc.getURL('view', 'xpage=overlay&conf=Register')}&xredirect=$!xredirectURLesp")
  <a style="margin-left:50px;" href="$addUserURL">$adminMsg.get('cel_add_user')</a>
  #if($show_user && $xwiki.exists($user))
    #set($sendValidationUserURL = "$!{xredirectURL}&sendNewValidation=1")
    &nbsp;<a style="float:right;margin-right:10px;" href="$sendValidationUserURL">$adminMsg.get('cel_useradmin_send_new_validation')</a>
    #set($cel_user_doc = $xwiki.getDocument($user))
    #set($user_obj = $cel_user_doc.getObject('XWiki.XWikiUsers'))
-   #set($delUserURL = "${cel_user_doc.getURL('delete')}?xredirect=$!xredirectURL")
+   #set($delUserURL = "${cel_user_doc.getURL('delete')}?xredirect=$!xredirectURLesp")
    &nbsp;<a style="float:right;margin-right:10px;" href="$delUserURL">$adminMsg.get('cel_delete_user')</a>
    #if("$!request.sendNewValidation" == '1')
     #set($emailAddress = "$!user_obj.getProperty('email').getValue()")
