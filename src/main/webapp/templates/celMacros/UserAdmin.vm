@@ -295,7 +295,6 @@ $('userselect').submit()">
    $xwiki.includeForm('LocalMacros.extendUserAdmin', false)
    <div class="clear"><!--iE6.0--></div>
  #end
-  <!-- TODO: add force_pwd_change --> 
 </div><!--UserAdminInfos"-->  
 <div class="UserAdminGroupdata">
    <div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_groupdata')</div>
@@ -307,10 +306,17 @@ $('userselect').submit()">
   #set($groupsList = $services.query.xwql($xwql).execute())
   #set($!dev = $!groupsList.remove('XWiki.XWikiAllGroup'))
   #set($!dev = $!groupsList.remove('XWiki.XWikiGroupTemplate'))
-##  #set ($sql = ", BaseObject as obj where obj.name=doc.fullName and obj.className='XWiki.XWikiGroups' order by doc.fullName")
-  #foreach ($item in $groupsList)
+#set($sortedGroupsMap = $util.getTreeMap())
+#foreach($groupFN in $groupsList)
+#set($cel_groupName = $services.model.resolveDocument($groupFN).getName())
+#set($cel_groupNameKey = "cel_groupname_${cel_groupName}")
+#if($adminMsg.get($cel_groupNameKey) != $cel_groupNameKey)
+#set($cel_groupName = $adminMsg.get($cel_groupNameKey))
+#end
+$!sortedGroupsMap.put("$!{cel_groupName} | ${groupFN}", $groupFN)
+#end
+#foreach($item in $sortedGroupsMap.values())
    ## do not display special groups
-   #if($item != "XWiki.XWikiGroupTemplate")
      #set($isUserInGroup = $xwiki.getUser($user).isUserInGroup("$item"))
      #set($show_group = ($isUserInGroup || $isAdmin)) ## Admin fix
      ## display group only if we have edit rights in order to prevent privilege escalation
@@ -327,7 +333,6 @@ $('userselect').submit()">
  name="groups" value="$item" #if($isUserInGroup) checked="checked" #end/>#end $cel_groupName<br />
     #end
    #end
-  #end    
      </div><!--UserAdminGroups-->
  </div><!--UserAdminGroupdata-->
  <div class="clear"><!--iE6.0--></div>
