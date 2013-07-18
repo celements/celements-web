@@ -92,13 +92,14 @@
  #end
   <form id="register" name="register" action="##
 #if($withEmailLogin)
-${xwiki.getURL('Tools.Login','view','xpage=celements_ajax&ajax_mode=CelRegisterUser')}##
+${xwiki.getURL('Content.login','view','xpage=celements_ajax&ajax_mode=CelRegisterUser')}##
 #end
 " method="post">
   <input type="hidden" name="xredirect" value="$!request.get('xredirect')&conf=UserAdmin" />
   <input type="hidden" name="template" value="XWiki.XWikiUserTemplate" />
   <input type="hidden" name="register" value="1">
   <input type="hidden" name="language" value="$language"/>
+  <input type="hidden" name="suppressValidationEmail" value="true"/>
 <div class="UserAdminInfos">   
 <div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_title',[""])</div>
   <table class="block" cellspacing="5px" width="100%">
