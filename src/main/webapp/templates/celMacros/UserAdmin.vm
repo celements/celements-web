@@ -169,12 +169,12 @@ $('userselect').submit()">
  #set($addUserURL = "${doc.getURL('view', 'xpage=overlay&conf=Register')}&xredirect=$!xredirectURLesp")
  <a style="margin-left:50px;" href="$addUserURL">$adminMsg.get('cel_add_user')</a>
  #if($show_user && $xwiki.exists($user))
-   #set($sendValidationUserURL = "$!{xredirectURL}&sendNewValidation=1")
-   &nbsp;<a style="float:right;margin-right:10px;" href="$sendValidationUserURL">$adminMsg.get('cel_useradmin_send_new_validation')</a>
    #set($cel_user_doc = $xwiki.getDocument($user))
    #set($user_obj = $cel_user_doc.getObject('XWiki.XWikiUsers'))
    #set($delUserURL = "${cel_user_doc.getURL('delete')}?xredirect=$!xredirectURLesp")
-   &nbsp;<a style="float:right;margin-right:10px;" href="$delUserURL">$adminMsg.get('cel_delete_user')</a>
+   <a style="float:right;margin-right:10px;" href="$delUserURL">$adminMsg.get('cel_delete_user')</a><br/>
+   #set($sendValidationUserURL = "$!{xredirectURL}&sendNewValidation=1")
+   <a style="float:right;margin-right:10px;" href="$sendValidationUserURL">$adminMsg.get('cel_useradmin_send_new_validation')</a><br/>
    #if("$!request.sendNewValidation" == '1')
     #set($emailAddress = "$!user_obj.getProperty('email').getValue()")
     $xwiki.celementsweb.sendNewValidation("$!emailAddress", "email")
