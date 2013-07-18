@@ -1,4 +1,8 @@
 #set($cel_loadAdminMenuBar = false)
 #set($showOverlayLanguageBar = false)
 #set($showCloseOverlayButton = true)
+#if($xwiki.exists("Celements2.Register"))
 #set($celementsLoadInOverlay = "Celements2.Register")
+#else
+#set($celementsLoadInOverlay = "celMacros/Register.vm")
+#end

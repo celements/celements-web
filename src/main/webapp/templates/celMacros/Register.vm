@@ -1,0 +1,223 @@
+#set ($register = $request.getParameter("register"))
+#set($exists = false)
+#set($complete = true)
+<div class="celements2_box">
+#if ($register)
+  #set($exists = $xwiki.exists("XWiki.$request.getParameter('xwikiname')"))
+  #set($complete = ($!request.getParameter("register_first_name") != "") && ($!request.getParameter("register_last_name") != "") && ($!request.getParameter("xwikiname") != "") && ($!request.getParameter("register_email") != "") && ($!request.getParameter("register_password") != "") && ($!request.getParameter("register2_password") != "") && ($!request.getParameter("register_company") != ""))
+  #set($valid = $!request.get("xwikiname") == $xwiki.getFormEncoded($!request.get("xwikiname")))
+  
+  #if($complete && $valid && !$exists)
+  	##IMPORTANT: the rights given in the createUser call are set for the
+  	##           XWiki.XWikiAdminGroup imediately. This means that if
+  	##           edit and view rights are also restricted, an XWikiContentEditorGroup
+  	##           user does not see the user just registered.
+#*  	#if($isAdmin)
+  	  #set($initalAdminRights = "view,edit,delete")
+  	#else
+  	  #set($initalAdminRights = "delete")
+	#end
+    #set($reg= $xwiki.createUser(false, $initalAdminRights))
+*#
+## do not send immediatelly a user validation. Allow to send it separatelly by a click
+## in the User Administration.
+    #set($reg= $xwiki.celementsweb.createUser(false))
+    #if ($reg>0)
+      ## group memberships
+      #set($isAdmin = false)
+      #set($isContentEditor = false)
+      #foreach($group in $request.getParameterValues("groups"))
+       #if($group == "XWiki.XWikiAdminGroup")
+        #set($isAdmin = true)
+       #end
+       #if($group == "XWiki.ContentEditorsGroup")
+        #set($isContentEditor = true)
+       #end
+      	#if($xwiki.exists($group))
+      	 #set($group_doc = $xwiki.getDocument($group))
+      	 #set($group_obj = $group_doc.newObject("XWiki.XWikiGroups"))
+      	 $group_obj.set("member","XWiki.$request.getParameter('xwikiname')")
+      	 $group_doc.save()
+      	#end
+      #end
+      ## Allow contenteditors to edit the userdoc if the user is not an admin
+      #set($curdoc = $xwiki.getDocument("XWiki.$request.getParameter('xwikiname')"))      
+      #set($rightsobj = $curdoc.getObject('XWiki.XWikiRights'))
+      #if(!$rightsobj)
+       #set($rightsobj = $curdoc.newObject('XWiki.XWikiRights'))
+      #end
+      #if(!$isAdmin)
+       $rightsobj.set('groups','XWiki.ContentEditorsGroup XWiki.XWikiAdminGroup')
+       $rightsobj.set('levels','view,edit,delete')
+       $rightsobj.set('allow',1)
+      #else
+       $rightsobj.set('groups','XWiki.ContentEditorsGroup')
+       $rightsobj.set('levels','view')
+       $rightsobj.set('allow',1)      
+       #set($rightsobj = $curdoc.newObject('XWiki.XWikiRights'))
+       $rightsobj.set('groups','XWiki.XWikiAdminGroup')
+       $rightsobj.set('levels','view,edit,delete')
+       $rightsobj.set('allow',1)
+      #end
+      $curdoc.save()
+##      #if($!request.get('xredirect') != "")
+##        $context.getResponse().sendRedirect($!request.get('xredirect'))
+##      #end
+      <div class="celements2_help_text">Registration of <span style="font-weight:bold;">$request.getParameter("xwikiname")</span> was successful.</div>
+    #else
+      <div class="celements2_input">Error: Registration not successful</div>
+    #end
+  #else 
+    #set($reg = 0)
+  #end
+#else
+  #set($reg=0)
+  <div class="celements2_box_title">$adminMsg.get('cel_register_title')</div>
+#end
+
+#if ($reg<=0)
+  #if($exists)
+    <div class="celements2_error">Error: User $request.getParameter("xwikiname") already existing!</div>  
+  #end
+  #if($register && (!$complete || !$valid))
+    <div class="celements2_error">Error: Please fill in / correct all mandatory fields!</div>    
+  #end
+  <div>&nbsp;</div>
+#if($xwiki.hasAccessLevel('register', $context.getUser(), 'XWiki.XWikiPreferences'))
+#set($withEmailLogin = true)
+ #if($withEmailLogin)
+    #set($fieldprefix = "")
+ #else
+    #set($fieldprefix = "register_")
+ #end
+  <form id="register" name="register" action="##
+#if($withEmailLogin)
+${xwiki.getURL('Tools.Login','view','xpage=celements_ajax&ajax_mode=CelRegisterUser')}##
+#end
+" method="post">
+  #includeTopic("XWiki.RegisterJS")
+  <input type="hidden" name="xredirect" value="$!request.get('xredirect')&conf=UserAdmin" />
+  <input type="hidden" name="template" value="XWiki.XWikiUserTemplate" />
+  <input type="hidden" name="register" value="1">
+  <input type="hidden" name="language" value="$language"/>
+<div class="UserAdminInfos">   
+<div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_title',[""])</div>
+  <table class="block" cellspacing="5px" width="100%">
+  <tbody>
+  <tr>
+    <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">$adminMsg.get("core.register.firstName")</td>
+    <td><input type="text" name="$!{fieldprefix}first_name" value="$!request.get('$!{fieldprefix}first_name')" size="40" class="celements2_input required"/></td>
+  </tr>
+    <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">$adminMsg.get("core.register.lastName")</td>
+    <td><input type="text" name="$!{fieldprefix}last_name" value="$!request.get('$!{fieldprefix}last_name')" size="40" class="celements2_input required"/></td>
+  </tr>
+#if(!$withEmailLogin)
+  <tr>
+    <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">Login Name</td>
+    <td><input type="text" name="xwikiname" value="$!request.get('xwikiname')" size="40" onfocus="prepareName(document.forms.register);" class="celements2_input validate-docname"/></td>
+  </tr>
+#end
+  <tr>
+    <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">$adminMsg.get("core.register.email")</td>
+    <td><input type="text" name="$!{fieldprefix}email" value="$!request.get('$!{fieldprefix}email')" size="40" class="celements2_input validate-email required"/></td>
+  </tr>
+#if($withEmailLogin)
+  <tr>
+    <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">$adminMsg.get("core.register.cemail")</td>
+    <td><input type="text" name="cemail" value="$!request.get('cemail')" size="40" class="celements2_input validate-email required"/></td>
+  </tr>
+#end
+#if(!$withEmailLogin)
+  <tr>
+    <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">Password</td>
+    <td><input type="password" name="$!{fieldprefix}password" value="$!request.get('$!{fieldprefix}password')" size="40" class="celements2_input required"/></td>
+  </tr>
+  <tr>
+    <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">Password (again)</td>
+    <td><input type="password" name="register2_password" value="$!request.get('register2_password')" size="40" class="celements2_input required"/></td>
+  </tr>
+#end
+  <tr>
+    <td style="text-align:right;vertical-align:top">$adminMsg.get('core.register.company')</td>
+    <td><input type="text" name="$!{fieldprefix}company" value="$!request.get('$!{fieldprefix}company')" size="40" class="celements2_input"/></td>
+  </tr>
+  <tr>
+    <td style="text-align:right;vertical-align:top">$adminMsg.get('cel_useradmin_edit_department')</td>
+    <td><input type="text" name="$!{fieldprefix}department" value="$!request.get('$!{fieldprefix}department')" size="40" class="celements2_input"/></td>
+  </tr>
+  <tr>
+    <td style="text-align:right;vertical-align:top">$adminMsg.get('cel_useradmin_edit_city')</td>
+    <td><input type="text" name="$!{fieldprefix}city" value="$!request.get('$!{fieldprefix}city')" size="40" class="celements2_input"/></td>
+  </tr>
+  <tr>
+    <td style="text-align:right;vertical-align:top">$adminMsg.get('cel_useradmin_edit_country')</td>
+    <td><input type="text" name="$!{fieldprefix}country" value="$!request.get('register_country')" size="40" class="celements2_input"/></td>
+  </tr>
+  <tr>
+    <td style="text-align:right;vertical-align:top">$adminMsg.get('cel_useradmin_edit_admin_language')</td>
+    <td>
+#set($celAdminLanguages = ["de","en","fr","it"])
+#set($userAdminLanguage = "$!services.celementsweb.getDefaultAdminLanguage()")
+ <select id='$!{fieldprefix}admin_language' name="$!{fieldprefix}admin_language" style="width:100px;" size="1">
+   <option value="">---</option>
+   #foreach($celAdminLang in $celAdminLanguages)
+   <option#if("$userAdminLanguage" == "$celAdminLang") selected="selected"#end value="${celAdminLang}">$adminMsg.get("cel_${celAdminLang}_${celAdminLang}")</option>
+   #end
+   </select>
+    </td>
+  </tr>
+  </tbody>
+  </table>
+</div><!--UserAdminInfos"-->
+#if(!$withEmailLogin)  
+<div class="UserAdminGroupdata">
+ #set($has_edit = $xwiki.hasAccessLevel("edit", $user, $user))
+   <div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_groupdata')</div>
+   <div class="UserAdminGroups">
+   ## all users must be part of XWikiAllGroup!!!
+   <input type="hidden" name="groups" value="XWiki.XWikiAllGroup" />
+  ## #set ($sql = ", BaseObject as obj where obj.name=doc.fullName and obj.className='XWiki.XWikiGroups' order by doc.fullName")
+  #set($xwql = "from doc.object(XWiki.XWikiGroups) as grp group by doc.fullName order by doc.fullName")
+  #foreach ($item in $services.query.xwql($xwql).execute())
+   ## do not display special groups
+   #if($item != "XWiki.XWikiGroupTemplate")
+    #set($isUserInGroup = $xwiki.getUser($user).isUserInGroup($item))
+    #set($show_group = ($isUserInGroup || $isAdmin)) ## Admin fix
+    ## display group only if we have edit rights in order to prevent privilege escalation
+    #if($xwiki.hasAccessLevel("edit", $item) && $show_group && ("$item" != 'XWiki.XWikiAllGroup'))
+     #if($has_edit)<input type="checkbox"##
+#if(!$isAdmin)
+ disabled="disabled"##
+#end
+#set($cel_groupName = $xwiki.getDocument($item).getName())
+#set($cel_groupNameKey = "cel_groupname_$cel_groupName")
+#if($adminMsg.get($cel_groupNameKey) != $cel_groupNameKey)
+#set($cel_groupName = $adminMsg.get($cel_groupNameKey))
+#end
+ name="groups" value="$item" #if($isUserInGroup) checked="checked" #end/>#end $cel_groupName<br />
+    #end
+   #end
+  #end    
+     </div><!--UserAdminGroups-->
+ </div><!--UserAdminGroupdata-->
+#end
+ <div class="clear"><!--iE6.0--></div>
+  <br />
+  <input type="submit" value="$adminMsg.get('cel_register_button')" class="celements2_input_button">
+  </form>
+ #else
+  #xwikimessageboxstart($adminMsg.get("error") $adminMsg.get("notallowed"))
+  #xwikimessageboxend()
+ #end
+#end
+<script type="text/javascript">
+ Validation.add('validate-docname', 'Please use only letters [a-z], digits [0-9] and \"_\".', function (v) {
+  return !Validation.get('IsEmpty').test(v) &&  !/\W/.test(v)
+ });
+ var valid = new Validation('register', {immediate : true});
+ ## if not complete or valid run the js validation
+ #if($register && (!$complete || !$valid))
+ var result = valid.validate();
+ #end
+</script>
+</div>
