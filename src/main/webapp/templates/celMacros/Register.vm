@@ -95,7 +95,6 @@
 ${xwiki.getURL('Tools.Login','view','xpage=celements_ajax&ajax_mode=CelRegisterUser')}##
 #end
 " method="post">
-  #includeTopic("XWiki.RegisterJS")
   <input type="hidden" name="xredirect" value="$!request.get('xredirect')&conf=UserAdmin" />
   <input type="hidden" name="template" value="XWiki.XWikiUserTemplate" />
   <input type="hidden" name="register" value="1">
