@@ -15,7 +15,7 @@
   #parse("activateaccount.vm")
 #end
 #if("$!celUserDataFieldLogin" == '')
-#set($celUserDataFieldLogin = "$!xwiki.getXWikiPreference('cellogin')")
+#set($celUserDataFieldLogin = "$!services.celementsweb.getPossibleLogins()")
 #end
 #if ($context.getUser().equals("XWiki.XWikiGuest"))
 #if(("$!request.get('cellogin')" == '1') && ("$!celUserDataFieldLogin" != ''))
