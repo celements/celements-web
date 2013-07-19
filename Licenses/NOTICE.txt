@@ -32,7 +32,7 @@ MIT license
 - http://madrobby.github.com/scriptaculous/license/
 
 jquery
-MIT or GPLv2 license
+MIT license
 - http://jquery.org/license/
 
 jcrop
