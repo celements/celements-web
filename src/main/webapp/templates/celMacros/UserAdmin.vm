@@ -177,8 +177,11 @@ $('userselect').submit()">
    <a style="float:right;margin-right:10px;" href="$sendValidationUserURL">$adminMsg.get('cel_useradmin_send_new_validation')</a><br/>
    #if("$!request.sendNewValidation" == '1')
     #set($emailAddress = "$!user_obj.getProperty('email').getValue()")
-    $xwiki.celementsweb.sendNewValidation("$!emailAddress", "email")
-    <p>$adminMsg.get('cel_useradmin_send_new_validation_confirm', ["$!emailAddress"])</p>
+    #if($xwiki.celementsweb.sendNewValidation("$!emailAddress", "email"))
+      <p>$adminMsg.get('cel_useradmin_send_new_validation_confirm', ["$!emailAddress"])</p>
+    #else
+      <p>$adminMsg.get('cel_useradmin_send_new_validation_failed', ["$!emailAddress"])</p>
+    #end
    #end
  #end
  </form>
