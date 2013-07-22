@@ -1,6 +1,6 @@
 ##INPUT (optional): $celUserDataFieldLogin, $celLoginPage
 #macro(passRecoveryLink)
-#set($celMailsPasswordRecoveryContent = $services.celementsweb.renderInheritableDocument('Mails.PasswordRecoverMailHtmlContent'))
+#set($celMailsPasswordRecoveryContent = $services.celementsweb.renderInheritableDocument($services.model.resolveDocument('Mails.PasswordRecoverMailHtmlContent')))
 #set($celMailsPasswordRecovery = $xwiki.parseTemplate("celMails/PasswordRecoverMailHtmlContent_$!{default_language}.vm"))
 #set($passwdRecoveryHTMLDocRef = $services.model.resolveDocument('Tools.PasswordRecoverMailHtmlContent'))
 #set($passwdRecoveryHTML2DocRef = $services.model.resolveDocument('celements2web:Tools.PasswordRecoverMailHtmlContent'))
