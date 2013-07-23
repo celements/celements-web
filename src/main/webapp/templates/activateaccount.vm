@@ -1,10 +1,23 @@
 #if("$!request.get('xredirect')" == '')
   #set($afterLoginLandingPage = "$!xwiki.getXWikiPreference('afterLoginLandingPage')")
   #if("$!afterLoginLandingPage" == '')
+    #set($afterLoginLandingPage = '')
+    #set($afterLoginLandingURL = $xwiki.celementsweb.getLoginRedirectURL())
+  #end
+  #if("$!afterLoginLandingPage" == '')
     #set($afterLoginLandingPage = "Content.login")
   #end
-  #set($url = "$!doc.getURL('view', 'xredirect=')")
-  #set($url = "${url}$xwiki.getURLEncoded($xwiki.getURL($afterLoginLandingPage,'view','activated=1'))")
+  #if("$!afterLoginLandingPage" != '')
+    #set($afterLoginLandingURL = $xwiki.getURL($afterLoginLandingPage,'view','activated=1'))
+  #end
+  #if($afterLoginLandingURL.indexOf('?') < 0)
+    #set($afterLoginLandingURL = "$!{afterLoginLandingURL}?")
+  #else
+    #set($afterLoginLandingURL = "$!{afterLoginLandingURL}&")
+  #end
+  #set($afterLoginLandingURL = $xwiki.getURLEncoded("$!{afterLoginLandingPage}activated=1"))
+  #set($url = "$!doc.getURL($context.action, 'xredirect=')")
+  #set($url = "${url}$afterLoginLandingURL")
   #foreach($req in $request.getParameterNames())
     #set($url = "${url}&$req=$!request.get($req)")
   #end
