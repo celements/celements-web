@@ -262,7 +262,7 @@
     #set($fbDoc = "${filePickerSpace}.${filePickerDoc}")
   #end
   #set($hasUpload = '1') ## from where?
-  #set($filebaseURL = "/Celements2/FileBase?xpage=plainpagetype&picker=1")
+  #set($filebaseURL = "$doc.getURL('view')?xpage=celements_ajax&ajax_mode=FileBase&picker=1")
   #set($filebaseURL = "$!{filebaseURL}&single_doc=${fbDoc}&fieldname=href")
   #set($filebaseURL = "$!{filebaseURL}&src_doc=${filePickerSpace}.${filePickerDoc}&columns=10")
   #set($filebaseURL = "$!{filebaseURL}&root=${filePickerSpace}&hasUpload=$hasUpload")
