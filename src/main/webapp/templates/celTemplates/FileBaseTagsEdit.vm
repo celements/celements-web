@@ -44,7 +44,7 @@
   #end
   $newDoc.save()
   $xwiki.celementsweb.flushCache()
-  #set($redir = "source_space=${space}&editTag=$newMenuName")
+  #set($redir = "xpage=overlay&conf=EditFileBaseTags&source_space=${space}&editTag=$newMenuName")
   $context.getResponse().sendRedirect("$doc.getURL('view', $redir)")
 #end
 #if("$!request.get('edited')" != '')
@@ -59,7 +59,7 @@
     $nameObj.set('menu_name', "$!request.get('tagName')")
   #end
   $tagDoc.save()
-  #set($redirSpace = "source_space=$space")
+  #set($redirSpace = "xpage=overlay&conf=EditFileBaseTags&source_space=$space")
   $context.getResponse().sendRedirect("$doc.getURL('view', $redirSpace)")
 #end
 #if("$!request.get('delTag')" != '')
@@ -71,7 +71,7 @@
   $xwiki.includeForm('celements2web:Macros.getCelementsMenuItemDetails', false)
   #set($contextMenu = '')
   #set($cmenu_MenuName = "$!adminMsg.get('cel_ml_add_tag')")
-  #set($cmenu_pageLink = ${doc.getURL("view", "source_space=${space}&addTag=1")})
+  #set($cmenu_pageLink = ${doc.getURL("view", "xpage=overlay&conf=EditFileBaseTags&source_space=${space}&addTag=1")})
   #set($hasOnlyLink = true)
   $xwiki.includeForm('celements2web:Macros.addContextMenuItem', false)
   $xwiki.includeForm('celements2web:Macros.finishContextMenu', false)
@@ -92,10 +92,10 @@
         #set($menuPage = $menuLink.substring($idx))
         #set($hasOnlyLink = true)
         #set($cmenu_MenuName = "$!adminMsg.get('cel_ml_edit_tag')")
-        #set($cmenu_pageLink = ${doc.getURL("view", "source_space=${space}&editTag=$menuPage")})
+        #set($cmenu_pageLink = ${doc.getURL("view", "xpage=overlay&conf=EditFileBaseTags&source_space=${space}&editTag=$menuPage")})
         $xwiki.includeForm('celements2web:Macros.addContextMenuItem', false)
         #set($cmenu_MenuName = "$!adminMsg.get('cel_ml_delete_tag')")
-        #set($redirect = $doc.getURL('view', "source_space=${space}&delTag=$menuName"))
+        #set($redirect = $doc.getURL('view', "xpage=overlay&conf=EditFileBaseTags&source_space=${space}&delTag=$menuName"))
         #set($delDoc = $xwiki.getDocument("${space}.${menuPage}"))
         #set($delUrl = $delDoc.getURL("delete", "confirm=1&xredirect=$xwiki.getURLEncoded($redirect)"))
         #set($delWarning = "$!adminMsg.get('cel_ml_delete_msg') $menuName")
@@ -106,6 +106,8 @@
         <li>
           #if("$!edit" == "$menuPage")
             <form name="updateMenuitem${edit}" action="" method="post">
+              <input type="hidden" name="xpage" value="overlay" />
+              <input type="hidden" name="conf" value="EditFileBaseTags" />
               <input type="hidden" name="source_space" value="$space" />
               <input type="hidden" name="edited" value="${edit}" />
               <input type="hidden" name="lang" value="$language" />
