@@ -1,0 +1,650 @@
+## INPUT (optional): 
+##      $initRoot
+##      $isInline [1 | &#8800;1]
+##      $initActive
+##      $initFind
+##      $initFilters
+##      $initSrcDoc
+##      $initSingleDoc
+##      $importMode [1 | &#8800;1]
+##      $picker [1 | &#8800;1]
+##      $initFieldname
+##      $imgsOnly [1 | &#8800;1]
+##      $initColumns
+##      $checkDocExistsOnUpload [1 | &#8800;1]
+##      $hasUpload boolean ( request.hasUpload [0 | 1] )
+
+## finals
+#set($previewWidth = 200)
+#set($previewHeight = 150)
+#set($all_doc_filter_id = "all_doc_filter_id")
+
+#if($context.getUser() != 'XWiki.XWikiGuest')
+#set($helpNav = $celementsweb.createNavigation())
+
+## imports
+#set($yui_doc = $xwiki.getDocument("celements2web:Celements2.YuiScripts"))
+#set($skin_doc = $xwiki.getDocument("celements2web:XWiki.Celements2Skin"))
+<link rel="stylesheet" type="text/css" href="$xwiki.getSkinFile('celRes/mediaLib/celements2medialib.css', true)" />
+$xwiki.includeForm('celements2web:Celements2.DarkBox', false)
+$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
+$celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
+$celementsweb.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
+$celementsweb.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
+$celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
+$celementsweb.addExtJSfileOnce($skin_doc.getAttachmentURL('filebase-upload.js', 'skin'))
+#if(("$!isInline" != '1') && ("$!request.get('inline')" == ''))
+  $celementsweb.addExtJSfileOnce(':celJS/mediaLib/resize.js')
+#end
+## colmn
+#if(("$!initColumns" == '') || ("$!request.get('columns')" != ''))
+  #set($initColumns = "$!request.get('columns')")
+#end
+
+## init imgsOnly
+#if(("$!imgsOnly" == '') || ("$!request.get('img_only')" != ''))
+  #set($imgsOnly = "$!request.get('img_only')")
+#end
+
+## get the spaces to show in FileBase
+#set($all_spaces = $xwiki.getSpaces())
+
+#if(("$!initRoot" == '') || ("$!request.get('root')" != ''))
+  #set($initRoot = "$!request.get('root')")
+#end
+#set($roots = $initRoot)
+#if("$!roots" == '')
+  #foreach($space in $all_spaces)
+    #if(("$!space" != '') && ("$!space" != 'XWiki'))
+      #set($roots = "$!{roots},$space")
+    #end
+  #end
+#end
+
+## get the filters to show in FileBase
+#if(("$!initFilters" == '') || ("$!request.get('filter')" != ''))
+  #set($initFilters = "$!request.get('filter')")
+#end
+#set($filters = $initFilters)
+
+## get source document
+#set($srcDoc = $initSrcDoc)
+#if("$!request.get('src_doc')" != '')
+  #set($srcDoc = $xwiki.getDocument("$!request.get('src_doc')"))
+#end
+
+## parse single doc information
+#if(("$!initSingleDoc" == '') || ("$!request.get('single_doc')" != ''))
+  #set($initSingleDoc = "$!request.get('single_doc')")
+#end
+
+#set($single_doc_space = '')
+#set($single_doc_doc = '')
+#if("$!initSingleDoc" != '')
+  #set($single_doc = " $!{initSingleDoc}. ")
+  #set($single_doc_space = $single_doc.substring(0, $single_doc.indexOf('.')))
+  #set($single_doc_space = $single_doc_space.trim())
+  #set($single_doc = " .$!{initSingleDoc} ")
+  #set($idx = $single_doc.lastIndexOf('.') +1)
+  #set($single_doc_doc = $single_doc.substring($idx))
+  #set($single_doc_doc = $single_doc_doc.trim())
+#end
+
+## get upload doc
+#set($uploadDoc = $srcDoc)
+#if("$!{single_doc_space}$!{single_doc_doc}" != '')
+  #set($uploadDoc = $xwiki.getDocument("$!{single_doc_space}.$!single_doc_doc"))
+#end
+
+## set has upload
+#set($hasUpload = true)
+#if("$!request.get('hasUpload')" != '')
+  #set($hasUpload = ("$!request.get('hasUpload')" == '1'))
+#end
+#set($fb_showUpload = ($uploadDoc.hasAccessLevel('edit') && ($hasUpload)))
+
+## set inline
+#if(($isInline == '') || ("$!request.get('inline')" != ''))
+  #set($isInline = "$!request.get('inline')")
+#end
+
+## set active menu point
+#set($root = '')
+#if($roots.indexOf(',') > 0)
+  #set($root = $roots.substring(0, $roots.indexOf(',')))
+#elseif("$!roots" == '')
+  #set($root = $all_doc_filter_id)
+#else
+  #set($root = $roots)
+#end
+#if(("$!initActive" == '') || ("$!request.get('active')" != ''))
+  #set($initActive = "$!request.get('active')")
+#end
+#set($active = $initActive)
+#if(($roots.indexOf(",") < 0) && ("$!active" == ''))
+    #set($active = "s$roots")
+#elseif(("$!active" == '') || (($active.indexOf('s') == 0) && ($roots.indexOf("$!active") < 0)))
+    #set($active = "f$all_doc_filter_id")
+#end
+#if(("$!initFind" == '') || ("$!request.get('find')" != ''))
+  #set($initFind = "$!request.get('find')")
+#end
+#set($find = "$!initFind")
+
+## build a list of all menu items and remember the nr of spaces
+#set($root_size = 0)
+#set($menu_list = [])
+#foreach($item in $roots.split(','))
+  #set($root_size = $velocityCount)
+  #set($tmp = $menu_list.add("s$item"))
+#end
+#if(("$!filters" == '') && ("$!single_doc_space" != ''))
+  #set($filters = $celementsweb.getSubMenuItemsForParent('',"$single_doc_space"))
+#else
+  #set($filters = $filters.split(','))
+#end 
+#foreach($item in $filters)
+  <!-- filteris: $item -->
+  #if("$!item.getName()" != '')
+    #set($item = "$!item.getName()")
+  #end
+  #set($dot = $item.indexOf('.') + 1)
+  #if($item.indexOf('.') > 0)
+    #set($item = $item.substring($dot))
+  #end
+  #set($tmp = $menu_list.add("f$item"))
+#end 
+
+<script type="text/javascript">
+## needed to prevent IE from showing scrollbars and hiding half of the filebase by doing so.
+  if($('cel_overlaybody')) {
+    $('cel_overlaybody').setStyle({ 'overflow' : 'hidden' });
+  }
+  
+  ##form <menu entry name , menu entry pretty name>
+  var menu = new Array(
+    #foreach($item in $menu_list)
+      #set($item = $item.substring(1))
+      #if($velocityCount > 1) , #end
+      #if(($velocityCount == 1) && ($root_size == 1)) ## only 1 space -> show as 'all documents'
+        new Array("$!item", "$!adminMsg.get('cel_ml_all_docs')")
+      #elseif($velocityCount == 1) ## show all documents as separate item
+        new Array("$all_doc_filter_id", "$!adminMsg.get('cel_ml_all_docs')"),
+        new Array("$!item", "$!item")
+      #elseif($velocityCount <= $root_size) ## is a space
+        new Array("$!item", "$!item")
+      #else ## is a filter
+        #set($menuDocName = "${single_doc_space}.$!item")
+        #set($menuName = $helpNav.getMultilingualMenuName("$menuDocName", $admin_language))
+        new Array("$!item", "$menuName")
+      #end
+    #end
+  );
+  var active_space = "$!active";
+
+##display the date as DD.MM.YYYY HH.MM.SS
+var celementsFormatDate = function(elCell, oRecord, oColumn, oData) { 
+    var oDate = oData;
+    var fullMonth = oDate.getMonth() + 1;
+    var dateString = (oDate.getDate()<10?"0":"") + oDate.getDate() + ".";
+    dateString += (fullMonth<10?"0":"") + fullMonth + "."; 
+    dateString += oDate.getFullYear() + " ";
+    dateString += (oDate.getHours()<10?"0":"") + oDate.getHours() + ":";
+    dateString += (oDate.getMinutes()<10?"0":"") + oDate.getMinutes() + ".";
+    dateString += (oDate.getSeconds()<10?"0":"") + oDate.getSeconds();
+    elCell.innerHTML = dateString;
+};
+
+var formatUrl = function(elCell, oRecord, oColumn, sData) {
+  namePre = '<input type="hidden" name="c3_fb_file_src" value="' + oRecord.getData('attached_to') + '" />';
+  namePre += '<input type="hidden" name="c3_fb_full_file_name" value="'+ sData + '" />';
+  namePre += '<a '; ##id="' +  + '"';
+  if(sData.length > 25){
+    namePre += 'title="' + sData + '" ';
+  }
+  namePre += 'href="';
+
+#if(("$!importMode" == '') || ("$!request.get('importMode')" != ''))
+  #set($importMode = "$!request.get('importMode')")
+#end
+#if(("$!picker" == '') || ("$!request.get('picker')" != ''))
+  #set($picker = "$!request.get('picker')")
+#end
+#if("$!importMode" == '1')
+    namePre += '#" class="c3_file_link"';
+#elseif("$!picker" == '1')
+    #set($fieldname = 'src')
+    #if("$!initFieldname" != '')
+      #set($fieldname = "$!initFieldname")
+    #end
+    #if("$!request.get('fieldname')" != '')
+      #set($fieldname = "$!request.get('fieldname')")
+    #end
+    namePre += '#" ';
+    namePre += 'onclick="parent.document.forms.linkPickerForm.${fieldname}.value = ';
+    namePre += "'" + oRecord.getData('url') + "'; ";
+    namePre += 'return false;" ';
+#else
+    namePre += oRecord.getData('url') + '" ';
+#end
+#* TODO wieder einfuegen wenn vorschau bereit
+    namePost += 'onmouseover="showFileContent(' + "'" + oRecord.getData('url') + "', '" + oRecord.getData('name') + "'" + ');" ';
+    namePost += 'onmouseout="replaceFileContent(' + "''" + ')"';
+ TODO bei folgendem Befehl += statt nur = *#
+    namePost = ' >';
+    if(sData.length > 25){
+      namePost += sData.substr(0, 25) + '&#126;';
+    } else {
+      namePost += sData;
+    }
+    namePost += "</a>";
+    elCell.innerHTML = namePre + namePost;
+};
+
+var deleteAttachment = function(doc, file){
+  url = "/delattachment/" + doc.replace(".", "/") + "/" + file;
+  new Ajax.Request(url, {method: 'post', onComplete: function(transport){
+    #foreach($item in $filters)
+      url = "$doc.getURL('view')" + "?xpage=celements_ajax&ajax_mode=FileBaseTags&save=1&tag=$!{item}&att_doc=" + doc + "&att_name=" + file + "&active=false";
+      new parent.Ajax.Request(url, { method: 'get' });
+    #end
+    requestData(active_space, document.getElementById('find_field').value);
+/*New, not yet working    #foreach($item in $filters)
+      delAttAjax("$!{item}", doc, file, false);
+    #end
+    requestData(active_space, $('find_field').value); */
+  }});
+}
+
+/*DADADADADADADADADADADADADADA: tagLink ist nur tag0 ohne space
+
+##TODO similar to setTag in filebase-upload.js
+var delAttAjax = function(tagLink, docName, attName, active){
+  new parent.Ajax.Request(getCelHost(), { 
+    method: 'post',
+    parameters: {
+      xpage: 'celements_ajax',
+      'ajax_mode' : 'FileBaseTags', 
+      save: 1,
+      tag: tagLink,
+      att_doc: docName,
+      att_name: attName,
+      active: active
+    }
+  });
+}*/
+
+var delFileFormatter = function(elCell, oRecord, oColumn, sData) {
+  fieldContent = '<a href="" onclick="if(confirm(';
+  fieldContent += "'";
+  fieldContent += "$msg.get('cel_ml_delete_confirmation')".replace('{0}', oRecord.getData("name"));
+  fieldContent += "'";
+  fieldContent += ")){deleteAttachment('" + oRecord.getData("attached_to") + "','" + oRecord.getData("name") + "')}; ";
+  fieldContent += "var e = arguments[0] || window.event; if (e.stopPropagation) { e.stopPropagation(); } else { e.cancelBubble=true; }; ";
+  fieldContent += "return false;";
+  fieldContent += '">$!adminMsg.get('cel_ml_delete')</a>';
+  
+  elCell.innerHTML = fieldContent;
+}
+
+##IE workaround to prevent errormsg in inline mode
+var setFind = function(findValue){
+  #if("$!isInline" != '1')
+    document.search_files.search_input.value = findValue;
+  #end
+}
+
+##get data when page is loaded
+YAHOO.util.Event.addListener(window, "load", function() {setActive(); requestData(active_space, "$!find"); setFind("$!find");});
+
+this.editTags = function(oEditor, oSelf){
+  var url = getCelHost();
+  url += "?xpage=celements_ajax&ajax_mode=FileBase&filebase_mode=FileBaseTags";
+  url += "&att_doc=" + oEditor.record.getData('attached_to');
+  url += "&tag_space=$!{single_doc_space}";
+  url += "&single_att=" + oEditor.record.getData('attached_to') + "/" + oEditor.record.getData('name');
+  //alert(url);
+  window.open(url, "TagEdit", "width=250,height=400,left=100,top=200,resizable=yes,scrollbars=yes");
+};
+
+// Custom editor for city column to save input on "enter" 
+this.editInlineTags = function(oEditor, oSelf) { 
+  var elCell = oEditor.cell; 
+  var oRecord = oEditor.record; 
+  var oColumn = oEditor.column; 
+  var elContainer = oEditor.container; 
+  var value = oRecord.getData(oColumn.key); 
+
+  // Textbox 
+  var elTextbox = elContainer.appendChild(document.createElement("input")); 
+  elTextbox.type = "checkbox"; 
+  elTextbox.style.width = (elCell.offsetWidth + 20) + "px"; 
+  elTextbox.value = value; 
+
+  /*// Set up a listener 
+  YAHOO.util.Event.addListener(elTextbox, "keyup", function(v){ 
+    // Save on "enter" 
+    if(v.keyCode === 13) { 
+      oSelf.saveCellEditor(); 
+    } 
+    // Update the tracker value 
+    else { 
+      oSelf._oCellEditor.value = elTextbox.value; 
+    } 
+  }); */
+
+// Select the text 
+elTextbox.select(); 
+};
+
+##this function requests the data and displays them usin YUI
+var requestData = function(space, find){
+##hier dann wenn find dargestellt wird find raus nehmen bzw. separat, da sonst beim space wechsel die suche erhalten bleibt (oder soll das?)
+        active_space = space;
+        //alert("/Celements2/FileBaseData?xpage=plain&img_only=$!{imgsOnly}&single_space=$!{single_doc_space}&single_doc=$!{single_doc_doc}&root=$!{initRoot}&columns=$!{initColumns}&active=" + space + "&find=" + find);
+        
+        var allowedExtentions = '';
+        if($('cel_filebase_allowed_file_extentions')){
+          allowedExtentions = ',' + $('cel_filebase_allowed_file_extentions').value + ',';
+        }
+        new Ajax.Request("/Celements2/FileBaseData?xpage=plain&allowed_ext=" + allowedExtentions + "&img_only=$!{imgsOnly}&single_space=$!{single_doc_space}&single_doc=$!{single_doc_doc}&root=$!{initRoot}&columns=$!{initColumns}&active=" + space + "&find=" + find, {
+            method: 'post',
+            onSuccess:function(transport){
+                var fileBaseColumnDef = [
+                  ## the '1's at the end are to prevent an empty / to short string -> don't forget to add if you add columns
+                  #set($columns = "$!{initColumns}111111111111111")
+                  #foreach($column in $columns.toCharArray())
+                    #if($column == '1')
+                      #if($velocityCount == 1)
+                        {key:"name", label:"$!adminMsg.get('cel_ml_filename')", width:200, sortable:true, resizeable:true, editor:this.editTags, formatter:formatUrl},
+                      #elseif($velocityCount == 2)
+                        {key:"attached_to", label:"$!adminMsg.get('cel_ml_attached_to')", sortable:true, editor:this.editTags, resizeable:true},
+                      #elseif($velocityCount == 3)
+                        {key:"mime_type", label:"$!adminMsg.get('cel_ml_mime_type')", width:58, sortable:true, editor:this.editTags,  resizeable:true},
+                      #elseif($velocityCount == 4)
+                        {key:"revision", label:"$!adminMsg.get('cel_ml_revision')", width:52, #*formatter:YAHOO.widget.DataTable.formatNumber,*# sortable:true, editor:this.editTags, resizeable:true},
+                      #elseif($velocityCount == 5)
+                        {key:"date", label:"$!adminMsg.get('cel_ml_date')", width:101, formatter:celementsFormatDate, sortable:true, editor:this.editTags, resizeable:true},
+                      #elseif($velocityCount == 6)
+                        {key:"del_attachment", label:"<!--no title needed-->", width:37, formatter:delFileFormatter, resizeable:true}
+                      #end
+                    #end
+                  #end
+                ];
+            
+                var fileBaseData = eval(transport.responseText);
+                ##alert(fileBaseData.fileBase[0].name);
+                ##alert("Ajax.Request:\n" + transport.responseText);
+                this.fileBaseDataSource = new YAHOO.util.DataSource(fileBaseData.fileBase);
+                this.fileBaseDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+                this.fileBaseDataSource.responseSchema = {
+                    fields: ['url','name','attached_to','mime_type','revision','date','del_attachment']
+                };
+                this.myDataTable = new YAHOO.widget.DataTable('c2_ml_content', fileBaseColumnDef, this.fileBaseDataSource, 
+                        { scrollable: true });
+            
+                ## Subscribe to events for row selection
+    #* TODO wieder einfuegen wenn vorschau bereit
+                this.myDataTable.subscribe("rowMouseoverEvent", this.myDataTable.onEventHighlightRow);
+                this.myDataTable.subscribe("rowMouseoutEvent", this.myDataTable.onEventUnhighlightRow);
+    *#
+                this.myDataTable.subscribe("rowClickEvent", this.myDataTable.onEventSelectRow);
+                this.myDataTable.subscribe("cellDblclickEvent",this.myDataTable.onEventShowCellEditor);
+                    // When cell is edited, pulse the color of the row yellow
+                this.onCellEdit = function(oArgs) {
+                    var elCell = oArgs.target;
+                    var oOldData = oArgs.oldData;
+                    var oNewData = oArgs.newData;
+        
+                    // Grab the row el and the 2 colors
+                    var elRow = this.getTrEl(elCell);
+                    var origColor = YAHOO.util.Dom.getStyle(elRow, "backgroundColor");
+                    var pulseColor = "#ff0";
+        
+                    // Create a temp anim instance that nulls out when anim is complete
+                    var rowColorAnim = new YAHOO.util.ColorAnim(elRow, {
+                            backgroundColor:{to:origColor, from:pulseColor}, duration:2});
+                    var onComplete = function() {
+                        rowColorAnim = null;
+                    }
+                    rowColorAnim.onComplete.subscribe(onComplete);
+                    //rowColorAnim.animate();
+                }
+                this.myDataTable.subscribe("cellEditEvent", this.onCellEdit);
+                this.myDataTable.subscribe("editorBlurEvent", this.myDataTable.onEventSaveCellEditor);//TODO ueberschreiben um den namen zu speichern.
+
+                ##needed for correct positioning
+                var cellspacing = document.createAttribute("cellspacing");
+                cellspacing.nodeValue = "0";
+                document.getElementsByTagName("table")[0].setAttributeNode(cellspacing);
+                
+                
+                ## add onContentReady async caller 
+                YAHOO.util.Event.onDOMReady(function() {
+                  $("c2_ml_content").down('.yui-dt-bd').addClassName("c3_import_scrollable");
+                  $("c2_ml_content").fire("filepicker:changed");
+                });
+            }
+        });
+};
+
+var setActive = function(){
+    active = active_space;
+    for(var i = 0; i < menu.length; i++){
+      if(menu[i][0] == active_space.substring(1)){
+        active = menu[i][1];
+      }
+    }
+    var categories = document.getElementsByName("browser_category");
+    for(var i = 0; i < categories.length; i++){
+        var newdef = '';
+        var defs = categories[i].className.split(" ");
+        for(var k = 0; k < defs.length; k++){
+            if(defs[k] != 'c2_ml_labelactive'){
+                newdef = newdef + defs[k] + ' ';
+            }
+        }
+        if((categories[i].innerHTML == active) || ((active == '') && (categories[i].innerHTML == "$!adminMsg.get('cel_ml_all_docs')"))){
+            newdef = newdef + 'c2_ml_labelactive';
+        }
+        categories[i].className = newdef;
+    }
+}
+
+var replaceFileContent = function(content){
+    document.getElementById('c2_ml_file_content').innerHTML = content;
+}
+
+#* TODO wieder einfuegen wenn vorschau bereit
+var showFileContent = function(url, name){
+    var content = '';
+    if((url.toLowerCase().lastIndexOf('.jpg') == url.length-4) || (url.toLowerCase().lastIndexOf('.jpeg') == url.length-5) || (url.toLowerCase().lastIndexOf('.gif') == url.length-4) || (url.toLowerCase().lastIndexOf('.png') == url.length-4)){
+        img = new Image();
+        img.src = url + "?celwidth=${previewWidth}";
+        content = "<img src='" + url + "?celwidth=${previewWidth}' /><br />" + name;
+        img.onload = function(){
+            if(img.height > $previewHeight){
+                img.src = url + "?celheight=${previewHeight}";
+                content = "<img src='" + url + "?celheight=${previewHeight}' /><br />" + name;
+                img.onload = function(){
+                    replaceFileContent(content);
+                }
+            } else{
+                replaceFileContent(content);
+            }
+        }
+    } else if(url.toLowerCase().lastIndexOf('.swf') == url.length-4){
+        content = '<object classid="CLSID:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
+        content += '<param name="movie" VALUE="'+url+'">';
+        content += '<param name="quality" value="low">';
+        content += '<param name="scale" value="showall">';
+        content += '<param name="menu" value="false">';
+        content +=  '<embed menu="false" quality="best" scale="showall" name="" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" src="'+url+'" style="height:${previewHeight}px;width:${previewWidth}px;"></embed></object><br />' + name;
+        replaceFileContent(content);
+    ## } else if(.class) sinnvoll, da nicht so einfach resizable? -> verhaut vermutlich layout
+    } else {
+        content = name;
+        replaceFileContent(content);
+    }
+}*#
+
+var initFileBasePanel = function() {
+    fbp = new YAHOO.widget.Panel("fileBasePanel", {
+        width: "auto",
+        draggable:false,
+        close:false});
+    fbp.render();
+}
+
+var timeout;
+var waiting = false;
+var copy = function(){
+  if(waiting){
+    window.clearTimeout(timeout);
+  }
+  waiting = true;
+  timeout = window.setTimeout("change()", 750);
+}
+
+function change() {
+  waiting = false;
+  #if("$!isInline" != '1')
+    requestData(active_space, document.search_files.search_input.value);
+  #else
+    requestData(active_space, '');
+  #end
+}
+</script>
+
+<div class="celements3_filebase" >
+    <div id="fileBasePanel" style="visibility:hidden">
+        ##<div class="hd"> FILEBASE</div>
+        <div class="bd">
+            <div class="c2_ml_overlay_box">
+                <div id="c2_ml_container_shadow">
+                    <div id="c2_ml_container">
+                        #if("$!isInline" != '1')
+                        <div id="c2_ml_browser">
+                            <div class="c2_ml_title">
+                                #if("$!picker" == 1)
+                                  #set($closeStyle = "style='visibility:hidden'")
+                                #end
+                                #set($docName = "$!request.get('src_doc')")
+                                <a id="c2_ml_close" href="$xwiki.getURL($docName)" $closeStyle ><!--close--></a>
+                                <div class="c2_colheaders">
+                                    $!adminMsg.get('cel_media_library')
+                                </div><!--c2_colheaders-->
+                            </div><!--c2_ml_title-->
+                                #foreach($item in $menu_list)
+                                    <!-- menuitemis: $item -->
+                                    #set($has_attachments = false)
+                                    #if(($velocityCount > $root_size) && $item.startsWith('s'))
+                                      #set($documents = $xwiki.getSpaceDocsName($item))
+                                      #foreach($doc_name in $documents)
+                                        #set($spaceDoc = $xwiki.getDocument($item, $doc_name))
+                                        #if(("$!spaceDoc.getAttachmentList()" != '[]') && ($spaceDoc.hasAccessLevel('view')))
+                                          #set($has_attachments = true)
+                                        #end
+                                      #end
+                                    #else
+                                      #set($has_attachments = true)
+                                    #end
+                                    #if(($velocityCount == 1) && ($root_size == 0)) ## no spaces -> TODO does this case exist?
+                                      #set($space = "f$all_doc_filter_id")
+                                      #set($space_name = "$!adminMsg.get('cel_ml_all_docs')")
+                                    #elseif(($velocityCount == 1) && ($root_size == 1)) ## only 1 space -> show as 'all documents'
+                                      #set($space = "$!item")
+                                      #set($space_name = "$!adminMsg.get('cel_ml_all_docs')")
+                                    #elseif($velocityCount == 1) ## always show 'all documents' as first
+                                      #set($space = "f$all_doc_filter_id")
+                                      #set($space_name = "$!adminMsg.get('cel_ml_all_docs')")
+                                      <a class="c2_ml_label0" name="browser_category" href="?active=$!{space}"  onClick="document.search_files.search_input.value = ''; requestData('$!{space}', ''); setActive(); return false;">$space_name</a>
+                                      #set($space = "$!item")
+                                      #set($space_name = "$!item.substring(1)")
+                                    #elseif($velocityCount <= $root_size) ## is a space
+                                      #set($space = "$!item")
+                                      #set($space_name = "$!item.substring(1)")
+                                    #else ## is a filter
+##TODO for now filters work only in single doc mode
+                                      #if("$!single_doc_space" != '')
+                                        #set($space = "$!item")
+                                        #set($menuName = $helpNav.getMultilingualMenuName("${single_doc_space}.$!item.substring(1)", $admin_language))
+                                        #set($space_name = "$menuName")
+                                      #end
+                                    #end
+                                    #if($has_attachments)
+                                      <a class="c2_ml_label0" name="browser_category" href="?active=$!{space}"  onClick="document.search_files.search_input.value = ''; requestData('$!{space}', ''); setActive(); return false;">$space_name</a>
+                                    #end
+                                #end
+                            <form action="" id="search_files" onSubmit="javascript:copy(); return false;" name="search_files" method="post">
+                                <input name="search_input" id="find_field" type="text" size="12" maxlength="100" value="" onKeyUp='javascript:copy();' />
+            ##                  <a href="" onClick="javascript:requestData(active_space, document.search_files.search_input.value); return false;">Find</a>
+                            </form>
+                        </div><!--c2_ml_browser-->
+                        #end
+            
+                        <div id="c2_ml_content"><!--ie6--></div><!--c2_ml_content-->
+                        <div class="boxclear"><!--ie6--></div>
+                        ##TODO display in a tooltip
+                        <div id="c2_ml_file_content" style="display:none;"><!--ie6--></div><!--c2_ml_file_content-->
+                        #if($fb_showUpload)
+#*                        #set($xredirect = "$!request.get('xredirect')")
+                          #if("$!xredirect" == '')
+                            #set($redirParams = "root=${srcDoc.web}&filter=$!{initFilters}&active=$!{initActive}&")
+                            #set($redirParams = "${redirParams}find=$!{initFind}&inline=$!{isInline}&")
+                            #set($redirParams = "${redirParams}columns=$!{initColumns}&img_only=$!{imgsOnly}&")
+                            #set($redirParams = "${redirParams}src_doc=${srcDoc.getFullName()}&single_doc=$!{initSingleDoc}&")
+                            #set($redirParams = "${redirParams}picker=$!{picker}&fieldname=$!{initFieldname}&")
+                            #set($redirParams = "${redirParams}skin=$!request.get('skin')&")
+                            #set($xredirect = $xwiki.getURL('Celements2.FileBase','view',$redirParams))
+                          #end
+*#                        <div class="c3_filebase_upload">
+                            <h2>$adminMsg.get('cel_tm_upload_attachment')</h2>
+                            <div id="progressBar" style="display:none">
+                              <img src='/skin/resources/celRes/ajax-loader-small.gif' />
+                            </div>
+                            <form id="cel_filebase_uploadForm" action="$xwiki.getURL($uploadDoc.getFullName(), 'upload')" enctype="multipart/form-data" method="post" target="cel_filebase_uploadFrame">
+                              <input type="hidden" id="cel_filebase_upload_namechange_message" value="$adminMsg.get('cel_filebase_upload_namechange_message')" />
+                              <input type="hidden" id="cel_filebase_check_doc_exists" value="$!checkDocExistsOnUpload" />
+                            #set($hasFilterShowChkBox = false)
+                            #foreach($x in $filters)
+                              #set($hasFilterShowChkBox = true)
+                            #end
+                            #if($hasFilterShowChkBox)
+                              <div style="display:none">
+                                #foreach($item in $filters)
+                                  #if($item.indexOf('.') <= 0)
+                                    #set($item = "$!{single_doc_space}.${item}")
+                                  #end
+                                  #set($menuName = $helpNav.getMultilingualMenuName("$item", $admin_language))
+                                  <div class="c3_fb_upload_filter">
+                                    <input type="checkbox" name="uploadFilterItem" id="c2_fb_$menuName" value="$menuDocName" />$menuName
+                                  </div>
+                                #end
+                              </div>
+                            #end
+                              <input type="hidden" id="uploadDoc" name="uploadDoc" value="$!uploadDoc.getFullName()">
+                              <input type="hidden" name="xredirect" value="$xwiki.getURL('Celements2.FileBaseUploadedOld', 'view', 'xpage=plain')" size="20" />
+                              <input type="hidden" id="uploadFilename" name="filename" value="" size="20" />
+                              <input type="file" id="uploadBrowser" class="browser" name="filepath" value="" size="40" />
+                              <input type="submit" class="upload" id="submitFileUpload" value="$adminMsg.get('cel_upload')" />
+                            </form>
+                            <iframe id="cel_filebase_uploadFrame" name="cel_filebase_uploadFrame" src="" style="display:none"></iframe>
+                          </div><!--c3_filebase_upload-->
+                        #end
+                    </div><!--c2_ml_container-->
+                </div><!--c2_ml_container_shadow-->
+            </div><!--c2_ml_overlay_box-->
+        </div><!--fileBasePanel bd-->
+        <div class="ft"></div> 
+  </div><!--fileBasePanel-->
+</div><!--celements3_filebase-->
+
+<script type="text/javascript">
+##    #if()
+##                          <script type="text/javascript">setActive();</"script>
+##    #end
+    initFileBasePanel();
+    fbp.show();
+</script>
+#end

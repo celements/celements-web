@@ -1,11 +1,14 @@
 #template("xwikivars.vm")
 #set($skinBodyAttributes = " style='overflow:hidden;'")
 #set($cel_loadAdminMenuBar = false)
+#*
 #if($xwiki.exists($services.model.resolveDocument('Celements2.FileBase')))
 #set($celementsLoadInOverlay = 'Celements2.FileBase')
 #else
 #set($celementsLoadInOverlay = 'celements2web:Celements2.FileBase')
 #end
+*#
+#set($celementsLoadInOverlay = 'celMacros/FileBase.vm')
 #set($showOverlayLanguageBar = false)
 #set($showCloseOverlayButton = true)
 #set($closeOverlayRedirect = "$!request.get('xredirect')")

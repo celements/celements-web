@@ -1,0 +1,112 @@
+## spaces - space to parse for attachments
+## att_doc - document containing all attachments (for single file base mode)
+## tag_space - space containging the tag documents
+## save - '1' to save changes, else != '1'
+#set($helpNav = $celementsweb.createNavigation())
+#macro(addDocument)
+  #if($context.getUser() != 'XWiki.XWikiGuest')
+    #foreach($attachment in $attachmentDoc.getAttachmentList())
+      #if(("$!single_att_att" == '') || ($single_att_att == $attachment.getFilename()))
+        <div class="attachment_name">$attachment.getFilename()</div>
+        <div class="attachment_tags">
+          #foreach($menuItem in $menu)
+            <div class="attachment_tag">
+              #set($menuLink = '')
+              #set($menuName = '')
+              #set($menuLink = "$menuItem.get('menu_link')")
+              #set($menuName = $helpNav.getMultilingualMenuName("${menuSpace}.$menuLink", $admin_language))
+              #set($tagDoc = $xwiki.getDocument("${menuSpace}.$menuLink"))
+              #set($tagObj = '')
+              #set($tagObj = $tagDoc.getObject("Classes.FilebaseTag", "attachment", "${attachment.getDocument().getFullName()}/$attachment.getFilename()", false))
+              <input type="checkbox" 
+              #if("$!tagObj.get('attachment')" != '') checked="checked" #end
+              #if($xwiki.getDocument("${menuSpace}.$menuLink").hasAccessLevel('edit'))
+                onClick="updateAttachmentTag('$attachment.getDocument().getFullName()', '$attachment.getFilename()', '${menuSpace}.$menuLink', checked);"
+              #else
+                disabled="disabled"
+              #end
+              /> $menuName
+              #set($noTagsAvailable = false)
+            </div>
+          #end
+        </div>
+      #end
+    #end
+  #end
+#end
+#set($attachmentSpaces = "$!request.get('spaces')")
+#set($attachmentDocName = "$!request.get('att_doc')")
+#set($attachmentDoc = '')
+#if($attachmentDocName != '')
+  #set($attachmentSpace = '')
+  #set($attachmentDoc = $xwiki.getDocument($attachmentDocName))
+#end
+#set($parent = '')
+#set($menuSpace = "$!request.get('tag_space')")
+## get $menu with list of all menu items in space
+#set($menu = $celementsweb.getSubMenuItemsForParent('', "$menuSpace"))
+#if("$!request.get('save')" == '1')
+  #set($att_doc = "$!request.get('att_doc')")
+  #set($att_name = "$!request.get('att_name')")
+  #set($tagDoc = $xwiki.getDocument("$!request.get('tag')"))
+  #set($tagObj = $tagDoc.getObject("Classes.FilebaseTag", "attachment", "${att_doc}/${att_name}", false))
+  #if(($context.getUser() != 'XWiki.XWikiGuest') && ($tagDoc.hasAccessLevel('edit')))
+    #if(("$!request.get('active')" == 'true'))
+      <!-- new tag in $tagDoc -->
+      #if("$!tagObj.getNumber()" == '')
+        <!-- inif: $tagObj, "$tagObj.getNumber()" -->
+        #set($tagObj = $tagDoc.newObject("Classes.FilebaseTag"))
+      #end
+      <!-- afterif: $tagObj, "$tagObj.getNumber()" -->
+      #set($att_name = $context.getXWiki().clearName("$att_name", false, true, $context.getContext()))
+      <!-- 'attachment', "${att_doc}/${att_name}" -->
+      $tagObj.set('attachment', "${att_doc}/${att_name}")
+    #else
+      <!-- tag removed from $tagDoc ($tagObj) -->
+      #if("$!tagObj" != '')
+        $tagDoc.removeObject($tagObj)
+      #end
+    #end
+    $tagDoc.save()
+  #end
+#else
+  <script type="text/javascript">
+    var updateAttachmentTag = function(docName, attName, tagLink, active){
+      var url = "$doc.getURL()" + "?xpage=celements_ajax&ajax_mode=FileBaseTags&save=1&tag=" + tagLink + "&att_doc=" + docName + "&att_name=" + attName + "&active=" + active;
+      new Ajax.Request(url, { method: 'get' });
+      ##alert("docName: " + docName + "attName: " + attName + " - tagLink: " + tagLink + " - active: " + active);
+    }
+  </script>
+  #set($noTagsAvailable = true)
+  #set($single_att = "$!request.get('single_att')")
+  #set($dot = $single_att.indexOf('.') + 1)
+  #set($slash = $single_att.indexOf('/') + 1)
+  #if("$!single_att" != '')
+    #set($single_att_space = $!single_att.substring(0, $single_att.indexOf('.')))
+    #set($single_att_doc = $!single_att.substring($dot, $single_att.indexOf('/')))
+    #set($single_att_att = $!single_att.substring($slash))
+  #else
+    #set($single_att_space = '')
+    #set($single_att_doc = '')
+    #set($single_att_att = '')
+  #end
+  #if("$!attachmentSpace" != '')
+    #foreach($space in $attachmentSpace.split(','))
+      #if(("$!single_att_space" == '') || ($space == $single_att_space))
+        #foreach($docName in $xwiki.getSpaceDocsName())
+          #if(("$!single_att_doc" == '') || ($docName == $single_att_doc))
+            #set($attachmentDoc = $xwiki.getDocument("${space}.${docName}"))
+            #addDocument()
+          #end
+        #end
+      #end
+    #end
+  #else
+    #if(("$single_att" == '') || (("$attachmentDoc.getSpace()" == $single_att_space) && ("$attachmentDoc.getName()" == $single_att_doc)))
+      #addDocument()
+    #end
+  #end
+  #if($noTagsAvailable)
+    $adminMsg.get('cel_ml_no_tags_available')
+  #end
+#end

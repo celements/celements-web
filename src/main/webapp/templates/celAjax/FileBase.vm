@@ -12,7 +12,12 @@ $!celementsweb.getAllExternalJavaScriptFiles()
 <title></title>
 </head>
 <body>
-$xwiki.celementsweb.renderCelementsDocument($services.model.resolveDocument('celements2web:Celements2.FileBase'))
+#if("$!request.filebase_mode" == 'FileBaseTags')
+#parse('celAjax/FileBaseTags.vm')
+#else
+##$xwiki.celementsweb.renderCelementsDocument($services.model.resolveDocument('celements2web:Celements2.FileBase'))
+#parse('celMacros/FileBase.vm')
+#end
 $celementsweb.addExtJSfileOnce(':celJS/initCelementsAfter.js', 'file')
 </body>
 </html>
