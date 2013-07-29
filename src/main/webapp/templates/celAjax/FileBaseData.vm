@@ -1,0 +1,118 @@
+## finals
+#set($all_doc_filter_id = "all_doc_filter_id")
+#set($roots = [])
+#set($find = "$!request.get('find')")
+#set($single_doc_space = "$!request.get('single_space')")
+#set($single_doc_doc = "$!request.get('single_doc')")
+#set($find_space_req = "$!request.get('active')")
+#set($root = "$!request.get('root')")
+###if(("$!find_space_req" == '') || ("$!find_space_req" == "f$all_doc_filter_id"))
+  #if("$!root" != '')
+    #set($spaceSource = $root.split(','))
+  #else
+    #set($spaceSource = $xwiki.getSpaces())
+  #end
+  #foreach($space in $spaceSource)
+  	#if(("$!space" != '') && ("$!space" != 'XWiki'))
+  	  #set($preventOutput = $roots.add("$!space"))
+	#end
+  #end
+###else
+  #set($filters =  [])
+  #foreach($item in $find_space_req.split(','))
+    #if(("$!item" != '') && $item.startsWith('f'))
+      #set($preventOutput = $filters.add("$!item.substring(1)"))
+    #end 
+  #end
+###end
+fileBaseData = {
+	fileBase: [	
+		#set($is_first_dataelement = 1)
+		#foreach($space in $roots)
+			#set($space = "$!{single_doc_space}")
+			#set($documents = $xwiki.getSpaceDocsName($space))
+			#if("$!single_doc_doc" != '')
+			  #set($documents = [])
+			  #set($prevent_output = $documents.add("$single_doc_doc"))
+			#end
+			#if(($documents.size() > 0) && ("$!space" != 'XWiki'))
+				#foreach($doc_name in $documents)
+					#set($doc = $xwiki.getDocument($space, $doc_name))
+					#set($attachments = $doc.getAttachmentList())
+					#foreach($attachment in $attachments)
+						#set($in_filter = false)
+						#foreach($filter in $filters)
+						  #set($filterDoc = '')
+						  #set($filterDoc = $xwiki.getDocument("${single_doc_space}.$filter"))
+						  #set($filterObj = '')
+						  #set($filterObj = $filterDoc.getObject("Classes.FilebaseTag", "attachment", "${attachment.getDocument().getFullName()}/$attachment.getFilename()", false))
+						  #if("$!filterObj.get('attachment')" != '')
+						    #set($in_filter = true)
+  						  #end
+						#end
+						#set($hasAllowedExt = true)
+						#set($allowedExts = ",$!{request.get('allowed_ext').toLowerCase()},")
+						#if("$allowedExts.replaceAll(',', '')" != '')
+						  #set($ext = '')
+						  #foreach($part in $attachment.getFilename().split('\.'))
+						    #set($ext = "$!part.toLowerCase()")
+  						  #end
+  						  #if(("$!ext" == '') || $allowedExts.indexOf(",$!{ext},") < 0)
+  						    #set($hasAllowedExt = false)
+  						  #end
+						#end
+						#if(($filters.size() <= 0) || $in_filter)
+						  #if(("$!request.get('img_only')" != '1') || ($attachment.isImage()))
+						    #if($hasAllowedExt)
+						      #set($att_name = $attachment.getFilename())
+						      #set($att_date = $!attachment.getDate())
+						      #set($year_str = 1900 + $!att_date.getYear())
+						      #set($month_str = 1 + $!{att_date.getMonth()})
+						      #set($print_date = "$!{att_date.getDate()}.$!{month_str}.$!{year_str} $!{att_date.getHours()}:$!{att_date.getMinutes()}.$!{att_date.getSeconds()}")
+						      #set($searchstring = '')
+						      #set($columns = "$!request.get('columns')1111111111")
+						      #foreach($column in $columns.toCharArray())
+						    	#if($column == '1')
+						    	  #if($velocityCount == 1)
+	                                #set($searchstring = "$!searchstring $!att_name ")
+	                              #elseif($velocityCount == 2)
+	                                #set($searchstring = "$!searchstring $!{space}.$!{doc_name} ")
+	                              #elseif($velocityCount == 3)
+	                                #set($searchstring = "$!searchstring $!{attachment.getMimeType()} ")
+	                              #elseif($velocityCount == 4)
+	                                #set($searchstring = "$!searchstring $!{attachment.getVersion()} ")
+	                              #elseif($velocityCount == 5)
+	                                #set($searchstring = "$!searchstring $!{print_date} ")
+	  	  				  	      #end
+		  				        #end
+						      #end
+						      #if(("$!find" == '') || ($searchstring.toLowerCase().indexOf($!{find.toLowerCase()}) >= 0))
+						        #if($is_first_dataelement != 1)
+						          ,
+						        #else
+						          #set($is_first_dataelement = 0)
+						        #end
+						        #set($param = "$!{att_name}")
+						        #set($ahref = "$!doc.getAttachmentURL($param,'download')")
+						        #set($mimetype = "$!{attachment.getMimeType()}")
+						        #set($mimesep = $mimetype.indexOf('/'))
+						        #if(($mimesep >= 0) && ($mimetype.length() > $mimesep))
+						          #set($mimesep = $util.add($mimesep, 1))
+						          #set($mimetype = $mimetype.substring($mimesep, $mimetype.length()))
+                                #end
+						        {url:"$!ahref",
+						        name:"$!{att_name}",
+						        attached_to:"$!{space}.$!{doc_name}",
+						        mime_type:"$mimetype",
+						        revision:"$!{attachment.getVersion()}",
+						        date:new Date($!att_date.getTime())}
+						      #end
+						    #end
+						  #end
+						#end
+					#end
+				#end
+			#end
+		#end
+	]
+};

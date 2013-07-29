@@ -28,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="$xwiki.getSkinFile('celRes/mediaLib/celements2medialib.css', true)" />
 $xwiki.includeForm('celements2web:Celements2.DarkBox', false)
 $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
+$celementsweb.addExtJSfileOnce(':celJS/initCelements.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
@@ -341,15 +342,29 @@ elTextbox.select();
 var requestData = function(space, find){
 ##hier dann wenn find dargestellt wird find raus nehmen bzw. separat, da sonst beim space wechsel die suche erhalten bleibt (oder soll das?)
         active_space = space;
-        //alert("/Celements2/FileBaseData?xpage=plain&img_only=$!{imgsOnly}&single_space=$!{single_doc_space}&single_doc=$!{single_doc_doc}&root=$!{initRoot}&columns=$!{initColumns}&active=" + space + "&find=" + find);
         
         var allowedExtentions = '';
         if($('cel_filebase_allowed_file_extentions')){
           allowedExtentions = ',' + $('cel_filebase_allowed_file_extentions').value + ',';
         }
-        new Ajax.Request("/Celements2/FileBaseData?xpage=plain&allowed_ext=" + allowedExtentions + "&img_only=$!{imgsOnly}&single_space=$!{single_doc_space}&single_doc=$!{single_doc_doc}&root=$!{initRoot}&columns=$!{initColumns}&active=" + space + "&find=" + find, {
-            method: 'post',
-            onSuccess:function(transport){
+        var paramObj = {
+            'xpage' : 'celements_ajax',
+            'ajax_mode' : 'FileBaseData'
+        };
+        paramObj['allowed_ext'] = allowedExtentions;
+        paramObj['img_only'] = "$!{imgsOnly}";
+        paramObj['single_space'] = "$!{single_doc_space}";
+        paramObj['single_doc'] = "$!{single_doc_doc}";
+        paramObj['root'] = "$!{initRoot}";
+        paramObj['columns'] = "$!{initColumns}";
+        paramObj['active'] = space;
+        paramObj['find'] = find;
+        //alert("/Celements2/FileBaseData?xpage=plain&img_only=$!{imgsOnly}&single_space=$!{single_doc_space}&single_doc=$!{single_doc_doc}&root=$!{initRoot}&columns=$!{initColumns}&active=" + space + "&find=" + find);
+        //alert(getCelHost() + paramObj);
+        new Ajax.Request(getCelHost(), { 
+          method: 'post',
+          parameters: paramObj,
+          onSuccess:function(transport){
                 var fileBaseColumnDef = [
                   ## the '1's at the end are to prevent an empty / to short string -> don't forget to add if you add columns
                   #set($columns = "$!{initColumns}111111111111111")
