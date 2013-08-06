@@ -117,11 +117,15 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
 
       _calClickOutsideHandler : function(event) {
         var _me = this;
-        Event.fire(_me._inputField, 'celements:datePicker-clickoutside', {
-          'celCalDatePicker' : _me,
-          'dateField' : _me._inputField
-        });
-        if (_me.visible()) {
+        var isOutside = (typeof event.findElement('#' + _me._datePickerCon.id
+            ) == 'undefined');
+        if (_me.visible() && isOutside) {
+          console.log("_calClickOutsideHandler: ", this, event.element(),
+              isOutside);
+          Event.fire(_me._inputField, 'celements:datePicker-clickoutside', {
+            'celCalDatePicker' : _me,
+            'dateField' : _me._inputField
+          });
           _me._pickerDateCal.hide();
         }
       },
