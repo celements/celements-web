@@ -62,7 +62,12 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
               title : 'Bitte ein Datum w&auml;hlen:',
               close : true
         });
-        var inputFieldValue = $F($(inputField));
+        var inputFieldValue = '';
+        if (_me._inputField.getValue) {
+          inputFieldValue = $F($(inputField));
+        } else {
+          inputFieldValue = inputField.innerHTML;
+        }
         if (inputFieldValue && (inputFieldValue != '')) {
           var dateSpliter = new RegExp('[-./]');
           var dateStr = inputFieldValue.split(dateSpliter);
