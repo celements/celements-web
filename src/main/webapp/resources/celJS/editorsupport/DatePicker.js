@@ -154,6 +154,11 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         _me._inputField.addClassName('celDatePickerVisible');
       },
 
+      getSelectedDateFormat : function(newFormatString) {
+        var _me = this;
+        return _me._selectedDateFormat;
+      },
+
       setSelectedDateFormat : function(newFormatString) {
         var _me = this;
         if ($j.format) {
