@@ -74,6 +74,7 @@ var Validation = Class.create();
 
 Validation.prototype = {
 	initialize : function(form, options){
+	  var _me = this;
 		this.options = Object.extend({
 			onSubmit : true,
 			stopOnFirst : false,
@@ -86,13 +87,21 @@ Validation.prototype = {
 		this.form = $(form);
 		if(this.options.onSubmit) Event.observe(this.form,'submit',this.onSubmit.bind(this),false);
 		if(this.options.immediate) {
-			var useTitles = this.options.useTitles;
-			var callback = this.options.onElementValidate;
 			Form.getElements(this.form).each(function(input) { // Thanks Mike!
-				Event.observe(input, 'blur', function(ev) { Validation.validate(Event.element(ev),{useTitle : useTitles, onElementValidate : callback}); });
+        Event.observe(input, 'blur',  _me.validateFieldHandler.bind(_me));
+        Event.observe(input, 'celValidation:revalidateField',
+            _me.validateFieldHandler.bind(_me));
 			});
 		}
 	},
+	validateFieldHandler : function(ev) {
+    var _me = this;
+    var useTitles = _me.options.useTitles;
+    var callback = _me.options.onElementValidate;
+    Validation.validate(Event.element(ev),{
+      useTitle : useTitles, onElementValidate : callback
+    });
+  },
 	onSubmit :  function(ev){
 		if(!this.validate()) Event.stop(ev);
 	},
