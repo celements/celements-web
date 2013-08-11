@@ -47,4 +47,4 @@ var addSuggest = function(conf) {
           timeout: 10000
       });
   });
-}
+};
