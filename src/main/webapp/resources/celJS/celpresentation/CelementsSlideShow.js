@@ -13,13 +13,16 @@ if(typeof CELEMENTS.presentation=="undefined"){CELEMENTS.presentation={};};
     return CPCY_SlideShowObj;
   };
 
+  /**
+   * prepare the one and only SlideShow for yuiOverlays
+   */
   $j(document).ready(function() {
-    var bodyElem = $$('body')[0];
     if (!CPCY_SlideShowObj) {
       CPCY_SlideShowObj = new CELEMENTS.presentation.SlideShow();
     }
+    var bodyElem = $$('body')[0];
     bodyElem.observe('cel_yuiOverlay:afterShowDialog_General',
-        CPCY_SlideShowObj.register.bind(CPCY_SlideShowObj));
+        _me._registerOnOpenOverlayCheckerBind);
   });
 
 //////////////////////////////////////////////////////////////////////////////
@@ -41,18 +44,33 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _nextElements : [],
       _prevElements : [],
       _navObj : undefined,
+      _registerOnOpenOverlayCheckerBind : undefined,
 
       _init : function(containerId) {
         var _me = this;
         _me._htmlContainerId = containerId;
         _me._navObj = new CELEMENTS.presentation.Navigation(_me._preloadSlide.bind(_me),
             _me._showSlide.bind(_me));
+        _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(
+            _me);
+      },
+
+      _registerOnOpenOverlayChecker : function(event) {
+        var _me = this;
+        var bodyElem = $$('body')[0];
+        var checkRegisterEvent = bodyElem.fire('cel_slideShow:shouldRegister', {
+           'origEvent' : event,
+           'slideShow' : _me
+         });
+        if (checkRegisterEvent.stopped) {
+          _me.register();
+        }
       },
 
       register : function() {
         var _me = this;
         _me._htmlContainer = $(_me._htmlContainerId);
-        if (_me._htmlContainer) {
+        if (_me._htmlContainer && _me._shouldRegisterOnOverlay()) {
           if (typeof initContextMenuAsync !== 'undefined') {
             _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
                 initContextMenuAsync);
