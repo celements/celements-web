@@ -22,7 +22,7 @@ if(typeof CELEMENTS.presentation=="undefined"){CELEMENTS.presentation={};};
     }
     var bodyElem = $$('body')[0];
     bodyElem.observe('cel_yuiOverlay:afterShowDialog_General',
-        _me._registerOnOpenOverlayCheckerBind);
+        CPCY_SlideShowObj._registerOnOpenOverlayCheckerBind);
   });
 
 //////////////////////////////////////////////////////////////////////////////
@@ -106,7 +106,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           method: 'post',
           parameters: {
             'xpage' : 'celements_ajax',
-            'ajax_mode' : 'getSubSlides'
+            'ajax_mode' : 'getSubSlides',
+            'loadMainSlides' : 
           },
           onSuccess: function(transport) {
             if (transport.responseText.isJSON()) {
