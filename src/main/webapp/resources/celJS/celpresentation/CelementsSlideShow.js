@@ -106,8 +106,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           method: 'post',
           parameters: {
             'xpage' : 'celements_ajax',
-            'ajax_mode' : 'getSubSlides',
-            'loadMainSlides' : 
+            'ajax_mode' : 'getSubSlides'
+//              ,
+//            'loadMainSlides' : 
           },
           onSuccess: function(transport) {
             if (transport.responseText.isJSON()) {
