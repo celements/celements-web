@@ -253,7 +253,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _showSlide : function(slideContent) {
         var _me = this;
+        _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged');
         _me._htmlContainer.update(slideContent);
+        _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged');
         _me._htmlContainer.fire('cel_yuiOverlay:contentChanged');
       }
 
