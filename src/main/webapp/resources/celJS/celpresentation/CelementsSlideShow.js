@@ -113,6 +113,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           onSuccess: function(transport) {
             if (transport.responseText.isJSON()) {
               var jsonObj = transport.responseText.evalJSON();
+              console.log('loadMainSlides for ' + spaceName + ' received: ', jsonObj);
               _me._navObj._setAllSlides(jsonObj, startAtIndex);
               callbackFN(jsonObj);
             } else {
