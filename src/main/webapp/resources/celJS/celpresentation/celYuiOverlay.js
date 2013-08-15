@@ -89,7 +89,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       _cleanUpAfterClose : function() {
         var _me = this;
-        console.log('_cleanUpAfterClode start');
+        console.log('_cleanUpAfterClose start');
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'auto' });
         var closeEvent = bodyElem.fire('cel_yuiOverlay:hideEvent');
