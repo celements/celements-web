@@ -46,6 +46,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _prevElements : [],
       _navObj : undefined,
       _registerOnOpenOverlayCheckerBind : undefined,
+      _centerSlide : true,
 
       _init : function(containerId) {
         var _me = this;
@@ -209,6 +210,11 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._overwritePageLayout = overwritePageLayout;
       },
 
+      setCenterSlide : function(isCenterSlide) {
+        var _me = this;
+        _me._centerSlide = isCenterSlide;
+      },
+
       _preloadSlide : function(slideFN, callbackFN) {
         var _me = this;
         callbackFN = callbackFN || function(newSlideContent) {};
@@ -258,27 +264,38 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _centerCurrentSlide : function() {
         var _me = this;
-        console.log('_centerCurrentSlide slideWrapper width: ',
-            $j('#slideWrapper').width());
-        console.log('_centerCurrentSlide slideWrapper height: ',
-            $j('#slideWrapper').height());
-        
+        $('slideWrapper').setStyle({
+          'position' : 'absolute'
+        });
+        var wrapperWidth = $j('#slideWrapper').width();
+        var wrapperHeight = $j('#slideWrapper').height();
+//        var containerWidth = $j(_me._htmlContainer).width();
+        var containerHeight = $j(_me._htmlContainer).height();
+        var wrapperTop = (containerHeight - wrapperHeight) / 2;
+        $('slideWrapper').setStyle({
+          'position' : 'relative',
+          'marginLeft' : 'auto',
+          'marginRight' : 'auto',
+          'top' : wrapperTop + 'px',
+          'width' : wrapperWidth + 'px',
+          'height' : wrapperHeight + 'px'
+        });
       },
 
       _showSlide : function(slideContent) {
         var _me = this;
-        _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged');
+        _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
         var slideWrapperElem = new Element('div', {
           'id' : 'slideWrapper'
+        }).setStyle({
+          'position' : 'relative'
         }).update(slideContent);
-        console.log('slideWrapper width before insert: ', $j(slideWrapperElem).width());
-        console.log('slideWrapper height before insert: ', $j(slideWrapperElem).height());
         _me._htmlContainer.update(slideWrapperElem);
-        console.log('slideWrapper width after insert: ', $j(slideWrapperElem).width());
-        console.log('slideWrapper height after insert: ', $j(slideWrapperElem).height());
-        _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged');
-        _me._centerCurrentSlide();
-        _me._htmlContainer.fire('cel_yuiOverlay:contentChanged');
+        _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
+        if (_me._centerSlide) {
+          _me._centerCurrentSlide();
+        }
+        _me._htmlContainer.fire('cel_yuiOverlay:contentChanged', _me);
       }
 
   };
