@@ -56,6 +56,11 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             _me);
       },
 
+      getHtmlContainer : function() {
+        var _me = this;
+        return _me._htmlContainer;
+      },
+
       _registerOnOpenOverlayChecker : function(event) {
         var _me = this;
         var bodyElem = $$('body')[0];
