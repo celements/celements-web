@@ -68,7 +68,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         configObj = configObj || {};
         _me.updateOpenConfig(configObj);
         _me._bindOpenHandler = _me._openHandler.bind(_me);
-        _me._bindCleanUpAfterClose = _cleanUpAfterClose.bind(_me);
+        _me._bindCleanUpAfterClose = _me._cleanUpAfterClose.bind(_me);
       },
 
       getWidth : function() {
