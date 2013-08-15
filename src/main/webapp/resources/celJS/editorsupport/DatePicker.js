@@ -199,6 +199,7 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
               newStartDate = $j.format.date(selectedDate, _me._selectedDateFormat);
             }
             _me._inputField.value = newStartDate;
+            _me._inputField.fire('celValidation:revalidateField');
           }
         }
         pickerDateCal.hide();
