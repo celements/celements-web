@@ -185,6 +185,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
               openConfig);
           if (!openDialogEvent.stopped) {
             _me._defaultOpenDialog(openConfig);
+          } else {
+            console.log('openCelPageInOverlay skipping defaultOpenDialog.');
           }
         } else {
           if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
@@ -202,6 +204,12 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
             'link' : link,
             'overlayURL' : overlayURL
           };
+        _me.intermediatOpenHandler(openConfig);
+      },
+
+      intermediatOpenHandler : function(openConfig) {
+        var _me = this;
+        openConfig = openConfig || _me._dialogConfig;
         if (!_me.getSuppressDimFromId()) {
           var width = parseInt(link.id.split(':')[4]) + 5;
           var height = link.id.split(':')[5];
@@ -244,6 +252,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       },
 
       _defaultOpenDialog : function(openConfig) {
+        console.log('_defaultOpenDialog start');
         var _me = this;
         _me.updateOpenConfig(openConfig);
         var dialog = _me.open();
@@ -252,6 +261,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
         $('yuiOverlayContainer').fire('cel_yuiOverlay:afterShowDialog');
         _me._loadFirstContent();
+        console.log('_defaultOpenDialog end');
       }
 
   };
