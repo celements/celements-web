@@ -99,6 +99,30 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         return _me._navObj._convertFullNameToViewURL(fullName);
       },
 
+      loadMainSlides : function(spaceName, startAtIndex, callbackFN) {
+        var _me = this;
+        callbackFN = callbackFN || function(jsonObj) {};
+        new Ajax.Request(getCelHost(), {
+          method: 'post',
+          parameters: {
+            'xpage' : 'celements_ajax',
+            'ajax_mode' : 'getMainSlides',
+            'spaceName' : spaceName
+          },
+          onSuccess: function(transport) {
+            if (transport.responseText.isJSON()) {
+              var jsonObj = transport.responseText.evalJSON();
+              _me._navObj._setAllSlides(jsonObj, startAtIndex);
+              callbackFN(jsonObj);
+            } else {
+              if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+                console.error('getSubSlides returns no Json: ', transport.responseText);
+              }
+            }
+          }
+        });
+      },
+
       loadSubSlides : function(parentFN, startAtIndex, callbackFN) {
         var _me = this;
         callbackFN = callbackFN || function(jsonObj) {};
