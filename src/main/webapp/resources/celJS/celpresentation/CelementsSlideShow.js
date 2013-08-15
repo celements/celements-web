@@ -40,6 +40,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
   CELEMENTS.presentation.SlideShow.prototype = {
       _htmlContainerId : undefined,
       _htmlContainer : undefined,
+      _overwritePageLayout : '',
       _preloadSlideImagesHash : new Hash(),
       _nextElements : [],
       _prevElements : [],
@@ -131,8 +132,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           parameters: {
             'xpage' : 'celements_ajax',
             'ajax_mode' : 'getSubSlides'
-//              ,
-//            'loadMainSlides' : 
           },
           onSuccess: function(transport) {
             if (transport.responseText.isJSON()) {
@@ -199,16 +198,25 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         });
       },
 
+      setOverwritePageLayout : function(overwritePageLayout) {
+        var _me = this;
+        _me._overwritePageLayout = overwritePageLayout;
+      },
+
       _preloadSlide : function(slideFN, callbackFN) {
         var _me = this;
         callbackFN = callbackFN || function(newSlideContent) {};
+        var params = {
+          'xpage' : 'celements_ajax',
+          'ajax_mode' : 'pageTypeWithLayout',
+          'ajax' : '1'
+        };
+        if (_me._overwritePageLayout != '') {
+          params['overwriteLayout'] = _me._overwritePageLayout;
+        }
         new Ajax.Request(_me._convertFullNameToViewURL(slideFN), {
           method: 'post',
-          parameters: {
-            'xpage' : 'celements_ajax',
-            'ajax_mode' : 'pageTypeWithLayout',
-            'ajax' : '1'
-          },
+          parameters: params,
           onSuccess: function(transport) {
             _me._htmlContainer.fire('cel_slideShow:preloadContentFinished', {
               'theSlideShow' : _me,
