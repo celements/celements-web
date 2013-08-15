@@ -256,11 +256,28 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         
       },
 
+      _centerCurrentSlide : function() {
+        var _me = this;
+        console.log('_centerCurrentSlide slideWrapper width: ',
+            $j('#slideWrapper').width());
+        console.log('_centerCurrentSlide slideWrapper height: ',
+            $j('#slideWrapper').height());
+        
+      },
+
       _showSlide : function(slideContent) {
         var _me = this;
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged');
-        _me._htmlContainer.update(slideContent);
+        var slideWrapperElem = new Element('div', {
+          'id' : 'slideWrapper'
+        }).update(slideContent);
+        console.log('slideWrapper width before insert: ', $j(slideWrapperElem).width());
+        console.log('slideWrapper height before insert: ', $j(slideWrapperElem).height());
+        _me._htmlContainer.update(slideWrapperElem);
+        console.log('slideWrapper width after insert: ', $j(slideWrapperElem).width());
+        console.log('slideWrapper height after insert: ', $j(slideWrapperElem).height());
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged');
+        _me._centerCurrentSlide();
         _me._htmlContainer.fire('cel_yuiOverlay:contentChanged');
       }
 
