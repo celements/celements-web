@@ -215,14 +215,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         if (_me._overwritePageLayout != '') {
           params['overwriteLayout'] = _me._overwritePageLayout;
         }
-        //!!! overwriteLayout HACK!!!
-        if (_me._overwritePageLayout == 'SimpleLayout') {
-          params = {
-              'xpage' : 'plainpagetype',
-              'ajax' : '1'
-            };
-        }
-        ///!!! END HACK
         new Ajax.Request(_me._convertFullNameToViewURL(slideFN), {
           method: 'post',
           parameters: params,
