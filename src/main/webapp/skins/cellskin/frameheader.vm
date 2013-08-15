@@ -4,7 +4,7 @@
 #set($overwriteLayoutRef = $pageLayoutMainDocRef.getLastSpaceReference())
 #end
 ## start a Celements Document
-$xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
+#parse("celMacros/startCelementsDocument.vm")
 ##
 ## start the celements body (and lacily finalise the header)
 ##ATTENTION: Can not be moved to disk until all overlays are checked (ProgrammingRights issues!)
@@ -18,7 +18,7 @@ $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 #end
 <div id="sitecontainer" class="lang_${language} doclang_$doclang">
 <!-- start celements cells -->
-#if("$!overwriteLayoutRef" != '')
+#if(("$!overwriteLayoutRef" != '') && $celementsweb.layoutExists($overwriteLayoutRef))
 $celementsweb.renderPageLayout($overwriteLayoutRef)
 #else
 $celementsweb.renderPageLayout()
