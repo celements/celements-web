@@ -89,7 +89,6 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       _cleanUpAfterClose : function() {
         var _me = this;
-        console.log('_cleanUpAfterClose start');
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'auto' });
         var closeEvent = bodyElem.fire('cel_yuiOverlay:hideEvent');
@@ -98,13 +97,10 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
             dialogWrapper.remove();
           });
         }
-        //destroy to prevent problems after following orientation changes on iPhone/iPad
-        dialog.destroy();
         if ($('modal dialog_mask')) {
           $('modal dialog_mask').remove();
         }
         _me._overlayDialog = null;
-        console.log('_cleanUpAfterClode end');
       },
 
       getOverlayDialog : function(openConfig) {
@@ -158,6 +154,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var _me = this;
         var dialog = _me.getOverlayDialog();
         dialog.hide();
+        //destroy to prevent problems after following orientation changes on iPhone/iPad
+        dialog.destroy();
       },
 
       showProgressDialog : function(headerText) {
