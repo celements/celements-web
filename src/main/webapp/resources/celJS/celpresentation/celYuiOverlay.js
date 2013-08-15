@@ -61,12 +61,14 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       },
       _dialogConfig : undefined,
       _bindOpenHandler : undefined,
-
+      _bindCleanUpAfterClose : undefined,
+      
       _init : function(configObj) {
         var _me = this;
         configObj = configObj || {};
         _me.updateOpenConfig(configObj);
         _me._bindOpenHandler = _me._openHandler.bind(_me);
+        _me._bindCleanUpAfterClose = _cleanUpAfterClose.bind(_me);
       },
 
       getWidth : function() {
@@ -85,22 +87,33 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         return _me._dialogConfig.height || _me._defaultConfig.height;
       },
 
+      _cleanUpAfterClose : function() {
+        var _me = this;
+        console.log('_cleanUpAfterClode start');
+        var bodyElem = $$('body')[0];
+        bodyElem.setStyle({ 'overflow' : 'auto' });
+        var closeEvent = bodyElem.fire('cel_yuiOverlay:hideEvent');
+        if (!closeEvent.stopped) {
+          $$('body div.cel-YuiOverlay').each(function(dialogWrapper) {
+            dialogWrapper.remove();
+          });
+        }
+        //destroy to prevent problems after following orientation changes on iPhone/iPad
+        dialog.destroy();
+        if ($('modal dialog_mask')) {
+          $('modal dialog_mask').remove();
+        }
+        _me._overlayDialog = null;
+        console.log('_cleanUpAfterClode end');
+      },
+
       getOverlayDialog : function(openConfig) {
         var _me = this;
         _me.updateOpenConfig(openConfig);
         if(!_me._overlayDialog) {
           _me._overlayDialog = new YAHOO.widget.SimpleDialog("modal dialog",
               _me._dialogConfig);
-          _me._overlayDialog.hideEvent.subscribe(function() {
-            var bodyElem = $$('body')[0];
-            bodyElem.setStyle({ 'overflow' : 'auto' });
-            var closeEvent = bodyElem.fire('cel_yuiOverlay:hideEvent');
-            if (!closeEvent.stopped) {
-              $$('body div.cel-YuiOverlay').each(function(dialogWrapper) {
-                dialogWrapper.remove();
-              });
-            }
-          });
+          _me._overlayDialog.hideEvent.subscribe(_me._bindCleanUpAfterClose);
         } else {
           _me._overlayDialog.cfg.setProperty('width', _me._dialogConfig.width);
         }
@@ -144,13 +157,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       close: function() {
         var _me = this;
         var dialog = _me.getOverlayDialog();
-        dialog.hide;
-        //destroy to prevent problems after following orientation changes on iPhone/iPad
-        dialog.destroy();
-        if ($('modal dialog_mask')) {
-          $('modal dialog_mask').remove();
-        }
-        _me._overlayDialog = null;
+        dialog.hide();
       },
 
       showProgressDialog : function(headerText) {
