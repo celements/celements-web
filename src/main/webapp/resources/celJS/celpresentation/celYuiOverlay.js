@@ -211,6 +211,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var _me = this;
         openConfig = openConfig || _me._dialogConfig;
         if (!_me.getSuppressDimFromId()) {
+          var link = openConfig.link;
           var width = parseInt(link.id.split(':')[4]) + 5;
           var height = link.id.split(':')[5];
           openConfig['width'] = width + 'px';
