@@ -1,4 +1,6 @@
+#if("$!celNewButtons" == '')
 #set($celNewButtons = $services.celementsweb.useNewButtons())
+#end
 #if("$!tinyMCE_statuslocation" == '')
   #set($tinyMCE_statuslocation = 'bottom')
 #end
