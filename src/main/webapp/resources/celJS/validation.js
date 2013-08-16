@@ -85,7 +85,10 @@ Validation.prototype = {
 			onElementValidate : function(result, elm) {}
 		}, options || {});
 		this.form = $(form);
-		if(this.options.onSubmit) Event.observe(this.form,'submit',this.onSubmit.bind(this),false);
+		if(this.options.onSubmit) {
+      Event.observe(this.form,'submit',this.onSubmit.bind(this),false);
+      Event.observe(this.form,'celForm:prepareSubmit',this.onSubmit.bind(this),false);
+		}
 		if(this.options.immediate) {
 			Form.getElements(this.form).each(function(input) { // Thanks Mike!
         Event.observe(input, 'blur',  _me.validateFieldHandler.bind(_me));
@@ -98,12 +101,13 @@ Validation.prototype = {
     var _me = this;
     var useTitles = _me.options.useTitles;
     var callback = _me.options.onElementValidate;
+    this.form.fire('celValidation:prepareElementValidation', Event.element(ev));
     Validation.validate(Event.element(ev),{
       useTitle : useTitles, onElementValidate : callback
     });
   },
 	onSubmit :  function(ev){
-    this.form.fire('celValidation:prepareValidationOnSubmit', this.form);
+    this.form.fire('celValidation:prepareFormValidation', this.form);
 		if(!this.validate()) {
 		  Event.stop(ev);
 	    this.form.fire('celValidation:validationFailedSubmitCancel', this.form);
