@@ -43,8 +43,8 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         _me._datePickerIdNum = datePickerIdNum;
         _me._inputField = $(inputField);
 
-        var dateFieldOffset = inputField.positionedOffset();
-        var inputFieldHeight = inputField.getHeight();
+        var dateFieldOffset = _me._inputField.positionedOffset();
+        var inputFieldHeight = _me._inputField.getHeight();
         if (!inputFieldHeight) {
           inputFieldHeight = 15;
         }
@@ -57,7 +57,7 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         });
         _me._datePickerCon.hide();
         _me._inputField.addClassName('celDatePickerHidden');
-        inputField.insert({ after : _me._datePickerCon });
+        _me._inputField.insert({ after : _me._datePickerCon });
         _me._pickerDateCal = new YAHOO.widget.Calendar("navDate" + datePickerIdNum,
             _me._datePickerCon.readAttribute('id'), {
               title : 'Bitte ein Datum w&auml;hlen:',
@@ -75,8 +75,8 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         _me._pickerDateCal.selectEvent.subscribe(_me._handleDateSelected, _me, true);
         _me._pickerDateCal.hideEvent.subscribe(_me._calHideEventHandler, _me, true);
         _me._pickerDateCal.showEvent.subscribe(_me._calShowEventHandler, _me, true);
-        $(inputField).observe("focus", _me._calClickInsideInputHandler.bind(_me));
-        $(inputField).observe("click", _me._calClickInsideInputHandler.bind(_me));
+        $(_me._inputField).observe("focus", _me._calClickInsideInputHandler.bind(_me));
+        $(_me._inputField).observe("click", _me._calClickInsideInputHandler.bind(_me));
         $(document.body).observe('click', _me._calClickOutsideHandler.bind(_me));
         $(document.body).observe('celements:datePicker-show',
             _me._calCheckMultipleOpenHandler.bind(_me));
@@ -86,9 +86,9 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         var _me = this;
         var inputFieldValue = '';
         if (_me._inputField.getValue) {
-          inputFieldValue = $F($(inputField));
+          inputFieldValue = $F($(_me._inputField));
         } else {
-          inputFieldValue = inputField.innerHTML;
+          inputFieldValue = _me._inputField.innerHTML;
         }
         if (inputFieldValue && (inputFieldValue != '')) {
           var dateSpliter = new RegExp('[-./]');
