@@ -77,9 +77,15 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         _me._pickerDateCal.showEvent.subscribe(_me._calShowEventHandler, _me, true);
         $(_me._inputField).observe("focus", _me._calClickInsideInputHandler.bind(_me));
         $(_me._inputField).observe("click", _me._calClickInsideInputHandler.bind(_me));
+        $(_me._inputField).observe("blur", _me._blurInputFieldHandler.bind(_me));
         $(document.body).observe('click', _me._calClickOutsideHandler.bind(_me));
         $(document.body).observe('celements:datePicker-show',
             _me._calCheckMultipleOpenHandler.bind(_me));
+      },
+
+      _blurInputFieldHandler : function() {
+        var _me = this;
+        _me._updatePickerSelectedDate(false);
       },
 
       _updatePickerSelectedDate : function(selectDate) {
@@ -101,6 +107,7 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
             var curDay = dateStr[0];
             _me._pickerDateCal.select(new Date(curMonth + '/' + curDay + '/' + curYear));
           }
+          _me._pickerDateCal.render();
         }
       },
 
