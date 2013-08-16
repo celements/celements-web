@@ -103,7 +103,11 @@ Validation.prototype = {
     });
   },
 	onSubmit :  function(ev){
-		if(!this.validate()) Event.stop(ev);
+    this.form.fire('celValidation:prepareValidationOnSubmit', this.form);
+		if(!this.validate()) {
+		  Event.stop(ev);
+	    this.form.fire('celValidation:validationFailedSubmitCancel', this.form);
+		}
 	},
 	validate : function() {
 		var result = false;
