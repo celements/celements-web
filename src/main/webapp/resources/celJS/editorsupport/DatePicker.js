@@ -63,7 +63,7 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
               title : 'Bitte ein Datum w&auml;hlen:',
               close : true
         });
-        _me._updatePickerSelectedDate();
+        _me._updatePickerSelectedDate(true);
         //TODO move to ajax
         _me._pickerDateCal.cfg.setProperty("MONTHS_SHORT",   ["Jan", "Feb", "M\u00E4r", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]); 
         _me._pickerDateCal.cfg.setProperty("MONTHS_LONG",    ["Januar", "Februar", "M\u00E4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]); 
@@ -82,7 +82,7 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
             _me._calCheckMultipleOpenHandler.bind(_me));
       },
 
-      _updatePickerSelectedDate : function() {
+      _updatePickerSelectedDate : function(selectDate) {
         var _me = this;
         var inputFieldValue = '';
         if (_me._inputField.getValue) {
@@ -93,12 +93,14 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         if (inputFieldValue && (inputFieldValue != '')) {
           var dateSpliter = new RegExp('[-./]');
           var dateStr = inputFieldValue.split(dateSpliter);
-          var curDay = dateStr[0];
           var curMonth = dateStr[1];
           var curYear = dateStr[2];
           _me._pickerDateCal.setYear(curYear);
           _me._pickerDateCal.setMonth(curMonth - 1);
-          _me._pickerDateCal.select(new Date(curMonth + '/' + curDay + '/' + curYear));
+          if (selectDate) {
+            var curDay = dateStr[0];
+            _me._pickerDateCal.select(new Date(curMonth + '/' + curDay + '/' + curYear));
+          }
         }
       },
 
@@ -151,7 +153,7 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
 
       _calShowEventHandler : function() {
         var _me = this;
-        _me._updatePickerSelectedDate();
+        _me._updatePickerSelectedDate(false);
         _me._inputField.removeClassName('celDatePickerHidden');
         Event.fire(_me._inputField, 'celements:datePicker-show', {
           'celCalDatePicker' : _me,
