@@ -17,8 +17,6 @@ CELEMENTS.presentation.ResponsiveDesignImage = function(containerId, wrapperId) 
 };
 
 (function() {
-  var CPRDI = CELEMENTS.presentation.ResponsiveDesignImage;
-
   CELEMENTS.presentation.ResponsiveDesignImage.prototype = {
       _htmlContainerId : undefined,
       _htmlContainer : undefined,
@@ -29,7 +27,7 @@ CELEMENTS.presentation.ResponsiveDesignImage = function(containerId, wrapperId) 
 
       _init : function(containerId, wrapperId) {
         var _me = this;
-        _me.resetContainerAndWrapper
+        _me.resetContainerAndWrapper;
       },
 
       resetContainerAndWrapper : function(containerId, wrapperId) {
@@ -68,7 +66,7 @@ CELEMENTS.presentation.ResponsiveDesignImage = function(containerId, wrapperId) 
         wrapWidth = parseInt(wrapWidth);
         wrapHeight = parseInt(wrapHeight);
         var newImgSrc = imgSrc.replace(/celwidth=\d*&?|celheight=\d*&?/g, '');
-        var newImgSrc = newImgSrc.replace(/\?$/g, '');
+        newImgSrc = newImgSrc.replace(/\?$/g, '');
         if (wrapWidth && (wrapWidth > 0)) {
           newImgSrc += _me._addParamToUrl(newImgSrc, 'celwidth=' + wrapWidth);
         } 
