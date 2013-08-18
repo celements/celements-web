@@ -48,6 +48,8 @@ tinyMCE.addI18n('de.celimage_dlg', {
   isSlideshowRandomStart : "Zuf\u00e4lliger Startpunkt",
   hasSlideshowAddNavigation : "Navigation hinzuf\u00fcgen",
   gallery : "Bild Album",
+  "galleryPicker" : "Bildstrecke",
+  "slideshowFixStartImageNum" : "feste Startbild Nummer",
   delay : "Bildwechsel nach (Sekunden)",
   defaultEffect : "standard (Fade)",
   effects : "Bildwechsel Effekt",

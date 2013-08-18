@@ -1,6 +1,7 @@
 var CelImageDialog = {
     _isNewImage : null,
     _origDim : new Hash(),
+    _gallery : undefined,
 
     preInit : function() {
     var url;
@@ -18,6 +19,10 @@ var CelImageDialog = {
     tinyMCEPopup.resizeToInnerSize();
     _me.fillClassList('class_list');
     _me.fillGalleryList('gallery_list');
+    if (ed.getParam("celanim_slideshow", false)) {
+      _me.fillGalleryList('galleryPicker_list');
+    }
+    $('galleryPicker_list').observe('change', _me._selectGalleryActionHandler.bind(_me));
     _me.fillEffectList('effect_list');
     TinyMCE_EditableSelects.init();
 
@@ -43,12 +48,14 @@ var CelImageDialog = {
       selectByValue(f, 'align', _me.getAttrib(n, 'align'));
       selectByValue(f, 'class_list', _me.getAttrib(n, 'class'), true, true);
       selectByValue(f, 'gallery_list', _me.getAttrib(n, 'gallery'), true, true);
+      selectByValue(f, 'galleryPicker_list', _me.getAttrib(n, 'gallery'), true, true);
       selectByValue(f, 'effect_list', _me.getAttrib(n, 'effect'), true, true);
       nl.hasSlideshow.checked = _me.getAttrib(n, 'hasSlideshow');
       nl.hasOverlay.checked = _me.getAttrib(n, 'hasOverlay');
       nl.hasCloseButton.checked = _me.getAttrib(n, 'hasCloseButton');
       nl.isSlideshowManualStart.checked = _me.getAttrib(n, 'isSlideshowManualStart');
       nl.isSlideshowRandomStart.checked = _me.getAttrib(n, 'isSlideshowRandomStart');
+      nl.slideshowFixStartImageNum.value = _me.getAttrib(n, 'slideshowFixStartImageNum');
       nl.hasSlideshowAddNavigation.checked = _me.getAttrib(n, 'hasSlideshowAddNavigation');
       nl.delay.value = _me.getAttrib(n, 'delay');
       nl.overlayWidth.value = _me.getAttrib(n, 'overlayWidth');
@@ -105,6 +112,30 @@ var CelImageDialog = {
     _me.showPreviewImage(nl.src.value, 1);
     Event.observe(window, 'resize', _me._popupResizeHandler);
     _me._popupResizeHandler();
+  },
+
+  _loadedGalleryData : function(galleryObj) {
+    var _me = this;
+    if (galleryObj.getImages().size() > 0) {
+      _me.isNewImage = true;
+      var filename = galleryObj.getImages()[0].getURL();
+      filename = filename.replace(/^(.+)\?.*/, '$1');
+      document.forms[0].src.value = filename;
+      document.forms[0].hasSlideshow.checked = true;
+      document.forms[0].slideshowFixStartImageNum.value = 1;
+      _me.showPreviewImage(filename);
+      mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
+    } else {
+      alert('empty gallery.');
+    }
+  },
+
+  _selectGalleryActionHandler : function(event) {
+    var _me = this;
+    var galleryPicker = event.element();
+    $('gallery_list').value = galleryPicker.value;
+    _me._gallery = new CELEMENTS.images.Gallery(galleryPicker.value,
+        _me._loadedGalleryData.bind(_me));
   },
 
   getOrigDimensionsForImg : function(imgSrc, callbackFN) {
@@ -250,7 +281,7 @@ var CelImageDialog = {
     var nl = f.elements;
     newId = 'S' + new Date().getTime() + ':' + getSelectValue(f, 'gallery') + ':'
       + nl.delay.value + ':' + getSelectValue(f, 'effect') + ':' + nl.overlayWidth.value
-      + ':' + nl.overlayHeight.value;
+      + ':' + nl.overlayHeight.value + ':' + nl.slideshowFixStartImageNum.value;
     return newId.replace(/:+$/, '');
   },
 
@@ -337,6 +368,10 @@ var CelImageDialog = {
     if (nl.isSlideshowRandomStart.checked) {
       args['id'] = _me.getSlideShowId(f);
       args['class'] = (args['class'] + ' celanim_slideshowRandomStart').strip();
+    }
+
+    if (nl.slideshowFixStartImageNum.value != '') {
+      args['id'] = _me.getSlideShowId(f);
     }
 
     if (nl.hasSlideshowAddNavigation.checked) {
@@ -498,6 +533,15 @@ var CelImageDialog = {
       return v;
     }
 
+    if (at == 'slideshowFixStartImageNum') {
+      v = '';
+      idArgs = dom.getAttrib(e, 'id').split(':');
+      if (idArgs.length > 6) {
+        v = idArgs[6];
+      }
+      return v;
+    }
+
     if (at == 'class') {
       v = ' ' + dom.getAttrib(e, 'class') + ' ';
       v = v.replace(/ /g, '  ');
@@ -609,6 +653,9 @@ var CelImageDialog = {
       tinymce.each(cl, function(o) {
         lst.options[lst.options.length] = new Option(o.title || o['gallery'], o['gallery']);
       });
+      if (!$(lst.up('fieldset')).visible()) {
+        Effect.Appear(lst.up('fieldset'));
+      }
     }
   },
 
