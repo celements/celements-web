@@ -40,6 +40,15 @@ $celementsweb.addExtJSfileOnce(':celJS/celanim/slideshow.js')
 $celementsweb.includeCSSAfterSkin(':celJS/highslide/highslide.css')
 $celementsweb.includeCSSAfterSkin(':celRes/celanim/slideshow.css')
 $celementsweb.includeCSSAfterSkin(':celRes/celanim/overlay.css')
+#if($xwiki.getSpacePreferenceAsInt('celNewImageGallery', 0) == 1)
+##new image gallery slideshow
+$!celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
+$!celementsweb.addExtJSfileOnce(':celJS/yui/button/button-min.js', 'file')
+$!celementsweb.addExtJSfileOnce(':celJS/yui/container/container-min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/celpresentation/celYuiOverlay.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/celpresentation/CelementsSlideShow.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/images/imageSlideShow.js', 'file')
+#end
 #end
 $!celementsweb.getAllExternalJavaScriptFiles()
 #if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)
