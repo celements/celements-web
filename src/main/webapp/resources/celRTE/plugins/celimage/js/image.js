@@ -260,7 +260,7 @@ var CelImageDialog = {
         var cropX = $('cropX').value;
         var cropY = $('cropY').value;
         var cropW = $('cropWidth').value;
-        var cropH = $('cropHeight').value
+        var cropH = $('cropHeight').value;
         newSrc = src.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
         newSrc = newSrc.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
         newSrc = newSrc.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
@@ -315,7 +315,7 @@ var CelImageDialog = {
 //    console.debug('insertAndClose now.');
     var _me = this;
     var ed = tinyMCEPopup.editor, f = document.forms[0];
-    var nl = f.elements, v, args = {}, el;
+    var nl = f.elements, args = {}, el;
 
     tinyMCEPopup.restoreSelection();
 
@@ -420,7 +420,7 @@ var CelImageDialog = {
   },
 
   getAttrib : function(e, at) {
-    var ed = tinyMCEPopup.editor, dom = ed.dom, v, v2;
+    var ed = tinyMCEPopup.editor, dom = ed.dom, v = '';
 
     if (at.startsWith('margin')) {
       switch (at) {
@@ -669,7 +669,7 @@ var CelImageDialog = {
   },
 
   fillEffectList : function(id) {
-    var dom = tinyMCEPopup.dom, lst = dom.get(id), v, cl;
+    var dom = tinyMCEPopup.dom, lst = dom.get(id), cl;
 
     outermostWindow = window;
     while (outermostWindow.parent && (outermostWindow != outermostWindow.parent)) {
@@ -764,7 +764,7 @@ var CelImageDialog = {
   },
 
   updateStyle : function(ty) {
-    var dom = tinyMCEPopup.dom, st, v, f = document.forms[0], img = dom.create('img', {style : dom.get('style').value});
+    var dom = tinyMCEPopup.dom, v, f = document.forms[0], img = dom.create('img', {style : dom.get('style').value});
 
     if (tinyMCEPopup.editor.settings.inline_styles) {
       // Handle align
@@ -844,7 +844,7 @@ var CelImageDialog = {
 
   showPreviewImage : function(u, st) {
     var _me = this;
-    var f = document.forms[0], nl = f.elements
+    var f = document.forms[0], nl = f.elements;
 
     if (!u || (u == '')) {
       tinyMCEPopup.dom.setHTML('prev', '<p style="padding:20px;">' + tinyMCEPopup.getLang(
