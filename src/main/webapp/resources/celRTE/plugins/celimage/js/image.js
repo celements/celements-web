@@ -123,6 +123,9 @@ var CelImageDialog = {
       document.forms[0].src.value = filename;
       document.forms[0].hasSlideshow.checked = true;
       document.forms[0].slideshowFixStartImageNum.value = 1;
+      var overlayDim = galleryObj.getDimension();
+      document.forms[0].overlayWidth.value = overlayDim.width;
+      document.forms[0].overlayHeight.value = overlayDim.height;
       _me.showPreviewImage(filename);
       mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
     } else {
@@ -355,19 +358,24 @@ var CelImageDialog = {
       longdesc : nl.longdesc.value
     });
 
+    var cssClassPrefix = 'celanim';
+    if (_me._gallery && _me._gallery.isNewImageGallery()) {
+      cssClassPrefix = 'celimage';
+    }
+
     if (nl.hasSlideshow.checked) {
       args['id'] = _me.getSlideShowId(f);
-      args['class'] = (args['class'] + ' celanim_slideshow').strip();
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_slideshow').strip();
     }
 
     if (nl.isSlideshowManualStart.checked) {
       args['id'] = _me.getSlideShowId(f);
-      args['class'] = (args['class'] + ' celanim_manualstart').strip();
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_manualstart').strip();
     }
 
     if (nl.isSlideshowRandomStart.checked) {
       args['id'] = _me.getSlideShowId(f);
-      args['class'] = (args['class'] + ' celanim_slideshowRandomStart').strip();
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_slideshowRandomStart').strip();
     }
 
     if (nl.slideshowFixStartImageNum.value != '') {
@@ -376,17 +384,17 @@ var CelImageDialog = {
 
     if (nl.hasSlideshowAddNavigation.checked) {
       args['id'] = _me.getSlideShowId(f);
-      args['class'] = (args['class'] + ' celanim_addNavigation').strip();
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_addNavigation').strip();
     }
 
     if (nl.hasOverlay.checked) {
       args['id'] = _me.getSlideShowId(f);
-      args['class'] = (args['class'] + ' celanim_overlay').strip();
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_overlay').strip();
     }
 
     if (nl.hasCloseButton.checked) {
       args['id'] = _me.getSlideShowId(f);
-      args['class'] = (args['class'] + ' celanim_overlay_addCloseButton').strip();
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_overlay_addCloseButton').strip();
     }
 
     el = ed.selection.getNode();
@@ -452,27 +460,27 @@ var CelImageDialog = {
     }
 
     if (at == 'hasSlideshow') {
-      return dom.hasClass(e, 'celanim_slideshow');
+      return (dom.hasClass(e, 'celanim_slideshow') || dom.hasClass(e, 'celimage_slideshow'));
     }
 
     if (at == 'isSlideshowManualStart') {
-      return dom.hasClass(e, 'celanim_manualstart');
+      return (dom.hasClass(e, 'celanim_manualstart') || dom.hasClass(e, 'celimage_manualstart'));
     }
 
     if (at == 'isSlideshowRandomStart') {
-      return dom.hasClass(e, 'celanim_slideshowRandomStart');
+      return (dom.hasClass(e, 'celanim_slideshowRandomStart') || dom.hasClass(e, 'celimage_slideshowRandomStart'));
     }
 
     if (at == 'hasSlideshowAddNavigation') {
-      return dom.hasClass(e, 'celanim_addNavigation');
+      return (dom.hasClass(e, 'celanim_addNavigation') || dom.hasClass(e, 'celimage_addNavigation'));
     }
 
     if (at == 'hasOverlay') {
-      return dom.hasClass(e, 'celanim_overlay');
+      return (dom.hasClass(e, 'celanim_overlay') || dom.hasClass(e, 'celimage_overlay'));
     }
 
     if (at == 'hasCloseButton') {
-      return dom.hasClass(e, 'celanim_overlay_addCloseButton');
+      return (dom.hasClass(e, 'celanim_overlay_addCloseButton') || dom.hasClass(e, 'celimage_overlay_addCloseButton'));
     }
 
     if(at == 'cropX') {
@@ -546,6 +554,7 @@ var CelImageDialog = {
       v = ' ' + dom.getAttrib(e, 'class') + ' ';
       v = v.replace(/ /g, '  ');
       v = v.replace(/ (celanim_slideshow|celanim_manualstart|celanim_overlay|celanim_overlay_addCloseButton|celanim_slideshowRandomStart|celanim_addNavigation) /g, ' ');
+      v = v.replace(/ (celimage_slideshow|celimage_manualstart|celimage_overlay|celimage_overlay_addCloseButton|celimage_slideshowRandomStart|celimage_addNavigation) /g, ' ');
       v = v.replace(/  /g, ' ');
       return v.strip();
     }
