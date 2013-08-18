@@ -307,11 +307,22 @@ var CelImageDialog = {
     return src;
   },
 
+  _getGallerySpace : function() {
+    var _me = this;
+    var gallerySpaceName = _me._gallery.getSpaceName();
+    if (_me._gallery && gallerySpaceName) {
+      return gallerySpaceName;
+    }
+    return '';
+  },
+
   getSlideShowId : function(f) {
+    var _me = this;
     var nl = f.elements;
     newId = 'S' + new Date().getTime() + ':' + getSelectValue(f, 'gallery') + ':'
       + nl.delay.value + ':' + getSelectValue(f, 'effect') + ':' + nl.overlayWidth.value
-      + ':' + nl.overlayHeight.value + ':' + nl.slideshowFixStartImageNum.value;
+      + ':' + nl.overlayHeight.value + ':' + nl.slideshowFixStartImageNum.value + ':'
+      + _me._getGallerySpace();
     return newId.replace(/:+$/, '');
   },
 
