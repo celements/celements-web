@@ -22,7 +22,8 @@ var CelImageDialog = {
     if (ed.getParam("celanim_slideshow", false)) {
       _me.fillGalleryList('galleryPicker_list');
     }
-    $('galleryPicker_list').observe('change', _me._selectGalleryActionHandler.bind(_me));
+    $('galleryPicker_list').observe('change', _me._selectGalleryPickerActionHandler.bind(_me));
+    $('gallery_list').observe('change', _me._selectGalleryActionHandler.bind(_me));
     _me.fillEffectList('effect_list');
     TinyMCE_EditableSelects.init();
 
@@ -49,6 +50,9 @@ var CelImageDialog = {
       selectByValue(f, 'class_list', _me.getAttrib(n, 'class'), true, true);
       selectByValue(f, 'gallery_list', _me.getAttrib(n, 'gallery'), true, true);
       selectByValue(f, 'galleryPicker_list', _me.getAttrib(n, 'gallery'), true, true);
+      if ($('gallery_list').value != '') {
+        _me._gallery = new CELEMENTS.images.Gallery($('gallery_list').value);
+      }
       selectByValue(f, 'effect_list', _me.getAttrib(n, 'effect'), true, true);
       nl.hasSlideshow.checked = _me.getAttrib(n, 'hasSlideshow');
       nl.hasOverlay.checked = _me.getAttrib(n, 'hasOverlay');
@@ -133,12 +137,35 @@ var CelImageDialog = {
     }
   },
 
+  _selectGalleryPickerActionHandler : function(event) {
+    var _me = this;
+    var gallerySelect = event.element();
+    if ($('gallery_list').value != gallerySelect.value) {
+      $('gallery_list').value = gallerySelect.value;
+    }
+    if (!_me._gallery || (_me._gallery.getDocRef() != gallerySelect.value)) {
+      if (gallerySelect.value != '') {
+        _me._gallery = new CELEMENTS.images.Gallery(gallerySelect.value,
+            _me._loadedGalleryData.bind(_me));
+      } else {
+        _me._gallery = undefined;
+      }
+    }
+  },
+
   _selectGalleryActionHandler : function(event) {
     var _me = this;
     var galleryPicker = event.element();
-    $('gallery_list').value = galleryPicker.value;
-    _me._gallery = new CELEMENTS.images.Gallery(galleryPicker.value,
-        _me._loadedGalleryData.bind(_me));
+    if ($('galleryPicker_list').value != galleryPicker.value) {
+      $('galleryPicker_list').value = galleryPicker.value;
+    }
+    if (!_me._gallery || (_me._gallery.getDocRef() != galleryPicker.value)) {
+      if (galleryPicker.value != '') {
+        _me._gallery = new CELEMENTS.images.Gallery(galleryPicker.value);
+      } else {
+        _me._gallery = undefined;
+      }
+    }
   },
 
   getOrigDimensionsForImg : function(imgSrc, callbackFN) {
