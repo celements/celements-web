@@ -353,11 +353,11 @@ this._init(preloadFunc, showFunc);
         _me._showFunc(_me._currContent);
         if (!_me._preloadNext) {
           _me._preloadFunc(_me._allSlides[_me.getNextIndex()],
-              _me._updateNextContent.bind(_me))
+              _me._updateNextContent.bind(_me));
         }
         if (!_me._preloadPrev) {
           _me._preloadFunc(_me._allSlides[_me.getPrevIndex()],
-              _me._updatePrevContent.bind(_me))
+              _me._updatePrevContent.bind(_me));
         }
       },
 
@@ -435,7 +435,7 @@ this._init(preloadFunc, showFunc);
           _me._preloadNext = null;
           _me._preloadPrev = null;
           _me._preloadFunc(_me._allSlides[_me._currIndex],
-              _me._updateCurrentContent.bind(_me))
+              _me._updateCurrentContent.bind(_me));
         }
       }
 
