@@ -1,8 +1,4 @@
 var slideshowIsDebug = false;
-  
-YAHOO.util.Event.onDOMReady(function() {
-  loadSlideShowDataAsync();
-});
 
 if (typeof getCelHost === 'undefined') {
   var getCelHost = function() {
@@ -27,6 +23,11 @@ var getSlideShowIds = function() {
 
 var loadSlideShowDataAsync = function() {
   if (getSlideShowIds().size() > 0) {
+    getSlideShowIds().each(function(elemId) {
+      $(elemId).setStyle({
+        'visibility' : 'hidden'
+      });
+    });
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
@@ -160,6 +161,9 @@ var celSlideShows_initOneSlideShow = function(slideShowConfig) {
      **/
     slideShowConfig.hasRandomStart = slideShowImg.hasClassName(
         'celanim_slideshowRandomStart');
+    slideShowConfig.firstImageNum = parseInt(celSlideShowGetPart(slideShowConfig.htmlId,
+        6, 0));
+    slideShowConfig.firstImageChange = true;
     slideShowImg.absolutize();
     removeImageSize(slideShowImg);
     removeImageSize(tempImg);
@@ -232,6 +236,9 @@ var celSlideShow_startOne = function(elemId) {
   }
   celSlideShowIsRunningHash.set(elemId, !isManualStart);
   if (isManualStart) {
+    $(elemId).setStyle({
+      'visibility' : ''
+    });
     var startButtonDiv = new Element('div', { 'class' : 'slideshowButton' });
     startButtonDiv.hide();
     $(elemId).insert({ after : startButtonDiv });
@@ -610,6 +617,14 @@ var changeImage = function(elemId) {
   if (celSlideShowIsNotChanging(elemId) && isLoadedAndDelayed(elemId)) {
     $(elemId).addClassName('celanim_isChanging');
     var effectKey = celSlideShowGetPart(elemId, 3, 'fade');
+    //TODO force "none" effect if _tmpImg.src = current img.
+    //TODO maybe forece "none" for first image loaded!
+    if (celSlideShowConfig.get(elemId).firstImageChange) {
+      effectKey = 'none';
+      $(elemId).setStyle({
+        'visibility' : ''
+      });
+    }
     var effectDetails = celSlideShowEffects.get(effectKey) || celSlideShowEffects.get(
         'fade');
     var effectParameters = $H(effectDetails.params).merge({
@@ -619,6 +634,7 @@ var changeImage = function(elemId) {
     theEffect = effectDetails.effect(elemId + '_tmpImg', effectParameters.toObject());
     celSlideShow_getOuterWrapperElement(elemId).fire(
         'celanim_slideshow:beforeChangeImage', celSlideShowConfig.get(elemId));
+    celSlideShowConfig.get(elemId).firstImageChange = false;
     new Effect.Parallel(
         [
           theEffect,
@@ -645,7 +661,7 @@ var celSlideShowInitFirstImage = function(slideConfig) {
     if (slideConfig.hasRandomStart) {
       celSlideShowSetCurrentImgId(slideConfig, slideShowGetRandomStartNum(slideConfig));
     } else {
-      celSlideShowSetCurrentImgId(slideConfig, 0);
+      celSlideShowSetCurrentImgId(slideConfig, slideConfig.firstImageNum);
     }
   }
 };
@@ -753,6 +769,8 @@ var celSlideShowGetImgSrcForId = function(slideConfig, newImgId) {
 var slideShowGetRandomStartNum = function(slideConfig) {
   return Math.round(Math.random() * (slideConfig.imageArray.size() - 1));
 };
+
+celAddOnBeforeLoadListener(loadSlideShowDataAsync);
 
 // default effects
 celSlideShowAddEffect('none', { effect : Effect.Appear, params : { duration: 0.0 } });
