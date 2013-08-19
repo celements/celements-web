@@ -113,7 +113,8 @@ function cancelAndClose(ed,h) {
 $xwiki.includeForm('celements2web:Macros.includeRTELanguageSelect', false)
 
 	<form id="edit" method="post" action="$doc.getURL("save")">
-	    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+##	    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+        <input type="hidden" name="template" value="$!request.template" />
 	    <input type="hidden" id="formeditxred" name="xredirect" value="$!cel_tiny_xredirect" />
 	    <input type="hidden" name="language" value="$!language" />
 <!-- FIX? : $tdoc.fullName , $tdoc.language -->
