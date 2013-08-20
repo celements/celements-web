@@ -184,7 +184,9 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           if (!openDialogEvent.stopped) {
             _me._defaultOpenDialog(openConfig);
           } else {
-            console.log('openCelPageInOverlay skipping defaultOpenDialog.');
+            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+              console.log('openCelPageInOverlay skipping defaultOpenDialog.');
+            }
           }
         } else {
           if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
@@ -251,7 +253,6 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       },
 
       _defaultOpenDialog : function(openConfig) {
-        console.log('_defaultOpenDialog start');
         var _me = this;
         _me.updateOpenConfig(openConfig);
         var dialog = _me.open();
@@ -260,7 +261,6 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
         $('yuiOverlayContainer').fire('cel_yuiOverlay:afterShowDialog');
         _me._loadFirstContent();
-        console.log('_defaultOpenDialog end');
       }
 
   };
