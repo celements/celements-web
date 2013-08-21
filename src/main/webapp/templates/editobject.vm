@@ -11,8 +11,9 @@
 #macro(displayObject $obj $class $props $firstfield)
   <div id="xobject_${class.name}_${obj.number}" class="xobject">
   <div id="xobject_${class.name}_${obj.number}_title" class="xobject-title"><h3>#cleanClassname(${class.name}) ${obj.number}:</strong> $doc.display($firstfield, $obj)
-    <a href="$doc.getURL("objectremove", "classname=${class.name}&amp;classid=${obj.number}&amp;xredirect=${doc.getURL('edit', 'editor=object')}")" class="xobject-action delete" title="Remove this object">$msg.get("removethisobject")</a>
-    #if(!$hasCustomObject) <a href="$doc.getURL("edit", "editor=object&amp;classname=${class.name}&amp;object=${obj.number}")" class="xobject-action edit" title="Edit only this object">$msg.get("editthisobject")</a> #end
+    #set($editorXredirect = ${doc.getURL('edit', "editor=object$!{xredPram}")})
+    <a href="$doc.getURL("objectremove", "classname=${class.name}&amp;classid=${obj.number}&amp;xredirect=$editorXredirect")" class="xobject-action delete" title="Remove this object">$msg.get("removethisobject")</a>
+    #if(!$hasCustomObject) <a href="$doc.getURL("edit", "editor=object&amp;classname=${class.name}&amp;object=${obj.number}$!{xredPramURL}")" class="xobject-action edit" title="Edit only this object">$msg.get("editthisobject")</a> #end
   </h3></div>
   <div id="xobject_${class.name}_${obj.number}_content" class="xobject-content"><div>
     <dl>
@@ -66,8 +67,13 @@
 ##
 ##
 ##
+#set($requestXredirect = "$!request.xredirect")
+#if("$!requestXredirect" != '')
+  #set($xredPram = "&xredirect=$!requestXredirect")
+  #set($xredPramURL = "&amp;xredirect=$!requestXredirect")
+#end
 #if("$!request.xpage" == 'editobject')
-  $response.sendRedirect($doc.getURL('edit', 'editor=object'))
+  $response.sendRedirect($doc.getURL('edit', "editor=object$!{xredPram}"))
 #else
   $xwiki.ssfx.use('js/xwiki/editors/dataeditors.css', true)##
   $xwiki.jsfx.use('js/xwiki/editors/dataeditors.js', true)##
@@ -85,15 +91,15 @@
     #set($classes = $doc.getxWikiClasses())
   #end
   #if($hasCustomClass || $hasCustomObject || $hasCustomField)
-    #set($fullEditorURL = "$doc.getURL('edit', 'editor=object')")
+    #set($fullEditorURL = $doc.getURL('edit', "editor=object$!{xredPramURL}"))
     <div class="more-actions">
       <a href='$fullEditorURL' class='edit-all' title='Edit only this object'>&laquo;Edit all the objects defined in this document</a>
     </div>
   #end
   #set($redirect = $xwiki.getRequestURL())
-  <form id="update" method="post" action="$doc.getURL("save")" onsubmit="cancelCancelEdit()">
+  <form id="update" method="post" action="$doc.getURL('save', "$!{xredPramURL}")" onsubmit="cancelCancelEdit()">
   <div id="xwikieditcontent">
-  #set($q = 'editor=object')
+  #set($q = "editor=object$!{xredPramURL}")
   #if($hasCustomClass)
     #set($customClass = ${request.classname})
     #set($q = "${q}&amp;classname=${customClass}")
