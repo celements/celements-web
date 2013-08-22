@@ -43,12 +43,16 @@ right:-15px;
 top:-15px;
 width:30px;
 }
-
-/*RLS Newsletter */
-
 .main.layoutsubsection{
 	position:relative;
 	width:800px;
+}
+
+/* Newsletter */
+
+.NewsletterAddressList .main.layoutsubsection{
+  position:relative;
+  width: 1050px;
 }
 newsletter_send_answer{
 	overflow-x:hidden;
