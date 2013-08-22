@@ -106,7 +106,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         return _me._navObj._convertFullNameToViewURL(fullName);
       },
 
-      loadMainSlides : function(spaceName, startAtIndex, callbackFN) {
+      loadMainSlides : function(spaceName, startAtIndexOrName, callbackFN) {
         var _me = this;
         callbackFN = callbackFN || function(jsonObj) {};
         new Ajax.Request(getCelHost(), {
@@ -119,6 +119,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           onSuccess: function(transport) {
             if (transport.responseText.isJSON()) {
               var jsonObj = transport.responseText.evalJSON();
+              var startAtIndex = startAtIndexOrName;
+              if (typeof(startAtIndexOrName) === 'string') {
+                startAtIndex = jsonObj.indexOf(startAtIndexOrName);
+              }
               _me._navObj._setAllSlides(jsonObj, startAtIndex);
               callbackFN(jsonObj);
             } else {
