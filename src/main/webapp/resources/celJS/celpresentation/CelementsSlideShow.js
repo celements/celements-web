@@ -121,7 +121,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
               var jsonObj = transport.responseText.evalJSON();
               var startAtIndex = startAtIndexOrName;
               if (typeof(startAtIndexOrName) === 'string') {
-                startAtIndex = jsonObj.indexOf(startAtIndexOrName);
+                startAtIndex = jsonObj.indexOf(spaceName + '.' +startAtIndexOrName);
               }
               _me._navObj._setAllSlides(jsonObj, startAtIndex);
               callbackFN(jsonObj);
