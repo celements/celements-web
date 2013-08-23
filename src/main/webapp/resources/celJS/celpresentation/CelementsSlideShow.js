@@ -40,7 +40,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
   CELEMENTS.presentation.SlideShow.prototype = {
       _htmlContainerId : undefined,
       _htmlContainer : undefined,
-      _overwritePageLayout : '',
+      _overwritePageLayout : 'SimpleLayout',
       _preloadSlideImagesHash : new Hash(),
       _nextElements : [],
       _prevElements : [],
@@ -210,7 +210,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       setOverwritePageLayout : function(overwritePageLayout) {
         var _me = this;
-        _me._overwritePageLayout = overwritePageLayout;
+        if (overwritePageLayout && (overwritePageLayout != '')) {
+          _me._overwritePageLayout = overwritePageLayout;
+        }
       },
 
       setCenterSlide : function(isCenterSlide) {
