@@ -633,7 +633,11 @@ function change() {
                                   #end
                                   #set($menuName = $helpNav.getMultilingualMenuName("$item", $admin_language))
                                   <div class="c3_fb_upload_filter">
-                                    <input type="checkbox" name="uploadFilterItem" id="c2_fb_$menuName" value="$menuDocName" />$menuName
+                                    #set($isChecked = '')
+                                    #if("$!item" == "$!active")
+                                      #set($isChecked = 'checked="checked" ')
+                                    #end
+                                    <input type="checkbox" name="uploadFilterItem" id="c2_fb_$menuName" value="$menuDocName" ${isChecked}/>$menuName
                                   </div>
                                 #end
                               </div>
