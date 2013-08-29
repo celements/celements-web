@@ -115,7 +115,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         }
         var dialogHeight = '';
         if ((_me._dialogConfig.height != undefined) && (_me._dialogConfig.height != '')) {
-          dialogHeight = 'style="height:' + _me._dialogConfig.height + ";'";
+          dialogHeight = 'style="height:' + _me._dialogConfig.height + ';"';
         }
         _me._overlayDialog.setHeader('&nbsp;'); 
         _me._overlayDialog.setBody('<div id="yuiOverlayContainer"' + dialogHeight
