@@ -106,7 +106,7 @@
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
-      <version>1.24</version>
+      <version>1.26</version>
     </dependency>
     <dependency>
        <groupId>com.celements</groupId>
