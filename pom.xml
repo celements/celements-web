@@ -32,7 +32,7 @@
   <modelVersion>4.0.0</modelVersion>  
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>2.35.0-SNAPSHOT</version>
+  <version>2.36.0-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -70,13 +70,13 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>1.15-SNAPSHOT</version>
+      <version>1.15</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>1.7-SNAPSHOT</version>
+      <version>1.7</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -101,12 +101,12 @@
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-application-manager</artifactId>
-      <version>1.17</version>
+      <version>1.19</version>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
-      <version>1.24</version>
+      <version>1.26</version>
     </dependency>
     <dependency>
        <groupId>com.celements</groupId>
@@ -117,12 +117,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.70-SNAPSHOT</version>
+      <version>1.70</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-subsystem-migration-manager</artifactId>
-      <version>1.0</version>
+      <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>

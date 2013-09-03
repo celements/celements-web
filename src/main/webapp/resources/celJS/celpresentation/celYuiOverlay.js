@@ -115,11 +115,13 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         }
         var dialogHeight = '';
         if ((_me._dialogConfig.height != undefined) && (_me._dialogConfig.height != '')) {
-          dialogHeight = 'style="height:' + _me._dialogConfig.height + ";'";
+          dialogHeight = 'style="height: ' + _me._dialogConfig.height
+            + '; position: relative;"';
         }
         _me._overlayDialog.setHeader('&nbsp;'); 
         _me._overlayDialog.setBody('<div id="yuiOverlayContainer"' + dialogHeight
-            + '><img style="display:block; margin-left: auto; margin-right:auto;"'
+            + '><img style="display:block; margin-left: auto; margin-right:auto;'
+            + ' position: relative; top: 48%;"'
             + ' src="/file/resources/celRes/ajax-loader.gif" /></div>'); 
         //add skin-div to get default yui-skin-sam layouting for the dialog
         var yuiSamSkinDiv = new Element('div'

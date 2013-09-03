@@ -229,12 +229,14 @@ form#newsletter_send span#testResultBoxSpan {
   font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
   color: black;
+  margin-left: 0;
 }
 .generalOverlay #cel_overlaybody h1,
 .generalOverlay #cel_overlaybody h2,
 .generalOverlay #cel_overlaybody h3 {
   font-size: 18px;
   line-height: 21px;
+  margin-left: 0;
   margin-bottom: 25px;
   font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
