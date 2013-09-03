@@ -1097,7 +1097,13 @@ $fn
   ## as otherwise the previously set panel will be displayed. getDocument() returns null if the
   ## user doesn't have the right to view a document.
   #set ($paneldoc = "")
-  #set ($paneldoc = $xwiki.getDocument($name))
+  #set($paneldocref = $services.model.resolveDocument($name))
+  #if($xwiki.exists($paneldocref))
+    #set($paneldoc = $xwiki.getDocument($paneldocref))
+  #else
+    #set($panelcentraldocref = $services.model.createDocumentReference('celements2web', 'Panels', $paneldocref.name)))
+    #set($paneldoc = $xwiki.getDocument($panelcentraldocref))
+  #end
   #if ($paneldoc != "")
     #set ($pobj = $paneldoc.getObject("Panels.PanelClass"))
     #if (!$pobj)
