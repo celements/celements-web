@@ -11,7 +11,7 @@
 .loginscreen {
     background: white;
     padding: 10px;
-    width: 530px;
+    width: 485px;
 }
 /* geändert laut Ticket #5637
 #loginForm fieldset.xwikimessage {
@@ -46,7 +46,7 @@
 	border:1px solid black;
 	font-size:12px;
 	line-height:15px;
-  margin-left: 120px;
+  margin-left: 140px;
 }
 #loginForm fieldset.xwikimessage a{
 	padding-left:167px;
@@ -63,7 +63,7 @@
 }
 #loginForm fieldset.xwikimessage table.xwikilogintable th {
   text-align: right;
-  width: 120px;
+  width: 140px;
 }
 #loginForm fieldset.xwikimessage table.xwikilogintable th,
 #loginForm fieldset.xwikimessage table.xwikilogintable td {
@@ -80,6 +80,6 @@
 }
 #loginForm fieldset.xwikimessage table.xwikilogintable tr + tr + tr td {
   padding: 0px;
-  padding-left: 120px;
+  padding-left: 140px;
   padding-top: 10px;
 }
