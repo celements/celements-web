@@ -1,0 +1,131 @@
+##FIXME CSS-Problems All CSS-Files must be loaded initally and can not be injected through AJAX changes.
+##FIXME The following CSS should be an Import-Config CSS. Problem: How to mark the UserCss object to be only interpreted
+##FIXME in import mode?
+<link rel="stylesheet" media="all" type="text/css" href="$xwiki.getSkinFile('celRes/import/ImportManager.css', true)" />
+<link rel="stylesheet" media="all" type="text/css" href="$xwiki.getSkinFile('celRes/import/GalleryImport.css', true)" />
+$celementsweb.addExtJSfileOnce(':celJS/import/importManager.js')
+## ATTENTION - Includes for old servers - 
+#*<link rel="stylesheet" media="all" type="text/css" href="$celSkin_doc.getAttachmentURL('ImportManager.css', 'skin')" />
+<link rel="stylesheet" media="all" type="text/css" href="$celSkin_doc.getAttachmentURL('GalleryImport.css', 'skin')" />
+$celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('importManager.js', 'skin'))*#
+#set($space = "$!request.get('space')")
+#if("$!space" == '')
+  #set($space = $doc.getSpace())
+#end
+#set($page = "$!request.get('page')")
+#if("$!page" == '')
+  #set($page = $doc.getFullName())
+#end
+#if($xwiki.exists("$page") && $xwiki.hasAccessLevel("edit", "$context.getUser()", "$page"))
+#set($importObj = $doc.getObject('Classes.ImportClass'))
+#if("$!importObj" == '')
+##  #set($theDoc = $doc)
+##  $xwiki.includeForm("Macros.getPageTypeAndTemplateDoc", false)
+#set($pageTypeRef = $services.pageType.getPageTypeRef($doc.documentReference))
+#set($pageTypeConfig = $services.pageType.getPageTypeConfig($pageTypeRef))
+#set($pageTypeName = $pageTypeConfig.getName())
+#set($pageTypeDocRef = $services.model.createDocumentReference('', 'PageTypes', $pageTypeName))
+#set($pageTypeCentralDocRef = $services.model.createDocumentReference('celements2web', 'PageTypes', $pageTypeName))
+#set($pageTypeDoc = $xwiki.getDocument($pageTypeDocRef))
+  #set($importObj = $pageTypeDoc.getObject('Classes.ImportClass'))
+  #if(("$!importObj" == '') && ($pageTypeDocRef != $pageTypeCentralDocRef))
+    #set($celeTemplateDoc = $xwiki.getDocument($pageTypeCentralDocRef))
+    #set($importObj = $celeTemplateDoc.getObject('Classes.ImportClass'))
+  #end
+#end
+#set($encoding = "$!importObj.getProperty('encoding').getValue()")
+#set($allowedExtentions = "$!importObj.getProperty('allowed_file_extentions').getValue()")
+#set($action = $importObj.getProperty('js_preimport_function').getValue())
+#set($preimportLink = $importObj.getProperty('preimport_link').getValue())
+#if($preimportLink.length() > 0)
+  #if($preimportLink.indexOf('?') < 0)
+    #set($preimportLink = "$!{preimportLink}?")
+  #end
+  #if(($preimportLink.indexOf('#') >= 0) || ($preimportLink.indexOf('$') >= 0))
+    #set($preimportLink = $!xwiki.renderText("{pre}$!{preimportLink}{/pre}",$doc))
+  #end
+#end
+<script type="text/javascript">
+  #if("$!action"!= '')
+    $!xwiki.renderText("{pre}$!{action}{/pre}",$doc)
+  #end
+</script>
+<form if="hiddenform" action="">
+<input type="hidden" id="c3_preimport_url" value="$!{preimportLink}" />
+<input type="hidden" id="c3_import_encoding" value="$!encoding" />
+#* TODO to be able to use an array the fielbase needs to be changed - when doing that it probably 
+        is also better to change to ajax requests instead of hidden fields to get the data
+#set($allowedExts = $!{allowedExtentions.trim().replace(',', '","')})
+#if($allowedExts.length() > 0)
+  #set($q = '"')
+  #set($allowedExts = "$q$allowedExts$q")
+#end
+<input type="hidden" id="cel_filebase_allowed_file_extentions" value="[$!allowedExts]" />
+*#
+<input type="hidden" id="cel_filebase_allowed_file_extentions" value=",$!allowedExtentions," />
+#set($allowedExtentionsStr = "'$!{allowedExtentions}'")
+<input type="hidden" id="cel_filebase_not_allowed_file_extention_message" value="$!adminMsg.get('cel_import_allowed_extentions', [$allowedExtentionsStr])" />
+<input type="hidden" id="c3_title_preimport" value="$adminMsg.get('cel_import_preimport')" />
+</form>
+<div class="c3_import_box c3_import_top">
+  <div class="c3_import_title">$adminMsg.get('cel_import_filelist')</div><!-- /c3_import_title -->
+  <div class="c3_filebase_box c3_import_tabbox">
+##    #set($isInline = '1') <!-- inline: $isInline -->
+  #set($initFilters = "$!importObj.getProperty('filebaseTagDocName').getValue()") <!-- filter: $initFilters -->
+  #set($initActive = "f$initFilters") <!-- active: $initActive -->
+  #set($fbDoc = "$!xwiki.getWebPreference('cel_centralfilebase')") <!-- centraldoc: $fbDoc -->
+  #set($initSingleDoc = "$!fbDoc") <!-- singledoc: $initSingleDoc -->
+  #set($fbDot = $fbDoc.indexOf('.'))
+  #set($fbDocSpace = "$!fbDoc.substring(0, $fbDot)") <!-- space: $fbDocSpace -->
+  #set($initRoot = "$!fbDocSpace") <!-- root: $initRoot -->
+  #set($importMode = '1') <!-- import: $importMode -->
+  #set($initColumns = '10') <!-- columns: $initColumns -->
+  #parse('celMacros/FileBase.vm')
+#* TODO make file base optional
+  #if("$!fbVersionContent" != '')
+    $fbVersionContent
+  #else
+    <table class="c3_import_attachment_table">
+      <thead>
+        <td>$adminMsg.get('cel_filename')</td>
+        <td>$adminMsg.get('cel_size')</td>
+        <td>$adminMsg.get('cel_version')</td>
+        <td>$adminMsg.get('cel_ml_date')</td>
+      </thead>
+      <tbody>
+        #foreach($attachment in $doc.getAttachmentList())
+          <tr>
+            <td><a href="" class="c3_file_link" onclick="preimport('$attachment.getFilename()'); return false;">$attachment.getFilename()</a></td>
+            <td class="number">$attachment.getFilesize()</td>
+            <td class="number">$attachment.getVersion()</td>
+            <td>$attachment.getDate()</td>
+          </tr>
+        #end
+      </tbody>
+    </table><!-- /c3_import_attachment_table -->
+  #end*#
+  </div><!-- /c3_filebase_box -->
+</div><!-- /c3_import_fileList -->
+<div class="c3_import_box c3_import_middle" id="c3_import_box">
+  <div class="c3_import_title">$adminMsg.get('cel_import_preimport')</div><!-- /c3_import_title -->
+  <div class="c3_import_preimport_result c3_import_tabbox" id="c3_import_preimport_result">
+    <p>$adminMsg.get('cel_import_preimport_message')</p>
+  </div><!-- /c3_import_tabbox -->
+</div><!-- /c3_import_preimport -->
+## UPLOAD 
+#if(!$xwiki.exists("Celements2.FileBase"))
+<div class="c3_import_box c3_import_buttom">
+  <div class="c3_import_title">$adminMsg.get('cel_import_upload')</div><!-- /c3_import_title -->
+  <div class="c3_import_tabbox">
+  <form action="$doc.getURL('upload')" class="c3_import_upload_form" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="xredirect" value="$doc.getURL('view')" size="20" />    
+    <input type="hidden" name="filename" value="" size="20" />
+    <input type="file" class="browser" name="filepath" value="" size="40"  />
+    <input type="submit" class="upload" value="$adminMsg.get('cel_upload')"/>
+  </form>
+  </div><!-- /c3_import_tabbox -->
+</div><!--c3_import_upload-->
+#end
+#else
+  $msg.get('sgr_import_denied')
+#end
