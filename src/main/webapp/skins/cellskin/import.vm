@@ -1,7 +1,7 @@
 #template("xwikivars.vm")
 #set($skinBodyAttributes = " style='overflow:hidden;'")
 #set($cel_loadAdminMenuBar = false)
-#set($celementsLoadInOverlay = 'Celements2.ImportBase')
+#set($celementsLoadInOverlay = 'celMacros/ImportBase.vm')
 #set($showOverlayLanguageBar = false)
 #set($showCloseOverlayButton = true)
 #set($closeOverlayRedirect = "$!request.get('xredirect')")
