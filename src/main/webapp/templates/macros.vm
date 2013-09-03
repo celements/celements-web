@@ -1101,7 +1101,7 @@ $fn
   #if($xwiki.exists($paneldocref))
     #set($paneldoc = $xwiki.getDocument($paneldocref))
   #else
-    #set($panelcentraldocref = $services.model.createDocumentReference('celements2web', 'Panels', $paneldocref.name)))
+    #set($panelcentraldocref = $services.model.createDocumentReference('celements2web', 'Panels', $paneldocref.name))
     #set($paneldoc = $xwiki.getDocument($panelcentraldocref))
   #end
   #if ($paneldoc != "")
