@@ -1,10 +1,16 @@
 var initCelRTE = function() {
+  var params = {
+      xpage : 'celements_ajax',
+      ajax_mode : 'TinyConfig'
+   };
+  var hrefSearch = window.location.search;
+  var templateRegEx = new RegExp('^(\\?|(.*&)+)?template=([^=&]*).*$');
+  if (hrefSearch.match(templateRegEx)) {
+    params['template'] = window.location.search.replace(templateRegEx, '$3');
+  }
   new Ajax.Request(getCelHost(), {
     method: 'post',
-    parameters: {
-       xpage : 'celements_ajax',
-       ajax_mode : 'TinyConfig'
-    },
+    parameters: params,
     onSuccess: function(transport) {
       var tinyConfigJSON = transport.responseText.replace(/\n/g,' ');
       if (tinyConfigJSON.isJSON()) {
