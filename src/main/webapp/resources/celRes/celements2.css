@@ -634,7 +634,8 @@ body > .cel_reorderNodes_proxy .docLangs,
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a,
-.celements3_tabMenu #con_langBar .docLangs a {
+.celements3_tabMenu #con_langBar .docLangs a,
+.celements3_tabMenu #con_langBar .docLangs span {
 	display: block;
 	float: left;
 	width: 20px;
@@ -648,7 +649,8 @@ body > .cel_reorderNodes_proxy .docLangs,
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a + a,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a + a,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a + a,
-.celements3_tabMenu #con_langBar .docLangs a + a {
+.celements3_tabMenu #con_langBar .docLangs a + a,
+.celements3_tabMenu #con_langBar .docLangs span + span {
 	margin-left: 1px;
 }
 
