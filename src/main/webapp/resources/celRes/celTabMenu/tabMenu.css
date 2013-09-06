@@ -127,6 +127,16 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
 	**/
   width: auto;
 }
+.celements3_tabMenu .titleblock {
+  display:block;
+  padding: 10px;
+  padding-left: 13px;
+  padding-right: 13px;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: 8px;
+  font-weight: bold;
+}
 .celements3_tabMenu .editblock {
   display:block;
   padding: 10px;
