@@ -62,7 +62,7 @@ TE.prototype = {
       var elementsValues = new Hash();
       _me.updateTinyMCETextAreas(formId);
       $(formId).getElements().each(function(elem) {
-        if (elem.name && (elem.name != '') && (!elementsValues.get(elem.name)
+        if (_me._isSubmittableField(elem) && (!elementsValues.get(elem.name)
             || (elementsValues.get(elem.name) == ''))) {
           if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
             console.debug('initValue for: ' + elem.name, elem.value);
@@ -681,6 +681,15 @@ TE.prototype = {
  },
 
  /**
+  * submittable fields must have a name attribute and maynot be disabled  
+  * @param fieldElem
+  * @returns {Boolean}
+  */
+ _isSubmittableField : function(fieldElem) {
+   return (fieldElem.name && (fieldElem.name != '') && !fieldElem.disabled);
+ },
+
+ /**
   * isDirtyField and needs saving
   * 
   * @param fieldElem
@@ -722,7 +731,7 @@ TE.prototype = {
        var elementsValues = entry.value;
        _me.updateTinyMCETextAreas(formId);
        $(formId).getElements().each(function(elem) {
-         if (elem.name && (elem.name != '') && _me.isDirtyField(elem, elementsValues)) {
+         if (_me._isSubmittableField(elem) && _me.isDirtyField(elem, elementsValues)) {
            if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
              console.debug('getDirtyFormIds first found dirty field: ', elem.name);
            }
