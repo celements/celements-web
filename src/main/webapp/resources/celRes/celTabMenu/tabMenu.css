@@ -261,3 +261,7 @@ body .yui-skin-sam .yui-simple-dialog {
   line-height: 16px;
   width: 400px;
 }
+
+.celements3_tabMenu #tabMenuPanel #con_langBar {
+  position: relative;
+}
