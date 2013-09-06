@@ -623,6 +623,7 @@ body > .cel_reorderNodes_proxy {
 	right: 0px;
 }
 .celements3_tabMenu #con_langBar .docLangs {
+  top: 14px;
   right: 13px;
 }
 body > .cel_reorderNodes_proxy .docLangs,
