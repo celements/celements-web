@@ -127,7 +127,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-calendar</artifactId>
-      <version>1.20</version>
+      <version>1.21-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
