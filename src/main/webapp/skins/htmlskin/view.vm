@@ -1,1 +1,1 @@
-$cdoc.getRenderedContent()
+$services.celementsweb.renderDocument($!cdoc.documentReference, $context.language)
