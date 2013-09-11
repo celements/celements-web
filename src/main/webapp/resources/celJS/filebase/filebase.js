@@ -31,6 +31,15 @@ CELEMENTS.filebase.UiController = function() {
         _me._fileUploadElem = $('uploadBrowser');
         _me._fileUploadElem.observe('celements:beforeUpload', _me._beforeUploading.bind(
             _me));
+        _me._fileUploadElem.observe('celements:uploadfinished', _me._finishUploading.bind(
+            _me));
+      },
+
+      _finishUploading : function(event) {
+//        var _me = this;
+        $('progressBar').hide();
+        $(''cel_filebase_uploadForm').show();
+        change();
       },
 
       _beforeUploading : function(event){
@@ -91,7 +100,8 @@ CELEMENTS.filebase.UiController = function() {
                   }
                 }
                 
-                var upform = $('cel_filebase_uploadForm').setStyle({ display: 'none' });
+                var upform = $('cel_filebase_uploadForm');
+                upform.hide();
                 $('progressBar').show();
                 upform.submit();
               } else {
