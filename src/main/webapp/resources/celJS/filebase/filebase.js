@@ -72,8 +72,9 @@ CELEMENTS.filebase.UiController = function() {
         }
       },
 
-      _transformFilename : function(name){
+      _transformFilename : function(name, forceOverwrite){
         var _me = this;
+        forceOverwrite = forceOverwrite || false;
         var uploadDoc = $('uploadDoc').value;
         new Ajax.Request(getCelHost(), { 
           method: 'post',
@@ -92,7 +93,8 @@ CELEMENTS.filebase.UiController = function() {
               var clearedName = jsonResultObj.allFileNames[0].clearedFileName;
               var noFileNameChanges = ((name == filename)
                   && name.match(clearedName + "$"));
-              var noOverwrites = (jsonResultObj.filesExistList.size() == 0);
+              var noOverwrites = (jsonResultObj.filesExistList.size() == 0)
+                  || forceOverwrite;
               if(noFileNameChanges && noOverwrites) {
                 $('uploadFilename').value = clearedName;
                 var elements = $$('.c3_fb_upload_filter input[name="uploadFilterItem"]');
@@ -111,12 +113,17 @@ CELEMENTS.filebase.UiController = function() {
                 //TODO give possibility to the user to change the name insead of only confirming it
                 var confirmName = confirm($('cel_filebase_upload_namechange_message').value + "\n'" + name + "' -> '" + clearedName + "'");
                 if(confirmName){
-                  transformFilename(clearedName);
+                  transformFilename(clearedName, forceOverwrite);
+                }
+              } else if (!noOverwrites) {
+                var confirmName = confirm(jsonResultObj.errorMsg);
+                if(confirmName){
+                  transformFilename(name, true);
                 }
               } else {
                 var confirmName = confirm(jsonResultObj.errorMsg);
                 if(confirmName){
-                  transformFilename(name);
+                  transformFilename(name, forceOverwrite);
                 }
               }
             }
