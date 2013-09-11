@@ -25,7 +25,7 @@
 ## imports
 <link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile(':celRes/mediaLib/celements2medialib.css')" />
 ##TODO replace with default overlay
-$xwiki.includeForm('celements2web:Celements2.DarkBox', false)
+#parse('celMacros/DarkBox.vm')
 $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
 $celementsweb.addExtJSfileOnce(':celJS/initCelements.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
