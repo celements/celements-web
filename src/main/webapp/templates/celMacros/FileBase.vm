@@ -655,7 +655,7 @@ function change() {
       <input type="hidden" id="celfileuploadToken" name="uploadToken" value="$!{celementsweb.getNewCelementsTokenForUser()}" />
       <input id="uploadBrowser" class="celfileupload celSupressAttachmentList" name="filepath" type="file" size="50" />
                             </form>
-                            <iframe id="cel_filebase_uploadFrame" name="cel_filebase_uploadFrame" src="" style="display:none"></iframe>
+##                            <iframe id="cel_filebase_uploadFrame" name="cel_filebase_uploadFrame" src="" style="display:none"></iframe>
                           </div><!--c3_filebase_upload-->
                         #end
                     </div><!--c2_ml_container-->
