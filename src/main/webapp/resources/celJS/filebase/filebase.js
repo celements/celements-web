@@ -39,12 +39,7 @@ CELEMENTS.filebase.UiController = function() {
 
       _reshowUploadElements : function() {
         var _me = this;
-//        alert('before');
-        $('progressBar').hide();
-        $('cel_filebase_uploadForm').show();
-        _me._fileUploadElem.value = '';
-        _me._fileUploadElem.clear();
-//        alert('after');
+        uploadAtt_Cancel_ResetFormAfter(_me._fileUploadElem);
       },
 
       _finishUploading : function(event) {
@@ -117,11 +112,7 @@ CELEMENTS.filebase.UiController = function() {
                     elements[i].checked = false;
                   }
                 }
-                
-                var upform = $('cel_filebase_uploadForm');
-                upform.hide();
-                $('progressBar').show();
-                upform.submit();
+                $('cel_filebase_uploadForm').submit();
               } else if (!noFileNameChanges) {
                 //TODO give possibility to the user to change the name insead of only confirming it
                 var confirmName = confirm($('cel_filebase_upload_namechange_message').value + "\n'" + name + "' -> '" + clearedName + "'");
