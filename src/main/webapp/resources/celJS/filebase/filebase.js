@@ -29,6 +29,7 @@ CELEMENTS.filebase.UiController = function() {
       _init : function() {
         var _me = this;
         _me._fileUploadElem = $('uploadBrowser');
+        _me._fileUploadElem.value = '';
         _me._fileUploadElem.observe('celements:beforeUpload', _me._beforeUploading.bind(
             _me));
         _me._fileUploadElem.observe('celements:uploadfinished', _me._finishUploading.bind(
