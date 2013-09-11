@@ -46,14 +46,14 @@ CELEMENTS.filebase.UiController = function() {
       _beforeUploading : function(event){
         var _me = this;
         event.stop();
-        if($('uploadBrowser').value.replace(/^\s+/, '').replace(/\s+$/, '').length > 0){
+        if(_me._fileUploadElem.value.replace(/^\s+/, '').replace(/\s+$/, '').length > 0){
           var allowedExtentions = '';
           if($('cel_filebase_allowed_file_extentions')){
             allowedExtentions = $('cel_filebase_allowed_file_extentions').value;
             allowedExtentions = allowedExtentions.toLowerCase();
           }
           
-          var fileParts = $('uploadBrowser').value.split('.');
+          var fileParts = _me._fileUploadElem.value.split('.');
           var fileExtention = fileParts[fileParts.size()-1];
           fileExtention = fileExtention.toLowerCase();
           if((allowedExtentions.replace(/,/g, "") == '') || (allowedExtentions.indexOf(',' + fileExtention + ',') >= 0)){
@@ -62,7 +62,7 @@ CELEMENTS.filebase.UiController = function() {
               filter.checked = true;
             }
             
-            _me._transformFilename($('uploadBrowser').value);
+            _me._transformFilename(_me_fileUploadElem.value);
           } else{
             if($('cel_filebase_not_allowed_file_extention_message')){
               alert($('cel_filebase_not_allowed_file_extention_message').value);
