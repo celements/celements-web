@@ -38,10 +38,10 @@ CELEMENTS.filebase.UiController = function() {
       },
 
       _reshowUploadElements : function() {
-        alert('before');
         $('progressBar').hide();
         $('cel_filebase_uploadForm').show();
-        alert('after');
+        _me._fileUploadElem.value = '';
+        _me._fileUploadElem.clear();
       },
 
       _finishUploading : function(event) {
