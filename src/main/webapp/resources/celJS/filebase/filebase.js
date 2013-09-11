@@ -30,6 +30,7 @@ CELEMENTS.filebase.UiController = function() {
         var _me = this;
         _me._fileUploadElem = $('uploadBrowser');
         _me._fileUploadElem.value = '';
+        _me._fileUploadElem.clear();
         _me._fileUploadElem.observe('celements:beforeUpload', _me._beforeUploading.bind(
             _me));
         _me._fileUploadElem.observe('celements:uploadfinished', _me._finishUploading.bind(
@@ -37,8 +38,10 @@ CELEMENTS.filebase.UiController = function() {
       },
 
       _reshowUploadElements : function() {
+        alert('before');
         $('progressBar').hide();
         $('cel_filebase_uploadForm').show();
+        alert('after');
       },
 
       _finishUploading : function(event) {
