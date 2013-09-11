@@ -65,7 +65,7 @@ CELEMENTS.filebase.UiController = function() {
             if(filter){
               filter.checked = true;
             }
-            _me._transformFilename(_me_fileUploadElem.value);
+            _me._transformFilename(_me._fileUploadElem.value);
           } else{
             if($('cel_filebase_not_allowed_file_extention_message')){
               alert($('cel_filebase_not_allowed_file_extention_message').value);
