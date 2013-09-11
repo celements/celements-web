@@ -113,7 +113,7 @@ CELEMENTS.filebase.UiController = function() {
                 if(confirmName){
                   transformFilename(clearedName);
                 }
-              } else if (!noOverwrites) {
+              } else {
                 var confirmName = confirm(jsonResultObj.errorMsg);
                 if(confirmName){
                   transformFilename(name);
