@@ -36,10 +36,14 @@ CELEMENTS.filebase.UiController = function() {
             _me));
       },
 
-      _finishUploading : function(event) {
-//        var _me = this;
+      _reshowUploadElements : function() {
         $('progressBar').hide();
         $('cel_filebase_uploadForm').show();
+      },
+
+      _finishUploading : function(event) {
+        var _me = this;
+        _me._reshowUploadElements();
         change();
       },
 
@@ -61,7 +65,6 @@ CELEMENTS.filebase.UiController = function() {
             if(filter){
               filter.checked = true;
             }
-            
             _me._transformFilename(_me_fileUploadElem.value);
           } else{
             if($('cel_filebase_not_allowed_file_extention_message')){
@@ -69,6 +72,7 @@ CELEMENTS.filebase.UiController = function() {
             } else{
               alert("Unsupported file extention.");
             }
+            _me._reshowUploadElements();
           }
         }
       },
@@ -115,16 +119,22 @@ CELEMENTS.filebase.UiController = function() {
                 var confirmName = confirm($('cel_filebase_upload_namechange_message').value + "\n'" + name + "' -> '" + clearedName + "'");
                 if(confirmName){
                   _me._transformFilename(clearedName, forceOverwrite);
+                } else {
+                  _me._reshowUploadElements();
                 }
               } else if (!noOverwrites) {
                 var confirmName = confirm(jsonResultObj.errorMsg);
                 if(confirmName){
                   _me._transformFilename(name, true);
+                } else {
+                  _me._reshowUploadElements();
                 }
               } else {
                 var confirmName = confirm(jsonResultObj.errorMsg);
                 if(confirmName){
                   _me._transformFilename(name, forceOverwrite);
+                } else {
+                  _me._reshowUploadElements();
                 }
               }
             }
