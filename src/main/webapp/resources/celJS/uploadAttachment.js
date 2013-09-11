@@ -130,7 +130,7 @@ var celUploadCallbackHandler = function(event) {
         );
       }
     }
-    uploadAttResetFormAfter();
+    uploadAttResetFormAfter(fileUploadInputElem);
     if($('noAttachments')) {
      $('noAttachments').show();
     }
