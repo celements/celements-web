@@ -38,7 +38,7 @@ CELEMENTS.filebase.UiController = function() {
       _finishUploading : function(event) {
 //        var _me = this;
         $('progressBar').hide();
-        $(''cel_filebase_uploadForm').show();
+        $('cel_filebase_uploadForm').show();
         change();
       },
 
