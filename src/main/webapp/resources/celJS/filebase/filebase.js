@@ -113,17 +113,17 @@ CELEMENTS.filebase.UiController = function() {
                 //TODO give possibility to the user to change the name insead of only confirming it
                 var confirmName = confirm($('cel_filebase_upload_namechange_message').value + "\n'" + name + "' -> '" + clearedName + "'");
                 if(confirmName){
-                  transformFilename(clearedName, forceOverwrite);
+                  _me._transformFilename(clearedName, forceOverwrite);
                 }
               } else if (!noOverwrites) {
                 var confirmName = confirm(jsonResultObj.errorMsg);
                 if(confirmName){
-                  transformFilename(name, true);
+                  _me._transformFilename(name, true);
                 }
               } else {
                 var confirmName = confirm(jsonResultObj.errorMsg);
                 if(confirmName){
-                  transformFilename(name, forceOverwrite);
+                  _me._transformFilename(name, forceOverwrite);
                 }
               }
             }
