@@ -23,7 +23,7 @@
 #set($helpNav = $celementsweb.createNavigation())
 
 ## imports
-<link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile('celRes/mediaLib/celements2medialib.css')" />
+<link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile(':celRes/mediaLib/celements2medialib.css')" />
 ##TODO replace with default overlay
 $xwiki.includeForm('celements2web:Celements2.DarkBox', false)
 $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
