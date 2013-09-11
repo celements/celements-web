@@ -23,9 +23,8 @@
 #set($helpNav = $celementsweb.createNavigation())
 
 ## imports
-#set($yui_doc = $xwiki.getDocument("celements2web:Celements2.YuiScripts"))
-#set($skin_doc = $xwiki.getDocument("celements2web:XWiki.Celements2Skin"))
-<link rel="stylesheet" type="text/css" href="$xwiki.getSkinFile('celRes/mediaLib/celements2medialib.css', true)" />
+<link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile('celRes/mediaLib/celements2medialib.css')" />
+##TODO replace with default overlay
 $xwiki.includeForm('celements2web:Celements2.DarkBox', false)
 $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
 $celementsweb.addExtJSfileOnce(':celJS/initCelements.js')
@@ -33,7 +32,8 @@ $celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
 $celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
-$celementsweb.addExtJSfileOnce($skin_doc.getAttachmentURL('filebase-upload.js', 'skin'))
+$celementsweb.addExtJSfileOnce(':celJS/uploadAttachment.js')
+$celementsweb.addExtJSfileOnce(':celJS/filebase/filebase.js')
 #if(("$!isInline" != '1') && ("$!request.get('inline')" == ''))
   $celementsweb.addExtJSfileOnce(':celJS/mediaLib/resize.js')
 #end
@@ -616,9 +616,10 @@ function change() {
 *#                        <div class="c3_filebase_upload">
                             <h2>$adminMsg.get('cel_tm_upload_attachment')</h2>
                             <div id="progressBar" style="display:none">
-                              <img src='/skin/resources/celRes/ajax-loader-small.gif' />
+                              <img src="$services.celementsweb.getSkinFile(':celRes/ajax-loader-small.gif', 'file')" />
                             </div>
-                            <form id="cel_filebase_uploadForm" action="$xwiki.getURL($uploadDoc.getFullName(), 'upload')" enctype="multipart/form-data" method="post" target="cel_filebase_uploadFrame">
+                            <form id="cel_filebase_uploadForm" action="?" enctype="multipart/form-data" method="post">
+##                            <form id="cel_filebase_uploadForm" action="$xwiki.getURL($uploadDoc.getFullName(), 'upload')" enctype="multipart/form-data" method="post" target="cel_filebase_uploadFrame">
                               <input type="hidden" id="cel_filebase_upload_namechange_message" value="$adminMsg.get('cel_filebase_upload_namechange_message')" />
                               <input type="hidden" id="cel_filebase_check_doc_exists" value="$!checkDocExistsOnUpload" />
                             #set($hasFilterShowChkBox = false)
@@ -642,11 +643,17 @@ function change() {
                                 #end
                               </div>
                             #end
-                              <input type="hidden" id="uploadDoc" name="uploadDoc" value="$!uploadDoc.getFullName()">
+#*                              <input type="hidden" id="uploadDoc" name="uploadDoc" value="$!uploadDoc.getFullName()">
                               <input type="hidden" name="xredirect" value="$xwiki.getURL('Celements2.FileBaseUploadedOld', 'view', 'xpage=plain')" size="20" />
                               <input type="hidden" id="uploadFilename" name="filename" value="" size="20" />
                               <input type="file" id="uploadBrowser" class="browser" name="filepath" value="" size="40" />
                               <input type="submit" class="upload" id="submitFileUpload" value="$adminMsg.get('cel_upload')" />
+*#
+      <input type="hidden" name="xredirect" value="" /> 
+      <input type="hidden" id="uploadDoc" name="fullName" value="$services.model.serialize($uploadDoc.documentReference, 'local')" />
+      <input type="hidden" id="uploadFilename" name="filename" value="" size="20" />
+      <input type="hidden" id="celfileuploadToken" name="uploadToken" value="$!{celementsweb.getNewCelementsTokenForUser()}" />
+      <input id="uploadBrowser" class="celfileupload celSupressAttachmentList" name="filepath" type="file" size="50" />
                             </form>
                             <iframe id="cel_filebase_uploadFrame" name="cel_filebase_uploadFrame" src="" style="display:none"></iframe>
                           </div><!--c3_filebase_upload-->
@@ -665,5 +672,6 @@ function change() {
 ##    #end
     initFileBasePanel();
     fbp.show();
+    $(document.body).fire('cel_filebase:loaded');
 </script>
 #end
