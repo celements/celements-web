@@ -615,9 +615,10 @@ function change() {
                           #end
 *#                        <div class="c3_filebase_upload">
                             <h2>$adminMsg.get('cel_tm_upload_attachment')</h2>
-                            <div id="progressBar" style="display:none">
+#*                            <div id="progressBar" style="display:none">
                               <img src="$services.celementsweb.getSkinFile(':celRes/ajax-loader-small.gif', 'file')" />
                             </div>
+*#
                             <form id="cel_filebase_uploadForm" action="?" enctype="multipart/form-data" method="post">
 ##                            <form id="cel_filebase_uploadForm" action="$xwiki.getURL($uploadDoc.getFullName(), 'upload')" enctype="multipart/form-data" method="post" target="cel_filebase_uploadFrame">
                               <input type="hidden" id="cel_filebase_upload_namechange_message" value="$adminMsg.get('cel_filebase_upload_namechange_message')" />
