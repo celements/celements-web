@@ -50,22 +50,24 @@ CELEMENTS.filebase.UiController = function() {
       _beforeUploading : function(event){
         var _me = this;
         event.stop();
-        if(_me._fileUploadElem.value.replace(/^\s+/, '').replace(/\s+$/, '').length > 0){
+      //uploadAttachment.js already extracted the filename
+        var filename = $('uploadFilename').value;
+        if(filename.length > 0){
           var allowedExtentions = '';
           if($('cel_filebase_allowed_file_extentions')){
             allowedExtentions = $('cel_filebase_allowed_file_extentions').value;
             allowedExtentions = allowedExtentions.toLowerCase();
           }
           
-          var fileParts = _me._fileUploadElem.value.split('.');
+          var fileParts = filename.split('.');
           var fileExtention = fileParts[fileParts.size()-1];
           fileExtention = fileExtention.toLowerCase();
           if((allowedExtentions.replace(/,/g, "") == '') || (allowedExtentions.indexOf(',' + fileExtention + ',') >= 0)){
-            filter = $('c2_fb_' + active);
-            if(filter){
+            var filter = $('c2_fb_' + active);
+            if (filter){
               filter.checked = true;
             }
-            _me._transformFilename(_me._fileUploadElem.value);
+            _me._transformFilename(filename);
           } else{
             if($('cel_filebase_not_allowed_file_extention_message')){
               alert($('cel_filebase_not_allowed_file_extention_message').value);
