@@ -45,6 +45,9 @@ TE.prototype = {
     }
   },
 
+  /**
+   * @deprecated
+   */
   retrieveInitalValues :  function(formId) {
     if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
       console.log('deprecated call for "retrieveInitalValues" instead'
