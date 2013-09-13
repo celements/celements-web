@@ -157,8 +157,8 @@ TE.prototype = {
       celstartab = $('cel_startab').innerHTML;
     }
     var tabClickHandler = function(event) {
-      event = $(event);
-      var elem = event.element();
+      //direct access of element method fails in IE8!
+      var elem = Event.element(event);
       var elemId = elem.id.substring(0, elem.id.length - 7);
       if (elemId && $(elemId + '-button')) {
         _me.getTab(elemId);
