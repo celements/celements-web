@@ -67,8 +67,8 @@ TE.prototype = {
       $(formId).getElements().each(function(elem) {
         if (_me._isSubmittableField(elem) && (!elementsValues.get(elem.name)
             || (elementsValues.get(elem.name) == ''))) {
-          if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-            console.debug('initValue for: ' + elem.name, elem.value);
+          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+            console.log('initValue for: ' + elem.name, elem.value);
           }
           var isInputElem = (elem.tagName.toLowerCase() == 'input');
           var elemValue = elem.value;
@@ -136,8 +136,8 @@ TE.prototype = {
         onSuccess: function(transport) {
           if (transport.responseText.isJSON()) {
             tabEditor.tabMenuSetup(transport.responseText.evalJSON());
-          } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-            console.debug('failed to get CelTabMenu config: no valid JSON!', transport);
+          } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+            console.log('failed to get CelTabMenu config: no valid JSON!', transport);
           } else {
             alert('Failed to load editor. Please try to reload the page and if it happens '
                + 'again, contact support. ');
@@ -236,8 +236,8 @@ TE.prototype = {
     try {
       listener();
     } catch (exept) {
-      if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-        console.debug('listener failed: ', listener);
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('listener failed: ', listener);
       }
     }
   },
@@ -419,8 +419,8 @@ TE.prototype = {
     } else {
       $(tabBodyId).select('form').each(function(formelem) {
         if (formelem && formelem.id && !_me.editorFormsInitialValues.get(formelem.id)) {
-          if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-            console.debug('tab already loaded: ', tabBodyId, $(tabBodyId),
+          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+            console.log('tab already loaded: ', tabBodyId, $(tabBodyId),
                 ' but is new retrieveInitialValues.');
           }
           _me.retrieveInitialValues(formelem.id);
@@ -641,8 +641,8 @@ TE.prototype = {
       doBeforeEditSubmit();
     }
     document.forms[formName].select('textarea.mceEditor').each(function(formfield) {
-      if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-        console.debug('textarea save tinymce: ', formfield.name, tinyMCE.get(formfield.id).save());
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('textarea save tinymce: ', formfield.name, tinyMCE.get(formfield.id).save());
       }
       formfield.value = tinyMCE.get(formfield.id).save();
     });
@@ -674,8 +674,8 @@ TE.prototype = {
  updateTinyMCETextAreas : function(formId) {
    document.forms[formId].select('textarea.mceEditor').each(function(formfield) {
    if (tinyMCE && tinyMCE.get(formfield.id)) {
-       if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-         console.debug('updateTinyMCETextAreas: ', formfield.name,
+       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+         console.log('updateTinyMCETextAreas: ', formfield.name,
              tinyMCE.get(formfield.id).getContent());
        }
        formfield.value = tinyMCE.get(formfield.id).getContent();
@@ -735,8 +735,8 @@ TE.prototype = {
        _me.updateTinyMCETextAreas(formId);
        $(formId).getElements().each(function(elem) {
          if (_me._isSubmittableField(elem) && _me.isDirtyField(elem, elementsValues)) {
-           if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-             console.debug('getDirtyFormIds first found dirty field: ', elem.name);
+           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+             console.log('getDirtyFormIds first found dirty field: ', elem.name);
            }
            dirtyFormIds.push(formId);
            throw $break;  //prototype each -> break
@@ -798,13 +798,13 @@ TE.prototype = {
          _me.retrieveInitialValues(formId);
        }
        if (remainingDirtyFormIds.size() > 0) {
-         if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-           console.debug('next saveAllForms with: ', remainingDirtyFormIds);
+         if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+           console.log('next saveAllForms with: ', remainingDirtyFormIds);
          }
          saveAllForms(remainingDirtyFormIds);
          } else {
-           if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-             console.debug('save done.');
+           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+             console.log('save done.');
            }
            execCallback(transport, jsonResponses);
          }
@@ -822,8 +822,8 @@ TE.prototype = {
 
  _handleSaveAjaxResponse : function(formId, transport, jsonResponses) {
    if (transport.responseText.isJSON()) {
-     if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-       console.debug('_handleSaveAjaxResponse with json result: ', transport.responseText);
+     if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+       console.log('_handleSaveAjaxResponse with json result: ', transport.responseText);
      }
      var jsonResult = transport.responseText.evalJSON();
      jsonResponses.set(formId, jsonResult);
