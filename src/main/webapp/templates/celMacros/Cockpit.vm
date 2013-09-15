@@ -1,11 +1,18 @@
 #if($isAdmin)
+#set($xredirect = "$!request.xredirect")
+#if("$!xredirect" == '')
+  #set($xredirect = $doc.getURL('view'))
+  #if("$!xredirect" == '')
+    #set($xredirect = '/')
+  #end
+#end
 <h1>$adminMsg.get('cel_cockpit_title')</h1>
 #set($wikiPreferenceDocRef = $services.model.createDocumentReference('', 'XWiki', 'XWikiPreferences'))
 #set($wikiPreferenceDoc = $xwiki.getDocument($wikiPreferenceDocRef))
 #set($wikiPreferenceObj = $wikiPreferenceDoc.getObject('XWiki.XWikiPreferences'))
 #set($cel_pageTypeObj = $wikiPreferenceDoc.getObject('Celements2.PageType'))
 <form id="wikiPropertiesEdit" method="post" action="$wikiPreferenceDoc.getURL('save')">
-<input type="hidden" name="xredirect" value="$!doc.getURL()" />
+<input type="hidden" name="xredirect" value="$xredirect" />
 <div id="wikiDefaultLanguageEdit" class="editblock">
     #set($wikiDefaultLanguage = $wikiPreferenceObj.getProperty('default_language').getValue())
     $adminMsg.get('cel_wikiDefaultLanguage'):
