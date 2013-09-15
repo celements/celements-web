@@ -23,7 +23,7 @@
     $adminMsg.get('cel_default_pagelayout'):
     #set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
     #if(!$cel_pageLayouts.containsKey('SimpleLayout'))
-      $cel_pageLayouts.put('SimpleLayout', 'Simple Layout')
+      #set($!devnull = $!cel_pageLayouts.put('SimpleLayout', 'Simple Layout'))
     #end
     #set($cel_currentPageLayout = "$!cel_pageTypeObj.getProperty('page_layout').getValue()")
     #if("$!cel_currentPageLayout" == '')
