@@ -5,6 +5,7 @@
 #set($wikiPreferenceObj = $wikiPreferenceDoc.getObject('XWiki.XWikiPreferences'))
 #set($cel_pageTypeObj = $wikiPreferenceDoc.getObject('Celements2.PageType'))
 <form id="wikiPropertiesEdit" method="post" action="$wikiPreferenceDoc.getURL('save')">
+<input type="hidden" name="xredirect" value="$!doc.getURL()" />
 <div id="wikiDefaultLanguageEdit" class="editblock">
     #set($wikiDefaultLanguage = $wikiPreferenceObj.getProperty('default_language').getValue())
     $adminMsg.get('cel_wikiDefaultLanguage'):
