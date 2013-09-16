@@ -114,7 +114,7 @@ CELEMENTS.filebase.UiController = function() {
                 }
                 $('cel_filebase_uploadForm').submit();
               } else if (!noFileNameChanges) {
-                //TODO give possibility to the user to change the name insead of only confirming it
+                //TODO give possibility to the user to change the name instead of only confirming it
                 var confirmName = confirm($('cel_filebase_upload_namechange_message').value + "\n'" + name + "' -> '" + clearedName + "'");
                 if(confirmName){
                   _me._transformFilename(clearedName, forceOverwrite);
