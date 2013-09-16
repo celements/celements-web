@@ -8,14 +8,14 @@
     #set($afterLoginLandingPage = "Content.login")
   #end
   #if("$!afterLoginLandingPage" != '')
-    #set($afterLoginLandingURL = $xwiki.getURL($afterLoginLandingPage,'view','activated=1'))
+    #set($afterLoginLandingURL = $xwiki.getURL($afterLoginLandingPage,'view'))
   #end
   #if($afterLoginLandingURL.indexOf('?') < 0)
     #set($afterLoginLandingURL = "$!{afterLoginLandingURL}?")
   #else
     #set($afterLoginLandingURL = "$!{afterLoginLandingURL}&")
   #end
-  #set($afterLoginLandingURL = $xwiki.getURLEncoded("$!{afterLoginLandingPage}activated=1"))
+  #set($afterLoginLandingURL = $xwiki.getURLEncoded("$!{afterLoginLandingURL}activated=1"))
   #set($url = "$!doc.getURL($context.action, 'xredirect=')")
   #set($url = "${url}$afterLoginLandingURL")
   #foreach($req in $request.getParameterNames())
