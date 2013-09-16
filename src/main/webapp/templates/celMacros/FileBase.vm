@@ -140,7 +140,12 @@ $celementsweb.addExtJSfileOnce(':celJS/filebase/filebase.js')
   #set($tmp = $menu_list.add("s$item"))
 #end
 #if(("$!filters" == '') && ("$!single_doc_space" != ''))
-  #set($filters = $celementsweb.getSubMenuItemsForParent('',"$single_doc_space"))
+  #set($menuSpaceRef = $services.model.createDocumentReference('', "$single_doc_space", '').lastSpaceReference)
+  #set($menu = $celementsweb.getSubNodesForParentRef($menuSpaceRef))
+  #set($filters = [])
+  #foreach($item in $menu)
+    #set($!devnull = $!filters.add($services.model.serialize($item.documentReference, 'local')))
+  #end
 #else
   #set($filters = $filters.split(','))
 #end 
