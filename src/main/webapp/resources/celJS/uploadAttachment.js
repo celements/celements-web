@@ -150,15 +150,21 @@ var uploadAtt_Cancel_ResetFormAfter = function(fileUploadInputElem) {
 };
 
 var uploadAttResetFormAfter = function(fileUploadInputElem) {
-  fileUploadInputElem.up('form').target = $('beforeUploadFormTarget').value;
+  if ($('beforeUploadFormTarget')) {
+    fileUploadInputElem.up('form').target = $('beforeUploadFormTarget').value;
+    $('beforeUploadFormTarget').remove();
+  }
   fileUploadInputElem.value = '';
   fileUploadInputElem.clear();
   if ($('xpage') != null) {
     $('xpage').remove();
   }
-  $('celementsFormId').remove();
-  $('beforeUploadFormTarget').remove();
-  $('attachmentloadingimg').remove();
+  if ($('celementsFormId')) {
+    $('celementsFormId').remove();
+  }
+  if ($('attachmentloadingimg')) {
+    $('attachmentloadingimg').remove();
+  }
 };
 
 var checkAttachmentList = function(fileUploadElm){

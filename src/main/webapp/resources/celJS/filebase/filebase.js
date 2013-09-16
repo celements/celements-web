@@ -44,8 +44,8 @@ CELEMENTS.filebase.UiController = function() {
 
       _finishUploading : function(event) {
         var _me = this;
-        _me._reshowUploadElements();
         change();
+        _me._reshowUploadElements();
       },
 
       _beforeUploading : function(event){
