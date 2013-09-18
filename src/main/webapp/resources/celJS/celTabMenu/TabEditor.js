@@ -752,9 +752,14 @@ TE.prototype = {
 
  changeEditLanguage : function(newEditLanguage, execCancelCallback) {
    var _me = this;
-   _me.checkUnsavedChanges(function() {
-     window.location.href = '?language=' + newEditLanguage + '&'
-         + window.location.search.replace(/^\?/, '').replace(/language=[^&]*&?/g, '');
+   _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
+     var successful = (typeof failed === 'undefined') || !failed;
+     if (successful) {
+       window.location.href = '?language=' + newEditLanguage + '&'
+           + window.location.search.replace(/^\?/, '').replace(/language=[^&]*&?/g, '');
+     } else {
+       execCancelCallback();
+     }
    }, execCancelCallback);
  },
 
