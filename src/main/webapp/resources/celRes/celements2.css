@@ -658,14 +658,16 @@ body > .cel_reorderNodes_proxy .docLangs,
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.defaultLanguage,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.defaultLanguage,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.defaultLanguage,
-.celements3_tabMenu #con_langBar .docLangs a.defaultLanguage {
+.celements3_tabMenu #con_langBar .docLangs a.defaultLanguage,
+.celements3_tabMenu #con_langBar .docLangs span.defaultLanguage {
 	font-weight: bold;
 }
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.transNotExists,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.transNotExists,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.transNotExists,
-.celements3_tabMenu #con_langBar .docLangs a.transNotExists {
+.celements3_tabMenu #con_langBar .docLangs a.transNotExists,
+.celements3_tabMenu #con_langBar .docLangs span.transNotExists {
 	background-color: white;
 	color: black;
 }
