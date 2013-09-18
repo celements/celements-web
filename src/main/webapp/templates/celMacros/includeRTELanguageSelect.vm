@@ -1,20 +1,23 @@
 <div id="con_langBar" class="editblock" onfocus="setFocus('con_langBar');" onblur="removeFocus('con_langBar');">
   <form name="con_langBar_form" method="post">
     <div class="docLangs">
-      #set($docTransList = $doc.getTranslationList())
-      #foreach($transLang in $xwiki.celementsweb.getAllowedLanguages())
-      #set($transCssClass = '')
-      #if("$!transLang" == "$!{doc.getDefaultLanguage()}")
+  #if("$!docTransList" == '')
+    #set($docTransList = $doc.getTranslationList())
+  #end
+  #foreach($transLang in $xwiki.celementsweb.getAllowedLanguages())
+    #set($transCssClass = '')
+    #if("$!transLang" == "$!{doc.getDefaultLanguage()}")
       #set($transCssClass = "$!{transCssClass} defaultLanguage transExists")
-      #elseif($docTransList.contains("$!transLang"))
+    #elseif($docTransList.contains("$!transLang"))
       #set($transCssClass = "$!{transCssClass} transExists")
-      #else
+    #else
       #set($transCssClass = "$!{transCssClass} transNotExists")
-      #end
+    #end
       <span class="$!{transCssClass.trim()}" ##
        title="$!adminMsg.get("cel_$!{transLang}")">##
       $!{transLang}</span>
-      #end
+  #end
+  #set($docTransList = '')
     </div><!-- IE6 -->
     $adminMsg.get('cel_tm_edit_translation'): 
     <input type="hidden" name="tab" value="1"/>
