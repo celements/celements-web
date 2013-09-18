@@ -750,6 +750,14 @@ TE.prototype = {
    return dirtyFormIds;
  },
 
+ changeEditLanguage : function(newEditLanguage) {
+   var _me = this;
+   _me.checkUnsavedChanges(function() {
+     window.location.href = '?language=' + newEditLanguage + '&'
+         + window.location.search.replace(/^\?/, '').replace(/language=[^&]*&?/g, '');
+   });
+ },
+
  checkUnsavedChanges : function(execCallback) {
    var _me = this;
    if (_me.isDirty()) {

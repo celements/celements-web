@@ -19,9 +19,13 @@
   #end
   #set($docTransList = '')
     </div><!-- IE6 -->
-    $adminMsg.get('cel_tm_edit_translation'): 
-    <input type="hidden" name="tab" value="1"/>
-    <select name="language" size="1" style="width:100px;" onchange="document.forms['edit'].formeditxred.value=('$doc.getURL("edit")' + encodeURI('?language=' + value + '&xredirect=' + document.forms['edit'].formeditxred.value));document.forms['edit'].submit();">
+    $adminMsg.get('cel_tm_edit_translation'):
+    <select name="language" size="1" style="width:100px;"## 
+#if($services.celementsweb.useNewButtons())
+  onchange="getCelementsTabEditor().changeEditLanguage(); return false;">
+#else
+  onchange="document.forms['edit'].formeditxred.value=('$doc.getURL("edit")' + encodeURI('?language=' + value + '&xredirect=' + document.forms['edit'].formeditxred.value));document.forms['edit'].submit();">
+#end
       #foreach($dl in $langs)
         <option #if("$!language" == "$dl")selected="selected"#end value="$dl" label="$adminMsg.get("cel_$dl")" >$adminMsg.get("cel_$dl")</option>
       #end
