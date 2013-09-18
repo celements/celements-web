@@ -750,16 +750,18 @@ TE.prototype = {
    return dirtyFormIds;
  },
 
- changeEditLanguage : function(newEditLanguage) {
+ changeEditLanguage : function(newEditLanguage, execCancelCallback) {
    var _me = this;
    _me.checkUnsavedChanges(function() {
      window.location.href = '?language=' + newEditLanguage + '&'
          + window.location.search.replace(/^\?/, '').replace(/language=[^&]*&?/g, '');
-   });
+   }, execCancelCallback);
  },
 
- checkUnsavedChanges : function(execCallback) {
+ checkUnsavedChanges : function(execCallback, execCancelCallback) {
    var _me = this;
+   execCallback = execCallback || function() {};
+   execCancelCallback = execCancelCallback || function() {};
    if (_me.isDirty()) {
    var saveBeforeCloseQuestion = _me._getModalDialog();
      saveBeforeCloseQuestion.setHeader(_me.tabMenuConfig.savingDialogWarningHeader); 
@@ -773,6 +775,7 @@ TE.prototype = {
              }},
                { text: _me.tabMenuConfig.savingDialogButtonCancel, handler:function() {
                 this.cancel();
+                execCancelCallback();
               } },
                { text: _me.tabMenuConfig.savingDialogButtonSave, handler:function() {
                  var _dialog = this;
