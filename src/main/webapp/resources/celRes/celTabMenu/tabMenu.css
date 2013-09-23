@@ -265,3 +265,15 @@ body .yui-skin-sam .yui-simple-dialog {
 .celements3_tabMenu #tabMenuPanel #con_langBar {
   position: relative;
 }
+
+/**
+  Ask Toolbar for google chrome leads to problems. Thus we hide it in editor mode!
+ **/
+
+iframe.apn-toolbar {
+  display: none !important;
+}
+
+body #cel_overlay {
+  top: 0px !important;
+}
