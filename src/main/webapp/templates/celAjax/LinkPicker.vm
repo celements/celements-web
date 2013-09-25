@@ -1,3 +1,20 @@
+## init Celements variables
+$response.setStatus(200)
+##only include if legacy celements2web.xar is installed
+#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
+$xwiki.includeForm("celements2web:Macros.initCelements", false)
+#end
+#set($isAjaxCall = ("$!request.ajax" == '1'))
+#if(!$isAjaxCall)
+## start a Celements Document
+#parse("celMacros/startCelementsDocument.vm")
+##
+#set($cel_loadAdminMenuBar=false)
+## start the celements body (and lacily finalise the header)
+#parse("celMacros/startCelementsBody.vm")
+##
+#end
+
 ##
 #macro(outputMenuItems $parentName)
 ##macro: "$parentName", "$sp" <br />
@@ -128,3 +145,6 @@ $xwiki.includeForm("$cel_linkpicker_MenuName_Macro", false)
 #end
 </div>
 </div>
+#if(!$isAjaxCall)
+#parse('celMacros/finaliseCelementsDocument.vm')
+#end
