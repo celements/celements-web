@@ -660,6 +660,7 @@ function change() {
       <input type="hidden" id="uploadFilename" name="filename" value="" size="20" />
       <input type="hidden" id="celfileuploadToken" name="uploadToken" value="$!{celementsweb.getNewCelementsTokenForUser()}" />
       <input id="uploadBrowser" class="celfileupload celSupressAttachmentList" name="filepath" type="file" size="50" />
+      <input type="hidden" name="celTokenUploadCreateIfNotExists" value="true" />
                             </form>
 ##                            <iframe id="cel_filebase_uploadFrame" name="cel_filebase_uploadFrame" src="" style="display:none"></iframe>
                           </div><!--c3_filebase_upload-->
