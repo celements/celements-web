@@ -99,8 +99,8 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         if (inputFieldValue && (inputFieldValue != '')) {
           var dateSpliter = new RegExp('[-./]');
           var dateStr = inputFieldValue.split(dateSpliter);
-          var curMonth = dateStr[1];
-          var curYear = dateStr[2];
+          var curMonth = dateStr[1] || new Date().getMonth();
+          var curYear = dateStr[2] || new Date().getFullYear();
           _me._pickerDateCal.setYear(curYear);
           _me._pickerDateCal.setMonth(curMonth - 1);
           if (selectDate) {
