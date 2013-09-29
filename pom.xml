@@ -76,7 +76,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>1.1-SNAPSHOT</version>
+      <version>1.1</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -123,7 +123,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.72-SNAPSHOT</version>
+      <version>1.72</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
