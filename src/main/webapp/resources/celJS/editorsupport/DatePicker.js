@@ -13,10 +13,17 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
     if (!inputField.id) {
       datePickerIdCounter = datePickerIdCounter + 1;
       inputField.id = 'celInputFieldDatePickerId' + datePickerIdCounter;
+    } else if (!datePickerObjsHash.get(inputField.id)) {
+      datePickerIdCounter = datePickerIdCounter + 1;
     }
     if (!datePickerObjsHash.get(inputField.id)) {
       datePickerObjsHash.set(inputField.id, new CELEMENTS.editorsupport.DatePicker(
           inputField, datePickerIdCounter));
+    } else {
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('skip creating new date picker for [' + inputField.id
+            + '] because there exists already one.');
+      }
     }
   };
 
