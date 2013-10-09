@@ -1,0 +1,49 @@
+##
+## Ajax Script switchMenuItemPos
+##
+##e.g. ?xpage=celements_ajax&ajax_mode=switchMenuItemPos&space=Content&item1=Fotografie&item2=WebHome&xredirect=Content.WebHome
+##
+## which space? default: Content
+#if($!context.getRequest().get("space") != "")
+ #set($space = $!context.getRequest().get("space"))
+#else
+ #set($space = "Content")
+#end
+#set($red = $!context.getRequest().get("xredirect"))
+#set($fullname1 = "${space}.$!context.getRequest().get('item1')")
+#set($fullname2 = "${space}.$!context.getRequest().get('item2')")
+
+## check if the documents to switch exists
+#if($!context.getRequest().get('item1') != "" && $!context.getRequest().get('item2') != "" && $xwiki.exists($fullname1) && $xwiki.exists($fullname2))
+
+  #set($doc1 = $xwiki.getDocument($fullname1))
+  #set($doc2 = $xwiki.getDocument($fullname2))
+
+  ## check if the documents have a MenuItem object
+  #if($!doc1.getObject("Celements2.MenuItem") && $!doc2.getObject("Celements2.MenuItem"))
+    ## get objects
+    #set($obj1 = $doc1.getObject("Celements2.MenuItem"))
+    #set($obj2 = $doc2.getObject("Celements2.MenuItem"))
+
+    ## get pos property values
+    #set($pos1 = $obj1.getProperty("menu_position").getValue())
+    #set($pos2 = $obj2.getProperty("menu_position").getValue())
+
+    ## switch
+    $obj1.set("menu_position",$pos2)
+    $obj2.set("menu_position",$pos1)
+
+    $doc1.save()
+    $doc2.save()
+	$xwiki.celementsweb.flushCache()
+  #end
+#end
+
+## redirect
+#if("$!red" != "Celements2.SwitchPos")
+#set($redURL = $xwiki.getURL($red,'view'))
+#if("$!redURL" == '')
+#set($redURL = '/')
+#end
+$context.getResponse().sendRedirect($redURL)
+#end
