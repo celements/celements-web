@@ -730,3 +730,8 @@ iframe.apn-toolbar {
 iframe.apn-toolbar + body #celements2_menu_bar {
   top: 0px !important;
 }
+
+[data-apn-myc3-v7c-toolbar_set=bottom] {
+  bottom: 0px !important;
+}
+
