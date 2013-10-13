@@ -212,9 +212,11 @@ TE.prototype = {
     if(typeof(resize) != 'undefined') {
       resize();
     }
-    var titlediv = new Element('div', { 'id': 'con_titblock', 'class': 'titleblock' });
-    titlediv.update(_me.tabMenuConfig.tabMenuPanelConfig.title);
-    $('tabMenuPanel').down('.bd').insert({ top: titlediv });
+    if (!$('con_titblock')) {
+      var titlediv = new Element('div', { 'id': 'con_titblock', 'class': 'titleblock' });
+      titlediv.update(_me.tabMenuConfig.tabMenuPanelConfig.title);
+      $('tabMenuPanel').down('.bd').insert({ top: titlediv });
+    }
     window.onbeforeunload = _me.checkBeforeUnload;
     _me.initDone = true;
     _me.afterInitListeners.each(_me._execOneListener);
