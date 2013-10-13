@@ -713,3 +713,20 @@ body #sitecontainer .cel_content_part table td {
 #cel_overlaybody #c3_import_button {
 	cursor: pointer;
 }
+
+/**
+  Ask Toolbar for google chrome leads to problems. Thus we hide it generally by default.
+ **/
+
+html[lang] {
+  padding-top: 0px !important;
+  border-top: none;
+}
+
+iframe.apn-toolbar {
+  display: none !important;
+}
+
+iframe.apn-toolbar + body #celements2_menu_bar {
+  top: 0px !important;
+}

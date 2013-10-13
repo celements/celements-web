@@ -20,6 +20,15 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
         var _me = this;
       },
 
+      _chromeAskToolbarFixTop : function(top) {
+        var _me = this;
+        if ($$('html iframe.apn-toolbar') && $$('html iframe.apn-toolbar').size() > 0) {
+          var toolbarHeight = $j('html iframe.apn-toolbar').height();
+          top = top - toolbarHeight;
+        }
+        return top;
+      },
+
       _addOutlineElement : function(elemId, idSuffix, top, left, width, height,
           cssClass) {
         var _me = this;
@@ -40,6 +49,7 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
             'bottom' : outlineElem
           });
         }
+        top = _me._chromeAskToolbarFixTop(top);
         outlineElem.setStyle({
           'top' : top + 'px',
           'left' : left + 'px',
