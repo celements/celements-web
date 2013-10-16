@@ -19,12 +19,16 @@ var registerCelAnimMoviePlayer = function() {
 var initCelAnimSWFPlayer = function() {
   if ($$('a.celanim_swfplayer').size() > 0) {
     $$('a.celanim_swfplayer').each(function(elem) {
-      var celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
+      var href = elem.href;
+      var divElem = new Element('div', { 'class' : elem.getAttribute('class') });
+      divElem.update(elem.down());
+      elem.remove();
+      var celAnimLinkConfig = getCelAnimSWFConfigForLink(href);
       if (celAnimLinkConfig && celAnimLinkConfig.replaceOnLoad) {
-        celanimLoadSWFplayer(elem);
+        celanimLoadSWFplayer(divElem);
       }
-      elem.stopObserving('click', celanimSWFplayerHandler);
-      elem.observe('click', celanimSWFplayerHandler);
+      divElem.stopObserving('click', celanimSWFplayerHandler);
+      divElem.observe('click', celanimSWFplayerHandler);
     });
     initEventTracking('a.celanim_swfplayer');
   }
