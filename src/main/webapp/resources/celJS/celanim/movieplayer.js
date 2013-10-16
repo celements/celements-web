@@ -30,8 +30,6 @@ console.log('added', divElem, 'to', container);
       elem.removeAttribute('class');
       elem.addClassName('replacedLink');
       elem.hide();
-//      elem.remove();
-console.log('elem no longer linked in dom', elem);
       var celAnimLinkConfig = getCelAnimSWFConfigForLink(href);
       if (celAnimLinkConfig && celAnimLinkConfig.replaceOnLoad) {
         celanimLoadSWFplayer(divElem);
@@ -49,6 +47,7 @@ var initMoviePlayerCssClasses = function(cssClassNames) {
       $$('a.' + flowclassname + ', a.' + flowclassname).each(function(elem) {
       var href = elem.href;
       if(!href) {
+console.log('down from', elem, 'to', elem.down('.replacedLink'));
         href = elem.down('.replacedLink').href;
       }
       var flvLink = href.replace(/^..\/..\//g, '/');
