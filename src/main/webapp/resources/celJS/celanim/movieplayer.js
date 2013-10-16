@@ -25,8 +25,11 @@ console.log('starting replace', elem);
 console.log('href', href, container);
       var divElem = new Element('div', { 'class' : elem.getAttribute('class') });
       divElem.update(elem.down());
-      container.update(divElem);
+      container.insert(divElem);
 console.log('added', divElem, 'to', container);
+      elem.removeAttribute('class');
+      elem.addClassName('replacedLink');
+      elem.hide();
 //      elem.remove();
 console.log('elem no longer linked in dom', elem);
       var celAnimLinkConfig = getCelAnimSWFConfigForLink(href);
@@ -42,22 +45,26 @@ console.log('elem no longer linked in dom', elem);
 
 var initMoviePlayerCssClasses = function(cssClassNames) {
   $A(cssClassNames).each(function(flowclassname) {
-    if ($$('a.' + flowclassname).size() > 0) {
-      $$('a.' + flowclassname).each(function(elem) {
-      var flvLink = elem.href.replace(/^..\/..\//g, '/');
-      elem.href = flvLink;
+    if ($$('a.' + flowclassname + ', a.' + flowclassname).size() > 0) {
+      $$('a.' + flowclassname + ', a.' + flowclassname).each(function(elem) {
+      var href = elem.href;
+      if(!href) {
+        href = elem.down('.replacedLink').href;
+      }
+      var flvLink = href.replace(/^..\/..\//g, '/');
+      href = flvLink;
       elem.removeClassName(flowclassname);
       if (flowclassname.indexOf('overlay') > 0) {
         elem.addClassName('celanim_overlay');
         elem.addClassName(flowclassname.replace(/_overlay_/g, '_'));
       } else {
-        if (elem.href.endsWith('.flv')) {
+        if (href.endsWith('.flv')) {
           if (flowclassname.indexOf('oneflowplayer') > 0) {
             elem.addClassName('celanim_oneflowplayerStart');
           } else {
             elem.addClassName('celanim_flowplayerStart');
           }
-        } else if (elem.href.endsWith('.mp3')) {
+        } else if (href.endsWith('.mp3')) {
           var isLinkEmpty = (elem.innerHTML.strip() == '');
           if (!isLinkEmpty) {
               if (flowclassname.indexOf('oneflowplayer') > 0) {
@@ -77,7 +84,7 @@ var initMoviePlayerCssClasses = function(cssClassNames) {
         }
       }
       if (flowclassname.indexOf('_externalvideo') > 0) {
-        var celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
+        var celAnimLinkConfig = getCelAnimSWFConfigForLink(href);
         if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
           elem.addClassName(celAnimLinkConfig.cssClass);
         }
