@@ -19,10 +19,15 @@ var registerCelAnimMoviePlayer = function() {
 var initCelAnimSWFPlayer = function() {
   if ($$('a.celanim_swfplayer').size() > 0) {
     $$('a.celanim_swfplayer').each(function(elem) {
+console.log('starting replace');
       var href = elem.href;
+      var container = elem.up();
       var divElem = new Element('div', { 'class' : elem.getAttribute('class') });
       divElem.update(elem.down());
+      container.update(divElem);
+console.log('added', divElem, 'to', container);
       elem.remove();
+console.log('elem removed', elem);
       var celAnimLinkConfig = getCelAnimSWFConfigForLink(href);
       if (celAnimLinkConfig && celAnimLinkConfig.replaceOnLoad) {
         celanimLoadSWFplayer(divElem);
