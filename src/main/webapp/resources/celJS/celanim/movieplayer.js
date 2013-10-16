@@ -209,6 +209,7 @@ var getCelAnimSWFConfigForLink = function(elemHref) {
   var celAnimLinkReplaceObject = getCelAnimObject();
   var isFound = false;
   var configObject = null;
+console.log('getCelAnimSWFConfigForLink elemHref=', elemHref);
   $A(celAnimLinkReplaceObject).each(function(linkReplaceObj) {
     if (!isFound && elemHref.match(new RegExp(linkReplaceObj.matchStr))) {
       isFound = true;
