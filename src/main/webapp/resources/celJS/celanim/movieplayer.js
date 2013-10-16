@@ -43,8 +43,8 @@ console.log('added', divElem, 'to', container);
 
 var initMoviePlayerCssClasses = function(cssClassNames) {
   $A(cssClassNames).each(function(flowclassname) {
-    if ($$('a.' + flowclassname + ', a.' + flowclassname).size() > 0) {
-      $$('a.' + flowclassname + ', a.' + flowclassname).each(function(elem) {
+    if ($$('a.' + flowclassname + ', div.' + flowclassname).size() > 0) {
+      $$('a.' + flowclassname + ', div.' + flowclassname).each(function(elem) {
       var href = elem.href;
       if(!href) {
 console.log('down from', elem, 'to', elem.down('.replacedLink'));
