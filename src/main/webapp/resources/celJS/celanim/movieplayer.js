@@ -20,9 +20,8 @@ var initCelAnimSWFPlayer = function() {
   if ($$('a.celanim_swfplayer').size() > 0) {
     $$('a.celanim_swfplayer').each(function(elem) {
 console.log('starting replace', elem);
-      var href = elem.href;
       var container = elem.up();
-console.log('href', href, container);
+console.log('href', getPlayerHref(elem), container);
       var divElem = new Element('div', { 'class' : elem.getAttribute('class') });
       divElem.update(elem.down());
       container.insert(divElem);
@@ -30,7 +29,7 @@ console.log('added', divElem, 'to', container);
       elem.removeAttribute('class');
       elem.addClassName('replacedLink');
       elem.hide();
-      var celAnimLinkConfig = getCelAnimSWFConfigForLink(href);
+      var celAnimLinkConfig = getCelAnimSWFConfigForLink(getPlayerHref(elem));
       if (celAnimLinkConfig && celAnimLinkConfig.replaceOnLoad) {
         celanimLoadSWFplayer(divElem);
       }
@@ -46,11 +45,7 @@ var initMoviePlayerCssClasses = function(cssClassNames) {
 console.log('do for flowclassname', flowclassname, $$('a.' + flowclassname + ', div.' + flowclassname));
     if ($$('a.' + flowclassname + ', div.' + flowclassname).size() > 0) {
       $$('a.' + flowclassname + ', div.' + flowclassname).each(function(elem) {
-      var href = elem.href;
-      if(!href) {
-console.log('down from', elem, 'to', elem.down('.replacedLink'));
-        href = elem.down('.replacedLink').href;
-      }
+      var href = getPlayerHref(elem);
       var flvLink = href.replace(/^..\/..\//g, '/');
       href = flvLink;
       elem.removeClassName(flowclassname);
@@ -103,17 +98,25 @@ console.log('down from', elem, 'to', elem.down('.replacedLink'));
 };
 
 var celanimSWFplayerHandler = function(event) {
-  var playerLink = event.findElement('a');
+  var playerLink = event.findElement('div');
   if (playerLink) {
     celanimLoadSWFplayer(playerLink);
   }
   event.stop();
 };
 
+var getPlayerHref = function(playerLink) {
+  var href = playerLink.href;
+  if(!href) {
+    href = playerLink.previous('a').href;
+  }
+  return href;
+};
+
 var celanimLoadSWFplayer = function(playerLink) {
   if (playerLink && !playerLink.hasClassName('celanim_loaded')) {
     playerLink.addClassName('celanim_loaded');
-    var movieLink = getCelAnimSWFmovieLink(playerLink.href);
+    var movieLink = getCelAnimSWFmovieLink(getPlayerHref(playerLink));
     if (swfobject.hasFlashPlayerVersion("9.0.0")) {
       //FP; 28.2.2013; replaced swf-object creation with http://code.google.com/p/swfobject/
       //--> it solves issues at least with IE7!!!
@@ -359,7 +362,7 @@ var getCelHost = function() {
 
 var celanimOpenInOverlay = function(e) {
   var elem = e.findElement('a');
-  var flvLink = elem.href.replace(/^..\/..\//g, '/');
+  var flvLink = getPlayerHref(elem).replace(/^..\/..\//g, '/');
   var cssClassNames = $w($(elem).className).without('celanim_overlay');
   var overlaySrc = getCelHost() + '?xpage=celements_ajax&ajax_mode=FlowplayerInOverlay';
   overlaySrc += '&cssclassname=' + cssClassNames.join(',');
@@ -391,7 +394,7 @@ var initEventTracking = function(cssselector) {
 var trackEvent = function(e) {
   var label = this.title;
   if (label.empty()) {
-    label = this.href;
+    label = getPlayerHref(this);
   }
   var action = "Play";
   var category = "Video";
