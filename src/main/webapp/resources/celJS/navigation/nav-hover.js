@@ -76,15 +76,19 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
   CELEMENTS.navigation.NavOpenOnHover.prototype = {
       _secondMenuLevelCssSelector : undefined,
       _scheduledHide : new Hash(),
+      _mainNavMouseOverBind : undefined,
 
       _init : function(secondMenuLevelCssSelector) {
         var _me = this;
         _me._secondMenuLevelCssSelector = secondMenuLevelCssSelector;
         _me._hideAllNotActiveSubNavigations();
         _me._registerNavigationHover();
+        _me._mainNavMouseOverBind = _me._mainNavMouseOver.bind(_me);
+        _me._mainNavMouseOutBind = _me._mainNavMouseOut.bind(_me);
       },
 
       _hideAllNotActiveSubNavigations : function(skipSubNav) {
+        var _me = this;
         $$(_me._secondMenuLevelCssSelector).each(function(subNav) {
           var mainLi = subNav.up('li');
           if (!mainLi.hasClassName('active') && (!skipSubNav || (skipSubNav != subNav))) {
@@ -95,10 +99,11 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
       },
   
       _registerNavigationHover : function() {
+        var _me = this;
         $$(_me._secondMenuLevelCssSelector).each(function(subNav) {
           var mainLi = subNav.up('li');
           if (!mainLi.hasClassName('active')) {
-            mainLi.observe('mouseover', _me._mainNavMouseOver);
+            mainLi.observe('mouseover', _me._mainNavMouseOverBind);
           }
         });
       },
@@ -115,8 +120,8 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
           subNav.addClassName('navHover');
           subNav.appear({ duration: 0.2 });
         }
-        mainLi.stopObserving('mouseout', _me._mainNavMouseOut);
-        mainLi.observe('mouseout', _me._mainNavMouseOut);
+        mainLi.stopObserving('mouseout', _me._mainNavMouseOutBind);
+        mainLi.observe('mouseout', _me._mainNavMouseOutBind);
       },
       
       _mainNavMouseOut : function(event) {
@@ -129,7 +134,7 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
           var subNav = mainLi.down('ul');
           _me._scheduledHide.set(subNav.id, _me._delayedHide.delay(0.5, subNav));
           subNav.setStyle({ 'opacity' : '0.8' });
-          mainLi.stopObserving('mouseout', _me._mainNavMouseOut);
+          mainLi.stopObserving('mouseout', _me._mainNavMouseOutBind);
         }
       },
       
