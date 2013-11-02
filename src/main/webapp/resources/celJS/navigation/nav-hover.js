@@ -81,10 +81,10 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
       _init : function(secondMenuLevelCssSelector) {
         var _me = this;
         _me._secondMenuLevelCssSelector = secondMenuLevelCssSelector;
-        _me._hideAllNotActiveSubNavigations();
-        _me._registerNavigationHover();
         _me._mainNavMouseOverBind = _me._mainNavMouseOver.bind(_me);
         _me._mainNavMouseOutBind = _me._mainNavMouseOut.bind(_me);
+        _me._hideAllNotActiveSubNavigations();
+        _me._registerNavigationHover();
       },
 
       _hideAllNotActiveSubNavigations : function(skipSubNav) {
