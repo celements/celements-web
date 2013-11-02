@@ -1,3 +1,23 @@
+/*
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
 /* Helpers */
 function showAdminToolbar(url){
 
@@ -14,7 +34,7 @@ function getDocumentDimensions(){
 	// determine size of the body element (taken from quirksmode.org
 	var x,y;
 	var test1 = document.body.scrollHeight;
-	var test2 = document.body.offsetHeight
+	var test2 = document.body.offsetHeight;
 	if (test1 > test2) // all but Explorer Mac
 	{
 		x = document.body.scrollWidth;
@@ -166,7 +186,7 @@ function AdminToolbar(){
 			me.overlayDiv.setSize(docDim[0], docDim[1]);
 		if(me.adminDiv)
 			me.adminDiv.setSize(300, docDim[1]-12);
-	}
+	};
 }
 
 /*** CLASS AdminWindow ***/
@@ -211,7 +231,7 @@ function AdminWindow(parent, parent_node, top, left, height, width, className){
 		this.titleDiv.setContent(title);
 		
 		return true;
-	}
+	};
 
 	this.AdminWindow(parent, parent_node, top, left, height, width, className);
 	
@@ -223,7 +243,7 @@ function AdminWindow(parent, parent_node, top, left, height, width, className){
 		this.contentUrl = url;
 		
 		return true;
-	}
+	};
 
 	this.setSize = function(height, width){
 	
@@ -331,7 +351,7 @@ function ContentDiv(parent, parent_node, top, left, height, width, className){
 
 		if(!url) url = "";
 		
-		me.n.innerHTML = "<iframe src='"+url+"' marginheight='0' marginwidth='0' frameborder='0' style='width:"+this.w+"px;height:"+this.h+"px;'/>"
+		me.n.innerHTML = "<iframe src='"+url+"' marginheight='0' marginwidth='0' frameborder='0' style='width:"+this.w+"px;height:"+this.h+"px;'/>";
 		
 		/*
 		this.http_request = null;
@@ -398,7 +418,7 @@ function ContentDiv(parent, parent_node, top, left, height, width, className){
 		}
 		
 		return true;
-	}
+	};
 	
 	// add aspects
 	Aspects.addBefore(this, "mouseDown", aopizeMouseDown);
