@@ -110,8 +110,8 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
 
       _mainNavMouseOver : function(event) {
         var _me = this;
-        var mainLi = this;
-        var subNav = this.down('ul');
+        var mainLi = event.findElement('li');
+        var subNav = mainLi.down('ul');
         _me._cancelDelayedHide(subNav);
         _me._hideAllNotActiveSubNavigations(subNav);
         if (subNav.visible()) {
@@ -126,7 +126,7 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
       
       _mainNavMouseOut : function(event) {
         var _me = this;
-        var mainLi = this;
+        var mainLi = event.findElement('li');
         var relTarg = event.relatedTarget || event.toElement;
         var menuElem = relTarg.up('ul ul') || relTarg;
         var insideMainLi = menuElem.up('li');
