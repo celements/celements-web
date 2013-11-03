@@ -81,8 +81,8 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
       _init : function(secondMenuLevelCssSelector) {
         var _me = this;
         _me._secondMenuLevelCssSelector = secondMenuLevelCssSelector;
-        _me._mainNavMouseOverBind = _me._mainNavMouseOver.bind(_me);
-        _me._mainNavMouseOutBind = _me._mainNavMouseOut.bind(_me);
+        _me._mainNavMouseOverBind = _me._mainNavMouseOver.curry(_me);
+        _me._mainNavMouseOutBind = _me._mainNavMouseOut.curry(_me);
         _me._hideAllNotActiveSubNavigations();
         _me._registerNavigationHover();
       },
@@ -108,9 +108,9 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
         });
       },
 
-      _mainNavMouseOver : function(event) {
-        var _me = this;
-        var mainLi = event.findElement('li');
+      _mainNavMouseOver : function(myself, event) {
+        var _me = myself;
+        var mainLi = this;
         var subNav = mainLi.down('ul');
         _me._cancelDelayedHide(subNav);
         _me._hideAllNotActiveSubNavigations(subNav);
@@ -124,22 +124,22 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
         mainLi.observe('mouseout', _me._mainNavMouseOutBind);
       },
       
-      _mainNavMouseOut : function(event) {
-        var _me = this;
-        var mainLi = event.findElement('li');
+      _mainNavMouseOut : function(myself, event) {
+        var _me = myself;
+        var mainLi = this;
         var relTarg = event.relatedTarget || event.toElement;
         var menuElem = relTarg.up('ul ul') || relTarg;
         var insideMainLi = menuElem.up('li');
         if (!(insideMainLi === mainLi)) {
           var subNav = mainLi.down('ul');
-          _me._scheduledHide.set(subNav.id, _me._delayedHide.delay(0.5, subNav));
+          _me._scheduledHide.set(subNav.id, _me._delayedHide.delay(0.5, myself, subNav));
           subNav.setStyle({ 'opacity' : '0.8' });
           mainLi.stopObserving('mouseout', _me._mainNavMouseOutBind);
         }
       },
       
-      _delayedHide : function(subNav) {
-        var _me = this;
+      _delayedHide : function(myself, subNav) {
+        var _me = myself;
         _me._scheduledHide.unset(subNav.id);
         subNav.fade({
           'duration' : 0.2,
