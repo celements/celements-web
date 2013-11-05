@@ -34,7 +34,7 @@ fileBaseData = {
       #if("$!single_doc_doc" != '')
         #set($documents = [])
         #set($prevent_output = $documents.add("$single_doc_doc"))
-        #set($prevent_output = $documents.addAll($xwiki.getSpaceDocsName($single_doc_doc.replaceAll('(.*)\\..*', '$1'))))
+        #set($prevent_output = $documents.addAll($xwiki.getSpaceDocsName($space)))
       #end
       #if(($documents.size() > 0) && ("$!space" != 'XWiki'))
         #foreach($doc_name in $documents)
