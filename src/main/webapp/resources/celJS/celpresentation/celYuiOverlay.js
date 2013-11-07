@@ -33,6 +33,9 @@ external js-files
 :celJS/yui/element/element-min.js
 :celJS/yui/button/button-min.js
 :celJS/yui/container/container-min.js
+
+ * Don't use setBody("...") on overlay dialog, instead set content of 
+ * div with id="yuiOverlayContainer".
  */
 if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
 if(typeof CELEMENTS.presentation=="undefined"){CELEMENTS.presentation={};};
