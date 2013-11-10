@@ -49,7 +49,9 @@ TE.prototype = {
   modalDialog : null,
 
   initDone : false,
-  
+
+  _isEditorDirtyOnLoad : false,
+
   afterInitListeners : new Array(),
 
   isValidFormId : function(formId) {
@@ -201,6 +203,7 @@ TE.prototype = {
         starttabId = celstartab;
       }
     });
+    _me._isEditorDirtyOnLoad = _me.tabMenuConfig.isDirtyOnLoad;
     _me.tmd = new YAHOO.widget.Panel("tabMenuPanel", _me.tabMenuConfig.tabMenuPanelConfig);
     _me.tmd.render();
 
@@ -690,7 +693,8 @@ TE.prototype = {
  },
 
  isDirty : function() {
-   return this.getDirtyFormIds().size() > 0;
+   var _me = this;
+   return (_me.getDirtyFormIds().size() > 0) || _me._isEditorDirtyOnLoad;
  },
 
  updateTinyMCETextAreas : function(formId) {
@@ -723,6 +727,9 @@ TE.prototype = {
   */
  isDirtyField : function(fieldElem, optElementsValues) {
    var _me = this;
+   if (fieldElem.hasClassName('celDirtyOnLoad')) {
+     return true;
+   }
    var formId = fieldElem.up('form').id;
    var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
    if (fieldElem.hasClassName('mceEditor') && tinyMCE && tinyMCE.get(fieldElem.id)) {
@@ -747,23 +754,34 @@ TE.prototype = {
    return false;
  },
 
+ _formDirtyOnLoad : function(formId) {
+   return (typeof($(formId).celFormDirtyOnLoad) === 'undefined');
+ },
+
  getDirtyFormIds : function() {
    var _me = this;
    var dirtyFormIds = new Array();
    _me.editorFormsInitialValues.each(function(entry) {
      var formId = entry.key;
      if (_me.isValidFormId(formId)) {
-       var elementsValues = entry.value;
-       _me.updateTinyMCETextAreas(formId);
-       $(formId).getElements().each(function(elem) {
-         if (_me._isSubmittableField(elem) && _me.isDirtyField(elem, elementsValues)) {
-           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-             console.log('getDirtyFormIds first found dirty field: ', elem.name);
-           }
-           dirtyFormIds.push(formId);
-           throw $break;  //prototype each -> break
+       if (_me._formDirtyOnLoad(formId)) {
+         if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+           console.log('getDirtyFormIds formDirtyOnLoad found. ');
          }
-       });
+         dirtyFormIds.push(formId);
+       } else {
+         var elementsValues = entry.value;
+         _me.updateTinyMCETextAreas(formId);
+         $(formId).getElements().each(function(elem) {
+           if (_me._isSubmittableField(elem) && _me.isDirtyField(elem, elementsValues)) {
+             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+               console.log('getDirtyFormIds first found dirty field: ', elem.name);
+             }
+             dirtyFormIds.push(formId);
+             throw $break;  //prototype each -> break
+           }
+         });
+       }
      } else if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
        console.warn('getDirtyFormIds: form with id [' + formId
     		   + '] disappeared since loading the editor.');
@@ -833,6 +851,7 @@ TE.prototype = {
      var remainingDirtyFormIds = allDirtyFormIds;
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
+         _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
        }
        if (remainingDirtyFormIds.size() > 0) {
