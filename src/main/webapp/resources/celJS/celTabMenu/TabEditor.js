@@ -203,7 +203,8 @@ TE.prototype = {
         starttabId = celstartab;
       }
     });
-    _me._isEditorDirtyOnLoad = _me.tabMenuConfig.isDirtyOnLoad;
+    _me._isEditorDirtyOnLoad = ((_me.tabMenuConfig.isDirtyOnLoad !== undefined)
+        && (_me.tabMenuConfig.isDirtyOnLoad == true));
     _me.tmd = new YAHOO.widget.Panel("tabMenuPanel", _me.tabMenuConfig.tabMenuPanelConfig);
     _me.tmd.render();
 
