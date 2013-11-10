@@ -755,7 +755,8 @@ TE.prototype = {
  },
 
  _formDirtyOnLoad : function(formId) {
-   return (typeof($(formId).celFormDirtyOnLoad) === 'undefined');
+   return (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
+     && ($(formId).celFormDirtyOnLoad.value == 'true');
  },
 
  getDirtyFormIds : function() {
