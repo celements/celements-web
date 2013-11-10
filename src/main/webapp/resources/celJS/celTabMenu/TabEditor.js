@@ -695,7 +695,12 @@ TE.prototype = {
 
  isDirty : function() {
    var _me = this;
-   return (_me.getDirtyFormIds().size() > 0) || _me._isEditorDirtyOnLoad;
+   var isDirty = (_me.getDirtyFormIds().size() > 0) || _me._isEditorDirtyOnLoad;
+   if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+     console.log('isDirty: ', isDirty, ' , isEditorDirtyOnLoad: ',
+         _me._isEditorDirtyOnLoad);
+   }
+   return isDirty;
  },
 
  updateTinyMCETextAreas : function(formId) {
