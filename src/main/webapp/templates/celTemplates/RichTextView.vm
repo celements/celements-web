@@ -1,6 +1,6 @@
 ##
 #if("$!celldoc" != '')
-#set($contentDoc = $celldoc)
+#set($contentDoc = $celldoc.getTranslatedDocument())
 #else	
 #set($contentDoc = $tdoc)
 #end
