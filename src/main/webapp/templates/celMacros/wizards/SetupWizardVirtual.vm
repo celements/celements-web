@@ -1,0 +1,5 @@
+#if($isAdmin)
+here goes the setup wizard for an virtual db.
+#else
+Please login with an local admin.
+#end

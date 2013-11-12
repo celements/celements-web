@@ -1,0 +1,5 @@
+#if($isSuperAdmin)
+here goes the setup wizard for the main db.
+#else
+Please login with an global admin.
+#end
