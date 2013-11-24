@@ -28,6 +28,7 @@ function startResizeObservers() {
     tabMenu.observe('tabedit:tabchange', resize);
     tabMenu.observe('tabedit:after-tabshow', resize);
   });
+  $('tabMenuPanel').observe('tabedit:afterDisplayNow', resize);
   resize();
 }
 
