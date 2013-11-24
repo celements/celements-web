@@ -382,10 +382,10 @@ TE.prototype = {
     return redirectValue;
   },
 
-  showTabMenu : function(id) {
+  showTabMenu : function(tabId) {
     var _me = this;
     $('cel_overlay').setStyle({'display' : "block"});
-    _me.getTab(id);
+    _me.getTab(tabId);
     var tabBodyId = tabId + '-tab';
     $(tabBodyId).fire('tabedit:before-tabshow', {
       'newTabId' : tabBodyId
