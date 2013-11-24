@@ -386,7 +386,14 @@ TE.prototype = {
     var _me = this;
     $('cel_overlay').setStyle({'display' : "block"});
     _me.getTab(id);
+    var tabBodyId = tabId + '-tab';
+    $(tabBodyId).fire('tabedit:before-tabshow', {
+      'newTabId' : tabBodyId
+    });
     _me.tmd.show();
+    $(tabBodyId).fire('tabedit:after-tabshow', {
+      'newTabId' : tabBodyId
+    });
   },
 
   getTab : function(tabId, reload) {
