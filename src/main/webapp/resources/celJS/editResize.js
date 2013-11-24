@@ -26,6 +26,7 @@ function startResizeObservers() {
   Event.observe(window, 'resize', resize);
   $$('.celements3_tabMenu .bd').each(function(tabMenu) {
     tabMenu.observe('tabedit:tabchange', resize);
+    tabMenu.observe('tabedit:after-tabshow', resize);
   });
   resize();
 }
