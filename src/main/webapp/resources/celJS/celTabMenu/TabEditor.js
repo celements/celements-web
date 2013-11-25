@@ -245,7 +245,13 @@ TE.prototype = {
     _me.initDone = true;
     _me.afterInitListeners.each(_me._execOneListener);
     var displayNowEffect = new Effect.Parallel([
-       new Effect.Appear('tabMenuPanel', { sync: true }), 
+       new Effect.Appear('tabMenuPanel', {
+         afterFinish: function() {
+           //afterFinish for parallel effect is not working!
+           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
+         },
+         sync: true
+       }), 
        new Effect.Fade('celementsLoadingIndicator', { sync: true }) 
     ], { 
        duration: 0.5,
@@ -255,6 +261,8 @@ TE.prototype = {
         displayNowEffect);
     if (!defaultShowEvent.stopped) {
       displayNowEffect.start();
+    } else {
+      $('tabMenuPanel').fire('tabedit:afterDisplayNow');
     }
   },
 
