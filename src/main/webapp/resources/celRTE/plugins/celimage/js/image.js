@@ -309,6 +309,9 @@ var CelImageDialog = {
 
   _getGallerySpace : function() {
     var _me = this;
+    if (!_me._gallery) {
+      return '';
+    }
     var gallerySpaceName = _me._gallery.getSpaceName();
     if (_me._gallery && gallerySpaceName) {
       return gallerySpaceName;
@@ -397,6 +400,7 @@ var CelImageDialog = {
     });
 
     var cssClassPrefix = 'celanim';
+    console.log('_insertAndClose: isNewImageGallery ', _me._gallery.isNewImageGallery());
     if (_me._gallery && _me._gallery.isNewImageGallery()) {
       cssClassPrefix = 'celimage';
     }
