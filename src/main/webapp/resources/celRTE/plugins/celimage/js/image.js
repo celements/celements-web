@@ -400,7 +400,7 @@ var CelImageDialog = {
     });
 
     var cssClassPrefix = 'celanim';
-    console.log('_insertAndClose: isNewImageGallery ', _me._gallery.isNewImageGallery());
+//    console.log('_insertAndClose: isNewImageGallery ', _me._gallery.isNewImageGallery());
     if (_me._gallery && _me._gallery.isNewImageGallery()) {
       cssClassPrefix = 'celimage';
     }
