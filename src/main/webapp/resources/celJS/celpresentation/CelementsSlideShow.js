@@ -315,11 +315,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _showSlide : function(slideContent) {
         var _me = this;
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
-        var slideWrapperElem = new Element('div', {
-          'id' : ('slideWrapper_' + _htmlContainerId)
-        }).setStyle({
+        var slideWrapperElem = new Element('div').addClassName(
+            'cel_sideShow_slideWrapper').setStyle({
           'position' : 'relative'
-        }).addClassName('cel_sideShow_slideWrapper').update(slideContent);
+        }).update(slideContent);
         _me._htmlContainer.update(slideWrapperElem);
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
         if (_me._centerSlide) {
