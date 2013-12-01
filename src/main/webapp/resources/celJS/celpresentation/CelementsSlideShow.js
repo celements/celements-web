@@ -287,17 +287,22 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         
       },
 
+      _getSlideWrapper : function() {
+        var _me = this;
+        return _me.getHtmlContainer().down('.cel_sideShow_slideWrapper');
+      },
+
       _centerCurrentSlide : function() {
         var _me = this;
-        $('slideWrapper').setStyle({
+        _me._getSlideWrapper().setStyle({
           'position' : 'absolute'
         });
-        var wrapperWidth = $j('#slideWrapper').width();
-        var wrapperHeight = $j('#slideWrapper').height();
+        var wrapperWidth = $j(_me._getSlideWrapper()).width();
+        var wrapperHeight = $j(_me._getSlideWrapper()).height();
 //        var containerWidth = $j(_me._htmlContainer).width();
         var containerHeight = $j(_me._htmlContainer).height();
         var wrapperTop = (containerHeight - wrapperHeight) / 2;
-        $('slideWrapper').setStyle({
+        _me._getSlideWrapper().setStyle({
           'position' : 'relative',
           'marginLeft' : 'auto',
           'marginRight' : 'auto',
@@ -311,10 +316,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
         var slideWrapperElem = new Element('div', {
-          'id' : 'slideWrapper'
+          'id' : ('slideWrapper_' + _htmlContainerId)
         }).setStyle({
           'position' : 'relative'
-        }).update(slideContent);
+        }).addClassName('cel_sideShow_slideWrapper').update(slideContent);
         _me._htmlContainer.update(slideWrapperElem);
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
         if (_me._centerSlide) {
