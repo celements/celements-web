@@ -336,10 +336,14 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._htmlContainer.update(slideWrapperElem);
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
         if (_me._centerSlide) {
-          _me._htmlContainer.select('img').each(function(imgElem) {
-            imgElem.observe('load', _me._imgLoadedReCenterSlideBind.curry(imgElem));
-          });
-          _me._centerCurrentSlide();
+          var centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
+              _me);
+          if (!centerSlideEvent.stopped) {
+            _me._htmlContainer.select('img').each(function(imgElem) {
+              imgElem.observe('load', _me._imgLoadedReCenterSlideBind.curry(imgElem));
+            });
+            _me._centerCurrentSlide();
+          }
         }
         _me._htmlContainer.fire('cel_yuiOverlay:contentChanged', _me);
       }
