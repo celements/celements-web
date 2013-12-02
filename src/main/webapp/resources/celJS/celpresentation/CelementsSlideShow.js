@@ -99,6 +99,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       register : function() {
         var _me = this;
+        if (!_me._htmlContainer) {
+          // late initialization needed in overlay
+          _me._htmlContainer = $(_me._htmlContainerId);
+        }
         if (_me._htmlContainer) {
           if (typeof initContextMenuAsync !== 'undefined') {
             _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
