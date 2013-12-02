@@ -66,6 +66,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _prevElements : [],
       _navObj : undefined,
       _registerOnOpenOverlayCheckerBind : undefined,
+      _imgLoadedReCenterSlideBind : undefined,
       _centerSlide : true,
 
       _init : function(containerId) {
@@ -76,6 +77,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             _me._showSlide.bind(_me));
         _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(
             _me);
+        _me._imgLoadedReCenterSlideBind = _me._imgLoadedReCenterSlide.bind(_me);
       },
 
       getHtmlContainer : function() {
@@ -312,6 +314,12 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         });
       },
 
+      _imgLoadedReCenterSlide : function(imgElem, event) {
+        var _me = this;
+        imgElem.stopObserving('load', _me._imgLoadedReCenterSlideBind);
+        _me._centerCurrentSlide();
+      },
+
       _showSlide : function(slideContent) {
         var _me = this;
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
@@ -322,6 +330,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._htmlContainer.update(slideWrapperElem);
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
         if (_me._centerSlide) {
+          _me._htmlContainer.select('img').each(function(imgElem) {
+            imgElem.observe('load', _me._imgLoadedReCenterSlideBind.curry(imgElem));
+          });
           _me._centerCurrentSlide();
         }
         _me._htmlContainer.fire('cel_yuiOverlay:contentChanged', _me);
