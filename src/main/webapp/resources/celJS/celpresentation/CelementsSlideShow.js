@@ -292,7 +292,12 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _centerCurrentSlide : function() {
         var _me = this;
         $('slideWrapper').setStyle({
-          'position' : 'absolute'
+          'position' : 'absolute',
+          'width' : 'auto',
+          'height' : 'auto',
+          'top' : 0,
+          'marginLeft' : 0,
+          'marginRight' : 0
         });
         var wrapperWidth = $j('#slideWrapper').width();
         var wrapperHeight = $j('#slideWrapper').height();
@@ -301,6 +306,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var wrapperTop = (containerHeight - wrapperHeight) / 2;
         $('slideWrapper').setStyle({
           'position' : 'relative',
+          'margin' : '0',
           'marginLeft' : 'auto',
           'marginRight' : 'auto',
           'top' : wrapperTop + 'px',
