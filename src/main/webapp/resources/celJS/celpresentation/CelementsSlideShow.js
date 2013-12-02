@@ -71,6 +71,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _init : function(containerId) {
         var _me = this;
         _me._htmlContainerId = containerId;
+        _me._htmlContainer = $(_me._htmlContainerId);
         _me._navObj = new CELEMENTS.presentation.Navigation(_me._preloadSlide.bind(_me),
             _me._showSlide.bind(_me));
         _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(
@@ -96,7 +97,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       register : function() {
         var _me = this;
-        _me._htmlContainer = $(_me._htmlContainerId);
         if (_me._htmlContainer) {
           if (typeof initContextMenuAsync !== 'undefined') {
             _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
