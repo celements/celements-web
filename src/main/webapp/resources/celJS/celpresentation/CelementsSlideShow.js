@@ -68,6 +68,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _registerOnOpenOverlayCheckerBind : undefined,
       _imgLoadedReCenterSlideBind : undefined,
       _centerSlide : true,
+      _autoresize : false,
 
       _init : function(containerId) {
         var _me = this;
@@ -234,6 +235,11 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         });
       },
 
+      setAutoresize : function(doAutoResize) {
+        var _me = this;
+        _me._autoresize = doAutoResize;
+      },
+
       setOverwritePageLayout : function(overwritePageLayout) {
         var _me = this;
         if (overwritePageLayout && (overwritePageLayout != '')) {
@@ -330,6 +336,68 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._centerCurrentSlide();
       },
 
+      _resizeCurrentSlide : function() {
+        var _me = this;
+        if (_me._autoresize) {
+          var zoomFactor = _me._computeZoomFactor();
+          if (zoomFactor <= 1) {
+            console.log('_resizeCurrentSlide: ', _me._htmlContainer, _me._getSlideWrapper(), zoomFactor);
+            var oldWidth = parseInt(_me._getSlideWrapper().getWidth());
+            var oldHeight = parseInt(_me._getSlideWrapper().getHeight());
+            newHeight = oldHeight * zoomFactor;
+            newWidth = oldWidth * zoomFactor;
+            var eventMemo = {
+                'fullWidth' : oldWidth,
+                'fullHeight' : oldHeight,
+                'zoomFactor' : zoomFactor,
+                'newWidth' : newWidth,
+                'newHeight' : newHeight
+            };
+            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+              console.log('final resize factor: ', eventMemo);
+            }
+            var resizeEvent = _me._htmlContainer.fire(
+                'cel_slideShow:resizeSlideContent', eventMemo);
+            if (!resizeEvent.stopped) {
+              _me._getSlideWrapper().setStyle({
+                'zoom' : zoomFactor,
+                'transform' : 'scale(' + zoomFactor + ')',
+                'transformOrigin' : '0 0 0',
+                'height' : oldHeight + 'px',  // important for FF
+                'width' : oldWidth + 'px' // important for FF
+              });
+            }
+          } else {
+            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+              console.log('no resize needed.', zoomFactor);
+            }
+          }
+        }
+      },
+
+      _computeZoomFactor : function() {
+        var _me = this;
+        var oldWidth = parseInt(_me._getSlideWrapper().getWidth());
+        var newWidth = oldWidth;
+        if (oldWidth > _me._htmlContainer.getWidth()) {
+          newWidth = _me._htmlContainer.getWidth();
+        }
+        var zoomWidthFactor = newWidth / oldWidth;
+        var oldHeight = parseInt(_me._getSlideWrapper().getHeight());
+        var newHeight = oldHeight;
+        if (oldHeight > _me._htmlContainer.getHeight()) {
+          newHeight = _me._htmlContainer.getHeight();
+        }
+        var zoomHeightFactor = newHeight / oldHeight;
+        var zoomFactor;
+        if (zoomHeightFactor < zoomWidthFactor) {
+          zoomFactor = zoomHeightFactor;
+        } else {
+          zoomFactor = zoomWidthFactor;
+        }
+        return zoomFactor;
+      },
+
       _showSlide : function(slideContent) {
         var _me = this;
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
@@ -340,6 +408,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._htmlContainer.update(slideWrapperElem);
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
         //TODO add resizeSlide before centerSlide
+        _me._resizeCurrentSlide();
         if (_me._centerSlide) {
           var centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
               _me);
