@@ -335,6 +335,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         }).update(slideContent);
         _me._htmlContainer.update(slideWrapperElem);
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
+        //TODO add resizeSlide before centerSlide
         if (_me._centerSlide) {
           var centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
               _me);
