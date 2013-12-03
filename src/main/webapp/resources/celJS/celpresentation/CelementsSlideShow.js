@@ -66,7 +66,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _prevElements : [],
       _navObj : undefined,
       _registerOnOpenOverlayCheckerBind : undefined,
-      _imgLoadedReCenterSlideBind : undefined,
+      _imgLoadedResizeAndCenterSlideBind : undefined,
       _centerSlide : true,
       _autoresize : false,
 
@@ -78,7 +78,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             _me._showSlide.bind(_me));
         _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(
             _me);
-        _me._imgLoadedReCenterSlideBind = _me._imgLoadedReCenterSlide.bind(_me);
+        _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(
+            _me);
       },
 
       getHtmlContainer : function() {
@@ -330,10 +331,21 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         });
       },
 
-      _imgLoadedReCenterSlide : function(imgElem, event) {
+      _imgLoadedResizeAndCenterSlide : function(imgElem, event) {
         var _me = this;
-        imgElem.stopObserving('load', _me._imgLoadedReCenterSlideBind);
-        _me._centerCurrentSlide();
+        imgElem.stopObserving('load', _me._imgLoadedResizeAndCenterSlideBind);
+        _me._resizeAndCenterSlide();
+      },
+
+      _resizeAndCenterSlide : function() {
+        _me._resizeCurrentSlide();
+        if (_me._centerSlide) {
+          var centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
+              _me);
+          if (!centerSlideEvent.stopped) {
+            _me._centerCurrentSlide();
+          }
+        }
       },
 
       _resizeCurrentSlide : function() {
@@ -407,17 +419,13 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         }).update(slideContent);
         _me._htmlContainer.update(slideWrapperElem);
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
-        //TODO add resizeSlide before centerSlide
-        _me._resizeCurrentSlide();
-        if (_me._centerSlide) {
-          var centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
-              _me);
-          if (!centerSlideEvent.stopped) {
-            _me._htmlContainer.select('img').each(function(imgElem) {
-              imgElem.observe('load', _me._imgLoadedReCenterSlideBind.curry(imgElem));
-            });
-            _me._centerCurrentSlide();
-          }
+        var resizeAndCenterSlideEvent = _me._htmlContainer.fire(
+            'cel_slideShow:resizeAndCenterSlide', _me);
+        if (!resizeAndCenterSlideEvent.stopped) {
+          _me._htmlContainer.select('img').each(function(imgElem) {
+            imgElem.observe('load', _me._imgLoadedResizeAndCenterSlideBind.curry(imgElem));
+          });
+          _me._resizeAndCenterSlide();
         }
         _me._htmlContainer.fire('cel_yuiOverlay:contentChanged', _me);
       }
