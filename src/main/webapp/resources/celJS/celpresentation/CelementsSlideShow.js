@@ -313,12 +313,15 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
        */
       _centerCurrentSlide : function() {
         var _me = this;
-        var slideWrapper = _me._getSlideRootElem(_me._getSlideWrapper());
+        var slideWrapper = _me._getSlideWrapper();
         var slideRoot = _me._getSlideRootElem(slideWrapper);
         slideWrapper.setStyle({
           'position' : 'absolute',
           'width' : 'auto',
           'height' : 'auto',
+        });
+        slideRoot.setStyle({
+          'position' : 'relative',
           'top' : 0,
           'marginLeft' : 0,
           'marginRight' : 0
@@ -378,7 +381,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
                 'newWidth' : newWidth,
                 'newHeight' : newHeight
             };
-            console.log('_resizeCurrentSlide: ', _me._htmlContainer, _me._getSlideWrapper(), zoomFactor, oldHeight, newHeight, oldWidth, newWidth);
             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
               console.log('final resize factor: ', eventMemo);
             }
@@ -395,6 +397,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             }
             var parentDiv = _me._getSlideRootElem();
             if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
+              console.log('_resizeCurrentSlide: ', _me._htmlContainer, _me._getSlideWrapper(), zoomFactor, oldHeight, newHeight, oldWidth, newWidth);
               parentDiv.setStyle({
                 'width' : newWidth + 'px',
                 'height' : newHeight + 'px'
