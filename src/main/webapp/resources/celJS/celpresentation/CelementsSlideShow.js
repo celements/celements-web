@@ -321,8 +321,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           'marginLeft' : 0,
           'marginRight' : 0
         });
-        var slideWidth = $j(_me._getSlideWrapper()).getWidth();
-        var slideHeight = $j(_me._getSlideWrapper()).getHeight();
+        //use jquery to get dimensions, because it works correctly inside iframes.
+        var slideWidth = $j(_me._getSlideWrapper()).width();
+        var slideHeight = $j(_me._getSlideWrapper()).height();
         var parentDiv = _me._getSlideRootElem();
         var parentHeight = parentDiv.getHeight();
         var topPos = (parentHeight - slideHeight) / 2;
