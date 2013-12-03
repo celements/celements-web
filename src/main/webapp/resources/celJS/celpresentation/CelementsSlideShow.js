@@ -313,7 +313,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
        */
       _centerCurrentSlide : function() {
         var _me = this;
-        var slideWrapper = _me._getSlideWrapper();
+        var slideWrapper = _me._getSlideRootElem(_me._getSlideWrapper());
+        var slideRoot = _me._getSlideRootElem(slideWrapper);
         slideWrapper.setStyle({
           'position' : 'absolute',
           'width' : 'auto',
@@ -325,16 +326,20 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         //use jquery to get dimensions, because it works correctly inside iframes.
         var slideWidth = $j(slideWrapper).width();
         var slideHeight = $j(slideWrapper).height();
-        var parentDiv = _me._getSlideRootElem();
+        var slideOuterHeight = $j(slideRoot).height();
+        var parentDiv = _me._htmlContainer;
         var parentHeight = parentDiv.getHeight();
-        var topPos = (parentHeight - slideHeight) / 2;
+        var topPos = (parentHeight - slideOuterHeight) / 2;
         slideWrapper.setStyle({
+          'position' : 'relative',
+          'width' : slideWidth + 'px',
+          'height' : slideHeight + 'px',
+        });
+        slideRoot.setStyle({
           'position' : 'relative',
           'margin' : '0',
           'marginLeft' : 'auto',
           'marginRight' : 'auto',
-          'width' : slideWidth + 'px',
-          'height' : slideHeight + 'px',
           'top' : topPos + 'px'
         });
       },
@@ -426,10 +431,11 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         return zoomFactor;
       },
 
-      _getSlideRootElem : function() {
+      _getSlideRootElem : function(defaultElem) {
         var _me = this;
+        defaultElem = defaultElem || _me._htmlContainer;
         var slideRootElem = _me._getSlideWrapper().up('.cel_sideShow_slideRoot'
-            ) || _me._htmlContainer;
+            ) || defaultElem;
         //console.log('_getSlideRootElem: ', slideRootElem);
         return slideRootElem;
       },
