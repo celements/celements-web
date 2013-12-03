@@ -305,6 +305,12 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         return _me.getHtmlContainer().down('.cel_sideShow_slideWrapper');
       },
 
+      /**
+       * if the slide is scaled down to fit in the _me._htmlContainer element then
+       * we need an additional div between the slideWrapper and the _htmlContainer
+       * to get the reduced dimensions of the slide. This intermediate div must
+       * present the .cel_sideShow_slideRoot css class.
+       */
       _centerCurrentSlide : function() {
         var _me = this;
         _me._getSlideWrapper().setStyle({
@@ -315,19 +321,19 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           'marginLeft' : 0,
           'marginRight' : 0
         });
-        var wrapperWidth = $j(_me._getSlideWrapper()).width();
-        var wrapperHeight = $j(_me._getSlideWrapper()).height();
-//        var containerWidth = $j(_me._htmlContainer).width();
-        var containerHeight = $j(_me._htmlContainer).height();
-        var wrapperTop = (containerHeight - wrapperHeight) / 2;
-        _me._getSlideWrapper().setStyle({
+        var slideWidth = $j(_me._getSlideWrapper()).getWidth();
+        var slideHeight = $j(_me._getSlideWrapper()).getHeight();
+        var parentDiv = _me._getSlideRootElem();
+        var parentHeight = parentDiv.getHeight();
+        var topPos = (parentHeight - slideHeight) / 2;
+        slideWrapper.setStyle({
           'position' : 'relative',
           'margin' : '0',
           'marginLeft' : 'auto',
           'marginRight' : 'auto',
-          'top' : wrapperTop + 'px',
-          'width' : wrapperWidth + 'px',
-          'height' : wrapperHeight + 'px'
+          'width' : slideWidth + 'px',
+          'height' : slideHeight + 'px',
+          'top' : topPos + 'px'
         });
       },
 
@@ -411,6 +417,11 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         return zoomFactor;
       },
 
+      _getSlideRootElem : function() {
+        var _me = this;
+        return _me._getSlideWrapper().up('.cel_sideShow_slideRoot') || _me._htmlContainer;
+      },
+
       _showSlide : function(slideContent) {
         var _me = this;
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
@@ -418,7 +429,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             'cel_sideShow_slideWrapper').setStyle({
           'position' : 'relative'
         }).update(slideContent);
-        _me._htmlContainer.update(slideWrapperElem);
+        _me._getSlideRootElem().update(slideWrapperElem);
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
         var resizeAndCenterSlideEvent = _me._htmlContainer.fire(
             'cel_slideShow:resizeAndCenterSlide', _me);
