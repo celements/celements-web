@@ -419,7 +419,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _getSlideRootElem : function() {
         var _me = this;
-        return _me._getSlideWrapper().up('.cel_sideShow_slideRoot') || _me._htmlContainer;
+        var slideRootElem = _me._getSlideWrapper().up('.cel_sideShow_slideRoot'
+            ) || _me._htmlContainer;
+        //console.log('_getSlideRootElem: ', slideRootElem);
+        return slideRootElem;
       },
 
       _showSlide : function(slideContent) {
