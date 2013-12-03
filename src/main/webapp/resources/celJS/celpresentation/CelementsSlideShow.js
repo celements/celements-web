@@ -388,6 +388,13 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
                 'width' : oldWidth + 'px' // important for FF
               });
             }
+            var parentDiv = _me._getSlideRootElem();
+            if (parentDiv.hasClassName('cel_sideShow_slideRoot')) {
+              parentDiv.setStyle({
+                'width' : newWidth + 'px',
+                'height' : newHeight + 'px'
+              });
+            }
           } else {
             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
               console.log('no resize needed.', zoomFactor);
