@@ -397,7 +397,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             }
             var parentDiv = _me._getSlideRootElem();
             if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
-              console.log('_resizeCurrentSlide: ', _me._htmlContainer, _me._getSlideWrapper(), zoomFactor, oldHeight, newHeight, oldWidth, newWidth);
               parentDiv.setStyle({
                 'width' : newWidth + 'px',
                 'height' : newHeight + 'px'
