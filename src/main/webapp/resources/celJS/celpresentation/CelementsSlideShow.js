@@ -302,14 +302,14 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _getSlideWrapper : function() {
         var _me = this;
-        return _me.getHtmlContainer().down('.cel_sideShow_slideWrapper');
+        return _me.getHtmlContainer().down('.cel_slideShow_slideWrapper');
       },
 
       /**
        * if the slide is scaled down to fit in the _me._htmlContainer element then
        * we need an additional div between the slideWrapper and the _htmlContainer
        * to get the reduced dimensions of the slide. This intermediate div must
-       * present the .cel_sideShow_slideRoot css class.
+       * present the .cel_slideShow_slideRoot css class.
        */
       _centerCurrentSlide : function() {
         var _me = this;
@@ -367,7 +367,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         if (_me._autoresize) {
           var zoomFactor = _me._computeZoomFactor();
           if (zoomFactor <= 1) {
-            console.log('_resizeCurrentSlide: ', _me._htmlContainer, _me._getSlideWrapper(), zoomFactor);
             var oldWidth = parseInt(_me._getSlideWrapper().getWidth());
             var oldHeight = parseInt(_me._getSlideWrapper().getHeight());
             newHeight = oldHeight * zoomFactor;
@@ -379,6 +378,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
                 'newWidth' : newWidth,
                 'newHeight' : newHeight
             };
+            console.log('_resizeCurrentSlide: ', _me._htmlContainer, _me._getSlideWrapper(), zoomFactor, oldHeight, newHeight, oldWidth, newWidth);
             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
               console.log('final resize factor: ', eventMemo);
             }
@@ -394,7 +394,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
               });
             }
             var parentDiv = _me._getSlideRootElem();
-            if (parentDiv.hasClassName('cel_sideShow_slideRoot')) {
+            if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
               parentDiv.setStyle({
                 'width' : newWidth + 'px',
                 'height' : newHeight + 'px'
@@ -434,7 +434,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _getSlideRootElem : function(defaultElem) {
         var _me = this;
         defaultElem = defaultElem || _me._htmlContainer;
-        var slideRootElem = _me._getSlideWrapper().up('.cel_sideShow_slideRoot'
+        var slideRootElem = _me._getSlideWrapper().up('.cel_slideShow_slideRoot'
             ) || defaultElem;
         //console.log('_getSlideRootElem: ', slideRootElem);
         return slideRootElem;
@@ -444,7 +444,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
         var slideWrapperElem = new Element('div').addClassName(
-            'cel_sideShow_slideWrapper').setStyle({
+            'cel_slideShow_slideWrapper').setStyle({
           'position' : 'relative'
         }).update(slideContent);
         _me._getSlideRootElem().update(slideWrapperElem);
