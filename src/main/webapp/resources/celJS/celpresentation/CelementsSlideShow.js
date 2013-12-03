@@ -338,6 +338,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       },
 
       _resizeAndCenterSlide : function() {
+        var _me = this;
         _me._resizeCurrentSlide();
         if (_me._centerSlide) {
           var centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
