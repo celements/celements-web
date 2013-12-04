@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+#set($mainSpaceRef = $services.model.createDocumentReference('', 'Content', 'WebHome'))
+#set($mainTreeNodes = $celementsweb.getSubNodesForParentRef($mainSpaceRef.lastSpaceReference))
+#set($externalURLPart = "$!doc.getExternalURL().replaceAll('([^/]+//[^/]+).*', '$1')")
+#foreach($treeNode in $mainTreeNodes)
+   <url>
+      <loc>${externalURLPart}$xwiki.getURL($treeNode.documentReference)</loc>
+#set($pageTypeName = $services.pageType.getPageTypeRef($treeNode.documentReference).getConfigName())
+#if("$!pageTypeName" == 'Blog')
+      <changefreq>daily</changefreq>
+#else
+      <changefreq>weekly</changefreq>
+#end
+      <priority>1.0</priority>
+   </url>
+#end
+</urlset>

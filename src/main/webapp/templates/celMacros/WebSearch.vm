@@ -148,7 +148,7 @@
       #set($ws_nf_content = $xwiki.getDocument("Tools.WebSearch_nothingFound").getContent())
       $xwiki.renderText("{pre}$!{ws_nf_content}{/pre}",$doc)
     #else
-    Sorry, your search did not match any documents.
+		$msg.get('cel_search_noresults')
     #end
     #end
   </div>

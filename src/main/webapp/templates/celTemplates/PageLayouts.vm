@@ -22,7 +22,7 @@
     <tr>
     #set($pretty_name = $layoutsMap.get($layoutKey))
     #set($plApi = $celementsweb.getPageLayoutApiForName($layoutKey))
-    <td class="column${velocitycount}">
+    <td class="column${velocityCount}">
         #if($isLayoutEditorAvailable)
             #set($editLink = $xwiki.getURL("$!{layoutKey}.WebHome", 'view'))
             <a href="$editLink">$!pretty_name</a>

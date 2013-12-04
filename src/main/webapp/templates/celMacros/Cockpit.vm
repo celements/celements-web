@@ -1,0 +1,68 @@
+#if($isAdmin)
+#set($xredirect = "$!request.xredirect")
+#if("$!xredirect" == '')
+  #set($xredirect = $doc.getURL('view'))
+  #if("$!xredirect" == '')
+    #set($xredirect = '/')
+  #end
+#end
+<h1>$adminMsg.get('cel_cockpit_title')</h1>
+#set($wikiPreferenceDocRef = $services.model.createDocumentReference('', 'XWiki', 'XWikiPreferences'))
+#set($wikiPreferenceDoc = $xwiki.getDocument($wikiPreferenceDocRef))
+#set($wikiPreferenceObj = $wikiPreferenceDoc.getObject('XWiki.XWikiPreferences'))
+#set($cel_pageTypeObj = $wikiPreferenceDoc.getObject('Celements2.PageType'))
+<form id="wikiPropertiesEdit" method="post" action="$wikiPreferenceDoc.getURL('save')">
+<input type="hidden" name="xredirect" value="$xredirect" />
+<div id="wikiDefaultLanguageEdit" class="editblock">
+    #set($wikiDefaultLanguage = $wikiPreferenceObj.getProperty('default_language').getValue())
+    $adminMsg.get('cel_wikiDefaultLanguage'):
+    #if("$!wikiDefaultLanguage" == '')
+      <input type="text" name="XWiki.XWikiPreferences_${wikiPreferenceObj.number}_default_language" value="$!wikiDefaultLanguage"/>
+    #else
+      <span class="wikiDefaultLanguage">$wikiDefaultLanguage</span>
+    #end
+</div>
+<div id="wikiSupportedLanguageEdit" class="editblock">
+    #set($wikiSupportedLanguage = $wikiPreferenceObj.getProperty('languages').getValue())
+    $adminMsg.get('cel_wikiSupportedLanguage'):
+    <input type="text" name="XWiki.XWikiPreferences_${wikiPreferenceObj.number}_languages" value="$!wikiSupportedLanguage"/>
+</div>
+<div id="pro_pagemasterEdit" class="editblock">
+    $adminMsg.get('cel_default_pagelayout'):
+    #set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
+    #if(!$cel_pageLayouts.containsKey('SimpleLayout'))
+      #set($!devnull = $!cel_pageLayouts.put('SimpleLayout', 'Simple Layout'))
+    #end
+    #set($cel_currentPageLayout = "$!cel_pageTypeObj.getProperty('page_layout').getValue()")
+    #if("$!cel_currentPageLayout" == '')
+      #set($cel_currentPageLayout = "SimpleLayout")
+    #end
+    <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_layout" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_layout">
+    #foreach($cel_pageLayoutKey in $cel_pageLayouts.keySet())
+      <option##
+        #if("$!cel_currentPageLayout" == "$!cel_pageLayoutKey")##
+          selected="selected"#
+        #end
+        value="$cel_pageLayoutKey" label="$cel_pageLayouts.get($cel_pageLayoutKey)">
+        $cel_pageLayouts.get($cel_pageLayoutKey)
+      </option>
+    #end
+    </select>
+</div>
+#if($isSuperAdmin)
+#set($cel_editobj_doc = $wikiPreferenceDoc)
+#set($cel_editobj_dict_prefix = 'cel_pro_metaTag_' )
+#set($cel_editobj_externalForm = true)  
+#set($cel_embedded_editobj = true)
+#set($cel_editobj_classname = "Classes.MetaTagClass")
+#set($cel_editobj_title = $adminMsg.get('cel_pro_metaTag_edit'))
+#set($cel_editobj_hasObjRemoveLink = true)
+#set($cel_editobj_hasObjAddLink = true)
+#set($cel_editobj_properties = "key,lang,value")
+<div id="pro_metaTagEdit" class="editblock">
+  #parse("celTemplates/ObjectEdit.vm")
+</div>
+#end
+<input type="submit" value="$adminMsg.get('cel_save')" />
+</form>
+#end ##isAdmin

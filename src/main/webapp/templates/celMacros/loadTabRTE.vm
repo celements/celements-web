@@ -17,7 +17,7 @@
   #set($cel_tiny_xredirect = '')
 #end
 #set($contextPath = ${request.contextPath})
-$xwiki.includeForm('celements2web:Macros.includeCelementsRTE', false)
+#parse("celMacros/includeCelementsRTE.vm")
 <script type="text/javascript">
 ##
 var cd = null;
@@ -108,9 +108,15 @@ function cancelAndClose(ed,h) {
 }
 </script>
 
-<div id="con_titblock" class="titleblock"></div>
+<div id="con_titblock" class="titleblock">
+#if($doc.isNew())
+$adminMsg.get('cel_tm_rte_create')
+#else
+$adminMsg.get('cel_tm_rte_edit')
+#end
+</div><!-- IE6 -->
 
-$xwiki.includeForm('celements2web:Macros.includeRTELanguageSelect', false)
+#parse("celMacros/includeRTELanguageSelect.vm")
 
 	<form id="edit" method="post" action="$doc.getURL("save")">
 ##	    <input type="hidden" name="template" value="$!doc.getTemplate()" />

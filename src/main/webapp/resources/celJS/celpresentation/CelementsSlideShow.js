@@ -1,3 +1,23 @@
+/*
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
 /**
  * YUI Overlay Celements presentation Slideshow
  * This is the Celements presentation Slideshow controller.
@@ -46,14 +66,19 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _prevElements : [],
       _navObj : undefined,
       _registerOnOpenOverlayCheckerBind : undefined,
+      _imgLoadedResizeAndCenterSlideBind : undefined,
       _centerSlide : true,
+      _autoresize : false,
 
       _init : function(containerId) {
         var _me = this;
         _me._htmlContainerId = containerId;
+        _me._htmlContainer = $(_me._htmlContainerId);
         _me._navObj = new CELEMENTS.presentation.Navigation(_me._preloadSlide.bind(_me),
             _me._showSlide.bind(_me));
         _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(
+            _me);
+        _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(
             _me);
       },
 
@@ -76,7 +101,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       register : function() {
         var _me = this;
-        _me._htmlContainer = $(_me._htmlContainerId);
+        if (!_me._htmlContainer) {
+          // late initialization needed in overlay
+          _me._htmlContainer = $(_me._htmlContainerId);
+        }
         if (_me._htmlContainer) {
           if (typeof initContextMenuAsync !== 'undefined') {
             _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
@@ -208,6 +236,11 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         });
       },
 
+      setAutoresize : function(doAutoResize) {
+        var _me = this;
+        _me._autoresize = doAutoResize;
+      },
+
       setOverwritePageLayout : function(overwritePageLayout) {
         var _me = this;
         if (overwritePageLayout && (overwritePageLayout != '')) {
@@ -267,38 +300,164 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         
       },
 
+      _getSlideWrapper : function() {
+        var _me = this;
+        return _me.getHtmlContainer().down('.cel_slideShow_slideWrapper');
+      },
+
+      /**
+       * if the slide is scaled down to fit in the _me._htmlContainer element then
+       * we need an additional div between the slideWrapper and the _htmlContainer
+       * to get the reduced dimensions of the slide. This intermediate div must
+       * present the .cel_slideShow_slideRoot css class.
+       */
       _centerCurrentSlide : function() {
         var _me = this;
-        $('slideWrapper').setStyle({
-          'position' : 'absolute'
+        var slideWrapper = _me._getSlideWrapper();
+        var slideRoot = _me._getSlideRootElem(slideWrapper);
+        slideWrapper.setStyle({
+          'position' : 'absolute',
+          'width' : 'auto',
+          'height' : 'auto',
         });
-        var wrapperWidth = $j('#slideWrapper').width();
-        var wrapperHeight = $j('#slideWrapper').height();
-//        var containerWidth = $j(_me._htmlContainer).width();
-        var containerHeight = $j(_me._htmlContainer).height();
-        var wrapperTop = (containerHeight - wrapperHeight) / 2;
-        $('slideWrapper').setStyle({
+        slideRoot.setStyle({
           'position' : 'relative',
+          'top' : 0,
+          'marginLeft' : 0,
+          'marginRight' : 0
+        });
+        //use jquery to get dimensions, because it works correctly inside iframes.
+        var slideWidth = $j(slideWrapper).width();
+        var slideHeight = $j(slideWrapper).height();
+        var slideOuterHeight = $j(slideRoot).height();
+        var parentDiv = _me._htmlContainer;
+        var parentHeight = parentDiv.getHeight();
+        var topPos = (parentHeight - slideOuterHeight) / 2;
+        slideWrapper.setStyle({
+          'position' : 'relative',
+          'width' : slideWidth + 'px',
+          'height' : slideHeight + 'px',
+        });
+        slideRoot.setStyle({
+          'position' : 'relative',
+          'margin' : '0',
           'marginLeft' : 'auto',
           'marginRight' : 'auto',
-          'top' : wrapperTop + 'px',
-          'width' : wrapperWidth + 'px',
-          'height' : wrapperHeight + 'px'
+          'top' : topPos + 'px'
         });
+      },
+
+      _imgLoadedResizeAndCenterSlide : function(imgElem, event) {
+        var _me = this;
+        imgElem.stopObserving('load', _me._imgLoadedResizeAndCenterSlideBind);
+        _me._resizeAndCenterSlide();
+      },
+
+      _resizeAndCenterSlide : function() {
+        var _me = this;
+        _me._resizeCurrentSlide();
+        if (_me._centerSlide) {
+          var centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
+              _me);
+          if (!centerSlideEvent.stopped) {
+            _me._centerCurrentSlide();
+          }
+        }
+      },
+
+      _resizeCurrentSlide : function() {
+        var _me = this;
+        if (_me._autoresize) {
+          var zoomFactor = _me._computeZoomFactor();
+          if (zoomFactor <= 1) {
+            var oldWidth = parseInt(_me._getSlideWrapper().getWidth());
+            var oldHeight = parseInt(_me._getSlideWrapper().getHeight());
+            newHeight = oldHeight * zoomFactor;
+            newWidth = oldWidth * zoomFactor;
+            var eventMemo = {
+                'fullWidth' : oldWidth,
+                'fullHeight' : oldHeight,
+                'zoomFactor' : zoomFactor,
+                'newWidth' : newWidth,
+                'newHeight' : newHeight
+            };
+            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+              console.log('final resize factor: ', eventMemo);
+            }
+            var resizeEvent = _me._htmlContainer.fire(
+                'cel_slideShow:resizeSlideContent', eventMemo);
+            if (!resizeEvent.stopped) {
+              _me._getSlideWrapper().setStyle({
+                'zoom' : zoomFactor,
+                'transform' : 'scale(' + zoomFactor + ')',
+                'transformOrigin' : '0 0 0',
+                'height' : oldHeight + 'px',  // important for FF
+                'width' : oldWidth + 'px' // important for FF
+              });
+            }
+            var parentDiv = _me._getSlideRootElem();
+            if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
+              parentDiv.setStyle({
+                'width' : newWidth + 'px',
+                'height' : newHeight + 'px'
+              });
+            }
+          } else {
+            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+              console.log('no resize needed.', zoomFactor);
+            }
+          }
+        }
+      },
+
+      _computeZoomFactor : function() {
+        var _me = this;
+        var oldWidth = parseInt(_me._getSlideWrapper().getWidth());
+        var newWidth = oldWidth;
+        if (oldWidth > _me._htmlContainer.getWidth()) {
+          newWidth = _me._htmlContainer.getWidth();
+        }
+        var zoomWidthFactor = newWidth / oldWidth;
+        var oldHeight = parseInt(_me._getSlideWrapper().getHeight());
+        var newHeight = oldHeight;
+        if (oldHeight > _me._htmlContainer.getHeight()) {
+          newHeight = _me._htmlContainer.getHeight();
+        }
+        var zoomHeightFactor = newHeight / oldHeight;
+        var zoomFactor;
+        if (zoomHeightFactor < zoomWidthFactor) {
+          zoomFactor = zoomHeightFactor;
+        } else {
+          zoomFactor = zoomWidthFactor;
+        }
+        return zoomFactor;
+      },
+
+      _getSlideRootElem : function(defaultElem) {
+        var _me = this;
+        defaultElem = defaultElem || _me._htmlContainer;
+        var slideRootElem = _me._getSlideWrapper().up('.cel_slideShow_slideRoot'
+            ) || defaultElem;
+        //console.log('_getSlideRootElem: ', slideRootElem);
+        return slideRootElem;
       },
 
       _showSlide : function(slideContent) {
         var _me = this;
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
-        var slideWrapperElem = new Element('div', {
-          'id' : 'slideWrapper'
-        }).setStyle({
+        var slideWrapperElem = new Element('div').addClassName(
+            'cel_slideShow_slideWrapper').setStyle({
           'position' : 'relative'
         }).update(slideContent);
-        _me._htmlContainer.update(slideWrapperElem);
+        _me._getSlideRootElem().update(slideWrapperElem);
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
-        if (_me._centerSlide) {
-          _me._centerCurrentSlide();
+        var resizeAndCenterSlideEvent = _me._htmlContainer.fire(
+            'cel_slideShow:resizeAndCenterSlide', _me);
+        if (!resizeAndCenterSlideEvent.stopped) {
+          _me._htmlContainer.select('img').each(function(imgElem) {
+            imgElem.observe('load', _me._imgLoadedResizeAndCenterSlideBind.curry(imgElem));
+          });
+          _me._resizeAndCenterSlide();
         }
         _me._htmlContainer.fire('cel_yuiOverlay:contentChanged', _me);
       }

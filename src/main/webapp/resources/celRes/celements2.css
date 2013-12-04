@@ -615,11 +615,16 @@ body > .cel_reorderNodes_proxy {
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs,
-.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs {
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs,
+.celements3_tabMenu #con_langBar .docLangs {
 	text-align: right;
 	position: absolute;
 	top: 1px;
 	right: 0px;
+}
+.celements3_tabMenu #con_langBar .docLangs {
+  top: 14px;
+  right: 13px;
 }
 body > .cel_reorderNodes_proxy .docLangs,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs,
@@ -629,7 +634,9 @@ body > .cel_reorderNodes_proxy .docLangs,
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a,
-.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a {
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a,
+.celements3_tabMenu #con_langBar .docLangs a,
+.celements3_tabMenu #con_langBar .docLangs span {
 	display: block;
 	float: left;
 	width: 20px;
@@ -642,26 +649,33 @@ body > .cel_reorderNodes_proxy .docLangs,
 }
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a + a,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a + a,
-.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a + a {
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a + a,
+.celements3_tabMenu #con_langBar .docLangs a + a,
+.celements3_tabMenu #con_langBar .docLangs span + span {
 	margin-left: 1px;
 }
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.defaultLanguage,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.defaultLanguage,
-.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.defaultLanguage {
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.defaultLanguage,
+.celements3_tabMenu #con_langBar .docLangs a.defaultLanguage,
+.celements3_tabMenu #con_langBar .docLangs span.defaultLanguage {
 	font-weight: bold;
 }
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.transNotExists,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.transNotExists,
-.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.transNotExists {
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.transNotExists,
+.celements3_tabMenu #con_langBar .docLangs a.transNotExists,
+.celements3_tabMenu #con_langBar .docLangs span.transNotExists {
 	background-color: white;
 	color: black;
 }
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a:hover,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a:hover,
-.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a:hover {
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a:hover,
+.celements3_tabMenu #con_langBar .docLangs a:hover {
 	background-color: #ccc;
 }
 
@@ -699,3 +713,25 @@ body #sitecontainer .cel_content_part table td {
 #cel_overlaybody #c3_import_button {
 	cursor: pointer;
 }
+
+/**
+  Ask Toolbar for google chrome leads to problems. Thus we hide it generally by default.
+ **/
+
+html[lang] {
+  padding-top: 0px !important;
+  border-top: none;
+}
+
+iframe.apn-toolbar {
+  display: none !important;
+}
+
+iframe.apn-toolbar + body #celements2_menu_bar {
+  top: 0px !important;
+}
+
+[data-apn-myc3-v7c-toolbar_set=bottom] {
+  bottom: 0px !important;
+}
+

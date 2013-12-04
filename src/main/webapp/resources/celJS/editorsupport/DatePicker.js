@@ -1,3 +1,23 @@
+/*
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
 /**
  * Enhancing contextmenu with an hover on elements with a contextMenu.
  */
@@ -13,10 +33,17 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
     if (!inputField.id) {
       datePickerIdCounter = datePickerIdCounter + 1;
       inputField.id = 'celInputFieldDatePickerId' + datePickerIdCounter;
+    } else if (!datePickerObjsHash.get(inputField.id)) {
+      datePickerIdCounter = datePickerIdCounter + 1;
     }
     if (!datePickerObjsHash.get(inputField.id)) {
       datePickerObjsHash.set(inputField.id, new CELEMENTS.editorsupport.DatePicker(
           inputField, datePickerIdCounter));
+    } else {
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('skip creating new date picker for [' + inputField.id
+            + '] because there exists already one.');
+      }
     }
   };
 
@@ -99,8 +126,8 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         if (inputFieldValue && (inputFieldValue != '')) {
           var dateSpliter = new RegExp('[-./]');
           var dateStr = inputFieldValue.split(dateSpliter);
-          var curMonth = dateStr[1];
-          var curYear = dateStr[2];
+          var curMonth = dateStr[1] || new Date().getMonth();
+          var curYear = dateStr[2] || new Date().getFullYear();
           _me._pickerDateCal.setYear(curYear);
           _me._pickerDateCal.setMonth(curMonth - 1);
           if (selectDate) {

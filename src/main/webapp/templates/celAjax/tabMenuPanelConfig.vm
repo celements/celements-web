@@ -33,4 +33,5 @@
   "label" : "${adminMsg.get('cel_tm_history')}"##
 }], ##
 "initCloseButton" : $!{celNewButtons},##
-"initSaveButton" : $!{celNewButtons}
+"initSaveButton" : $!{celNewButtons},##
+"isDirtyOnLoad" : $doc.isNew()

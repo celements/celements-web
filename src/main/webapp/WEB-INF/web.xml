@@ -65,7 +65,8 @@
        the button pressed. -->
   <filter>
     <filter-name>ActionDispatcher</filter-name>
-    <filter-class>com.xpn.xwiki.web.ActionFilter</filter-class>
+    <filter-class>com.xpn.xwiki.web.ActionFilterFBHack</filter-class>
+<!--    <filter-class>com.xpn.xwiki.web.ActionFilter</filter-class> -->
   </filter>
 
   <!-- The encoding filter MUST always be the first one, as setting the encoding does not work after accessing the request data. -->

@@ -1,0 +1,35 @@
+<div id="con_langBar" class="editblock" onfocus="setFocus('con_langBar');" onblur="removeFocus('con_langBar');">
+  <form name="con_langBar_form" method="post">
+    <div class="docLangs">
+  #if("$!docTransList" == '')
+    #set($docTransList = $doc.getTranslationList())
+  #end
+  #foreach($transLang in $xwiki.celementsweb.getAllowedLanguages())
+    #set($transCssClass = '')
+    #if("$!transLang" == "$!{doc.getDefaultLanguage()}")
+      #set($transCssClass = "$!{transCssClass} defaultLanguage transExists")
+    #elseif($docTransList.contains("$!transLang"))
+      #set($transCssClass = "$!{transCssClass} transExists")
+    #else
+      #set($transCssClass = "$!{transCssClass} transNotExists")
+    #end
+      <span class="$!{transCssClass.trim()}" ##
+       title="$!adminMsg.get("cel_$!{transLang}")">##
+      $!{transLang}</span>
+  #end
+  #set($docTransList = '')
+    </div><!-- IE6 -->
+    $adminMsg.get('cel_tm_edit_translation'):
+    <input type="hidden" id="langbar-initialEditorLanguage" name="initialEditorLanguage" value="$!language" />
+    <select name="language" size="1" style="width:100px;"## 
+#if($services.celementsweb.useNewButtons())
+  onchange="var langSelect = this; getCelementsTabEditor().changeEditLanguage(langSelect.value, function() { langSelect.value=$('langbar-initialEditorLanguage').value; }); return false;">
+#else
+  onchange="document.forms['edit'].formeditxred.value=('$doc.getURL("edit")' + encodeURI('?language=' + value + '&xredirect=' + document.forms['edit'].formeditxred.value));document.forms['edit'].submit();">
+#end
+      #foreach($dl in $langs)
+        <option #if("$!language" == "$dl")selected="selected"#end value="$dl" label="$adminMsg.get("cel_$dl")" >$adminMsg.get("cel_$dl")</option>
+      #end
+    </select>
+  </form>
+</div><!-- /con_langBar -->

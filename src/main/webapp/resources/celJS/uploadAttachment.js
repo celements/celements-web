@@ -130,15 +130,7 @@ var celUploadCallbackHandler = function(event) {
         );
       }
     }
-    fileUploadInputElem.up('form').target = $('beforeUploadFormTarget').value;
-    fileUploadInputElem.value = '';
-    fileUploadInputElem.clear();
-    if ($('xpage') != null) {
-      $('xpage').remove();
-    }
-    $('celementsFormId').remove();
-    $('beforeUploadFormTarget').remove();
-    $('attachmentloadingimg').remove();
+    uploadAttResetFormAfter(fileUploadInputElem);
     if($('noAttachments')) {
      $('noAttachments').show();
     }
@@ -146,6 +138,32 @@ var celUploadCallbackHandler = function(event) {
       'uploadResult' : uploadRes
     });
     fileUploadInputElem.show();
+  }
+};
+
+/**
+ * call this function if you cancel the submit
+ */
+var uploadAtt_Cancel_ResetFormAfter = function(fileUploadInputElem) {
+  uploadAttResetFormAfter(fileUploadInputElem);
+  fileUploadInputElem.show();
+};
+
+var uploadAttResetFormAfter = function(fileUploadInputElem) {
+  if ($('beforeUploadFormTarget')) {
+    fileUploadInputElem.up('form').target = $('beforeUploadFormTarget').value;
+    $('beforeUploadFormTarget').remove();
+  }
+  fileUploadInputElem.value = '';
+  fileUploadInputElem.clear();
+  if ($('xpage') != null) {
+    $('xpage').remove();
+  }
+  if ($('celementsFormId')) {
+    $('celementsFormId').remove();
+  }
+  if ($('attachmentloadingimg')) {
+    $('attachmentloadingimg').remove();
   }
 };
 

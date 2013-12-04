@@ -229,6 +229,8 @@ form#newsletter_send span#testResultBoxSpan {
   font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
   color: black;
+}
+.generalOverlay .layoutsubsection p {
   margin-left: 0;
 }
 .generalOverlay #cel_overlaybody h1,

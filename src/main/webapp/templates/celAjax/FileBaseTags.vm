@@ -9,19 +9,19 @@
       #if(("$!single_att_att" == '') || ($single_att_att == $attachment.getFilename()))
         <div class="attachment_name">$attachment.getFilename()</div>
         <div class="attachment_tags">
-          #foreach($menuItem in $menu)
+          #foreach($treeNode in $menu)
             <div class="attachment_tag">
-              #set($menuLink = '')
+              #set($menuNodeFN = '')
               #set($menuName = '')
-              #set($menuLink = "$menuItem.get('menu_link')")
-              #set($menuName = $helpNav.getMultilingualMenuName("${menuSpace}.$menuLink", $admin_language))
-              #set($tagDoc = $xwiki.getDocument("${menuSpace}.$menuLink"))
+              #set($menuNodeFN = $services.model.serialize($treeNode.documentReference, 'local'))
+              #set($menuName = $helpNav.getMultilingualMenuName($menuNodeFN, $admin_language))
+              #set($tagDoc = $xwiki.getDocument($treeNode.documentReference))
               #set($tagObj = '')
               #set($tagObj = $tagDoc.getObject("Classes.FilebaseTag", "attachment", "${attachment.getDocument().getFullName()}/$attachment.getFilename()", false))
               <input type="checkbox" 
               #if("$!tagObj.get('attachment')" != '') checked="checked" #end
-              #if($xwiki.getDocument("${menuSpace}.$menuLink").hasAccessLevel('edit'))
-                onClick="updateAttachmentTag('$attachment.getDocument().getFullName()', '$attachment.getFilename()', '${menuSpace}.$menuLink', checked);"
+              #if($tagDoc.hasAccessLevel('edit'))
+                onClick="updateAttachmentTag('$attachment.getDocument().getFullName()', '$attachment.getFilename()', '${menuNodeFN}', checked);"
               #else
                 disabled="disabled"
               #end
@@ -43,12 +43,13 @@
 #end
 #set($parent = '')
 #set($menuSpace = "$!request.get('tag_space')")
+#set($menuSpaceRef = $services.model.createDocumentReference('', $menuSpace, '').lastSpaceReference)
 ## get $menu with list of all menu items in space
-#set($menu = $celementsweb.getSubMenuItemsForParent('', "$menuSpace"))
+#set($menu = $celementsweb.getSubNodesForParentRef($menuSpaceRef))
 #if("$!request.get('save')" == '1')
   #set($att_doc = "$!request.get('att_doc')")
   #set($att_name = "$!request.get('att_name')")
-  #set($tagDoc = $xwiki.getDocument("$!request.get('tag')"))
+  #set($tagDoc = $xwiki.getDocument($services.model.resolveDocument("$!request.get('tag')")))
   #set($tagObj = $tagDoc.getObject("Classes.FilebaseTag", "attachment", "${att_doc}/${att_name}", false))
   #if(($context.getUser() != 'XWiki.XWikiGuest') && ($tagDoc.hasAccessLevel('edit')))
     #if(("$!request.get('active')" == 'true'))
@@ -58,7 +59,7 @@
         #set($tagObj = $tagDoc.newObject("Classes.FilebaseTag"))
       #end
       <!-- afterif: $tagObj, "$tagObj.getNumber()" -->
-      #set($att_name = $context.getXWiki().clearName("$att_name", false, true, $context.getContext()))
+      #set($att_name = $xwiki.celementsweb.clearFileName("$att_name"))
       <!-- 'attachment', "${att_doc}/${att_name}" -->
       $tagObj.set('attachment', "${att_doc}/${att_name}")
     #else

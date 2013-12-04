@@ -127,6 +127,16 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel {
 	**/
   width: auto;
 }
+.celements3_tabMenu .titleblock {
+  display:block;
+  padding: 10px;
+  padding-left: 13px;
+  padding-right: 13px;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: 8px;
+  font-weight: bold;
+}
 .celements3_tabMenu .editblock {
   display:block;
   padding: 10px;
@@ -250,4 +260,20 @@ body .yui-skin-sam .yui-simple-dialog {
   font-size: 14px;
   line-height: 16px;
   width: 400px;
+}
+
+.celements3_tabMenu #tabMenuPanel #con_langBar {
+  position: relative;
+}
+
+/**
+  Ask Toolbar for google chrome leads to problems. Thus we hide it in editor mode!
+ **/
+
+iframe.apn-toolbar {
+  display: none !important;
+}
+
+body #cel_overlay {
+  top: 0px !important;
 }

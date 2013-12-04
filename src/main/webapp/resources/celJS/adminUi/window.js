@@ -1,3 +1,23 @@
+/*
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
 // AJAX window maker 0.1 beta
 // written by Theus Hossmann in 2005
 // Feel free to use and modify this script
@@ -48,12 +68,12 @@ function WMWindow(nr, parent, parent_node, top, left, height, width, className){
 
 		this.contentDiv = new ContentDiv(nr, this, this.n, this.pt, this.pl, this.h, this.w, 'content');
 		this.contentDiv.setSize(this.h - (this.contentDiv.totalh - this.contentDiv.h), this.w - (this.contentDiv.totalw - this.contentDiv.w));
-		this.contentDiv.setContent('http://creadev.synventis.com:8080/xwiki/bin/view/Celements2/Test?xpage=plain')
+		this.contentDiv.setContent('http://creadev.synventis.com:8080/xwiki/bin/view/Celements2/Test?xpage=plain');
 		
-		this.moveX = new fx.MoveX(this.n, {duration: 400})
-		this.moveY = new fx.MoveY(this.n, {duration: 400})
-		this.fadeWidth = new fx.Width(this.n, {duration: 400})
-		this.fadeHeight = new fx.Height(this.n, {duration: 400})
+		this.moveX = new fx.MoveX(this.n, {duration: 400});
+		this.moveY = new fx.MoveY(this.n, {duration: 400});
+		this.fadeWidth = new fx.Width(this.n, {duration: 400});
+		this.fadeHeight = new fx.Height(this.n, {duration: 400});
 		
 		return true;
 	};
@@ -63,7 +83,7 @@ function WMWindow(nr, parent, parent_node, top, left, height, width, className){
 		this.titleDiv.setContent(title);
 		
 		return true;
-	}
+	};
 
 	this.WMWindow(nr, parent, parent_node, top, left, height, width, className);
 	
@@ -75,7 +95,7 @@ function WMWindow(nr, parent, parent_node, top, left, height, width, className){
 		this.contentUrl = url;
 		
 		return true;
-	}
+	};
 		
 	this.mouseOver = function(e){
 
@@ -212,10 +232,10 @@ function ContentDiv(nr, parent, parent_node, top, left, height, width, className
 		this.http_request = null;
 	
 		try{
-			this.http_request = new ActiveXObject("Msxml2.XMLHTTP")
+			this.http_request = new ActiveXObject("Msxml2.XMLHTTP");
 		}catch(e){
 			try{
-				this.http_request = new ActiveXObject("Microsoft.XMLHTTP")
+				this.http_request = new ActiveXObject("Microsoft.XMLHTTP");
 			}catch(e){
 				this.http_request = null;
 			}
@@ -256,7 +276,7 @@ function ContentDiv(nr, parent, parent_node, top, left, height, width, className
 		}
 		
 		return true;
-	}
+	};
 	
 	// add aspects
 	Aspects.addBefore(this, "mouseDown", aopizeMouseDown);

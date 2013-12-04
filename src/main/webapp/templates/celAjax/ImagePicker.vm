@@ -1,12 +1,20 @@
 ## init Celements variables
 $response.setStatus(200)
+##only include if legacy celements2web.xar is installed
+#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
+#end
+#set($isAjaxCall = ("$!request.ajax" == '1'))
+#if(!$isAjaxCall)
 ## start a Celements Document
-$xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
-## start the celements body (and lacily finalise the header)
+#parse("celMacros/startCelementsDocument.vm")
+##
 #set($cel_loadAdminMenuBar=false)
 $celementsweb.includeCSSPage(':celRes/imagePicker.css')
-$xwiki.parseTemplate("celMacros/startCelementsBody.vm")
+## start the celements body (and lacily finalise the header)
+#parse("celMacros/startCelementsBody.vm")
+##
+#end
 
 #set($imageOnly = "$!request.images")
 #if("$!imageOnly" == '')
@@ -118,5 +126,6 @@ var origFieldName = '$!request.get('origFieldName')';
 <script type="text/javascript">
     loadAttachmentList(baseurl);
 </script>
-</body>
-</html>
+#if(!$isAjaxCall)
+#parse('celMacros/finaliseCelementsDocument.vm')
+#end

@@ -1,0 +1,8 @@
+#set($cel_loadAdminMenuBar = false)
+#set($showOverlayLanguageBar = false)
+#set($showCloseOverlayButton = false)
+#if($context.isMainWiki())
+#set($celementsLoadInOverlay = "celMacros/wizards/SetupWizardMain.vm")
+#else
+#set($celementsLoadInOverlay = "celMacros/wizards/SetupWizardVirtual.vm")
+#end

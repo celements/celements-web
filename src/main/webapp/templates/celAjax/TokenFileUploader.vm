@@ -1,3 +1,4 @@
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
 #if("$!request.fullName" == '')
 #set($fullName = "$doc.fullName")
 #else
@@ -5,39 +6,64 @@
 #end
 #if("$!request.tfu_mode" == 'getTokenForCurrentUser')
 #set($startUserName = $context.user.indexOf('.') + 1)
-{ "hasUploadRights" : $xwiki.hasAccessLevel('edit', $context.getUser(), $fullName),##
- "token" : "$!{celementsweb.getNewCelementsTokenForUser()}",##
- "username" : "$!{context.user.substring($startUserName)}"##
-}
+$jsonBuilder.openDictionary()
+$jsonBuilder.openProperty('hasUploadRights')
+$jsonBuilder.addBoolean($xwiki.hasAccessLevel('edit', $context.getUser(), $fullName))
+$jsonBuilder.addStringProperty('token', "$!{celementsweb.getNewCelementsTokenForUser()}")
+$jsonBuilder.addStringProperty('username', "$!{context.user.substring($startUserName)}")
+$jsonBuilder.closeDictionary()
+$jsonBuilder.getJSON()
 #elseif("$!request.tfu_mode" == 'filesExistCheck')
-{"filesExistList" : [##
+#set($uploadDoc = $xwiki.getDocument($services.model.resolveDocument($fullName)))
+$jsonBuilder.openDictionary()
+#set($filesExistList = [])
+$jsonBuilder.openProperty('allFileNames')
+$jsonBuilder.openArray()
 #set($listOverwriteFiles = [])
-#set($listAllClearedFileNames = [])
 #set($overwriteFiles = '')
 #set($Q = '"')
 #set($delStr = '')
 #foreach($filename in $request.getParameterValues('filename'))
 #set($clearedFileName = "$!xwiki.celementsweb.clearFileName($filename)")
-#if("$!doc.getAttachment($clearedFileName)" != '')
-${delStr}"${clearedFileName}"##	
+#if("$!uploadDoc.getAttachment($clearedFileName)" != '')
+#set($!devnull = $filesExistList.add("${clearedFileName}"))
 #set($overwriteFiles = "${overwriteFiles}${delStr} ${clearedFileName}")
 #set($delStr = ',')
 #set($!devnull = $listOverwriteFiles.add($filename))
 #end
-#set($!devnull = $listAllClearedFileNames.add("{ ${Q}fileName${Q} : ${Q}${filename}${Q} , ${Q}clearedFileName${Q} : ${Q}${clearedFileName}${Q} }"))
+$jsonBuilder.openDictionary()
+$jsonBuilder.addStringProperty('fileName', "$!{filename}")
+$jsonBuilder.addStringProperty('clearedFileName', "$!{clearedFileName}")
+$jsonBuilder.closeDictionary()
 #end
-], "allFileNames" : $listAllClearedFileNames , ##
-"errorMsg" : "$adminMsg.get('cel_ml_overwrite_confirm', ["${overwriteFiles.trim()}"])"}
+$jsonBuilder.closeArray()
+$jsonBuilder.openProperty('filesExistList')
+$jsonBuilder.openArray()
+#foreach($clearedFileName in $filesExistList)
+$jsonBuilder.addString("${clearedFileName}")
+#end
+$jsonBuilder.closeArray()
+#set($existsErrorMsg = $adminMsg.get('cel_ml_overwrite_confirm', ["${overwriteFiles.trim()}"]))
+$jsonBuilder.addStringProperty('errorMsg', "$!existsErrorMsg")
+$jsonBuilder.closeDictionary()
+$jsonBuilder.getJSON()
 #elseif("$!request.tfu_mode" == 'getToken')
 $celementsweb.getNewCelementsTokenForUser()
 #elseif("$!request.tfu_mode" == 'upload')
-#set($createIfNotExists = (("$!context.getUser()" == 'XWiki.XWikiGuest') || ("$!request.celTokenUploadCreateIfNotExists" == 'true')))
+#set($createIfNotExists = (("$!context.getUser()" != 'XWiki.XWikiGuest') || ("$!request.celTokenUploadCreateIfNotExists" == 'true')))
 #if(("$!request.uploadToken" != '') && ($xwiki.exists("$!fullName") || $createIfNotExists))
-{ "success" : $celementsweb.tokenBasedUpload("$!fullName", 'filepath', $request.get("uploadToken"), $createIfNotExists),##
-  "attfilename" : "$!xwiki.celementsweb.clearFileName($request.get('filename'))",##
+#set($numSavedFiles = $celementsweb.tokenBasedUpload("$!fullName", 'filepath', $request.get("uploadToken"), $createIfNotExists))
+#set($successful = ($numSavedFiles > 0))
+$jsonBuilder.openDictionary()
+$jsonBuilder.openProperty("success")
+$jsonBuilder.addBoolean($successful)
+$jsonBuilder.openProperty("numSavedFiles")
+$jsonBuilder.addInteger($numSavedFiles)
+$jsonBuilder.addStringProperty("attfilename", "$!xwiki.celementsweb.clearFileName($request.get('filename'))")
 #set($startUserName = $context.user.indexOf('.') + 1)
- "username" : "$!{context.user.substring($startUserName)}"##
-}
+$jsonBuilder.addStringProperty("username", "$!{context.user.substring($startUserName)}")
+$jsonBuilder.closeDictionary()
+$jsonBuilder.getJSON()
 #else
 uploadToken ["$!request.uploadToken"] missing or Document '$fullName' does not exist. User: "$!context.getUser()"
 #end

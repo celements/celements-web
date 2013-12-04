@@ -45,7 +45,7 @@
     #end
     </select>
 </div>
-#if($context.user.startsWith('xwiki:'))
+#if($isSuperAdmin)
 #set($cel_editobj_dict_prefix = 'cel_pro_metaTag_' )
 #set($cel_editobj_externalForm = true)  
 #set($cel_embedded_editobj = true)
