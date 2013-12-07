@@ -9,6 +9,8 @@ $services.celementsweb.renderDocument($services.model.resolveDocument($overwrite
 #end
 #set($overwriteRenderDocument = '')
 #else
+#set($celPDCdocPageType = $services.pageType.getPageTypeRef($pageDocRef).getConfigName())
+#set($celPDCdocCssPTclass = "cel_pagetype_$!{celPDCdocPageType}")
 #if($isAddPdDiv)
 #set($isInheritable = $services.cells.isInheritable($cellDocRef))
 #set($pageDepDocRef = $services.cells.getPageDependentDocRef($doc.getDocumentReference(), $cellDocRef, false))
@@ -17,11 +19,12 @@ $services.celementsweb.renderDocument($services.model.resolveDocument($overwrite
 #set($pdCount = $pdCount + 1)
 <div id="cellPDContent$!{pdCount}$!{pageDocRef.getName()}:$!{isInheritable}:$!{pdSpaceSuffix}:$!{pageDepFN}"##
  class="cel_cm_pagedependent_content">
-<div class="cellPDContent-body">
+ #set($celPDCdocCssPTclass = "cellPDContent-body ${celPDCdocCssPTclass}")
 #end
+<div class="${celPDCdocCssPTclass}">
 $services.celementsweb.renderCelementsDocument($pageDocRef)
-#if($isAddPdDiv)
 <!-- IE6 --></div>
+#if($isAddPdDiv)
 <!-- IE6 --></div>
 #end
 #end
