@@ -68,6 +68,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _navObj : undefined,
       _registerOnOpenOverlayCheckerBind : undefined,
       _imgLoadedResizeAndCenterSlideBind : undefined,
+      _cleanupSlideTransitionBind : undefined,
       _centerSlide : true,
       _autoresize : false,
 
@@ -81,6 +82,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             _me);
         _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(
             _me);
+        _me._cleanupSlideTransitionBind = _me._cleanupSlideTransition.bind(_me);
       },
 
       getHtmlContainer : function() {
@@ -483,6 +485,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _showSlideAfterPreloadingImg : function() {
         var _me = this;
         var slides = _me._getSlideRootElem().select('.cel_slideShow_slideWrapper');
+        _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
+            _me._cleanupSlideTransitionBind);
+        _me._htmlContainer.observe('cel_slideShow:slideTransitionFinished',
+            _me._cleanupSlideTransitionBind);
         var contentChangeEvent = _me._htmlContainer.fire('cel_yuiOverlay:changeContent', {
           'slideShowObj' : _me,
           'slides' : slides
@@ -494,7 +500,14 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           } else {
             slides[0].show();
           }
+          _me._cleanupSlideTransition();
         }
+      },
+
+      _cleanupSlideTransition : function() {
+        var _me = this;
+        _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
+            _me._cleanupSlideTransitionBind);
         slides.each(function(slideElem) {
           if (!slideElem.visible()) {
             slideElem.remove();
@@ -504,7 +517,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._getSlideRootElem().removeClassName('celanim_isChanging');
         _me._htmlContainer.fire('cel_yuiOverlay:contentChanged', _me);
       }
-
   };
 })();
 
