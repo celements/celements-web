@@ -484,6 +484,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _showSlideAfterPreloadingImg : function() {
         var _me = this;
+        //TODO add second slideRootElem to allow proper positioning of both slides
         var slides = _me._getSlideRootElem().select('.cel_slideShow_slideWrapper');
         _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
             _me._cleanupSlideTransitionBind);
