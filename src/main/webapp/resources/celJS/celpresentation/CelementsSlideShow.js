@@ -508,6 +508,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
             _me._cleanupSlideTransitionBind);
+        var slides = _me._getSlideRootElem().select('.cel_slideShow_slideWrapper');
         slides.each(function(slideElem) {
           if (!slideElem.visible()) {
             slideElem.remove();
