@@ -13,7 +13,12 @@ $xwiki.includeForm('celements2web:Macros.getContentDblClick', false)
 #if($celementsweb.isEmptyRTEDocument($contentDoc.documentReference))
 #set($additionalCSS = "$!additionalCSS celRTEempty")
 #end
-<div id="rteContent$!{contentDoc.getName()}:$!{contentDoc.getFullName()}"##
+#if($contentDoc.documentReference == $doc.documentReference)
+#set($currentPagePart = 'currentPage:')
+#else
+#set($currentPagePart = '')
+#end
+<div id="rteContent$!{contentDoc.getName()}:$!{currentPagePart}$!{contentDoc.getFullName()}"##
  class="rteContent cel_cm_rte_content$!{additionalCSS}" $!dblClick>
 #end
 #if(($celementsweb.getPageType($contentDoc.fullName).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
