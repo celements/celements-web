@@ -645,6 +645,7 @@ this._init(preloadFunc, showFunc, waitingFunc);
       },
 
       _cancelWaitingNext : function () {
+        var _me = this;
         if (_me._waitingNextSlide) {
           _me._waitingFunc({
             'waitingMode' : 'next',
@@ -655,6 +656,7 @@ this._init(preloadFunc, showFunc, waitingFunc);
       },
 
       _cancelWaitingPrev : function () {
+        var _me = this;
         if (_me._waitingPrevSlide) {
           _me._waitingFunc({
             'waitingMode' : 'prev',
