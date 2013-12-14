@@ -525,9 +525,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 //////////////////////////////////////////////////////////////////////////////
 // Celements presentation Navigation
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.presentation.Navigation = function(preloadFunc, showFunc) {
+CELEMENTS.presentation.Navigation = function(preloadFunc, showFunc, waitingFunc) {
 // constructor
-this._init(preloadFunc, showFunc);
+this._init(preloadFunc, showFunc, waitingFunc);
 };
 
 (function() {
