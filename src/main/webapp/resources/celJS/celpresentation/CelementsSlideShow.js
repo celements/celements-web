@@ -102,6 +102,25 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         }
       },
 
+      _addContentWrapper : function() {
+        var _me = this;
+        if (!_me._htmlContainer.down('.cel_slideShow_slideRoot')) {
+          var divInnerWrapper = new Element('div', {
+            'id' : ('slideWrapper_' + _me._htmlContainer.id),
+            'class' : 'cel_slideShow_slideWrapper'
+           }).setStyle({
+             'position' : 'relative'
+           });
+          var divSlideRoot = divInnerWrapper.wrap('div', {
+            'id' : ('slideRoot_' + _me._htmlContainer.id),
+            'class' : 'cel_slideShow_slideRoot'
+           });
+          var oldContent = _me._htmlContainer.innerHTML;
+          _me._htmlContainer.update(divSlideRoot);
+          divInnerWrapper.update(oldContent);
+        }
+      },
+
       register : function() {
         var _me = this;
         if (!_me._htmlContainer) {
@@ -109,19 +128,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           _me._htmlContainer = $(_me._htmlContainerId);
         }
         if (_me._htmlContainer) {
-          if (!_me._htmlContainer.down('cel_slideShow_slideRoot')) {
-            var divInnerWrapper = new Element('div', {
-              'id' : ('slideWrapper_' + _me._htmlContainer.id),
-              'class' : 'cel_slideShow_slideWrapper'
-             }).setStyle({
-               'position' : 'relative'
-             });
-            var divSlideRoot = divInnerWrapper.wrap('div', {
-              'id' : ('slideRoot_' + _me._htmlContainer.id),
-              'class' : 'cel_slideShow_slideRoot'
-             });
-            _me._htmlContainer.insert({ 'top' : divSlideRoot});
-          }
+          _me._addContentWrapper();
           if (typeof initContextMenuAsync !== 'undefined') {
             _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
                 initContextMenuAsync);
