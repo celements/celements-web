@@ -256,6 +256,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       _loadFirstContent : function() {
         var _me = this;
+        _me._dialogConfig.contentChanged = true;
         var loadContentEvent = $('yuiOverlayContainer').fire(
             'cel_yuiOverlay:loadFirstContent', _me._dialogConfig);
         if (!loadContentEvent.stopped) {
@@ -272,7 +273,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
               yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
             }
           });
-        } else {
+        } else if (_me._dialogConfig.contentChanged) {
+          var yuiOverlayContainer = $('yuiOverlayContainer');
           yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
         }
       },
