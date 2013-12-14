@@ -109,6 +109,19 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           _me._htmlContainer = $(_me._htmlContainerId);
         }
         if (_me._htmlContainer) {
+          if (!_me._htmlContainer.down('cel_slideShow_slideRoot')) {
+            var divInnerWrapper = new Element('div', {
+              'id' : ('slideWrapper_' + _me._htmlContainer.id),
+              'class' : 'cel_slideShow_slideWrapper'
+             }).setStyle({
+               'position' : 'relative'
+             });
+            var divSlideRoot = divInnerWrapper.wrap('div', {
+              'id' : ('slideRoot_' + _me._htmlContainer.id),
+              'class' : 'cel_slideShow_slideRoot'
+             });
+            _me._htmlContainer.insert({ 'top' : divSlideRoot});
+          }
           if (typeof initContextMenuAsync !== 'undefined') {
             _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
                 initContextMenuAsync);
