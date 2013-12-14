@@ -626,24 +626,36 @@ this._init(preloadFunc, showFunc);
 
       nextSlide : function() {
         var _me = this;
-        _me._preloadPrev = _me._currContent;
-        _me._prevIndex = _me._currIndex;
         var preloadNextContent = _me._preloadNext;
-        _me._currIndex = _me._nextIndex;
-        _me._preloadNext = null;
-        _me._nextIndex = null;
-        _me._updateCurrentContent(preloadNextContent);
+        if (preloadNextContent) {
+          _me._preloadPrev = _me._currContent;
+          _me._prevIndex = _me._currIndex;
+          _me._currIndex = _me._nextIndex;
+          _me._preloadNext = null;
+          _me._nextIndex = null;
+          _me._updateCurrentContent(preloadNextContent);
+        } else {
+          if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+            console.warn('skip nextSlide because preload not yet finished.');
+          }
+        }
       },
 
       prevSlide : function() {
         var _me = this;
-        _me._nextIndex = _me._currIndex;
-        _me._preloadNext = _me._currContent;
-        _me._currIndex = _me._prevIndex;
         var preloadPrevContent = _me._preloadPrev;
-        _me._preloadPrev = null;
-        _me._prevIndex = null;
-        _me._updateCurrentContent(preloadPrevContent);
+        if (preloadPrevContent) {
+          _me._nextIndex = _me._currIndex;
+          _me._preloadNext = _me._currContent;
+          _me._currIndex = _me._prevIndex;
+          _me._preloadPrev = null;
+          _me._prevIndex = null;
+          _me._updateCurrentContent(preloadPrevContent);
+        } else {
+          if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+            console.warn('skip prevSlide because preload not yet finished.');
+          }
+        }
       },
 
       gotoSlide : function(gotoIndex) {
