@@ -544,14 +544,18 @@ this._init(preloadFunc, showFunc);
       _currContent : undefined,
       _preloadNext : undefined,
       _preloadPrev : undefined,
+      _waitingNextSlide : false,
+      _waitingPrevSlide : false,
 
       _preloadFunc : undefined,
       _showFunc : undefined,
+      _waitingFunc : undefined,
 
-      _init : function(preloadFunc, showFunc) {
+      _init : function(preloadFunc, showFunc, waitingFunc) {
         var _me = this;
         _me._preloadFunc = preloadFunc || function(){};
         _me._showFunc = showFunc || function(){};
+        _me._waitingFunc = waitingFunc || function(){};
       },
 
       _convertFullNameToViewURL : function(fullName) {
@@ -586,11 +590,27 @@ this._init(preloadFunc, showFunc);
       _updateNextContent : function(newNextContent) {
         var _me = this;
         _me._preloadNext = newNextContent;
+        if (_me._waitingNextSlide) {
+          _me._waitingNextSlide = false;
+          _me._waitingFunc({
+            'waitingMode' : 'next',
+            'waitingState' : 'finished'
+          });
+          _me.nextSlide();
+        }
       },
 
       _updatePrevContent : function(newPrevContent) {
         var _me = this;
         _me._preloadPrev = newPrevContent;
+        if (_me._waitingPrevSlide) {
+          _me._waitingPrevSlide = false;
+          _me._waitingFunc({
+            'waitingMode' : 'prev',
+            'waitingState' : 'finished'
+          });
+          _me.prevSlide();
+        }
       },
 
       getNextIndex : function() {
@@ -624,43 +644,73 @@ this._init(preloadFunc, showFunc);
         return _me._allSlides.indexOf(fullName);
       },
 
+      _cancelWaitingNext : function () {
+        if (_me._waitingNextSlide) {
+          _me._waitingFunc({
+            'waitingMode' : 'next',
+            'waitingState' : 'cancel'
+          });
+          _me._waitingNextSlide = false;
+        }
+      },
+
+      _cancelWaitingPrev : function () {
+        if (_me._waitingPrevSlide) {
+          _me._waitingFunc({
+            'waitingMode' : 'prev',
+            'waitingState' : 'cancel'
+          });
+          _me._waitingPrevSlide = false;
+        }
+      },
+
       nextSlide : function() {
         var _me = this;
         var preloadNextContent = _me._preloadNext;
+        _me._cancelWaitingPrev();
         if (preloadNextContent) {
+          _me._waitingNextSlide = false;
           _me._preloadPrev = _me._currContent;
           _me._prevIndex = _me._currIndex;
           _me._currIndex = _me._nextIndex;
           _me._preloadNext = null;
           _me._nextIndex = null;
           _me._updateCurrentContent(preloadNextContent);
-        } else {
-          if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-            console.warn('skip nextSlide because preload not yet finished.');
-          }
+        } else if (!_me._waitingNextSlide) {
+          _me._waitingNextSlide = true;
+          _me._waitingFunc({
+            'waitingMode' : 'next',
+            'waitingState' : 'start'
+          });
         }
       },
 
       prevSlide : function() {
         var _me = this;
+        _me._cancelWaitingNext();
         var preloadPrevContent = _me._preloadPrev;
         if (preloadPrevContent) {
+          _me._waitingPrevSlide = false;
           _me._nextIndex = _me._currIndex;
           _me._preloadNext = _me._currContent;
           _me._currIndex = _me._prevIndex;
           _me._preloadPrev = null;
           _me._prevIndex = null;
           _me._updateCurrentContent(preloadPrevContent);
-        } else {
-          if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-            console.warn('skip prevSlide because preload not yet finished.');
-          }
+        } else if (!_me._waitingPrevSlide) {
+          _me._waitingPrevSlide = true;
+          _me._waitingFunc({
+            'waitingMode' : 'prev',
+            'waitingState' : 'start'
+          });
         }
       },
 
       gotoSlide : function(gotoIndex) {
         var _me = this;
         gotoIndex = gotoIndex || 0;
+        _me._cancelWaitingPrev();
+        _me._cancelWaitingNext();
         if ((gotoIndex < _me._allSlides.size()) && (gotoIndex >= 0)) {
           _me._currIndex = gotoIndex;
           _me._nextIndex = null;
