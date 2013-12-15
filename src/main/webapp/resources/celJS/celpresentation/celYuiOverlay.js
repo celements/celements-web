@@ -77,7 +77,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         zindex: 101, 
         modal:true,
         monitorresize:false,
-        suppressDimFromId:false,
+        suppressDimFromId: false,
 //        icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
         icon: null, 
         constraintoviewport: true
@@ -101,8 +101,10 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       getSuppressDimFromId : function() {
         var _me = this;
-        return _me._dialogConfig.suppressDimFromId
-            || _me._defaultConfig.suppressDimFromId;
+        if (typeof _me._dialogConfig.suppressDimFromId !== 'undefined') {
+          return _me._dialogConfig.suppressDimFromId;
+        }
+        return _me._defaultConfig.suppressDimFromId;
       },
 
       getHeight : function() {
