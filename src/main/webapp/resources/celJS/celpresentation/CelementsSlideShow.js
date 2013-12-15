@@ -195,12 +195,19 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           _me._registerNavLinks();
           _me._htmlContainer.observe('cel_slideShow:preloadContentFinished',
               _me._preloadSlideImages.bind(_me));
+          var bodyElem = $$('body')[0];
+          bodyElem.observe('cel_yuiOverlay:hideEvent', _me._resetContainerElem.bind(_me));
         } else {
           if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
             console.warn('register slideshow failed. Reason: container with id "'
                 + _me._htmlContainerId + '" not found!');
           }
         }
+      },
+
+      _resetContainerElem : function() {
+        var _me = this;
+        _me._htmlContainer = null;
       },
 
       _convertFullNameToViewURL : function(fullName) {
