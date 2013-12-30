@@ -185,9 +185,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
                 initContextMenuAsync);
             initContextMenuAsync();
           }
-          if (typeof registerCelAnimMoviePlayer !== 'undefined') {
+          if (typeof registerCelAnimMoviePlayerInsideParent !== 'undefined') {
             _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
-                registerCelAnimMoviePlayer);
+                registerCelAnimMoviePlayerInsideParent.curry(_me._htmlContainer));
           }
           _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
               _me._registerNavLinks.bind(_me));
