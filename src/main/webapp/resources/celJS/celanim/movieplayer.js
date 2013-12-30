@@ -18,10 +18,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-$j(document).ready(function() {
-  registerCelAnimMoviePlayer();
-});
-
 var registerCelAnimMoviePlayer = function() {
   initMoviePlayerCssClasses(['celanim_mp3_flowplayer',
                              'celanim_flowplayer', 'celanim_overlay_flowplayer',
@@ -402,3 +398,36 @@ var trackEvent = function(e) {
   }
   _gaq.push(['_trackEvent',category,action,label]);
 };
+
+var asyncLoadConf = function() {
+  new Ajax.Request(getCelHost(), { 
+    method : "POST",
+    parameters: {
+      'xpage' : 'celements_ajax',
+      'ajax_mode' : 'movieplayerDefaults'
+    },
+    onSuccess : function(transport) {
+      if (transport.responseText.isJSON()) {
+        var responseObject = transport.responseText.evalJSON();
+        if (responseObject.defaults) {
+          conf = responseObject;
+        }
+      }
+    }
+  });
+};
+
+var isConfDefined = function() {
+  return ((typeof conf !== 'undefined') && conf.defaults);
+};
+
+if (!isConfDefined) {
+  asyncLoadConf();
+}
+
+$j(document).ready(function() {
+  if (isConfDefined) {
+    registerCelAnimMoviePlayer();
+  }
+});
+
