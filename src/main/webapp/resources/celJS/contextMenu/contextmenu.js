@@ -154,7 +154,7 @@ function ContextMenu(){
       'left' : x + 'px',
       'top' : y + 'px'
     });
-  }
+  };
   
   this.internal_hide = function() {
     me.config = new Array();
@@ -163,11 +163,19 @@ function ContextMenu(){
     me.menuDiv = null;
   
     $(document).stopObserving('mousedown', me.hide);
-  }
+  };
+
+  this._close = function(element) {
+    me.internal_hide();
+    getCmOutliner().removeAllOutlines(element);
+  };
+
+  this.closeAll = function() {
+    me._close($$('body')[0]);
+  };
 
   this.hide = function(e){
-    me.internal_hide();
-    getCmOutliner().removeAllOutlines(e.element());
+    me._close(e.element());
     e.stop();
   };
   
