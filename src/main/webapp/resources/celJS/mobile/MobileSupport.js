@@ -176,7 +176,7 @@ CELEMENTS.mobile.Dimensions.prototype = {
         parameters: {
           'xpage' : 'celements_ajax',
           'ajax_mode' : 'MobileLogDimAndAgent',
-          'mobileDim' : _me.getDimensions(),
+          'mobileDim' : Object.toJSON(_me.getDimensions()),
           'userAgent' : navigator.userAgent,
           'isOrientationLandscape' : _me.isOrientationLandscape()
         },
