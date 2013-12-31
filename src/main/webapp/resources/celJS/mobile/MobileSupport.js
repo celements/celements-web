@@ -127,6 +127,10 @@ CELEMENTS.mobile.Dimensions.prototype = {
           'docBodyOffset' : {
             'width' : document.body.offsetWidth,
             'height' : document.body.offsetHeight
+          },
+          'docElement' : {
+            'width' : document.documentElement.clientWidth,
+            'height' : document.documentElement.clientHeight
           }
       };
       return mobileDim;
@@ -147,7 +151,9 @@ CELEMENTS.mobile.Dimensions.prototype = {
       outStr += "docBodyClient: " + mobileDim.docBodyClient.width + ","
         + mobileDim.docBodyClient.height + "\n";
       outStr += "docBodyOffset: " + mobileDim.docBodyOffset.width + ","
-        + mobileDim.docBodyOffset.height + "\n";
+      + mobileDim.docBodyOffset.height + "\n";
+      outStr += "docElement: " + mobileDim.docElement.width + ","
+      + mobileDim.docElement.height + "\n";
       alert(outStr);
     },
 
