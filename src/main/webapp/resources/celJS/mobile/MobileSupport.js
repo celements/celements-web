@@ -151,9 +151,9 @@ CELEMENTS.mobile.Dimensions.prototype = {
       outStr += "docBodyClient: " + mobileDim.docBodyClient.width + ","
         + mobileDim.docBodyClient.height + "\n";
       outStr += "docBodyOffset: " + mobileDim.docBodyOffset.width + ","
-      + mobileDim.docBodyOffset.height + "\n";
+        + mobileDim.docBodyOffset.height + "\n";
       outStr += "docElement: " + mobileDim.docElement.width + ","
-      + mobileDim.docElement.height + "\n";
+        + mobileDim.docElement.height + "\n";
       alert(outStr);
     },
 
