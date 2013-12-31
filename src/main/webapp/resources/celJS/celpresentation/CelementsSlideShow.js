@@ -80,13 +80,25 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._htmlContainer = $(_me._htmlContainerId);
         _me._navObj = new CELEMENTS.presentation.Navigation(_me._preloadSlide.bind(_me),
             _me._showSlide.bind(_me), _me._waitingLoad.bind(_me));
-        _me._nextSlideBind = _me._navObj.nextSlide.bind(_me._navObj);
-        _me._prevSlideBind = _me._navObj.prevSlide.bind(_me._navObj);
+        _me._nextSlideBind = _me._nextSlideClickHandler.bind(_me);
+        _me._prevSlideBind = _me._prevSlideClickHandler.bind(_me);
         _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(
             _me);
         _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(
             _me);
         _me._cleanupSlideTransitionBind = _me._cleanupSlideTransition.bind(_me);
+      },
+
+      _nextSlideClickHandler : function(event) {
+        var _me = this;
+        event.stop();
+        _me._navObj.nextSlide();
+      },
+
+      _prevSlideClickHandler : function(event) {
+        var _me = this;
+        event.stop();
+        _me._navObj.prevSlide();
       },
 
       getHtmlContainer : function() {
