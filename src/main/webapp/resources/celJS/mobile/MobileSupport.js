@@ -76,6 +76,9 @@ CELEMENTS.mobile.Dimensions.prototype = {
         }
     },
 
+    _init : function() {
+    },
+
     isOrientationLandscape : function() {
 //    var _me = this;
       var innerWidth = window.innerWidth || document.documentElement.clientWidth;
