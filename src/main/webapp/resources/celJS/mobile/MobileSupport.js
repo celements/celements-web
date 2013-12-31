@@ -71,8 +71,8 @@ CELEMENTS.mobile.Dimensions.prototype = {
         },
         any: function() {
           var _me = this;
-          return (_me.isMobile.Android() || _me.isMobile.BlackBerry()
-              || _me.isMobile.iOS() || _me.isMobile.Opera() || _me.isMobile.Windows());
+          return (_me.Android() || _me.BlackBerry() || _me.iOS() || _me.Opera()
+              || _me.Windows());
         }
     },
 
