@@ -76,11 +76,20 @@ CELEMENTS.mobile.Dimensions.prototype = {
         }
     },
 
+    isOrientationLandscape : function() {
+//    var _me = this;
+      var innerWidth = window.innerWidth || document.documentElement.clientWidth;
+      var innerHeight = window.innerHeight || document.documentElement.clientHeight;
+      //window.orientation works only correct on load, but has whimsical behavior when 
+      //  rotating 
+      return innerWidth > innerHeight;
+    },
+  
     getInnerWidth : function() {
       var _me = this;
       var width = window.innerWidth || document.documentElement.clientWidth;
       if(_me.isMobile.any()) {
-        if(_me.isMobile.iOS() && _me._isOrientationLandscape()) {
+        if(_me.isMobile.iOS() && _me.isOrientationLandscape()) {
           width = screen.height;
         } else if (!_me.isMobile.Android()) {
           width = screen.width;
@@ -93,7 +102,7 @@ CELEMENTS.mobile.Dimensions.prototype = {
 //        var _me = this;
       var height = window.innerHeight || document.documentElement.clientHeight;
 //        if(_me.isMobile.any()) {
-//          if(_me.isMobile.iOS() && _me._isOrientationLandscape()) {
+//          if(_me.isMobile.iOS() && _me.isOrientationLandscape()) {
 //            height = screen.width;
 //          } else {
 //            height = screen.height;
@@ -165,7 +174,8 @@ CELEMENTS.mobile.Dimensions.prototype = {
           'xpage' : 'celements_ajax',
           'ajax_mode' : 'MobileLogDimAndAgent',
           'mobileDim' : _me.getDimensions(),
-          'userAgent' : navigator.userAgent
+          'userAgent' : navigator.userAgent,
+          'isOrientationLandscape' : _me.isOrientationLandscape()
         },
         onSuccess : function(transport) {
           if (transport.responseText.isJSON()) {
