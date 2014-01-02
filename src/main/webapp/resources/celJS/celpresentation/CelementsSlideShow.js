@@ -409,20 +409,22 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           'position' : 'absolute',
           'width' : 'auto',
           'height' : 'auto',
+          'marginLeft' : 0,
+          'marginRight' : 0
         });
         slideRoot.setStyle({
           'position' : 'relative',
-          'top' : 0,
-          'marginLeft' : 0,
-          'marginRight' : 0
+          'top' : 0
         });
         //use jquery to get dimensions, because it works correctly inside iframes.
         var slideWidth = $j(slideWrapper).width();
         var slideHeight = $j(slideWrapper).height();
-        var slideOuterHeight = $j(slideRoot).height();
+//        var slideOuterHeight = $j(slideRoot).height();
         var parentDiv = _me._htmlContainer;
         var parentHeight = parentDiv.getHeight();
-        var topPos = (parentHeight - slideOuterHeight) / 2;
+        //XXX why slideOuterHeight? !!! FP; 2/1/2014
+        //var topPos = (parentHeight - slideOuterHeight) / 2;
+        var topPos = (parentHeight - slideHeight) / 2;
         slideWrapper.setStyle({
           'position' : 'relative',
           'width' : slideWidth + 'px',
