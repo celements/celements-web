@@ -429,7 +429,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           'height' : slideHeight + 'px',
           'margin' : '0',
           'marginLeft' : 'auto',
-          'marginRight' : 'auto',
+          'marginRight' : 'auto'
         });
         slideRoot.setStyle({
           'position' : 'relative',
