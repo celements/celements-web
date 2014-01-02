@@ -36,6 +36,8 @@ CELEMENTS.mobile.Dimensions = function() {
 };
 
 CELEMENTS.mobile.Dimensions.prototype = {
+    
+    _dimLogging : false,
 
     isMobile : {
         Android: function() {
@@ -97,6 +99,9 @@ CELEMENTS.mobile.Dimensions.prototype = {
         } else if (!_me.isMobile.Android()) {
           width = screen.width;
         }
+      }
+      if (_me._dimLogging) {
+        _me.logDimAndAgent("getInnerWidth returning: [" + width + "].");
       }
       return width;
     },
@@ -169,8 +174,9 @@ CELEMENTS.mobile.Dimensions.prototype = {
       alert(outStr);
     },
 
-    logDimAndAgent : function() {
+    logDimAndAgent : function(message) {
       var _me = this;
+      var logMessage = message || '';
       new Ajax.Request(getCelHost(), {
         method : "POST",
         parameters: {
@@ -178,7 +184,8 @@ CELEMENTS.mobile.Dimensions.prototype = {
           'ajax_mode' : 'MobileLogDimAndAgent',
           'mobileDim' : Object.toJSON(_me.getDimensions()),
           'userAgent' : navigator.userAgent,
-          'isOrientationLandscape' : _me.isOrientationLandscape()
+          'isOrientationLandscape' : _me.isOrientationLandscape(),
+          'message' : logMessage
         },
         onSuccess : function(transport) {
           if (transport.responseText.isJSON()) {
