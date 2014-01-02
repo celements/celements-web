@@ -107,15 +107,17 @@ CELEMENTS.mobile.Dimensions.prototype = {
     },
 
     getInnerHeight : function() {
-//        var _me = this;
       var height = window.innerHeight || document.documentElement.clientHeight;
-//        if(_me.isMobile.any()) {
-//          if(_me.isMobile.iOS() && _me.isOrientationLandscape()) {
-//            height = screen.width;
-//          } else {
-//            height = screen.height;
-//          }
-//        }
+      if(isMobile.any()) {
+        if(isMobile.iOS() && isOrientationLandscape()) {
+          height = screen.width;
+        } else if (!isMobile.Android()) {
+          height = screen.height;
+        }
+      }
+      if (_me._dimLogging) {
+        _me.logDimAndAgent("getInnerHeight returning: [" + height + "].");
+      }
       return height;
     },
 
