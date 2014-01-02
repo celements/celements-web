@@ -1,1 +1,1 @@
-$services.mobileLogging.dimensionAndAgentLog()
+$services.mobileLogging.dimensionAndAgentLog("$!request.message")
