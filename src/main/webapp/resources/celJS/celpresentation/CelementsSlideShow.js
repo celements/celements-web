@@ -427,12 +427,12 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           'position' : 'relative',
           'width' : slideWidth + 'px',
           'height' : slideHeight + 'px',
-        });
-        slideRoot.setStyle({
-          'position' : 'relative',
           'margin' : '0',
           'marginLeft' : 'auto',
           'marginRight' : 'auto',
+        });
+        slideRoot.setStyle({
+          'position' : 'relative',
           'top' : topPos + 'px'
         });
       },
