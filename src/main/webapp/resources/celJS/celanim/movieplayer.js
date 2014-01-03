@@ -19,6 +19,7 @@
  */
 
 var celAnimMoviePlayerRegisterBodyDone = false;
+var celAnimMoviePlayerRegisterBodyReadyMissed = false;
 
 var registerCelAnimMoviePlayer = function() {
   if (!celAnimMoviePlayerRegisterBodyDone) {
@@ -498,7 +499,9 @@ var asyncLoadConf = function() {
         var responseObject = transport.responseText.evalJSON();
         if (responseObject.defaults) {
           conf = responseObject;
-          registerCelAnimMoviePlayer();
+          if (celAnimMoviePlayerRegisterBodyReadyMissed) {
+            registerCelAnimMoviePlayer();
+          }
         }
       }
     }
@@ -516,6 +519,8 @@ if (!isConfDefined()) {
 $j(document).ready(function() {
   if (isConfDefined()) {
     registerCelAnimMoviePlayer();
+  } else {
+    celAnimMoviePlayerRegisterBodyReadyMissed = true;
   }
 });
 
