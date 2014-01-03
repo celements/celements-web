@@ -18,8 +18,13 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
+var celAnimMoviePlayerRegisterBodyDone = false;
+
 var registerCelAnimMoviePlayer = function() {
-  registerCelAnimMoviePlayerInsideParent($$('body')[0]);
+  if (!celAnimMoviePlayerRegisterBodyDone) {
+    celAnimMoviePlayerRegisterBodyDone = true;
+    registerCelAnimMoviePlayerInsideParent($$('body')[0]);
+  }
 };
 
 var registerCelAnimMoviePlayerInsideParent = function(parentElem) {
@@ -493,6 +498,7 @@ var asyncLoadConf = function() {
         var responseObject = transport.responseText.evalJSON();
         if (responseObject.defaults) {
           conf = responseObject;
+          registerCelAnimMoviePlayer();
         }
       }
     }
