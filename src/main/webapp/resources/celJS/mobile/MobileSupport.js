@@ -107,11 +107,12 @@ CELEMENTS.mobile.Dimensions.prototype = {
     },
 
     getInnerHeight : function() {
+      var _me = this;
       var height = window.innerHeight || document.documentElement.clientHeight;
-      if(isMobile.any()) {
-        if(isMobile.iOS() && isOrientationLandscape()) {
+      if(_me.isMobile.any()) {
+        if(_me.isMobile.iOS() && _me.isOrientationLandscape()) {
           height = screen.width;
-        } else if (!isMobile.Android()) {
+        } else if (!_me.isMobile.Android()) {
           height = screen.height;
         }
       }
