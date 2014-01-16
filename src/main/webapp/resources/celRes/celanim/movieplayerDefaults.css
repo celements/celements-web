@@ -1,1 +1,64 @@
-//TODO
+.celanim_overlay {
+    height: auto !important;
+    width: auto !important;
+}
+a.celanim_4to3 {
+    display: block;
+    height: 394px;
+    width: 525px;
+}
+.celanim_4to3 .highslide-html-content {
+    height: 637px;
+    width: 790px;
+}
+.celanim_inoverlay .celanim_4to3 {
+    height: 577px !important;
+    width: 770px !important;
+}
+a.celanim_16to9 {
+    display: block;
+    height: 309px;
+    width: 550px;
+}
+.celanim_16to9 .highslide-html-content {
+    height: 483px;
+    width: 790px;
+}
+.celanim_inoverlay .celanim_16to9 {
+    height: 433px !important;
+    width: 770px !important;
+}
+a.celanim_youtube {
+    display: block;
+    height: 331px;
+    width: 550px;
+}
+.celanim_youtube .highslide-html-content {
+    height: 511px;
+    width: 790px;
+}
+.celanim_inoverlay .celanim_youtube {
+    height: 463px !important;
+    width: 770px !important;
+}
+a.celanim_sfvideo {
+    display: block;
+    height: 331px;
+    width: 550px;
+}
+.celanim_sfvideo .highslide-html-content {
+    height: 511px;
+    width: 790px;
+}
+.celanim_inoverlay .celanim_sfvideo {
+    height: 463px !important;
+    width: 770px !important;
+}
+a#celanimFlowPlayer {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 382px;
+  width: 590px;
+}
