@@ -10,6 +10,7 @@
 <script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/validation.js', 'file')"></script>
 <script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/SWFObject-2.2/swfobject.js', 'file')"></script>
 <script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/flowplayer/flowplayer-3.2.6.min.js', 'file')"></script>
+<link rel="stylesheet" media="all" type="text/css" href="$celementsweb.getSkinFile(':celRes/celanim/movieplayerDefaults.css', 'skin')" /> 
 ##TODO refactor movieplayer.js that it can be used with file-action
 <script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/celanim/movieplayer.js', 'skin')"></script>
 <title></title>
