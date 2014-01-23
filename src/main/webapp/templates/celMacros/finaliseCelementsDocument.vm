@@ -1,3 +1,4 @@
+$services.celementsweb.displayImageMapConfigs()
 $celementsweb.addExtJSfileOnce(':celJS/initCelementsAfter.js', 'file')
 </body>
 </html>

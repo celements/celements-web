@@ -32,7 +32,6 @@ $rteContent
 #foreach($configName in $imgUseMaps)
 $services.celementsweb.addImageMapConfig($configName)
 #end
-$services.celementsweb.displayImageMapConfigs()
 #if("$request.xpage" != 'rdf')
 <!-- IE6 --></div>
 #end
