@@ -118,15 +118,9 @@ TE.prototype = {
     var loadingElem = new Element('div', {
       'id' : 'celementsLoadingIndicator'
     }).update(loaderimg).setStyle({
-      'backgroundColor' : '#F0F0F0',
-      'position' : 'absolute',
-      'paddingTop' : '35px',
-      'width' : tabMenuPanelWidth + 'px',
-      'paddingBottom' : '30px'
+      'width' : tabMenuPanelWidth + 'px'
     });
-    var textLoading = new Element('p').update('loading ...').setStyle({
-      'text-align' : 'center'
-    });
+    var textLoading = new Element('p').update('loading ...');
     loadingElem.insert(textLoading);
     $$('.celements3_tabMenu')[0].insert({
       top : loadingElem
