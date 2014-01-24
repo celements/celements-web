@@ -1,7 +1,8 @@
 ## Generic Celements Search
 ##
 ## INPUT (optional): $websearch_ouput_results (default: {internal array for output items})
-##
+## INPUT (optional): $searchpackages
+## INPUT (optional): $spaces
 #macro(outputSearchResults $websearch_results)
   #if($websearch_results.size() > 0)
   #set($countSearchResults = $countSearchResults + $websearch_results.size())
