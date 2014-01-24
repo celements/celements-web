@@ -3,6 +3,7 @@
 ## INPUT (optional): $websearch_ouput_results (default: {internal array for output items})
 ## INPUT (optional): $searchpackages
 ## INPUT (optional): $spaces
+## INPUT (optional): $hideForm [true|false]
 #macro(outputSearchResults $websearch_results)
   #if($websearch_results.size() > 0)
   #set($countSearchResults = $countSearchResults + $websearch_results.size())
@@ -60,8 +61,10 @@
       #set($maxInputFieldSize = 20)
   #end
   <div id="websearch">
+  #if("$!hideForm" != 'true')
   #if("$msg.get('cel_search_page_title')" != 'cel_search_page_title')
     <h1>$msg.get('cel_search_page_title')</h1>
+  #end
   #end
   #set($formatDate = "d. MMMM yyyy")
   #set ($text = "$!request.get('text')" )
@@ -80,11 +83,16 @@
       #set($searchInTextFields = false)
   #end
     #set($docBlackList = "$!docBlackList")
+  #if("$!hideForm" != 'true')
   <div class="websearch_form">
   <form action="WebSearch">
     <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
+    #if("$!spaces" != '')
+      <input type="hidden" name="text" value="$!spaces" />
+    #end
   </form>
   </div>
+  #end
   #if($text != "")
     #set($query = $services.lucene.createQuery())
     #if("$!spaces" != '')
