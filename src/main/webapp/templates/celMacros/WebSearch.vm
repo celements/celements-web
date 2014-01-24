@@ -4,6 +4,7 @@
 ## INPUT (optional): $searchpackages
 ## INPUT (optional): $spaces
 ## INPUT (optional): $hideForm [true|false]
+## INPUT (optional): $linkedDocsOnly
 #macro(outputSearchResults $websearch_results)
   #if($websearch_results.size() > 0)
   #set($countSearchResults = $countSearchResults + $websearch_results.size())
@@ -98,7 +99,11 @@
     #if("$!spaces" != '')
       #set($spacesList = $util.getArrayList())
       #foreach($spc in $spaces.split(' '))
-        #set($devNull = $spacesList.add(${services.lucene.createRestriction('space', "${Q}${spc}${Q}")}))
+        #if($spc.indexOf('?') >= 0)
+          #set($devNull = $spacesList.add(${services.lucene.createRestriction('space', "${spc}")}))
+        #else
+          #set($devNull = $spacesList.add(${services.lucene.createRestriction('space', "${Q}${spc}${Q}")}))
+        #end
       #end
       #set($devNull = $query.addOrRestrictionList($spacesList))
     #else
@@ -140,7 +145,7 @@
     #set ($start = 0)
     #set ($nb = 50)
     <!-- 
-    Sql: $luceneQuery
+    Sql: {pre}$luceneQuery{/pre}
     Sql start: $start
     Sql nb: $nb
     spaces: $spaces
