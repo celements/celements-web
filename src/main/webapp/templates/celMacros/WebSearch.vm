@@ -3,9 +3,10 @@
 ## INPUT (optional): $websearch_ouput_results (default: {internal array for output items})
 ## INPUT (optional): $searchpackages
 ## INPUT (optional): $spaces
-## INPUT (optional): $hideForm [true|false]
+## INPUT (optional): $hideForm [true|false] default: false
 ## INPUT (optional): $linkedDocsOnly
-## INPUT (optional): $fuzzySearch
+## INPUT (optional): $fuzzySearch [true|false] default: false
+## INPUT (optional): $pageTypes
 #macro(outputSearchResults $websearch_results)
   #if($websearch_results.size() > 0)
   #set($countSearchResults = $countSearchResults + $websearch_results.size())
@@ -78,6 +79,10 @@
   #if("$!spaces" == '')
       #set ($negSpaces = "XWiki Templates Tools Celements2 Macros LocalMacros Ajax Overlay" )
   #end
+  #set($negPageTypes = '')
+  #if("$!pageTypes" == '')
+      #set ($negPageTypes = "Redirect" )
+  #end
   #if("$!linkedDocsOnly" == '')
       #set($linkedDocsOnly = true)
   #end
@@ -113,6 +118,17 @@
       #end
     #end
     #set($devNull = $query.addRestriction(${services.lucene.createRestriction('type', "attachment").setNegate(true)}))
+    #if("$!pageTypes" != '')
+      #set($ptRestrList = $util.getArrayList())
+      #foreach($pt in $pageTypes.split(' '))
+        #set($devNull = $ptRestrList.add(${services.lucene.createRestriction('Celements2.PageType.page_type', "${pt}")}))
+      #end
+      #set($devNull = $query.addOrRestrictionList($ptRestrList))
+    #else
+      #foreach($pt in $negPageTypes.split(' '))
+        #set($devNull = $query.addRestriction(${services.lucene.createRestriction('Celements2.PageType.page_type', "${pt}").setNegate(true)}))
+      #end
+    #end
     #if("$!searchpackages" == '')
       #set($searchpackages = 'content,menu,blog')
     #end
