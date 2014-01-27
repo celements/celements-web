@@ -5,6 +5,7 @@
 ## INPUT (optional): $spaces
 ## INPUT (optional): $hideForm [true|false]
 ## INPUT (optional): $linkedDocsOnly
+## INPUT (optional): $fuzzySearch
 #macro(outputSearchResults $websearch_results)
   #if($websearch_results.size() > 0)
   #set($countSearchResults = $countSearchResults + $websearch_results.size())
@@ -94,7 +95,7 @@
   </form>
   </div>
   #end
-  #if($text != "")
+  #if("$!text" != "")
     #set($query = $services.lucene.createQuery())
     #if("$!spaces" != '')
       #set($spacesList = $util.getArrayList())
@@ -121,22 +122,42 @@
     #set($searchpackages = ",$!{searchpackages},")
     #set($otherRestrList = $util.getArrayList())
     #if($searchpackages.indexOf(',content,') >= 0)
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('ft', "$!text").setFuzzy()}))
+      #set($restr = ${services.lucene.createRestriction('ft', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',menu,') >= 0)
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Celements2.MenuName.menu_name', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('title', "$!text").setFuzzy()}))
+      #set($restr = ${services.lucene.createRestriction('Celements2.MenuName.menu_name', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('title', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',blog,') >= 0)
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.title', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.extract', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.content', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.publishdate', "$!text").setFuzzy()}))
+      #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.title', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.extract', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.content', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.publishdate', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',chronoblog,') >= 0)
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.project', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.description', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.date', "$!text")}))
+      #set($restr = ${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.project', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.description', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
+        #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.date', "$!text")}))
+      #end
     #end
     #set($devNull = $query.addOrRestrictionList($otherRestrList))
     #set($luceneQuery = "${query.getQueryString()}")
