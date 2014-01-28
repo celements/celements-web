@@ -29,7 +29,8 @@
     #set($luceneItem = $websearch_ouput_results_map.get($item))
     #set($bentrydoc = $xwiki.getDocument($item))
     <li class="result_item">
-      #set($pageLink = "/${bentrydoc.web}/${bentrydoc.name}")
+      #set($resultRef = $services.model.resolveDocument("${bentrydoc.fullName}"))
+      #set($pageLink = $xwiki.getURL($resultRef))
   ##      #if("${bentrydoc.language}" != "${context.language}")
   ##        <a href="${pageLink}?language=${bentrydoc.language}">
   ##      #else
@@ -39,15 +40,14 @@
       #elseif($util.parseDouble("$!luceneItem.score") > $util.parseDouble("0.1"))
         #set($bgcolor = 'orange')
       #end
-      <span class="result_ranking_color" style="display: none; width: 20px; background-color: ${bgcolor};">&nbsp;</span>
-      <span class="result_ranking_score" style="display: none;">${mathtool.roundTo(2, $mathtool.mul(100, $util.parseDouble("$!luceneItem.score")))}</span>
-      <a href="${pageLink}">
+      <span class="result_ranking_color" style="width: 20px; background-color: ${bgcolor};">&nbsp;</span>
+      <span class="result_ranking_score" >${mathtool.roundTo(2, $mathtool.mul(100, $util.parseDouble("$!luceneItem.score")))}</span>
   ##      #end
-      #if("$bentrydoc.web" == 'Content')
-        $bentrydoc.name
-      #else
-        $bentrydoc.fullName.replaceAll('\.',": ")
-      #end
+      <a class="result_page_link" href="${pageLink}">
+        $celementsweb.getDocHeaderTitle($bentrydoc.fullName)
+      </a>
+      <a class="result_url" href="${pageLink}">
+        $xwiki.getDocument($resultRef).getExternalURL()
       </a>
       <span class="result_date">$msg.get('search_result_last_change'): $datetool.format($formatDate, $bentrydoc.date, $services.celementsweb.getLocal($language))</span>
     </li>
@@ -181,25 +181,32 @@
     #set($resultList = $results.getResults())
     #set ($start = 0)
     #set ($nb = 50)
+    #if($isAdmin)
     <!-- 
-    Sql: {pre}$luceneQuery{/pre}
-    Sql start: $start
-    Sql nb: $nb
+    query: {pre}$luceneQuery{/pre}
     spaces: $spaces
     -->
+    #end
     <div class="results">
   #if("$msg.get('cel_search_results_title')" != 'cel_search_results_title')
-  <h2>$msg.get('cel_search_results_title')</h2>
+    <h2>$msg.get('cel_search_results_title')</h2>
+    <span class="cel_search_results_total">
+      #if($resultList.size() < 1000)
+        $msg.get('cel_search_results_total', [$resultList.size()])
+      #else
+        $msg.get('cel_aearch_results_total_1000')
+      #end
+    </span>
   #end
     #set($countSearchResults = 0)
-    <!-- resultList.size : $resultList.size() -->
+    #if($isAdmin) <!-- resultList.size : $resultList.size() --> #end
     #outputSearchResults($resultList)
     #if($countSearchResults == 0)
     #if($xwiki.exists('Tools.WebSearch_nothingFound'))
       #set($ws_nf_content = $xwiki.getDocument("Tools.WebSearch_nothingFound").getContent())
       $xwiki.renderText("{pre}$!{ws_nf_content}{/pre}",$doc)
     #else
-		$msg.get('cel_search_noresults')
+    $msg.get('cel_search_noresults')
     #end
     #end
   </div>
