@@ -3,8 +3,10 @@
 ## INPUT (optional): $websearch_ouput_results (default: {internal array for output items})
 ## INPUT (optional): $searchpackages
 ## INPUT (optional): $spaces
-## INPUT (optional): $hideForm [true|false]
+## INPUT (optional): $hideForm [true|false] default: false
 ## INPUT (optional): $linkedDocsOnly
+## INPUT (optional): $fuzzySearch [true|false] default: false
+## INPUT (optional): $pageTypes
 #macro(outputSearchResults $websearch_results)
   #if($websearch_results.size() > 0)
   #set($countSearchResults = $countSearchResults + $websearch_results.size())
@@ -27,7 +29,8 @@
     #set($luceneItem = $websearch_ouput_results_map.get($item))
     #set($bentrydoc = $xwiki.getDocument($item))
     <li class="result_item">
-      #set($pageLink = "/${bentrydoc.web}/${bentrydoc.name}")
+      #set($resultRef = $services.model.resolveDocument("${bentrydoc.fullName}"))
+      #set($pageLink = $xwiki.getURL($resultRef))
   ##      #if("${bentrydoc.language}" != "${context.language}")
   ##        <a href="${pageLink}?language=${bentrydoc.language}">
   ##      #else
@@ -37,17 +40,16 @@
       #elseif($util.parseDouble("$!luceneItem.score") > $util.parseDouble("0.1"))
         #set($bgcolor = 'orange')
       #end
-      <span class="result_ranking_color" style="display: none; width: 20px; background-color: ${bgcolor};">&nbsp;</span>
-      <span class="result_ranking_score" style="display: none;">${mathtool.roundTo(2, $mathtool.mul(100, $util.parseDouble("$!luceneItem.score")))}</span>
-      <a href="${pageLink}">
+      <span class="result_ranking_color" style="background-color: ${bgcolor};">&nbsp;</span>
+      <span class="result_ranking_score" >${mathtool.roundTo(2, $mathtool.mul(100, $util.parseDouble("$!luceneItem.score")))}</span>
   ##      #end
-      #if("$bentrydoc.web" == 'Content')
-        $bentrydoc.name
-      #else
-        $bentrydoc.fullName.replaceAll('\.',": ")
-      #end
+      <a class="result_page_link" href="${pageLink}">
+        $celementsweb.getDocHeaderTitle($bentrydoc.fullName)
       </a>
       <span class="result_date">$msg.get('search_result_last_change'): $datetool.format($formatDate, $bentrydoc.date, $services.celementsweb.getLocal($language))</span>
+      <a class="result_url" href="${pageLink}">
+        $xwiki.getDocument($resultRef).getExternalURL()
+      </a>
     </li>
   ## [TODO] Output the first x characters of the HTML escaped document content
   ## $xwiki.getShortRefererText($referer, 100)
@@ -77,6 +79,10 @@
   #if("$!spaces" == '')
       #set ($negSpaces = "XWiki Templates Tools Celements2 Macros LocalMacros Ajax Overlay" )
   #end
+  #set($negPageTypes = '')
+  #if("$!pageTypes" == '')
+      #set ($negPageTypes = "Redirect" )
+  #end
   #if("$!linkedDocsOnly" == '')
       #set($linkedDocsOnly = true)
   #end
@@ -94,7 +100,7 @@
   </form>
   </div>
   #end
-  #if($text != "")
+  #if("$!text" != "")
     #set($query = $services.lucene.createQuery())
     #if("$!spaces" != '')
       #set($spacesList = $util.getArrayList())
@@ -112,6 +118,17 @@
       #end
     #end
     #set($devNull = $query.addRestriction(${services.lucene.createRestriction('type', "attachment").setNegate(true)}))
+    #if("$!pageTypes" != '')
+      #set($ptRestrList = $util.getArrayList())
+      #foreach($pt in $pageTypes.split(' '))
+        #set($devNull = $ptRestrList.add(${services.lucene.createRestriction('Celements2.PageType.page_type', "${pt}")}))
+      #end
+      #set($devNull = $query.addOrRestrictionList($ptRestrList))
+    #else
+      #foreach($pt in $negPageTypes.split(' '))
+        #set($devNull = $query.addRestriction(${services.lucene.createRestriction('Celements2.PageType.page_type', "${pt}").setNegate(true)}))
+      #end
+    #end
     #if("$!searchpackages" == '')
       #set($searchpackages = 'content,menu,blog')
     #end
@@ -121,22 +138,42 @@
     #set($searchpackages = ",$!{searchpackages},")
     #set($otherRestrList = $util.getArrayList())
     #if($searchpackages.indexOf(',content,') >= 0)
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('ft', "$!text").setFuzzy()}))
+      #set($restr = ${services.lucene.createRestriction('ft', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',menu,') >= 0)
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Celements2.MenuName.menu_name', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('title', "$!text").setFuzzy()}))
+      #set($restr = ${services.lucene.createRestriction('Celements2.MenuName.menu_name', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('title', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',blog,') >= 0)
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.title', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.extract', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.content', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('XWiki.ArticleClass.publishdate', "$!text").setFuzzy()}))
+      #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.title', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.extract', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.content', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.publishdate', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',chronoblog,') >= 0)
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.project', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.description', "$!text").setFuzzy()}))
-      #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.date', "$!text")}))
+      #set($restr = ${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.project', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #set($restr = ${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.description', "$!text")})
+      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #set($devNull = $otherRestrList.add($restr))
+      #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
+        #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.date', "$!text")}))
+      #end
     #end
     #set($devNull = $query.addOrRestrictionList($otherRestrList))
     #set($luceneQuery = "${query.getQueryString()}")
@@ -144,25 +181,32 @@
     #set($resultList = $results.getResults())
     #set ($start = 0)
     #set ($nb = 50)
+    #if($isAdmin)
     <!-- 
-    Sql: {pre}$luceneQuery{/pre}
-    Sql start: $start
-    Sql nb: $nb
+    query: {pre}$luceneQuery{/pre}
     spaces: $spaces
     -->
+    #end
     <div class="results">
   #if("$msg.get('cel_search_results_title')" != 'cel_search_results_title')
-  <h2>$msg.get('cel_search_results_title')</h2>
+    <h2>$msg.get('cel_search_results_title')</h2>
+    <span class="cel_search_results_total">
+      #if($resultList.size() < 1000)
+        $msg.get('cel_search_results_total', [$resultList.size()])
+      #else
+        $msg.get('cel_aearch_results_total_1000')
+      #end
+    </span>
   #end
     #set($countSearchResults = 0)
-    <!-- resultList.size : $resultList.size() -->
+    #if($isAdmin) <!-- resultList.size : $resultList.size() --> #end
     #outputSearchResults($resultList)
     #if($countSearchResults == 0)
     #if($xwiki.exists('Tools.WebSearch_nothingFound'))
       #set($ws_nf_content = $xwiki.getDocument("Tools.WebSearch_nothingFound").getContent())
       $xwiki.renderText("{pre}$!{ws_nf_content}{/pre}",$doc)
     #else
-		$msg.get('cel_search_noresults')
+    $msg.get('cel_search_noresults')
     #end
     #end
   </div>
