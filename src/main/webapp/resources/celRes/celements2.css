@@ -715,6 +715,10 @@ body #sitecontainer .cel_content_part table td {
 }
 
 /* Search results */
+#websearch .results ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
 #websearch .results .result_item {
   padding-bottom: 16px;
 }
