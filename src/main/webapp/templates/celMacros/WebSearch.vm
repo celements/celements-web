@@ -140,30 +140,38 @@
     #set($otherRestrList = $util.getArrayList())
     #if($searchpackages.indexOf(',content,') >= 0)
       #set($restr = ${services.lucene.createRestriction('ft', "$!text")})
+      #set($devNull = $restr.setBoost('20'))
       #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
       #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',menu,') >= 0)
       #set($restr = ${services.lucene.createRestriction('Celements2.MenuName.menu_name', "$!text")})
+      #set($devNull = $restr.setBoost('30'))
       #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
       #set($devNull = $otherRestrList.add($restr))
       #set($restr = ${services.lucene.createRestriction('title', "$!text")})
+      #set($devNull = $restr.setBoost('30'))
       #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
       #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',blog,') >= 0)
       #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.title', "$!text")})
+##      #set($devNull = $restr.setBoost('0.05'))
       #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
       #set($devNull = $otherRestrList.add($restr))
       #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.extract', "$!text")})
+##      #set($devNull = $restr.setBoost('0.05'))
       #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
       #set($devNull = $otherRestrList.add($restr))
       #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.content', "$!text")})
+##      #set($devNull = $restr.setBoost('0.05'))
       #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
       #set($devNull = $otherRestrList.add($restr))
-      #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.publishdate', "$!text")})
-      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
-      #set($devNull = $otherRestrList.add($restr))
+      #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
+        #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.publishdate', "$!text")})
+        #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+        #set($devNull = $otherRestrList.add($restr))
+      #end
     #end
     #if($searchpackages.indexOf(',chronoblog,') >= 0)
       #set($restr = ${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.project', "$!text")})
