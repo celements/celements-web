@@ -715,41 +715,41 @@ body #sitecontainer .cel_content_part table td {
 }
 
 /* Search results */
-#websearch .results ul {
+#sitecontainer #websearch .results ul {
   list-style-type: none;
   padding-left: 0px;
 }
-#websearch .results .result_item {
+#sitecontainer #websearch .results .result_item {
   padding-bottom: 16px;
 }
-#websearch .results .result_ranking_color {
+#sitecontainer #websearch .results .result_ranking_color {
   width: 8px;
   border-radius: 2px;
   display: none;
 }
-#websearch .results .result_ranking_score {
+#sitecontainer #websearch .results .result_ranking_score {
   display: none;
 }
-#websearch .results .result_page_link {
+#sitecontainer #websearch .results .result_page_link {
   color: blue;
   text-decoration: none;
   font-size: 20px;
   padding-bottom: 2px;
   display: block;
 }
-#websearch .results .result_page_link:hover {
+#sitecontainer #websearch .results .result_page_link:hover {
   text-decoration: underline;
 }
-#websearch .results .result_page_link:visited {
+#sitecontainer #websearch .results .result_page_link:visited {
   color: purple;
   text-decoration: none;
 }
-#websearch .results .result_url {
+#sitecontainer #websearch .results .result_url {
   color: #393;
   text-decoration: none;
   font-size: 14px;
 }
-#websearch .results .result_date {
+#sitecontainer #websearch .results .result_date {
   float: right;
 }
 
