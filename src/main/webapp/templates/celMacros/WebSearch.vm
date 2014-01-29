@@ -50,6 +50,7 @@
         $xwiki.getDocument($resultRef).getExternalURL()
       </a>
       <span class="result_date">$msg.get('search_result_last_change'): $datetool.format($formatDate, $bentrydoc.date, $services.celementsweb.getLocal($language))</span>
+      <span style="clear:both; display: block;"><!--ie--></span>
     </li>
   ## [TODO] Output the first x characters of the HTML escaped document content
   ## $xwiki.getShortRefererText($referer, 100)
