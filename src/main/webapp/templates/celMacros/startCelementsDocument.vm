@@ -6,7 +6,7 @@
 #if(!$withoutDefaultHeaders || ($!withoutDefaultHeaders == ''))
   #set($withoutDefaultHeaders = false)
 #end
-#if(!$initCelementsWasRun)
+#if(!$initCelementsWasRun && $xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
   ## define the celements variables (this is a lacy call)
   $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #end
