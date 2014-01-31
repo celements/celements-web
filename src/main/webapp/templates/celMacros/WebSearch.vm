@@ -96,7 +96,7 @@
   <form action="WebSearch">
     <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
     #if("$!spaces" != '')
-      <input type="hidden" name="text" value="$!spaces" />
+      <input type="hidden" name="space" value="$!spaces" />
     #end
   </form>
   </div>
