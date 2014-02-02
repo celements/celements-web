@@ -11,7 +11,7 @@
   #if("$!request.skin" == 'cellskin')
     #set($params = "skin=cellskin&")
   #end
-  #set($params = "$!{params}xpage=overlay&conf=UserAdmin}&user=$redirUser")}")
+  #set($params = "$!{params}xpage=overlay&conf=UserAdmin&user=$redirUser")}")
   #set($xredirectURL = $!{doc.getURL('view',$params)})
   #if(!$skipRedirect)
    ## send redirect
