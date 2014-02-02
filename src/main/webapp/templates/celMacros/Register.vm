@@ -84,7 +84,7 @@
   #end
   <div>&nbsp;</div>
 #if($xwiki.hasAccessLevel('register', $context.getUser(), 'XWiki.XWikiPreferences'))
-#set($withEmailLogin = true)
+#set($withEmailLogin = !$context.isMainWiki())
  #if($withEmailLogin)
     #set($fieldprefix = "")
  #else
