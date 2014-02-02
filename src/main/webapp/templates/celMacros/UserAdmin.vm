@@ -7,7 +7,12 @@
     $d.save()
   #end
   ## compose redirect url
-  #set($xredirectURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin&user=$redirUser")})
+  #set($params = '')
+  #if("$!request.skin" == 'cellskin')
+    #set($params = "skin=cellskin&")
+  #end
+  #set($params = "$!{params}xpage=overlay&conf=UserAdmin}&user=$redirUser")}")
+  #set($xredirectURL = $!{doc.getURL('view',$params)})
   #if(!$skipRedirect)
    ## send redirect
    $response.sendRedirect($xredirectURL)
@@ -118,7 +123,12 @@
 <div class="celements2_box">
  #if($isAdmin)
  <div class="celements2_box_title">$adminMsg.get('cel_admin_useradmin')</div>
- #set($actionURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin")})
+  #set($params = '')
+  #if("$!request.skin" == 'cellskin')
+    #set($params = "skin=cellskin&")
+  #end
+  #set($params = "$!{params}xpage=overlay&conf=UserAdmin")
+ #set($actionURL = $!{doc.getURL('view',$params)})
  <form id="userselect" action="$!actionURL" method="post">
  <select name="user" style="width:300px;" size="1" class="celements2_input"##
  onchange="##
@@ -166,7 +176,12 @@ $('userselect').submit()">
 ## <input type="submit" value="Show"  class="celements2_input_button"/>&nbsp;
  #set($xredirectURL = $!{doc.getURL('view',"xpage=overlay&conf=UserAdmin&user=$user")})
  #set($xredirectURLesp = $escapetool.url($xredirectURL))
- #set($addUserURL = "${doc.getURL('view', 'xpage=overlay&conf=Register')}&xredirect=$!xredirectURLesp")
+  #set($params = '')
+  #if("$!request.skin" == 'cellskin')
+    #set($params = "skin=cellskin&")
+  #end
+  #set($params = "$!{params}xpage=overlay&conf=Register}")
+ #set($addUserURL = "${doc.getURL('view', $params)}&xredirect=$!xredirectURLesp")
  <a style="margin-left:50px;" href="$addUserURL">$adminMsg.get('cel_add_user')</a>
  #if($show_user && $xwiki.exists($user))
    #set($cel_user_doc = $xwiki.getDocument($user))
@@ -245,7 +260,11 @@ $('userselect').submit()">
       $xwiki.includeForm('celements2web:Templates.ObjectEdit',false)
     #else
     <td style="vertical-align:top;" class="celements2_input_mandatory" colspan="1">
-      #set($params = "xpage=passwd&xredirect=${doc.getURL()}")
+      #set($params = '')
+      #if("$!request.skin" == 'cellskin')
+        #set($params = "skin=cellskin&")
+      #end
+      #set($params = "$!{params}xpage=passwd&xredirect=${doc.getURL()}")
      <a href="$doc.getURL('view', $params)">$adminMsg.get('cel_useradmin_password_change')</a>
     #end
     </td>
