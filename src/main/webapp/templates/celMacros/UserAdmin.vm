@@ -180,7 +180,7 @@ $('userselect').submit()">
   #if("$!request.skin" == 'cellskin')
     #set($params = "skin=cellskin&")
   #end
-  #set($params = "$!{params}xpage=overlay&conf=Register}")
+  #set($params = "$!{params}xpage=overlay&conf=Register")
  #set($addUserURL = "${doc.getURL('view', $params)}&xredirect=$!xredirectURLesp")
  <a style="margin-left:50px;" href="$addUserURL">$adminMsg.get('cel_add_user')</a>
  #if($show_user && $xwiki.exists($user))
