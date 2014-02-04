@@ -1,19 +1,20 @@
 <div id="recylceBinList">
 <h1>$adminMsg.get('cel_recyclebin_title') ##
-#if($xwiki.hasAdminRights())
-#if("$request.deleteNow" == 'older30Days')
+#if($xwiki.hasAdminRights() && ("$request.deleteNow" == 'older30Days'))
 #set($deletedDocumentVersions = $services.celementsweb.permanentlyEmptyTrash(30))
 </h1>
 <p>$adminMsg.get('cel_recyclebin_deleted', ["$deletedDocumentVersions"])</p>
 <p><a href="?xpage=overlay&conf=FullRecylceBin">$adminMsg.get('cel_recyclebin_deleted_backlink')</a>
-#else
+#elseif($hasedit)
 #set($allDeletedDocuments = $services.celementsweb.getDeletedDocuments('ddoc.date desc', false))
 #if($allDeletedDocuments.size() > 0)
 ($adminMsg.get('cel_recyclebin_title_numDocuments', ["$allDeletedDocuments.size()"]))</h1>
+#if($xwiki.hasAdminRights())
 <p>$adminMsg.get('cel_recyclebin_delete_hint')<br/>
 $adminMsg.get('cel_recyclebin_delete_warning')<br/> 
 <a href="?xpage=overlay&conf=FullRecylceBin&deleteNow=older30Days">
 $adminMsg.get('cel_recyclebin_delete_now_link')</a></p>
+#end
 <p>$adminMsg.get('core.recyclebin.showlistmsg')</p>
 <table class="centered">
  <thead>
@@ -61,9 +62,8 @@ $adminMsg.get('cel_recyclebin_delete_now_link')</a></p>
 </h1>
 <p>$adminMsg.get('cel_recyclebin_empty')</p>
 #end
-#end
 #else
 </h1>
-<p>$adminMsg.get('cel_recyclebin_no_adminrights')</p>
+<p>$adminMsg.get('cel_recyclebin_not_enough_rights')</p>
 #end
 </div>
