@@ -129,10 +129,10 @@ $xwiki.ssfx.use('uicomponents/pagination/pagination.css', true)##
         #if ($xwiki.hasMinorEdit())
           #if (!$request.getParameter('showminor'))
             <div class="buttonwrapper"><input class="button" type="submit" name="viewminorversions" value="$msg.get('core.viewers.history.showMinorEdits')"
-              onclick="document.forms.${formname}.action='$tdoc.getURL('view', "$!{viewer}&amp;showminor=true&amp;$docvariant")'; if (document.forms.${formname}.onsubmit) document.forms.${formname}.onsubmit();" /></div>
+              onclick="document.forms.${formname}.action='$tdoc.getURL($context.action, "$!{viewer}&amp;showminor=true&amp;$docvariant")'; if (document.forms.${formname}.onsubmit) document.forms.${formname}.onsubmit();" /></div>
           #else
             <div class="buttonwrapper"><input class="button" type="submit" name="hideminorversions" value="$msg.get('core.viewers.history.hideMinorEdits')"
-              onclick="document.forms.${formname}.action='$tdoc.getURL('view', "$!{viewer}&amp;$docvariant")'; if (document.forms.${formname}.onsubmit) document.forms.${formname}.onsubmit();" /></div>
+              onclick="document.forms.${formname}.action='$tdoc.getURL($context.action, "$!{viewer}&amp;$docvariant")'; if (document.forms.${formname}.onsubmit) document.forms.${formname}.onsubmit();" /></div>
           #end
         #end
       </div>
