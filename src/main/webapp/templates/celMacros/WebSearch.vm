@@ -5,7 +5,7 @@
 ## INPUT (optional): $spaces
 ## INPUT (optional): $hideForm [true|false] default: false
 ## INPUT (optional): $linkedDocsOnly
-## INPUT (optional): $fuzzySearch [true|false] default: false
+## INPUT (optional): $fuzzySearch [0-1] (the lower the fuzzyer) default: not fuzzy
 ## INPUT (optional): $pageTypes
 #macro(outputSearchResults $websearch_results)
   #if($websearch_results.size() > 0)
@@ -94,6 +94,15 @@
   #if("$!hideForm" != 'true')
   <div class="websearch_form">
   <form action="WebSearch">
+#*    Unscharfe Suche: 
+    <select name="fuzzy">
+      <option#if("$!fuzzySearch" == '1') selected="selected"#end value="1">1 (exakte Suche)</option>
+      <option#if("$!fuzzySearch" == '0.9') selected="selected"#end value="0.9">0.9</option>
+      <option#if("$!fuzzySearch" == '0.8') selected="selected"#end value="0.8">0.8</option>
+      <option#if("$!fuzzySearch" == '0.7') selected="selected"#end value="0.7">0.7</option>
+      <option#if("$!fuzzySearch" == '0.6') selected="selected"#end value="0.6">0.6</option>
+      <option#if("$!fuzzySearch" == '0.5') selected="selected"#end value="0.5">0.5 (standard Fuzzy)</option>
+    </select><br />*#
     <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
     #if("$!spaces" != '')
       <input type="hidden" name="space" value="$!spaces" />
@@ -141,44 +150,44 @@
     #if($searchpackages.indexOf(',content,') >= 0)
       #set($restr = ${services.lucene.createRestriction('ft', "$!text")})
       #set($devNull = $restr.setBoost('20'))
-      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
       #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',menu,') >= 0)
       #set($restr = ${services.lucene.createRestriction('Celements2.MenuName.menu_name', "$!text")})
       #set($devNull = $restr.setBoost('30'))
-      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
       #set($devNull = $otherRestrList.add($restr))
       #set($restr = ${services.lucene.createRestriction('title', "$!text")})
       #set($devNull = $restr.setBoost('30'))
-      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
       #set($devNull = $otherRestrList.add($restr))
     #end
     #if($searchpackages.indexOf(',blog,') >= 0)
       #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.title', "$!text")})
 ##      #set($devNull = $restr.setBoost('0.05'))
-      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
       #set($devNull = $otherRestrList.add($restr))
       #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.extract', "$!text")})
 ##      #set($devNull = $restr.setBoost('0.05'))
-      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
       #set($devNull = $otherRestrList.add($restr))
       #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.content', "$!text")})
 ##      #set($devNull = $restr.setBoost('0.05'))
-      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
       #set($devNull = $otherRestrList.add($restr))
       #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
         #set($restr = ${services.lucene.createRestriction('XWiki.ArticleClass.publishdate', "$!text")})
-        #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+        #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
         #set($devNull = $otherRestrList.add($restr))
       #end
     #end
     #if($searchpackages.indexOf(',chronoblog,') >= 0)
       #set($restr = ${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.project', "$!text")})
-      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
       #set($devNull = $otherRestrList.add($restr))
       #set($restr = ${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.description', "$!text")})
-      #if($fuzzySearch) #set($devNull = $restr.setFuzzy()) #end
+      #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
       #set($devNull = $otherRestrList.add($restr))
       #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
         #set($devNull = $otherRestrList.add(${services.lucene.createRestriction('Chronoskop.ChronoBlogClass.date', "$!text")}))
