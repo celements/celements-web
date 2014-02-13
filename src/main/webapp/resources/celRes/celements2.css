@@ -749,6 +749,10 @@ body #sitecontainer .cel_content_part table td {
   text-decoration: none;
   font-size: 14px;
 }
+#sitecontainer #websearch .results .result_bread_crumbs {
+  color: black;
+  display: block;
+}
 #sitecontainer #websearch .results .result_date {
   float: right;
 }
