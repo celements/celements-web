@@ -46,6 +46,7 @@
       <a class="result_page_link" href="${pageLink}">
         $celementsweb.getDocHeaderTitle($bentrydoc.fullName)
       </a>
+      <span class="result_bread_crumbs">Gefunden unter <a href="#">Hauptseite</a> > <a href="#">Unterseite</a> > <a href="#">Unter-Unterseite</a></span>
       <a class="result_url" href="${pageLink}">
         $xwiki.getDocument($resultRef).getExternalURL()
       </a>
