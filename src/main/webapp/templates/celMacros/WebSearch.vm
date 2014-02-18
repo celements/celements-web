@@ -44,9 +44,19 @@
       <span class="result_ranking_score" >${mathtool.roundTo(2, $mathtool.mul(100, $util.parseDouble("$!luceneItem.score")))}</span>
   ##      #end
       <a class="result_page_link" href="${pageLink}">
-        $celementsweb.getDocHeaderTitle($bentrydoc.fullName)
+        $celementsweb.getDocHeaderTitle($resultRef)
       </a>
-      <span class="result_bread_crumbs">Gefunden unter <a href="#">Hauptseite</a> > <a href="#">Unterseite</a> > <a href="#">Unter-Unterseite</a></span>
+      #set($parentDocRefList = $xwiki.celementsweb.getDocumentParentsDocRefList($resultRef, false))
+      #if($parentDocRefList.size() > 0)
+      <span class="result_bread_crumbs"><span class="result_bread_crumbs_title">$msg.get('cel_search_breadcrumbs_title')</span>
+        #foreach($parentDocRef in $parentDocRefList)
+        #if($velocityCount > 1)
+        $msg.get('cel_search_breadcrumbs_delimiter')
+        #end
+        <a href="$xwiki.getURL($parentDocRef)">$celementsweb.getDocHeaderTitle($parentDocRef)</a>
+        #end
+      </span>
+      #end
       <a class="result_url" href="${pageLink}">
         $xwiki.getDocument($resultRef).getExternalURL()
       </a>
