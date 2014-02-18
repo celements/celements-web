@@ -49,6 +49,16 @@
     #end
     </select>
 </div>
+<div id="wikiDomains" class="editblock">
+<h2>$adminMsg.get('cel_cockpit_domainnames_title')</h2>
+<ol>
+#foreach($wikiDoc in $xwiki.wikimanager.getWikiDocumentList())
+#if($wikiDoc.getWikiName() == $context.getDatabase())
+<li>$wikiDoc.getServer()</li>
+#end
+#end
+</ol>
+</div>
 #if($isSuperAdmin)
 #set($cel_editobj_doc = $wikiPreferenceDoc)
 #set($cel_editobj_dict_prefix = 'cel_pro_metaTag_' )
