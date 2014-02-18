@@ -4,7 +4,7 @@
 ## OUTPUT: 
 ##
 <title>##
-$celementsweb.getDocHeaderTitle($doc.fullName)##
+$xwiki.celementsweb.getDocHeaderTitle($doc.documentReference)##
 </title>
 $!xwiki.getSpacePreference("meta")
 #if("$!charEncoding" == '')
