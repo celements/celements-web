@@ -49,7 +49,7 @@
       #set($parentDocRefList = $xwiki.celementsweb.getDocumentParentsDocRefList($resultRef, false))
       #if($parentDocRefList.size() > 0)
       <span class="result_bread_crumbs"><span class="result_bread_crumbs_title">$msg.get('cel_search_breadcrumbs_title')</span>
-        #foreach($parentDocRef in $parentDocRefList)
+        #foreach($parentDocRef in $util.reverseList($parentDocRefList))
         #if($velocityCount > 1)
         $msg.get('cel_search_breadcrumbs_delimiter')
         #end
