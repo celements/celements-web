@@ -19,6 +19,10 @@
  */
 
 var initCelRTE = function() {
+  if(!!window.MSStream && (navigator.userAgent.indexOf("MSIE") < 0)) { // if is IE11
+    alert('Der RichText Editor ist zur Zeit nicht für den Internet Explorer 11 verfügbar. Bitte verwenden Sie einen unterstützten Browser (Chrome, FireFox, Safari, IE10, IE9 oder IE8).');
+    return;
+  }
   var params = {
       xpage : 'celements_ajax',
       ajax_mode : 'TinyConfig'
