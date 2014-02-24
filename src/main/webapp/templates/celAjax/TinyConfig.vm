@@ -23,6 +23,14 @@
   "mode" : "specific_textareas",
   "editor_selector" : "mceEditor",
   "editor_deselector" : "mceNoEditor",
+#set($pageStyles = '')
+#if("$!{xwiki.celementsweb.getPageLayoutForDoc($doc.documentReference)}" != '')
+#set($pageStyles = "layout_$!{xwiki.celementsweb.getPageLayoutForDoc($doc.documentReference)}")
+#end
+##TODO get pageStyles from pageType-scriptService
+#set($cel_pageTypeObj = $doc.getObject('Celements2.PageType', true))
+#set($pageStyles = "$!{pageStyles} $!cel_pageTypeObj.getProperty('page_styles').getValue()")
+  "body_class" : "$!{pageStyles.trim()}",
   "language" : "$admin_language",
   "theme" : "advanced",
   "oninit" : "celFinishTinyMCEStart",
