@@ -655,7 +655,14 @@ this._init(preloadFunc, showFunc, waitingFunc);
         var _me = this;
         _me._allSlides = $A(slidesFNarray);
         if (_me._allSlides.size() > 0) {
+          var maxIndex = (_me._allSlides.size() - 1);
           startIndex = startIndex || 0;
+          if (startIndex < 0) {
+            startIndex = 0;
+          }
+          if (startIndex > maxIndex) {
+            startIndex = maxIndex;
+          }
           _me.gotoSlide(startIndex);
         } else {
           _me._currIndex = undefined;
