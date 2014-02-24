@@ -5,3 +5,6 @@
 #set($hasEdit = $hasedit)
 #set($hasAdmin = $isAdmin)
 #set($redirect = $doc.getURL('view', 'xpage=overlay&conf=PageAttachments'))
+#if("$!request.xredirect" != '')
+#set($redirect = "$!{redirect}&xredirect=$!{request.xredirect}")
+#end
