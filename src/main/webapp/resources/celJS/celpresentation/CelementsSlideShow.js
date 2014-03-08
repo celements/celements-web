@@ -204,6 +204,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
               _me._registerNavLinks.bind(_me));
           _me._registerNavLinks();
+          _me._htmlContainer.observe('cel_yuiOverlay:beforeSlideInsert',
+              _me._insertSlideCounterHandler).bind(_me);
           _me._htmlContainer.observe('cel_slideShow:preloadContentFinished',
               _me._preloadSlideImages.bind(_me));
           var bodyElem = $$('body')[0];
@@ -274,6 +276,23 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
               }
             }
           }
+        });
+      },
+
+      _insertSlideCounterHandler : function(event) {
+        var _me = this;
+        _me._insertSlideCounter(event.memo.newSlideWrapperElem);
+      },
+
+      _insertSlideCounter : function(newSlideWrapperElem) {
+        var _me = this;
+        newSlideWrapperElem.select('.celPresSlideShow_countSlideNum').each(
+            function(countSlideElem) {
+              countSlideElem.update(_me._navObj.getNumSlides());
+        });
+        newSlideWrapperElem.select('.celPresSlideShow_currentSlideNum').each(
+            function(currentSlideElem) {
+              currentSlideElem.update(_me._navObj._currContent);
         });
       },
 
@@ -550,6 +569,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             'cel_slideShow_slideWrapper').setStyle({
           'position' : 'relative'
         }).update(slideContent).hide();
+        _me._htmlContainer.fire('cel_yuiOverlay:beforeSlideInsert', {
+          'celSlideShow' : _me,
+          'newSlideWrapperElem' : slideWrapperElem
+          });
         _me._getSlideRootElem().insert({ bottom: slideWrapperElem });
         var resizeAndCenterSlideEvent = _me._htmlContainer.fire(
             'cel_slideShow:resizeAndCenterSlide', _me);
@@ -738,6 +761,10 @@ this._init(preloadFunc, showFunc, waitingFunc);
       indexOf : function(fullName) {
         var _me = this;
         return _me._allSlides.indexOf(fullName);
+      },
+
+      getNumSlides : function() {
+        return _me._allSlides.size();
       },
 
       _cancelWaitingNext : function () {
