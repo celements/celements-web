@@ -292,7 +292,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         });
         newSlideWrapperElem.select('.celPresSlideShow_currentSlideNum').each(
             function(currentSlideElem) {
-              currentSlideElem.update(_me._navObj._currContent);
+              currentSlideElem.update(_me._navObj.getCurrentSlideNum());
         });
       },
 
@@ -398,7 +398,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         if (!_me._preloadSlideImagesHash.get(preLoadSlide.slideFN)) {
           var preloadElem = new Element('div').update(preLoadSlide.responseText);
           var imgsArray = preloadElem.select('img');
-//          console.log('preloadElem: ', preloadElem, imgsArray.toArray());
           _me._preloadSlideImagesHash.set(preLoadSlide.slideFN, preloadElem);
           _me._htmlContainer.fire('cel_slideShow:afterPreloadImages', {
             'theSlideShow' : _me,
@@ -557,7 +556,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         defaultElem = defaultElem || _me._htmlContainer;
         var slideRootElem = _me._getSlideWrapper().up('.cel_slideShow_slideRoot'
             ) || defaultElem;
-        //console.log('_getSlideRootElem: ', slideRootElem);
         return slideRootElem;
       },
 
@@ -736,6 +734,11 @@ this._init(preloadFunc, showFunc, waitingFunc);
         }
       },
 
+      getCurrentSlideNum : function() {
+        var _me = this;
+        return _me._currIndex + 1;
+      },
+
       getNextIndex : function() {
         var _me = this;
         var newNextIdx = _me._currIndex + 1;
@@ -768,6 +771,7 @@ this._init(preloadFunc, showFunc, waitingFunc);
       },
 
       getNumSlides : function() {
+        var _me = this;
         return _me._allSlides.size();
       },
 
