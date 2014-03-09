@@ -205,7 +205,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
               _me._registerNavLinks.bind(_me));
           _me._registerNavLinks();
           _me._htmlContainer.observe('cel_yuiOverlay:afterSlideInsert',
-              _me._insertSlideCounterHandler).bind(_me);
+              _me._insertSlideCounterHandler.bind(_me));
           _me._htmlContainer.observe('cel_slideShow:preloadContentFinished',
               _me._preloadSlideImages.bind(_me));
           var bodyElem = $$('body')[0];
