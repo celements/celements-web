@@ -10,6 +10,7 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #parse("celMacros/startCelementsDocument.vm")
 ##
 #set($cel_loadAdminMenuBar=false)
+#set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celLinkPicker forceColors")
 ## start the celements body (and lacily finalise the header)
 #parse("celMacros/startCelementsBody.vm")
 ##
