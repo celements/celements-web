@@ -1,0 +1,72 @@
+<h1>Verwendung der Anh&auml;nge im Datei Manager</h1>
+<a href="?" style="padding-left:8px;padding-right:8px;">Alle</a>|<a href="?linked=1" style="padding:8px;">Nur verlinkte</a>|<a href="?unlinked=1" style="padding-left:8px;padding-right:8px;">Nur nicht verlinkte</a>
+<br />
+<br />
+#set($attDoc = $xwiki.getDocument('Content_attachments.FileBaseDoc'))
+#set($zeroFiles = 0)
+#set($totalSize = 0)
+#set($totalWOZero = 0)
+<table>
+<thead>
+<tr>
+<th>Links</th>
+<th>Gr&ouml;sse</th>
+<th>Verlinkt auf</th>
+<th>Name</th>
+</tr>
+<tbody>
+#foreach($att in $attDoc.getAttachmentList())
+    #set($usedList = $services.query.xwql("where (doc.content like :attName or doc.content like :attNameURL)").bindValue('attName', "%${att.getFilename()}%").bindValue('attNameURL', "%${escapetool.url($att.getFilename())}%").execute())
+    #set($used = $usedList.size())
+#if(("$!request.linked" == '' && "$!request.unlinked" == '') || ("$!request.linked" == '1' && $used > 0) || ("$!request.unlinked" == '1' && $used == 0))
+<tr>
+  <td style="border-top: solid black 1px">
+    <span##
+    #if($used == 0)##
+       style="color: #ff0000"##
+       #set($zeroFiles = $mathtool.add($zeroFiles, 1))
+    #end>
+      $used
+    </span>
+  </td>
+  <td style="border-top: solid black 1px">
+    #set($fSize = $att.getFilesize())
+    #set($size = $mathtool.div($fSize, 1000000))
+    <span##
+    #if($size > 1)##
+       style="color: #ff0000"##
+    #end>
+    $numbertool.format("00.000", $size) Mb</span>
+    #set($totalSize = $mathtool.add($totalSize, $fSize))
+    #if($used != 0)
+      #set($totalWOZero = $mathtool.add($totalWOZero, $fSize))
+    #end
+  </td>
+  <td style="border-top: solid black 1px">
+     <ul>
+     #foreach($usedDoc in $usedList)
+       <li><a href="$xwiki.getURL($usedDoc)">$usedDoc</a></li>
+     #end
+     </ul>
+  </td>
+  <td style="border-top: solid black 1px">
+    <a href="$attDoc.getAttachmentURL($att.getFilename())">$att.getFilename()</a>
+  </td>
+</tr>
+#end
+#end
+<tr><td style="border-top: solid black 1px"></td><td style="border-top: solid black 1px"></td><td style="border-top: solid black 1px"></td><td style="border-top: solid black 1px"></td></tr>
+</tbody>
+</table>
+#set($totalSizeMb = $mathtool.div($totalSize, 1000000))
+#set($totalWOZeroMb = $mathtool.div($totalWOZero, 1000000))
+<br />
+<b>
+#if("$!request.linked" == '' && "$!request.unlinked" == '')
+Total Anh&auml;nge: $attDoc.getAttachmentList().size()  | Total nicht verlinkt: $zeroFiles
+#end
+ | Total: $numbertool.format("00.000", $totalSizeMb) Mb | Total ohne nicht verlinkte: $numbertool.format("00.000", $totalWOZeroMb) Mb</b>
+<br />
+<br />
+<a href="?" style="padding:8px;">Alle</a>|<a href="?linked=1" style="padding-left:8px;padding-right:8px;">Nur verlinkte</a>|<a href="?unlinked=1" style="padding-left:8px;padding-right:8px;">Nur nicht verlinkte</a>
+<div style="padding-bottom: 20px;">&nbsp;</div>

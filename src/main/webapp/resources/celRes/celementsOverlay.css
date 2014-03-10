@@ -221,6 +221,7 @@ form#newsletter_send span#testResultBoxSpan {
 }
 .generalOverlay .layoutsubsection #cel_overlaybody {
   position: relative;
+  width: 100%;
 }
 .generalOverlay .layoutsubsection,
 .generalOverlay .layoutsubsection p {
@@ -329,3 +330,15 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #recylceBinList table .column_actions {
 	width: 215px;
 }
+
+/* fix for password change form in baseskin */
+.generalOverlay .changePassword dl {
+  margin: 0;
+}
+.generalOverlay .changePassword dl dd input {
+  margin: 0;
+}
+.generalOverlay .changePassword dl dd input#xwikipassword {
+  margin: 0;
+}
+

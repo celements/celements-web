@@ -66,6 +66,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _prevElements : [],
       _preloadingImageQueue : [],
       _navObj : undefined,
+      _nextSlideBind : undefined,
+      _prevSlideBind : undefined,
       _registerOnOpenOverlayCheckerBind : undefined,
       _imgLoadedResizeAndCenterSlideBind : undefined,
       _cleanupSlideTransitionBind : undefined,
@@ -77,12 +79,26 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._htmlContainerId = containerId;
         _me._htmlContainer = $(_me._htmlContainerId);
         _me._navObj = new CELEMENTS.presentation.Navigation(_me._preloadSlide.bind(_me),
-            _me._showSlide.bind(_me));
+            _me._showSlide.bind(_me), _me._waitingLoad.bind(_me));
+        _me._nextSlideBind = _me._nextSlideClickHandler.bind(_me);
+        _me._prevSlideBind = _me._prevSlideClickHandler.bind(_me);
         _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(
             _me);
         _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(
             _me);
         _me._cleanupSlideTransitionBind = _me._cleanupSlideTransition.bind(_me);
+      },
+
+      _nextSlideClickHandler : function(event) {
+        var _me = this;
+        event.stop();
+        _me._navObj.nextSlide();
+      },
+
+      _prevSlideClickHandler : function(event) {
+        var _me = this;
+        event.stop();
+        _me._navObj.prevSlide();
       },
 
       getHtmlContainer : function() {
@@ -102,6 +118,72 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         }
       },
 
+      _waitingLoad : function(waitingObj) {
+        var _me = this;
+        if (waitingObj.waitingMode == 'next') {
+          if (waitingObj.waitingState == 'start') {
+            _me._nextElements.each(function(nextElem) {
+              nextElem.addClassName('cel_slideShow_loadingNext');
+            });
+            _me._htmlContainer.addClassName('cel_slideShow_loadingNext');
+          } else {
+            _me._nextElements.each(function(nextElem) {
+              nextElem.removeClassName('cel_slideShow_loadingNext');
+            });
+            _me._htmlContainer.removeClassName('cel_slideShow_loadingNext');
+          }
+          _me._htmlContainer.fire('cel_slideShow:waitingNextLoad-'
+              + waitingObj.waitingState, waitingObj);
+        } else if (waitingObj.waitingMode == 'prev') {
+          if (waitingObj.waitingState == 'start') {
+            _me._nextElements.each(function(nextElem) {
+              nextElem.addClassName('cel_slideShow_loadingPrev');
+            });
+            _me._htmlContainer.addClassName('cel_slideShow_loadingPrev');
+          } else {
+            _me._nextElements.each(function(nextElem) {
+              nextElem.removeClassName('cel_slideShow_loadingPrev');
+            });
+            _me._htmlContainer.removeClassName('cel_slideShow_loadingPrev');
+          }
+          _me._htmlContainer.fire('cel_slideShow:waitingPrevLoad-'
+              + waitingObj.waitingState, waitingObj);
+        } else {
+          if (waitingObj.waitingState == 'start') {
+            _me._nextElements.each(function(nextElem) {
+              nextElem.addClassName('cel_slideShow_loading');
+            });
+            _me._htmlContainer.addClassName('cel_slideShow_loading');
+          } else {
+            _me._nextElements.each(function(nextElem) {
+              nextElem.removeClassName('cel_slideShow_loading');
+            });
+            _me._htmlContainer.removeClassName('cel_slideShow_loading');
+          }
+          _me._htmlContainer.fire('cel_slideShow:waitingLoad-' + waitingObj.waitingState,
+              waitingObj);
+        }
+      },
+
+      _addContentWrapper : function() {
+        var _me = this;
+        if (!_me._htmlContainer.down('.cel_slideShow_slideRoot')) {
+          var divInnerWrapper = new Element('div', {
+            'id' : ('slideWrapper_' + _me._htmlContainer.id),
+            'class' : 'cel_slideShow_slideWrapper'
+           }).setStyle({
+             'position' : 'relative'
+           });
+          var divSlideRoot = divInnerWrapper.wrap('div', {
+            'id' : ('slideRoot_' + _me._htmlContainer.id),
+            'class' : 'cel_slideShow_slideRoot'
+           });
+          var oldContent = _me._htmlContainer.innerHTML;
+          _me._htmlContainer.update(divSlideRoot);
+          divInnerWrapper.update(oldContent);
+        }
+      },
+
       register : function() {
         var _me = this;
         if (!_me._htmlContainer) {
@@ -109,27 +191,36 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           _me._htmlContainer = $(_me._htmlContainerId);
         }
         if (_me._htmlContainer) {
+          _me._addContentWrapper();
           if (typeof initContextMenuAsync !== 'undefined') {
             _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
                 initContextMenuAsync);
             initContextMenuAsync();
           }
-          if (typeof registerCelAnimMoviePlayer !== 'undefined') {
+          if (typeof registerCelAnimMoviePlayerInsideParent !== 'undefined') {
             _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
-                registerCelAnimMoviePlayer);
-            registerCelAnimMoviePlayer();
+                registerCelAnimMoviePlayerInsideParent.curry(_me._htmlContainer));
           }
           _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
               _me._registerNavLinks.bind(_me));
           _me._registerNavLinks();
+          _me._htmlContainer.observe('cel_yuiOverlay:afterSlideInsert',
+              _me._insertSlideCounterHandler.bind(_me));
           _me._htmlContainer.observe('cel_slideShow:preloadContentFinished',
               _me._preloadSlideImages.bind(_me));
+          var bodyElem = $$('body')[0];
+          bodyElem.observe('cel_yuiOverlay:hideEvent', _me._resetContainerElem.bind(_me));
         } else {
           if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
             console.warn('register slideshow failed. Reason: container with id "'
                 + _me._htmlContainerId + '" not found!');
           }
         }
+      },
+
+      _resetContainerElem : function() {
+        var _me = this;
+        _me._htmlContainer = null;
       },
 
       _convertFullNameToViewURL : function(fullName) {
@@ -188,6 +279,23 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         });
       },
 
+      _insertSlideCounterHandler : function(event) {
+        var _me = this;
+        _me._insertSlideCounter(event.memo.newSlideWrapperElem);
+      },
+
+      _insertSlideCounter : function(newSlideWrapperElem) {
+        var _me = this;
+        newSlideWrapperElem.select('.celPresSlideShow_countSlideNum').each(
+            function(countSlideElem) {
+              countSlideElem.update(_me._navObj.getNumSlides());
+        });
+        newSlideWrapperElem.select('.celPresSlideShow_currentSlideNum').each(
+            function(currentSlideElem) {
+              currentSlideElem.update(_me._navObj.getCurrentSlideNum());
+        });
+      },
+
       _registerNavLinks : function() {
         var _me = this;
         _me._registerNext();
@@ -199,9 +307,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._nextElements = _me._htmlContainer.select('.celPresSlideShow_next');
         _me._nextElements.each(function(nextElem) {
-          var nextSlideFunc = _me._navObj.nextSlide.bind(_me._navObj);
-          nextElem.stopObserving('click', nextSlideFunc);
-          nextElem.observe('click', nextSlideFunc);
+          nextElem.stopObserving('click', _me._nextSlideBind);
+          nextElem.observe('click', _me._nextSlideBind);
         });
       },
 
@@ -209,9 +316,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._prevElements = _me._htmlContainer.select('.celPresSlideShow_prev');
         _me._prevElements.each(function(prevElem) {
-          var prevSlideFunc = _me._navObj.prevSlide.bind(_me._navObj);
-          prevElem.stopObserving('click', prevSlideFunc);
-          prevElem.observe('click', prevSlideFunc);
+          prevElem.stopObserving('click', _me._prevSlideBind);
+          prevElem.observe('click', _me._prevSlideBind);
         });
       },
 
@@ -292,7 +398,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         if (!_me._preloadSlideImagesHash.get(preLoadSlide.slideFN)) {
           var preloadElem = new Element('div').update(preLoadSlide.responseText);
           var imgsArray = preloadElem.select('img');
-//          console.log('preloadElem: ', preloadElem, imgsArray.toArray());
           _me._preloadSlideImagesHash.set(preLoadSlide.slideFN, preloadElem);
           _me._htmlContainer.fire('cel_slideShow:afterPreloadImages', {
             'theSlideShow' : _me,
@@ -322,30 +427,32 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           'position' : 'absolute',
           'width' : 'auto',
           'height' : 'auto',
+          'marginLeft' : 0,
+          'marginRight' : 0
         });
         slideRoot.setStyle({
           'position' : 'relative',
-          'top' : 0,
-          'marginLeft' : 0,
-          'marginRight' : 0
+          'top' : 0
         });
         //use jquery to get dimensions, because it works correctly inside iframes.
         var slideWidth = $j(slideWrapper).width();
         var slideHeight = $j(slideWrapper).height();
-        var slideOuterHeight = $j(slideRoot).height();
+//        var slideOuterHeight = $j(slideRoot).height();
         var parentDiv = _me._htmlContainer;
         var parentHeight = parentDiv.getHeight();
-        var topPos = (parentHeight - slideOuterHeight) / 2;
+        //XXX why slideOuterHeight? !!! FP; 2/1/2014
+        //var topPos = (parentHeight - slideOuterHeight) / 2;
+        var topPos = (parentHeight - slideHeight) / 2;
         slideWrapper.setStyle({
           'position' : 'relative',
           'width' : slideWidth + 'px',
           'height' : slideHeight + 'px',
+          'margin' : '0',
+          'marginLeft' : 'auto',
+          'marginRight' : 'auto'
         });
         slideRoot.setStyle({
           'position' : 'relative',
-          'margin' : '0',
-          'marginLeft' : 'auto',
-          'marginRight' : 'auto',
           'top' : topPos + 'px'
         });
       },
@@ -449,7 +556,6 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         defaultElem = defaultElem || _me._htmlContainer;
         var slideRootElem = _me._getSlideWrapper().up('.cel_slideShow_slideRoot'
             ) || defaultElem;
-        //console.log('_getSlideRootElem: ', slideRootElem);
         return slideRootElem;
       },
 
@@ -461,7 +567,15 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             'cel_slideShow_slideWrapper').setStyle({
           'position' : 'relative'
         }).update(slideContent).hide();
+        _me._htmlContainer.fire('cel_yuiOverlay:beforeSlideInsert', {
+          'celSlideShow' : _me,
+          'newSlideWrapperElem' : slideWrapperElem
+        });
         _me._getSlideRootElem().insert({ bottom: slideWrapperElem });
+        _me._htmlContainer.fire('cel_yuiOverlay:afterSlideInsert', {
+          'celSlideShow' : _me,
+          'newSlideWrapperElem' : slideWrapperElem
+        });
         var resizeAndCenterSlideEvent = _me._htmlContainer.fire(
             'cel_slideShow:resizeAndCenterSlide', _me);
         if (!resizeAndCenterSlideEvent.stopped) {
@@ -525,9 +639,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 //////////////////////////////////////////////////////////////////////////////
 // Celements presentation Navigation
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.presentation.Navigation = function(preloadFunc, showFunc) {
+CELEMENTS.presentation.Navigation = function(preloadFunc, showFunc, waitingFunc) {
 // constructor
-this._init(preloadFunc, showFunc);
+this._init(preloadFunc, showFunc, waitingFunc);
 };
 
 (function() {
@@ -544,14 +658,18 @@ this._init(preloadFunc, showFunc);
       _currContent : undefined,
       _preloadNext : undefined,
       _preloadPrev : undefined,
+      _waitingNextSlide : false,
+      _waitingPrevSlide : false,
 
       _preloadFunc : undefined,
       _showFunc : undefined,
+      _waitingFunc : undefined,
 
-      _init : function(preloadFunc, showFunc) {
+      _init : function(preloadFunc, showFunc, waitingFunc) {
         var _me = this;
         _me._preloadFunc = preloadFunc || function(){};
         _me._showFunc = showFunc || function(){};
+        _me._waitingFunc = waitingFunc || function(){};
       },
 
       _convertFullNameToViewURL : function(fullName) {
@@ -562,7 +680,14 @@ this._init(preloadFunc, showFunc);
         var _me = this;
         _me._allSlides = $A(slidesFNarray);
         if (_me._allSlides.size() > 0) {
+          var maxIndex = (_me._allSlides.size() - 1);
           startIndex = startIndex || 0;
+          if (startIndex < 0) {
+            startIndex = 0;
+          }
+          if (startIndex > maxIndex) {
+            startIndex = maxIndex;
+          }
           _me.gotoSlide(startIndex);
         } else {
           _me._currIndex = undefined;
@@ -586,11 +711,32 @@ this._init(preloadFunc, showFunc);
       _updateNextContent : function(newNextContent) {
         var _me = this;
         _me._preloadNext = newNextContent;
+        if (_me._waitingNextSlide) {
+          _me._waitingNextSlide = false;
+          _me._waitingFunc({
+            'waitingMode' : 'next',
+            'waitingState' : 'finished'
+          });
+          _me.nextSlide();
+        }
       },
 
       _updatePrevContent : function(newPrevContent) {
         var _me = this;
         _me._preloadPrev = newPrevContent;
+        if (_me._waitingPrevSlide) {
+          _me._waitingPrevSlide = false;
+          _me._waitingFunc({
+            'waitingMode' : 'prev',
+            'waitingState' : 'finished'
+          });
+          _me.prevSlide();
+        }
+      },
+
+      getCurrentSlideNum : function() {
+        var _me = this;
+        return _me._currIndex + 1;
       },
 
       getNextIndex : function() {
@@ -624,31 +770,80 @@ this._init(preloadFunc, showFunc);
         return _me._allSlides.indexOf(fullName);
       },
 
+      getNumSlides : function() {
+        var _me = this;
+        return _me._allSlides.size();
+      },
+
+      _cancelWaitingNext : function () {
+        var _me = this;
+        if (_me._waitingNextSlide) {
+          _me._waitingFunc({
+            'waitingMode' : 'next',
+            'waitingState' : 'cancel'
+          });
+          _me._waitingNextSlide = false;
+        }
+      },
+
+      _cancelWaitingPrev : function () {
+        var _me = this;
+        if (_me._waitingPrevSlide) {
+          _me._waitingFunc({
+            'waitingMode' : 'prev',
+            'waitingState' : 'cancel'
+          });
+          _me._waitingPrevSlide = false;
+        }
+      },
+
       nextSlide : function() {
         var _me = this;
-        _me._preloadPrev = _me._currContent;
-        _me._prevIndex = _me._currIndex;
         var preloadNextContent = _me._preloadNext;
-        _me._currIndex = _me._nextIndex;
-        _me._preloadNext = null;
-        _me._nextIndex = null;
-        _me._updateCurrentContent(preloadNextContent);
+        _me._cancelWaitingPrev();
+        if (preloadNextContent) {
+          _me._waitingNextSlide = false;
+          _me._preloadPrev = _me._currContent;
+          _me._prevIndex = _me._currIndex;
+          _me._currIndex = _me._nextIndex;
+          _me._preloadNext = null;
+          _me._nextIndex = null;
+          _me._updateCurrentContent(preloadNextContent);
+        } else if (!_me._waitingNextSlide) {
+          _me._waitingNextSlide = true;
+          _me._waitingFunc({
+            'waitingMode' : 'next',
+            'waitingState' : 'start'
+          });
+        }
       },
 
       prevSlide : function() {
         var _me = this;
-        _me._nextIndex = _me._currIndex;
-        _me._preloadNext = _me._currContent;
-        _me._currIndex = _me._prevIndex;
+        _me._cancelWaitingNext();
         var preloadPrevContent = _me._preloadPrev;
-        _me._preloadPrev = null;
-        _me._prevIndex = null;
-        _me._updateCurrentContent(preloadPrevContent);
+        if (preloadPrevContent) {
+          _me._waitingPrevSlide = false;
+          _me._nextIndex = _me._currIndex;
+          _me._preloadNext = _me._currContent;
+          _me._currIndex = _me._prevIndex;
+          _me._preloadPrev = null;
+          _me._prevIndex = null;
+          _me._updateCurrentContent(preloadPrevContent);
+        } else if (!_me._waitingPrevSlide) {
+          _me._waitingPrevSlide = true;
+          _me._waitingFunc({
+            'waitingMode' : 'prev',
+            'waitingState' : 'start'
+          });
+        }
       },
 
       gotoSlide : function(gotoIndex) {
         var _me = this;
         gotoIndex = gotoIndex || 0;
+        _me._cancelWaitingPrev();
+        _me._cancelWaitingNext();
         if ((gotoIndex < _me._allSlides.size()) && (gotoIndex >= 0)) {
           _me._currIndex = gotoIndex;
           _me._nextIndex = null;

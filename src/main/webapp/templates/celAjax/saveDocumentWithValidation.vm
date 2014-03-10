@@ -1,8 +1,13 @@
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
+$jsonBuilder.openDictionary()
 #set($map = $util.getHashMap())
 #set($devnull = $map.putAll($request.getParameterMap()))
 #set($validationResult = $celementsweb.validateRequest())
 ## Handle Validation Results
-#if($validationResult.size() == 0)
+#set($validationPassed = ($validationResult.size() == 0))
+$jsonBuilder.openProperty('successful')
+$jsonBuilder.addBoolean($validationPassed)
+#if($validationPassed)
   #set($numSaved = 0)
   #foreach($d in $celementsweb.updateDocFromMap("$!doc.fullName", $map))
    #if(!$d.isNew() || ("$!request.createIfNotExists" == 'true'))
@@ -10,16 +15,20 @@
       #set($numSaved = $numSaved + 1)
     #end
   #end
- { "successful" : true, "numSavedDocVersions" : $numSaved }
+$jsonBuilder.openProperty("numSavedDocVersions")
+$jsonBuilder.addInteger($numSaved)
 #else
+  $jsonBuilder.openProperty('errorMessages')
+  $jsonBuilder.openArray()
   #set($errorMessages = '')
   #foreach($err in $validationResult.keySet())
     #if("$validationResult.get($err)" != '')
-      #set($errorMessages = "${errorMessages},${Q}$adminMsg.get($validationResult.get($err))${Q}")
+      $jsonBuilder.addString($adminMsg.get($validationResult.get($err)))
     #else
-      #set($errorMessages = "${errorMessages},${Q}${err}${Q}")
+      $jsonBuilder.addString("$err")
     #end
   #end
- { "successful" : false, "errorMessages" : [ ${errorMessages.replaceAll('^,','')}##
- ]}
+$jsonBuilder.closeArray()
 #end
+$jsonBuilder.closeDictionary()
+$jsonBuilder.getJSON()

@@ -714,6 +714,49 @@ body #sitecontainer .cel_content_part table td {
 	cursor: pointer;
 }
 
+/* Search results */
+#sitecontainer #websearch .results ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+#sitecontainer #websearch .results .result_item {
+  padding-bottom: 16px;
+}
+#sitecontainer #websearch .results .result_ranking_color {
+  width: 8px;
+  border-radius: 2px;
+  display: none;
+}
+#sitecontainer #websearch .results .result_ranking_score {
+  display: none;
+}
+#sitecontainer #websearch .results .result_page_link {
+  color: blue;
+  text-decoration: none;
+  font-size: 20px;
+  padding-bottom: 2px;
+  display: block;
+}
+#sitecontainer #websearch .results .result_page_link:hover {
+  text-decoration: underline;
+}
+#sitecontainer #websearch .results .result_page_link:visited {
+  color: purple;
+  text-decoration: none;
+}
+#sitecontainer #websearch .results .result_url {
+  color: #393;
+  text-decoration: none;
+  font-size: 14px;
+}
+#sitecontainer #websearch .results .result_bread_crumbs {
+  color: black;
+  display: block;
+}
+#sitecontainer #websearch .results .result_date {
+  float: right;
+}
+
 /**
   Ask Toolbar for google chrome leads to problems. Thus we hide it generally by default.
  **/

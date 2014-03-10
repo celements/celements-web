@@ -3,7 +3,9 @@ $response.setStatus(501)
 Unkown ajax_mode [$!{request.ajax_mode}]!
 #end
 ## init Celements variables
+#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements'))) 
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
+#end
 #if("$!request.ajax_mode" == 'CelTabEditAjax')
 $xwiki.includeForm("celements2web:Macros.Ajax", false)
 #elseif("$!request.ajax_mode" != '')

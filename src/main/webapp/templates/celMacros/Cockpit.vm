@@ -65,4 +65,17 @@
 #end
 <input type="submit" value="$adminMsg.get('cel_save')" />
 </form>
+#if($isSuperAdmin)
+##TODO check getWikiDocumentList for local admin
+<div id="wikiDomains" class="editblock">
+<h2>$adminMsg.get('cel_cockpit_domainnames_title')</h2>
+<ol>
+#foreach($wikiDoc in $xwiki.wikimanager.getWikiDocumentList())
+#if($wikiDoc.getWikiName() == $context.getDatabase())
+<li>$wikiDoc.getServer()</li>
+#end
+#end
+</ol>
+</div>
+#end
 #end ##isAdmin

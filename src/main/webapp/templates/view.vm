@@ -1,5 +1,5 @@
 #set($contextIsFinished = false)
-#set($isXWikiSkinRequested = (("$!request.viewer" != '') || ("$!request.skin" != ''))) 
+#set($isXWikiSkinRequested = (("$!request.viewer" != '') || (("$!request.skin" != '') && ("$!request.skin" != 'cellskin')))) 
 #set($isBaseOrCellSkin = (("$xwiki.getSkin()" == 'cellskin') || ("$xwiki.getSkin()" == 'celements2web:Skins.BaseSkin')))
 #set($isBasedOnCellOrBaseSkin = (($xwiki.getBaseSkin() == 'celements2web:Skins.BaseSkin') || ($xwiki.getBaseSkin() == 'cellskin')))
 #set($isLocalSkinBasedOnCelementsRequested = (($xwiki.getSkin().indexOf('.') > 0) && ($xwiki.getSkin().indexOf(':') < 0) && $isBasedOnCellOrBaseSkin))

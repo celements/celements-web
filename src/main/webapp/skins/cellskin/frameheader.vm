@@ -16,7 +16,10 @@
 #if("$!doclang" == '')
   #set($doclang = $tdoc.getDefaultLanguage())
 #end
-<div id="sitecontainer" class="lang_${language} doclang_$doclang">
+##TODO get pageStyles from pageType-scriptService
+#set($cel_pageTypeObj = $doc.getObject('Celements2.PageType', true))
+#set($pageStyles = "$!cel_pageTypeObj.getProperty('page_styles').getValue()")
+<div id="sitecontainer" class="lang_${language} doclang_$doclang $!{pageStyles.trim()}">
 <!-- start celements cells -->
 #if(("$!overwriteLayoutRef" != '') && $celementsweb.layoutExists($overwriteLayoutRef))
 $celementsweb.renderPageLayout($overwriteLayoutRef)
