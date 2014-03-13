@@ -27,16 +27,26 @@ $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('importManager.js',
 #set($pageTypeDocRef = $services.model.createDocumentReference('', 'PageTypes', $pageTypeName))
 #set($pageTypeCentralDocRef = $services.model.createDocumentReference('celements2web', 'PageTypes', $pageTypeName))
 #set($pageTypeDoc = $xwiki.getDocument($pageTypeDocRef))
-  #set($importObj = $pageTypeDoc.getObject('Classes.ImportClass'))
-  #if(("$!importObj" == '') && ($pageTypeDocRef != $pageTypeCentralDocRef))
-    #set($celeTemplateDoc = $xwiki.getDocument($pageTypeCentralDocRef))
-    #set($importObj = $celeTemplateDoc.getObject('Classes.ImportClass'))
-  #end
+#set($importObj = $pageTypeDoc.getObject('Classes.ImportClass'))
+#if(("$!importObj" == '') && ($pageTypeDocRef != $pageTypeCentralDocRef))
+  #set($celeTemplateDoc = $xwiki.getDocument($pageTypeCentralDocRef))
+  #set($importObj = $celeTemplateDoc.getObject('Classes.ImportClass'))
 #end
-#set($encoding = "$!importObj.getProperty('encoding').getValue()")
-#set($allowedExtentions = "$!importObj.getProperty('allowed_file_extentions').getValue()")
-#set($action = $importObj.getProperty('js_preimport_function').getValue())
-#set($preimportLink = $importObj.getProperty('preimport_link').getValue())
+#end
+#if("$!importObj" != '')
+  #set($encoding = "$!importObj.getProperty('encoding').getValue()")
+  #set($allowedExtentions = "$!importObj.getProperty('allowed_file_extentions').getValue()")
+  #set($action = $importObj.getProperty('js_preimport_function').getValue())
+  #set($preimportLink = $importObj.getProperty('preimport_link').getValue())
+  #set($initFilters = "$!importObj.getProperty('filebaseTagDocName').getValue()") <!-- filter: $initFilters -->
+#else
+  #set($encoding = "")
+  #set($allowedExtentions = "zip")
+  #set($action = "")
+  ##TODO #set($preimportLink = "?xpage=celements_ajax&ajax_mode=ImportPhoto")
+  #set($preimportLink = "/Tools/ImportPhoto?xpage=plain")
+  #set($initFilters = "tag1")
+#end
 #if($preimportLink.length() > 0)
   #if($preimportLink.indexOf('?') < 0)
     #set($preimportLink = "$!{preimportLink}?")
@@ -71,7 +81,6 @@ $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('importManager.js',
   <div class="c3_import_title">$adminMsg.get('cel_import_filelist')</div><!-- /c3_import_title -->
   <div class="c3_filebase_box c3_import_tabbox">
 ##    #set($isInline = '1') <!-- inline: $isInline -->
-  #set($initFilters = "$!importObj.getProperty('filebaseTagDocName').getValue()") <!-- filter: $initFilters -->
   #set($initActive = "f$initFilters") <!-- active: $initActive -->
   #set($fbDoc = "$!xwiki.getWebPreference('cel_centralfilebase')") <!-- centraldoc: $fbDoc -->
   #set($initSingleDoc = "$!fbDoc") <!-- singledoc: $initSingleDoc -->
