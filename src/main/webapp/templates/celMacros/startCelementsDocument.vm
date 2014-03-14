@@ -14,14 +14,9 @@
 #if("$doc.fullName" == 'Content.favicon.ico')
   $context.getResponse().sendRedirect($skin_doc.getAttachmentURL('favicon.ico','skin'))
 #end
-
-#set($obj = $doc.getObject('Celements.PageDepCellConfigClass', false))
-#set($depSpace = $obj.getProperty('space_name').getValue())
-#set($currLayoutRef = $doc.getDocumentReference().getLastSpaceReference())
-#set($pdcLayoutDefDocRef = $services.cells.getLayoutDefaultDocRef($currLayoutRef, $depSpace))
-#set($layoutDoc = $xwiki.getDocument($pdcLayoutDefDocRef))
+#set($layoutDocRef = $services.model.createDocumentReference('', "$celementsweb.getCurrentRenderingLayout().getName()", 'WebHome'))
+#set($layoutDoc = $xwiki.getDocument($layoutDocRef))
 #set($layoutObj = $layoutDoc.getObject('Celements.PageLayoutPropertiesClass'))
-
 #if(("$!layoutObj" != '') && ("$!layoutObj.getProperty('doctype').getValue()" == 'HTML 5'))
 <!DOCTYPE html>
 #if($language && ("$!language" != ""))
