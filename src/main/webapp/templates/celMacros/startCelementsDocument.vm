@@ -14,7 +14,8 @@
 #if("$doc.fullName" == 'Content.favicon.ico')
   $context.getResponse().sendRedirect($skin_doc.getAttachmentURL('favicon.ico','skin'))
 #end
-#set($layoutDocRef = $services.model.createDocumentReference('', "$celementsweb.getCurrentRenderingLayout().getName()", 'WebHome'))
+#set($layoutSpace = $celementsweb.getCurrentRenderingLayout().getName())
+#set($layoutDocRef = $services.model.createDocumentReference('', "$layoutSpace", 'WebHome'))
 #set($layoutDoc = $xwiki.getDocument($layoutDocRef))
 #set($layoutObj = $layoutDoc.getObject('Celements.PageLayoutPropertiesClass'))
 #if(("$!layoutObj" != '') && ("$!layoutObj.getProperty('doctype').getValue()" == 'HTML 5'))
