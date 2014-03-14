@@ -45,6 +45,7 @@ $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('importManager.js',
   #set($action = "")
   ##TODO #set($preimportLink = "?xpage=celements_ajax&ajax_mode=ImportPhoto")
   #set($preimportLink = "/Tools/ImportPhoto?xpage=plain")
+  <!-- include ':celJS/import/import-photo.js' -->
   $celementsweb.addExtJSfileOnce(':celJS/import/import-photo.js')
   #set($initFilters = "tag1")
 #end
