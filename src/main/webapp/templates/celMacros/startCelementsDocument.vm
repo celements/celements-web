@@ -14,8 +14,7 @@
 #if("$doc.fullName" == 'Content.favicon.ico')
   $context.getResponse().sendRedirect($skin_doc.getAttachmentURL('favicon.ico','skin'))
 #end
-#set($doctype = "$!xwiki.getSpacePreference('doctype')")
-#if("$!doctype" == 'HTML5')
+#if("$!xwiki.getSpacePreference('doctype')" == 'HTML5')
 <!DOCTYPE html>
 #if($language && ("$!language" != ""))
 <html lang="$!language">
