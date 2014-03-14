@@ -14,12 +14,25 @@
 #if("$doc.fullName" == 'Content.favicon.ico')
   $context.getResponse().sendRedirect($skin_doc.getAttachmentURL('favicon.ico','skin'))
 #end
+#set($layoutSpace = $celementsweb.getCurrentRenderingLayout().getName())
+#set($layoutDocRef = $services.model.createDocumentReference('', "$layoutSpace", 'WebHome'))
+#set($layoutDoc = $xwiki.getDocument($layoutDocRef))
+#set($layoutObj = $layoutDoc.getObject('Celements.PageLayoutPropertiesClass'))
+#if(("$!layoutObj" != '') && ("$!layoutObj.getProperty('doctype').getValue()" == 'HTML 5'))
+<!DOCTYPE html>
+#if($language && ("$!language" != ""))
+<html lang="$!language">
+#else 
+<html lang="en">
+#end
+#else
 ##<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 #if($language && ("$!language" != ""))
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="$!language" lang="$!language">
 #else	
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+#end
 #end
 <head>
 #if($!withoutDefaultHeaders == false)
