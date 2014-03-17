@@ -64,6 +64,8 @@ var CelImageDialog = {
       nl.delay.value = _me.getAttrib(n, 'delay');
       nl.overlayWidth.value = _me.getAttrib(n, 'overlayWidth');
       nl.overlayHeight.value = _me.getAttrib(n, 'overlayHeight');
+      nl.animWidth.value = _me.getAttrib(n, 'animWidth');
+      nl.animHeight.value = _me.getAttrib(n, 'animHeight');
       nl.style.value = dom.getAttrib(n, 'style');
       nl.id.value = dom.getAttrib(n, 'id');
       nl.dir.value = dom.getAttrib(n, 'dir');
@@ -325,7 +327,7 @@ var CelImageDialog = {
     newId = 'S' + new Date().getTime() + ':' + getSelectValue(f, 'gallery') + ':'
       + nl.delay.value + ':' + getSelectValue(f, 'effect') + ':' + nl.overlayWidth.value
       + ':' + nl.overlayHeight.value + ':' + nl.slideshowFixStartImageNum.value + ':'
-      + _me._getGallerySpace();
+      + _me._getGallerySpace() + ':'  + nl.animWidth.value + ':' + nl.animHeight.value;
     return newId.replace(/:+$/, '');
   },
 
@@ -579,6 +581,24 @@ var CelImageDialog = {
       idArgs = dom.getAttrib(e, 'id').split(':');
       if (idArgs.length > 5) {
         v = idArgs[5];
+      }
+      return v;
+    }
+
+    if (at == 'animWidth') {
+      v = '';
+      idArgs = dom.getAttrib(e, 'id').split(':');
+      if (idArgs.length > 8) {
+        v = idArgs[8];
+      }
+      return v;
+    }
+
+    if (at == 'animHeight') {
+      v = '';
+      idArgs = dom.getAttrib(e, 'id').split(':');
+      if (idArgs.length > 9) {
+        v = idArgs[9];
       }
       return v;
     }
