@@ -418,43 +418,46 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
        * we need an additional div between the slideWrapper and the _htmlContainer
        * to get the reduced dimensions of the slide. This intermediate div must
        * present the .cel_slideShow_slideRoot css class.
+       * 
+       * prerequisite: slideWrapper MUST have a height and width asigned (e.g. by resize)
        */
       _centerCurrentSlide : function(slideWrapperIn) {
         var _me = this;
         var slideWrapper = slideWrapperIn || _me._getSlideWrapper();
         var slideRoot = _me._getSlideRootElem(slideWrapper);
-        slideWrapper.setStyle({
-          'position' : 'absolute',
-          'width' : 'auto',
-          'height' : 'auto',
-          'marginLeft' : 0,
-          'marginRight' : 0
-        });
-        slideRoot.setStyle({
-          'position' : 'relative',
-          'top' : 0
-        });
+//        slideWrapper.setStyle({
+//          'position' : 'absolute',
+//          'width' : 'auto',
+//          'height' : 'auto',
+//          'marginLeft' : 0,
+//          'marginRight' : 0
+//        });
+//        slideRoot.setStyle({
+//          'position' : 'relative',
+//          'top' : 0
+//        });
         //use jquery to get dimensions, because it works correctly inside iframes.
-        var slideWidth = $j(slideWrapper).width();
-        var slideHeight = $j(slideWrapper).height();
         var slideOuterHeight = $j(slideRoot).height();
         var parentDiv = _me._htmlContainer;
         var parentHeight = parentDiv.getHeight();
+        var parentWidth = parentDiv.getWidth();
         //FIXED: why slideOuterHeight? !!! FP; 2/1/2014
         //--> it must be slideOuterHeight to get correct size of scaled down slides.
         //--> see method comment
         var topPos = (parentHeight - slideOuterHeight) / 2;
         slideWrapper.setStyle({
           'position' : 'relative',
-          'width' : slideWidth + 'px',
-          'height' : slideHeight + 'px',
           'margin' : '0',
           'marginLeft' : 'auto',
           'marginRight' : 'auto'
         });
+        // overwrite slideRoot width to max posible width (= parentWidth) to achieve
+        // horizontal centering.
         slideRoot.setStyle({
-          'position' : 'relative',
-          'top' : topPos + 'px'
+          'position' : 'absolute',
+          'width' : (parentWidth + 'px'),
+          'top' : topPos + 'px',
+          'margin' : '0'
         });
       },
 
@@ -486,18 +489,14 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         if (_me._autoresize) {
           var slideWrapper = slideWrapperIn || _me._getSlideWrapper();
-          var zoomFactor = _me._computeZoomFactor(slideWrapper);
-          if (zoomFactor <= 1) {
-            var oldWidth = parseInt(slideWrapper.getWidth());
-            var oldHeight = parseInt(slideWrapper.getHeight());
-            newHeight = oldHeight * zoomFactor;
-            newWidth = oldWidth * zoomFactor;
+          var zoomFactorObj = _me._computeZoomFactor(slideWrapper);
+          if (zoomFactorObj.zoomFactor <= 1) {
             var eventMemo = {
-                'fullWidth' : oldWidth,
-                'fullHeight' : oldHeight,
-                'zoomFactor' : zoomFactor,
-                'newWidth' : newWidth,
-                'newHeight' : newHeight
+                'fullWidth' : zoomFactorObj.oldWidth,
+                'fullHeight' : zoomFactorObj.oldHeight,
+                'zoomFactor' : zoomFactorObj.zoomFactor,
+                'newWidth' : zoomFactorObj.newWidth,
+                'newHeight' : zoomFactorObj.newHeight
             };
             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
               console.log('final resize factor: ', eventMemo);
@@ -506,23 +505,23 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
                 'cel_slideShow:resizeSlideContent', eventMemo);
             if (!resizeEvent.stopped) {
               slideWrapper.setStyle({
-                'zoom' : zoomFactor,
-                'transform' : 'scale(' + zoomFactor + ')',
+                'zoom' : zoomFactorObj.zoomFactor,
+                'transform' : 'scale(' + zoomFactorObj.zoomFactor + ')',
                 'transformOrigin' : '0 0 0',
-                'height' : oldHeight + 'px',  // important for FF
-                'width' : oldWidth + 'px' // important for FF
+                'height' : zoomFactorObj.oldHeight + 'px',  // important for FF
+                'width' : zoomFactorObj.oldWidth + 'px' // important for FF
               });
             }
-            var parentDiv = _me._getSlideRootElem();
+            var parentDiv = _me._getSlideRootElem(slideWrapper);
             if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
               parentDiv.setStyle({
-                'width' : newWidth + 'px',
-                'height' : newHeight + 'px'
+                'width' : zoomFactorObj.newWidth + 'px',
+                'height' : zoomFactorObj.newHeight + 'px'
               });
             }
           } else {
             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-              console.log('no resize needed.', zoomFactor);
+              console.log('no resize needed.', zoomFactorObj.zoomFactor);
             }
           }
         }
@@ -531,6 +530,16 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _computeZoomFactor : function(slideWrapperIn) {
         var _me = this;
         var slideWrapper = slideWrapperIn || _me._getSlideWrapper();
+        var slideRoot = _me._getSlideRootElem(slideWrapper);
+        var isRootHidden = !slideRoot.visible();
+        var rootPositionValue = slideRoot.getStyle('position');
+        if (isRootHidden) {
+          slideRoot.setStyle({
+            'position' : 'absolute',
+            'visibility' : 'hidden'
+          });
+          slideRoot.show();
+        }
         var oldWidth = parseInt(slideWrapper.getWidth());
         var newWidth = oldWidth;
         if (oldWidth > _me._htmlContainer.getWidth()) {
@@ -549,33 +558,51 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         } else {
           zoomFactor = zoomWidthFactor;
         }
-        return zoomFactor;
+        if (isRootHidden) {
+          slideRoot.setStyle({
+            'position' : rootPositionValue,
+            'visibility' : ''
+          });
+          slideRoot.hide();
+        }
+        return {
+          'zoomFactor' : zoomFactor,
+          'oldHeight' : oldHeight,
+          'oldWidth' : oldWidth,
+          'newHeight' : oldHeight * zoomFactor,
+          'newWidth' : oldWidth * zoomFactor
+        };
       },
 
-      _getSlideRootElem : function(defaultElem) {
+      _getSlideRootElem : function(slideWrapper) {
         var _me = this;
-        defaultElem = defaultElem || _me._htmlContainer;
-        var slideRootElem = _me._getSlideWrapper().up('.cel_slideShow_slideRoot'
-            ) || defaultElem;
+        defaultElem = slideWrapper || _me._htmlContainer;
+        var slideRootElem = slideWrapper.up('.cel_slideShow_slideRoot') || defaultElem;
         return slideRootElem;
       },
 
       _showSlide : function(slideContent) {
         var _me = this;
-        _me._getSlideRootElem().addClassName('celanim_isChanging');
+        _me.getHtmlContainer().addClassName('celanim_isChanging');
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
         var slideWrapperElem = new Element('div').addClassName(
-            'cel_slideShow_slideWrapper').setStyle({
+          'cel_slideShow_slideWrapper').setStyle({
           'position' : 'relative'
-        }).update(slideContent).hide();
+        }).update(slideContent);
+        var slideRootElem = new Element('div').addClassName(
+          'cel_slideShow_slideRoot').setStyle({
+          'position' : 'absolute'
+        }).update(slideWrapperElem).hide();
         _me._htmlContainer.fire('cel_yuiOverlay:beforeSlideInsert', {
           'celSlideShow' : _me,
-          'newSlideWrapperElem' : slideWrapperElem
+          'newSlideWrapperElem' : slideWrapperElem,
+          'newSlideRootElem' : slideRootElem
         });
-        _me._getSlideRootElem().insert({ bottom: slideWrapperElem });
+        _me.getHtmlContainer().insert({ bottom: slideRootElem });
         _me._htmlContainer.fire('cel_yuiOverlay:afterSlideInsert', {
           'celSlideShow' : _me,
-          'newSlideWrapperElem' : slideWrapperElem
+          'newSlideWrapperElem' : slideWrapperElem,
+          'newSlideRootElem' : slideRootElem
         });
         var resizeAndCenterSlideEvent = _me._htmlContainer.fire(
             'cel_slideShow:resizeAndCenterSlide', _me);
@@ -600,7 +627,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _showSlideAfterPreloadingImg : function() {
         var _me = this;
         //TODO add second slideRootElem to allow proper positioning of both slides
-        var slides = _me._getSlideRootElem().select('.cel_slideShow_slideWrapper');
+        var slides = _me.getHtmlContainer().select('.cel_slideShow_slideRoot');
         _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
             _me._cleanupSlideTransitionBind);
         _me._htmlContainer.observe('cel_slideShow:slideTransitionFinished',
@@ -624,14 +651,14 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
             _me._cleanupSlideTransitionBind);
-        var slides = _me._getSlideRootElem().select('.cel_slideShow_slideWrapper');
+        var slides = _me.getHtmlContainer().select('.cel_slideShow_slideRoot');
         slides.each(function(slideElem) {
           if (!slideElem.visible()) {
             slideElem.remove();
           }
         });
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
-        _me._getSlideRootElem().removeClassName('celanim_isChanging');
+        _me.getHtmlContainer().removeClassName('celanim_isChanging');
         _me._htmlContainer.fire('cel_yuiOverlay:contentChanged', _me);
       }
   };
