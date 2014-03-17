@@ -437,12 +437,13 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         //use jquery to get dimensions, because it works correctly inside iframes.
         var slideWidth = $j(slideWrapper).width();
         var slideHeight = $j(slideWrapper).height();
-//        var slideOuterHeight = $j(slideRoot).height();
+        var slideOuterHeight = $j(slideRoot).height();
         var parentDiv = _me._htmlContainer;
         var parentHeight = parentDiv.getHeight();
-        //XXX why slideOuterHeight? !!! FP; 2/1/2014
-        //var topPos = (parentHeight - slideOuterHeight) / 2;
-        var topPos = (parentHeight - slideHeight) / 2;
+        //FIXED: why slideOuterHeight? !!! FP; 2/1/2014
+        //--> it must be slideOuterHeight to get correct size of scaled down slides.
+        //--> see method comment
+        var topPos = (parentHeight - slideOuterHeight) / 2;
         slideWrapper.setStyle({
           'position' : 'relative',
           'width' : slideWidth + 'px',
