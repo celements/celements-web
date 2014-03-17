@@ -283,6 +283,25 @@ var CelImageDialog = {
     return '';
   },
   
+  addFixAnimSizeToURL : function(src) {
+    var f = document.forms[0];
+    var nl = f.elements;
+    if (src && (src != '')) {
+      var newSrc = src.replace(/(.*\?)(.*&background=\d*|background=\d*)(\D?.*)/g, '$1$3');
+      if(newSrc.indexOf('?') < 0) {
+        newSrc += '?';
+      } else if(!newSrc.endsWith('&')) {
+        newSrc += '&';
+      }
+      if (nl.hasSlideshow.checked) {
+        //TODO change background color to transparent
+        newSrc += 'background=00000022';
+      }
+      return newSrc;
+    }
+    return '';
+  },
+  
   replaceCropInURL : function(src) {
     if (src && (src != '')) {
       if($('isCropped').value == '1') {
@@ -381,10 +400,18 @@ var CelImageDialog = {
       };
     }
 
+    if (nl.hasSlideshow.checked && !isNaN(parseInt(nl.animWidth.value))
+        && !isNaN(parseInt(nl.animHeight.value))) {
+      nl.celwidth.value = parseInt(nl.animWidth.value);
+      nl.celheight.value = parseInt(nl.animHeight.value);
+    }
+
     nl.src.value = _me.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
         nl.celheight.value);
-    
+
     nl.src.value = _me.replaceCropInURL(nl.src.value);
+
+    nl.src.value = _me.addFixAnimSizeToURL(nl.src.value);
 
     tinymce.extend(args, {
       src : nl.src.value,
