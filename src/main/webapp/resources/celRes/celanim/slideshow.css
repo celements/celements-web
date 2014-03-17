@@ -35,7 +35,7 @@
 
 
 .celimage_slideshow_wrapper .slideshowButton { 
-  background-image: url(celanim/buttons500.png);
+  background-image: url(buttons500.png);
   height: 66px !important; 
   width: 67px !important; 
   position: absolute; 
@@ -51,5 +51,5 @@
 }
 
 .celimage_slideshow_wrapper .slideshowButton:hover { 
-  background-image: url(celanim/buttons500-hover.png);
+  background-image: url(buttons500-hover.png);
 }
