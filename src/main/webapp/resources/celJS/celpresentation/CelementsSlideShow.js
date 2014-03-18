@@ -487,10 +487,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _resizeCurrentSlide : function(slideWrapperIn) {
         var _me = this;
-        if (_me._autoresize) {
-          var slideWrapper = slideWrapperIn || _me._getSlideWrapper();
-          var zoomFactorObj = _me._computeZoomFactor(slideWrapper);
-          if (zoomFactorObj.zoomFactor <= 1) {
+        var slideWrapper = slideWrapperIn || _me._getSlideWrapper();
+        var zoomFactorObj = _me._computeZoomFactor(slideWrapper);
+        if ((_me._autoresize) && (zoomFactorObj.zoomFactor <= 1)) {
             var eventMemo = {
                 'fullWidth' : zoomFactorObj.oldWidth,
                 'fullHeight' : zoomFactorObj.oldHeight,
@@ -519,10 +518,23 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
                 'height' : zoomFactorObj.newHeight + 'px'
               });
             }
-          } else {
+        } else {
+          if (zoomFactorObj.zoomFactor > 1) {
             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
               console.log('no resize needed.', zoomFactorObj.zoomFactor);
             }
+          }
+          //set sizes without zoom too. Important for centering
+          slideWrapper.setStyle({
+            'height' : zoomFactorObj.oldHeight + 'px',
+            'width' : zoomFactorObj.oldWidth + 'px'
+          });
+          var parentDiv = _me._getSlideRootElem(slideWrapper);
+          if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
+            parentDiv.setStyle({
+              'width' : zoomFactorObj.oldWidth + 'px',
+              'height' : zoomFactorObj.oldHeight + 'px'
+            });
           }
         }
       },
