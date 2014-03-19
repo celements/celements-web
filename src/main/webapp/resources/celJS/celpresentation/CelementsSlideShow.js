@@ -286,11 +286,12 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _insertSlideCounter : function(newSlideWrapperElem) {
         var _me = this;
-        newSlideWrapperElem.select('.celPresSlideShow_countSlideNum').each(
+        _me._htmlContainer.select('.celPresSlideShow_countSlideNum').each(
             function(countSlideElem) {
               countSlideElem.update(_me._navObj.getNumSlides());
         });
-        newSlideWrapperElem.select('.celPresSlideShow_currentSlideNum').each(
+        _me._htmlContainer.select(
+            '.celPresSlideShow_currentSlideNum').each(
             function(currentSlideElem) {
               currentSlideElem.update(_me._navObj.getCurrentSlideNum());
         });
