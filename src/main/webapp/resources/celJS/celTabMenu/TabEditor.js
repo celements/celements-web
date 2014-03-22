@@ -54,6 +54,8 @@ TE.prototype = {
 
   afterInitListeners : new Array(),
 
+  _log : new CELEMENTS.mobile.Dimensions(),
+
   isValidFormId : function(formId) {
   return (typeof formId == 'string') && (formId != '') && $(formId)
       && (typeof $(formId).action != 'undefined') && ($(formId).action != '');
@@ -860,12 +862,14 @@ TE.prototype = {
 
  saveAllFormsAjax : function(execCallback, doNotSaveFormId) {
    var _me = this;
+   _me._log.logDimAndAgent('saveAllFormsAjax: start ', doNotSaveFormId);
    var dirtyFormIds = _me.getDirtyFormIds();
    var jsonResponses = new Hash();
    var saveAllForms = function(allDirtyFormIds) {
      var formId = allDirtyFormIds.pop();
      var remainingDirtyFormIds = allDirtyFormIds;
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
+       _me._log.logDimAndAgent('saveAllFormsAjax: success ', transport);
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
          _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
