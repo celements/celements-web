@@ -672,6 +672,8 @@ TE.prototype = {
  },
 
  saveAndContinueAjax : function(formName, handler) {
+   var _me = this;
+  _me._log.logDimAndAgent('saveAndContinueAjax: start ', formName);
   if(!formName) { formName = 'edit'; }
   if(document.forms[formName]) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
@@ -868,6 +870,7 @@ TE.prototype = {
    var saveAllForms = function(allDirtyFormIds) {
      var formId = allDirtyFormIds.pop();
      var remainingDirtyFormIds = allDirtyFormIds;
+     _me._log.logDimAndAgent('saveAllFormsAjax: before saveAndContinueAjax in saveAllForms ', allDirtyFormIds);
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
        _me._log.logDimAndAgent('saveAllFormsAjax: success ', transport);
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
