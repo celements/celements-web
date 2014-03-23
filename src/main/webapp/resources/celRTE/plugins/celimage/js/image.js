@@ -58,6 +58,7 @@ var CelImageDialog = {
       nl.hasOverlay.checked = _me.getAttrib(n, 'hasOverlay');
       nl.hasCloseButton.checked = _me.getAttrib(n, 'hasCloseButton');
       nl.isSlideshowManualStart.checked = _me.getAttrib(n, 'isSlideshowManualStart');
+      nl.isSlideshowCustomStart.checked = _me.getAttrib(n, 'isSlideshowCustomStart');
       nl.isSlideshowRandomStart.checked = _me.getAttrib(n, 'isSlideshowRandomStart');
       nl.slideshowFixStartImageNum.value = _me.getAttrib(n, 'slideshowFixStartImageNum');
       nl.hasSlideshowAddNavigation.checked = _me.getAttrib(n, 'hasSlideshowAddNavigation');
@@ -444,6 +445,11 @@ var CelImageDialog = {
       args['class'] = (args['class'] + ' ' + cssClassPrefix + '_manualstart').strip();
     }
 
+    if (nl.isSlideshowCustomStart.checked) {
+      args['id'] = _me.getSlideShowId(f);
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_customStartSlide').strip();
+    }
+
     if (nl.isSlideshowRandomStart.checked) {
       args['id'] = _me.getSlideShowId(f);
       args['class'] = (args['class'] + ' ' + cssClassPrefix + '_slideshowRandomStart').strip();
@@ -536,6 +542,10 @@ var CelImageDialog = {
 
     if (at == 'isSlideshowManualStart') {
       return (dom.hasClass(e, 'celanim_manualstart') || dom.hasClass(e, 'celimage_manualstart'));
+    }
+
+    if (at == 'isSlideshowCustomStart') {
+      return (dom.hasClass(e, 'celanim_slideshowCustomStart') || dom.hasClass(e, 'celimage_customStartSlide'));
     }
 
     if (at == 'isSlideshowRandomStart') {

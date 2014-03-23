@@ -46,6 +46,7 @@ tinyMCE.addI18n('de.celimage_dlg', {
   hasSlideshow : "mit Bildstrecke",
   isSlideshowManualStart : "Manuell Starten",
   isSlideshowRandomStart : "Zuf\u00e4lliger Startpunkt",
+  isSlideshowCustomStart : "Eigenes Standbild",
   hasSlideshowAddNavigation : "Navigation hinzuf\u00fcgen",
   gallery : "Bild Album",
   "galleryPicker" : "Bildstrecke",
