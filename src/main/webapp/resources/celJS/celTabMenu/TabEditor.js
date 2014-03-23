@@ -427,16 +427,21 @@ TE.prototype = {
       if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
         lang = $$('.celTabLanguage')[0].value;
       }
+      var loadTabParams = {
+          xpage : 'celements_ajax',
+          ajax_mode : 'CelTabContent',
+          id : tabId,
+          language : lang
+       };
+      if (window.location.search.match(/\&?template=[^\&]+/)) {
+        loadTabParams["template"] = window.location.search.replace(
+            /\&?template=([^\&])+/, '$1');
+      }
       // load tab content
       asyncLoading = true;
       new Ajax.Request(getTMCelHost(), {
          method: 'post',
-         parameters: {
-            xpage : 'celements_ajax',
-            ajax_mode : 'CelTabContent',
-            id : tabId,
-            language : lang
-         },
+         parameters: loadTabParams,
          onSuccess: function(transport) {
            div.update(transport.responseText);
            _me.lazyLoadJS(div);
