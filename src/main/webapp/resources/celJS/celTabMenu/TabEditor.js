@@ -437,6 +437,10 @@ TE.prototype = {
         loadTabParams["template"] = window.location.search.replace(
             /\&?template=([^\&])+/, '$1');
       }
+      if (window.location.search.match(/\&?language=[^\&]+/)) {
+        loadTabParams["language"] = window.location.search.replace(
+            /\&?language=([^\&])+/, '$1');
+      }
       // load tab content
       asyncLoading = true;
       new Ajax.Request(getTMCelHost(), {
