@@ -592,6 +592,8 @@ TE.prototype = {
     }
     _me.saveAllFormsAjax(function(transport) {
       window.onbeforeunload = null;
+      _me._log.logDimAndAgent('saveAndClose: before synchronous submit for form |'
+          + oldSaveFormName + '|');
       document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
   } else {
@@ -868,14 +870,15 @@ TE.prototype = {
    var dirtyFormIds = _me.getDirtyFormIds();
    var jsonResponses = new Hash();
    var saveAllForms = function(allDirtyFormIds) {
-     _me._log.logDimAndAgent('saveAllFormsAjax: before saveAndContinueAjax in '
-         + 'saveAllForms allDirtyFormIds: ' + Object.toJSON(allDirtyFormIds));
      var formId = allDirtyFormIds.pop();
      var remainingDirtyFormIds = allDirtyFormIds;
+     _me._log.logDimAndAgent('saveAllFormsAjax: before saveAndContinueAjax in '
+         + 'saveAllForms for formId |' + formId + '|, remainingDirtyFormIds: '
+         + Object.toJSON(remainingDirtyFormIds));
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
-       _me._log.logDimAndAgent('saveAllFormsAjax: success |'
-           + transport.responseText + '|');
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
+         _me._log.logDimAndAgent('saveAllFormsAjax: received json Response |'
+             + Object.toJSON(jsonResponses) + '|');
          _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
        }
