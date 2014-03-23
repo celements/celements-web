@@ -7,6 +7,7 @@
 #parse('app.vm')
 #else
 $response.setStatus(409)
+#set($editorBlockerMessage = $adminMsg.get("thispagealreadyexists"))
 #set($overwriteRenderDocument = 'celInlineTemplates/docalreadyexists.vm')
 $xwiki.parseTemplate("frameheader.vm")
 #if("$!overwriteRenderDocument" != '')
