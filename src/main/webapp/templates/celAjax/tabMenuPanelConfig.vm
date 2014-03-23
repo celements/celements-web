@@ -19,7 +19,7 @@
   "id" : "tb3",##
   "label" : "${adminMsg.get('cel_tm_attachments')}"##
 #end
-#if($isAdmin)
+#if($isAdmin && !$doc.isNew())
 },{##
   "id" : "tbrights",##
   "label" : "${adminMsg.get('cel_tm_rights')}"##
