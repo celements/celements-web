@@ -673,7 +673,7 @@ TE.prototype = {
 
  saveAndContinueAjax : function(formName, handler) {
    var _me = this;
-  _me._log.logDimAndAgent('saveAndContinueAjax: start ', formName);
+  _me._log.logDimAndAgent('saveAndContinueAjax: start |' + formName + '|');
   if(!formName) { formName = 'edit'; }
   if(document.forms[formName]) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
@@ -864,15 +864,17 @@ TE.prototype = {
 
  saveAllFormsAjax : function(execCallback, doNotSaveFormId) {
    var _me = this;
-   _me._log.logDimAndAgent('saveAllFormsAjax: start ', doNotSaveFormId);
+   _me._log.logDimAndAgent('saveAllFormsAjax: start |' + doNotSaveFormId + '|');
    var dirtyFormIds = _me.getDirtyFormIds();
    var jsonResponses = new Hash();
    var saveAllForms = function(allDirtyFormIds) {
+     _me._log.logDimAndAgent('saveAllFormsAjax: before saveAndContinueAjax in '
+         + 'saveAllForms allDirtyFormIds: ' + Object.toJSON(allDirtyFormIds));
      var formId = allDirtyFormIds.pop();
      var remainingDirtyFormIds = allDirtyFormIds;
-     _me._log.logDimAndAgent('saveAllFormsAjax: before saveAndContinueAjax in saveAllForms ', allDirtyFormIds);
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
-       _me._log.logDimAndAgent('saveAllFormsAjax: success ', transport);
+       _me._log.logDimAndAgent('saveAllFormsAjax: success |'
+           + transport.responseText + '|');
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
          _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
@@ -881,6 +883,8 @@ TE.prototype = {
          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
            console.log('next saveAllForms with: ', remainingDirtyFormIds);
          }
+         _me._log.logDimAndAgent('saveAllFormsAjax: in success before recursive saveAllForms with remainingDirtyFormIds |'
+             + Object.toJSON(remainingDirtyFormIds) + '|');
          saveAllForms(remainingDirtyFormIds);
          } else {
            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
