@@ -3,9 +3,12 @@
 <div id="pro_pagetypeEdit" class="editblock" onfocus="setFocus('pro_pagetypeEdit');" onblur="removeFocus('pro_pagetypeEdit');">
 	$adminMsg.get('cel_tm_page_type'):
 	#set($cel_pageTypeObj = $doc.getObject('Celements2.PageType'))
-	#if("$!cel_pageTypeObj" == '')
+	#if(("$!cel_pageTypeObj" == ''))
         #set($cel_pageTypeObj = $doc.getObject('Celements2.PageType', true))
+#if(!$doc.isNew())
+##NEVER change new document on load. This would create the document in inline/template mode!
         $doc.save()
+#end
 	#end
     #set($selectedFound = false)
     #set($pageTypeCat = "$!celementsweb.getPageType($doc.fullName).getCategoryString()")
