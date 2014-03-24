@@ -756,6 +756,9 @@ body #sitecontainer .cel_content_part table td {
 #sitecontainer #websearch .results .result_date {
   float: right;
 }
+#sitecontainer #websearch .clearright {
+  clear:right;
+}
 
 /**
   Ask Toolbar for google chrome leads to problems. Thus we hide it generally by default.
