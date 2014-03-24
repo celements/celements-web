@@ -560,6 +560,9 @@ a.thumbnaill img {
 .clearboth {
 	clear:both;
 }
+.clearright {
+  clear:right;
+}
 .floatright {
 	float:right;
 }
