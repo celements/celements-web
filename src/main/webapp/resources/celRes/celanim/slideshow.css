@@ -48,6 +48,7 @@
   opacity: 0.9; 
   background-position: -41px -44px !important; 
   background-repeat: no-repeat; 
+  z-index: 2;
 }
 
 .celimage_slideshow_wrapper .slideshowButton:hover { 
