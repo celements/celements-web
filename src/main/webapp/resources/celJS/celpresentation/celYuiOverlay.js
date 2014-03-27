@@ -170,7 +170,9 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var dialog = _me.getOverlayDialog();
         dialog.render();
         dialog.show();
-        $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
+        if ($(document.body).down('div.mask')) {
+          $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
+        }
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'hidden' });
         bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
