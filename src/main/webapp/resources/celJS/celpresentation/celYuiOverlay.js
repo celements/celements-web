@@ -154,7 +154,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           ).addClassName('cel-YuiOverlay');
         if (_me._dialogConfig.additionalCssClass
             && (_me._dialogConfig.additionalCssClass != '')) {
-          yuiSamSkinDiv.addClassName(_me._overlayDialog.additionalCssClass);
+          yuiSamSkinDiv.addClassName(_me._dialogConfig.additionalCssClass);
         }
         $(document.body).insert(yuiSamSkinDiv);
         _me._overlayDialog.render(yuiSamSkinDiv);
