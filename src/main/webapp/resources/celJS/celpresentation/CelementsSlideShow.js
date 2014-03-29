@@ -61,10 +61,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _htmlContainerId : undefined,
       _htmlContainer : undefined,
       _overwritePageLayout : 'SimpleLayout',
-      _preloadSlideImagesHash : new Hash(),
-      _nextElements : [],
-      _prevElements : [],
-      _preloadingImageQueue : [],
+      _preloadSlideImagesHash : undefined,
+      _nextElements : undefined,
+      _prevElements : undefined,
+      _preloadingImageQueue : undefined,
       _navObj : undefined,
       _nextSlideBind : undefined,
       _prevSlideBind : undefined,
@@ -76,6 +76,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _init : function(containerId) {
         var _me = this;
+        _me._preloadSlideImagesHash = new Hash();
+        _me._nextElements = [];
+        _me._prevElements = [];
+        _me._preloadingImageQueue = [];
         _me._htmlContainerId = containerId;
         _me._htmlContainer = $(_me._htmlContainerId);
         _me._navObj = new CELEMENTS.presentation.Navigation(_me._preloadSlide.bind(_me),
@@ -249,7 +253,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
               callbackFN(jsonObj);
             } else {
               if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-                console.error('getSubSlides returns no Json: ', transport.responseText);
+                console.error('loadMainSlides returns no Json: ', transport.responseText);
               }
             }
           }
@@ -691,7 +695,7 @@ this._init(preloadFunc, showFunc, waitingFunc);
   CELEMENTS.presentation.Navigation.prototype = {
       _loop : true,
 
-      _allSlides : new Array(),
+      _allSlides : undefined,
       _currIndex : undefined,
       _nextIndex : undefined,
       _prevIndex : undefined,
@@ -708,6 +712,7 @@ this._init(preloadFunc, showFunc, waitingFunc);
 
       _init : function(preloadFunc, showFunc, waitingFunc) {
         var _me = this;
+        _me._allSlides = new Array();
         _me._preloadFunc = preloadFunc || function(){};
         _me._showFunc = showFunc || function(){};
         _me._waitingFunc = waitingFunc || function(){};
