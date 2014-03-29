@@ -71,6 +71,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _registerOnOpenOverlayCheckerBind : undefined,
       _imgLoadedResizeAndCenterSlideBind : undefined,
       _cleanupSlideTransitionBind : undefined,
+      _gotoSlideBind : undefined,
       _centerSlide : true,
       _autoresize : false,
 
@@ -91,6 +92,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(
             _me);
         _me._cleanupSlideTransitionBind = _me._cleanupSlideTransition.bind(_me);
+        _me._gotoSlideBind = _me._gotoSlide.bind(_me);
       },
 
       _nextSlideClickHandler : function(event) {
@@ -112,12 +114,16 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _registerOnOpenOverlayChecker : function(event) {
         var _me = this;
+        var celOverlayObj = event.memo;
         var bodyElem = $$('body')[0];
         var checkRegisterEvent = bodyElem.fire('cel_slideShow:shouldRegister', {
            'origEvent' : event,
-           'slideShow' : _me
+           'slideShow' : _me,
+           'celOverlay' : celOverlayObj
          });
-        if (checkRegisterEvent.stopped) {
+        if (checkRegisterEvent.stopped
+            && (_me._htmlContainerId === celOverlayObj.getContainerId())) {
+          _me._htmlContainer = null;
           _me.register();
         }
       },
@@ -231,9 +237,12 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             _me._htmlContainer);
       },
 
-      _resetContainerElem : function() {
+      _resetContainerElem : function(event) {
         var _me = this;
-        _me._htmlContainer = null;
+        var celOverlayObj = event.memo;
+        if (celOverlayObj.getContainerId() == _me._htmlContainerId) {
+          _me._htmlContainer = null;
+        }
       },
 
       _convertFullNameToViewURL : function(fullName) {
@@ -353,8 +362,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._htmlContainer.select('.celPresSlideShow_navigation').each(function(navElem) {
           navElem.select('a').each(function(navLink) {
-            navLink.stopObserving('click', _me._gotoSlide.bind(_me));
-            navLink.observe('click', _me._gotoSlide.bind(_me));
+            navLink.stopObserving('click', _me._gotoSlideBind);
+            navLink.observe('click', _me._gotoSlideBind);
           });
         });
       },

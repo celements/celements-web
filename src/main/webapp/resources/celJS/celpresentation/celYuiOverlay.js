@@ -96,6 +96,16 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me._bindCleanUpAfterClose = _me._cleanUpAfterClose.bind(_me);
       },
 
+      getContainerId : function() {
+        var _me = this;
+        return _me._dialogConfig.containerId || _me._defaultConfig.containerId;
+      },
+
+      getDialogId : function() {
+        var _me = this;
+        return _me._dialogConfig.dialogId || _me._defaultConfig.dialogId;
+      },
+
       getWidth : function() {
         var _me = this;
         return _me._dialogConfig.width || _me._defaultConfig.width;
@@ -185,8 +195,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         }
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'hidden' });
-        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
-        $(_me._dialogConfig.containerId).fire('cel_yuiOverlay:afterShowDialog');
+        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General', _me);
+        $(_me._dialogConfig.containerId).fire('cel_yuiOverlay:afterShowDialog', _me);
       },
 
       close: function() {
@@ -310,7 +320,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var dialog = _me.open();
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'hidden' });
-        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
+        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General', _me);
         $(_me._dialogConfig.containerId).fire('cel_yuiOverlay:afterShowDialog');
         _me._loadFirstContent();
       }
