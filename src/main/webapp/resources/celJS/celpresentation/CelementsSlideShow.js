@@ -201,10 +201,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
                 initContextMenuAsync);
             initContextMenuAsync();
           }
-          if (typeof registerCelAnimMoviePlayerInsideParent !== 'undefined') {
-            _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
-                registerCelAnimMoviePlayerInsideParent.curry(_me._htmlContainer));
-          }
+          _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
+              _me._registerDynamicProviderAfterContentChanged.bind(_me));
           _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
               _me._registerNavLinks.bind(_me));
           _me._registerNavLinks();
@@ -220,6 +218,17 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
                 + _me._htmlContainerId + '" not found!');
           }
         }
+      },
+
+      _registerDynamicProviderAfterContentChanged : function() {
+        var _me = this;
+        //TODO move to independent CelementsSlideShowMovieExtender
+        if (typeof registerCelAnimMoviePlayerInsideParent !== 'undefined') {
+          _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
+              registerCelAnimMoviePlayerInsideParent.curry(_me._htmlContainer));
+        }
+        $(document.body).fire('cel_slideShow:registerAfterContentChanged',
+            _me._htmlContainer);
       },
 
       _resetContainerElem : function() {
