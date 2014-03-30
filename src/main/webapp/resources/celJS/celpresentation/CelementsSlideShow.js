@@ -346,14 +346,23 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _gotoSlide : function(event) {
         var _me = this;
-        event.stop();
         var fullName = event.element().id.split(':')[2];
         var gotoIndex = _me._navObj.indexOf(fullName);
         if (gotoIndex >= 0) {
+          event.stop();
           _me._navObj.gotoSlide(gotoIndex);
         } else {
-          if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-            console.error('_gotoSlide failed. Index not found for: ', fullName);
+          var nonSlideClickEvent = _me._htmlContainer.fire('cel_slideShow:nonSlideClick',
+              {
+            'theSlideShow' : _me,
+            'fullName' : fullName,
+            'clickEvent' : event
+          });
+          if (!nonSlideClickEvent.stopped) {
+            if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+              console.error('_gotoSlide failed. Index not found for: ', fullName,
+                  ' and cel_slideShow:nonSlideClick event not handled');
+            }
           }
         }
       },
@@ -757,6 +766,26 @@ this._init(preloadFunc, showFunc, waitingFunc);
           _me._currIndex = undefined;
         }
       },
+
+//      _addSlides : function(slidesFNarray) {
+//        var _me = this;
+//        //TODO
+//        not yet implemented
+//        _me._allSlides = $A(slidesFNarray);
+//        if (_me._allSlides.size() > 0) {
+//          var maxIndex = (_me._allSlides.size() - 1);
+//          startIndex = startIndex || 0;
+//          if (startIndex < 0) {
+//            startIndex = 0;
+//          }
+//          if (startIndex > maxIndex) {
+//            startIndex = maxIndex;
+//          }
+//          _me.gotoSlide(startIndex);
+//        } else {
+//          _me._currIndex = undefined;
+//        }
+//      },
 
       _updateCurrentContent : function(newCurrContent) {
         var _me = this;
