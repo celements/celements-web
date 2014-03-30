@@ -404,6 +404,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _gotoSlideClickHandler : function(event) {
         var _me = this;
         var fullName = event.element().id.split(':')[2];
+        if ((typeof fullName === 'undefined') && event.findElement('a')) {
+          fullName = event.findElement('a').id.split(':')[2];
+        }
         if (_me.gotoSlide(fullName)) {
           event.stop();
         } else {
