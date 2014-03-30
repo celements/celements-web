@@ -71,7 +71,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       _registerOnOpenOverlayCheckerBind : undefined,
       _imgLoadedResizeAndCenterSlideBind : undefined,
       _cleanupSlideTransitionBind : undefined,
-      _gotoSlideBind : undefined,
+      _gotoSlideClickHandlerBind : undefined,
       _centerSlide : true,
       _autoresize : false,
 
@@ -92,7 +92,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(
             _me);
         _me._cleanupSlideTransitionBind = _me._cleanupSlideTransition.bind(_me);
-        _me._gotoSlideBind = _me._gotoSlide.bind(_me);
+        _me._gotoSlideClickHandlerBind = _me._gotoSlideClickHandler.bind(_me);
       },
 
       _nextSlideClickHandler : function(event) {
@@ -250,6 +250,30 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         return _me._navObj._convertFullNameToViewURL(fullName);
       },
 
+      loadAndAddMainSlides : function(spaceName, callbackFN) {
+        var _me = this;
+        callbackFN = callbackFN || function(jsonObj) {};
+        new Ajax.Request(getCelHost(), {
+          method: 'post',
+          parameters: {
+            'xpage' : 'celements_ajax',
+            'ajax_mode' : 'getMainSlides',
+            'spaceName' : spaceName
+          },
+          onSuccess: function(transport) {
+            if (transport.responseText.isJSON()) {
+              var jsonObj = transport.responseText.evalJSON();
+              _me._navObj._addSlides(jsonObj);
+              callbackFN(jsonObj);
+            } else {
+              if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+                console.error('loadMainSlides returns no Json: ', transport.responseText);
+              }
+            }
+          }
+        });
+      },
+
       loadMainSlides : function(spaceName, startAtIndexOrName, callbackFN) {
         var _me = this;
         callbackFN = callbackFN || function(jsonObj) {};
@@ -272,6 +296,29 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             } else {
               if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
                 console.error('loadMainSlides returns no Json: ', transport.responseText);
+              }
+            }
+          }
+        });
+      },
+
+      loadAndAddSubSlides : function(parentFN, callbackFN) {
+        var _me = this;
+        callbackFN = callbackFN || function(jsonObj) {};
+        new Ajax.Request(_me._convertFullNameToViewURL(parentFN), {
+          method: 'post',
+          parameters: {
+            'xpage' : 'celements_ajax',
+            'ajax_mode' : 'getSubSlides'
+          },
+          onSuccess: function(transport) {
+            if (transport.responseText.isJSON()) {
+              var jsonObj = transport.responseText.evalJSON();
+              _me._navObj._addSlides(jsonObj);
+              callbackFN(jsonObj);
+            } else {
+              if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+                console.error('getSubSlides returns no Json: ', transport.responseText);
               }
             }
           }
@@ -344,13 +391,21 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         });
       },
 
-      _gotoSlide : function(event) {
+      gotoSlide : function(fullName) {
         var _me = this;
-        var fullName = event.element().id.split(':')[2];
         var gotoIndex = _me._navObj.indexOf(fullName);
         if (gotoIndex >= 0) {
-          event.stop();
           _me._navObj.gotoSlide(gotoIndex);
+          return true;
+        }
+        return false;
+      },
+
+      _gotoSlideClickHandler : function(event) {
+        var _me = this;
+        var fullName = event.element().id.split(':')[2];
+        if (_me.gotoSlide(fullName)) {
+          event.stop();
         } else {
           var nonSlideClickEvent = _me._htmlContainer.fire('cel_slideShow:nonSlideClick',
               {
@@ -359,9 +414,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
             'clickEvent' : event
           });
           if (!nonSlideClickEvent.stopped) {
-            if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-              console.error('_gotoSlide failed. Index not found for: ', fullName,
-                  ' and cel_slideShow:nonSlideClick event not handled');
+            if ((typeof console != 'undefined')
+                && (typeof console.error != 'undefined')) {
+              console.error('_gotoSlideClickHandler failed. Index not found for: ',
+                  fullName, ' and cel_slideShow:nonSlideClick event not handled');
             }
           }
         }
@@ -371,8 +427,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._htmlContainer.select('.celPresSlideShow_navigation').each(function(navElem) {
           navElem.select('a').each(function(navLink) {
-            navLink.stopObserving('click', _me._gotoSlideBind);
-            navLink.observe('click', _me._gotoSlideBind);
+            navLink.stopObserving('click', _me._gotoSlideClickHandlerBind);
+            navLink.observe('click', _me._gotoSlideClickHandlerBind);
           });
         });
       },
@@ -767,25 +823,10 @@ this._init(preloadFunc, showFunc, waitingFunc);
         }
       },
 
-//      _addSlides : function(slidesFNarray) {
-//        var _me = this;
-//        //TODO
-//        not yet implemented
-//        _me._allSlides = $A(slidesFNarray);
-//        if (_me._allSlides.size() > 0) {
-//          var maxIndex = (_me._allSlides.size() - 1);
-//          startIndex = startIndex || 0;
-//          if (startIndex < 0) {
-//            startIndex = 0;
-//          }
-//          if (startIndex > maxIndex) {
-//            startIndex = maxIndex;
-//          }
-//          _me.gotoSlide(startIndex);
-//        } else {
-//          _me._currIndex = undefined;
-//        }
-//      },
+      _addSlides : function(slidesFNarray) {
+        var _me = this;
+        _me._allSlides = _me._allSlides.concat(slidesFNarray);
+      },
 
       _updateCurrentContent : function(newCurrContent) {
         var _me = this;
