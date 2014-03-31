@@ -54,3 +54,8 @@
 .celimage_slideshow_wrapper .slideshowButton:hover { 
   background-image: url(buttons500-hover.png);
 }
+
+.celanim_slideshow_wrapper.celimage_addNavigation .slideshowButton,
+.celimage_slideshow_wrapper.celimage_addNavigation .slideshowButton {
+  display: none;
+}
