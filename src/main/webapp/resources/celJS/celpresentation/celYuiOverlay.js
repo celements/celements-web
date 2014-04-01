@@ -174,7 +174,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         }
         $(document.body).insert(yuiSamSkinDiv);
         _me._overlayDialog.render(yuiSamSkinDiv);
-        $(document.body).fire('cel_yuiOverlay:afterRenderDialog');
+        $(document.body).fire('cel_yuiOverlay:afterRenderDialog', _me);
         return _me._overlayDialog;
       },
 
