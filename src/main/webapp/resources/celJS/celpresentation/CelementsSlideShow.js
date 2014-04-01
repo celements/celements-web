@@ -266,8 +266,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
               _me._navObj._addSlides(jsonObj);
               callbackFN(jsonObj);
             } else {
-              if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-                console.error('loadMainSlides returns no Json: ', transport.responseText);
+              if ((typeof console != 'undefined')
+                  && (typeof console.error != 'undefined')) {
+                console.error('loadAndAddMainSlides returns no Json: ',
+                    transport.responseText);
               }
             }
           }
@@ -294,7 +296,8 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
               _me._navObj._setAllSlides(jsonObj, startAtIndex);
               callbackFN(jsonObj);
             } else {
-              if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+              if ((typeof console != 'undefined')
+                  && (typeof console.error != 'undefined')) {
                 console.error('loadMainSlides returns no Json: ', transport.responseText);
               }
             }
@@ -317,8 +320,10 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
               _me._navObj._addSlides(jsonObj);
               callbackFN(jsonObj);
             } else {
-              if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-                console.error('getSubSlides returns no Json: ', transport.responseText);
+              if ((typeof console != 'undefined')
+                  && (typeof console.error != 'undefined')) {
+                console.error('loadAndAddSubSlides returns no Json: ',
+                    transport.responseText);
               }
             }
           }
@@ -340,8 +345,9 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
               _me._navObj._setAllSlides(jsonObj, startAtIndex);
               callbackFN(jsonObj);
             } else {
-              if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-                console.error('getSubSlides returns no Json: ', transport.responseText);
+              if ((typeof console != 'undefined')
+                  && (typeof console.error != 'undefined')) {
+                console.error('loadSubSlides returns no Json: ', transport.responseText);
               }
             }
           }
