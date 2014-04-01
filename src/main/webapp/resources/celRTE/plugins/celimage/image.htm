@@ -11,7 +11,7 @@
   <script type="text/javascript" src="../../utils/form_utils.js"></script>
   <script type="text/javascript" src="../../utils/validate.js"></script>
   <script type="text/javascript" src="../../utils/editable_selects.js"></script>
-  <script type="text/javascript" src="js/image.js?version=201403231120"></script>
+  <script type="text/javascript" src="js/image.js?version=201404011913"></script>
   <script type="text/javascript" src="js/imagepicker.js?version=201308181956"></script>
   <script type="text/javascript" src="/file/resources/celJS/images/galleryClass.js?version=201312012056"></script>
   <script type="text/javascript" src="/file/resources/celJS/jcrop/jquery.Jcrop.min.js"></script>
@@ -176,8 +176,25 @@
             </tr>
 
             <tr>
-              <td class="column1"><label id="isSlideshowManualStartLabel" for="isSlideshowManualStart">{#celimage_dlg.isSlideshowManualStart}</label></td> 
-              <td><input id="isSlideshowManualStart" name="isSlideshowManualStart" type="checkbox" value="" /></td> 
+              <td class="column1"><label id="hasAutoChangeLabel" for="hasAutoChange_list">{#celimage_dlg.hasAutoChange}</label></td>
+              <td>
+                <select id="hasAutoChange_list" name="hasAutoChange">
+                  <option value="autoStart">{#celimage_dlg.hasAutoChange_auto_start}</option>
+                  <option value="manuelStart">{#celimage_dlg.hasAutoChange_manuel_start}</option>
+                  <option value="none">{#celimage_dlg.hasAutoChange_none}</option>
+                </select>
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="addCounterLabel" for="addCounter_list">{#celimage_dlg.addCounter}</label></td>
+              <td>
+                <select id="addCounter_list" name="addCounter">
+                  <option value="none">{#celimage_dlg.addCounter_none}</option>
+                  <option value="normal">{#celimage_dlg.addCounter_normal}</option>
+                  <option value="leadingzeros">{#celimage_dlg.addCounter_leadingzeros}</option>
+                </select>
+              </td> 
             </tr>
 
             <tr>
@@ -248,12 +265,39 @@
               <td><input id="hasCloseButton" name="hasCloseButton" type="checkbox" value="" /></td> 
             </tr>
 
+            <tr id="hasAddNavigationOverlayRow">
+              <td class="column1"><label id="hasAddNavigationOverlayLabel" for="hasAddNavigationOverlay">{#celimage_dlg.hasSlideshowAddNavigation}</label></td> 
+              <td><input id="hasAddNavigationOverlay" name="hasAddNavigationOverlay" type="checkbox" value="" /></td> 
+            </tr>
+
             <tr>
               <td class="column1"><label id="widthlabel" for="overlayWidth">{#celimage_dlg.dimensions}</label></td>
               <td class="nowrap">
                 <input name="overlayWidth" type="text" id="overlayWidth" value="" size="5" maxlength="5" class="size" /> px x 
                 <input name="overlayHeight" type="text" id="overlayHeight" value="" size="5" maxlength="5" class="size" /> px
               </td>
+            </tr>
+
+            <tr id="hasAutoChangeOverlayRow">
+              <td class="column1"><label id="hasAutoChangeOverlayLabel" for="hasAutoChangeOverlay_list">{#celimage_dlg.hasAutoChange}</label></td>
+              <td>
+                <select id="hasAutoChangeOverlay_list" name="hasAutoChangeOverlay">
+                  <option value="autoStart">{#celimage_dlg.hasAutoChange_auto_start}</option>
+                  <option value="manuelStart">{#celimage_dlg.hasAutoChange_manuel_start}</option>
+                  <option value="none">{#celimage_dlg.hasAutoChange_none}</option>
+                </select>
+              </td> 
+            </tr>
+
+            <tr id="addCounterOverlayRow">
+              <td class="column1"><label id="addCounterOverlayLabel" for="addCounterOverlay_list">{#celimage_dlg.addCounter}</label></td>
+              <td>
+                <select id="addCounterOverlay_list" name="addCounterOverlay">
+                  <option value="none">{#celimage_dlg.addCounter_none}</option>
+                  <option value="normal">{#celimage_dlg.addCounter_normal}</option>
+                  <option value="leadingzeros">{#celimage_dlg.addCounter_leadingzeros}</option>
+                </select>
+              </td> 
             </tr>
 
           </table>
