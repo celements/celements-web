@@ -321,7 +321,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'hidden' });
         bodyElem.fire('cel_yuiOverlay:afterShowDialog_General', _me);
-        $(_me._dialogConfig.containerId).fire('cel_yuiOverlay:afterShowDialog');
+        $(_me._dialogConfig.containerId).fire('cel_yuiOverlay:afterShowDialog', _me);
         _me._loadFirstContent();
       }
 
