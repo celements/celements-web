@@ -1,0 +1,51 @@
+#if($isAdmin)
+  $celementsweb.addExtJSfileOnce(':celJS/adminUi/sendNewsletterInjectedReceivers.js', 'file') 
+  #set($obj = $doc.getObject('Classes.NewsletterConfigClass'))
+  <h1>Send to injected newsletter receivers</h1>
+  <p>
+    Send newsletter to the specified list of email addresses. Can be used to send a
+    newsletter only to a sublist of the regular receivers. You need to be on the article
+    page you want to send. Further you can&quot;t send to any address, but only to
+    registered and active addresses. All other addresses will be skipped.
+  </p>
+  #set($xwql = "from doc.object(Celements2.BlogConfigClass) as obj where obj.blogspace=:blog")
+  #set($blogFn = '')
+  #set($query = $services.query.xwql($xwql).bindValue('blog', $doc.getSpace()))
+  #foreach($fn in $query.execute())
+    #set($blogFn = $fn)
+  #end
+  #if("$!blogFn" != '')
+  <form class="newsletter_receiver_inject" action="" method="post">
+    <p>
+      <label for="subject" style="display: inline-block; width: 100px;">Subject</label>
+      <input type="text" style="width: 422px" name="subject" value="$!obj.getProperty('subject').getValue()" />
+    </p>
+    <p>
+      <label for="from" style="display: inline-block; width: 100px;">From</label>
+      <input type="text" style="width: 422px" name="from" value="$!obj.getProperty('from_address').getValue()" />
+    </p>
+    <p>
+      <label for="replyTo" style="display: inline-block; width: 100px;">Reply To</label>
+      <input type="text" style="width: 422px" name="replyTo" value="$!obj.getProperty('reply_to_address').getValue()" />
+    </p>
+    <p>
+      <label for="blogDocFN" style="display: inline-block; width: 100px;">Blog Document</label>
+      <input type="text" style="width: 422px" name="blogDocFN" value="$blogFn" />
+    </p>
+    <p>
+      <label for="baseURL" style="display: inline-block; width: 100px;">Base URL</label>
+      <input type="text" style="width: 422px" name="baseURL" value="$doc.getExternalURL()" />
+    </p>
+    <p>
+      <label for="receivers" style="display: block;">Receivers (one address per line)</label>
+      <textarea class="receivers" name="receivers" style="width: 525px; height: 300px;"></textarea>
+    </p>
+    <input class="submit" type="submit" value="Newsletter versenden" />
+  </form>
+  <div class="newsletter_send_results"></div>
+  #else
+    <p style="font-color: red;">Only works on newsletter article document.</p>
+  #end
+#else
+  <p style="font-color: red;">You need to be admin to use.</p>
+#end
