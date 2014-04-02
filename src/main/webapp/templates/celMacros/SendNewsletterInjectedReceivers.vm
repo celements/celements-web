@@ -1,19 +1,14 @@
-#if($isAdmin)
+#if($isSuperAdmin)
   $celementsweb.addExtJSfileOnce(':celJS/adminUi/sendNewsletterInjectedReceivers.js', 'file') 
   #set($obj = $doc.getObject('Classes.NewsletterConfigClass'))
-  <h1>Send to injected newsletter receivers</h1>
+  <h1>Send to injected newsletter receivers (super admin only)</h1>
   <p>
     Send newsletter to the specified list of email addresses. Can be used to send a
     newsletter only to a sublist of the regular receivers. You need to be on the article
     page you want to send. Further you can&quot;t send to any address, but only to
     registered and active addresses. All other addresses will be skipped.
   </p>
-  #set($xwql = "from doc.object(Celements2.BlogConfigClass) as obj where obj.blogspace=:blog")
-  #set($blogFn = '')
-  #set($query = $services.query.xwql($xwql).bindValue('blog', $doc.getSpace()))
-  #foreach($fn in $query.execute())
-    #set($blogFn = $fn)
-  #end
+  #set($blogFn = $xwiki.celementsblog.getBlogPageByBlogSpace("$!doc.getSpace()").getFullName())
   #if("$!blogFn" != '')
   <form class="newsletter_receiver_inject" action="" method="post">
     <p>
@@ -42,6 +37,7 @@
     </p>
     <input class="submit" type="submit" value="Newsletter versenden" />
   </form>
+  <div class="clearboth"><!-- ie --></div>
   <div class="newsletter_send_results"></div>
   #else
     <p style="font-color: red;">Only works on newsletter article document.</p>
