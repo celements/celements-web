@@ -124,7 +124,7 @@ $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('importManager.js',
   </div><!-- /c3_import_tabbox -->
 </div><!-- /c3_import_preimport -->
 ## UPLOAD 
-#if(!$xwiki.exists("Celements2.FileBase"))
+#if("$!xwiki.getXWikiPreference('celements_version')" == '')
 <div class="c3_import_box c3_import_buttom">
   <div class="c3_import_title">$adminMsg.get('cel_import_upload')</div><!-- /c3_import_title -->
   <div class="c3_import_tabbox">
