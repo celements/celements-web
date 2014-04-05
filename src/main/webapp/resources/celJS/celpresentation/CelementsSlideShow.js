@@ -769,7 +769,13 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._htmlContainer.fire('cel_yuiOverlay:afterContentChanged', _me);
         _me.getHtmlContainer().removeClassName('celanim_isChanging');
         _me._htmlContainer.fire('cel_yuiOverlay:contentChanged', _me);
+      },
+
+      getCurrentSlideFN : function() {
+        var _me = this;
+        return _me._navObj.getCurrentSlideFN();
       }
+
   };
 })();
 
@@ -835,6 +841,11 @@ this._init(preloadFunc, showFunc, waitingFunc);
       _addSlides : function(slidesFNarray) {
         var _me = this;
         _me._allSlides = _me._allSlides.concat(slidesFNarray);
+      },
+
+      getCurrentSlideFN : function() {
+        var _me = this;
+        return _me._allSlides[_me.getCurrentSlideNum() - 1];
       },
 
       _updateCurrentContent : function(newCurrContent) {
