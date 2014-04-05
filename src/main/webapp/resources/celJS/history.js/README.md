@@ -126,46 +126,46 @@ If you are using Rails, then the easiest way for you to try History.js would be 
 	- For [Dojo](http://dojotoolkit.org/) v1.8+
 
 		``` html
-		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4+html5/dojo.history.js"></script>
+		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4AndHtml5/dojo.history.js"></script>
 		```
 	
 	- For [ExtJs](http://www.sencha.com/) v1.8+
 
 		``` html
-		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4+html5/extjs.history.js"></script>
+		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4AndHtml5/extjs.history.js"></script>
 		```
 	
 	- For [jQuery](http://jquery.com/) v1.3+
 
 		``` html
-		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
+		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4AndHtml5/jquery.history.js"></script>
 		```
 
 	- For [Mootools](http://mootools.net/) v1.3+
 
 		``` html
-		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4+html5/mootools.history.js"></script>
+		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4AndHtml5/mootools.history.js"></script>
 		```
 
 	- For [Right.js](http://rightjs.org/) v2.2+
 
 		``` html
-		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4+html5/right.history.js"></script>
+		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4AndHtml5/right.history.js"></script>
 		```
 
 	- For [Zepto](http://zeptojs.com/) v0.5+
 
 		``` html
-		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4+html5/zepto.history.js"></script>
+		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4AndHtml5/zepto.history.js"></script>
 		```
 
 	- For everything else
 
 		``` html
-		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4+html5/native.history.js"></script>
+		<script src="http://www.yourwebsite.com/history.js/scripts/bundled/html4AndHtml5/native.history.js"></script>
 		```
 
-> Note: If you want to only support HTML5 Browsers and not HTML4 Browsers (so no hash fallback support) then just change the `/html4+html5/` part in the urls to just `/html5/`. See [Why supporting HTML4 browsers could be either good or bad based on my app's use cases](https://github.com/browserstate/history.js/wiki/Intelligent-State-Handling)
+> Note: If you want to only support HTML5 Browsers and not HTML4 Browsers (so no hash fallback support) then just change the `/html4AndHtml5/` part in the urls to just `/html5/`. See [Why supporting HTML4 browsers could be either good or bad based on my app's use cases](https://github.com/browserstate/history.js/wiki/Intelligent-State-Handling)
 
 
 ## Get Updates

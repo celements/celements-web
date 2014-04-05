@@ -38,7 +38,7 @@ configs =
 
 		{
 			# Options
-			name: 'html4+html5+dojo'
+			name: 'html4AndHtml5+dojo'
 			watch: options.watch
 
 			# Paths
@@ -56,7 +56,7 @@ configs =
 			]
 
 			# Bundling
-			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4+html5/dojo.history.js'
+			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4AndHtml5/dojo.history.js'
 		}
 		{
 			# Options
@@ -84,7 +84,7 @@ configs =
 
 		{
 			# Options
-			name: 'html4+html5+extjs'
+			name: 'html4AndHtml5+extjs'
 			watch: options.watch
 
 			# Paths
@@ -102,7 +102,7 @@ configs =
 			]
 
 			# Bundling
-			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4+html5/extjs.history.js'
+			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4AndHtml5/extjs.history.js'
 		}
 		{
 			# Options
@@ -130,7 +130,7 @@ configs =
 
 		{
 			# Options
-			name: 'html4+html5+jquery'
+			name: 'html4AndHtml5+jquery'
 			watch: options.watch
 
 			# Paths
@@ -148,7 +148,7 @@ configs =
 			]
 
 			# Bundling
-			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4+html5/jquery.history.js'
+			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4AndHtml5/jquery.history.js'
 		}
 		{
 			# Options
@@ -177,7 +177,7 @@ configs =
 
 		{
 			# Options
-			name: 'html4+html5+mootools'
+			name: 'html4AndHtml5+mootools'
 			watch: options.watch
 
 			# Paths
@@ -195,7 +195,7 @@ configs =
 			]
 
 			# Bundling
-			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4+html5/mootools.history.js'
+			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4AndHtml5/mootools.history.js'
 		}
 		{
 			# Options
@@ -224,7 +224,7 @@ configs =
 
 		{
 			# Options
-			name: 'html4+html5+native'
+			name: 'html4AndHtml5+native'
 			watch: options.watch
 
 			# Paths
@@ -242,7 +242,7 @@ configs =
 			]
 
 			# Bundling
-			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4+html5/native.history.js'
+			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4AndHtml5/native.history.js'
 		}
 		{
 			# Options
@@ -271,7 +271,7 @@ configs =
 
 		{
 			# Options
-			name: 'html4+html5+right'
+			name: 'html4AndHtml5+right'
 			watch: options.watch
 
 			# Paths
@@ -289,7 +289,7 @@ configs =
 			]
 
 			# Bundling
-			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4+html5/right.history.js'
+			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4AndHtml5/right.history.js'
 		}
 		{
 			# Options
@@ -318,7 +318,7 @@ configs =
 
 		{
 			# Options
-			name: 'html4+html5+zepto'
+			name: 'html4AndHtml5+zepto'
 			watch: options.watch
 
 			# Paths
@@ -336,7 +336,7 @@ configs =
 			]
 
 			# Bundling
-			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4+html5/zepto.history.js'
+			bundleScriptPath: __dirname+'/scripts/bundled-uncompressed/html4AndHtml5/zepto.history.js'
 		}
 		{
 			# Options
