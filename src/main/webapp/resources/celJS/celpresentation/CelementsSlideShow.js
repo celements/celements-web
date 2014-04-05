@@ -209,7 +209,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
           }
           _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
               _me._registerDynamicProviderAfterContentChanged.bind(_me));
-          _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
+          _me._htmlContainer.observe('cel_yuiOverlay:afterSlideInsert',
               _me._registerNavLinks.bind(_me));
           _me._registerNavLinks();
           _me._htmlContainer.observe('cel_yuiOverlay:afterSlideInsert',
