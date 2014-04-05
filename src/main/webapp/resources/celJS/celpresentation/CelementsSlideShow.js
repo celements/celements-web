@@ -774,6 +774,11 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
       getCurrentSlideFN : function() {
         var _me = this;
         return _me._navObj.getCurrentSlideFN();
+      },
+
+      getCurrentSlideURL : function() {
+        var _me = this;
+        return _me._convertFullNameToViewURL(_me.getCurrentSlideFN());
       }
 
   };
@@ -817,7 +822,7 @@ this._init(preloadFunc, showFunc, waitingFunc);
       },
 
       _convertFullNameToViewURL : function(fullName) {
-        return '/' + fullName.replace(/\./, '/');
+        return ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/');
       },
 
       _setAllSlides : function(slidesFNarray, startIndex) {
