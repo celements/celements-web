@@ -535,6 +535,7 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 //        });
         //use jquery to get dimensions, because it works correctly inside iframes.
         var slideOuterHeight = $j(slideRoot).height();
+        var slideOuterWidth = $j(slideRoot).width();
         var parentDiv = _me._htmlContainer;
         var parentHeight = parentDiv.getHeight();
         var parentWidth = parentDiv.getWidth();
@@ -542,17 +543,16 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
         //--> it must be slideOuterHeight to get correct size of scaled down slides.
         //--> see method comment
         var topPos = (parentHeight - slideOuterHeight) / 2;
+        var leftPos = (parentWidth - slideOuterWidth) / 2;
         slideWrapper.setStyle({
           'position' : 'relative',
-          'margin' : '0',
-          'marginLeft' : 'auto',
-          'marginRight' : 'auto'
+          'margin' : '0'
         });
-        // overwrite slideRoot width to max posible width (= parentWidth) to achieve
-        // horizontal centering.
+        // horizontal centering with absolut left position needed, because FF gets
+        // conflict with transform-origin and margin auto
         slideRoot.setStyle({
           'position' : 'absolute',
-          'width' : (parentWidth + 'px'),
+          'left' : leftPos + 'px',
           'top' : topPos + 'px',
           'margin' : '0'
         });
