@@ -29,7 +29,7 @@ if(typeof CELEMENTS.presentation=="undefined"){CELEMENTS.presentation={};};
 
   var CPCY_SlideShowObj = undefined;
 
-  getCelSlideShowObj = function() {
+  window.getCelSlideShowObj = function() {
     return CPCY_SlideShowObj;
   };
 
@@ -48,14 +48,13 @@ if(typeof CELEMENTS.presentation=="undefined"){CELEMENTS.presentation={};};
 //////////////////////////////////////////////////////////////////////////////
 // Celements presentation Slideshow
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.presentation.SlideShow = function(containerId) {
+window.CELEMENTS.presentation.SlideShow = function(containerId) {
   containerId = containerId || 'yuiOverlayContainer';
   // constructor
   this._init(containerId);
 };
 
 (function() {
-  var CPCYOSS = CELEMENTS.presentation.SlideShow;
 
   CELEMENTS.presentation.SlideShow.prototype = {
       _htmlContainerId : undefined,
@@ -787,14 +786,12 @@ CELEMENTS.presentation.SlideShow = function(containerId) {
 //////////////////////////////////////////////////////////////////////////////
 // Celements presentation Navigation
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.presentation.Navigation = function(preloadFunc, showFunc, waitingFunc) {
+window.CELEMENTS.presentation.Navigation = function(preloadFunc, showFunc, waitingFunc) {
 // constructor
 this._init(preloadFunc, showFunc, waitingFunc);
 };
 
 (function() {
-  var CPCYON = CELEMENTS.presentation.Navigation;
-
   CELEMENTS.presentation.Navigation.prototype = {
       _loop : true,
 
