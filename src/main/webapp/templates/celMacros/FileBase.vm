@@ -280,6 +280,13 @@ var delAttAjax = function(tagLink, docName, attName, active){
   });
 }*/
 
+var celementsFormatRev = function(elCell, oRecord, oColumn, sData) {
+  fieldContent = '<a href="oRecord.getData("url").replace(/\/download\//g, "/viewattachrev/")'
+  fieldContent += '" target="_blank">oRecord.getData("revision")</a>';
+  
+  elCell.innerHTML = fieldContent;
+}
+
 var delFileFormatter = function(elCell, oRecord, oColumn, sData) {
   fieldContent = '<a href="" onclick="if(confirm(';
   fieldContent += "'";
@@ -382,7 +389,7 @@ var requestData = function(space, find){
                       #elseif($velocityCount == 3)
                         {key:"mime_type", label:"$!adminMsg.get('cel_ml_mime_type')", width:58, sortable:true, editor:this.editTags,  resizeable:true},
                       #elseif($velocityCount == 4)
-                        {key:"revision", label:"$!adminMsg.get('cel_ml_revision')", width:52, #*formatter:YAHOO.widget.DataTable.formatNumber,*# sortable:true, editor:this.editTags, resizeable:true},
+                        {key:"revision", label:"$!adminMsg.get('cel_ml_revision')", width:52, formatter:celementsFormatRev, sortable:true, editor:this.editTags, resizeable:true},
                       #elseif($velocityCount == 5)
                         {key:"date", label:"$!adminMsg.get('cel_ml_date')", width:101, formatter:celementsFormatDate, sortable:true, editor:this.editTags, resizeable:true},
                       #elseif($velocityCount == 6)
