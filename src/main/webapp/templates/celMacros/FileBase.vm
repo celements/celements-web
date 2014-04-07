@@ -282,8 +282,8 @@ var delAttAjax = function(tagLink, docName, attName, active){
 
 var celementsFormatRev = function(elCell, oRecord, oColumn, sData) {
   var revUrl = oRecord.getData("url").replace(/\/download\//g, "/viewattachrev/");
-  fieldContent = '<a href="revUrl" '
-  fieldContent += 'target="_blank">oRecord.getData("revision")</a>';
+  fieldContent = '<a href="' + revUrl + '" '
+  fieldContent += 'target="_blank">' + oRecord.getData("revision") + '</a>';
   
   elCell.innerHTML = fieldContent;
 }
