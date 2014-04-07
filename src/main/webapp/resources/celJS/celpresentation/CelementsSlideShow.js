@@ -360,14 +360,23 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _insertSlideCounter : function(newSlideWrapperElem) {
         var _me = this;
+        var numSlides = _me._navObj.getNumSlides();
         _me._htmlContainer.select('.celPresSlideShow_countSlideNum').each(
             function(countSlideElem) {
-              countSlideElem.update(_me._navObj.getNumSlides());
+              countSlideElem.update(numSlides);
         });
+        var currentSlideNum = _me._navObj.getCurrentSlideNum();
+        if (_me._htmlContainer.hasClassName('celimage_addCounterZeros')
+            || _me._htmlContainer.hasClassName('celanim_addCounterZeros')) {
+          currentSlideNum = '0000000000' + currentSlideNum;
+          currentSlideNum = currentSlideNum.substring(
+              currentSlideNum.length - numSlides.toString().length,
+              currentSlideNum.length);
+        }
         _me._htmlContainer.select(
             '.celPresSlideShow_currentSlideNum').each(
             function(currentSlideElem) {
-              currentSlideElem.update(_me._navObj.getCurrentSlideNum());
+              currentSlideElem.update(currentSlideNum);
         });
       },
 
