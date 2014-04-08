@@ -179,6 +179,15 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         if (!_me._htmlContainer.down('.cel_slideShow_slideRoot')) {
           var oldContent = _me._htmlContainer.innerHTML;
           _me._htmlContainer.update(_me._addWrapperElements(oldContent));
+          var slideWrapper = _me._getSlideWrapper();
+          slideWrapper.down().setStyle({
+            'position' : '',
+            'top' : '',
+            'left' : '',
+            'right' :'',
+            'bottom' :''
+          });
+          _me._resizeAndCenterSlide(slideWrapper);
         }
       },
 
