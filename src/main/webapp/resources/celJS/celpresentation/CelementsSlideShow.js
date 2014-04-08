@@ -177,20 +177,21 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _addContentWrapper : function() {
         var _me = this;
         if (!_me._htmlContainer.down('.cel_slideShow_slideRoot')) {
-          var divInnerWrapper = new Element('div', {
-            'id' : ('slideWrapper_' + _me._htmlContainer.id),
-            'class' : 'cel_slideShow_slideWrapper'
-           }).setStyle({
-             'position' : 'relative'
-           });
-          var divSlideRoot = divInnerWrapper.wrap('div', {
-            'id' : ('slideRoot_' + _me._htmlContainer.id),
-            'class' : 'cel_slideShow_slideRoot'
-           });
           var oldContent = _me._htmlContainer.innerHTML;
-          _me._htmlContainer.update(divSlideRoot);
-          divInnerWrapper.update(oldContent);
+          _me._htmlContainer.update(_me._addWrapperElements(oldContent));
         }
+      },
+
+      _addWrapperElements : function(slideContent) {
+        var slideWrapperElem = new Element('div').addClassName(
+          'cel_slideShow_slideWrapper').setStyle({
+          'position' : 'relative'
+        }).update(slideContent);
+        var slideRootElem = new Element('div').addClassName(
+          'cel_slideShow_slideRoot').setStyle({
+          'position' : 'absolute'
+        }).update(slideWrapperElem);
+        return slideRootElem;
       },
 
       register : function() {
@@ -702,14 +703,8 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me.getHtmlContainer().addClassName('celanim_isChanging');
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
-        var slideWrapperElem = new Element('div').addClassName(
-          'cel_slideShow_slideWrapper').setStyle({
-          'position' : 'relative'
-        }).update(slideContent);
-        var slideRootElem = new Element('div').addClassName(
-          'cel_slideShow_slideRoot').setStyle({
-          'position' : 'absolute'
-        }).update(slideWrapperElem).hide();
+        var slideRootElem = _me._addWrapperElements(slideContent).hide();
+        var slideWrapperElem = slideRootElem.down('.cel_slideShow_slideWrapper');
         _me._htmlContainer.fire('cel_yuiOverlay:beforeSlideInsert', {
           'celSlideShow' : _me,
           'newSlideWrapperElem' : slideWrapperElem,
