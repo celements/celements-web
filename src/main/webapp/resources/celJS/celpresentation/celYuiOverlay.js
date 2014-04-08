@@ -162,7 +162,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me._overlayDialog.setBody('<div id="' + _me._dialogConfig.containerId + '"'
             + dialogHeight
             + '><img style="display:block; margin-left: auto; margin-right:auto;'
-            + ' position: relative; top: 48%;"'
+            + ' position: relative; top: 48%; height:32px; width:32px;"'
+            + ' height="32" width="32px"'
             + ' src="/file/resources/celRes/ajax-loader.gif" /></div>'); 
         //add skin-div to get default yui-skin-sam layouting for the dialog
         var yuiSamSkinDiv = new Element('div'
