@@ -651,7 +651,7 @@ var CelImageDialog = {
     }
 
     if (at == 'isSlideshowCustomStart') {
-      return (dom.hasClass(e, 'celanim_slideshowCustomStart')
+      return (dom.hasClass(e, 'celanim_customStartSlide')
           || dom.hasClass(e, 'celimage_customStartSlide'));
     }
 
@@ -775,7 +775,7 @@ var CelImageDialog = {
       v = v.replace(/ (celanim_manualstart|celanim_autostart|celanim_nonestart) /g, ' ');
       v = v.replace(/ (celanim_overlaymanualstart|celanim_overlayautostart|celanim_overlaynonestart) /g, ' ');
       v = v.replace(/ (celanim_addCounterOverlayNormal|celanim_addCounterOverlayZeros|celanim_addCounterOverlayNone) /g, ' ');
-      v = v.replace(/ (celanim_slideshowCustomStart) /g, ' ');
+      v = v.replace(/ (celanim_customStartSlide) /g, ' ');
 
       v = v.replace(/ (celimage_slideshow|celimage_manualstart|celimage_overlay|celimage_overlay_addCloseButton|celimage_slideshowRandomStart) /g, ' ');
       v = v.replace(/ (celimage_addNavigation|celimage_addNavigationOverlay) /g, ' ');
