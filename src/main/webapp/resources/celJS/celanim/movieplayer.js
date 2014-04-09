@@ -229,13 +229,13 @@ var getCelAnimObject = function() {
     'replaceOnLoad' : true
     },
     { 'name' : 'youtube',
-    'matchStr' : '^http:\/\/www.youtube.com\/.*?[\/=]',
+    'matchStr' : '^https?:\/\/www.youtube.com\/.*?[\/=]',
     'replaceStr' : 'http://www.youtube.com/v/',
     'cssClass' : 'celanim_youtube',
     'replaceOnLoad' : true
     },
     { 'name' : 'sfvideoPortal',
-    'matchStr' : '^http:\/\/(www.videoportal.sf.tv|www.sf.tv)\/.*[\/=]',
+    'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv)\/.*[\/=]',
     'replaceStr' : 'http://www.sf.tv/videoplayer/embed/',
     'cssClass' : 'celanim_sfvideo',
     'replaceOnLoad' : true
