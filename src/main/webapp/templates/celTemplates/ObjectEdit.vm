@@ -7,8 +7,11 @@
 #if(!$cel_embedded_editobj)
 #set($linkParams = 'editor=object')
 #end
+#if("$!cel_editobj_xredirect_params" != '')
+#set($linkParams = "${linkParams}&${cel_editobj_xredirect_params}")
+#end
 #if("$!xredirect" != '')
-#set($linkParams = "${linkParams}&${cel_editobj_xredirect_params}&xredirect=$xredirect")
+#set($linkParams = "${linkParams}&xredirect=$xredirect")
 #end
 #if("$!cel_editobj_doc" == '')
  #set($cel_editobj_doc = $doc)
