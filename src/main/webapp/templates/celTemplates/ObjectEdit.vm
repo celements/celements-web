@@ -1,10 +1,14 @@
 ##INPUT (optional) $cel_editobj_validate [true|false] AND (if true) #setClassForField(<propfieldname>)
+##INPUT (optional) $cel_editobj_xredirect_params e.g. weitch back to tab with id tbxyz: "tab=tbxyz"
 #if("$!createIfNotExists" == '')
   #set($createIfNotExists = false)
 #end
 #set($linkParams = '')
 #if(!$cel_embedded_editobj)
 #set($linkParams = 'editor=object')
+#end
+#if("$!cel_editobj_xredirect_params" != '')
+#set($linkParams = "${linkParams}&${cel_editobj_xredirect_params}")
 #end
 #if("$!xredirect" != '')
 #set($linkParams = "${linkParams}&xredirect=$xredirect")
