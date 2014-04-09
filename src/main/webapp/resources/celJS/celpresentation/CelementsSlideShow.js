@@ -187,8 +187,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             'right' :'',
             'bottom' :''
           });
-          _me._resizeAndCenterSlide(slideWrapper);
         }
+        _me._resizeAndCenterSlide(_me._getSlideWrapper());
+        _me._preloadImagesAndResizeCenterSlide(_me._getSlideWrapper());
       },
 
       _addWrapperElements : function(slideContent) {
@@ -728,26 +729,33 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var resizeAndCenterSlideEvent = _me._htmlContainer.fire(
             'cel_slideShow:resizeAndCenterSlide', _me);
         if (!resizeAndCenterSlideEvent.stopped) {
-          _me._preloadingImageQueue = new Array();
-          slideWrapperElem.select('img').each(function(imgElem) {
-            if (!imgElem.complete) {
-              imgElem.observe('load', _me._imgLoadedResizeAndCenterSlideBind.curry(
-                  imgElem, slideWrapperElem, _me._showSlideAfterPreloadingImg.bind(_me)));
-              _me._preloadingImageQueue.push(imgElem);
-            }
-          });
-          if (_me._preloadingImageQueue.length == 0) {
-            _me._resizeAndCenterSlide(slideWrapperElem);
-            _me._showSlideAfterPreloadingImg();
-          }
+          _me._preloadImagesAndResizeCenterSlide(slideWrapperElem,
+              _me._showSlideAfterPreloadingImg.bind(_me));
         } else {
           _me._showSlideAfterPreloadingImg();
         }
       },
 
+      _preloadImagesAndResizeCenterSlide : function(slideWrapperElem, callbackFN) {
+        var _me = this;
+        _me._preloadingImageQueue = new Array();
+        slideWrapperElem.select('img').each(function(imgElem) {
+          if (!imgElem.complete) {
+            imgElem.observe('load', _me._imgLoadedResizeAndCenterSlideBind.curry(
+                imgElem, slideWrapperElem, callbackFN));
+            _me._preloadingImageQueue.push(imgElem);
+          }
+        });
+        if (_me._preloadingImageQueue.length == 0) {
+          _me._resizeAndCenterSlide(slideWrapperElem);
+          if (callbackFN) {
+            callbackFN();
+          }
+        }
+      },
+
       _showSlideAfterPreloadingImg : function() {
         var _me = this;
-        //TODO add second slideRootElem to allow proper positioning of both slides
         var slides = _me.getHtmlContainer().select('.cel_slideShow_slideRoot');
         _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
             _me._cleanupSlideTransitionBind);
