@@ -45,6 +45,7 @@ tinyMCE.addI18n('de.celimage_dlg', {
   slideshow : "Bildstrecke",
   hasSlideshow : "mit Bildstrecke",
   hasAutoChange : "Automatischer Bildwechsel",
+  'hasAutoChange_auto_start_no_stop': "automatischer Start ohne manueller Stop",
   'hasAutoChange_auto_start' : "automatischer Start",
   'hasAutoChange_manuel_start' : "Manuell Starten",
   'hasAutoChange_none' : "kein",
