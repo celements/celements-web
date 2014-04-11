@@ -188,7 +188,6 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             'bottom' :''
           });
         }
-        _me._resizeAndCenterSlide(_me._getSlideWrapper());
         _me._preloadImagesAndResizeCenterSlide(_me._getSlideWrapper());
       },
 
@@ -661,11 +660,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var slideRoot = _me._getSlideRootElem(slideWrapper);
         var isRootHidden = !slideRoot.visible();
         var rootPositionValue = slideRoot.getStyle('position');
+        slideRoot.setStyle({
+          'position' : 'absolute',
+          'visibility' : 'hidden'
+        });
         if (isRootHidden) {
-          slideRoot.setStyle({
-            'position' : 'absolute',
-            'visibility' : 'hidden'
-          });
           slideRoot.show();
         }
         var oldWidth = parseInt(slideWrapper.getWidth());
@@ -686,11 +685,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         } else {
           zoomFactor = zoomWidthFactor;
         }
+        slideRoot.setStyle({
+          'position' : rootPositionValue,
+          'visibility' : ''
+        });
         if (isRootHidden) {
-          slideRoot.setStyle({
-            'position' : rootPositionValue,
-            'visibility' : ''
-          });
           slideRoot.hide();
         }
         return {
