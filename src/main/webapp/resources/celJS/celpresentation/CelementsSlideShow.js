@@ -281,6 +281,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
                     transport.responseText);
               }
             }
+          },
+          onFailure: function(transport) {
+            console.warn('loadAndAddMainSlides failed for: ', spaceName);
           }
         });
       },
@@ -310,6 +313,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
                 console.error('loadMainSlides returns no Json: ', transport.responseText);
               }
             }
+          },
+          onFailure: function(transport) {
+            console.warn('loadMainSlides failed for: ', spaceName, startAtIndexOrName);
           }
         });
       },
@@ -335,6 +341,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
                     transport.responseText);
               }
             }
+          },
+          onFailure: function(transport) {
+            console.warn('loadAndAddSubSlides failed for: ', parentFN);
           }
         });
       },
@@ -359,6 +368,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
                 console.error('loadSubSlides returns no Json: ', transport.responseText);
               }
             }
+          },
+          onFailure: function(transport) {
+            console.warn('loadSubSlides failed for: ', parentFN, startAtIndex);
           }
         });
       },
@@ -503,6 +515,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
               'slideFN' : slideFN,
               'responseText' : transport.responseText
             });
+          },
+          onFailure: function(transport) {
+            console.warn('_preloadSlide failed for: ', slideFN);
           }
         });
       },
