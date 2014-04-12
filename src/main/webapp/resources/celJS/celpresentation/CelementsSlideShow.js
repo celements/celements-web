@@ -755,7 +755,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _showSlideAfterPreloadingImg : function() {
         var _me = this;
-        var slides = _me.getHtmlContainer().select('.cel_slideShow_slideRoot');
+        var slides = _me.getHtmlContainer().select('> .cel_slideShow_slideRoot');
         _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
             _me._cleanupSlideTransitionBind);
         _me._htmlContainer.observe('cel_slideShow:slideTransitionFinished',
@@ -779,7 +779,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
             _me._cleanupSlideTransitionBind);
-        var slides = _me.getHtmlContainer().select('.cel_slideShow_slideRoot');
+        var slides = _me.getHtmlContainer().select('> .cel_slideShow_slideRoot');
         slides.each(function(slideElem) {
           if (!slideElem.visible()) {
             slideElem.remove();
