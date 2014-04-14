@@ -71,6 +71,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _imgLoadedResizeAndCenterSlideBind : undefined,
       _cleanupSlideTransitionBind : undefined,
       _gotoSlideClickHandlerBind : undefined,
+      _counterLeadingZeros : false,
       _centerSlide : true,
       _autoresize : false,
 
@@ -92,6 +93,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             _me);
         _me._cleanupSlideTransitionBind = _me._cleanupSlideTransition.bind(_me);
         _me._gotoSlideClickHandlerBind = _me._gotoSlideClickHandler.bind(_me);
+      },
+
+      setCounterLeadingZeros : function(useLeadingZeros) {
+        var _me = this;
+        _me._counterLeadingZeros = useLeadingZeros;
       },
 
       _nextSlideClickHandler : function(event) {
@@ -388,8 +394,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
               countSlideElem.update(numSlides);
         });
         var currentSlideNum = _me._navObj.getCurrentSlideNum();
-        if (_me._htmlContainer.hasClassName('celimage_addCounterZeros')
-            || _me._htmlContainer.hasClassName('celanim_addCounterZeros')) {
+        if (_me._counterLeadingZeros) {
           currentSlideNum = '0000000000' + currentSlideNum;
           currentSlideNum = currentSlideNum.substring(
               currentSlideNum.length - numSlides.toString().length,
