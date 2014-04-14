@@ -571,6 +571,14 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
 //          'position' : 'relative',
 //          'top' : 0
 //        });
+        //we cannot read element dimension if any parent is hidden (display:none)
+        var hiddenParentElems = [];
+        slideWrapper.ancestors().each(function(parentElem) {
+          if (!parentElem.visible()) {
+            hiddenParentElems.push(parentElem);
+            parentElem.show();
+          }
+        });
         //use jquery to get dimensions, because it works correctly inside iframes.
         var slideOuterHeight = $j(slideRoot).height();
         var slideOuterWidth = $j(slideRoot).width();
@@ -582,6 +590,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         //--> see method comment
         var topPos = (parentHeight - slideOuterHeight) / 2;
         var leftPos = (parentWidth - slideOuterWidth) / 2;
+        hiddenParentElems.each(Element.hide);
         slideWrapper.setStyle({
           'position' : 'relative',
           'margin' : '0'
@@ -678,15 +687,18 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         var slideWrapper = slideWrapperIn || _me._getSlideWrapper();
         var slideRoot = _me._getSlideRootElem(slideWrapper);
-        var isRootHidden = !slideRoot.visible();
         var rootPositionValue = slideRoot.getStyle('position');
         slideRoot.setStyle({
           'position' : 'absolute',
           'visibility' : 'hidden'
         });
-        if (isRootHidden) {
-          slideRoot.show();
-        }
+        var hiddenParentElems = [];
+        slideWrapper.ancestors().each(function(parentElem) {
+          if (!parentElem.visible()) {
+            hiddenParentElems.push(parentElem);
+            parentElem.show();
+          }
+        });
         var oldWidth = parseInt(slideWrapper.getWidth());
         var newWidth = oldWidth;
         if (oldWidth > _me._htmlContainer.getWidth()) {
@@ -709,9 +721,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
           'position' : rootPositionValue,
           'visibility' : ''
         });
-        if (isRootHidden) {
-          slideRoot.hide();
-        }
+        hiddenParentElems.each(Element.hide);
         return {
           'zoomFactor' : zoomFactor,
           'oldHeight' : oldHeight,
@@ -765,7 +775,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             _me._preloadingImageQueue.push(imgElem);
           }
         });
-        if (_me._preloadingImageQueue.length == 0) {
+        if (_me._preloadingImageQueue.size() == 0) {
           _me._resizeAndCenterSlide(slideWrapperElem);
           if (callbackFN) {
             callbackFN();
