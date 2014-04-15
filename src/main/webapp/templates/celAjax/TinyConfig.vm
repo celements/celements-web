@@ -239,6 +239,7 @@
   #end
   ##FIXME $linkPickerSpace must be given by input parameter depending on rte context
   #set($linkPickerSpace = "$doc.space")
+  #set($filePickerSpace = "$linkPickerSpace") ## filePickerSpace must be a single space!!
   #if("$!linkPickerSpaces" != '')
     #set($linkPickerSpace = "$!linkPickerSpaces")
   #end
@@ -253,7 +254,6 @@
   #if("$!fileBaseSingleDoc" != '')
     #set($isSingle = "$fileBaseSingleDoc")
   #end
-  #set($filePickerSpace = "$linkPickerSpace")
   #if("$!fileBasePickerSpace" != '')
     #set($filePickerSpace = "$!fileBasePickerSpace")
   #end
