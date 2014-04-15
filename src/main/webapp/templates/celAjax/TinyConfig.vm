@@ -243,8 +243,9 @@
   #if("$!linkPickerSpaces" != '')
     #set($linkPickerSpace = "$!linkPickerSpaces")
   #end
-  #if(("$!xwiki.getSpacePreference('parent')" != '') && ($linkPickerSpaces.indexOf("$!{xwiki.getSpacePreference('parent')}") < 0))
-    #set($linkPickerSpace = "$!linkPickerSpaces,$!{xwiki.getSpacePreference('parent')}")
+  #set($parentSpace = "$!{xwiki.getSpacePreference('parent')}")
+  #if(("$!parentSpace" != '') && ($linkPickerSpaces.indexOf("$!{parentSpace}") < 0))
+    #set($linkPickerSpace = "$!linkPickerSpaces,")
   #end
   #set($fileUploadSpace = "$doc.space")
   #if("$!fileBaseUploadSpace" != '')
@@ -269,6 +270,9 @@
   "wiki_filepicker_space" : "$filePickerSpace",
   "wiki_filepicker_doc" : "$filePickerDoc",
   #set($fbDoc = "$!xwiki.getSpacePreference('cel_centralfilebase')")
+  #if (("$!fbDoc" == '') && ("$!parentSpace" != ''))
+    #set($fbDoc = "$!xwiki.getSpacePreferenceFor('cel_centralfilebase', $parentSpace)")
+  #end
   #if("$!fbDoc" == '')
     #set($fbDoc = "${filePickerSpace}_filebase.AttachmentDocument")
   #elseif("$!fbDoc" == '-')
