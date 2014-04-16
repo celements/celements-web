@@ -245,7 +245,7 @@
   #end
   #set($parentSpace = "$!{xwiki.getSpacePreference('parent')}")
   #if(("$!parentSpace" != '') && ($linkPickerSpaces.indexOf("$!{parentSpace}") < 0))
-    #set($linkPickerSpace = "$!linkPickerSpaces,")
+    #set($linkPickerSpace = "$!linkPickerSpaces,$!{parentSpace}")
   #end
   #set($fileUploadSpace = "$doc.space")
   #if("$!fileBaseUploadSpace" != '')
