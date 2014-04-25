@@ -667,6 +667,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
               console.log('no resize needed.', zoomFactorObj.zoomFactor);
             }
+          } else {
+            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+              console.log('resize skipped.', { 'zoomFactor' : zoomFactorObj.zoomFactor,
+                '_autoresize' : _me._autoresize });
+            }
           }
           //set sizes without zoom too. Important for centering
           slideWrapper.setStyle({
