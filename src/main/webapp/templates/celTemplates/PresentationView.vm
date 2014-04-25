@@ -17,5 +17,5 @@
 #end
 <div class="presentationList">
 #parse('celTemplates/NavigationCellView.vm')
-</div>
-</div>
+<!-- presentationList --></div>
+<!-- pres$!{contentDoc.getName()} --></div>
