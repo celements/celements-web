@@ -222,23 +222,23 @@ var celanimLoadSWFplayer = function(playerLink) {
 var getCelAnimObject = function() {
   var celAnimObject = [
     { 
-    'name' : 'vimeo',
-    'matchStr' : '^https?:\/\/vimeo.com\/.*?',
-    'replaceStr' : 'http://vimeo.com/moogaloop.swf?clip_id=',
-    'cssClass' : 'celanim_vimeo',
-    'replaceOnLoad' : true
+      'name' : 'vimeo',
+      'matchStr' : '^https?:\/\/vimeo.com\/.*?',
+      'replaceStr' : 'http://vimeo.com/moogaloop.swf?clip_id=',
+      'cssClass' : 'celanim_vimeo',
+      'replaceOnLoad' : true
     },
     { 'name' : 'youtube',
-    'matchStr' : '^https?:\/\/www.youtube.com\/.*?[\/=]',
-    'replaceStr' : 'http://www.youtube.com/v/',
-    'cssClass' : 'celanim_youtube',
-    'replaceOnLoad' : true
+      'matchStr' : '^https?:\/\/(www.youtube.com\/.*?[\/=]|youtu.be\/)',
+      'replaceStr' : 'http://www.youtube.com/v/',
+      'cssClass' : 'celanim_youtube',
+      'replaceOnLoad' : true
     },
     { 'name' : 'sfvideoPortal',
-    'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv)\/.*[\/=]',
-    'replaceStr' : 'http://www.sf.tv/videoplayer/embed/',
-    'cssClass' : 'celanim_sfvideo',
-    'replaceOnLoad' : true
+      'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv)\/.*[\/=]',
+      'replaceStr' : 'http://www.sf.tv/videoplayer/embed/',
+      'cssClass' : 'celanim_sfvideo',
+      'replaceOnLoad' : true
     }];
   return celAnimObject;
 };
