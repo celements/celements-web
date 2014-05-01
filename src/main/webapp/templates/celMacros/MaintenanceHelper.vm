@@ -9,7 +9,7 @@
     </a>
     #if("$!request.flushCache" == 'true')
       <br/>
-      $xwiki.flushCache() done.
+      $services.celementsweb.flushMenuItemCache() done.
     #end
     </p>
     ##end: flushCache
