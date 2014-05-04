@@ -31,7 +31,9 @@
     $menu_name_obj.set("menu_name", "$newMenuName")
   #end
   $newDoc.save()
-  $xwiki.celementsweb.flushCache()
+## FP 04/05/2014 removing flushCache. flushCache needed what for? since 2.45.0 menuItems
+## changes are taken care of by TreeNodeCacheListener
+##  $xwiki.celementsweb.flushCache()
   #set($redir = "xpage=overlay&conf=EditFileBaseTags&source_space=${space}&editTag=$newMenuName")
   $context.getResponse().sendRedirect("$doc.getURL('view', $redir)")
 #end
@@ -50,7 +52,9 @@
   $context.getResponse().sendRedirect("$doc.getURL('view', $redirSpace)")
 #end
 #if("$!request.get('delTag')" != '')
-  $xwiki.celementsweb.flushCache()
+## FP 04/05/2014 removing flushCache. flushCache needed what for? since 2.45.0 menuItems
+## changes are taken care of by TreeNodeCacheListener
+##  $xwiki.celementsweb.flushCache()
   $!request.get('delTag') $!adminMsg.get('cel_ml_delete_successful')
 #end
 #set($contextMenu = '')

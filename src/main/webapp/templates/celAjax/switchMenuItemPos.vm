@@ -35,7 +35,9 @@
 
     $doc1.save()
     $doc2.save()
-	$xwiki.celementsweb.flushCache()
+## FP 04/05/2014 removing flushCache. flushCache needed what for? since 2.45.0 menuItems
+## changes are taken care of by TreeNodeCacheListener
+##	$xwiki.celementsweb.flushCache()
   #end
 #end
 
