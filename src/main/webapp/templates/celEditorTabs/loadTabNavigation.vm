@@ -36,7 +36,7 @@
 #end
     #end
     #set($navObjNb = $theMenuName.getNumber())
-    #set($escapedMenuNameValue = "$escapetool.html($!theMenuName.getProperty('menu_name').getValue())")
+    #set($escapedMenuNameValue = "$!escapetool.html($!theMenuName.getProperty('menu_name').getValue())")
 	$adminMsg.get('cel_tm_menu_name'): <input type="text" value="$!escapedMenuNameValue" id="menuname" name="Celements2.MenuName_${navObjNb}_menu_name" onfocus="setFocus('nav_menunameEdit');" onblur="removeFocus('nav_menunameEdit');"></input><br />
 </div>
 
