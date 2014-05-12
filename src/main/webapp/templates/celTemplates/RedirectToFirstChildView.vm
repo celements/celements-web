@@ -1,8 +1,10 @@
-#set($docFN = $services.model.serialize($doc.getDocumentReference()))
-#set($allChildren = $celementsweb.getSubNodesForParent($docFN, $doc.space))
+#set($allChildren = $celementsweb.getSubNodesForParentRef($doc.documentReference))
+#if(($allChildren.size() == 0) && ("$!doc.documentReference.name" == 'WebHome'))
+#set($allChildren = $celementsweb.getSubNodesForParentRef($doc.documentReference.lastSpaceReference))
+#end
 #if($allChildren.size() > 0)
 #if(("$!context.action" == 'view') && ("$!request.xpage" == ''))
-#set($docRef = $allChildren.get(0).getDocumentReference())
+#set($docRef = $allChildren.get(0).documentReference)
 $response.sendRedirect($xwiki.getURL($docRef))
 #else
 Weiterleitung nur in view-Mode aktiv.
