@@ -35,9 +35,9 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #set($maxHeight = $util.parseInt("$!request.maxHeight"))
 #set($maxWidth = $util.parseInt("$!request.maxWidth"))
 #if(($maxHeight > 0) || ($maxWidth > 0))
-#set($pageContent = $services.celementsweb.fixMaxImageSizes($pageContent, $maxWidth, $maxHeight)))
+#set($pageContent = $services.celementsphoto.fixMaxImageSizes($pageContent, $maxWidth, $maxHeight))
 #end
-$pageContent
+$!pageContent
 <!-- end celements cells -->
 </div><!-- main wrapper -->
 #if(!$isAjaxCall)
