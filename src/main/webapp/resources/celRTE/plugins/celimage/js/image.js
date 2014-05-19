@@ -293,9 +293,9 @@ var CelImageDialog = {
       if(newSrc.indexOf('?') < 0) {
         newSrc += '?';
       } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
-        newSrc += '&amp;';
+        newSrc += '&';
       }
-      newSrc += 'celwidth=' + width + '&amp;celheight=' + height;
+      newSrc += 'celwidth=' + width + '&celheight=' + height;
       return newSrc;
     }
     return '';
@@ -309,7 +309,7 @@ var CelImageDialog = {
       if(newSrc.indexOf('?') < 0) {
         newSrc += '?';
       } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
-        newSrc += '&amp;';
+        newSrc += '&';
       }
       if (nl.hasSlideshow.checked) {
         //TODO change background color to transparent
@@ -334,10 +334,10 @@ var CelImageDialog = {
         if(newSrc.indexOf('?') < 0) {
           newSrc += '?';
         } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
-          newSrc += '&amp;';
+          newSrc += '&';
         }
-        newSrc += 'cropX=' + cropX + '&amp;cropY=' + cropY + '&amp;cropW=' + cropW
-            + '&amp;cropH=' + cropH;
+        newSrc += 'cropX=' + cropX + '&cropY=' + cropY + '&cropW=' + cropW
+            + '&cropH=' + cropH;
         return newSrc;
       } else {
         return src;

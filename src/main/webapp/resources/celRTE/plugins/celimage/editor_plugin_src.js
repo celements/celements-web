@@ -170,9 +170,9 @@
       if(newSrc.indexOf('?') < 0) {
         newSrc += '?';
       } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
-        newSrc += '&amp;';
+        newSrc += '&';
       }
-      newSrc += 'celwidth=' + width + '&amp;celheight=' + height;
+      newSrc += 'celwidth=' + width + '&celheight=' + height;
       return newSrc;
     },
 
