@@ -130,11 +130,11 @@
         return;
       var imageFullName = this._getImageFullName(e.src);
       if (!ed.origData.get(imageFullName)) {
-        var cropW = parseInt(e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4'));
+        var cropW = parseInt(e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropW=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropW || (typeof(cropW) == 'undefined') || (cropW <= 0)) {
           cropW = null;
         }
-        var cropH = parseInt(e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4'));
+        var cropH = parseInt(e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropH=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropH || (typeof(cropH) == 'undefined') || (cropH <= 0)) {
           cropH = null;
         }
@@ -165,14 +165,14 @@
     },
     
     addAutoResizeToURL : function(src, width, height) {
-      var newSrc = src.replace(/(.*\?.*)(&celwidth=\d*|celwidth=\d*&)(\D?.*)/g, '$1$3');
-      newSrc = newSrc.replace(/(.*\?.*)(&celheight=\d*|celheight=\d*&)(\D?.*)/g, '$1$3');
+      var newSrc = src.replace(/(.*\?)(.*&(?:amp;)?celwidth=\d*|celwidth=\d*)(\D?.*)/g, '$1$3');
+      newSrc = newSrc.replace(/(.*\?)(.*&(?:amp;)?celheight=\d*|celheight=\d*)(\D?.*)/g, '$1$3');
       if(newSrc.indexOf('?') < 0) {
         newSrc += '?';
-      } else if(!newSrc.endsWith('&')) {
-        newSrc += '&';
+      } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
+        newSrc += '&amp;';
       }
-      newSrc += 'celwidth=' + width + '&celheight=' + height;
+      newSrc += 'celwidth=' + width + '&amp;celheight=' + height;
       return newSrc;
     },
 

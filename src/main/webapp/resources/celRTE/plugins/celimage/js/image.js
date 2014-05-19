@@ -30,8 +30,8 @@ var CelImageDialog = {
 
     if (n.nodeName == 'IMG') {
       nl.src.value = dom.getAttrib(n, 'src').replace(/\?.*/, '');
-      nl.celwidth.value = dom.getAttrib(n, 'width');
-      nl.celheight.value = dom.getAttrib(n, 'height');
+      nl.celwidth.value = dom.getAttrib(n, 'width') || $j(n).width();
+      nl.celheight.value = dom.getAttrib(n, 'height') || $j(n).height();
       nl.cropX.value = _me.getAttrib(n, 'cropX');
       nl.cropY.value = _me.getAttrib(n, 'cropY');
       nl.cropWidth.value = _me.getAttrib(n, 'cropWidth');
@@ -288,14 +288,14 @@ var CelImageDialog = {
   
   addAutoResizeToURL : function(src, width, height) {
     if (src && (src != '')) {
-      var newSrc = src.replace(/(.*\?)(.*&celwidth=\d*|celwidth=\d*)(\D?.*)/g, '$1$3');
-      newSrc = newSrc.replace(/(.*\?)(.*&celheight=\d*|celheight=\d*)(\D?.*)/g, '$1$3');
+      var newSrc = src.replace(/(.*\?)(.*&(?:amp;)?celwidth=\d*|celwidth=\d*)(\D?.*)/g, '$1$3');
+      newSrc = newSrc.replace(/(.*\?)(.*&(?:amp;)?celheight=\d*|celheight=\d*)(\D?.*)/g, '$1$3');
       if(newSrc.indexOf('?') < 0) {
         newSrc += '?';
-      } else if(!newSrc.endsWith('&')) {
-        newSrc += '&';
+      } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
+        newSrc += '&amp;';
       }
-      newSrc += 'celwidth=' + width + '&celheight=' + height;
+      newSrc += 'celwidth=' + width + '&amp;celheight=' + height;
       return newSrc;
     }
     return '';
@@ -305,11 +305,11 @@ var CelImageDialog = {
     var f = document.forms[0];
     var nl = f.elements;
     if (src && (src != '')) {
-      var newSrc = src.replace(/(.*\?)(.*&background=\d*|background=\d*)(\D?.*)/g, '$1$3');
+      var newSrc = src.replace(/(.*\?)(.*&(?:amp;)?background=\d*|background=\d*)(\D?.*)/g, '$1$3');
       if(newSrc.indexOf('?') < 0) {
         newSrc += '?';
-      } else if(!newSrc.endsWith('&')) {
-        newSrc += '&';
+      } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
+        newSrc += '&amp;';
       }
       if (nl.hasSlideshow.checked) {
         //TODO change background color to transparent
@@ -327,17 +327,17 @@ var CelImageDialog = {
         var cropY = $('cropY').value;
         var cropW = $('cropWidth').value;
         var cropH = $('cropHeight').value;
-        newSrc = src.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
-        newSrc = newSrc.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
-        newSrc = newSrc.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
-        newSrc = newSrc.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
+        newSrc = src.replace(/(.*\?)(.*(?:&|&amp;)cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?)(.*(?:&|&amp;)cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?)(.*(?:&|&amp;)cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?)(.*(?:&|&amp;)cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
         if(newSrc.indexOf('?') < 0) {
           newSrc += '?';
-        } else if(!newSrc.endsWith('&')) {
-          newSrc += '&';
+        } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
+          newSrc += '&amp;';
         }
-        newSrc += 'cropX=' + cropX + '&cropY=' + cropY + '&cropW=' + cropW + '&cropH=' 
-            + cropH;
+        newSrc += 'cropX=' + cropX + '&amp;cropY=' + cropY + '&amp;cropW=' + cropW
+            + '&amp;cropH=' + cropH;
         return newSrc;
       } else {
         return src;
@@ -689,16 +689,16 @@ var CelImageDialog = {
     }
 
     if(at == 'cropX') {
-      return e.src.replace(/((^|(.*[\?&]))cropX=(\d*)\D?.*)|.*/g, '$4');
+      return e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropX=(\d*)\D?.*)|.*/g, '$4');
     }
     if(at == 'cropY') {
-      return e.src.replace(/((^|(.*[\?&]))cropY=(\d*)\D?.*)|.*/g, '$4');
+      return e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropY=(\d*)\D?.*)|.*/g, '$4');
     }
     if(at == 'cropWidth') {
-      return e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4');
+      return e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropW=(\d*)\D?.*)|.*/g, '$4');
     }
     if(at == 'cropHeight') {
-      return e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4');
+      return e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropH=(\d*)\D?.*)|.*/g, '$4');
     }
     
     if (at == 'gallery') {
