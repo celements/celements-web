@@ -500,10 +500,12 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var params = {
           'xpage' : 'celements_ajax',
           'ajax_mode' : 'pageTypeWithLayout',
-          'maxHeight' : _me._htmlContainer.getHeight(),
-          'maxWidth' : _me._htmlContainer.getWidth(),
           'ajax' : '1'
         };
+        if (_me._htmlContainer) {
+          params['maxHeight'] = _me._htmlContainer.getHeight();
+          params['maxWidth'] = _me._htmlContainer.getWidth();
+        }
         if (_me._overwritePageLayout != '') {
           params['overwriteLayout'] = _me._overwritePageLayout;
         }
