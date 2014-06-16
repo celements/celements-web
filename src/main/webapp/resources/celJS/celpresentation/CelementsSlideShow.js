@@ -559,6 +559,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
        * present the .cel_slideShow_slideRoot css class.
        * 
        * prerequisite: slideWrapper MUST have a height and width asigned (e.g. by resize)
+       * @TODO move to CelementsSlides js class.
        */
       _centerCurrentSlide : function(slideWrapperIn) {
         var _me = this;
