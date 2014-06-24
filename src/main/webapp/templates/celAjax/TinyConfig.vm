@@ -12,7 +12,9 @@
 #end
 #set($xwikiPref_template_url = "$!xwiki.getDocument('XWiki.XWikiPreferences').getAttachment('template-list.js')")
 #set($webPref_template_url = "$!xwiki.getDocument('${doc.space}.WebPreferences').getAttachment('template-list.js')")
-#if ("$!webPref_template_url" != '')
+#if(!$services.celementsweb.getRTETemplateList().isEmpty())
+  #set($template_external_list_url = $doc.getURL($context.action, 'xpage=celements_ajax&ajax_mode=tinyTemplateList'))
+#elseif ("$!webPref_template_url" != '')
   #set($template_external_list_url = $!services.celementsweb.getSkinFile("${doc.space}.WebPreferences;template-list.js", 'file'))
 #elseif ("$!xwikiPref_template_url" != '')
   #set($template_external_list_url = $!services.celementsweb.getSkinFile('XWiki.XWikiPreferences;template-list.js', 'file'))
