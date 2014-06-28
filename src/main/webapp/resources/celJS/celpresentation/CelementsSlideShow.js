@@ -436,6 +436,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         });
       },
 
+      addSlides : function(fullNameArray) {
+        var _me = this;
+        _me._navObj._addSlides(fullNameArray);
+      },
+
       gotoSlide : function(fullName) {
         var _me = this;
         var gotoIndex = _me._navObj.indexOf(fullName);
@@ -517,20 +522,45 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
           method: 'post',
           parameters: params,
           onSuccess: function(transport) {
-            _me._htmlContainer.fire('cel_slideShow:preloadContentFinished', {
-              'theSlideShow' : _me,
-              'slideFN' : slideFN,
-              'responseText' : transport.responseText
-            });
-            callbackFN(transport.responseText);
-            _me._htmlContainer.fire('cel_slideShow:preloadFinished', {
-              'theSlideShow' : _me,
-              'slideFN' : slideFN,
-              'responseText' : transport.responseText
-            });
+            var jsonObj = transport.headerJSON;
+            if (jsonObj && jsonObj.redirectFN && (jsonObj.redirectFN != '')
+                && (jsonObj.redirectFN != slideFN)) {
+              var beforeRedirEvent = _me._htmlContainer.fire(
+                  'cel_slideShow:preloadContentBeforeRedirect', {
+                'theSlideShow' : _me,
+                'slideFN' : slideFN,
+                'jsonObj' : jsonObj
+              });
+              if (!beforeRedirEvent.stopped) {
+                if (!_me.gotoSlide(jsonObj.redirectFN)) {
+                  _me._htmlContainer.fire('cel_slideShow:preloadContentRedirectFailed', {
+                    'theSlideShow' : _me,
+                    'slideFN' : slideFN,
+                    'jsonObj' : jsonObj
+                  });
+                }
+              }
+            } else {
+              _me._htmlContainer.fire('cel_slideShow:preloadContentFinished', {
+                'theSlideShow' : _me,
+                'slideFN' : slideFN,
+                'responseText' : transport.responseText
+              });
+              callbackFN(transport.responseText);
+              _me._htmlContainer.fire('cel_slideShow:preloadFinished', {
+                'theSlideShow' : _me,
+                'slideFN' : slideFN,
+                'responseText' : transport.responseText
+              });
+            }
           },
           onFailure: function(transport) {
             console.warn('_preloadSlide failed for: ', slideFN);
+            _me._htmlContainer.fire('cel_slideShow:preloadContentFailed', {
+              'theSlideShow' : _me,
+              'slideFN' : slideFN,
+              'responseText' : transport.responseText
+            });
           }
         });
       },
