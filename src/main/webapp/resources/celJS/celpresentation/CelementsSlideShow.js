@@ -869,6 +869,7 @@ this._init(preloadFunc, showFunc, waitingFunc);
       _preloadPrev : undefined,
       _waitingNextSlide : undefined,
       _waitingPrevSlide : undefined,
+      _hasSlidePreload : undefined,
 
       _preloadFunc : undefined,
       _showFunc : undefined,
@@ -878,6 +879,7 @@ this._init(preloadFunc, showFunc, waitingFunc);
         var _me = this;
         _me._waitingNextSlide = false;
         _me._waitingPrevSlide = false;
+        _me._hasSlidePreload = true;
         _me._allSlides = new Array();
         _me._preloadFunc = preloadFunc || function(){};
         _me._showFunc = showFunc || function(){};
@@ -911,6 +913,11 @@ this._init(preloadFunc, showFunc, waitingFunc);
         _me._allSlides = _me._allSlides.concat(slidesFNarray);
       },
 
+      setHasSlidePreload : function(hasSlidePreload) {
+        var _me = this;
+        _me._hasSlidePreload = hasSlidePreload;
+      },
+
       getCurrentSlideFN : function() {
         var _me = this;
         return _me._allSlides[_me.getCurrentSlideNum() - 1];
@@ -920,11 +927,11 @@ this._init(preloadFunc, showFunc, waitingFunc);
         var _me = this;
         _me._currContent = newCurrContent;
         _me._showFunc(_me._currContent);
-        if (!_me._preloadNext) {
+        if (_me._hasSlidePreload && !_me._preloadNext) {
           _me._preloadFunc(_me._allSlides[_me.getNextIndex()],
               _me._updateNextContent.bind(_me));
         }
-        if (!_me._preloadPrev) {
+        if (_me._hasSlidePreload && !_me._preloadPrev) {
           _me._preloadFunc(_me._allSlides[_me.getPrevIndex()],
               _me._updatePrevContent.bind(_me));
         }
