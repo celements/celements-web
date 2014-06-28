@@ -59,7 +59,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
   CELEMENTS.presentation.SlideShow.prototype = {
       _htmlContainerId : undefined,
       _htmlContainer : undefined,
-      _overwritePageLayout : 'SimpleLayout',
+      _overwritePageLayout : undefined,
       _preloadSlideImagesHash : undefined,
       _nextElements : undefined,
       _prevElements : undefined,
@@ -71,12 +71,16 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _imgLoadedResizeAndCenterSlideBind : undefined,
       _cleanupSlideTransitionBind : undefined,
       _gotoSlideClickHandlerBind : undefined,
-      _counterLeadingZeros : false,
-      _centerSlide : true,
-      _autoresize : false,
+      _counterLeadingZeros : undefined,
+      _centerSlide : undefined,
+      _autoresize : undefined,
 
       _init : function(containerId) {
         var _me = this;
+        _me._overwritePageLayout = 'SimpleLayout';
+        _me._counterLeadingZeros = false;
+        _me._centerSlide = true;
+        _me._autoresize = false;
         _me._preloadSlideImagesHash = new Hash();
         _me._nextElements = [];
         _me._prevElements = [];
@@ -863,8 +867,8 @@ this._init(preloadFunc, showFunc, waitingFunc);
       _currContent : undefined,
       _preloadNext : undefined,
       _preloadPrev : undefined,
-      _waitingNextSlide : false,
-      _waitingPrevSlide : false,
+      _waitingNextSlide : undefined,
+      _waitingPrevSlide : undefined,
 
       _preloadFunc : undefined,
       _showFunc : undefined,
@@ -872,6 +876,8 @@ this._init(preloadFunc, showFunc, waitingFunc);
 
       _init : function(preloadFunc, showFunc, waitingFunc) {
         var _me = this;
+        _me._waitingNextSlide = false;
+        _me._waitingPrevSlide = false;
         _me._allSlides = new Array();
         _me._preloadFunc = preloadFunc || function(){};
         _me._showFunc = showFunc || function(){};
