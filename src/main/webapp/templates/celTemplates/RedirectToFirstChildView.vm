@@ -13,7 +13,9 @@ $jsonBuilder.openDictionary()
 $jsonBuilder.addStringProperty('redirectFN', "$!services.model.serialize($docRef, 'local')")
 $jsonBuilder.addStringProperty('redirectURL', "$xwiki.getURL($docRef)")
 $jsonBuilder.closeDictionary()
-$jsonBuilder.getJSON()
+#set($jsonStr = $jsonBuilder.getJSON())
+$response.addHeader('X-JSON', $jsonStr)
+$jsonStr
 #else
 Weiterleitung nur in view-Mode aktiv.
 #end

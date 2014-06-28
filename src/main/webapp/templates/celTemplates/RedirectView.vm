@@ -42,7 +42,9 @@ $jsonBuilder.addStringProperty('showIncluded', "$!red_obj.getProperty('show_incl
 $jsonBuilder.addStringProperty('redirectFN', "$redFN")
 $jsonBuilder.addStringProperty('redirectURL', "$!redExternalURL")
 $jsonBuilder.closeDictionary()
-$jsonBuilder.getJSON()
+#set($jsonStr = $jsonBuilder.getJSON())
+$response.addHeader('X-JSON', $jsonStr)
+$jsonStr
 #else ## render view
   #if("$!showIncluded" == '1')
     #set($overwriteRenderDocument = 'celInlineTemplates/RedirectIncludedView.vm')
