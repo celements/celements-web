@@ -1,11 +1,21 @@
+#set($isAjaxCall = ("$!request.ajax" == '1'))
 #set($allChildren = $celementsweb.getSubNodesForParentRef($doc.documentReference))
 #if(($allChildren.size() == 0) && ("$!doc.documentReference.name" == 'WebHome'))
 #set($allChildren = $celementsweb.getSubNodesForParentRef($doc.documentReference.lastSpaceReference))
 #end
 #if($allChildren.size() > 0)
-#if(("$!context.action" == 'view') && ("$!request.xpage" == ''))
 #set($docRef = $allChildren.get(0).documentReference)
+#if(("$!context.action" == 'view') && ("$!request.xpage" == '') && !$isAjaxCall)
 $response.sendRedirect($xwiki.getURL($docRef))
+#elseif($isAjaxCall)
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
+$jsonBuilder.openDictionary()
+$jsonBuilder.addStringProperty('redirectFN', "$!services.model.serialize($docRef, 'local')")
+$jsonBuilder.addStringProperty('redirectURL', "$xwiki.getURL($docRef)")
+$jsonBuilder.closeDictionary()
+#set($jsonStr = $jsonBuilder.getJSON())
+$response.addHeader('X-JSON', $jsonStr)
+$jsonStr
 #else
 Weiterleitung nur in view-Mode aktiv.
 #end

@@ -123,7 +123,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.90</version>
+      <version>1.91-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>

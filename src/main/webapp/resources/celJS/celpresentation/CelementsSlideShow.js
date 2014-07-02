@@ -59,7 +59,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
   CELEMENTS.presentation.SlideShow.prototype = {
       _htmlContainerId : undefined,
       _htmlContainer : undefined,
-      _overwritePageLayout : 'SimpleLayout',
+      _overwritePageLayout : undefined,
       _preloadSlideImagesHash : undefined,
       _nextElements : undefined,
       _prevElements : undefined,
@@ -71,12 +71,16 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _imgLoadedResizeAndCenterSlideBind : undefined,
       _cleanupSlideTransitionBind : undefined,
       _gotoSlideClickHandlerBind : undefined,
-      _counterLeadingZeros : false,
-      _centerSlide : true,
-      _autoresize : false,
+      _counterLeadingZeros : undefined,
+      _centerSlide : undefined,
+      _autoresize : undefined,
 
       _init : function(containerId) {
         var _me = this;
+        _me._overwritePageLayout = 'SimpleLayout';
+        _me._counterLeadingZeros = false;
+        _me._centerSlide = true;
+        _me._autoresize = false;
         _me._preloadSlideImagesHash = new Hash();
         _me._nextElements = [];
         _me._prevElements = [];
@@ -432,6 +436,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         });
       },
 
+      addSlides : function(fullNameArray) {
+        var _me = this;
+        _me._navObj._addSlides(fullNameArray);
+      },
+
       gotoSlide : function(fullName) {
         var _me = this;
         var gotoIndex = _me._navObj.indexOf(fullName);
@@ -513,20 +522,45 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
           method: 'post',
           parameters: params,
           onSuccess: function(transport) {
-            _me._htmlContainer.fire('cel_slideShow:preloadContentFinished', {
-              'theSlideShow' : _me,
-              'slideFN' : slideFN,
-              'responseText' : transport.responseText
-            });
-            callbackFN(transport.responseText);
-            _me._htmlContainer.fire('cel_slideShow:preloadFinished', {
-              'theSlideShow' : _me,
-              'slideFN' : slideFN,
-              'responseText' : transport.responseText
-            });
+            var jsonObj = transport.headerJSON;
+            if (jsonObj && jsonObj.redirectFN && (jsonObj.redirectFN != '')
+                && (jsonObj.redirectFN != slideFN)) {
+              var beforeRedirEvent = _me._htmlContainer.fire(
+                  'cel_slideShow:preloadContentBeforeRedirect', {
+                'theSlideShow' : _me,
+                'slideFN' : slideFN,
+                'jsonObj' : jsonObj
+              });
+              if (!beforeRedirEvent.stopped) {
+                if (!_me.gotoSlide(jsonObj.redirectFN)) {
+                  _me._htmlContainer.fire('cel_slideShow:preloadContentRedirectFailed', {
+                    'theSlideShow' : _me,
+                    'slideFN' : slideFN,
+                    'jsonObj' : jsonObj
+                  });
+                }
+              }
+            } else {
+              _me._htmlContainer.fire('cel_slideShow:preloadContentFinished', {
+                'theSlideShow' : _me,
+                'slideFN' : slideFN,
+                'responseText' : transport.responseText
+              });
+              callbackFN(transport.responseText);
+              _me._htmlContainer.fire('cel_slideShow:preloadFinished', {
+                'theSlideShow' : _me,
+                'slideFN' : slideFN,
+                'responseText' : transport.responseText
+              });
+            }
           },
           onFailure: function(transport) {
             console.warn('_preloadSlide failed for: ', slideFN);
+            _me._htmlContainer.fire('cel_slideShow:preloadContentFailed', {
+              'theSlideShow' : _me,
+              'slideFN' : slideFN,
+              'responseText' : transport.responseText
+            });
           }
         });
       },
@@ -863,8 +897,9 @@ this._init(preloadFunc, showFunc, waitingFunc);
       _currContent : undefined,
       _preloadNext : undefined,
       _preloadPrev : undefined,
-      _waitingNextSlide : false,
-      _waitingPrevSlide : false,
+      _waitingNextSlide : undefined,
+      _waitingPrevSlide : undefined,
+      _hasSlidePreload : undefined,
 
       _preloadFunc : undefined,
       _showFunc : undefined,
@@ -872,6 +907,9 @@ this._init(preloadFunc, showFunc, waitingFunc);
 
       _init : function(preloadFunc, showFunc, waitingFunc) {
         var _me = this;
+        _me._waitingNextSlide = false;
+        _me._waitingPrevSlide = false;
+        _me._hasSlidePreload = true;
         _me._allSlides = new Array();
         _me._preloadFunc = preloadFunc || function(){};
         _me._showFunc = showFunc || function(){};
@@ -905,6 +943,11 @@ this._init(preloadFunc, showFunc, waitingFunc);
         _me._allSlides = _me._allSlides.concat(slidesFNarray);
       },
 
+      setHasSlidePreload : function(hasSlidePreload) {
+        var _me = this;
+        _me._hasSlidePreload = hasSlidePreload;
+      },
+
       getCurrentSlideFN : function() {
         var _me = this;
         return _me._allSlides[_me.getCurrentSlideNum() - 1];
@@ -914,11 +957,11 @@ this._init(preloadFunc, showFunc, waitingFunc);
         var _me = this;
         _me._currContent = newCurrContent;
         _me._showFunc(_me._currContent);
-        if (!_me._preloadNext) {
+        if (_me._hasSlidePreload && !_me._preloadNext) {
           _me._preloadFunc(_me._allSlides[_me.getNextIndex()],
               _me._updateNextContent.bind(_me));
         }
-        if (!_me._preloadPrev) {
+        if (_me._hasSlidePreload && !_me._preloadPrev) {
           _me._preloadFunc(_me._allSlides[_me.getPrevIndex()],
               _me._updatePrevContent.bind(_me));
         }
