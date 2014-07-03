@@ -10,8 +10,14 @@
  #set($space = "Content")
 #end
 #set($red = $!context.getRequest().get("xredirect"))
-#set($fullname1 = "${space}.$!context.getRequest().get('item1')")
-#set($fullname2 = "${space}.$!context.getRequest().get('item2')")
+#set($fullname1 = "$!context.getRequest().get('item1')")
+#if($fullname1.indexOf('.') <= 0)
+  #set($fullname1 = "${space}.$!fullname1")
+#end
+#set($fullname2 = "$!context.getRequest().get('item2')")
+#if($fullname2.indexOf('.') <= 0)
+  #set($fullname1 = "${space}.$!fullname2")
+#end
 
 ## check if the documents to switch exists
 #if($!context.getRequest().get('item1') != "" && $!context.getRequest().get('item2') != "" && $xwiki.exists($fullname1) && $xwiki.exists($fullname2))
