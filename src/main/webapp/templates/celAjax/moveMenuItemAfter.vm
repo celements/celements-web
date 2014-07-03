@@ -1,0 +1,36 @@
+##
+## Ajax Script moveMenuItemAfter
+##
+##e.g. ?xpage=celements_ajax&ajax_mode=moveMenuItemAfter&moveItem=Content.Fotografie&insertAfterItem=Content.WebHome&xredirect=Content.WebHome
+##
+#set($red = $!context.getRequest().get("xredirect"))
+#set($moveItemFN = "$!context.getRequest().get('moveItem')")
+#set($insertAfterItemFN = "$!context.getRequest().get('insertAfterItem')")
+
+## check if the documents to switch exists
+#if($!context.getRequest().get('moveItem') != "")
+
+  #set($moveDocRef = $services.model.resolveDocument($moveItemFN))
+  #set($insertAfterDocRef = $util.null)
+  #if("$!insertAfterItemFN" != '')
+    #set($newInsertAfterDocRef = $services.model.resolveDocument($insertAfterItemFN))
+    #if($xwiki.celementsweb.isTreeNode($newInsertAfterDocRef))
+      #set($insertAfterDocRef = $newInsertAfterDocRef)
+    #end
+  #end
+  
+  #if($xwiki.celementsweb.isTreeNode($moveDocRef))
+    $services.celementsweb.moveTreeDocAfter($moveDocRef, $insertAfterDocRef)
+  #end
+#end
+
+#if($request.ajax != '')
+Done.
+#else
+## redirect
+#set($redURL = $xwiki.getURL($red,'view'))
+#if("$!redURL" == '')
+#set($redURL = '/')
+$context.getResponse().sendRedirect($redURL)
+#end
+#end
