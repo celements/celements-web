@@ -935,6 +935,11 @@ TE.prototype = {
                  _me.saveAllFormsAjax(function(transport, jsonResponses) {
                    _dialog.hide();
                    var failed = _me.showErrorMessages(jsonResponses);
+                   if ((typeof console != 'undefined')
+                       && (typeof console.log != 'undefined')) {
+                     console.log('saveAllFormsAjax returning: ', failed, jsonResponses,
+                         execCallback);
+                   }
              execCallback(transport, jsonResponses, failed);
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
