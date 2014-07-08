@@ -862,8 +862,10 @@ TE.prototype = {
  },
 
  _formDirtyOnLoad : function(formId) {
-   return (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
-     && ($(formId).celFormDirtyOnLoad.value == 'true');
+   var _me = this;
+   return _me._isEditorDirtyOnLoad ||
+     (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
+       && ($(formId).celFormDirtyOnLoad.value == 'true');
  },
 
  getDirtyFormIds : function() {
