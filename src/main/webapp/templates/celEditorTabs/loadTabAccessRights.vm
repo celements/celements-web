@@ -26,33 +26,43 @@
 
 <div class="cel_rightsTab">
 
-## #if($services.celementsRight.publicationActivated($doc.documentReference))
-##	
-##    ##cel_tm_rights_publication=Publikationszeitraum
-##    ##cel_tm_rights_publication_always=Immer
-##    ##cel_tm_rights_publication_add=Hinzufügen
-##    ##cel_tm_rights_publication_remove=Entfernen
-##    ##cel_tm_rights_publication_from=Von
-##    ##cel_tm_rights_publication_until=Bis
-##    ###cel_tm_rights_publication_published=Publiziert
-##    ##cel_tm_rights_publication_unpublished=Nicht publiziert
-##	
-##	<h1>$!adminMsg.get('cel_tm_rights_publication')</h1>
-##	<form id="publicationForm" name="publicationForm" action="" method="post">
-##        <input type="hidden" name="update" value="1" />
-##        <input type="hidden" name="tab" value="tbrights" />
-##        <input type="hidden" name="xpage" value="celements_ajax" />
-##        <input type="hidden" name="ajax_mode" value="SavePublication" />
-##	
-##	 #set($publiObj = $doc.getObject('Classes.DocumentPublication'))
-##		
-##	 #if("$!publicObj" != "")
-##		##TODO
-##	 #else
-##		$!adminMsg.get('cel_tm_rights_publication_always')
-##	 #end		     
-##	</form>	
-## #end
+#if($services.celementsRight.publicationActivated($doc.documentReference))
+	
+    ##cel_tm_rights_publication=Publikationszeitraum
+    ##cel_tm_rights_publication_always=Immer
+    ##cel_tm_rights_publication_add=Hinzufügen
+    ##cel_tm_rights_publication_remove=Entfernen
+    ##cel_tm_rights_publication_from=Von
+    ##cel_tm_rights_publication_until=Bis
+    ###cel_tm_rights_publication_published=Publiziert
+    ##cel_tm_rights_publication_unpublished=Nicht publiziert
+	
+	<h1>$!adminMsg.get('cel_tm_rights_publication')</h1>
+	<form id="publicationForm" name="publicationForm" action="" method="post">
+        <input type="hidden" name="update" value="1" />
+        <input type="hidden" name="tab" value="tbrights" />
+        <input type="hidden" name="xpage" value="celements_ajax" />
+        <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+        #set($publishObjs = $doc.getObjects('Classes.DocumentPublication'))
+        
+        #if("$!publishObjs" == "")
+            $!adminMsg.get('cel_tm_rights_publication_always')
+	    #end
+	    
+		<div id="edit_progon_left" class="progon_edit_column_left">
+			#set($cel_editobj_objects = $publishObjs)
+			#set($cel_editobj_hasObjAddLink = true)
+			#set($cel_editobj_hasObjRemoveLink = true)
+			#set($cel_editobj_properties = "publishDate,unpublishDate")
+			#set($cel_editobj_classname = 'Classes.DocumentPublication')
+	        #set($cel_editobj_dict_prefix = 'cel_tm_rights_' )
+	        #set($cel_editobj_externalForm = true)  
+	        #set($cel_embedded_editobj = true)
+	        #set($cel_editobj_title = $adminMsg.get('cel_tm_rights_publication'))
+			$xwiki.includeForm('celements2web:Templates.ObjectEdit', false)
+		</div>   
+	</form>	
+#end
 		
 <h1>$!adminMsg.get('cel_tm_rights_rights')</h1>
 #if($celementsweb.isCelementsRights($doc.fullName))
