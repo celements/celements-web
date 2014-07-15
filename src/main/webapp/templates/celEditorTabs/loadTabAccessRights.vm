@@ -42,14 +42,14 @@
 #if($services.celementsright.publicationActivated($doc.documentReference))
 	
 	<h1>$!adminMsg.get('cel_tm_rights_publication')</h1>
-	<form id="publicationForm" name="publicationForm" action="" method="post">
+	<form id="publicationForm" name="publicationForm" action="?" method="post">
         <input type="hidden" name="update" value="1" />
         <input type="hidden" name="tab" value="tbrights" />
         <input type="hidden" name="xpage" value="celements_ajax" />
         <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
         #set($publishObjs = $doc.getObjects('Classes.DocumentPublication'))
         
-        #if("$!publishObjs" == "")
+        #if(("$!publishObjs" == "") || ($publishObjs.size() == 0))
             $!adminMsg.get('cel_tm_rights_publication_always')
 	    #end
 	        
@@ -63,11 +63,12 @@
 	        #set($cel_editobj_externalForm = true)  
 	        #set($cel_embedded_editobj = true)
 	        #set($cel_editobj_title = $adminMsg.get('cel_tm_rights_publication'))
+	        #set($cel_editobj_xredirect_params = 'tab=tbrights')
 			$xwiki.includeForm('celements2web:Templates.ObjectEdit', false)
 		</div>   
 	</form>	
 #end
-		
+$celementsweb.addExtJSfileOnce(':celJS/celTabMenu/publishDatePicker.js')	
 <h1>$!adminMsg.get('cel_tm_rights_rights')</h1>
 #if($celementsweb.isCelementsRights($doc.fullName))
 <span class='cel_lazyloadJS' style='display: none;'>celJS/adminUi/accessRights.js</span>
