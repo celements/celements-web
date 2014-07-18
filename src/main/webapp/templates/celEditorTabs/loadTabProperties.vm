@@ -57,6 +57,7 @@
 #set($cel_editobj_hasObjRemoveLink = true)
 #set($cel_editobj_hasObjAddLink = true)
 #set($cel_editobj_properties = "key,lang,value")
+#set($cel_editobj_xredirect_params = 'tab=tb4')
 <div id="pro_metaTagEdit" class="editblock" onfocus="setFocus('pro_metaTagEdit');" onblur="removeFocus('pro_metaTagEdit');">
   $xwiki.includeForm('celements2web:Templates.ObjectEdit',false)
 </div>
