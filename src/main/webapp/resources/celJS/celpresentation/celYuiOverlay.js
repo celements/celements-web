@@ -69,7 +69,9 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
   CELEMENTS.presentation.Overlay.prototype = {
       _overlayDialog : null,
       _defaultConfig : {
-        "width" : "300px", 
+        'dialogId' : 'modal dialog',
+        'containerId' : 'yuiOverlayContainer',
+        "width" : "300px",
         fixedcenter: true, 
         visible: false, 
         draggable: false, 
@@ -94,6 +96,16 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me._bindCleanUpAfterClose = _me._cleanUpAfterClose.bind(_me);
       },
 
+      getContainerId : function() {
+        var _me = this;
+        return _me._dialogConfig.containerId || _me._defaultConfig.containerId;
+      },
+
+      getDialogId : function() {
+        var _me = this;
+        return _me._dialogConfig.dialogId || _me._defaultConfig.dialogId;
+      },
+
       getWidth : function() {
         var _me = this;
         return _me._dialogConfig.width || _me._defaultConfig.width;
@@ -116,14 +128,17 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var _me = this;
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'auto' });
-        var closeEvent = bodyElem.fire('cel_yuiOverlay:hideEvent');
+        var closeEvent = bodyElem.fire('cel_yuiOverlay:hideEvent', _me);
         if (!closeEvent.stopped) {
-          $$('body div.cel-YuiOverlay').each(function(dialogWrapper) {
-            dialogWrapper.remove();
-          });
+          if ($(_me._dialogConfig.dialogId)) {
+            var dialogWrapper = $(_me._dialogConfig.dialogId).up('div.cel-YuiOverlay');
+            if (dialogWrapper) {
+              dialogWrapper.remove();
+            };
+          }
         }
-        if ($('modal dialog_mask')) {
-          $('modal dialog_mask').remove();
+        if ($(_me._dialogConfig.dialogId + '_mask')) {
+          $(_me._dialogConfig.dialogId + '_mask').remove();
         }
         _me._overlayDialog = null;
       },
@@ -132,7 +147,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var _me = this;
         _me.updateOpenConfig(openConfig);
         if(!_me._overlayDialog) {
-          _me._overlayDialog = new YAHOO.widget.SimpleDialog("modal dialog",
+          _me._overlayDialog = new YAHOO.widget.SimpleDialog(_me._dialogConfig.dialogId,
               _me._dialogConfig);
           _me._overlayDialog.hideEvent.subscribe(_me._bindCleanUpAfterClose);
         } else {
@@ -144,17 +159,23 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
             + '; position: relative;"';
         }
         _me._overlayDialog.setHeader('&nbsp;'); 
-        _me._overlayDialog.setBody('<div id="yuiOverlayContainer"' + dialogHeight
+        _me._overlayDialog.setBody('<div id="' + _me._dialogConfig.containerId + '"'
+            + dialogHeight
             + '><img style="display:block; margin-left: auto; margin-right:auto;'
-            + ' position: relative; top: 48%;"'
+            + ' position: relative; top: 48%; height:32px; width:32px;"'
+            + ' height="32" width="32px"'
             + ' src="/file/resources/celRes/ajax-loader.gif" /></div>'); 
         //add skin-div to get default yui-skin-sam layouting for the dialog
         var yuiSamSkinDiv = new Element('div'
           ).addClassName('yui-skin-sam'
           ).addClassName('cel-YuiOverlay');
+        if (_me._dialogConfig.additionalCssClass
+            && (_me._dialogConfig.additionalCssClass != '')) {
+          yuiSamSkinDiv.addClassName(_me._dialogConfig.additionalCssClass);
+        }
         $(document.body).insert(yuiSamSkinDiv);
         _me._overlayDialog.render(yuiSamSkinDiv);
-        $(document.body).fire('cel_yuiOverlay:afterRenderDialog');
+        $(document.body).fire('cel_yuiOverlay:afterRenderDialog', _me);
         return _me._overlayDialog;
       },
 
@@ -169,12 +190,14 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var _me = this;
         var dialog = _me.getOverlayDialog();
         dialog.render();
-        dialog.show();
-        $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
+        _me.show();
+        if ($(_me._dialogConfig.dialogId + '_mask')) {
+          $(_me._dialogConfig.dialogId + '_mask').addClassName('cel-YuiOverlay');
+        }
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'hidden' });
-        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
-        $('yuiOverlayContainer').fire('cel_yuiOverlay:afterShowDialog');
+        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General', _me);
+        $(_me._dialogConfig.containerId).fire('cel_yuiOverlay:afterShowDialog', _me);
       },
 
       close: function() {
@@ -183,6 +206,17 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         dialog.hide();
         //destroy to prevent problems after following orientation changes on iPhone/iPad
         dialog.destroy();
+      },
+
+      show: function() {
+        var _me = this;
+        _me._overlayDialog.show();
+        //DIRTY HACK!!!
+        //for some reasons the zIndex does not correctly get applied by yui, thus
+        //we need to force it here
+        $(_me._overlayDialog.element).setStyle({
+          'zIndex' : _me._dialogConfig.zindex
+          });
       },
 
       showProgressDialog : function(headerText) {
@@ -194,8 +228,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         dialog.cfg.queueProperty("buttons", null);
         dialog.cfg.setProperty("close", false);
         dialog.render();
-        dialog.show();
-        $(document.body).down('div.mask').addClassName('cel-YuiOverlay');
+        _me.show();
+        $(_me._dialogConfig.dialogId + '_mask').addClassName('cel-YuiOverlay');
       },
 
       openCelPageInOverlay : function(openConfig) {
@@ -259,7 +293,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _loadFirstContent : function() {
         var _me = this;
         _me._dialogConfig.contentChanged = true;
-        var loadContentEvent = $('yuiOverlayContainer').fire(
+        var loadContentEvent = $(_me._dialogConfig.containerId).fire(
             'cel_yuiOverlay:loadFirstContent', _me._dialogConfig);
         if (!loadContentEvent.stopped) {
           new Ajax.Request(_me._dialogConfig.overlayURL, {
@@ -270,13 +304,13 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
               'ajax' : '1'
             },
             onSuccess: function(transport) {
-              var yuiOverlayContainer = $('yuiOverlayContainer');
+              var yuiOverlayContainer = $(_me._dialogConfig.containerId);
               yuiOverlayContainer.update(transport.responseText);
               yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
             }
           });
         } else if (_me._dialogConfig.contentChanged) {
-          var yuiOverlayContainer = $('yuiOverlayContainer');
+          var yuiOverlayContainer = $(_me._dialogConfig.containerId);
           yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
         }
       },
@@ -287,8 +321,6 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var dialog = _me.open();
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'hidden' });
-        bodyElem.fire('cel_yuiOverlay:afterShowDialog_General');
-        $('yuiOverlayContainer').fire('cel_yuiOverlay:afterShowDialog');
         _me._loadFirstContent();
       }
 

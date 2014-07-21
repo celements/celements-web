@@ -363,6 +363,9 @@ th.yui-dt-asc {
 		display:none;
 }
 
+.celements3_filebase * {
+  box-sizing: content-box;
+}
 .c3_import_scrollable{
 	position:relative;
 	overflow: scroll;
@@ -419,6 +422,7 @@ div.celements3_filebase .yui-panel-container {
 }
 #fileBasePanel .c3_import_scrollable,
 .fileBasePanel .c3_import_scrollable {
+  height: 260px;
 	width: auto;
 }
 .c2_ml_container_shadow .c2_ml_container,

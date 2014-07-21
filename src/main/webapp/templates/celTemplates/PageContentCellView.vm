@@ -22,7 +22,7 @@ $services.celementsweb.renderDocument($services.model.resolveDocument($overwrite
  #set($celPDCdocCssPTclass = "cellPDContent-body ${celPDCdocCssPTclass}")
 #end
 <div class="${celPDCdocCssPTclass}">
-$services.celementsweb.renderCelementsDocument($pageDocRef)
+$services.celementsweb.renderCelementsDocument($pageDocRef, true)
 <!-- IE6 --></div>
 #if($isAddPdDiv)
 <!-- IE6 --></div>

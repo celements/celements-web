@@ -1,0 +1,2 @@
+Deprecated since celements-web 2.44.0 (April 2014)
+balupton-history is deprecated. Please use history.js instead!

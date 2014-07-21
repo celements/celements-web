@@ -29,18 +29,24 @@ var registerCelAnimMoviePlayer = function() {
 };
 
 var registerCelAnimMoviePlayerInsideParent = function(parentElem) {
-  var parentElemIn = parentElem || $$('body')[0];
-  initMoviePlayerCssClassesInsideParent(parentElemIn, ['celanim_mp3_flowplayer',
-                             'celanim_flowplayer', 'celanim_overlay_flowplayer',
-                             'celanim_flowplayer2', 'celanim_overlay_flowplayer2',
-                             'celanim_oneflowplayer', 'celanim_overlay_oneflowplayer', 
-                             'celanim_oneflowplayer2', 'celanim_overlay_oneflowplayer2',
-                             'celanim_externalvideo', 'celanim_overlay_externalvideo']);
-  initFlowPlayerLinksInsideParent(parentElemIn, 'a.celanim_flowplayerStart');
-  initOneFlowPlayerLinksInsideParent(parentElemIn, 'a.celanim_oneflowplayerStart');
-  initFlowPlayerAudioLinksInsideParent(parentElemIn, 'a.celanim_flowplayerAudioStart');
-  initOverlayLinksInsideParent(parentElemIn, 'a.celanim_overlay');
-  initCelAnimSWFPlayerInsideParent(parentElemIn);
+  var shouldRegisterBodyEvent = $(document.body).fire(
+      'celanim_player:shouldRegisterInsideBody', parentElem);
+  if (!shouldRegisterBodyEvent.stopped) {
+    var parentElemIn = parentElem || $$('body')[0];
+    initMoviePlayerCssClassesInsideParent(parentElemIn, ['celanim_mp3_flowplayer',
+                               'celanim_flowplayer', 'celanim_overlay_flowplayer',
+                               'celanim_flowplayer2', 'celanim_overlay_flowplayer2',
+                               'celanim_oneflowplayer', 'celanim_overlay_oneflowplayer', 
+                               'celanim_oneflowplayer2', 'celanim_overlay_oneflowplayer2',
+                               'celanim_externalvideo', 'celanim_overlay_externalvideo']);
+    initFlowPlayerLinksInsideParent(parentElemIn, 'a.celanim_flowplayerStart');
+    initOneFlowPlayerLinksInsideParent(parentElemIn, 'a.celanim_oneflowplayerStart');
+    initFlowPlayerAudioLinksInsideParent(parentElemIn, 'a.celanim_flowplayerAudioStart');
+    initOverlayLinksInsideParent(parentElemIn, 'a.celanim_overlay');
+    initCelAnimSWFPlayerInsideParent(parentElemIn);
+  } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+    console.log('register of celanim movieplayer stopped for ', parentElem);
+  }
 };
 
 /**
@@ -216,23 +222,23 @@ var celanimLoadSWFplayer = function(playerLink) {
 var getCelAnimObject = function() {
   var celAnimObject = [
     { 
-    'name' : 'vimeo',
-    'matchStr' : '^https?:\/\/vimeo.com\/.*?',
-    'replaceStr' : 'http://vimeo.com/moogaloop.swf?clip_id=',
-    'cssClass' : 'celanim_vimeo',
-    'replaceOnLoad' : true
+      'name' : 'vimeo',
+      'matchStr' : '^https?:\/\/vimeo.com\/.*?',
+      'replaceStr' : 'http://vimeo.com/moogaloop.swf?clip_id=',
+      'cssClass' : 'celanim_vimeo',
+      'replaceOnLoad' : true
     },
     { 'name' : 'youtube',
-    'matchStr' : '^http:\/\/www.youtube.com\/.*?[\/=]',
-    'replaceStr' : 'http://www.youtube.com/v/',
-    'cssClass' : 'celanim_youtube',
-    'replaceOnLoad' : true
+      'matchStr' : '^https?:\/\/(www.youtube.com\/.*?[\/=]|youtu.be\/)',
+      'replaceStr' : 'http://www.youtube.com/v/',
+      'cssClass' : 'celanim_youtube',
+      'replaceOnLoad' : true
     },
     { 'name' : 'sfvideoPortal',
-    'matchStr' : '^http:\/\/(www.videoportal.sf.tv|www.sf.tv)\/.*[\/=]',
-    'replaceStr' : 'http://www.sf.tv/videoplayer/embed/',
-    'cssClass' : 'celanim_sfvideo',
-    'replaceOnLoad' : true
+      'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv)\/.*[\/=]',
+      'replaceStr' : 'http://www.sf.tv/videoplayer/embed/',
+      'cssClass' : 'celanim_sfvideo',
+      'replaceOnLoad' : true
     }];
   return celAnimObject;
 };

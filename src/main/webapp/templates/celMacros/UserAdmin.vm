@@ -203,11 +203,11 @@ $('userselect').submit()">
  <br />
  <br />
  #end
- #if($show_user && $xwiki.hasAccessLevel("view", $user, $user))
+ #if($show_user && $xwiki.hasAccessLevel("view", $context.user, $user))
  #set($cel_editobj_doc = $xwiki.getDocument($user))
  #set($user_obj = $cel_editobj_doc.getObject('XWiki.XWikiUsers'))
  #set($isLDAPuser = ("$!cel_editobj_doc.getObject('XWiki.LDAPProfileClass')" != ''))
- #set($has_edit = $xwiki.hasAccessLevel("edit", $user, $user))
+ #set($has_edit = $xwiki.hasAccessLevel("edit", $context.user, $user))
  #if($emailLoginActive)
  #set($userLogin = $!user_obj.getProperty('email').getValue())
  #else

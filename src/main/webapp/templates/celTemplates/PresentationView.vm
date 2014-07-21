@@ -7,12 +7,15 @@
 #set($overwritePresCmCssClass = 'cel_cm_presentation')
 #end
 <div id="pres$!{contentDoc.getName()}:$!{contentDoc.getFullName()}"##
- class="$!{overwritePresCmCssClass}">
+#if("$!overwritePresCmCssClass.trim()" != '')
+ class="$!{overwritePresCmCssClass}"##
+#end
+ >
  #set($contentDocPageTypeRef = $services.pageType.getPageTypeRef($contentDoc.documentReference))
 #if(($services.pageType.getPageTypeConfig($contentDocPageTypeRef).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
 <h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>
 #end
 <div class="presentationList">
 #parse('celTemplates/NavigationCellView.vm')
-</div>
-</div>
+<!-- presentationList --></div>
+<!-- pres$!{contentDoc.getName()} --></div>

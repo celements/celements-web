@@ -4,7 +4,7 @@
 #set($deletedDocumentVersions = $services.celementsweb.permanentlyEmptyTrash(30))
 </h1>
 <p>$adminMsg.get('cel_recyclebin_deleted', ["$deletedDocumentVersions"])</p>
-<p><a href="?xpage=overlay&conf=FullRecylceBin">$adminMsg.get('cel_recyclebin_deleted_backlink')</a>
+<p><a href="?xpage=overlay&conf=FullRecycleBin">$adminMsg.get('cel_recyclebin_deleted_backlink')</a>
 #elseif($hasedit)
 #set($allDeletedDocuments = $services.celementsweb.getDeletedDocuments('ddoc.date desc', false))
 #if($allDeletedDocuments.size() > 0)
@@ -12,7 +12,7 @@
 #if($xwiki.hasAdminRights())
 <p>$adminMsg.get('cel_recyclebin_delete_hint')<br/>
 $adminMsg.get('cel_recyclebin_delete_warning')<br/> 
-<a href="?xpage=overlay&conf=FullRecylceBin&deleteNow=older30Days">
+<a href="?xpage=overlay&conf=FullRecycleBin&deleteNow=older30Days">
 $adminMsg.get('cel_recyclebin_delete_now_link')</a></p>
 #end
 <p>$adminMsg.get('core.recyclebin.showlistmsg')</p>

@@ -1,0 +1,11 @@
+#if($services.celementsweb.isAppScriptRequest())
+#set($celAppScript = $services.celementsweb.getScriptNameFromURL())
+#parse('app.vm')
+#else
+#set($overwriteRenderDocument = 'celInlineTemplates/viewattachrev.vm')
+$xwiki.parseTemplate("frameheader.vm")
+#if("$!overwriteRenderDocument" != '')
+$xwiki.parseTemplate($overwriteRenderDocument)
+#end
+$xwiki.parseTemplate("framefooter.vm")
+#end

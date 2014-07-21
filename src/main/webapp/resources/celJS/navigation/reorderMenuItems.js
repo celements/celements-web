@@ -65,15 +65,17 @@ CELEMENTS.reorder.DDReorder.prototype = {
       _me.maxLevel = maxLevel;
     }
     
-		$$('ul' + _me._ulSelector + ' li').each(function(listItem) {
-		  if (!listItem.id) {
-		    var menuItemId = (listItem.down('span,a')).id;
-		    listItem.id = 'LI' + menuItemId;
-		  }
-		  _me._addEmptySublists(listItem.id);
-      var ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
-      _me._addHandleIfPresent(ddElem, listItem);
-		});
+    $$('ul' + _me._ulSelector + ' li').each(function(listItem) {
+      if (!listItem.hasClassName('cel_nodrag')) {
+        if (!listItem.id) {
+          var menuItemId = (listItem.down('span,a')).id;
+          listItem.id = 'LI' + menuItemId;
+        }
+        _me._addEmptySublists(listItem.id);
+        var ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
+        _me._addHandleIfPresent(ddElem, listItem);
+      }
+    });
 		$$('ul' + _me._ulSelector).each(function(listElem) {
       new YAHOO.util.DDTarget(listElem.id);
 		});

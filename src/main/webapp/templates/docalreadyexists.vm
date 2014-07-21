@@ -1,0 +1,17 @@
+###
+### Document already exists message
+###
+###
+#if($services.celementsweb.isAppScriptRequest())
+#set($celAppScript = $services.celementsweb.getScriptNameFromURL())
+#parse('app.vm')
+#else
+$response.setStatus(409)
+#set($editorBlockerMessage = $adminMsg.get("thispagealreadyexists"))
+#set($overwriteRenderDocument = 'celInlineTemplates/docalreadyexists.vm')
+$xwiki.parseTemplate("frameheader.vm")
+#if("$!overwriteRenderDocument" != '')
+$xwiki.parseTemplate($overwriteRenderDocument)
+#end
+$xwiki.parseTemplate("framefooter.vm")
+#end

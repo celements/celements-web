@@ -22,7 +22,13 @@ var startObserversNewUniqueName = function(){
   updateObservers();
   Event.observe(window, 'resize', resizeTab);
   $$('.c3_import_box')[0].observe('filepicker:changed', updateObservers);
-  $('c3_import_box').observe('preimport:changed', preimportChanged);
+  if (typeof preimportChanged !== 'undefined') {
+    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+      console.warn('deprecated usage of direct preimportChanged registration.');
+    }
+    $('c3_import_box').observe('preimport:changed', preimportChanged);
+  }
+  $(document.body).fire('preimport:beforeShowBox');
   showTab($$('.c3_import_box')[0]);
   resizeTab();
 };
@@ -42,7 +48,13 @@ function updateObservers() {
 }
 
 var clickObserve = function(event) {
-  preimport(event);
+  if (typeof preimport !== 'undefined') {
+    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+      console.warn('deprecated usage of direct "preimport" global function call.');
+    }
+    preimport(event);
+  }
+  $('c3_import_box').fire('preimport:clickOnRow', event);
   showTab($$('.c3_import_middle')[0]);
 };
 

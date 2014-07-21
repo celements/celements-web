@@ -24,13 +24,14 @@ var CelImageDialog = {
     }
     $('galleryPicker_list').observe('change', _me._selectGalleryPickerActionHandler.bind(_me));
     $('gallery_list').observe('change', _me._selectGalleryActionHandler.bind(_me));
+    $('hasSlideshow').observe('click', _me._clickHasSlideshowHandler.bind(_me));
     _me.fillEffectList('effect_list');
     TinyMCE_EditableSelects.init();
 
     if (n.nodeName == 'IMG') {
       nl.src.value = dom.getAttrib(n, 'src').replace(/\?.*/, '');
-      nl.celwidth.value = dom.getAttrib(n, 'width');
-      nl.celheight.value = dom.getAttrib(n, 'height');
+      nl.celwidth.value = dom.getAttrib(n, 'width') || $j(n).width();
+      nl.celheight.value = dom.getAttrib(n, 'height') || $j(n).height();
       nl.cropX.value = _me.getAttrib(n, 'cropX');
       nl.cropY.value = _me.getAttrib(n, 'cropY');
       nl.cropWidth.value = _me.getAttrib(n, 'cropWidth');
@@ -57,13 +58,20 @@ var CelImageDialog = {
       nl.hasSlideshow.checked = _me.getAttrib(n, 'hasSlideshow');
       nl.hasOverlay.checked = _me.getAttrib(n, 'hasOverlay');
       nl.hasCloseButton.checked = _me.getAttrib(n, 'hasCloseButton');
-      nl.isSlideshowManualStart.checked = _me.getAttrib(n, 'isSlideshowManualStart');
+      nl.hasAutoChange.value = _me.getAttrib(n, 'hasAutoChange');
+      nl.hasAutoChangeOverlay.value = _me.getAttrib(n, 'hasAutoChangeOverlay');
+      nl.addCounter.value = _me.getAttrib(n, 'addCounter');
+      nl.addCounterOverlay.value = _me.getAttrib(n, 'addCounterOverlay');
+      nl.isSlideshowCustomStart.checked = _me.getAttrib(n, 'isSlideshowCustomStart');
       nl.isSlideshowRandomStart.checked = _me.getAttrib(n, 'isSlideshowRandomStart');
       nl.slideshowFixStartImageNum.value = _me.getAttrib(n, 'slideshowFixStartImageNum');
       nl.hasSlideshowAddNavigation.checked = _me.getAttrib(n, 'hasSlideshowAddNavigation');
+      nl.hasAddNavigationOverlay.checked = _me.getAttrib(n, 'hasAddNavigationOverlay');
       nl.delay.value = _me.getAttrib(n, 'delay');
       nl.overlayWidth.value = _me.getAttrib(n, 'overlayWidth');
       nl.overlayHeight.value = _me.getAttrib(n, 'overlayHeight');
+      nl.animWidth.value = _me.getAttrib(n, 'animWidth');
+      nl.animHeight.value = _me.getAttrib(n, 'animHeight');
       nl.style.value = dom.getAttrib(n, 'style');
       nl.id.value = dom.getAttrib(n, 'id');
       nl.dir.value = dom.getAttrib(n, 'dir');
@@ -153,6 +161,18 @@ var CelImageDialog = {
     }
   },
 
+  _clickHasSlideshowHandler : function(event) {
+    if ($('hasSlideshow').checked) {
+      $('hasAutoChangeOverlayRow').show();
+      $('addCounterOverlayRow').show();
+      $('hasAddNavigationOverlayRow').show();
+    } else {
+      $('hasAutoChangeOverlayRow').hide();
+      $('addCounterOverlayRow').hide();
+      $('hasAddNavigationOverlayRow').hide();
+    }
+  },
+
   _selectGalleryActionHandler : function(event) {
     var _me = this;
     var galleryPicker = event.element();
@@ -226,7 +246,7 @@ var CelImageDialog = {
     $$('.panel_wrapper .panel, .panel_wrapper .current').each(function(panel) {
       panel.setStyle( { 'height' : newMaxSize + 'px' });
     });
-    var newPickerMaxSize = newMaxSize - 62;
+    var newPickerMaxSize = newMaxSize - 62 - 41;
     $('attachments').setStyle({ 'height' : newPickerMaxSize + 'px' });
     //TODO add minimal height depending on content
   },
@@ -268,14 +288,33 @@ var CelImageDialog = {
   
   addAutoResizeToURL : function(src, width, height) {
     if (src && (src != '')) {
-      var newSrc = src.replace(/(.*\?)(.*&celwidth=\d*|celwidth=\d*)(\D?.*)/g, '$1$3');
-      newSrc = newSrc.replace(/(.*\?)(.*&celheight=\d*|celheight=\d*)(\D?.*)/g, '$1$3');
+      var newSrc = src.replace(/(.*\?)(.*&(?:amp;)?celwidth=\d*|celwidth=\d*)(\D?.*)/g, '$1$3');
+      newSrc = newSrc.replace(/(.*\?)(.*&(?:amp;)?celheight=\d*|celheight=\d*)(\D?.*)/g, '$1$3');
       if(newSrc.indexOf('?') < 0) {
         newSrc += '?';
-      } else if(!newSrc.endsWith('&')) {
+      } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
         newSrc += '&';
       }
       newSrc += 'celwidth=' + width + '&celheight=' + height;
+      return newSrc;
+    }
+    return '';
+  },
+  
+  addFixAnimSizeToURL : function(src) {
+    var f = document.forms[0];
+    var nl = f.elements;
+    if (src && (src != '')) {
+      var newSrc = src.replace(/(.*\?)(.*&(?:amp;)?background=\d*|background=\d*)(\D?.*)/g, '$1$3');
+      if(newSrc.indexOf('?') < 0) {
+        newSrc += '?';
+      } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
+        newSrc += '&';
+      }
+      if (nl.hasSlideshow.checked) {
+        //TODO change background color to transparent
+        newSrc += 'background=00000022';
+      }
       return newSrc;
     }
     return '';
@@ -288,17 +327,17 @@ var CelImageDialog = {
         var cropY = $('cropY').value;
         var cropW = $('cropWidth').value;
         var cropH = $('cropHeight').value;
-        newSrc = src.replace(/(.*\?)(.*&cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
-        newSrc = newSrc.replace(/(.*\?)(.*&cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
-        newSrc = newSrc.replace(/(.*\?)(.*&cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
-        newSrc = newSrc.replace(/(.*\?)(.*&cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
+        newSrc = src.replace(/(.*\?)(.*(?:&|&amp;)cropX=\d*|cropX=\d*)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?)(.*(?:&|&amp;)cropY=\d*|cropY=\d*)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?)(.*(?:&|&amp;)cropW=\d*|cropW=\d*)(\D?.*)/g, '$1$3');
+        newSrc = newSrc.replace(/(.*\?)(.*(?:&|&amp;)cropH=\d*|cropH=\d*)(\D?.*)/g, '$1$3');
         if(newSrc.indexOf('?') < 0) {
           newSrc += '?';
-        } else if(!newSrc.endsWith('&')) {
+        } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
           newSrc += '&';
         }
-        newSrc += 'cropX=' + cropX + '&cropY=' + cropY + '&cropW=' + cropW + '&cropH=' 
-            + cropH;
+        newSrc += 'cropX=' + cropX + '&cropY=' + cropY + '&cropW=' + cropW
+            + '&cropH=' + cropH;
         return newSrc;
       } else {
         return src;
@@ -325,7 +364,7 @@ var CelImageDialog = {
     newId = 'S' + new Date().getTime() + ':' + getSelectValue(f, 'gallery') + ':'
       + nl.delay.value + ':' + getSelectValue(f, 'effect') + ':' + nl.overlayWidth.value
       + ':' + nl.overlayHeight.value + ':' + nl.slideshowFixStartImageNum.value + ':'
-      + _me._getGallerySpace();
+      + _me._getGallerySpace() + ':'  + nl.animWidth.value + ':' + nl.animHeight.value;
     return newId.replace(/:+$/, '');
   },
 
@@ -379,10 +418,18 @@ var CelImageDialog = {
       };
     }
 
+    if (nl.hasSlideshow.checked && !isNaN(parseInt(nl.animWidth.value))
+        && !isNaN(parseInt(nl.animHeight.value))) {
+      nl.celwidth.value = parseInt(nl.animWidth.value);
+      nl.celheight.value = parseInt(nl.animHeight.value);
+    }
+
     nl.src.value = _me.addAutoResizeToURL(nl.src.value, nl.celwidth.value,
         nl.celheight.value);
-    
+
     nl.src.value = _me.replaceCropInURL(nl.src.value);
+
+    nl.src.value = _me.addFixAnimSizeToURL(nl.src.value);
 
     tinymce.extend(args, {
       src : nl.src.value,
@@ -410,14 +457,54 @@ var CelImageDialog = {
       args['class'] = (args['class'] + ' ' + cssClassPrefix + '_slideshow').strip();
     }
 
-    if (nl.isSlideshowManualStart.checked) {
-      args['id'] = _me.getSlideShowId(f);
+    if (nl.addCounter.value == 'normal') {
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_addCounterNormal').strip();
+    } else if (nl.addCounter.value == 'leadingzeros'){
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_addCounterZeros').strip();
+    } else if (nl.addCounter.value == 'none'){
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_addCounterNone').strip();
+    }
+
+    if (nl.hasAutoChange.value == 'manuelStart') {
       args['class'] = (args['class'] + ' ' + cssClassPrefix + '_manualstart').strip();
+    } else if (nl.hasAutoChange.value == 'autoStart'){
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_autostart').strip();
+    } else if (nl.hasAutoChange.value == 'autoStartNoStop'){
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_autostartnostop').strip();
+    } else if (nl.hasAutoChange.value == 'none'){
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_nonestart').strip();
+    }
+
+    if (nl.hasAutoChangeOverlay.value == 'manuelStart') {
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_overlaymanualstart'
+          ).strip();
+    } else if (nl.hasAutoChangeOverlay.value == 'autoStart'){
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_overlayautostart'
+          ).strip();
+    } else if (nl.hasAutoChangeOverlay.value == 'none'){
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_overlaynonestart'
+          ).strip();
+    }
+
+    if (nl.addCounterOverlay.value == 'normal') {
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_addCounterOverlayNormal'
+          ).strip();
+    } else if (nl.addCounterOverlay.value == 'leadingzeros'){
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_addCounterOverlayZeros'
+          ).strip();
+    } else if (nl.addCounterOverlay.value == 'none'){
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_addCounterOverlayNone'
+          ).strip();
+    }
+
+    if (nl.isSlideshowCustomStart.checked) {
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_customStartSlide'
+          ).strip();
     }
 
     if (nl.isSlideshowRandomStart.checked) {
-      args['id'] = _me.getSlideShowId(f);
-      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_slideshowRandomStart').strip();
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_slideshowRandomStart'
+          ).strip();
     }
 
     if (nl.slideshowFixStartImageNum.value != '') {
@@ -425,8 +512,11 @@ var CelImageDialog = {
     }
 
     if (nl.hasSlideshowAddNavigation.checked) {
-      args['id'] = _me.getSlideShowId(f);
       args['class'] = (args['class'] + ' ' + cssClassPrefix + '_addNavigation').strip();
+    }
+
+    if (nl.hasAddNavigationOverlay.checked) {
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_addNavigationOverlay').strip();
     }
 
     if (nl.hasOverlay.checked) {
@@ -435,8 +525,8 @@ var CelImageDialog = {
     }
 
     if (nl.hasCloseButton.checked) {
-      args['id'] = _me.getSlideShowId(f);
-      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_overlay_addCloseButton').strip();
+      args['class'] = (args['class'] + ' ' + cssClassPrefix + '_overlay_addCloseButton'
+          ).strip();
     }
 
     el = ed.selection.getNode();
@@ -502,40 +592,113 @@ var CelImageDialog = {
     }
 
     if (at == 'hasSlideshow') {
-      return (dom.hasClass(e, 'celanim_slideshow') || dom.hasClass(e, 'celimage_slideshow'));
+      return (dom.hasClass(e, 'celanim_slideshow')
+          || dom.hasClass(e, 'celimage_slideshow'));
     }
 
-    if (at == 'isSlideshowManualStart') {
-      return (dom.hasClass(e, 'celanim_manualstart') || dom.hasClass(e, 'celimage_manualstart'));
+    if (at == 'addCounter') {
+      if (dom.hasClass(e, 'celanim_addCounterNormal') 
+          || dom.hasClass(e, 'celimage_addCounterNormal')) {
+        return 'normal';
+      } else if (dom.hasClass(e, 'celanim_addCounterZeros') 
+          || dom.hasClass(e, 'celimage_addCounterZeros')) {
+        return 'leadingzeros';
+      } else if (dom.hasClass(e, 'celanim_addCounterNone') 
+          || dom.hasClass(e, 'celimage_addCounterNone')) {
+        return 'none';
+      }
+      return 'none';
+    }
+
+    if (at == 'hasAutoChange') {
+      if (dom.hasClass(e, 'celanim_manualstart') 
+          || dom.hasClass(e, 'celimage_manualstart')) {
+        return 'manuelStart';
+      } else if (dom.hasClass(e, 'celanim_autostart') 
+          || dom.hasClass(e, 'celimage_autostart')) {
+        return 'autoStart';
+      } else if (dom.hasClass(e, 'celanim_autostartnostop') 
+          || dom.hasClass(e, 'celimage_autostartnostop')) {
+        return 'autoStartNoStop';
+      } else if (dom.hasClass(e, 'celanim_nonestart') 
+          || dom.hasClass(e, 'celimage_nonestart')) {
+        return 'none';
+      }
+      return 'autoStart';
+    }
+
+    if (at == 'hasAutoChangeOverlay') {
+      if (dom.hasClass(e, 'celanim_overlaymanualstart') 
+          || dom.hasClass(e, 'celimage_overlaymanualstart')) {
+        return 'manuelStart';
+      } else if (dom.hasClass(e, 'celanim_overlayautostart') 
+          || dom.hasClass(e, 'celimage_overlayautostart')) {
+        return 'autoStart';
+      } else if (dom.hasClass(e, 'celanim_overlayautostartnostop') 
+          || dom.hasClass(e, 'celimage_overlayautostartnostop')) {
+        return 'autoStartNoStop';
+      } else if (dom.hasClass(e, 'celanim_overlaynonestart') 
+          || dom.hasClass(e, 'celimage_overlaynonestart')) {
+        return 'none';
+      }
+      return 'autoStart';
+    }
+
+    if (at == 'addCounterOverlay') {
+      if (dom.hasClass(e, 'celanim_addCounterOverlayNormal') 
+          || dom.hasClass(e, 'celimage_addCounterOverlayNormal')) {
+        return 'normal';
+      } else if (dom.hasClass(e, 'celanim_addCounterOverlayZeros') 
+          || dom.hasClass(e, 'celimage_addCounterOverlayZeros')) {
+        return 'leadingzeros';
+      } else if (dom.hasClass(e, 'celanim_addCounterOverlayNone') 
+          || dom.hasClass(e, 'celimage_addCounterOverlayNone')) {
+        return 'none';
+      }
+      return 'none';
+    }
+
+    if (at == 'isSlideshowCustomStart') {
+      return (dom.hasClass(e, 'celanim_customStartSlide')
+          || dom.hasClass(e, 'celimage_customStartSlide'));
     }
 
     if (at == 'isSlideshowRandomStart') {
-      return (dom.hasClass(e, 'celanim_slideshowRandomStart') || dom.hasClass(e, 'celimage_slideshowRandomStart'));
+      return (dom.hasClass(e, 'celanim_slideshowRandomStart')
+          || dom.hasClass(e, 'celimage_slideshowRandomStart'));
     }
 
     if (at == 'hasSlideshowAddNavigation') {
-      return (dom.hasClass(e, 'celanim_addNavigation') || dom.hasClass(e, 'celimage_addNavigation'));
+      return (dom.hasClass(e, 'celanim_addNavigation')
+          || dom.hasClass(e, 'celimage_addNavigation'));
+    }
+
+    if (at == 'hasAddNavigationOverlay') {
+      return (dom.hasClass(e, 'celanim_addNavigationOverlay')
+          || dom.hasClass(e, 'celimage_addNavigationOverlay'));
     }
 
     if (at == 'hasOverlay') {
-      return (dom.hasClass(e, 'celanim_overlay') || dom.hasClass(e, 'celimage_overlay'));
+      return (dom.hasClass(e, 'celanim_overlay')
+          || dom.hasClass(e, 'celimage_overlay'));
     }
 
     if (at == 'hasCloseButton') {
-      return (dom.hasClass(e, 'celanim_overlay_addCloseButton') || dom.hasClass(e, 'celimage_overlay_addCloseButton'));
+      return (dom.hasClass(e, 'celanim_overlay_addCloseButton')
+          || dom.hasClass(e, 'celimage_overlay_addCloseButton'));
     }
 
     if(at == 'cropX') {
-      return e.src.replace(/((^|(.*[\?&]))cropX=(\d*)\D?.*)|.*/g, '$4');
+      return e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropX=(\d*)\D?.*)|.*/g, '$4');
     }
     if(at == 'cropY') {
-      return e.src.replace(/((^|(.*[\?&]))cropY=(\d*)\D?.*)|.*/g, '$4');
+      return e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropY=(\d*)\D?.*)|.*/g, '$4');
     }
     if(at == 'cropWidth') {
-      return e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4');
+      return e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropW=(\d*)\D?.*)|.*/g, '$4');
     }
     if(at == 'cropHeight') {
-      return e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4');
+      return e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropH=(\d*)\D?.*)|.*/g, '$4');
     }
     
     if (at == 'gallery') {
@@ -583,6 +746,24 @@ var CelImageDialog = {
       return v;
     }
 
+    if (at == 'animWidth') {
+      v = '';
+      idArgs = dom.getAttrib(e, 'id').split(':');
+      if (idArgs.length > 8) {
+        v = idArgs[8];
+      }
+      return v;
+    }
+
+    if (at == 'animHeight') {
+      v = '';
+      idArgs = dom.getAttrib(e, 'id').split(':');
+      if (idArgs.length > 9) {
+        v = idArgs[9];
+      }
+      return v;
+    }
+
     if (at == 'slideshowFixStartImageNum') {
       v = '';
       idArgs = dom.getAttrib(e, 'id').split(':');
@@ -595,8 +776,23 @@ var CelImageDialog = {
     if (at == 'class') {
       v = ' ' + dom.getAttrib(e, 'class') + ' ';
       v = v.replace(/ /g, '  ');
-      v = v.replace(/ (celanim_slideshow|celanim_manualstart|celanim_overlay|celanim_overlay_addCloseButton|celanim_slideshowRandomStart|celanim_addNavigation) /g, ' ');
-      v = v.replace(/ (celimage_slideshow|celimage_manualstart|celimage_overlay|celimage_overlay_addCloseButton|celimage_slideshowRandomStart|celimage_addNavigation) /g, ' ');
+
+      v = v.replace(/ (celanim_slideshow|celanim_manualstart|celanim_overlay|celanim_overlay_addCloseButton|celanim_slideshowRandomStart) /g, ' ');
+      v = v.replace(/ (celanim_addNavigation|celanim_addNavigationOverlay) /g, ' ');
+      v = v.replace(/ (celanim_addCounterNormal|celanim_addCounterZeros|celanim_addCounterNone) /g, ' ');
+      v = v.replace(/ (celanim_manualstart|celanim_autostart|celanim_autostartnostop|celanim_nonestart) /g, ' ');
+      v = v.replace(/ (celanim_overlaymanualstart|celanim_overlayautostart|celanim_overlaynonestart) /g, ' ');
+      v = v.replace(/ (celanim_addCounterOverlayNormal|celanim_addCounterOverlayZeros|celanim_addCounterOverlayNone) /g, ' ');
+      v = v.replace(/ (celanim_customStartSlide) /g, ' ');
+
+      v = v.replace(/ (celimage_slideshow|celimage_manualstart|celimage_overlay|celimage_overlay_addCloseButton|celimage_slideshowRandomStart) /g, ' ');
+      v = v.replace(/ (celimage_addNavigation|celimage_addNavigationOverlay) /g, ' ');
+      v = v.replace(/ (celimage_addCounterNormal|celimage_addCounterZeros|celimage_addCounterNone) /g, ' ');
+      v = v.replace(/ (celimage_manualstart|celimage_autostart|celimage_autostartnostop|celimage_nonestart) /g, ' ');
+      v = v.replace(/ (celimage_overlaymanualstart|celimage_overlayautostart|celimage_overlayautostart) /g, ' ');
+      v = v.replace(/ (celimage_addCounterOverlayNormal|celimage_addCounterOverlayZeros|celimage_addCounterOverlayNone) /g, ' ');
+      v = v.replace(/ (celimage_customStartSlide) /g, ' ');
+
       v = v.replace(/  /g, ' ');
       return v.strip();
     }

@@ -1,0 +1,96 @@
+## ONLY FOR SPECIAL USES BY AN ADMIN, NOT FOR NORMAL SEND
+## execute from newsletter article document, or the content will not be rendered correctly
+## INPUT: receivers - List of email adresses. One per line.
+## INPUT: blogDocFN - Full name of the blog document
+#if($isAdmin)
+#set($receiverString = "$!request.receivers")
+#set($subject = "$!request.subject")
+#set($from = "$!request.from")
+#set($replyTo = "$!request.replyTo")
+#set($sourceBlog = "$!request.blogDocFN")
+#set($baseURL = "$!request.baseURL")
+#set($unavailableList = $util.getArrayList())
+#set($receiverList = $util.getArrayList())
+#set($receiverMap = $util.getHashMap())
+#foreach($receiver in $receiverString.split('\n'))
+  #set($receiver = $receiver.trim())
+  #set($xwql = 'from doc.object(Celements.NewsletterReceiverClass) as obj')##
+  #set($xwql = "$xwql where obj.email=:receiver and obj.subscribed=:blog")##
+  #set($query = $services.query.xwql($xwql))##
+  #set($query = $query.bindValue('receiver', $receiver))##
+  #set($query = $query.bindValue('blog', $sourceBlog))##
+  #set($qRes = $query.execute())
+  #if($qRes.size() > 0)
+    #foreach($receiverDocFN in $qRes)
+      #set($recDocRef = $services.model.resolveDocument($receiverDocFN))##
+      #set($devNull = $receiverMap.put($recDocRef, $receiver))##
+      #set($devNull = $receiverList.add($recDocRef))
+    #end
+  #else 
+    #set($devNull = $unavailableList.add($receiver))
+  #end
+#end
+#set($results = [])
+#set($results = $xwiki.celementsblog.sendNewsletterToInjectedReceiverList($receiverList, $from, $replyTo, $subject, $doc.getDocumentReference(), $baseURL))
+<h1>Ergebnis in Resultat</h1>
+<p style="font-color: red;">FIXME: result="$results" should receive and display the result</p>
+<table>
+  <thead>
+    <tr>
+      <th>Input Mail</th>
+      <th>Result Mail</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($result in $results)
+    <tr>
+    #foreach($info in $result)
+      <td>
+      #if($velocityCount == 1)
+        <a href="$xwiki.getDocument($info).getURL('edit', 'editor=object')" target="_blank">
+          $receiverMap.get($info)
+        </a>
+      #else
+        $info
+      #end
+      </td>
+    #end
+    #set($devNull = $receiverList.remove($result))
+    </tr>
+  #end
+  </tbody>
+</table>
+<h1>Kein Ergebnis in Resultat</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Input Mail</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($result in $receiverList)
+    <tr>
+      <td>
+        <a href="$xwiki.getDocument($result).getURL('edit', 'editor=object')" target="_blank">
+          $receiverMap.get($result)
+        </a>
+      </td>
+    </tr>
+  #end
+  </tbody>
+</table>
+<h1>Nicht als Empfänger verfügbar</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Input Mail</th>
+    </tr>
+  </thead>
+  <tbody>
+  #foreach($mail in $unavailableList)
+    <tr><td>$mail</td></tr>
+  #end
+  </tbody>
+</table>
+#end

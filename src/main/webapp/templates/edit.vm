@@ -57,19 +57,32 @@ $xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
 ##
 #set($force = $!request.get('force'))
 #if (($tdoc.getLocked()==true)&&(!$force))
-  <div class="layoutsection celementsEditorBlocker">
   $response.setStatus(423)
   #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
-  #xwikimessageboxstart($msg.get('notice') "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
+  #set($editorBlockerMessage = "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
+  #if($isAdmin)
+    #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
+    #set($additionalButtons = "<a class=${Q}celbutton forcelock${Q} href=${Q}${forceEditURL}${Q}>$msg.get('forcelock')</a>")
+  #end    
+#end
+#if("$!editorBlockerMessage" != '')
+<div id="tabMenuPanel" style="position:absolute; z-index:99; top:40%; width:${menuPanelWidth}px"> 
+  <div class="layoutsection celementsEditorBlocker">
+  #xwikimessageboxstart($adminMsg.get('notice') "$!editorBlockerMessage")
+  #if($isAdmin && ("$!exception" != ''))
+    <div class="cel_exception">
+    $!exception
+    </div>
+  #end
   <div class="celButtons">
   <a class="celbutton cancel" href="$doc.getURL('view')">$adminMsg.get('cancel')</a>
-#if($isAdmin)
-  #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
-  <a class="celbutton forcelock" href="$forceEditURL">$msg.get('forcelock')</a>
-#end	
+#if($additionalButtons)
+$!additionalButtons
+#end    
   </div>
   #xwikimessageboxend()
   </div>
+</div>
 #else
   ##################
   ##   Edit zone  ##

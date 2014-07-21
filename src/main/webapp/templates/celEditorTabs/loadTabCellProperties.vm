@@ -3,7 +3,10 @@
 #set($cellObj = $doc.getObject("Celements.CellClass", false))
 #if("$!cellObj" == '')
 #set($cellObj = $doc.newObject("Celements.CellClass"))
-$doc.save()
+#if(!$doc.isNew())
+##NEVER change new document on load. This would create the document in inline/template mode!
+        $doc.save()
+#end
 #end
 <form id="propertiesEdit" method="post" action="$doc.getURL('save')">
 <div id="pro_pagetypeEdit" class="editblock" onfocus="setFocus('pro_pagetypeEdit');" onblur="removeFocus('pro_pagetypeEdit');">
@@ -11,7 +14,10 @@ $doc.save()
     #set($cel_pageTypeObj = $doc.getObject('Celements2.PageType'))
     #if("$!cel_pageTypeObj" == '')
         #set($cel_pageTypeObj = $doc.getObject('Celements2.PageType', true))
+#if(!$doc.isNew())
+##NEVER change new document on load. This would create the document in inline/template mode!
         $doc.save()
+#end
     #end
     #set($selectedFound = false)
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_type" size="1" style="width:100px;" name="Celements2.PageType_${cel_pageTypeObj.number}_page_type">

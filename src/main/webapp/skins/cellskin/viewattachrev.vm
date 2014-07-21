@@ -1,0 +1,5 @@
+#set($cel_loadAdminMenuBar = false)
+#set($showOverlayLanguageBar = false)
+#set($showCloseOverlayButton = true)
+#set($celementsLoadInOverlay = "celInlineTemplates/viewattachrev.vm") ##template on disk
+#parse('view.vm')

@@ -12,7 +12,9 @@
 #end
 #set($xwikiPref_template_url = "$!xwiki.getDocument('XWiki.XWikiPreferences').getAttachment('template-list.js')")
 #set($webPref_template_url = "$!xwiki.getDocument('${doc.space}.WebPreferences').getAttachment('template-list.js')")
-#if ("$!webPref_template_url" != '')
+#if(!$services.celementsweb.getRTETemplateList().isEmpty())
+  #set($template_external_list_url = $doc.getURL($context.action, 'xpage=celements_ajax&ajax_mode=tinyTemplateList'))
+#elseif ("$!webPref_template_url" != '')
   #set($template_external_list_url = $!services.celementsweb.getSkinFile("${doc.space}.WebPreferences;template-list.js", 'file'))
 #elseif ("$!xwikiPref_template_url" != '')
   #set($template_external_list_url = $!services.celementsweb.getSkinFile('XWiki.XWikiPreferences;template-list.js', 'file'))
@@ -163,7 +165,7 @@
   ##TODO move to API-Call for better control on defaults.
   #set($rte_valid_elements = $celementsweb.getRTEConfigField('valid_elements'))
   #if("$!rte_valid_elements" == '')
-    #set($rte_valid_elements = "$!{rte_valid_elements}+a[href|class|target|onclick|name|id|title],b/strong,br,")
+    #set($rte_valid_elements = "$!{rte_valid_elements}+a[href|class|target|onclick|name|id|title|rel],b/strong,br,")
     #set($rte_valid_elements = "$!{rte_valid_elements}caption,#h?[align<center?justify?left?right|class|style|id],")
     #set($rte_valid_elements = "$!{rte_valid_elements}hr[class|width|size|noshade],")
     #set($rte_valid_elements = "$!{rte_valid_elements}img[width|height|class|align|style|src|border=0|alt|id|title|usemap],")
@@ -239,11 +241,13 @@
   #end
   ##FIXME $linkPickerSpace must be given by input parameter depending on rte context
   #set($linkPickerSpace = "$doc.space")
+  #set($filePickerSpace = "$linkPickerSpace") ## filePickerSpace must be a single space!!
   #if("$!linkPickerSpaces" != '')
     #set($linkPickerSpace = "$!linkPickerSpaces")
   #end
-  #if("$!xwiki.getSpacePreference('parent')" != '')
-    #set($linkPickerSpace = "$!linkPickerSpaces,$!{xwiki.getSpacePreference('parent')}")
+  #set($parentSpace = "$!{xwiki.getSpacePreference('parent')}")
+  #if(("$!parentSpace" != '') && ($linkPickerSpaces.indexOf("$!{parentSpace}") < 0))
+    #set($linkPickerSpace = "$!linkPickerSpaces,$!{parentSpace}")
   #end
   #set($fileUploadSpace = "$doc.space")
   #if("$!fileBaseUploadSpace" != '')
@@ -253,7 +257,6 @@
   #if("$!fileBaseSingleDoc" != '')
     #set($isSingle = "$fileBaseSingleDoc")
   #end
-  #set($filePickerSpace = "$linkPickerSpace")
   #if("$!fileBasePickerSpace" != '')
     #set($filePickerSpace = "$!fileBasePickerSpace")
   #end
@@ -269,6 +272,9 @@
   "wiki_filepicker_space" : "$filePickerSpace",
   "wiki_filepicker_doc" : "$filePickerDoc",
   #set($fbDoc = "$!xwiki.getSpacePreference('cel_centralfilebase')")
+  #if (("$!fbDoc" == '') && ("$!parentSpace" != ''))
+    #set($fbDoc = "$!xwiki.getSpacePreferenceFor('cel_centralfilebase', $parentSpace)")
+  #end
   #if("$!fbDoc" == '')
     #set($fbDoc = "${filePickerSpace}_filebase.AttachmentDocument")
   #elseif("$!fbDoc" == '-')

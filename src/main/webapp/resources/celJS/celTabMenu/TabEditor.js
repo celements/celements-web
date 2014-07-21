@@ -35,8 +35,12 @@ TE.prototype = {
   tabMenuConfig : null,
 
   scriptLoading : false,
+  
+  CSSLoading : false,
 
   scriptQueue : new Array(),
+  
+  CSSQueue : new Array(),
 
   tabButtons : new Hash(),
   
@@ -53,6 +57,8 @@ TE.prototype = {
   _isEditorDirtyOnLoad : false,
 
   afterInitListeners : new Array(),
+
+  _log : new CELEMENTS.mobile.Dimensions(),
 
   isValidFormId : function(formId) {
   return (typeof formId == 'string') && (formId != '') && $(formId)
@@ -425,19 +431,29 @@ TE.prototype = {
       if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
         lang = $$('.celTabLanguage')[0].value;
       }
+      var loadTabParams = {
+          xpage : 'celements_ajax',
+          ajax_mode : 'CelTabContent',
+          id : tabId,
+          language : lang
+       };
+      if (window.location.search.match(/\&?template=[^\&]+/)) {
+        loadTabParams["template"] = window.location.search.replace(
+            /.*\&?template=([^\&]+).*/, '$1');
+      }
+      if (window.location.search.match(/\&?language=[^\&]+/)) {
+        loadTabParams["language"] = window.location.search.replace(
+            /.*\&?language=([^\&]+).*/, '$1');
+      }
       // load tab content
       asyncLoading = true;
       new Ajax.Request(getTMCelHost(), {
          method: 'post',
-         parameters: {
-            xpage : 'celements_ajax',
-            ajax_mode : 'CelTabContent',
-            id : tabId,
-            language : lang
-         },
+         parameters: loadTabParams,
          onSuccess: function(transport) {
            div.update(transport.responseText);
            _me.lazyLoadJS(div);
+           _me.lazyLoadCSS(div);
            //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
            //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
            //TODO following fired event. -> Workaround: execute registered method once after registration.
@@ -497,7 +513,68 @@ TE.prototype = {
     }
   });
   if(scripts.length > 0) { _me.loadScripts(scripts); }
-},
+ },
+
+ lazyLoadCSS : function(parentEle) {
+  var _me = this;
+  var scripts = [];
+  parentEle.select('span.cel_lazyloadCSS').each(function(scriptEle) {
+    var scriptPath = scriptEle.innerHTML;
+    if(scriptPath != '') {
+      if (scriptPath.indexOf('?') > 0) {
+        scriptPath += '&';
+      } else {
+        scriptPath += '?';
+      }
+      scriptPath += "version=" + _me.tabMenuConfig.startupTimeStamp;
+      scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
+      if(!_me.cssIsLoaded(scriptPath)) {
+        scripts.push( { isUrl: true, value: scriptPath } );
+      }
+    }
+  });
+  if(scripts.length > 0) { _me.loadCSSScripts(scripts); }
+ },
+ 
+ loadCSSScripts : function(scripts) {
+  var _me = this;
+  var CSSLoaded = function() {
+    _me.CSSLoading = false;
+    _me.loadCSSScripts();
+  };
+  if(!_me.CSSLoading && (_me.CSSQueue.size() > 0)) {
+    var loadScript = _me.CSSQueue.first();
+    _me.CSSQueue = _me.CSSQueue.slice(1); // remove first element
+    if(loadScript.isUrl) {
+      var newEle = new Element('link', { 
+          'rel': 'stylesheet',
+          'href': loadScript.value,
+          'type': 'text/css',
+          'media': 'screen'
+      });
+    if(Prototype.Browser.IE) {
+        newEle.onreadystatechange = function () {
+          if (this.readyState === 'loaded' || this.readyState === 'complete') {
+            CSSLoaded();
+          }
+        };
+      } else if (Prototype.Browser.Gecko || Prototype.Browser.WebKit) {
+        newEle.onload  = CSSLoaded;
+        newEle.onerror = CSSLoaded;
+      }
+      _me.CSSLoading = true;
+      $$('head')[0].insert(newEle);
+    } else {
+      eval(loadScript.value);
+      _me.loadScripts();
+    }
+  } else if((scripts != undefined) && (scripts.size() > 0)) {
+    $A(scripts).each( function(ele) {
+      _me.CSSQueue.push(ele);
+    });
+    _me.loadCSSScripts();
+  }
+ },
 
  loadScripts : function(scripts) {
   var _me = this;
@@ -545,6 +622,17 @@ TE.prototype = {
   return isLoaded;
 },
 
+ cssIsLoaded : function(script) {
+  var _me = this;
+  var isLoaded = false;
+  $$('link[rel="stylesheet"]').each(function(loadedScript) {
+    if(loadedScript.href === _me.getTMCelDomain() + script) {
+      isLoaded = true;
+    }
+  });
+  return isLoaded;
+ },
+
  setButtonActive : function(id) {
   var _me = this;
   // set all buttons: inactive
@@ -590,6 +678,8 @@ TE.prototype = {
     }
     _me.saveAllFormsAjax(function(transport) {
       window.onbeforeunload = null;
+//      _me._log.logDimAndAgent('saveAndClose: before synchronous submit for form |'
+//          + oldSaveFormName + '|');
       document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
   } else {
@@ -670,6 +760,8 @@ TE.prototype = {
  },
 
  saveAndContinueAjax : function(formName, handler) {
+//   var _me = this;
+//  _me._log.logDimAndAgent('saveAndContinueAjax: start |' + formName + '|');
   if(!formName) { formName = 'edit'; }
   if(document.forms[formName]) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
@@ -770,8 +862,10 @@ TE.prototype = {
  },
 
  _formDirtyOnLoad : function(formId) {
-   return (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
-     && ($(formId).celFormDirtyOnLoad.value == 'true');
+   var _me = this;
+   return _me._isEditorDirtyOnLoad ||
+     (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
+       && ($(formId).celFormDirtyOnLoad.value == 'true');
  },
 
  getDirtyFormIds : function() {
@@ -843,6 +937,11 @@ TE.prototype = {
                  _me.saveAllFormsAjax(function(transport, jsonResponses) {
                    _dialog.hide();
                    var failed = _me.showErrorMessages(jsonResponses);
+                   if ((typeof console != 'undefined')
+                       && (typeof console.log != 'undefined')) {
+                     console.log('saveAllFormsAjax returning: ', failed, jsonResponses,
+                         execCallback);
+                   }
              execCallback(transport, jsonResponses, failed);
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
@@ -860,13 +959,19 @@ TE.prototype = {
 
  saveAllFormsAjax : function(execCallback, doNotSaveFormId) {
    var _me = this;
+//   _me._log.logDimAndAgent('saveAllFormsAjax: start |' + doNotSaveFormId + '|');
    var dirtyFormIds = _me.getDirtyFormIds();
    var jsonResponses = new Hash();
    var saveAllForms = function(allDirtyFormIds) {
      var formId = allDirtyFormIds.pop();
      var remainingDirtyFormIds = allDirtyFormIds;
+//     _me._log.logDimAndAgent('saveAllFormsAjax: before saveAndContinueAjax in '
+//         + 'saveAllForms for formId |' + formId + '|, remainingDirtyFormIds: '
+//         + Object.toJSON(remainingDirtyFormIds));
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
+//         _me._log.logDimAndAgent('saveAllFormsAjax: received json Response |'
+//             + Object.toJSON(jsonResponses) + '|');
          _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
        }
@@ -874,6 +979,8 @@ TE.prototype = {
          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
            console.log('next saveAllForms with: ', remainingDirtyFormIds);
          }
+//         _me._log.logDimAndAgent('saveAllFormsAjax: in success before recursive saveAllForms with remainingDirtyFormIds |'
+//             + Object.toJSON(remainingDirtyFormIds) + '|');
          saveAllForms(remainingDirtyFormIds);
          } else {
            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
