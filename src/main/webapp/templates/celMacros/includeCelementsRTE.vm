@@ -15,6 +15,7 @@ var initCelRTE = function() {
     onSuccess: function(transport) {
       var tinyConfigJSON = transport.responseText.replace(/\n/g,' ');
       if (tinyConfigJSON.isJSON()) {
+        window.tinymce.dom.Event.domLoaded = true;
         tinyMCE.init(tinyConfigJSON.evalJSON());
       } else {
         console.error('TinyConfig is no json!', tinyConfigJSON);
