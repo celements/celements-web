@@ -862,8 +862,10 @@ TE.prototype = {
  },
 
  _formDirtyOnLoad : function(formId) {
-   return (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
-     && ($(formId).celFormDirtyOnLoad.value == 'true');
+   var _me = this;
+   return _me._isEditorDirtyOnLoad ||
+     (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
+       && ($(formId).celFormDirtyOnLoad.value == 'true');
  },
 
  getDirtyFormIds : function() {
@@ -935,6 +937,11 @@ TE.prototype = {
                  _me.saveAllFormsAjax(function(transport, jsonResponses) {
                    _dialog.hide();
                    var failed = _me.showErrorMessages(jsonResponses);
+                   if ((typeof console != 'undefined')
+                       && (typeof console.log != 'undefined')) {
+                     console.log('saveAllFormsAjax returning: ', failed, jsonResponses,
+                         execCallback);
+                   }
              execCallback(transport, jsonResponses, failed);
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
