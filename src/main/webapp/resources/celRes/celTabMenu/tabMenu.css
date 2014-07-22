@@ -293,8 +293,15 @@ body #cel_overlay {
 #nav_extractEdit h6 {
 	margin-bottom: 5px;
 }
-#publicationForm label,
-#nav_extractEdit label {
+#publicationForm .editblock label {
 	float: left;
 	padding: 3px 0px;
+}
+#publicationForm .editblock dd {
+	margin-left: 210px;
+}
+#nav_extractEdit .editblock,
+#nav_extractEdit .editblock dd {
+	margin: 0px;
+	padding: 0px;
 }
