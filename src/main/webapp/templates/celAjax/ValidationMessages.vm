@@ -1,5 +1,7 @@
 #set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
 $jsonBuilder.openDictionary()
+$jsonBuilder.addStringProperty('language', "$language")
+$jsonBuilder.addStringProperty('admin-language', "$admin_language")
 $jsonBuilder.addStringProperty('required', "$adminMsg.get('cel_form_valid_required')")
 $jsonBuilder.addStringProperty('validate-number', "Please enter a valid number in this field.")
 $jsonBuilder.addStringProperty('validate-digits', "Please use numbers only in this field. please avoid spaces or other characters such as dots or commas.")
