@@ -84,11 +84,6 @@
         #set($cel_editobj_cssclasses = { "extract" : "mceEditor" })
         #parse("celTemplates/ObjectEdit.vm")
     </div>
-#*    
-    <div id="cel_courseOverviewEdit" class="editblock">$adminMsg.get('cel_course_edit_overview'):<br />
-	   <textarea class="mceEditor" id='Classes.DocumentExtract_${objNr}_extract' rows='5' name='Classes.DocumentExtract_${objNr}_extract'>$xwiki.getXMLEncoded($tdoc.getContent())</textarea>
-	</div>
-*#
 </form>
 #* Extract End *#
 

@@ -67,8 +67,7 @@
 			#parse("celTemplates/ObjectEdit.vm")
 		</div>   
 	</form>	
-#end
-$celementsweb.addExtJSfileOnce(':celJS/celTabMenu/publishDatePicker.js')	
+#end	
 <h1>$!adminMsg.get('cel_tm_rights_rights')</h1>
 #if($celementsweb.isCelementsRights($doc.fullName))
 <span class='cel_lazyloadJS' style='display: none;'>celJS/adminUi/accessRights.js</span>
