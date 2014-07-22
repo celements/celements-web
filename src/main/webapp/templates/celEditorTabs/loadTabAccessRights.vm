@@ -64,7 +64,7 @@
 	        #set($cel_embedded_editobj = true)
 	        #set($cel_editobj_title = $adminMsg.get('cel_tm_rights_publication'))
 	        #set($cel_editobj_xredirect_params = 'tab=tbrights')
-			$xwiki.includeForm('celements2web:Templates.ObjectEdit', false)
+			#parse("celTemplates/ObjectEdit.vm")
 		</div>   
 	</form>	
 #end

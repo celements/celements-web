@@ -61,24 +61,19 @@
 <input type="hidden" name="tab" value="tbrights" />
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
-
+    #parse("celMacros/includeCelementsRTE.vm")
     #set($extractObj = $doc.getObject('Classes.DocumentExtract','language',"$language", false))
     #if ("$!extractObj" == '')
-        #set($extractObj = $doc.getObject('Classes.DocumentExtract','language',"", false))
+        #set($extractObj = $doc.newObject('Classes.DocumentExtract'))
+        $extractObj.set('language', $language)
     #end
-    #if ("$!extractObj" != '')
-        #set($extractObjLanguage = "$!{extractObj.getProperty('language').getValue()}")
-        #if ("$!extractObjLanguage" == '')
-            #set($extractObjLanguage = $language)
-        #end
-        #set($cel_editobj_hasObjAddLink = false)
-    #else
-        #set($cel_editobj_hasObjAddLink = true)
-    #end    
+    #set($objNr = $extractObj.getNumber())
     <div id="nav_menunameEdit" class="editblock">
-        <input name="Classes.DocumentExtract_${extractObj.getNumber()}_language" type="hidden" value="$!extractObjLanguage">
-        #set($cel_editobj_objects = $extractObj)
-        #set($cel_editobj_hasObjRemoveLink = true)
+        <input name="Classes.DocumentExtract_${objNr}_language" type="hidden" value="$language">
+        #set($cel_editobj_nb = $objNr)
+        #set($cel_editobj_doc = $doc)
+        #set($cel_editobj_hasObjAddLink = false)
+        #set($cel_editobj_hasObjRemoveLink = false)
         #set($cel_editobj_properties = "extract")
         #set($cel_editobj_classname = 'Classes.DocumentExtract')
         #set($cel_editobj_dict_prefix = 'cel_tm_documentextract_' )
@@ -86,8 +81,14 @@
         #set($cel_embedded_editobj = true)
         #set($cel_editobj_title = $adminMsg.get('cel_tm_documentextract'))
         #set($cel_editobj_xredirect_params = 'tab=tb2')
-        $xwiki.includeForm('celements2web:Templates.ObjectEdit', false)
-    </div> 
+        #set($cel_editobj_cssclasses = { "extract" : "mceEditor" })
+        #parse("celTemplates/ObjectEdit.vm")
+    </div>
+#*    
+    <div id="cel_courseOverviewEdit" class="editblock">$adminMsg.get('cel_course_edit_overview'):<br />
+	   <textarea class="mceEditor" id='Classes.DocumentExtract_${objNr}_extract' rows='5' name='Classes.DocumentExtract_${objNr}_extract'>$xwiki.getXMLEncoded($tdoc.getContent())</textarea>
+	</div>
+*#
 </form>
 #* Extract End *#
 
