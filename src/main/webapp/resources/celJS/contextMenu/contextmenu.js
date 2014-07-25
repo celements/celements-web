@@ -58,11 +58,15 @@ function ContextMenuItem(link, text, icon, shortcut) {
   this.getHTML = function(nr){
   
     var tmpHTML = "<div class='contextMenuItem'><div class='contextMenuIcon'>";
+/**
     if (me.icon) {
       tmpHTML += "<img src='"+me.icon+"' alt='"+me.text+"' />";
     } else {
       tmpHTML += "&nbsp;";
     }
+    //icon deactivated for now
+ */
+    tmpHTML += "&nbsp;";
     
     tmpHTML += "</div><div class='contextMenuLink' onmouseover='javascript:contextMouseOver(this)' onmouseout='javascript:contextMouseOut(this)' onclick='javascript:";
     tmpHTML += me.link;
