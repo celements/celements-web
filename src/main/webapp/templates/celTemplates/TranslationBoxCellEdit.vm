@@ -1,0 +1,36 @@
+#if("$!request.get('xredirect')" != '')
+#set($xredirect = $!request.getParameter('xredirect'))
+#else
+#set($xredirect = "$doc.getURL('view')")
+#end
+#set($redirectStr = "xredirect=$xredirect")
+#set($cellObj = "")
+#set($cellObj = $celldoc.getObject('Celements.TranslationBoxCellConfigClass', false))
+#if("$!cellObj" == '')
+#set($cellObj = $celldoc.newObject("Celements.TranslationBoxCellConfigClass"))
+$cellObj.set('menu_element_name', "$cellObj.fullName");
+$celldoc.save()
+$response.sendRedirect($doc.getURL('edit', $redirectStr))
+#end
+<div id="navigationCellEdit">
+<h1>Translation Box Cell</h1>
+<form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
+    <input type="hidden" name="template" value="$!doc.getTemplate()" />
+    <input type="hidden" name="xredirect" value="$!xredirect" />
+    <input type="hidden" name="language" value="$!tdoc.language" />
+  #if($celementsweb.getSubMenuItemsForParent($doc.getFullName(), $doc.getSpace()).size() == 0)
+    <div id="editablecode_container">
+#set($cel_embedded_editobj = true)
+#set($cel_editobj_classname = "Celements.TranslationBoxCellConfigClass")
+#set($cel_editobj_nb = $cellObj.getNumber())
+#set($cel_editobj_hasObjRemoveLink = false)
+#set($cel_editobj_externalForm = true)
+#set($cel_editobj_properties = 'page_exceptions,pagetype_exceptions')
+#set($cel_editobj_readonly_properties = '')
+#set($cel_editobj_dict_property_prefix = 'transboxCellEdit_')
+$xwiki.parseTemplate("celTemplates/ObjectEdit.vm")
+  #else
+  <p>Group-Cell: Inhalt wird nur bei Zellen ohne weitere Unter-Zellen berechnet.</p>
+  #end
+</form>
+</div>
