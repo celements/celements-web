@@ -287,3 +287,21 @@ iframe.apn-toolbar {
 body #cel_overlay {
   top: 0px !important;
 }
+
+/* Publikationsdatum & DocumentExtract  */
+#publicationForm h6,
+#nav_extractEdit h6 {
+	margin-bottom: 5px;
+}
+#publicationForm .editblock label {
+	float: left;
+	padding: 3px 0px;
+}
+#publicationForm .editblock dd {
+	margin-left: 210px;
+}
+#nav_extractEdit .editblock,
+#nav_extractEdit .editblock dd {
+	margin: 0px;
+	padding: 0px;
+}
