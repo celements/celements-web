@@ -332,7 +332,14 @@ var XWiki = (function(XWiki){
             this.node.addClassName("loading");
             this.node.setStyle("min-height:200px");
             
-            new Ajax.Request(window.location, {
+            var url = '';
+            if (typeof getCelHost !== 'undefined') {
+              url += getCelHost();
+            } else {
+              url += window.location;
+            }
+
+            new Ajax.Request(url, {
               method:'post',
               parameters: parameters,
               onSuccess: function(transport) {
