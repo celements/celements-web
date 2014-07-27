@@ -2,6 +2,10 @@
 
 /* Overriding skins */
 
+#import ul.xlist li.xitem div.xitemcontainer {
+    text-indent: 0;
+}
+
 div.legend {
 	margin-bottom:10px;
 	font-size:1.33em;
