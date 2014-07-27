@@ -184,6 +184,10 @@ ul.pages {
 
 ul.pages li.xitem {
   width: 100%;
+}
+
+ul.pages li.xitem,
+ul.package li.xitem {
   list-style-type: none;
 }
 
