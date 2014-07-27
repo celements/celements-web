@@ -184,6 +184,7 @@ ul.pages {
 
 ul.pages li.xitem {
   width: 100%;
+  list-style-type: none;
 }
 
 .documentName{
