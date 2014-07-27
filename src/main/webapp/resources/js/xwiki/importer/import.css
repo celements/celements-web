@@ -21,6 +21,9 @@ div.legend {
 .clearfloats {
   font-size: 0; /* toucan IE6 */
   margin: -1px 50px 0;
+  background-color: #fff;
+  clear: both;
+  height: 1px;
 }
 
 ul {
