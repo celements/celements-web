@@ -187,6 +187,10 @@ ul.package li.xitem div.xitemcontainer div.selection {
   margin-right: .2em;
 }
 
+div#package .hidden {
+  display: none !important;
+}
+
 ul.pages {
   margin: 0 !important;
 }
