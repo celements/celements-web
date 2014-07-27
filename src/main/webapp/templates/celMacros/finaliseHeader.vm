@@ -6,6 +6,9 @@
 ## INPUT(optional) : $after_skin_cssdoc (default: '')
 ##
 #if(!$finaliseHeaderRUN) ## prevent from being run twice and allow lacy calls.
+## Hook for inserting CSS skin extensions
+<!-- com.xpn.xwiki.plugin.skinx.CssSkinExtensionPlugin -->
+<!-- com.xpn.xwiki.plugin.skinx.CssSkinFileExtensionPlugin -->
 $xwiki.celementsweb.displayAllCSS()
 ## get DocumentSpecific Meta-Tag
 #set($metaTags = $celementsweb.getDocMetaTags($language, $default_language))
