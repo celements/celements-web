@@ -204,3 +204,7 @@ ul.package ul.pages li.xitem div.xpagecontainer input {
   display: block;
   margin-top: .5em;
 }
+
+.main.layoutsubsection {
+  width: 1024px;
+}
