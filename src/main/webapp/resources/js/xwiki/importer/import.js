@@ -85,8 +85,8 @@ var XWiki = (function(XWiki){
             this.failureCallback = options.onFailure || function(){};
             
             var url = '';
-            if (typeof getCelHost !== 'undefined') {
-              url += getCelHost();
+            if (typeof window.getCelHost !== 'undefined') {
+              url += window.getCelHost();
             } else {
               url += window.docgeturl;
             }
@@ -333,8 +333,8 @@ var XWiki = (function(XWiki){
             this.node.setStyle("min-height:200px");
             
             var url = '';
-            if (typeof getCelHost !== 'undefined') {
-              url += getCelHost();
+            if (typeof window.getCelHost !== 'undefined') {
+              url += window.getCelHost();
             } else {
               url += window.location;
             }
