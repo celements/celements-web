@@ -79,14 +79,20 @@ var XWiki = (function(XWiki){
          */
         initialize:function(name, options) 
         {
-            this.name = decodeURIComponent( name ) 
+            this.name = decodeURIComponent( name );
                         
             this.successCallback = options.onSuccess || function(){};
             this.failureCallback = options.onFailure || function(){};
             
-            var url = window.docgeturl + "?xpage=packageinfo&package=" + name;
+            var url = '';
+            if (typeof getCelHost !== 'undefined') {
+              url += getCelHost();
+            } else {
+              url += window.docgeturl;
+            }
+            url += "?xpage=packageinfo&package=" + name;
             
-            var ajx = new Ajax.Request(url, {
+            new Ajax.Request(url, {
                 onSuccess: this.onSuccess.bindAsEventListener(this),
                 on1223 : this.on1223.bindAsEventListener(this),
                 on0 : this.on0.bindAsEventListener(this),
