@@ -207,6 +207,6 @@ ul.package ul.pages li.xitem div.xpagecontainer input {
   margin-top: .5em;
 }
 
-.main.layoutsubsection {
+.generalOverlay .main.layoutsubsection {
   width: 1024px;
 }
