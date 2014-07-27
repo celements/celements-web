@@ -177,6 +177,7 @@ ul.package li.xitem div.xitemcontainer div.spacename {
   background: transparent url($xwiki.getSkinFile('icons/silk/folder.gif', true)) no-repeat scroll 0 .1em ;
   cursor: pointer;
   font-weight: bold;
+  padding-left: 30px;
 }
 
 ul.package li.xitem div.xitemcontainer div.selection {
