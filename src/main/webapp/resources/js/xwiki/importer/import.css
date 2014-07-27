@@ -159,6 +159,15 @@ ul.package li.xitem div.xitemcontainer input.space {
   float: right;
 }
 
+ul.package li.xitem div.xitemcontainer span.checkbox {
+  display: inline;
+  height: auto;
+  left: auto;
+  position: static;
+  top: auto;
+  width: auto;
+}
+
 ul.package li.xitem div.xitemcontainer div.spacename,
 ul.package li.xitem div.xitemcontainer img {
   float: left;	
