@@ -49,7 +49,7 @@
     #end
     </select>
 </div>
-##TODO add configuration for publish and extract
+##TODO add configuration for publish (publishdate_active) and extract (extract_active)
 #if($isSuperAdmin)
 #set($cel_editobj_doc = $wikiPreferenceDoc)
 #set($cel_editobj_dict_prefix = 'cel_pro_metaTag_' )
