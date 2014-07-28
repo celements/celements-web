@@ -490,9 +490,15 @@ TE.prototype = {
  lazyLoadJS : function(parentEle) {
   var _me = this;
   var scripts = [];
-  parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec').each(function(scriptEle) {
+  parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec').each(
+      function(scriptEle) {
     if(scriptEle.hasClassName('cel_lazyloadJS')) {
       var scriptPath = scriptEle.innerHTML;
+      var scriptPathObj = null;
+      if (scriptPath.isJSON()) {
+        scriptPathObj = scriptPath.evalJSON();
+        scriptPath = scriptPathObj.url;
+      }
       if(scriptPath != '') {
         if (scriptPath.indexOf('?') > 0) {
           scriptPath += '&';
@@ -500,7 +506,11 @@ TE.prototype = {
           scriptPath += '?';
         }
         scriptPath += "version=" + _me.tabMenuConfig.startupTimeStamp;
-        scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
+        if ((typeof scriptPathObj === 'object') && (scriptPathObj.action == 'file')) {
+          scriptPath = _me.tabMenuConfig.jsPathFileActionPrefix + scriptPath;
+        } else {
+          scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
+        }
         if(!_me.scriptIsLoaded(scriptPath)) {
           scripts.push( { isUrl: true, value: scriptPath } );
 //          var newEle = new Element('script', { type: 'text/javascript', src: scriptPath });
@@ -520,6 +530,11 @@ TE.prototype = {
   var scripts = [];
   parentEle.select('span.cel_lazyloadCSS').each(function(scriptEle) {
     var scriptPath = scriptEle.innerHTML;
+    var scriptPathObj = null;
+    if (scriptPath.isJSON()) {
+      scriptPathObj = scriptPath.evalJSON();
+      scriptPath = scriptPathObj.url;
+    }
     if(scriptPath != '') {
       if (scriptPath.indexOf('?') > 0) {
         scriptPath += '&';
@@ -527,7 +542,11 @@ TE.prototype = {
         scriptPath += '?';
       }
       scriptPath += "version=" + _me.tabMenuConfig.startupTimeStamp;
-      scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
+      if ((typeof scriptPathObj === 'object') && (scriptPathObj.action == 'file')) {
+        scriptPath = _me.tabMenuConfig.jsPathFileActionPrefix + scriptPath;
+      } else {
+        scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
+      }
       if(!_me.cssIsLoaded(scriptPath)) {
         scripts.push( { isUrl: true, value: scriptPath } );
       }
