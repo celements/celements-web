@@ -494,7 +494,7 @@ TE.prototype = {
       function(scriptEle) {
     if(scriptEle.hasClassName('cel_lazyloadJS')) {
       var scriptPath = scriptEle.innerHTML;
-      var scriptPathObj = null;
+      var scriptPathObj = "";
       if (scriptPath.isJSON()) {
         scriptPathObj = scriptPath.evalJSON();
         scriptPath = scriptPathObj.url;
@@ -530,7 +530,7 @@ TE.prototype = {
   var scripts = [];
   parentEle.select('span.cel_lazyloadCSS').each(function(scriptEle) {
     var scriptPath = scriptEle.innerHTML;
-    var scriptPathObj = null;
+    var scriptPathObj = "";
     if (scriptPath.isJSON()) {
       scriptPathObj = scriptPath.evalJSON();
       scriptPath = scriptPathObj.url;
@@ -554,7 +554,7 @@ TE.prototype = {
   });
   if(scripts.length > 0) { _me.loadCSSScripts(scripts); }
  },
- 
+
  loadCSSScripts : function(scripts) {
   var _me = this;
   var CSSLoaded = function() {
