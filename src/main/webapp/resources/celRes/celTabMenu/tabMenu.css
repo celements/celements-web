@@ -300,8 +300,8 @@ body #cel_overlay {
 #publicationForm .editblock dd {
 	margin-left: 210px;
 }
-#nav_extractEdit .editblock,
-#nav_extractEdit .editblock dd {
+#nav_extractEdit .editblock .editblock,
+#nav_extractEdit .editblock .editblock dd {
 	margin: 0px;
 	padding: 0px;
 }
