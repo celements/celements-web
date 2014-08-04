@@ -271,12 +271,13 @@ form#newsletter_send span#testResultBoxSpan {
   color: black;
 }
 
-/* Tabellen */
+/* Tables */
 .generalOverlay #cel_overlaybody #recylceBinList table,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table {
 	width: 785px;
 	border-collapse: collapse;
+	table-layout: fixed;
 }
 .generalOverlay #cel_overlaybody #recylceBinList table th,
 .generalOverlay #cel_overlaybody #recylceBinList table td,
@@ -300,17 +301,25 @@ form#newsletter_send span#testResultBoxSpan {
 }
 
 /* WIDTH for Attachment Recycle Bin */
+.FullAttRecylceBin .main.layoutsubsection {
+	width: 900px;
+}
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table {
+	width: 885px;
+}
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_filename {
-	width:245px;
+	width:295px;
+	overflow: hidden;
+	word-wrap: break-word;
 }
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_docName {
 	width: 200px;
 }
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_deldate {
-	width: 120px;
+	width: 140px;
 }
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_deleter {
-	width: 100px;
+	width: 130px;
 }
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_actions {
 	width: 120px;
