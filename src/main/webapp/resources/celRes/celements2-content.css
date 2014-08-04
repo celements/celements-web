@@ -6,3 +6,7 @@ body.mceContentBody  {
   margin: 0px;
   padding: 0px;
 }
+
+body.mceContentBody td {
+	min-width: 5px;
+}
