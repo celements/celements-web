@@ -272,6 +272,7 @@ form#newsletter_send span#testResultBoxSpan {
 }
 
 /* Tables */
+.generalOverlay #cel_overlaybody #AttachmentHistory table,
 .generalOverlay #cel_overlaybody #recylceBinList table,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table {
@@ -279,6 +280,8 @@ form#newsletter_send span#testResultBoxSpan {
 	border-collapse: collapse;
 	table-layout: fixed;
 }
+.generalOverlay #cel_overlaybody #AttachmentHistory table th,
+.generalOverlay #cel_overlaybody #AttachmentHistory table td,
 .generalOverlay #cel_overlaybody #recylceBinList table th,
 .generalOverlay #cel_overlaybody #recylceBinList table td,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table th,
@@ -287,6 +290,7 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table td {
 	padding: 4px;
 }
+.generalOverlay #cel_overlaybody #AttachmentHistory tabl th,
 .generalOverlay #cel_overlaybody #recylceBinList table th,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table th,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table th {
@@ -294,10 +298,34 @@ form#newsletter_send span#testResultBoxSpan {
 	text-align: left;
 	border-bottom: 2px solid black;
 }
+.generalOverlay #cel_overlaybody #AttachmentHistory table .tr_odd td,
 .generalOverlay #cel_overlaybody #recylceBinList table .tr_odd td,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .tr_odd td,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table .tr_odd td { 
 	background-color: #E1E1E1;
+}
+.generalOverlay #cel_overlaybody #AttachmentHistory table tr:hover td,
+.generalOverlay #cel_overlaybody #recylceBinList table tr:hover td,
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table tr:hover td,
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table tr:hover td { 
+	background-color: #EEEEEE;
+}
+
+/* WIDTH for Attachment History */
+.generalOverlay #cel_overlaybody #AttachmentHistory table .column_image {
+	width: 90px;
+}
+.generalOverlay #cel_overlaybody #AttachmentHistory table .column_version {
+	width: 135px;
+}
+.generalOverlay #cel_overlaybody #AttachmentHistory table .column_size {
+	width: 160px;
+}
+.generalOverlay #cel_overlaybody #AttachmentHistory table .column_author {
+	width: 200px;
+}
+.generalOverlay #cel_overlaybody #AttachmentHistory table .column_date {
+	width: 200px;
 }
 
 /* WIDTH for Attachment Recycle Bin */
