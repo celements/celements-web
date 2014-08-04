@@ -1,5 +1,4 @@
-<div class="main layoutsubsection">
-<div id="mainContentArea">
+<div id="AttachmentHistory">
 <h3>$xwiki.parseMessage("availableversionsattachment")</h3>
 #if ($tdoc.realLanguage!="")
 #set($lang = "&language=${tdoc.realLanguage}")
@@ -7,10 +6,16 @@
 #set($lang = "")
 #end
 <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+<thead>
     <tr>
-        <th></th><th>$msg.get("version")</th><th>$msg.get("size")</th>
-        <th>$msg.get("author")</th><th>$msg.get("date")</th>
+        <th class="column_image"></th>
+        <th class="column_version">$msg.get("version")</th>
+        <th class="column_size">$msg.get("size")</th>
+        <th class="column_author">$msg.get("author")</th>
+        <th class="column_date">$msg.get("date")</th>
     </tr>
+ </thead>
+<tbody>
 #foreach ($version in $attachment.getVersions())
     <tr#if($velocityCount % 2 == 1) class="table-odd"#else class="table-even"#end>
 #set($attachrev = $attachment.getAttachmentRevision($version.toString()))
@@ -20,17 +25,17 @@
   #set($url = $doc.getAttachmentRevisionURL("${attachment.filename}", ${version.toString()}))
 #end
 #if ($attachment.isImage())
-        <td><img src="${url}" alt="${attachment.filename}" width="80" />
+        <td><img src="${url}&celwidth=80&celheight=80" alt="${attachment.filename}" />
 #else
         <td class="mime">#mimetypeimg($attachment.getMimeType().toLowerCase() $attachment.getFilename().toLowerCase())
 #end
         </td>
         <td><a href="$url">$version</a></td>
         <td>$attachrev.getFilesize()</td>
-        <td>$xwiki.getUserName($attachrev.getAuthor())</td>
+        <td>$xwiki.getUserName($attachrev.getAuthor(), false)</td>
         <td>$xwiki.formatDate($attachrev.getDate())</td>
     </tr>
 #end
+</tbody>
 </table>
-</div>## mainContentArea
-</div>## main
+</div>## AttachmentHistory
