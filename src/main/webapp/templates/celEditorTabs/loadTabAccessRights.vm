@@ -1,15 +1,17 @@
-<span class='cel_lazyloadJS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/yui/yahoo/yahoo-min.js' }</span>
-<span class='cel_lazyloadJS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/yui/event/event-min.js' }</span>
-<span class='cel_lazyloadJS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/yui/dom/dom-min.js' }</span>
-<span class='cel_lazyloadJS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/yui/cookie/cookie-min.js' }</span>
-<span class='cel_lazyloadJS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/yui/calendar/calendar-min.js' }</span>
-<span class='cel_lazyloadJS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/jquery-format/jquery.format-1.2.min.js' }</span>
-<span class='cel_lazyloadJS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/editorsupport/DatePicker.js' }</span>
-<span class='cel_lazyloadJS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/jquery-datetimepicker/jquery.datetimepicker.js' }</span>
-<span class='cel_lazyloadJS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/celTabMenu/publishDatePicker.js' }</span>
 
-<span class='cel_lazyloadCSS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/yui/calendar/assets/skins/sam/calendar.css' }</span>
-<span class='cel_lazyloadCSS' style='display: none;'>{ 'action' : 'file', 'url': 'celJS/jquery-datetimepicker/jquery.datetimepicker.css' }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/yahoo/yahoo-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/event/event-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/dom/dom-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/cookie/cookie-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/calendar/calendar-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/jquery-format/jquery.format-1.2.min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/editorsupport/DatePicker.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/jquery-datetimepicker/jquery.datetimepicker.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/celTabMenu/publishDatePicker.js" }</span>
+<span class='cel_lazyloadCSS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/calendar/assets/skins/sam/calendar.css" }</span>
+<span class='cel_lazyloadCSS' style='display: none;'>{ "action" : "file", "url": "celJS/jquery-datetimepicker/jquery.datetimepicker.css" }</span>
+
+
 
 #macro(getAccessRights)
   #set($rights = '')

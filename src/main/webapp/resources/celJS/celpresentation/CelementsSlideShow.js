@@ -647,6 +647,8 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _imgLoadedResizeAndCenterSlide : function(imgElem, slideWrapper, callbackFN, event) {
         var _me = this;
         imgElem.stopObserving('load', _me._imgLoadedResizeAndCenterSlideBind);
+        imgElem.stopObserving('error', _me._imgLoadedResizeAndCenterSlideBind);
+        imgElem.stopObserving('abort', _me._imgLoadedResizeAndCenterSlideBind);
         _me._preloadingImageQueue = _me._preloadingImageQueue.without(imgElem);
         if (_me._preloadingImageQueue.length == 0) {
           _me._resizeAndCenterSlide(slideWrapper);
@@ -814,8 +816,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._preloadingImageQueue = new Array();
         slideWrapperElem.select('img').each(function(imgElem) {
           if (!imgElem.complete) {
-            imgElem.observe('load', _me._imgLoadedResizeAndCenterSlideBind.curry(
-                imgElem, slideWrapperElem, callbackFN));
+            var finishFnc = _me._imgLoadedResizeAndCenterSlideBind.curry(
+                imgElem, slideWrapperElem, callbackFN);
+            imgElem.observe('load', finishFnc);
+            imgElem.observe('error', finishFnc);
+            imgElem.observe('abort', finishFnc);
             _me._preloadingImageQueue.push(imgElem);
           }
         });
