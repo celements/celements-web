@@ -16,6 +16,7 @@
     </tr>
  </thead>
 <tbody>
+#set($dateFormat = 'dd/MM/yyyy, HH:mm')
 #foreach ($version in $attachment.getVersions())
     <tr#if($velocityCount % 2 == 1) class="table-odd"#else class="table-even"#end>
 #set($attachrev = $attachment.getAttachmentRevision($version.toString()))
@@ -33,7 +34,7 @@
         <td><a href="$url">$version</a></td>
         <td>$attachrev.getFilesize()</td>
         <td>$xwiki.getUserName($attachrev.getAuthor(), false)</td>
-        <td>$xwiki.formatDate($attachrev.getDate())</td>
+        <td>$xwiki.formatDate($attachrev.getDate(), $dateFormat)</td>
     </tr>
 #end
 </tbody>
