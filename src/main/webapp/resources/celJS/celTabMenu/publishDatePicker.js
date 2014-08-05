@@ -1,6 +1,7 @@
 jQuery("input").each(function( index, value ) {
-	var prefix = value.id.substr(0, value.id.indexOf('_'));
-	var suffix = value.id.substr(value.id.lastIndexOf('_')+1, value.id.length);
+	var regexp = /^((.*?)_\d+_)(.*)$/;
+	var prefix = value.id.replace(regexp, "$2");
+	var suffix = value.id.replace(regexp, "$3");
 	if(prefix == "Classes.DocumentPublication") {
 		var replaceId = value.id.replace(".", "\\.");
 		jQuery("#"+replaceId).datetimepicker({	     
@@ -11,7 +12,7 @@ jQuery("input").each(function( index, value ) {
 		if (suffix == 'unpublishDate') {
 			siblingSuffix = "publishDate";
 		}
-		var siblingInputId = replaceId.substr(0, replaceId.lastIndexOf('_')+1)+siblingSuffix;
+		var siblingInputId = replaceId.replace(regexp, "$1")+siblingSuffix;
 		jQuery("#"+replaceId).blur(function() {
 			var endDate = null;
 			var startDate = null;
