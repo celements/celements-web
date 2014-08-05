@@ -13,19 +13,24 @@ jQuery("input").each(function( index, value ) {
 		}
 		var siblingInputId = replaceId.substr(0, replaceId.lastIndexOf('_')+1)+siblingSuffix;
 		jQuery("#"+replaceId).blur(function() {
-			var greaterDate = null;
-			var lowerDate = null;
+			var endDate = null;
+			var startDate = null;
+			var endDateStr = "";
+			var startDateStr = "";
 			if (suffix == 'unpublishDate') {
-				greaterDate = parseStringToDate(jQuery("#" + replaceId).val());
-				lowerDate   = parseStringToDate(jQuery("#" + siblingInputId).val());
+				endDateStr   = jQuery("#" + replaceId).val();
+				startDateStr = jQuery("#" + siblingInputId).val();
 			} else {
-				greaterDate = parseStringToDate(jQuery("#" + siblingInputId).val());				
-				lowerDate   = parseStringToDate(jQuery("#" + replaceId).val());
+				endDateStr   = jQuery("#" + siblingInputId).val();				
+				startDateStr = jQuery("#" + replaceId).val();
 			}
-			if ((greaterDate < lowerDate) && (greaterDate != "" && lowerDate != "")) {
+			endDate = parseStringToDate(endDateStr);				
+			startDate   = parseStringToDate(startDateStr);
+			if ((endDate < startDate) && (endDate != "" && startDate != "")) {
 				var errorMesgDialog = getCelementsTabEditor()._getModalDialog();
-				errorMesgDialog.setHeader('Saving failed!');
-				errorMesgDialog.setBody("saving failed for the following reasons:");
+				errorMesgDialog.setHeader(Validation.messages.get("validate-warning-header"));
+				var validationMessage = Validation.messages.get("validate-dateRange").replace(/<FROM_DATE>/g, startDateStr).replace(/<TO_DATE>/g, endDateStr);
+				errorMesgDialog.setBody(validationMessage);
 				errorMesgDialog.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
 				errorMesgDialog.cfg.queueProperty("buttons",
 				[ { text: "OK", handler:function() {
