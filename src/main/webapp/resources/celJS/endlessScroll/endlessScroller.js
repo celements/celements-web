@@ -36,7 +36,6 @@
  */
 if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
 if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
-var scrollAnims = new Hash();
 
 (function(window, undefined) {
   "use strict";
@@ -56,10 +55,12 @@ var scrollAnims = new Hash();
     _observer : undefined,
     _isLoading : undefined,
     _reloadDoneCallbackBind : undefined,
+    _checkIsScrollBottomBind : undefined,
     
     _init : function(elemId, action, params) {
       var _me = this;
       _me._reloadDoneCallbackBind = _me.reloadDoneCallback.bind(_me);
+      _me._checkIsScrollBottomBind = _me._checkIsScrollBottom.bind(_me);
       _me._isLoading = false;
       _me._elementHeight = 0;
       _me.loadAllOnInit = false;
@@ -91,16 +92,15 @@ var scrollAnims = new Hash();
           _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
         }
         if(_me.isScrollBlockEle) {
-          _me._observer = _me.htmlElem.observe('scroll', _me._checkIsScrollBottom);
+          _me._observer = _me.htmlElem.observe('scroll', _me._checkIsScrollBottomBind);
         } else {
-          _me._observer = Element.observe(window, 'scroll', _me._checkIsScrollBottom);
+          _me._observer = Element.observe(window, 'scroll', _me._checkIsScrollBottomBind);
         }
-        scrollAnims.set(_me.htmlElem, _me);
       }
     },
     
     _checkIsScrollBottom : function(event) {
-      var _me = scrollAnims.get(event.element());
+      var _me = this;
       var pos = 0;
       if(_me.isScrollBlockEle) {
         pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
