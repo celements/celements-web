@@ -114,29 +114,22 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
     
     reloadDoneCallback : function(keepObserving) {
       var _me = this;
-      console.log('reloadDoneCallback: ', keepObserving, _me._reloadDoneCallbackBind, _me.htmlElem);
       var maxHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
-      console.log('reloadDoneCallback: maxHeight ', maxHeight, _me._elementHeight);
       if(keepObserving || (((typeof(keepObserving) == 'undefined')
           || (keepObserving == null)) && (_me._elementHeight < maxHeight))) {
-        console.log('reloadDoneCallback: in if ', _me._elementHeight, _me.overlap);
         if(_me.loadAllOnInit || (keepObserving && (_me._elementHeight - _me.overlap <= _me.htmlElem.getHeight()))) {
-          console.log('reloadDoneCallback: before action');
           _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
         } else {
           _me.isLoading = false;
         }
       } else {
-        console.log('reloadDoneCallback: in else ', _me.isScrollBlockEle, _me.htmlElem);
         if(_me.isScrollBlockEle) {
           _me.htmlElem.stopObserving('scroll');
         } else {
           window.stopObserving('scroll');
         }
       }
-      console.log('reloadDoneCallback _me._elementHeight: ', _me.htmlElem);
       _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
-      console.log('reloadDoneCallback: finish.');
     }
 
   };
