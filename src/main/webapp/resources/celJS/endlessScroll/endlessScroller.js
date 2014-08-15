@@ -49,15 +49,21 @@ var scrollAnims = new Hash();
   CELEMENTS.anim.EndlessScroll.prototype = {
     htmlElem : undefined,
     action : undefined,
-    overlap : 0,
+    overlap : undefined,
     isScrollBlockEle : undefined,
-    loadAllOnInit : false,
-    _elementHeight : 0,
+    loadAllOnInit : undefined,
+    _elementHeight : undefined,
     _observer : undefined,
-    _isLoading : false,
+    _isLoading : undefined,
+    _reloadDoneCallbackBind : undefined,
     
     _init : function(elemId, action, params) {
       var _me = this;
+      _me._reloadDoneCallbackBind = _me.reloadDoneCallback.bind(_me);
+      _me._isLoading = false;
+      _me._elementHeight = 0;
+      _me.loadAllOnInit = false;
+      _me.overlap = 0;
       _me.htmlElem = $(elemId);
       if (_me.htmlElem) {
         _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
@@ -82,7 +88,7 @@ var scrollAnims = new Hash();
         if(((typeof(params) == 'undefined') || (typeof(params.executeOnInit) == 'undefined') 
             || params.executeOnInit) || _me.loadAllOnInit) {
           _me.isLoading = true;
-          _me.action(_me.htmlElem, _me.reloadDoneCallback);
+          _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
         }
         if(_me.isScrollBlockEle) {
           _me._observer = _me.htmlElem.observe('scroll', _me._checkIsScrollBottom);
@@ -103,14 +109,15 @@ var scrollAnims = new Hash();
       }
       if((pos + _me.overlap) >= 0) {
         _me.isLoading = true;
-        _me.action(_me.htmlElem, _me.reloadDoneCallback);
+        _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
       }
     },
     
-    reloadDoneCallback : function(keepObserving, _me) {
+    reloadDoneCallback : function(keepObserving) {
+      var _me = this;
       if(keepObserving || (((typeof(keepObserving) == 'undefined') || (keepObserving == null)) && (_me._elementHeight < Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight())))) {
         if(_me.loadAllOnInit || (keepObserving && (_me._elementHeight - _me.overlap <= _me.htmlElem.getHeight()))) {
-          _me.action(_me.htmlElem, _me.reloadDoneCallback);
+          _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
         } else {
           _me.isLoading = false;
         }
