@@ -46,8 +46,6 @@ var scrollAnims = new Hash();
     this._init(id, action, params);
   };
 
-  var CES = CELEMENTS.anim.EndlessScroll;
-  
   CELEMENTS.anim.EndlessScroll.prototype = {
     htmlElem : undefined,
     action : undefined,
