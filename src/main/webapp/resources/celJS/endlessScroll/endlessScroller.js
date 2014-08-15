@@ -131,6 +131,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
           window.stopObserving('scroll');
         }
       }
+      console.log('reloadDoneCallback _me._elementHeight: ', _me.htmlElem);
       _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
       console.log('reloadDoneCallback: finish.');
     }
