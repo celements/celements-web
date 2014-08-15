@@ -105,7 +105,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       if(_me.isScrollBlockEle) {
         pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
       } else {
-        -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
+        pos = -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
       }
       if((pos + _me.overlap) >= 0) {
         _me.isLoading = true;
