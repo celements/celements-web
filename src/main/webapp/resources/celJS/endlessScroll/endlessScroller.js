@@ -67,6 +67,12 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       _me.overlap = 0;
       _me.htmlElem = $(elemId);
       if (_me.htmlElem) {
+        var elemOverflow = _me.htmlElem.getStyle('overflow-y');
+        if(elemOverflow == 'visible') {
+          _me.isScrollBlockEle = false;
+        } else {
+          _me.isScrollBlockEle = true;
+        }
         _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
         _me.action = action;
         _me.loadAllOnInit = (typeof(params) != 'undefined') 
@@ -77,13 +83,6 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
           }
           if(typeof(params.isScrollBlockEle) != 'undefined') {
             _me.isScrollBlockEle = params.isScrollBlockEle;
-          } else {
-            var elemOverflow = _me.htmlElem.getStyle('overflow-y');
-            if(elemOverflow == 'visible') {
-              _me.isScrollBlockEle = false;
-            } else {
-              _me.isScrollBlockEle = true;
-            }
           }
         }
         if(((typeof(params) == 'undefined') || (typeof(params.executeOnInit) == 'undefined') 
