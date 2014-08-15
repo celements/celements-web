@@ -115,8 +115,11 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
     
     reloadDoneCallback : function(keepObserving) {
       var _me = this;
-      if(keepObserving || (((typeof(keepObserving) == 'undefined') || (keepObserving == null)) && (_me._elementHeight < Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight())))) {
+      console.log('reloadDoneCallback: ', keepObserving, _me._reloadDoneCallbackBind);
+      if(keepObserving || (((typeof(keepObserving) == 'undefined')
+          || (keepObserving == null)) && (_me._elementHeight < Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight())))) {
         if(_me.loadAllOnInit || (keepObserving && (_me._elementHeight - _me.overlap <= _me.htmlElem.getHeight()))) {
+          console.log('reloadDoneCallback: before action');
           _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
         } else {
           _me.isLoading = false;
@@ -129,6 +132,8 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         }
       }
       _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
+      console.log('reloadDoneCallback: finish.');
     }
+
   };
 })(window);
