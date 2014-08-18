@@ -36,90 +36,101 @@
  */
 if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
 if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
-var scrollAnims = new Hash();
 
-(function() {
-CELEMENTS.anim.EndlessScroll = function(id, action, params) {
-  // constructor
-  this._init(id, action, params);
-};
+(function(window, undefined) {
+  "use strict";
 
-var CES = CELEMENTS.anim.EndlessScroll;
+  CELEMENTS.anim.EndlessScroll = function(id, action, params) {
+    // constructor
+    this._init(id, action, params);
+  };
 
-CELEMENTS.anim.EndlessScroll.prototype = {
-  htmlElem : undefined,
-  action : undefined,
-  overlap : 0,
-  isScrollBlockEle : undefined,
-  loadAllOnInit : false,
-  _elementHeight : 0,
-  _observer : undefined,
-  _isLoading : false,
-  
-  _init : function(elemId, action, params) {
-    var _me = this;
-    _me.htmlElem = $(elemId);
-    _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
-    _me.action = action;
-    _me.loadAllOnInit = (typeof(params) != 'undefined') 
-        && (typeof(params.loadAllOnInit) != 'undefined') && params.loadAllOnInit;
-    if(typeof(params) != 'undefined') {
-      if(typeof(params.overlap) != 'undefined') {
-        _me.overlap = params.overlap;
-      }
-      if(typeof(params.isScrollBlockEle) != 'undefined') {
-        _me.isScrollBlockEle = params.isScrollBlockEle;
-      } else {
+  CELEMENTS.anim.EndlessScroll.prototype = {
+    htmlElem : undefined,
+    action : undefined,
+    overlap : undefined,
+    isScrollBlockEle : undefined,
+    loadAllOnInit : undefined,
+    _elementHeight : undefined,
+    _observer : undefined,
+    _isLoading : undefined,
+    _reloadDoneCallbackBind : undefined,
+    _checkIsScrollBottomBind : undefined,
+    
+    _init : function(elemId, action, params) {
+      var _me = this;
+      _me._reloadDoneCallbackBind = _me.reloadDoneCallback.bind(_me);
+      _me._checkIsScrollBottomBind = _me._checkIsScrollBottom.bind(_me);
+      _me._isLoading = false;
+      _me._elementHeight = 0;
+      _me.loadAllOnInit = false;
+      _me.overlap = 0;
+      _me.htmlElem = $(elemId);
+      if (_me.htmlElem) {
         var elemOverflow = _me.htmlElem.getStyle('overflow-y');
         if(elemOverflow == 'visible') {
           _me.isScrollBlockEle = false;
         } else {
           _me.isScrollBlockEle = true;
         }
+        _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
+        _me.action = action;
+        _me.loadAllOnInit = (typeof(params) != 'undefined') 
+            && (typeof(params.loadAllOnInit) != 'undefined') && params.loadAllOnInit;
+        if(typeof(params) != 'undefined') {
+          if(typeof(params.overlap) != 'undefined') {
+            _me.overlap = params.overlap;
+          }
+          if(typeof(params.isScrollBlockEle) != 'undefined') {
+            _me.isScrollBlockEle = params.isScrollBlockEle;
+          }
+        }
+        if(((typeof(params) == 'undefined') || (typeof(params.executeOnInit) == 'undefined') 
+            || params.executeOnInit) || _me.loadAllOnInit) {
+          _me.isLoading = true;
+          _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+        }
+        if(_me.isScrollBlockEle) {
+          _me._observer = _me.htmlElem.observe('scroll', _me._checkIsScrollBottomBind);
+        } else {
+          _me._observer = Element.observe(window, 'scroll', _me._checkIsScrollBottomBind);
+        }
       }
-    }
-    if(((typeof(params) == 'undefined') || (typeof(params.executeOnInit) == 'undefined') 
-        || params.executeOnInit) || _me.loadAllOnInit) {
-      _me.isLoading = true;
-      _me.action(_me.htmlElem, _me.reloadDoneCallback);
-    }
-    if(_me.isScrollBlockEle) {
-      _me._observer = _me.htmlElem.observe('scroll', _me._checkIsScrollBottom);
-    } else {
-      _me._observer = Element.observe(window, 'scroll', _me._checkIsScrollBottom);
-    }
-    scrollAnims.set(_me.htmlElem, _me);
-  },
-  
-  _checkIsScrollBottom : function(event) {
-    var _me = scrollAnims.get(event.element());
-    var pos = 0;
-    if(_me.isScrollBlockEle) {
-      pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
-    } else {
-      -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
-    }
-    if((pos + _me.overlap) >= 0) {
-      _me.isLoading = true;
-      _me.action(_me.htmlElem, _me.reloadDoneCallback);
-    }
-  },
-  
-  reloadDoneCallback : function(keepObserving, _me) {
-    if(keepObserving || (((typeof(keepObserving) == 'undefined') || (keepObserving == null)) && (_me._elementHeight < Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight())))) {
-      if(_me.loadAllOnInit || (keepObserving && (_me._elementHeight - _me.overlap <= _me.htmlElem.getHeight()))) {
-        _me.action(_me.htmlElem, _me.reloadDoneCallback);
-      } else {
-        _me.isLoading = false;
-      }
-    } else {
+    },
+    
+    _checkIsScrollBottom : function(event) {
+      var _me = this;
+      var pos = 0;
       if(_me.isScrollBlockEle) {
-        _me.htmlElem.stopObserving('scroll');
+        pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
       } else {
-        window.stopObserving('scroll');
+        pos = -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
       }
+      if((pos + _me.overlap) >= 0) {
+        _me.isLoading = true;
+        _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+      }
+    },
+    
+    reloadDoneCallback : function(keepObserving) {
+      var _me = this;
+      var maxHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
+      if(keepObserving || (((typeof(keepObserving) == 'undefined')
+          || (keepObserving == null)) && (_me._elementHeight < maxHeight))) {
+        if(_me.loadAllOnInit || (keepObserving && (_me._elementHeight - _me.overlap <= _me.htmlElem.getHeight()))) {
+          _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+        } else {
+          _me.isLoading = false;
+        }
+      } else {
+        if(_me.isScrollBlockEle) {
+          _me.htmlElem.stopObserving('scroll');
+        } else {
+          window.stopObserving('scroll');
+        }
+      }
+      _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
     }
-    _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
-  }
-};
-})();
+
+  };
+})(window);
