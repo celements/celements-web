@@ -1,6 +1,8 @@
 #set($noRecursiveLoginCall = (("$!renderDocument" == '') || ("$!renderDocument.fullName" != 'Tools.Login')))
 #if("$!context.getUser()" != 'XWiki.XWikiGuest')
-  $response.sendRedirect($xwiki.getDocument('Content.WebHome').getExternalURL('view'))
+  #set($redirURL = $xwiki.getDocument('Content.WebHome').getExternalURL('view'))
+  <!-- login redirURL : $redirURL -->
+  $response.sendRedirect($redirURL)
 #else
   #if($noRecursiveLoginCall && $xwiki.exists('Tools.Login') && $xwiki.hasAccessLevel("view","Tools.Login"))
     #set($overwriteRenderDocument = 'Tools.Login')
