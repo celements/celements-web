@@ -342,6 +342,12 @@ TE.prototype = {
           if (window.location.search.match(/\&?template=[^\&]+/)) {
             window.onbeforeunload = null;
             window.location.search = window.location.search.replace(/\&?template=[^\&]+/, '');
+            var newURL = "";
+            $j("input[id=white_list_url]").each(function( index, value ) {
+              var regEx  = new RegExp("^.*(" + value.value + "=[^&]*).*$", "gi");
+              newURL += window.location.search.replace(regEx, '$1') + "&";
+            });
+            window.location.search = newURL;
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
         } else {
