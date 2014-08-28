@@ -343,9 +343,30 @@ TE.prototype = {
             window.onbeforeunload = null;
             window.location.search = window.location.search.replace(/\&?template=[^\&]+/, '');
             var newURL = "";
-            $j("input[id=white_list_url]").each(function( index, value ) {
-              var regEx  = new RegExp("^.*(" + value.value + "=[^&]*).*$", "gi");
-              newURL += window.location.search.replace(regEx, '$1') + "&";
+            var standardWhiteList = ["xredirect", "xcontinue", "language"];
+            var regEx;
+            var index;
+            for (index = 0; index < standardWhiteList.length; index++) {
+              regEx = new RegExp("^.*(" + standardWhiteList[index] + "=[^&]*).*$", "gi");
+              var regExArray = regEx.exec(window.location.search);
+              if (regExArray != null){
+                var i;
+                for(i = 1; i<regExArray.length; i++){
+                  newURL += regExArray[i] + "&";
+                }
+              }
+            } 
+            $j("input[id=white_list_url]").each(function( index, value ) {;
+              if($j.inArray(value.value, standardWhiteList) == -1){
+                regEx  = new RegExp("^.*(" + value.value + "=[^&]*).*$", "gi");
+                regExArray = regEx.exec(window.location.search);
+                if (regExArray != null){
+                  var i;
+                  for(i = 1; i<regExArray.length; i++){
+                    newURL += regExArray[i] + "&";
+                  }
+                }
+              }
             });
             window.location.search = newURL;
           }
