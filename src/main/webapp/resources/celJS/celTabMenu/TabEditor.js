@@ -333,6 +333,24 @@ TE.prototype = {
     }
   },
 
+  _deleteParamsFromURL : function() {
+    var newURL = "";
+    var standardWhiteList = ["xredirect", "xcontinue", "language"];
+    var additionalWhiteList = [];
+    $j("input[name=white_list_url]").each(function( index, value ) {
+      additionalWhiteList.add(value.value);
+    });
+    standardWhiteList = standardWhiteList.concat(additionalWhiteList);
+    for (var index = 0; index < standardWhiteList.length; index++) {
+      var regEx = new RegExp("^.*(" + standardWhiteList[index] + "=[^&]*).*$", "g");
+      var regExArray = regEx.exec(window.location.search);
+      if (regExArray != null) {
+        newURL += regExArray.slice(1).join("&");
+      }
+    } 
+    return newURL;
+  },
+
   initSaveButton : function() {
     var _me = this;
     var saveClickHandler = function() {
@@ -341,7 +359,7 @@ TE.prototype = {
           //remove template in url query after creating document in inline mode
           if (window.location.search.match(/\&?template=[^\&]+/)) {
             window.onbeforeunload = null;
-            window.location.search = window.location.search.replace(/\&?template=[^\&]+/, '');
+            window.location.search = _deleteParamsFromURL();
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
         } else {
