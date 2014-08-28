@@ -93,7 +93,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         if(_me.isScrollBlockEle) {
           _me._observer = _me.htmlElem.observe('scroll', _me._checkIsScrollBottomBind);
         } else {
-          _me._observer = Element.observe(window, 'scroll', _me._checkIsScrollBottomBind);
+          _me._observer = Event.observe(window, 'scroll', _me._checkIsScrollBottomBind);
         }
       }
     },
@@ -124,9 +124,9 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         }
       } else {
         if(_me.isScrollBlockEle) {
-          _me.htmlElem.stopObserving('scroll');
+          _me.htmlElem.stopObserving('scroll', _me._checkIsScrollBottomBind);
         } else {
-          window.stopObserving('scroll');
+          Event.stopObserving(window, 'scroll', _me._checkIsScrollBottomBind);
         }
       }
       _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
