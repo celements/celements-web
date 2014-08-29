@@ -264,9 +264,13 @@
   #if("$!singleAttachmentDocument" != '')
     #set($filePickerDoc = "$!singleAttachmentDocument")
   #end
+#*
+  ##this is wrong in general !!!
+  ##29.08.2014 FP: removed to fix problems for Programmzeitung!!!
   #if($linkPickerSpace.indexOf('_') >= 0)
     #set($linkPickerSpace = $linkPickerSpace.substring(0, $linkPickerSpace.indexOf('_')))
   #end
+*#
   "wiki_linkpicker_space" : "$linkPickerSpace",
   "wiki_filepicker_upload_space" : "$fileUploadSpace",
   "wiki_filepicker_space" : "$filePickerSpace",
