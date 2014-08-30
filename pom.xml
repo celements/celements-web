@@ -70,7 +70,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>1.25-SNAPSHOT</version>
+      <version>1.25</version>
       <type>war</type>
     </dependency>
     <dependency>
