@@ -46,7 +46,7 @@ new Ajax.Request(getCelHost(), {
       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
         console.log('initCelements.js: finished getting messages.');
       }
-      $(document).fire('cel:messagesLoaded', celMessages);
+      $(document.body).fire('cel:messagesLoaded', celMessages);
     } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
       console.error('noJSON!!! ', transport.responseText);
     }
