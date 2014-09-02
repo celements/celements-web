@@ -523,15 +523,4 @@
         };
     })();
 
-    var updateCelMessages = function() {
-      $.format.locale({ 'date' : celMessages.jqueryFormater });
-    };
-
-    celAddOnBeforeLoadListener(function() {
-      if (typeof celMessages.jqueryFormater === 'object') {
-        updateCelMessages();
-      } else {
-        $(document.body).observe('cel:messagesLoaded', updateCelMessages);
-      }
-    });
 }(jQuery));
