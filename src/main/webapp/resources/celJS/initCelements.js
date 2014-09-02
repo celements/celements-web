@@ -31,3 +31,24 @@ var getCelHost = function() {
   return celHost;
 };
 }
+
+var celMessages = {};
+
+new Ajax.Request(getCelHost(), {
+  method : 'post',
+  parameters : {
+    xpage : 'celements_ajax',
+    ajax_mode : 'Messages'
+  },
+  onSuccess : function(transport) {
+    if (transport.responseText.isJSON()) {
+      celMessages = transport.responseText.evalJSON();
+      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        console.log('initCelements.js: finished getting messages.');
+      }
+      $(document).fire('cel:messagesLoaded', celMessages);
+    } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+      console.error('noJSON!!! ', transport.responseText);
+    }
+  }
+});
