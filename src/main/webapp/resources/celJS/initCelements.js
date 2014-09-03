@@ -44,7 +44,7 @@ new Ajax.Request(getCelHost(), {
     if (transport.responseText.isJSON()) {
       celMessages = transport.responseText.evalJSON();
       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('initCelements.js: finished getting messages.');
+        console.log('initCelements.js: finished getting dictionary messages.');
       }
       $(document.body).fire('cel:messagesLoaded', celMessages);
     } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
