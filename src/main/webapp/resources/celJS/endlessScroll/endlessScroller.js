@@ -88,7 +88,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         if(((typeof(params) == 'undefined') || (typeof(params.executeOnInit) == 'undefined') 
             || params.executeOnInit) || _me.loadAllOnInit) {
           _me.isLoading = true;
-          _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+          _me._executeActionCallback();
         }
         if(_me.isScrollBlockEle) {
           _me._observer = _me.htmlElem.observe('scroll', _me._checkIsScrollBottomBind);
@@ -97,7 +97,19 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         }
       }
     },
-    
+
+    _executeActionCallback : function() {
+      var _me = this;
+      try {
+        _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+      } catch (exp) {
+        if ((typeof console != 'undefined')
+            && (typeof console.error != 'undefined')) {
+          console.error('endlessScroller failed in action callback. ', exp);
+        }
+      }
+    },
+
     _checkIsScrollBottom : function(event) {
       var _me = this;
       var pos = 0;
@@ -108,7 +120,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       }
       if((pos + _me.overlap) >= 0) {
         _me.isLoading = true;
-        _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+        _me._executeActionCallback();
       }
     },
     
@@ -118,7 +130,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       if(keepObserving || (((typeof(keepObserving) == 'undefined')
           || (keepObserving == null)) && (_me._elementHeight < maxHeight))) {
         if(_me.loadAllOnInit || (keepObserving && (_me._elementHeight - _me.overlap <= _me.htmlElem.getHeight()))) {
-          _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+          _me._executeActionCallback();
         } else {
           _me.isLoading = false;
         }
