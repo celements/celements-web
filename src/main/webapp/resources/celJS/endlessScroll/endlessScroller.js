@@ -107,6 +107,10 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
     
     _executeActionCallback : function() {
       var _me = this;
+      if (_me._isLogEnabled() && (typeof console != 'undefined')
+          && (typeof console.log != 'undefined')) {
+        console.log('_executeActionCallback: start');
+      }
       try {
         _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
       } catch (exp) {
