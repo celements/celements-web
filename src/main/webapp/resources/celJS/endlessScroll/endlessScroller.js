@@ -60,7 +60,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
     
     _init : function(elemId, action, params) {
       var _me = this;
-      _me._logLevel = 0;
+      _me._logLevel = 4;
       _me._reloadDoneCallbackBind = _me.reloadDoneCallback.bind(_me);
       _me._checkIsScrollBottomBind = _me._checkIsScrollBottom.bind(_me);
       _me._isLoading = false;
@@ -118,7 +118,6 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
     },
 
     /**
-     * none = 0
      * debug = 1
      * log = 2
      * info = 3
@@ -128,7 +127,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
      */
     _isLogEnabled : function() {
       var _me = this;
-      return (_me._logLevel >= 2);
+      return (_me._logLevel <= 2);
     },
 
     _checkIsScrollBottom : function(event) {
