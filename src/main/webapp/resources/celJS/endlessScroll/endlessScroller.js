@@ -56,9 +56,11 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
     _isLoading : undefined,
     _reloadDoneCallbackBind : undefined,
     _checkIsScrollBottomBind : undefined,
+    _logLevel : undefined,
     
     _init : function(elemId, action, params) {
       var _me = this;
+      _me._logLevel = 0;
       _me._reloadDoneCallbackBind = _me.reloadDoneCallback.bind(_me);
       _me._checkIsScrollBottomBind = _me._checkIsScrollBottom.bind(_me);
       _me._isLoading = false;
@@ -98,6 +100,11 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       }
     },
 
+    setLogging : function(logLevel) {
+      var _me = this;
+      _me._logLevel = logLevel;
+    },
+    
     _executeActionCallback : function() {
       var _me = this;
       try {
@@ -110,8 +117,26 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       }
     },
 
+    /**
+     * none = 0
+     * debug = 1
+     * log = 2
+     * info = 3
+     * warn = 4
+     * error = 5
+     * fatal = 6
+     */
+    _isLogEnabled : function() {
+      var _me = this;
+      return (_me._logLevel >= 2);
+    },
+
     _checkIsScrollBottom : function(event) {
       var _me = this;
+      if (_me._isLogEnabled() && (typeof console != 'undefined')
+          && (typeof console.log != 'undefined')) {
+        console.log('_checkIsScrollBottom: ', event);
+      }
       var pos = 0;
       if(_me.isScrollBlockEle) {
         pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
