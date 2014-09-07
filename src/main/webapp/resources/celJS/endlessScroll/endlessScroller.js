@@ -157,7 +157,14 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       var maxHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
       if(keepObserving || (((typeof(keepObserving) == 'undefined')
           || (keepObserving == null)) && (_me._elementHeight < maxHeight))) {
-        if(_me.loadAllOnInit || (keepObserving && (_me._elementHeight - _me.overlap <= _me.htmlElem.getHeight()))) {
+        if(_me.loadAllOnInit || (keepObserving
+            && (_me._elementHeight - _me.overlap <= _me.htmlElem.getHeight()))) {
+          if (_me._isLogEnabled() && (typeof console != 'undefined')
+              && (typeof console.log != 'undefined')) {
+            console.log('reloadDoneCallback: before _executeActionCallback',
+                (_me._elementHeight - _me.overlap), _me.htmlElem.getHeight(),
+                _me._elementHeight, _me.overlap);
+          }
           _me._executeActionCallback();
         } else {
           _me.isLoading = false;
