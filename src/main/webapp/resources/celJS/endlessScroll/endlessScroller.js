@@ -120,12 +120,15 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       var _me = this;
       if (_me._isLogEnabled() && (typeof console != 'undefined')
           && (typeof console.log != 'undefined')) {
-        console.log('_executeActionCallback: start');
+        console.log('_executeActionCallback: start ', _me._isLoading);
       }
       try {
         if (!_me._isLoading) {
           _me._isLoading = true;
           _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+        } else if (_me._isLogEnabled() && (typeof console != 'undefined')
+            && (typeof console.log != 'undefined')) {
+          console.log('_executeActionCallback: skipp execute action ', _me._isLoading);
         }
       } catch (exp) {
         if ((typeof console != 'undefined')
