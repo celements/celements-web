@@ -56,6 +56,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
     _isLoading : undefined,
     _reloadDoneCallbackBind : undefined,
     _checkIsScrollBottomBind : undefined,
+    _scrollEventName : undefined,
     _logLevel : undefined,
     
     _init : function(elemId, action, params) {
@@ -68,6 +69,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       _me.loadAllOnInit = false;
       _me.overlap = 0;
       _me.htmlElem = $(elemId);
+      _me._scrollEventName = 'scroll';
       if (_me.htmlElem) {
         var elemOverflow = _me.htmlElem.getStyle('overflow-y');
         if(elemOverflow == 'visible') {
@@ -86,6 +88,9 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
           if(typeof(params.isScrollBlockEle) != 'undefined') {
             _me.isScrollBlockEle = params.isScrollBlockEle;
           }
+          if(typeof(params.scrollEventName) != 'undefined') {
+            _me._scrollEventName = params.scrollEventName;
+          }
         }
         if(((typeof(params) == 'undefined') || (typeof(params.executeOnInit) == 'undefined') 
             || params.executeOnInit) || _me.loadAllOnInit) {
@@ -93,9 +98,11 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
           _me._executeActionCallback();
         }
         if(_me.isScrollBlockEle) {
-          _me._observer = _me.htmlElem.observe('scroll', _me._checkIsScrollBottomBind);
+          _me._observer = _me.htmlElem.observe(_me._scrollEventName,
+              _me._checkIsScrollBottomBind);
         } else {
-          _me._observer = Event.observe(window, 'scroll', _me._checkIsScrollBottomBind);
+          _me._observer = Event.observe(window, _me._scrollEventName,
+              _me._checkIsScrollBottomBind);
         }
       }
     },
@@ -163,7 +170,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
               && (typeof console.log != 'undefined')) {
             console.log('reloadDoneCallback: before _executeActionCallback',
                 (_me._elementHeight - _me.overlap), _me.htmlElem.getHeight(),
-                _me._elementHeight, _me.overlap);
+                _me._elementHeight, _me.overlap, _me.isScrollBlockEle);
           }
           _me._executeActionCallback();
         } else {
@@ -171,9 +178,9 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         }
       } else {
         if(_me.isScrollBlockEle) {
-          _me.htmlElem.stopObserving('scroll', _me._checkIsScrollBottomBind);
+          _me.htmlElem.stopObserving(_me._scrollEventName, _me._checkIsScrollBottomBind);
         } else {
-          Event.stopObserving(window, 'scroll', _me._checkIsScrollBottomBind);
+          Event.stopObserving(window, _me._scrollEventName, _me._checkIsScrollBottomBind);
         }
       }
       _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
