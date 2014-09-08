@@ -183,7 +183,7 @@ Object.extend(Validation, {
 			elm[prop] = true;
 			elm.removeClassName('validation-passed');
       elm.addClassName('validation-failed');
-			var elmWrapper = elm.up('validation-field-wrapper');
+			var elmWrapper = elm.up('.validation-field-wrapper');
 			if (elmWrapper) {
 			  elmWrapper.removeClassName('validation-passed');
 			  elmWrapper.addClassName('validation-failed');
@@ -195,7 +195,7 @@ Object.extend(Validation, {
 			elm[prop] = '';
 			elm.removeClassName('validation-failed');
 			elm.addClassName('validation-passed');
-      var elmWrapper = elm.up('validation-field-wrapper');
+      var elmWrapper = elm.up('.validation-field-wrapper');
       if (elmWrapper) {
         elmWrapper.removeClassName('validation-failed');
         elmWrapper.addClassName('validation-passed');
@@ -231,7 +231,7 @@ Object.extend(Validation, {
 			}
 			elm.removeClassName('validation-failed');
 			elm.removeClassName('validation-passed');
-      var elmWrapper = elm.up('validation-field-wrapper');
+      var elmWrapper = elm.up('.validation-field-wrapper');
       if (elmWrapper) {
         elmWrapper.removeClassName('validation-failed');
         elmWrapper.removeClassName('validation-passed');
