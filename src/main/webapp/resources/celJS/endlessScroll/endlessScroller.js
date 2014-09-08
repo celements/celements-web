@@ -123,8 +123,10 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         console.log('_executeActionCallback: start');
       }
       try {
-        _me._isLoading = true;
-        _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+        if (!_me._isLoading) {
+          _me._isLoading = true;
+          _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
+        }
       } catch (exp) {
         if ((typeof console != 'undefined')
             && (typeof console.error != 'undefined')) {
