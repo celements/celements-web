@@ -94,7 +94,6 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         }
         if(((typeof(params) == 'undefined') || (typeof(params.executeOnInit) == 'undefined') 
             || params.executeOnInit) || _me.loadAllOnInit) {
-          _me._isLoading = true;
           _me._executeActionCallback();
         }
         if(_me.isScrollBlockEle) {
@@ -124,6 +123,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         console.log('_executeActionCallback: start');
       }
       try {
+        _me._isLoading = true;
         _me.action(_me.htmlElem, _me, _me._reloadDoneCallbackBind);
       } catch (exp) {
         if ((typeof console != 'undefined')
@@ -159,7 +159,6 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         pos = -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
       }
       if((pos + _me.overlap) >= 0) {
-        _me._isLoading = true;
         _me._executeActionCallback();
       }
     },
