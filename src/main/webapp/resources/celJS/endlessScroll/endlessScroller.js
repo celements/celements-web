@@ -170,6 +170,10 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
     
     reloadDoneCallback : function(keepObserving) {
       var _me = this;
+      if (_me._isLogEnabled() && (typeof console != 'undefined')
+          && (typeof console.log != 'undefined')) {
+        console.log('reloadDoneCallback: start ', keepObserving);
+      }
       var maxHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
       if(keepObserving || (((typeof(keepObserving) == 'undefined')
           || (keepObserving == null)) && (_me._elementHeight < maxHeight))) {
@@ -183,6 +187,10 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
           }
           _me._executeActionCallback();
         } else {
+          if (_me._isLogEnabled() && (typeof console != 'undefined')
+              && (typeof console.log != 'undefined')) {
+            console.log('reloadDoneCallback: reset _isloading');
+          }
           _me._isLoading = false;
         }
       } else {
