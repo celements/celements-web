@@ -182,7 +182,12 @@ Object.extend(Validation, {
 			}
 			elm[prop] = true;
 			elm.removeClassName('validation-passed');
-			elm.addClassName('validation-failed');
+      elm.addClassName('validation-failed');
+			var elmWrapper = elem.up('validation-field-wrapper');
+			if (elmWrapper) {
+			  elmWrapper.removeClassName('validation-passed');
+			  elmWrapper.addClassName('validation-failed');
+			}
 			return false;
 		} else {
 			var advice = Validation.getAdvice(name, elm);
@@ -190,6 +195,11 @@ Object.extend(Validation, {
 			elm[prop] = '';
 			elm.removeClassName('validation-failed');
 			elm.addClassName('validation-passed');
+      var elmWrapper = elem.up('validation-field-wrapper');
+      if (elmWrapper) {
+        elmWrapper.removeClassName('validation-failed');
+        elmWrapper.addClassName('validation-passed');
+      }
 			return true;
 		}
 		} catch(e) {
@@ -221,6 +231,11 @@ Object.extend(Validation, {
 			}
 			elm.removeClassName('validation-failed');
 			elm.removeClassName('validation-passed');
+      var elmWrapper = elem.up('validation-field-wrapper');
+      if (elmWrapper) {
+        elmWrapper.removeClassName('validation-failed');
+        elmWrapper.removeClassName('validation-passed');
+      }
 		});
 	},
 	add : function(className, error, test, options) {
