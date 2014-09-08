@@ -94,7 +94,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         }
         if(((typeof(params) == 'undefined') || (typeof(params.executeOnInit) == 'undefined') 
             || params.executeOnInit) || _me.loadAllOnInit) {
-          _me.isLoading = true;
+          _me._isLoading = true;
           _me._executeActionCallback();
         }
         if(_me.isScrollBlockEle) {
@@ -111,7 +111,12 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       var _me = this;
       _me._logLevel = logLevel;
     },
-    
+
+    isLoading : function() {
+      var _me = this;
+      return _me._isLoading;
+    },
+
     _executeActionCallback : function() {
       var _me = this;
       if (_me._isLogEnabled() && (typeof console != 'undefined')
@@ -154,7 +159,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         pos = -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
       }
       if((pos + _me.overlap) >= 0) {
-        _me.isLoading = true;
+        _me._isLoading = true;
         _me._executeActionCallback();
       }
     },
@@ -174,7 +179,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
           }
           _me._executeActionCallback();
         } else {
-          _me.isLoading = false;
+          _me._isLoading = false;
         }
       } else {
         if(_me.isScrollBlockEle) {
