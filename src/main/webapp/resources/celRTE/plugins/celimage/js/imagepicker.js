@@ -94,7 +94,11 @@ var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
       if (transport.responseText.isJSON()) {
         var json = transport.responseText.evalJSON();
         loadAttachmentListCallback(json, true, false, false);
-        callbackFnkt(json.length == stepNumber);
+        try {
+          callbackFnkt(json.length == stepNumber);
+        } catch (exp) {
+          console.error('endlessScrollLoadActionFnc: callback failed.', exp);
+        }
         if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
           console.log('loadAttachmentList: total loaded [',
               $$('.imagePickerSource').size() ,'] are there more? ',
