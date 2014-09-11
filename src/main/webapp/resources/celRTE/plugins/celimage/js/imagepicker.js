@@ -111,7 +111,8 @@ var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
 
 var loadAttachmentList = function(baseurl) {
   var attachEl = document.getElementById("attachments");
-  var scroll = new CELEMENTS.anim.EndlessScroll(attachEl, endlessScrollLoadActionFnc, {
+//  var scroll = 
+  new CELEMENTS.anim.EndlessScroll(attachEl, endlessScrollLoadActionFnc, {
     isScrollBlockEle : true,
     overlap : 150
   });
@@ -185,7 +186,7 @@ var goThroughStack = function() {
   } else {
     goThroughStack.delay(0.1);
   }
-}
+};
 
 var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck, fromStack) {
   if(!fromStack) {
