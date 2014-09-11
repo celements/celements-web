@@ -79,7 +79,7 @@ var pickerUploadFinshed = function(event) {
   }
 };
 
-var endlessScrollLoadActionFnc = function(attachEl, callbackFnkt) {
+var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
   $('attachments').insert(loadingImg);
   new Ajax.Request(baseurl, {
     method: 'post',
@@ -115,7 +115,7 @@ var loadAttachmentList = function(baseurl) {
     isScrollBlockEle : true,
     overlap : 150
   });
-  scroll.setLogging(1);
+//  scroll.setLogging(1);
 };
 
 var getCenteredImagePickerValue = function(diffValue) {
