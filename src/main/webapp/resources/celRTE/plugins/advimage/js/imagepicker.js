@@ -21,12 +21,12 @@ var loadAttachmentList = function(baseurl) {
       loadAttachmentListCallback(transport.responseText);
     }
   });
-}
+};
 
 var loadAttachmentListCallback = function(e) {
   var attachEl = document.getElementById("attachments");
   attachEl.innerHTML = e;
-}
+};
 
 var updateAttachName = function(form) {
  // called on submit of upload form
@@ -54,4 +54,4 @@ var updateAttachName = function(form) {
   if (form.filename.value=="")
    form.filename.value = fname;
   return true;
-}
+};
