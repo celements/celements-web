@@ -79,40 +79,43 @@ var pickerUploadFinshed = function(event) {
   }
 };
 
+var endlessScrollLoadActionFnc = function(attachEl, callbackFnkt) {
+  $('attachments').insert(loadingImg);
+  new Ajax.Request(baseurl, {
+    method: 'post',
+    parameters: {
+       'xpage' : 'celements_ajax',
+       'ajax_mode' : 'imagePickerList',
+       'images' : '1',
+       'start' : startPos,
+       'nb' : stepNumber
+    },
+    onComplete: function(transport) {
+      if (transport.responseText.isJSON()) {
+        var json = transport.responseText.evalJSON();
+        loadAttachmentListCallback(json, true, false, false);
+        callbackFnkt(json.length == stepNumber);
+        if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+          console.log('loadAttachmentList: total loaded [',
+              $$('.imagePickerSource').size() ,'] are there more? ',
+              (json.length == stepNumber));
+        }
+      } else if ((typeof console != 'undefined') 
+          && (typeof console.warn != 'undefined')) {
+        console.warn('loadAttachmentList: noJSON!!! ', transport.responseText);
+      }
+    }
+  });
+  startPos += stepNumber;
+};
+
 var loadAttachmentList = function(baseurl) {
   var attachEl = document.getElementById("attachments");
-  var scroll = new CELEMENTS.anim.EndlessScroll(attachEl, function(attachEl, callbackFnkt) {
-    $('attachments').insert(loadingImg);
-    new Ajax.Request(baseurl, {
-      method: 'post',
-      parameters: {
-         'xpage' : 'celements_ajax',
-         'ajax_mode' : 'imagePickerList',
-         'images' : '1',
-         'start' : startPos,
-         'nb' : stepNumber
-      },
-      onComplete: function(transport) {
-        if (transport.responseText.isJSON()) {
-          var json = transport.responseText.evalJSON();
-          loadAttachmentListCallback(json, true, false, false);
-          callbackFnkt(json.length == stepNumber, scroll);
-          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-            console.log('loadAttachmentList: total loaded [',
-                $$('.imagePickerSource').size() ,'] are there more? ',
-                (json.length == stepNumber));
-          }
-        } else if ((typeof console != 'undefined') 
-            && (typeof console.warn != 'undefined')) {
-          console.warn('loadAttachmentList: noJSON!!! ', transport.responseText);
-        }
-      }
-    });
-    startPos += stepNumber;
-  }, {
+  var scroll = new CELEMENTS.anim.EndlessScroll(attachEl, endlessScrollLoadActionFnc, {
     isScrollBlockEle : true,
     overlap : 150
   });
+  scroll.setLogging(1);
 };
 
 var getCenteredImagePickerValue = function(diffValue) {
