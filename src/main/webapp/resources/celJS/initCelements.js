@@ -34,21 +34,51 @@ var getCelHost = function() {
 
 var celMessages = {};
 
-new Ajax.Request(getCelHost(), {
-  method : 'post',
-  parameters : {
-    xpage : 'celements_ajax',
-    ajax_mode : 'Messages'
-  },
-  onSuccess : function(transport) {
-    if (transport.responseText.isJSON()) {
-      celMessages = transport.responseText.evalJSON();
-      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('initCelements.js: finished getting dictionary messages.');
+(function(window, undefined) {
+  "use strict";
+
+  new Ajax.Request(getCelHost(), {
+    method : 'post',
+    parameters : {
+      xpage : 'celements_ajax',
+      ajax_mode : 'Messages'
+    },
+    onSuccess : function(transport) {
+      if (transport.responseText.isJSON()) {
+        celMessages = transport.responseText.evalJSON();
+        if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+          console.log('initCelements.js: finished getting dictionary messages.');
+        }
+        $(document.body).fire('cel:messagesLoaded', celMessages);
+      } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+        console.error('noJSON!!! ', transport.responseText);
       }
-      $(document.body).fire('cel:messagesLoaded', celMessages);
-    } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-      console.error('noJSON!!! ', transport.responseText);
     }
-  }
-});
+  });
+
+  var formValidations = new Hash();
+
+  var registerValidation = function(formElem) {
+    if (formElem && formElem.id) {
+      var valid = new Validation(formElem.id, {
+        immediate : true,
+        useTitles : true,
+        stopOnFirst : false
+      });
+      formValidations.set(formElem.id, valid);
+    } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+      console.error('failed to register validation on form with no id. ', formElem);
+    }
+  };
+
+  celAddOnBeforeLoadListener(function() {
+    $$('form.cel_form_validation').each(registerValidation);
+    $(document.body).observe('cel_yuiOverlay:contentChanged', function(event) {
+      var containerElem = event.findElement();
+      if (containerElem) {
+        containerElem.select('form.cel_form_validation').each(registerValidation);
+      }
+    });
+  });
+
+})(window);
