@@ -60,7 +60,7 @@ var celMessages = {};
 
   var registerValidation = function(formElem) {
     if (formElem && formElem.id) {
-      var valid = new Validation(formElem.id, {
+      var valid = new Validation(formElem, {
         immediate : true,
         useTitles : true,
         stopOnFirst : false
