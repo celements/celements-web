@@ -305,3 +305,6 @@ body #cel_overlay {
 	margin: 0px;
 	padding: 0px;
 }
+.celements3_tabMenu #navigation_form #nav_menunameEdit input {
+  width: 300px;
+}
