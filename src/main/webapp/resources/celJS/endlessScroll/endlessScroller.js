@@ -189,13 +189,18 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
           _me._executeActionCallback();
         }
       } else {
-        if(_me.isScrollBlockEle) {
-          _me.htmlElem.stopObserving(_me._scrollEventName, _me._checkIsScrollBottomBind);
-        } else {
-          Event.stopObserving(window, _me._scrollEventName, _me._checkIsScrollBottomBind);
-        }
+        _me.stopObserving();
       }
       _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
+    },
+
+    stopObserving : function() {
+      var _me = this;
+      if(_me.isScrollBlockEle) {
+        _me.htmlElem.stopObserving(_me._scrollEventName, _me._checkIsScrollBottomBind);
+      } else {
+        Event.stopObserving(window, _me._scrollEventName, _me._checkIsScrollBottomBind);
+      }
     }
 
   };
