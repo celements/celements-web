@@ -24,6 +24,7 @@ $xwiki.includeForm("celements2web:Macros.getActionTypeAndActionTemplateDoc", fal
 ##           end of this script.
 #set($isExecutable = $isExecutable && ("$!actionDocFullName" != '') && $xwiki.exists("$!actionDocFullName") && ("$!formActionDoc" != '') && $xwiki.exists($action_exec))
 #end  ## macro checkAction
+## start script
 #set($errorMsg = '') ## initalize
 #if("$!celldoc" != '')
 #set($contentDoc = $celldoc)
