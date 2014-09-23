@@ -66,11 +66,11 @@
       <version>2.7.2</version>
       <type>war</type>
     </dependency>
-    <!-- Add here all your module-web dependencies -->    
+    <!-- Add here all your module-web dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>1.26-SNAPSHOT</version>
+      <version>1.26</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -123,7 +123,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.97-SNAPSHOT</version>
+      <version>1.97</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
