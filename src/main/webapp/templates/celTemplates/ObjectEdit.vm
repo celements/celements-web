@@ -219,8 +219,6 @@ $celementsweb.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
 #set($displayStr = $cel_editobj_doc.displayEdit($prop, "${class.name}_${obj.number}_" , $obj))
 #if($displayStr.startsWith('<select ') && $displayStr.contains('<input '))
   #set($displayStr = $displayStr.substring(0, $displayStr.indexOf('<input ')))
-#elseif($displayStr.startsWith('<input ') && ($displayStr.lastIndexOf('<input ') != 0))
-  #set($displayStr = $displayStr.substring(0, $displayStr.lastIndexOf('<input ')))
 #end
 ##Extension css-classnames
 #if(("$!cel_editobj_cssclasses" != '') && $cel_editobj_cssclasses.containsKey($prop.name))
