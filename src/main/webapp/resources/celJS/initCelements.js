@@ -18,6 +18,55 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
+/**
+ * START: prototype AJAX fix;
+ **/
+var Try = {
+  logging : false, 
+  these : function() {
+    var returnValue = undefined;
+
+    for (var i = 0, length = arguments.length; i < length; i++) {
+      var lambda = arguments[i];
+      try {
+        returnValue = lambda();
+        break;
+      } catch (e) {
+        if (Try.logging && (typeof console != 'undefined')
+            && (typeof console.log != 'undefined')) {
+          console.log('Try.these skip lambda ', lambda, e);
+        }
+      }
+    }
+
+    return returnValue;
+  }
+};
+
+Ajax.getCORS_Transport = function() {
+  return Try.these(
+    function() {return new XDomainRequest();},
+    function() {return new XMLHttpRequest();},
+    function() {return new ActiveXObject('Msxml2.XMLHTTP');},
+    function() {return new ActiveXObject('Microsoft.XMLHTTP');}
+  ) || false;
+};
+
+Ajax.Request.addMethods({ initialize : function($super, url, options) {
+    $super(options);
+    if ((typeof options != 'undefined') && options.crossSite) {
+      this.transport = Ajax.getCORS_Transport();
+    } else {
+      this.transport = Ajax.getTransport();
+    }
+    this.request(url);
+  }
+}).bind(Ajax.Request);
+
+/**
+ * END: prototype AJAX fix;
+ **/
+
 var celOnBeforeLoadListenerArray = [];
 
 var celAddOnBeforeLoadListener = function(listenerFunc) {
