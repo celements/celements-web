@@ -19,7 +19,32 @@
  */
 
 /**
- * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed);
+ * START: patch for missing window.console object or methods
+ **/
+if (typeof window.console === 'undefined') {
+  window.console = {};
+}
+if (typeof window.console.error === 'undefined') {
+  window.console.error = Prototype.emptyFunction;
+}
+if (typeof window.console.warn === 'undefined') {
+  window.console.warn = window.console.error;
+}
+if (typeof window.console.info === 'undefined') {
+  window.console.info = window.console.warn;
+}
+if (typeof window.console.log === 'undefined') {
+  window.console.log = window.console.info;
+}
+if (typeof window.console.debug === 'undefined') {
+  window.console.debug = window.console.log;
+}
+/**
+ * END: patch for missing window.console object or methods
+ **/
+
+/**
+ * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
  **/
 var Try = {
   logging : false, 
@@ -189,7 +214,7 @@ Ajax.Response.addMethods({
 }).bind(Ajax.Response);
 
 /**
- * END: prototype AJAX fix;
+ * END: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
  **/
 
 var celOnBeforeLoadListenerArray = [];
