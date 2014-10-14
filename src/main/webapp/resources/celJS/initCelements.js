@@ -59,7 +59,8 @@ Ajax.Request.addMethods({
 
   initialize : function($super, url, options) {
     $super(options);
-    if ((typeof options != 'undefined') && options.crossSite) {
+    this.url = url;
+    if (!this.isSameOrigin() || this.options.crossSite) {
       this.transport = Ajax.getCORS_Transport();
     } else {
       this.transport = Ajax.getTransport();
