@@ -55,6 +55,7 @@ Ajax.getCORS_Transport = function() {
 Ajax.Request.logging = false;
 Ajax.Request.addMethods({
   _status : undefined,
+  _readyState : undefined,
 
   initialize : function($super, url, options) {
     $super(options);
@@ -126,21 +127,19 @@ Ajax.Request.addMethods({
   },
 
   onLoad : function() {
-    this._status = 200;
-    console.log('onLoad: ', this.transport.responseText);
+    this._status = this.transport.status || 200;
+    this._readyState = this.transport.readyState || 4;
     if (!this._complete) {
-      this.respondToReadyState(4);
+      this.respondToReadyState(this._readyState);
     }
-    console.log('onLoad end');
   },
 
   onError : function() {
-    this._status = 400;
-    console.log('onError: ', this.transport.responseText);
+    this._status = this.transport.status || 400;
+    this._readyState = this.transport.readyState || 4;
     if (!this._complete) {
       this.respondToReadyState(4);
     }
-    console.log('onError end');
   },
 
   getStatus: function() {
@@ -160,6 +159,33 @@ Ajax.Request.addMethods({
   }
 
 }).bind(Ajax.Request);
+
+Ajax.Response.addMethods({
+  _status : undefined,
+
+  initialize: function(request){
+    this.request = request;
+    var transport  = this.transport  = request.transport;
+    var readyState = this.readyState = transport.readyState || request._readyState;
+    this._status = request._status;
+
+    if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
+      this.status       = this.getStatus();
+      this.statusText   = this.getStatusText();
+      this.responseText = String.interpret(transport.responseText);
+      this.headerJSON   = this._getHeaderJSON();
+    }
+
+    if (readyState == 4) {
+      var xml = transport.responseXML;
+      this.responseXML  = Object.isUndefined(xml) ? null : xml;
+      this.responseJSON = this._getResponseJSON();
+    }
+  },
+
+  getStatus: Ajax.Request.prototype.getStatus
+
+}).bind(Ajax.Response);
 
 /**
  * END: prototype AJAX fix;
