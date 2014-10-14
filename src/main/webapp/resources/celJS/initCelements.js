@@ -19,7 +19,7 @@
  */
 
 /**
- * START: prototype AJAX fix;
+ * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed);
  **/
 var Try = {
   logging : false, 
