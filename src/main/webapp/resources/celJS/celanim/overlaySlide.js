@@ -78,7 +78,9 @@ var celanimOverlay_addOpenConfig = function(elemId, openConfig) {
       $(elemId).setStyle({
         'cursor' : "url(/file/resources/celJS/highslide/graphics/zoomin.cur), pointer"
       });
+      $(elemId).stopObserving('click', celanimOverlay_OpenInOverlay);
       $(elemId).observe('click', celanimOverlay_OpenInOverlay);
+      $(elemId).stopObserving('celanim_overlay:openOverlay', celanimOverlay_OpenInOverlay);
       $(elemId).observe('celanim_overlay:openOverlay', celanimOverlay_OpenInOverlay);
     } else {
       if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
