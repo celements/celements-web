@@ -96,6 +96,9 @@ Validation.prototype = {
             _me.validateFieldHandler.bind(_me));
 			});
 		}
+		this.form.select('.celSubmitFormWithValidation').each(function(buttonElem) {
+      buttonElem.observe('click', _me.clickOnSubmitLinkHandler.bind(_me));
+    });
 	},
 	validateFieldHandler : function(ev) {
     var _me = this;
@@ -132,6 +135,13 @@ Validation.prototype = {
 	},
 	reset : function() {
 		Form.getElements(this.form).each(Validation.reset);
+	},
+	clickOnSubmitLinkHandler : function(event) {
+	  var _me = this;
+	  event.stop();
+	  if (_me.validate()) {
+	    _me.form.submit();
+	  }
 	}
 };
 
@@ -269,33 +279,8 @@ Validation.add('IsEmpty', '', function(v) {
   return ((v == null) || (v.length == 0)); // || /^\s+$/.test(v));
   });
 
-var getCelHost = function() {
-  var celHost = document.location + '?';
-  celHost = celHost.substring(0, celHost.indexOf('?'));
-  return celHost;
-};
-
 Validation.messages = new Hash( {
   '_unknown_' : 'unkown error'
-});
-
-new Ajax.Request(getCelHost(), {
-  method : 'post',
-  parameters : {
-    xpage : 'celements_ajax',
-    ajax_mode : 'ValidationMessages'
-  },
-  onSuccess : function(transport) {
-    if (transport.responseText.isJSON()) {
-      Validation.messages = Validation.messages.merge(transport.responseText.evalJSON());
-      Validation.addAllThese(Validation.defaultFunctions);
-      if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-        console.debug('validation.js: finished adding default functions.');
-      }
-    } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-      console.error('noJSON!!! ', transport.responseText);
-    }
-  }
 });
 
 Validation.defaultFunctions = [
@@ -367,3 +352,47 @@ Validation.defaultFunctions = [
   ['validate-email-equal', 'email', Validator.methods.equalToField ],
   ['validate-docname', null, Validator.methods.validDocName ]
 ];
+
+new Ajax.Request(getCelHost(), {
+  method : 'post',
+  parameters : {
+    xpage : 'celements_ajax',
+    ajax_mode : 'ValidationMessages'
+  },
+  onSuccess : function(transport) {
+    if (transport.responseText.isJSON()) {
+      Validation.messages = Validation.messages.merge(transport.responseText.evalJSON());
+      Validation.addAllThese(Validation.defaultFunctions);
+      if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+        console.debug('validation.js: finished adding default functions.');
+      }
+    } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+      console.error('noJSON!!! ', transport.responseText);
+    }
+  }
+});
+
+Validation.addValidationToForm = function(form) {
+  var valid = null;
+  if (form.tagName.toLowerCase() == 'form') {
+    valid = new Validation(form, {
+      immediate : true,
+      useTitles : true,
+      stopOnFirst : false
+    });
+  }
+  return valid;
+};
+
+Validation.addValidationToFormListener = function(event) {
+  var form = event.findElement();
+  if (form.tagName.toLowerCase() == 'form') {
+    Validation.addValidationToForm(form);
+  }
+};
+
+celAddOnBeforeLoadListener(function() {
+  $(document.body).observe('celValidation:addValidation',
+      Validation.addValidationToFormListener);
+  $$('form.celAddValidationToForm').each(Validation.addValidationToForm);
+});

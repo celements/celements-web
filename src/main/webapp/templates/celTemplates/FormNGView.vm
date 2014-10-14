@@ -128,9 +128,12 @@ complete: $complete<br/>
    $!renderedFormContent
  #end
  #if("$!celementsFormValidationName" != '')
+  <!--
+  deprecated usage of celementsFormValidationName variable instead add the css tricker
+  class celAddValidationToForm to the form and do NOT set celementsFormValidationName
+   -->
   <script type="text/javascript">
-   var valid = new Validation(${q}${celementsFormValidationName}${q},{immediate : true , useTitles : true, stopOnFirst : false}); // OR new Validation(document.forms[0]);
-   Event.observe(window, 'load', function(){ $!onLoadScript });
+   var valid = Validation.addValidationToForm(${q}${celementsFormValidationName}${q});
   </script>  
  #end
 #end
