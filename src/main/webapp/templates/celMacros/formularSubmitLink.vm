@@ -1,0 +1,11 @@
+## formularSubmitLink
+## print an A-Tag link to submit a form using javascript and the browser side
+## form-validation.
+## INPUT: $linkText $celementsFormValidationName
+## INPUT (optional): $additionalClasses (default: '')
+## OUTPUT:
+##
+#set($additionalClasses = "$!additionalClasses")
+<a href="#" class="celSubmitFormWithValidation submit$!additionalClasses"##
+ style="cursor:pointer">$linkText</a>
+#set($additionalClasses = '')
