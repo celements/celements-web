@@ -385,14 +385,16 @@ Validation.addValidationToForm = function(form) {
 };
 
 Validation.addValidationToFormListener = function(event) {
-  var form = event.findElement();
-  if (form.tagName.toLowerCase() == 'form') {
-    Validation.addValidationToForm(form);
+  var elem = event.findElement();
+  if (elem.tagName.toLowerCase() == 'form') {
+    Validation.addValidationToForm(elem);
+  } else {
+    elem.select('form.celAddValidationToForm').each(Validation.addValidationToForm);
   }
 };
 
 celAddOnBeforeLoadListener(function() {
   $(document.body).observe('celValidation:addValidation',
       Validation.addValidationToFormListener);
-  $$('form.celAddValidationToForm').each(Validation.addValidationToForm);
+  $(document.body).fire('celValidation:addValidation');
 });
