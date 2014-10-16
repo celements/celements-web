@@ -81,7 +81,7 @@
         #set($cel_embedded_editobj = true)
         #set($cel_editobj_title = $adminMsg.get('cel_tm_documentextract'))
         #set($cel_editobj_xredirect_params = 'tab=tb2')
-        #set($cel_editobj_cssclasses = { "extract" : "mceEditor" })
+        #set($cel_editobj_cssclasses = { "extract" : "mceEditor celEditorBody_extract" })
         #parse("celTemplates/ObjectEdit.vm")
     </div>
 </form>
