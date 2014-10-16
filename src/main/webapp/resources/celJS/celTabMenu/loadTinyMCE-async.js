@@ -18,59 +18,83 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-var initCelRTE = function() {
-  if(!!window.MSStream && (navigator.userAgent.indexOf("MSIE") < 0)) { // if is IE11
-    alert('Der RichText Editor ist zur Zeit nicht für den Internet Explorer 11 verfügbar. Bitte verwenden Sie einen unterstützten Browser (Chrome, FireFox, Safari, IE10, IE9 oder IE8).');
-    return;
-  }
-  var params = {
-      xpage : 'celements_ajax',
-      ajax_mode : 'TinyConfig'
-   };
-  var hrefSearch = window.location.search;
-  var templateRegEx = new RegExp('^(\\?|(.*&)+)?template=([^=&]*).*$');
-  if (hrefSearch.match(templateRegEx)) {
-    params['template'] = window.location.search.replace(templateRegEx, '$3');
-  }
-  new Ajax.Request(getCelHost(), {
-    method: 'post',
-    parameters: params,
-    onSuccess: function(transport) {
-      var tinyConfigJSON = transport.responseText.replace(/\n/g,' ');
-      if (tinyConfigJSON.isJSON()) {
-        window.tinymce.dom.Event.domLoaded = true;
-        tinyMCE.init(tinyConfigJSON.evalJSON());
-      } else {
-        console.error('TinyConfig is no json!', tinyConfigJSON);
-      }
-    }
-  });
-};
+(function(window, undefined) {
+  "use strict";
 
-var finishedCelRTE_tinyMCE_Load = false;
-
-var celFinishTinyMCEStart = function() {
-  finishedCelRTE_tinyMCE_Load = true;
-  $$('body')[0].fire('celRTE:finishedInit');
-};
-
-var delayedEditorOpeningHandler = function(event) {
-  var mceEditorAreaAvailable = ($$('#tabMenuPanel .mceEditor').size() > 0);
-  if (!finishedCelRTE_tinyMCE_Load && mceEditorAreaAvailable) {
-    event.stop();
-    $$('body')[0].observe('celRTE:finishedInit', function() {
-      event.memo.start();
+  var getAllEditorBodyClasses = function(tinyConfigObj) {
+    var generalBodyClasses = tinyConfigObj["body_class"];
+    var editorSelector = tinyConfigObj["editor_selector"];
+    var bodyClassArray = [];
+    $$('.' + editorSelector).each(function(textareaElem) {
+      var elemClasses = [];
+      $w(textareaElem.className).each(function(cssClassName) {
+        if (cssClassName.startsWith('celEditorBody_')) {
+          elemClasses.add(cssClassName);
+        }
+      });
+      var elemBodyClasses = elemClasses.join(' ') + ' ' + generalBodyClasses;
+      bodyClassArray.push(textareaElem.id + "=" + elemBodyClasses.strip());
     });
-  }
-};
+    return bodyClassArray;
+  };
 
-$j(document).ready(function() {
-  $('tabMenuPanel').observe('tabedit:finishedLoadingDisplayNow',
-      delayedEditorOpeningHandler);
-  getCelementsTabEditor().addAfterInitListener(function() {
-    initCelRTE();
-    if(typeof(resize) != 'undefined') {
-      resize();
+  var initCelRTE = function() {
+    if(!!window.MSStream && (navigator.userAgent.indexOf("MSIE") < 0)) { // if is IE11
+      alert('Der RichText Editor ist zur Zeit nicht für den Internet Explorer 11 verfügbar. Bitte verwenden Sie einen unterstützten Browser (Chrome, FireFox, Safari, IE10, IE9 oder IE8).');
+      return;
     }
+    var params = {
+        xpage : 'celements_ajax',
+        ajax_mode : 'TinyConfig'
+     };
+    var hrefSearch = window.location.search;
+    var templateRegEx = new RegExp('^(\\?|(.*&)+)?template=([^=&]*).*$');
+    if (hrefSearch.match(templateRegEx)) {
+      params['template'] = window.location.search.replace(templateRegEx, '$3');
+    }
+    new Ajax.Request(getCelHost(), {
+      method: 'post',
+      parameters: params,
+      onSuccess: function(transport) {
+        var tinyConfigJSON = transport.responseText.replace(/\n/g,' ');
+        if (tinyConfigJSON.isJSON()) {
+          window.tinymce.dom.Event.domLoaded = true;
+          var tinyConfigObj = tinyConfigJSON.evalJSON();
+          tinyConfigObj["body_class"] = getAllEditorBodyClasses().join(',');
+          tinyMCE.init(tinyConfigObj);
+        } else {
+          console.error('TinyConfig is no json!', tinyConfigJSON);
+        }
+      }
+    });
+  };
+  
+  var finishedCelRTE_tinyMCE_Load = false;
+  
+  window.celFinishTinyMCEStart = function() {
+    finishedCelRTE_tinyMCE_Load = true;
+    $$('body')[0].fire('celRTE:finishedInit');
+  };
+  
+  var delayedEditorOpeningHandler = function(event) {
+    var mceEditorAreaAvailable = ($$('#tabMenuPanel .mceEditor').size() > 0);
+    if (!finishedCelRTE_tinyMCE_Load && mceEditorAreaAvailable) {
+      event.stop();
+      $$('body')[0].observe('celRTE:finishedInit', function() {
+        event.memo.start();
+      });
+    }
+  };
+  
+  $j(document).ready(function() {
+    $('tabMenuPanel').observe('tabedit:finishedLoadingDisplayNow',
+        delayedEditorOpeningHandler);
+    getCelementsTabEditor().addAfterInitListener(function() {
+      initCelRTE();
+      if(typeof(resize) != 'undefined') {
+        resize();
+      }
+    });
   });
-});
+  
+})(window);
