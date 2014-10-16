@@ -60,7 +60,7 @@
         if (tinyConfigJSON.isJSON()) {
           window.tinymce.dom.Event.domLoaded = true;
           var tinyConfigObj = tinyConfigJSON.evalJSON();
-          tinyConfigObj["body_class"] = getAllEditorBodyClasses().join(',');
+          tinyConfigObj["body_class"] = getAllEditorBodyClasses(tinyConfigObj).join(',');
           tinyMCE.init(tinyConfigObj);
         } else {
           console.error('TinyConfig is no json!', tinyConfigJSON);
