@@ -29,7 +29,7 @@
       var elemClasses = [];
       $w(textareaElem.className).each(function(cssClassName) {
         if (cssClassName.startsWith('celEditorBody_')) {
-          elemClasses.add(cssClassName);
+          elemClasses.push(cssClassName);
         }
       });
       var elemBodyClasses = elemClasses.join(' ') + ' ' + generalBodyClasses;
