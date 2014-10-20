@@ -339,11 +339,11 @@ Validation.defaultFunctions = [
 				// [$].##
 				return Validation.get('IsEmpty').test(v) ||  /^\$?\-?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}\d*(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/.test(v);
 			}],
-	['validate-selection', null, function(v,elm){
+	['validate-selection', null, function(v, elm){
 				return elm.options ? elm.selectedIndex > 0 : !Validation.get('IsEmpty').test(v);
 			}],
-  ['validate-one-required', null, function (v,elm) {
-        var p = elm.parentNode;
+  ['validate-one-required', null, function (v, elm) {
+        var p = elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
         var options = p.getElementsByTagName('INPUT');
         return $A(options).any(function(elm) {
           return $F(elm);
