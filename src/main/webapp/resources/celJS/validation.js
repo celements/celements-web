@@ -114,6 +114,14 @@ Validation.prototype = {
 		if(!this.validate()) {
 		  Event.stop(ev);
 	    this.form.fire('celValidation:validationFailedSubmitCancel', this.form);
+		} else {
+      var valSubEv = this.form.fire('celValidation:submitFormAfterValidation', {
+        form: this.form,
+        submitEvent : ev
+      });
+      if (valSubEv.stopped) {
+        ev.stop();
+      }
 		}
 	},
 	validate : function() {
