@@ -11,6 +11,9 @@ $!xwiki.getSpacePreference("meta")
   #set($charEncoding = "$xwiki.encoding")
 #end
 <meta http-equiv="Content-Type" content="text/html; charset=$!charEncoding" />
+#if($services.celementsweb.hasGoogleAnalytics())
+<meta name="cel-GAA-Num" content="$services.celementsweb.getGoogleAnalytics()"/>
+#end
 #set($webprefDoc = $xwiki.getDocument("${doc.space}.WebPreferences"))
 #set($wikiprefDoc = $xwiki.getDocument("XWiki.XWikiPreferences"))
 #if("$!webprefDoc.getAttachment('favicon.ico')" != '')
