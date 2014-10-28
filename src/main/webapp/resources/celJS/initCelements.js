@@ -229,11 +229,11 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
   window.celOnFinishHeaderListenerArray = [];
 
   window.celAddOnFinishHeaderListener = function(listenerFunc) {
-    celOnFinishHeaderListenerArray.push(listenerFunc);
+    window.celOnFinishHeaderListenerArray.push(listenerFunc);
   };
 
   window.celFinishHeaderHandler = function() {
-    $A(window.celAddOnFinishHeaderListener).each(function(listener) {
+    $A(window.celOnFinishHeaderListenerArray).each(function(listener) {
       try {
         listener();
       } catch (exp) {
