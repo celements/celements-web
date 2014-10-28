@@ -223,6 +223,31 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
   celOnBeforeLoadListenerArray.push(listenerFunc);
 };
 
+(function(window, undefined) {
+  "use strict";
+
+  window.celOnFinishHeaderListenerArray = [];
+
+  window.celAddOnFinishHeaderListener = function(listenerFunc) {
+    celOnFinishHeaderListenerArray.push(listenerFunc);
+  };
+
+  window.celFinishHeaderHandler = function() {
+    $A(window.celAddOnFinishHeaderListener).each(function(listener) {
+      try {
+        listener();
+      } catch (exp) {
+        console.error('Failed to execute celOnFinishHeader listener. ', exp);
+      }
+    });
+  };
+
+})(window);
+
+
+/**
+ * getCelHost function
+ **/
 if (typeof getCelHost === 'undefined') {
 var getCelHost = function() {
   var celHost = document.location + '?';
@@ -278,6 +303,24 @@ var celMessages = {};
         containerElem.select('form.cel_form_validation').each(registerValidation);
       }
     });
+  });
+
+  /**
+   * Google Analytics integration
+   **/
+  window.celAddOnFinishHeaderListener(function() {
+    //get google Account Number from Meta-Tags
+    var metas = $$('meta[name="cel-GAA-Num"]');
+    if ((metas.size() > 0) && (metas[0].content != '')) {
+      var gaaNum = metas[0].content;
+      window._gaq = window._gaq || [];
+      window._gaq.push(['_setAccount', gaaNum]);
+      window._gaq.push(['_trackPageview']);
+  
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    }
   });
 
 })(window);
