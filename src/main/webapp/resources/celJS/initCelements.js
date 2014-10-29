@@ -313,13 +313,15 @@ var celMessages = {};
     var metas = $$('meta[name="cel-GAA-Num"]');
     if ((metas.size() > 0) && (metas[0].content != '')) {
       var gaaNum = metas[0].content;
-      window._gaq = window._gaq || [];
-      window._gaq.push(['_setAccount', gaaNum]);
-      window._gaq.push(['_trackPageview']);
-  
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', gaaNum, 'example.com');
+      ga('send', 'pageview');
+      console.log('finish initalizing google universal analytics.', gaaNum);
     }
   });
 
