@@ -234,6 +234,7 @@
   #end
   "wiki_attach_path" : "$attachmentPath",
   "wiki_imagedownload_path" : "$attachmentDLPath",
+  #set($linkPickerSpaces = "$!linkPickerSpaces") ## linkPickerSpaces could be undefined
   ##FIXME move to blog-component after adding a linkPicker-api
   #set($blogPageDoc = $xwiki.celementsblog.getBlogPageByBlogSpace("$doc.space"))
   #if("$!blogPageDoc" != '')
@@ -246,8 +247,8 @@
     #set($linkPickerSpace = "$!linkPickerSpaces")
   #end
   #set($parentSpace = "$!{xwiki.getSpacePreference('parent')}")
-  #if(("$!parentSpace" != '') && ($linkPickerSpaces.indexOf("$!{parentSpace}") < 0))
-    #set($linkPickerSpace = "$!linkPickerSpaces,$!{parentSpace}")
+  #if(("$!parentSpace" != '') && ($linkPickerSpace.indexOf("$!{parentSpace}") < 0))
+    #set($linkPickerSpace = "$!linkPickerSpace,$!{parentSpace}")
   #end
   #set($fileUploadSpace = "$doc.space")
   #if("$!fileBaseUploadSpace" != '')
