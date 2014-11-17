@@ -1,0 +1,9 @@
+#if("$!spaceName" == '')
+  #set($spaceName = $doc.documentReference.lastSpaceReference.name)
+#end
+#set($structNav = $celementsweb.createNavigation())
+$structNav.setMenuPart("$!menuPart")
+$structNav.setShowAll(true)
+$structNav.setHasLink(true)
+$structNav.setMenuSpace($spaceName)
+$structNav.includeNavigation()
