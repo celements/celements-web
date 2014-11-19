@@ -235,8 +235,8 @@ var getCelAnimObject = function() {
       'replaceOnLoad' : true
     },
     { 'name' : 'sfvideoPortal',
-      'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv)\/.*[\/=]',
-      'replaceStr' : 'http://www.sf.tv/videoplayer/embed/',
+      'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv|www.srf.ch)\/.*[\/=]',
+      'replaceStr' : 'http://www.srf.ch/player/tv/x/videoembed/x?mode=embed&id=',
       'cssClass' : 'celanim_sfvideo',
       'replaceOnLoad' : true
     }];
