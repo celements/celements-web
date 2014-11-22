@@ -148,6 +148,8 @@ var celanimSWFplayerHandler = function(event) {
   event.stop();
 };
 
+var celanimFlowPlayerObjectCounter = 0;
+
 var celanimLoadSWFplayer = function(playerLink) {
   if (playerLink && !playerLink.hasClassName('celanim_loaded')) {
     playerLink.addClassName('celanim_loaded');
@@ -157,7 +159,12 @@ var celanimLoadSWFplayer = function(playerLink) {
       //--> it solves issues at least with IE7!!!
 //      playerContainer.update(new Element('span', { 'id' : 'celanimFlowPlayer_object' }));
 //      swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%", "100%", "9.0.0", "expressInstall.swf");
-      playerLink.update(new Element('span', { 'id' : 'celanimFlowPlayer_object' }));
+      var playerId = 'celanimFlowPlayer_object';
+      celanimFlowPlayerObjectCounter = celanimFlowPlayerObjectCounter + 1;
+      if (celanimFlowPlayerObjectCounter > 1) {
+        playerId += '_' + celanimFlowPlayerObjectCounter;
+      }
+      playerLink.update(new Element('span', { 'id' : playerId }));
 //    var objectElem = new Element('object', {
 //    'type' : 'application/x-shockwave-flash',
 //    'data' : movieLink,
@@ -185,7 +192,7 @@ var celanimLoadSWFplayer = function(playerLink) {
       flashvars['scale'] = 'showall';
       flashvars['wmode'] = 'opaque';
       // more details on embedSWF function on http://code.google.com/p/swfobject/wiki/api
-      swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%", "100%", "9.0.0",
+      swfobject.embedSWF(movieLink, playerId, "100%", "100%", "9.0.0",
           "expressInstall.swf", flashvars, params);
 //      playerLink.update(objectElem);
       playerLink.fire('celanim_player:flashplayerloaded', { 'movielink' : movieLink });
