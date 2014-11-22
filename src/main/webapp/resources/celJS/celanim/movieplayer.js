@@ -234,9 +234,15 @@ var getCelAnimObject = function() {
       'cssClass' : 'celanim_youtube',
       'replaceOnLoad' : true
     },
+    { 'name' : 'sfaudioPortal',
+      'matchStr' : '^https?:\/\/(www.srf.ch)\/.*\/audio/.*[\/=]',
+      'replaceStr' : 'http://www.srf.ch/player/flash/srfplayer.swf?mode=embed&audio_id=',
+      'cssClass' : 'celanim_sfvideo',
+      'replaceOnLoad' : true
+    },
     { 'name' : 'sfvideoPortal',
       'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv|www.srf.ch)\/.*[\/=]',
-      'replaceStr' : 'http://www.srf.ch/player/tv/x/videoembed/x?mode=embed&id=',
+      'replaceStr' : 'http://www.srf.ch/player/flash/srfplayer.swf?mode=embed&segment_id=',
       'cssClass' : 'celanim_sfvideo',
       'replaceOnLoad' : true
     }];
