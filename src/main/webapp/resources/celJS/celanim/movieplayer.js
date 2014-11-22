@@ -237,7 +237,7 @@ var getCelAnimObject = function() {
     { 'name' : 'sfaudioPortal',
       'matchStr' : '^https?:\/\/(www.srf.ch)\/.*\/audio/.*[\/=]',
       'replaceStr' : 'http://www.srf.ch/player/flash/srfplayer.swf?mode=embed&audio_id=',
-      'cssClass' : 'celanim_sfvideo',
+      'cssClass' : 'celanim_sfaudio',
       'replaceOnLoad' : true
     },
     { 'name' : 'sfvideoPortal',
