@@ -439,7 +439,11 @@ var initOverlayLinks = function(flowclassname) {
 var initOverlayLinksInsideParent = function(parentElem, flowclassname) {
   if (parentElem.select(flowclassname).size() > 0) {
     parentElem.select(flowclassname).each(function(flowLink) {
-      flowLink.observe('click', celanimOpenInOverlay);
+      if(flowLink.hasClassName('celanim_sfaudio')) {
+        flowLink.observe('click', celanimOpenInOverlaySFAudio);
+      } else {
+        flowLink.observe('click', celanimOpenInOverlay);
+      }
     });
     initEventTracking(flowclassname);
   }
@@ -451,7 +455,11 @@ var getCelHost = function() {
   return celHost;
 };
 
-var celanimOpenInOverlay = function(e) {
+var celanimOpenInOverlaySFAudio = function(e) {
+  celanimOpenInOverlay(e, 580, 70);
+};
+
+var celanimOpenInOverlay = function(e, fixWidth, fixHeight) {
   var elem = e.findElement('a');
   var flvLink = elem.href.replace(/^..\/..\//g, '/');
   var cssClassNames = $w($(elem).className).without('celanim_overlay');
@@ -461,16 +469,23 @@ var celanimOpenInOverlay = function(e) {
   hs.graphicsDir = 'highslide/graphics/';
   hs.outlineType = '';
   hs.wrapperClassName = 'no-footer no-move draggable-header celanim_overlay_wrapper '
-    + cssClassNames.join(' '); 
-  hs.htmlExpand(null, {
-    src : overlaySrc,
-    objectType: 'iframe',
-    dimmingOpacity: 0.60,
-    dragByHeading : false,
-    align : 'center',
-    preserveContent : false,
-    objectHeight: '0' //important for IE!!!
-  });
+    + cssClassNames.join(' ');
+  var params = {
+      src : overlaySrc,
+      objectType: 'iframe',
+      dimmingOpacity: 0.60,
+      dragByHeading : false,
+      align : 'center',
+      preserveContent : false,
+      objectHeight: '0' //important for IE!!!
+  };
+  if(fixWidth) {
+    params.width = fixWidth;
+  }
+  if(fixHeight) {
+    params.height = fixHeight;
+  }
+  hs.htmlExpand(null, params);
   e.stop();
 };
 
