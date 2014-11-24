@@ -518,7 +518,16 @@ var trackEvent = function(e) {
   if (this.hasClassName("celanim_audio")) {
     category = "Audio";
   }
-  _gaq.push(['_trackEvent',category,action,label]);
+  if (typeof(ga) !== 'undefined') {
+    ga('send', {
+      'hitType': 'event',          // Required.
+      'eventCategory': category,   // Required.
+      'eventAction': action,      // Required.
+      'eventLabel': label
+    });
+  } else if (typeof(_gaq) !== 'undefined') {
+    _gaq.push(['_trackEvent',category,action,label]);
+  }
 };
 
 var asyncLoadConf = function() {
