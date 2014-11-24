@@ -242,6 +242,17 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
     });
   };
 
+  /**
+   * getCelDomain function
+   **/
+  if (typeof window.getCelDomain === 'undefined') {
+    window.getCelDomain = function() {
+      var hostName = window.location.host;
+      var domainName = hostName.replace(/^www\./, '');
+      return domainName;
+    };
+  }
+
 })(window);
 
 
@@ -319,7 +330,7 @@ var celMessages = {};
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', gaaNum, 'example.com');
+      ga('create', gaaNum, window.getCelDomain());
       ga('send', 'pageview');
       console.log('finish initalizing google universal analytics.', gaaNum);
     }
