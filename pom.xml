@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>2.6</version>
+    <version>2.7-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>  
   <artifactId>celements-web</artifactId>
@@ -141,6 +141,10 @@
       <version>1.7</version>
     </dependency>
     <dependency>
+      <groupId>commons-net</groupId>
+      <artifactId>commons-net</artifactId>
+    </dependency>
+    <dependency>
       <groupId>batik</groupId>
       <artifactId>batik-rasterizer</artifactId>
       <version>1.6-1</version>
@@ -243,6 +247,7 @@
                 <exclude>WEB-INF/lib/xwiki-plugin-activitystream-*.jar</exclude>
                 <exclude>WEB-INF/lib/poi-*.jar</exclude>
                 <exclude>WEB-INF/lib/metadata-extractor-*.jar</exclude>
+                <exclude>WEB-INF/lib/commons-net-*.jar</exclude>
 <!--                <exclude>WEB-INF/lib/xwiki-core-office-*.jar</exclude> -->
               </excludes>
             </overlay>
