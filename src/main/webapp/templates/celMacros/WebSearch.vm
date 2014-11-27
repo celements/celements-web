@@ -104,7 +104,7 @@
     #set($docBlackList = "$!docBlackList")
   #if("$!hideForm" != 'true')
   <div class="websearch_form">
-  <form action="WebSearch">
+  <form action="$doc.getURL()">
 #*    Unscharfe Suche: 
     <select name="fuzzy">
       <option#if("$!fuzzySearch" == '1') selected="selected"#end value="1">1 (exakte Suche)</option>
