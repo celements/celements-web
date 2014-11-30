@@ -27,9 +27,6 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
 
 (function() {
 
-var Dom = YAHOO.util.Dom;
-var YEvent = YAHOO.util.Event;
-
 //////////////////////////////////////////////////////////////////////////////
 // CELEMENTS accordeon heading animation
 // --> there will be a glitsh on slideup in some browsers if you use margins on headings.
