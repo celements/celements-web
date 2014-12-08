@@ -19,6 +19,7 @@ Event.observe(window, 'load', function(){
   $('imagePickerUploadAreaFieldset').hide();
   $('imagePickerForm').action = baseurl;
   getUploadToken();
+  loadTagList();
   $$('#imagePickerUploadArea .celfileupload').each(function(elem) {
     elem.observe('celements:uploadfinished', pickerUploadFinshed);
   });
@@ -26,7 +27,6 @@ Event.observe(window, 'load', function(){
 
 var imagePicker_pickerTabFirstClickHandler = function(event) {
   this.stopObserving('click', imagePicker_pickerTabFirstClickHandler);
-  loadTagList(baseurl);
   loadAttachmentList(baseurl);
 };
 
@@ -122,7 +122,8 @@ var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
   startPos += stepNumber;
 };
 
-var loadTagList = function(baseurl) {
+var loadTagList = function() {
+  $('tagPicker_list').observe('change', tagSelectedLoadAttachmentList);
   new Ajax.Request(baseurl, {
     method: 'post',
     parameters: {
@@ -144,6 +145,10 @@ var loadTagList = function(baseurl) {
     }
   });
 };
+
+var tagSelectedLoadAttachmentList = function() {
+  loadAttachmentList(baseurl);
+}
 
 var loadAttachmentList = function(baseurl) {
   var attachEl = document.getElementById("attachments");
