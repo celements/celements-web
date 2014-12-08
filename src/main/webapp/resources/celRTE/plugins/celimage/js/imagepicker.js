@@ -134,7 +134,7 @@ var loadTagList = function() {
       if(response.responseText.isJSON()) {
         var json = response.responseText.evalJSON();
         var select = $('tagPicker_list');
-        for(var i = 0; i < json.tagList; i++) {
+        for(var i = 0; i < json.tagList.length; i++) {
           var option = new Element('option', { 'value' : json.tagList[i].value });
           option.update(json.tagList[i].label);
           select.insert(option);
