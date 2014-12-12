@@ -19,6 +19,7 @@ Event.observe(window, 'load', function(){
   $('imagePickerUploadAreaFieldset').hide();
   $('imagePickerForm').action = baseurl;
   getUploadToken();
+  loadTagList();
   $$('#imagePickerUploadArea .celfileupload').each(function(elem) {
     elem.observe('celements:uploadfinished', pickerUploadFinshed);
   });
@@ -54,6 +55,9 @@ var pickerUploadFinshed = function(event) {
   var uploadResult = event.memo.uploadResult;
   if (uploadResult && uploadResult.success && (uploadResult.success == 1)) {
     $('attachments').insert({ top : loadingImg });
+    if($('tagPicker_list')) {
+      $('tagPicker_list').value = '';
+    }
     new Ajax.Request(baseurl, {
         method: 'post',
         parameters: {
@@ -81,6 +85,10 @@ var pickerUploadFinshed = function(event) {
 
 var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
   $('attachments').insert(loadingImg);
+  var tag = '';
+  if($('tagPicker_list')) {
+    tag = $('tagPicker_list').value;
+  }
   new Ajax.Request(baseurl, {
     method: 'post',
     parameters: {
@@ -88,7 +96,8 @@ var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
        'ajax_mode' : 'imagePickerList',
        'images' : '1',
        'start' : startPos,
-       'nb' : stepNumber
+       'nb' : stepNumber,
+       'tagList' : tag
     },
     onComplete: function(transport) {
       if (transport.responseText.isJSON()) {
@@ -112,6 +121,34 @@ var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
   });
   startPos += stepNumber;
 };
+
+var loadTagList = function() {
+  $('tagPicker_list').observe('change', tagSelectedLoadAttachmentList);
+  new Ajax.Request(baseurl, {
+    method: 'post',
+    parameters: {
+       'xpage' : 'celements_ajax',
+       'ajax_mode' : 'imageFilterList'
+    },
+    onComplete: function(response) {
+      if(response.responseText.isJSON()) {
+        var json = response.responseText.evalJSON();
+        var select = $('tagPicker_list');
+        for(var i = 0; i < json.tagList.length; i++) {
+          var option = new Element('option', { 'value' : json.tagList[i].value });
+          option.update(json.tagList[i].label);
+          select.insert(option);
+        }
+      } else if((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+        console.warn('loadTagList: noJSON!!! ', response.responseText);
+      }
+    }
+  });
+};
+
+var tagSelectedLoadAttachmentList = function() {
+  loadAttachmentList(baseurl);
+}
 
 var loadAttachmentList = function(baseurl) {
   var attachEl = document.getElementById("attachments");
