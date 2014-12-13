@@ -46,8 +46,6 @@ CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent) {
 };
 
 (function() {
-var AAAE = CELEMENTS.anim.AccordeonEffect;
-
 CELEMENTS.anim.AccordeonEffect.prototype = {
   htmlElem : undefined,
 
