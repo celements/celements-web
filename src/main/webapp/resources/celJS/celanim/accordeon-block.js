@@ -30,6 +30,13 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
 //////////////////////////////////////////////////////////////////////////////
 // CELEMENTS accordeon animation
 // --> there will be a glitsh on slideup in some browsers if you use margins on headings.
+// id          parent html element. Wrapper of all boxes
+// cssBox      css selector for all boxes (each box containing one title and one content
+//              element)
+// cssTitle    css selector for clickable title element. On a click on the title box, the
+//              content box will toggle between open or close.
+// cssContent  css selector for content box which is open and closed by a click on the
+//              title box. 
 //////////////////////////////////////////////////////////////////////////////
 CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent) {
   // constructor
