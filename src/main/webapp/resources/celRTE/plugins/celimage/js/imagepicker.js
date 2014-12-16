@@ -147,6 +147,10 @@ var loadTagList = function() {
 };
 
 var tagSelectedLoadAttachmentList = function() {
+  startPos = 0;
+  
+  
+  
   loadAttachmentList(baseurl);
 }
 
