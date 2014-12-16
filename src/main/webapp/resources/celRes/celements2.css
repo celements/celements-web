@@ -781,3 +781,15 @@ iframe.apn-toolbar + body #celements2_menu_bar {
   bottom: 0px !important;
 }
 
+/**
+ * Fluid design auto resize images
+ **/
+img.cel_fluidresizeWidth {
+  width: 100%;
+  height: auto;
+}
+
+img.cel_fluidresizeHeight {
+  width: auto;
+  height: 100%;
+}
