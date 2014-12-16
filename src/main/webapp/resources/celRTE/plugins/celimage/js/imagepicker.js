@@ -55,9 +55,6 @@ var pickerUploadFinshed = function(event) {
   var uploadResult = event.memo.uploadResult;
   if (uploadResult && uploadResult.success && (uploadResult.success == 1)) {
     $('attachments').insert({ top : loadingImg });
-    if($('tagPicker_list')) {
-      $('tagPicker_list').value = '';
-    }
     new Ajax.Request(baseurl, {
         method: 'post',
         parameters: {
