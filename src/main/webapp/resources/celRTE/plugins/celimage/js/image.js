@@ -246,7 +246,7 @@ var CelImageDialog = {
     $$('.panel_wrapper .panel, .panel_wrapper .current').each(function(panel) {
       panel.setStyle( { 'height' : newMaxSize + 'px' });
     });
-    var newPickerMaxSize = newMaxSize - 62 - 41;
+    var newPickerMaxSize = newMaxSize - 62 - 41 - 41;
     $('attachments').setStyle({ 'height' : newPickerMaxSize + 'px' });
     //TODO add minimal height depending on content
   },

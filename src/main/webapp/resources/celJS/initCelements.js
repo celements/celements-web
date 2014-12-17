@@ -336,4 +336,13 @@ var celMessages = {};
     }
   });
 
+  /**
+   * Fluid Design image map support
+   */
+  celAddOnBeforeLoadListener(function() {
+    if (typeof $j('img[usemap]').rwdImageMaps !== 'undefined') {
+      $j('img[usemap]').rwdImageMaps();
+    }
+  });
+
 })(window);
