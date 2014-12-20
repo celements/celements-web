@@ -20,7 +20,10 @@ function onCancel_att() {}
 <tr>
   <td class="celements2_line" style="text-align:left;">
   #if ($attach.isImage())
-    <a href="$doc.getAttachmentURL($attach.filename,'download')"><img src="$doc.getAttachmentURL($attach.filename,'download')?celwidth=100" alt="" width="100" border="0" /></a>
+    ##IMPORTANT: do NOT set image with or height, because the image will be stretched.
+    ##IMPORTANT: do NOT remove celwith or celheight because their are important for
+    ##           correct resizing of to big images
+    <a href="$doc.getAttachmentURL($attach.filename,'download')"><img src="$doc.getAttachmentURL($attach.filename,'download')?celwidth=100&celheight=15" alt="" border="0" /></a>
   #else
     &nbsp;
   #end
