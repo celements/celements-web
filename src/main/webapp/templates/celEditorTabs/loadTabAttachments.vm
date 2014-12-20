@@ -3,7 +3,7 @@ function onSave_att() {}
 function onCancel_att() {}
 </script>
 
-#set($redurl = "$xwiki.getURL($doc.getFullName(), 'edit', 'tab=3')")
+#set($redurl = $doc.getURL('edit', 'tab=tb3'))
 
 <div id="att_contentView" class="editblock">
 	<h2>$adminMsg.get("cel_tm_attachments")</h2>
@@ -20,7 +20,7 @@ function onCancel_att() {}
 <tr>
   <td class="celements2_line" style="text-align:left;">
   #if ($attach.isImage())
-    <a href="$doc.getAttachmentURL($attach.filename,'download')"><img src="$doc.getAttachmentURL($attach.filename,'download')?celwidth=100&celheight=15" alt="" width="100" height="15" border="0" /></a>
+    <a href="$doc.getAttachmentURL($attach.filename,'download')"><img src="$doc.getAttachmentURL($attach.filename,'download')?celwidth=100" alt="" width="100" border="0" /></a>
   #else
     &nbsp;
   #end
@@ -79,7 +79,7 @@ function onCancel_att() {}
   return true;
   }
   </script>
-  <input type="hidden" name="xredirect" value="$doc.getURL('edit')?tab=3" size="20" />    
+  <input type="hidden" name="xredirect" value="$redurl" size="20" />    
   <input type="hidden" name="filename" value="" size="20" />
   <input type="file" name="filepath" value="" size="40"  />
   <input type="submit" value="$adminMsg.get('cel_upload')" onclick="return updateName(this.form)" />  
