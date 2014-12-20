@@ -272,7 +272,9 @@
     #set($linkPickerSpace = $linkPickerSpace.substring(0, $linkPickerSpace.indexOf('_')))
   #end
 *#
-  "wiki_linkpicker_space" : "$linkPickerSpace",
+  #set($allLinkPickerSpaces = "$!linkPickerSpace,$!celementsweb.getRTEConfigField('link_picker_spaces')")
+  #set($allLinkPickerSpaces = $allLinkPickerSpaces.replaceAll(',,|^,|,$', ''))
+  "wiki_linkpicker_space" : "$allLinkPickerSpaces",
   "wiki_filepicker_upload_space" : "$fileUploadSpace",
   "wiki_filepicker_space" : "$filePickerSpace",
   "wiki_filepicker_doc" : "$filePickerDoc",
