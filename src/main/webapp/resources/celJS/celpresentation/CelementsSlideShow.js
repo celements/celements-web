@@ -60,6 +60,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _htmlContainerId : undefined,
       _htmlContainer : undefined,
       _overwritePageLayout : undefined,
+      _preloadSlideAjaxMode : undefined,
       _preloadSlideImagesHash : undefined,
       _nextElements : undefined,
       _prevElements : undefined,
@@ -78,6 +79,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _init : function(containerId) {
         var _me = this;
         _me._overwritePageLayout = 'SimpleLayout';
+        _me._preloadSlideAjaxMode = '';
         _me._counterLeadingZeros = false;
         _me._centerSlide = true;
         _me._autoresize = false;
@@ -493,9 +495,12 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
 
       setOverwritePageLayout : function(overwritePageLayout) {
         var _me = this;
-        if (overwritePageLayout && (overwritePageLayout != '')) {
-          _me._overwritePageLayout = overwritePageLayout;
-        }
+        _me._overwritePageLayout = overwritePageLayout;
+      },
+
+      setPreloadSlideAjaxMode : function(preloadSlideAjaxMode) {
+        var _me = this;
+        _me._preloadSlideAjaxMode = preloadSlideAjaxMode;
       },
 
       setCenterSlide : function(isCenterSlide) {
@@ -517,6 +522,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         }
         if (_me._overwritePageLayout != '') {
           params['overwriteLayout'] = _me._overwritePageLayout;
+        }
+        if (_me._preloadSlideAjaxMode != '') {
+          params['ajax_mode'] = _me._preloadSlideAjaxMode;
         }
         new Ajax.Request(_me._convertFullNameToViewURL(slideFN), {
           method: 'post',
