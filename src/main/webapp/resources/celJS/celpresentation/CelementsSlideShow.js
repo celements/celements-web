@@ -61,6 +61,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _htmlContainer : undefined,
       _overwritePageLayout : undefined,
       _preloadSlideAjaxMode : undefined,
+      _preloadSlideParams : undefined,
       _preloadSlideImagesHash : undefined,
       _nextElements : undefined,
       _prevElements : undefined,
@@ -80,6 +81,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         _me._overwritePageLayout = 'SimpleLayout';
         _me._preloadSlideAjaxMode = '';
+        _me._preloadSlideParams = new Hash();
         _me._counterLeadingZeros = false;
         _me._centerSlide = true;
         _me._autoresize = false;
@@ -503,6 +505,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._preloadSlideAjaxMode = preloadSlideAjaxMode;
       },
 
+      addPreloadSlideParam : function(params) {
+        var _me = this;
+        _me._preloadSlideParams.merge(params);
+      },
+
       setCenterSlide : function(isCenterSlide) {
         var _me = this;
         _me._centerSlide = isCenterSlide;
@@ -526,6 +533,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         if (_me._preloadSlideAjaxMode != '') {
           params['ajax_mode'] = _me._preloadSlideAjaxMode;
         }
+        params = _preloadSlideParams.merge(params).toObject();
         new Ajax.Request(_me._convertFullNameToViewURL(slideFN), {
           method: 'post',
           parameters: params,
