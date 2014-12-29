@@ -40,42 +40,49 @@ CELEMENTS.mobile.Dimensions.prototype = {
     _dimLogging : false,
 
     isMobile : {
-        Android: function() {
-          return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function() {
-          return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function() {
-          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        iPhone: function() {
-          return navigator.userAgent.match(/iPhone/i);
-        },
-        iPod: function() {
-          return navigator.userAgent.match(/iPod/i);
-        },
-        iPad: function() {
-          return navigator.userAgent.match(/iPad/i);
-        },
-        Opera: function() {
-          return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function() {
-          return navigator.userAgent.match(/IEMobile/i);
-        },
-        Simulator: function() {
-          // http://iphone4simulator.com/ maybe
-          return (window.top != window);
-        },
-        ChromeOn_iOS: function() {
-          return navigator.userAgent.match(/CriOS/i);
-        },
-        any: function() {
-          var _me = this;
-          return (_me.Android() || _me.BlackBerry() || _me.iOS() || _me.Opera()
-              || _me.Windows());
-        }
+      Safari: function() {
+        var _me = this;
+        return navigator.userAgent.match(/Safari/i) && !_me.Chrome();
+      },
+      Chrome: function() {
+        return navigator.userAgent.match(/Chrome/i);
+      },
+      Android: function() {
+        return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      iPhone: function() {
+        return navigator.userAgent.match(/iPhone/i);
+      },
+      iPod: function() {
+        return navigator.userAgent.match(/iPod/i);
+      },
+      iPad: function() {
+        return navigator.userAgent.match(/iPad/i);
+      },
+      Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+      },
+      Simulator: function() {
+        // http://iphone4simulator.com/ maybe
+        return (window.top != window);
+      },
+      ChromeOn_iOS: function() {
+        return navigator.userAgent.match(/CriOS/i);
+      },
+      any: function() {
+        var _me = this;
+        return (_me.Android() || _me.BlackBerry() || _me.iOS() || _me.Opera()
+            || _me.Windows());
+      }
     },
 
     _init : function() {
