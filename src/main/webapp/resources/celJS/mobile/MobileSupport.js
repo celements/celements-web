@@ -82,6 +82,15 @@ CELEMENTS.mobile.Dimensions.prototype = {
         var _me = this;
         return (_me.Android() || _me.BlackBerry() || _me.iOS() || _me.Opera()
             || _me.Windows());
+      },
+      version: function() {
+        var _me = this;
+        if (_me.Safari()) {
+          return navigator.userAgent.match(/Version\/(\d+\.\d+)/)[1];
+        } else if (_me.Chrome()) {
+          return navigator.userAgent.match(/Chrome\/(\d+\.\d+)/)[1];
+        }
+        return $j.browser.version;
       }
     },
 
