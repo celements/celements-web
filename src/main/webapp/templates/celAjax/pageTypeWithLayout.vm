@@ -2,6 +2,8 @@
 #if("$!request.overwriteLayout" != '')
 #set($pageLayoutMainDocRef = $services.model.createDocumentReference('', "$!request.overwriteLayout", ''))
 #set($overwriteLayoutRef = $pageLayoutMainDocRef.getLastSpaceReference())
+#set($pageLayoutCentalMainDocRef = $services.model.createDocumentReference('celements2web', "$!request.overwriteLayout", ''))
+#set($overwriteLayoutCentralRef = $pageLayoutCentalMainDocRef.getLastSpaceReference())
 #end
 ##only include if legacy celements2web.xar is installed
 #if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
@@ -29,6 +31,8 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 <!-- start celements cells -->
 #if(("$!overwriteLayoutRef" != '') && $celementsweb.layoutExists($overwriteLayoutRef))
 #set($pageContent = $celementsweb.renderPageLayout($overwriteLayoutRef))
+#elseif(("$!overwriteLayoutCentralRef" != '') && $celementsweb.layoutExists($overwriteLayoutCentralRef))
+#set($pageContent = $celementsweb.renderPageLayout($overwriteLayoutCentralRef))
 #else
 #set($pageContent = $celementsweb.renderPageLayout())
 #end
