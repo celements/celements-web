@@ -502,11 +502,13 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
 
       setPreloadSlideAjaxMode : function(preloadSlideAjaxMode) {
         var _me = this;
+        console.log('setPreloadSlideAjaxMode: ', preloadSlideAjaxMode);
         _me._preloadSlideAjaxMode = preloadSlideAjaxMode;
       },
 
       addPreloadSlideParam : function(params) {
         var _me = this;
+        console.log('addPreloadSlideParam: ', params);
         _me._preloadSlideParams = _me._preloadSlideParams.merge(params);
       },
 
