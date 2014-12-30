@@ -507,7 +507,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
 
       addPreloadSlideParam : function(params) {
         var _me = this;
-        _me._preloadSlideParams.merge(params);
+        _me._preloadSlideParams = _me._preloadSlideParams.merge(params);
       },
 
       setCenterSlide : function(isCenterSlide) {
