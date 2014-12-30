@@ -502,13 +502,13 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
 
       setPreloadSlideAjaxMode : function(preloadSlideAjaxMode) {
         var _me = this;
-        console.log('setPreloadSlideAjaxMode: ', preloadSlideAjaxMode);
+//        console.log('setPreloadSlideAjaxMode: ', preloadSlideAjaxMode);
         _me._preloadSlideAjaxMode = preloadSlideAjaxMode;
       },
 
       addPreloadSlideParam : function(params) {
         var _me = this;
-        console.log('addPreloadSlideParam: ', params);
+//        console.log('addPreloadSlideParam: ', params);
         _me._preloadSlideParams = _me._preloadSlideParams.merge(params);
       },
 
@@ -535,7 +535,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         if (_me._preloadSlideAjaxMode != '') {
           params['ajax_mode'] = _me._preloadSlideAjaxMode;
         }
-        params = _preloadSlideParams.merge(params).toObject();
+        params = _me._preloadSlideParams.merge(params).toObject();
         new Ajax.Request(_me._convertFullNameToViewURL(slideFN), {
           method: 'post',
           parameters: params,
