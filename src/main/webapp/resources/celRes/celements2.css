@@ -798,6 +798,7 @@ img.cel_fluidresizeHeight {
  **/
 div.presentationList {
   position: relative;
+  overflow: hidden; /** needed to bind clear both **/
 }
 div.presentationList > ul {
   list-style: none;
