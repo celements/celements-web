@@ -796,6 +796,9 @@ img.cel_fluidresizeHeight {
 /**
  * Presentation module
  **/
+div.presentationList {
+  position: relative;
+}
 div.presentationList > ul {
   list-style: none;
   margin: 0px;
