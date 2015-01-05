@@ -807,4 +807,6 @@ div.presentationList > ul > li {
   margin: 0px;
   padding: 0px;
 }
- 
+div.presentationList > div.navigation-clear {
+  clear: both;
+}
