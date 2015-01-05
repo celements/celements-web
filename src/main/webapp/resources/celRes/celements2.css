@@ -793,3 +793,18 @@ img.cel_fluidresizeHeight {
   width: auto;
   height: 100%;
 }
+/**
+ * Presentation module
+ **/
+div.presentationList > ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+div.presentationList > ul > li {
+  display: block;
+  float: left;
+  margin: 0px;
+  padding: 0px;
+}
+ 
