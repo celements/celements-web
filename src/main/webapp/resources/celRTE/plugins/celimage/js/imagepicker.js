@@ -147,7 +147,7 @@ var tagSelectedLoadAttachmentList = function() {
   startPos = 0;
   $('attachments').update(loadingImg);
   loadAttachmentList(baseurl);
-}
+};
 
 var loadAttachmentList = function(baseurl) {
   var attachEl = document.getElementById("attachments");
