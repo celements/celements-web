@@ -1,5 +1,7 @@
 <div class="cel_pagepropertiesTab">
-<form id="propertiesEdit" method="post" action="$doc.getURL('save')">
+<form id="propertiesEdit" method="post" action="?">
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 <div id="pro_pagetypeEdit" class="editblock" onfocus="setFocus('pro_pagetypeEdit');" onblur="removeFocus('pro_pagetypeEdit');">
 	$adminMsg.get('cel_tm_page_type'):
 	#set($cel_pageTypeObj = $doc.getObject('Celements2.PageType'))
@@ -19,19 +21,16 @@
     #end
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_type" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_type">
       #foreach($item in $pageTypeList)
-        #set($pt_doc = $xwiki.getDocument($item))
-         #set($page_type_properties_obj = '')
-         #set($page_type_properties_obj = $pt_doc.getObject('Celements2.PageTypeProperties'))
-        #if(("$!page_type_properties_obj" == '') || ("$!page_type_properties_obj.getProperty('visible').getValue()" == '1'))
-         #if("$!page_type_properties_obj" != '')
-          #set($pretty_name = $!page_type_properties_obj.getProperty('type_name').getValue())
-        #else
-          #set($pretty_name = $pt_doc.getName())
-        #end        
-        <option value="$pt_doc.getName()" #if("$!pt_doc.getName()" == "$!page_type") selected="selected" #set($selectedFound = true)#end label="$!pretty_name">$!pretty_name</option>
+        #set($ptConfig = $services.pageType.getPageTypeConfig($item))
+        #if($ptConfig.isVisible())
+        <option value="$!{ptConfig.getName()}"##
+          #if("$!{ptConfig.getName()}" == "$!page_type")##
+            selected="selected"##
+          #end##
+          label="$!ptConfig.getPrettyName()">$!ptConfig.getPrettyName()</option>
         #end
       #end
-      #if(!$selectedFound)
+      #if(!$pageTypeList.contains("PageTypes.$!{ptConfig.getName()}"))
         <option value="$page_type" selected="selected" label="Unknown PageType">Unknown PageType</option>
       #end
       </select>
