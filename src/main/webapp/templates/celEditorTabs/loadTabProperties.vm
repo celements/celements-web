@@ -30,7 +30,7 @@
           label="$!ptConfig.getPrettyName()">$!ptConfig.getPrettyName()</option>
         #end
       #end
-      #if(!$pageTypeList.contains("PageTypes.$!{ptConfig.getName()}"))
+      #if(!$pageTypeList.contains("PageTypes.$!{page_type}"))
         <option value="$page_type" selected="selected" label="Unknown PageType">Unknown PageType</option>
       #end
       </select>
