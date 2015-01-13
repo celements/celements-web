@@ -21,6 +21,7 @@
     #end
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_type" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_type">
       #foreach($item in $pageTypeList)
+        <!-- pageType: $item -->
         #set($ptConfig = $services.pageType.getPageTypeConfig($item))
         #if($ptConfig.isVisible())
         <option value="$!{ptConfig.getName()}"##
@@ -30,7 +31,7 @@
           label="$!ptConfig.getPrettyName()">$!ptConfig.getPrettyName()</option>
         #end
       #end
-      #if(!$pageTypeList.contains("PageTypes.$!{page_type}"))
+      #if(!$pageTypeList.contains("$!{page_type}"))
         <option value="$page_type" selected="selected" label="Unknown PageType">Unknown PageType</option>
       #end
       </select>
