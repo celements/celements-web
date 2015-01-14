@@ -19,8 +19,13 @@
     #else
       #set($pageTypeList = $services.pageType.getAvailablePageTypes())
     #end
+    #set($treeMap = $util.getTreeMap())
+    #foreach($item in $pageTypeList)
+      #set($ptConfig = $services.pageType.getPageTypeConfig($item))
+      #set($!devNull = $treeMap.put($!ptConfig.getPrettyName(), $item))
+    #end
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_type" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_type">
-      #foreach($item in $pageTypeList)
+      #foreach($item in $treeMap.values())
         <!-- pageType: $item -->
         #set($ptConfig = $services.pageType.getPageTypeConfig($item))
         #if($ptConfig.isVisible())
