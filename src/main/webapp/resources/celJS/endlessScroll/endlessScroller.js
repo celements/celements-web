@@ -165,6 +165,9 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       }
       if((pos + _me.overlap) >= 0) {
         _me._executeActionCallback();
+      } else if (_me._isLogEnabled()) {
+        console.log('_checkIsScrollBottom: skipp executeActionCallback ',
+            (pos + _me.overlap));
       }
     },
     
