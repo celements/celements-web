@@ -158,10 +158,18 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         console.log('_checkIsScrollBottom: ', event);
       }
       var pos = 0;
-      if(_me.isScrollBlockEle) {
-        pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
+      var params = {
+        'currentScrollOverflow' : null
+      };
+      var scrollPosEvent = _me.htmlElem.fire('celEndlesScroll:ScrollPosEvent', params); 
+      if (!scrollPosEvent.stopped) {
+        if(_me.isScrollBlockEle) {
+          pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
+        } else {
+          pos = -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
+        }
       } else {
-        pos = -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
+        pos = -params.currentScrollOverflow;
       }
       if((pos + _me.overlap) >= 0) {
         _me._executeActionCallback();
