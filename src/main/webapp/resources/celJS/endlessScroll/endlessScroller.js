@@ -170,6 +170,9 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
         }
       } else {
         pos = -params.currentScrollOverflow;
+        if (_me._isLogEnabled()) {
+          console.log('_checkIsScrollBottom: scrollPosEvent stopped and got pos ', pos);
+        }
       }
       if((pos + _me.overlap) >= 0) {
         _me._executeActionCallback();
