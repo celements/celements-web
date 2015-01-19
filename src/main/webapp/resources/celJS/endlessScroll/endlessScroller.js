@@ -161,7 +161,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       var params = {
         'currentScrollOverflow' : null
       };
-      var scrollPosEvent = _me.htmlElem.fire('celEndlesScroll:ScrollPosEvent', params); 
+      var scrollPosEvent = _me.htmlElem.fire('celEndlessScroll:ScrollPosEvent', params); 
       if (!scrollPosEvent.stopped) {
         if(_me.isScrollBlockEle) {
           pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
