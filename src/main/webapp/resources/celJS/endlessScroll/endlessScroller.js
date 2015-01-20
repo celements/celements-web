@@ -155,7 +155,11 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       var _me = this;
       if (_me._isLogEnabled() && (typeof console != 'undefined')
           && (typeof console.log != 'undefined')) {
-        console.log('_checkIsScrollBottom: ', event);
+        console.log('_checkIsScrollBottom: ', event, _me._isLoading);
+      }
+      if (_me._isLoading) {
+        // already loading
+        return;
       }
       var pos = 0;
       var params = {
