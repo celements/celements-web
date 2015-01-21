@@ -296,6 +296,7 @@ var clickOnFileAction = function (event) {
   if (!filename) {
     filename = selectElem.href;
   }
+  console.log('clickOnFileAction: filename ', filename);
   if (filename && document.forms[0].src) {
     filename = filename.replace(/^(.+)\?.*/, '$1');
     document.forms[0].src.value = filename;
