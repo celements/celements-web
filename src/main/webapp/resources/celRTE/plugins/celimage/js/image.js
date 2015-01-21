@@ -1084,6 +1084,7 @@ var CelImageDialog = {
     var _me = this;
     var f = document.forms[0], nl = f.elements;
 
+    console.log('showPreviewImage: filename ', u);
     if (!u || (u == '')) {
       tinyMCEPopup.dom.setHTML('prev', '<p style="padding:20px;">' + tinyMCEPopup.getLang(
           'celimage_dlg.select_image_first') +'</p>');
