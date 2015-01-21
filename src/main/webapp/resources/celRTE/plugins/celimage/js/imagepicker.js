@@ -250,9 +250,11 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck,
       if (imgElem.src == currentImgSrc) {
         cssClasses += ' selected';
       }
+      var thmbImgSrc = (imgElem.src + '?celheight=' + imagePickerMaxDimension
+          + '&celwidth=' + imagePickerMaxDimension);
+      console.log('loadAttachmentListCallback: insert img ', thmbImgSrc);
       var imgThmb = new Element('img', {
-        'src' : (imgElem.src + '?celheight=' + imagePickerMaxDimension + '&celwidth='
-            + imagePickerMaxDimension)
+        'src' : thmbImgSrc
       });
       var imgContainerDiv = new Element('div', {
         'class' : cssClasses
