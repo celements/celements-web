@@ -252,7 +252,6 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck,
       }
       var thmbImgSrc = (decodeURI(imgElem.src) + '?celheight=' + imagePickerMaxDimension
           + '&celwidth=' + imagePickerMaxDimension);
-      console.log('loadAttachmentListCallback: insert img ', thmbImgSrc);
       var imgThmb = new Element('img', {
         'src' : thmbImgSrc
       });
