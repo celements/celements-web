@@ -1106,7 +1106,9 @@ var CelImageDialog = {
       $('cropY').value = '';
       $('cropWidth').value = '';
       $('cropHeight').value = '';
-//      console.log('showPreviewImage: image changed');
+      console.log('showPreviewImage: image changed');
+    } else {
+      console.log('showPreviewImage: image NOT changed');
     }
 
 //    console.log('showPreviewImage: new URL ', u);
