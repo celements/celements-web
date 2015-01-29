@@ -39,6 +39,4 @@ $overlayResult
   #end
 #end
 #end
-#if(!$disableViewInBackground)
-  $xwiki.parseTemplate("view.vm")
-#end
+$xwiki.parseTemplate("view.vm")
