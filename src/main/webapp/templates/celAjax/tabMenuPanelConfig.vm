@@ -19,7 +19,9 @@
   "id" : "tb3",##
   "label" : "${adminMsg.get('cel_tm_attachments')}"##
 #end
-#if($isAdmin && !$doc.isNew())
+##FP; 30.1.2015; removing isAdmin check for tabrights, because ContentEditors must be
+## able to define publication time frames.
+#if(!$doc.isNew())
 },{##
   "id" : "tbrights",##
   "label" : "${adminMsg.get('cel_tm_rights')}"##
