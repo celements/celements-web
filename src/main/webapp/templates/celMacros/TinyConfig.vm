@@ -1,0 +1,301 @@
+#if("$!celNewButtons" == '')
+#set($celNewButtons = $services.celementsweb.useNewButtons())
+#end
+#if("$!tinyMCE_statuslocation" == '')
+  #set($tinyMCE_statuslocation = 'bottom')
+#end
+#if("$!tinyMCE_height" == '')
+  #set($tinyMCE_height = 500)
+#end
+#if("$!tinyMCE_width" == '')
+  #set($tinyMCE_width = 453)
+#end
+#set($xwikiPref_template_url = "$!xwiki.getDocument('XWiki.XWikiPreferences').getAttachment('template-list.js')")
+#set($webPref_template_url = "$!xwiki.getDocument('${doc.space}.WebPreferences').getAttachment('template-list.js')")
+#if(!$services.celementsweb.getRTETemplateList().isEmpty())
+  #set($template_external_list_url = $doc.getURL($context.action, 'xpage=celements_ajax&ajax_mode=tinyTemplateList'))
+#elseif ("$!webPref_template_url" != '')
+  #set($template_external_list_url = $!services.celementsweb.getSkinFile("${doc.space}.WebPreferences;template-list.js", 'file'))
+#elseif ("$!xwikiPref_template_url" != '')
+  #set($template_external_list_url = $!services.celementsweb.getSkinFile('XWiki.XWikiPreferences;template-list.js', 'file'))
+#else
+  #set($template_external_list_url = $!services.celementsweb.getSkinFile("$services.model.serialize($skin_doc.documentReference, 'default');template-list.js", 'file'))
+#end
+{ 
+  "mode" : "specific_textareas",
+  "editor_selector" : "mceEditor",
+  "editor_deselector" : "mceNoEditor",
+#set($pageStyles = '')
+#if("$!{xwiki.celementsweb.getPageLayoutForDoc($doc.documentReference)}" != '')
+#set($pageStyles = "layout_$!{xwiki.celementsweb.getPageLayoutForDoc($doc.documentReference)}")
+#end
+##TODO get pageStyles from pageType-scriptService
+#set($cel_pageTypeObj = $doc.getObject('Celements2.PageType', true))
+#set($pageStyles = "$!{pageStyles} $!cel_pageTypeObj.getProperty('page_styles').getValue()")
+  "body_class" : "$!{pageStyles.trim()}",
+  "language" : "$admin_language",
+  "theme" : "advanced",
+  "oninit" : "celFinishTinyMCEStart",
+  "editor_css" : "$services.celementsweb.getSkinFile(':celRTE/celements-ui.css')",
+  ## lookup the additional rte_plugins field in the XWiki and WebPreference
+  #set($rtePluginsConfig = $celementsweb.getRTEConfigField('plugins'))
+  ##FP 16.11.2012; remove "autoresize" from rtePluginsPre because there are issues
+  #set($rtePluginsPre = ["safari","save","paste","advlink","template","table","lists","inlinepopups","advimage","contextmenu","celimage"])
+  #set($rteOmitPlugins = [])
+  #if("$!rtePluginsConfig" != '')
+    #foreach($oneRtePlugin in $rtePluginsConfig.split('[,| ]'))
+      #if($oneRtePlugin.startsWith('-'))
+        #set($!dev = $rteOmitPlugins.add($oneRtePlugin.replaceFirst('-','')))
+      #elseif("$!oneRtePlugin" != '')
+        #set($!dev = $rtePluginsPre.add($oneRtePlugin))
+      #end
+    #end
+  #end
+  #set($rtePlugins = '')
+    #foreach($oneRtePlugin in $rtePluginsPre)
+      #if(("$!oneRtePlugin" != '') && !$rteOmitPlugins.contains($oneRtePlugin))
+        #set($rtePlugins = "$!{rtePlugins},$!oneRtePlugin")
+      #end
+    #end
+  "plugins" : "${rtePlugins}",
+  "save_enablewhendirty" : false,
+  "save_onsavecallback" : "simplySave",
+  "save_cancelFunction" : "cancelAndClose",
+  "theme_advanced_layout_manager" : "SimpleLayout",
+  "theme_advanced_toolbar_location" : "top",
+  "theme_advanced_toolbar_align" : "left",
+  "height" : "$tinyMCE_height",
+  "width" : "$tinyMCE_width",
+  "template_external_list_url" : "$!template_external_list_url",
+  "theme_advanced_statusbar_location" : "$tinyMCE_statuslocation",
+  "theme_advanced_resize_horizontal" : false,
+  "theme_advanced_resizing" : true,
+  "apply_source_formatting" : true,
+  "advimage_constrain_proportions" : true,
+  "relative_urls" : false,
+  "document_base_url" : "/",
+  "inline_styles" : true,
+  "accessibility_warnings" : false,
+  #set($content_css_filenameURL = "$celementsweb.getSkinFile(':celRes/celements2-content.css', 'file')")
+  #foreach($cssObj in $xwiki.celementsweb.getRTEContentCSS())
+  #if("$!{cssObj.getCSS()}" != '')
+      #set($content_css_filenameURL = "$!{content_css_filenameURL},$!{cssObj.getCSS()}")
+    #end
+  #end
+  #if("$!content_css_filenameURL" != '')
+  "content_css" : "$!{content_css_filenameURL.replaceAll('^,', '')}",
+  #end
+  ## lookup the rte_styles field in the XWiki and WebPreference
+  #set($rteStyles = $celementsweb.getRTEConfigField('styles'))
+##  #if("$!rteStyles" == '')
+##    ## default back to the standard fields.
+##    #set($rteStyles = 'cel_rte_style_titel=h1;cel_rte_style_untertitel=h2;cel_rte_style_text=text')
+##  #end
+  ## get multilingual style names
+  #set($mlRteStyle = '')
+  #set($mlRteStyleName = '')
+  #foreach($rteStyleElement in $rteStyles.split('[=;]'))
+    #if($velocityCount%2 == 1)
+      #set($mlRteStyleName = $adminMsg.get("$rteStyleElement"))
+    #elseif("$mlRteStyleName" != '')
+      #set($mlRteStyle = "${mlRteStyle}${mlRteStyleName}=${rteStyleElement};")
+      #set($mlRteStyleName = '')
+    #end
+  #end
+  ## lookup the rte button layout in XWiki- and WebPreferences and
+  ## default back to the standard fields
+  #set($rte_row_1 = $celementsweb.getRTEConfigField('row_1'))
+  #if("$!rte_row_1" == '')
+    #if(!$celNewButtons)
+      #set($rte_row_1 = "$!{rte_row_1}save,cancel,|,")
+    #end
+    #set($rte_row_1 = "$!{rte_row_1}bold,italic,underline,|,")
+    #set($rte_row_1 = "$!{rte_row_1}justifyleft,justifycenter,justifyright,justifyfull,")
+    #set($rte_row_1 = "$!{rte_row_1}|,bullist,numlist,|,link,unlink,")
+    #set($rte_row_1 = "$!{rte_row_1}image,forecolor,backcolor,|,code")
+  #elseif("$!rte_row_1" == 'none')
+    #set($rte_row_1 = '')
+  #end
+  #set($rte_row_2 = $celementsweb.getRTEConfigField('row_2'))
+  #if("$!rte_row_2" == '')
+    #set($rte_row_2 = 'styleselect,fontselect,fontsizeselect,pastetext,pasteword')
+  #elseif("$!rte_row_2" == 'none')
+    #set($rte_row_2 = '')
+  #end
+  #set($rte_row_3 = $celementsweb.getRTEConfigField('row_3')) 
+  #if("$!rte_row_3" == '')
+    #set($rte_row_3 = 'tablecontrols')
+  #elseif("$!rte_row_3" == 'none')
+    #set($rte_row_3 = '')
+  #end
+  #if($rte_supress_cancel)
+    #set($rte_row_1 = "$!{rte_row_1.replaceAll('cancel,?(\|,|separator,)?','')}")
+    #set($rte_row_2 = "$!{rte_row_2.replaceAll('cancel,?(\|,|separator,)?','')}")
+    #set($rte_row_3 = "$!{rte_row_3.replaceAll('cancel,?(\|,|separator,)?','')}")
+  #end
+  #if($rte_supress_save)
+    #set($rte_row_1 = "$!{rte_row_1.replaceAll('save,?(\|,|separator,)?','')}")
+    #set($rte_row_2 = "$!{rte_row_2.replaceAll('save,?(\|,|separator,)?','')}")
+    #set($rte_row_3 = "$!{rte_row_3.replaceAll('save,?(\|,|separator,)?','')}")
+  #end
+  ## get other rte preferences
+  #set($rte_cancel_option = "$!userObj.getProperty('rte_cancel_option').getValue()")
+  #if("$!rte_cancel_option" == '') 
+    #set($rte_cancel_option = 'ask')
+  #end
+  "theme_advanced_styles" : "$!mlRteStyle.replaceAll(';$','')",
+  "theme_advanced_buttons1" : "$rte_row_1",
+  "theme_advanced_buttons2" : "$rte_row_2",
+  "theme_advanced_buttons3" : "$rte_row_3",
+  #set($rte_blockformats = $celementsweb.getRTEConfigField('blockformats'))
+  ## get multilingual blockformat names
+  #set($mlBlockFormat = '')
+  #set($mlBlockFormatName = '')
+  #foreach($blockFormatElement in $rte_blockformats.split('[=,]'))
+    #if($velocityCount%2 == 1)
+      #set($mlBlockFormatName = $adminMsg.get("$blockFormatElement"))
+    #elseif("$mlBlockFormatName" != '')
+      #set($mlBlockFormat = "${mlBlockFormat}${mlBlockFormatName}=${blockFormatElement},")
+      #set($mlBlockFormatName = '')
+    #end
+  #end
+  "theme_advanced_blockformats" : "$!mlBlockFormat.replaceAll(',$','')",
+  ## lookup the rte valid elements in XWiki- and WebPreferences and
+  ## default back to the standard configuration
+  ##TODO move to API-Call for better control on defaults.
+  #set($rte_valid_elements = $celementsweb.getRTEConfigField('valid_elements'))
+  #if("$!rte_valid_elements" == '')
+    #set($rte_valid_elements = "$!{rte_valid_elements}+a[href|class|target|onclick|name|id|title|rel|hreflang],b/strong,br,")
+    #set($rte_valid_elements = "$!{rte_valid_elements}caption,#h?[align<center?justify?left?right|class|style|id],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}hr[class|width|size|noshade],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}img[width|height|class|align|style|src|border=0|alt|id|title|usemap],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}i/em,#p[style|class|name|id],-span[class|style|id|title],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}textformat[blockindent|indent|leading|leftmargin|rightmargin|tabstops],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}sub[class],sup[class],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}table[align<center?left?right|bgcolor|border|cellpadding|cellspacing|class|height|width|style|id|title],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}tbody[align<center?char?justify?left?right|class|valign<baseline?bottom?middle?top],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}#td[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|nowrap<nowrap|style|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|width],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}#th[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|style|width],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}thead[align<center?char?justify?left?right|class|valign<baseline?bottom?middle?top],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}-tr[align<center?char?justify?left?right|bgcolor|class|style|rowspan|valign<baseline?bottom?middle?top|id],")
+    #set($rte_valid_elements = "$!{rte_valid_elements}-ol[class|type|compact],-ul[class|type|compact],#li[class]")
+  #end
+  "valid_elements" : "$rte_valid_elements",
+  ## lookup the rte invalid elements in XWiki- and WebPreferences and
+  ## default back to the standard configuration
+  ##TODO move to API-Call for better control on defaults.
+  #set($rte_invalid_elements = $celementsweb.getRTEConfigField('invalid_elements'))
+  #if("$!rte_invalid_elements" == '')
+    #set($rte_invalid_elements = "$!{rte_invalid_elements}abbr,acronym,address,applet,area,base,basefont,bdo,big,")
+    #set($rte_invalid_elements = "$!{rte_invalid_elements}blockquote,body,button,center,cite,code,col,colgroup,")
+    #set($rte_invalid_elements = "$!{rte_invalid_elements}dd,del,dfn,dir,div,dl,dt,fieldset,font,form,frame,")
+    #set($rte_invalid_elements = "$!{rte_invalid_elements}frameset,head,html,iframe,input,ins,isindex,")
+    #set($rte_invalid_elements = "$!{rte_invalid_elements}kbd,label,legend,link,map,menu,meta,noframes,noscript,")
+    #set($rte_invalid_elements = "$!{rte_invalid_elements}object,optgroup,option,param,pre/listing/plaintext/xmp,")
+    #set($rte_invalid_elements = "$!{rte_invalid_elements}q,s,samp,script,select,small,strike,textarea,tfoot,")
+    #set($rte_invalid_elements = "$!{rte_invalid_elements}tt,u,var")
+  #end
+  "invalid_elements" : "$rte_invalid_elements",
+  ##
+  #set($spellCheckTest = ",$!{rtePlugins},")
+  #if($spellCheckTest.contains(',spellchecker,'))
+    "spellchecker_languages" : "+English=en-us,French=fr,German=de,Italian=it",
+    "spellchecker_rpc_url" : "/jmyspell-spellchecker",
+  #end
+  "celanim_slideshow" : $!celementsweb.useImageAnimations(),
+  #set($useCelCrop = ("$!xwiki.getSpacePreference('celcrop')" == '1'))
+  "cel_crop" : $useCelCrop,
+  #if($celementsweb.useImageAnimations())
+    #set($galleriesXWQL = "from doc.object(XWiki.PhotoAlbumClass) as album")
+    #set($galleriesXWQL = "${galleriesXWQL} where doc.fullName <> 'XWiki.PhotoAlbumClassTemplate'")
+    #set($galleriesXWQL = "${galleriesXWQL} and doc.translation=0")
+    #set($galleriesXWQL = "${galleriesXWQL} order by doc.title, doc.name")
+    #set($availableGalleries = '')
+    #foreach($galleryFN in $services.query.xwql($galleriesXWQL).execute())
+      #set($galleryDoc = $xwiki.getDocument($galleryFN))
+      #set($galleryName = "$!galleryDoc.title ($!galleryDoc.name)")
+      #set($availableGalleries = "$!{availableGalleries},${galleryName}=${galleryFN}")
+    #end
+    "gallerylist" : "$availableGalleries.replaceFirst(',','')",
+  #end
+  ##
+  ## file base link, file picker link
+  #if(("$!xwiki.getSpacePreference('cel_centralfilebase')" != '') && ("$!xwiki.getSpacePreference('cel_centralfilebase')" != '-'))
+    #set($wiki_filbase_path = "$!xwiki.getSpacePreference('cel_centralfilebase')")
+  #else
+    #set($wiki_filbase_path = "$doc.getFullName()")
+  #end
+  "wiki_images_path" : "$xwiki.getURL($wiki_filbase_path, 'download')",
+  #set($attachmentPath = "$xwiki.getURL($wiki_filbase_path, 'view')")
+  #set($attachmentDLPath = "$xwiki.getURL($wiki_filbase_path, 'download')")
+  #if("$!imagePickerAttPath" != '')
+    #set($attachmentDLPath = $xwiki.getURL("$!imagePickerAttPath", 'download'))
+    #set($attachmentPath = $xwiki.getURL("$!imagePickerAttPath", 'view'))
+  #end
+  "wiki_attach_path" : "$attachmentPath",
+  "wiki_imagedownload_path" : "$attachmentDLPath",
+  #set($linkPickerSpaces = "$!linkPickerSpaces") ## linkPickerSpaces could be undefined
+  ##FIXME move to blog-component after adding a linkPicker-api
+  #set($blogPageDoc = $xwiki.celementsblog.getBlogPageByBlogSpace("$doc.space"))
+  #if("$!blogPageDoc" != '')
+    #set($linkPickerSpaces = "$!blogPageDoc.space")
+  #end
+  ##FIXME $linkPickerSpace must be given by input parameter depending on rte context
+  #set($linkPickerSpace = "$doc.space")
+  #set($filePickerSpace = "$linkPickerSpace") ## filePickerSpace must be a single space!!
+  #if("$!linkPickerSpaces" != '')
+    #set($linkPickerSpace = "$!linkPickerSpaces")
+  #end
+  #set($parentSpace = "$!{xwiki.getSpacePreference('parent')}")
+  #if(("$!parentSpace" != '') && ($linkPickerSpace.indexOf("$!{parentSpace}") < 0))
+    #set($linkPickerSpace = "$!linkPickerSpace,$!{parentSpace}")
+  #end
+  #set($fileUploadSpace = "$doc.space")
+  #if("$!fileBaseUploadSpace" != '')
+    #set($fileUploadSpace = "$!fileBaseUploadSpace")
+  #end
+  #set($isSingle = '1')
+  #if("$!fileBaseSingleDoc" != '')
+    #set($isSingle = "$fileBaseSingleDoc")
+  #end
+  #if("$!fileBasePickerSpace" != '')
+    #set($filePickerSpace = "$!fileBasePickerSpace")
+  #end
+  #set($filePickerDoc = $doc.getName())
+  #if("$!singleAttachmentDocument" != '')
+    #set($filePickerDoc = "$!singleAttachmentDocument")
+  #end
+#*
+  ##this is wrong in general !!!
+  ##29.08.2014 FP: removed to fix problems for Programmzeitung!!!
+  #if($linkPickerSpace.indexOf('_') >= 0)
+    #set($linkPickerSpace = $linkPickerSpace.substring(0, $linkPickerSpace.indexOf('_')))
+  #end
+*#
+  #set($allLinkPickerSpaces = "$!linkPickerSpace,$!celementsweb.getRTEConfigField('link_picker_spaces')")
+  #set($allLinkPickerSpaces = $allLinkPickerSpaces.replaceAll(',,|^,|,$', ''))
+  "wiki_linkpicker_space" : "$allLinkPickerSpaces",
+  "wiki_filepicker_upload_space" : "$fileUploadSpace",
+  "wiki_filepicker_space" : "$filePickerSpace",
+  "wiki_filepicker_doc" : "$filePickerDoc",
+  #set($fbDoc = "$!xwiki.getSpacePreference('cel_centralfilebase')")
+  #if (("$!fbDoc" == '') && ("$!parentSpace" != ''))
+    #set($fbDoc = "$!xwiki.getSpacePreferenceFor('cel_centralfilebase', $parentSpace)")
+  #end
+  #if("$!fbDoc" == '')
+    #set($fbDoc = "${filePickerSpace}_filebase.AttachmentDocument")
+  #elseif("$!fbDoc" == '-')
+    #set($fbDoc = "${filePickerSpace}.${filePickerDoc}")
+  #end
+  #set($hasUpload = '1') ## from where?
+  #set($filebaseURL = "$doc.getURL('view')")
+  #if("$!filebaseURL" == '')
+    #set($filebaseURL = "/WebHome")
+  #end
+  #set($filebaseURL = "$!{filebaseURL}?xpage=celements_ajax&ajax_mode=FileBase&picker=1")
+  #set($filebaseURL = "$!{filebaseURL}&single_doc=${fbDoc}&fieldname=href")
+  #set($filebaseURL = "$!{filebaseURL}&src_doc=${filePickerSpace}.${filePickerDoc}&columns=10")
+  #set($filebaseURL = "$!{filebaseURL}&root=${filePickerSpace}&hasUpload=$hasUpload")
+  "wiki_filebase_link" : "$!{filebaseURL}",
+  "wiki_filebase_single_doc" : "$isSingle" ##
+}
