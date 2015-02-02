@@ -429,13 +429,14 @@ TE.prototype = {
     var tabBodyId = tabId + '-tab';
     var div = $(tabBodyId);
     var asyncLoading = false;
+    var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
     if ((div == null) || ((reload != 'undefined') && reload)) {
       if (div == null) {
-        var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
         div = new Element('div', {
           'class': 'menuTab ' + tabBodyId,
-          'id': tabBodyId,
-          'style': 'width: ' + width
+          'id': tabBodyId
+        }).setStyle({
+          'width' : width
         });
       }
       var loaderspan = new Element('span', { 'class': 'tabloader' });
@@ -496,6 +497,10 @@ TE.prototype = {
         }
       });
     }
+    //fix celements3_tabMenu width
+    $(tabBodyId).up('.celements3_tabMenu').setStyle({
+      'width' : width
+    });
     $(tabBodyId).show();
     if (!asyncLoading) {
       $(tabBodyId).fire('tabedit:tabchange', {
