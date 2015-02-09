@@ -67,23 +67,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
   var CPO = CELEMENTS.presentation.Overlay;
 
   CELEMENTS.presentation.Overlay.prototype = {
-      _overlayDialog : null,
-      _defaultConfig : {
-        'dialogId' : 'modal dialog',
-        'containerId' : 'yuiOverlayContainer',
-        "width" : "300px",
-        fixedcenter: true, 
-        visible: false, 
-        draggable: false, 
-        close: false, 
-        zindex: 101, 
-        modal:true,
-        monitorresize:false,
-        suppressDimFromId: false,
-//        icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
-        icon: null, 
-        constraintoviewport: true
-      },
+      _overlayDialog : undefined,
+      _defaultConfig : undefined,
       _dialogConfig : undefined,
       _bindOpenHandler : undefined,
       _bindCleanUpAfterClose : undefined,
@@ -91,9 +76,29 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _init : function(configObj) {
         var _me = this;
         configObj = configObj || {};
+        _me._defaultConfig = _me._getDefaultConfig();
         _me.updateOpenConfig(configObj);
         _me._bindOpenHandler = _me._openHandler.bind(_me);
         _me._bindCleanUpAfterClose = _me._cleanUpAfterClose.bind(_me);
+      },
+
+      _getDefaultConfig : function() {
+        return {
+          'dialogId' : 'modal dialog',
+          'containerId' : 'yuiOverlayContainer',
+          "width" : "300px",
+          fixedcenter: true, 
+          visible: false, 
+          draggable: false, 
+          close: false, 
+          zindex: 101, 
+          modal:true,
+          monitorresize:false,
+          suppressDimFromId: false,
+//          icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
+          icon: null, 
+          constraintoviewport: true
+        };
       },
 
       getContainerId : function() {
