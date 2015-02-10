@@ -254,6 +254,8 @@
                 <exclude>WEB-INF/lib/metadata-extractor-*.jar</exclude>
                 <exclude>WEB-INF/lib/commons-net-*.jar</exclude>
                 <exclude>WEB-INF/lib/slf4j-log4j12-1.5.8.jar</exclude>
+                <exclude>WEB-INF/lib/tika-core-0.8.jar</exclude>
+                <exclude>WEB-INF/lib/tika-parsers-0.8.jar</exclude>
 <!--                <exclude>WEB-INF/lib/xwiki-core-office-*.jar</exclude> -->
               </excludes>
             </overlay>
