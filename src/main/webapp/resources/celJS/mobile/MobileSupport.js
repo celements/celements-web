@@ -126,9 +126,9 @@ CELEMENTS.mobile.Dimensions.prototype = {
       } else {
         zoomStyles['transformOrigin'] = '0 0 0';
         zoomStyles['transform'] = 'scale(' + zoomFactor + ')';
-        zoomStyles['height'] = fullHeight + 'px';  // important for FF
-        zoomStyles['width'] = fullWidth + 'px';  // important for FF
       }
+      zoomStyles['height'] = fullHeight + 'px';  // important for FF
+      zoomStyles['width'] = fullWidth + 'px';  // important for FF
       return zoomStyles;
     },
 
