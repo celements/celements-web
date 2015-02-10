@@ -42,41 +42,48 @@ CELEMENTS.mobile.Dimensions.prototype = {
     isMobile : {
       Safari: function() {
         var _me = this;
-        return navigator.userAgent.match(/Safari/i) && !_me.Chrome();
+        return window.navigator.userAgent.match(/Safari/i) && !_me.Chrome();
       },
       Chrome: function() {
-        return navigator.userAgent.match(/Chrome/i);
+        return window.navigator.userAgent.match(/Chrome/i);
       },
       Android: function() {
-        return navigator.userAgent.match(/Android/i);
+        return window.navigator.userAgent.match(/Android/i);
       },
       BlackBerry: function() {
-        return navigator.userAgent.match(/BlackBerry/i);
+        return window.navigator.userAgent.match(/BlackBerry/i);
       },
       iOS: function() {
-        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        return window.navigator.userAgent.match(/iPhone|iPad|iPod/i);
       },
       iPhone: function() {
-        return navigator.userAgent.match(/iPhone/i);
+        return window.navigator.userAgent.match(/iPhone/i);
       },
       iPod: function() {
-        return navigator.userAgent.match(/iPod/i);
+        return window.navigator.userAgent.match(/iPod/i);
       },
       iPad: function() {
-        return navigator.userAgent.match(/iPad/i);
+        return window.navigator.userAgent.match(/iPad/i);
       },
       Opera: function() {
-        return navigator.userAgent.match(/Opera Mini/i);
+        return window.navigator.userAgent.match(/Opera Mini/i);
       },
       Windows: function() {
-        return navigator.userAgent.match(/IEMobile/i);
+        return window.navigator.userAgent.match(/IEMobile/i);
+      },
+      IE: function() {
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+        var trident = ua.match(/Trident.*rv\:(\d{2})\./) || false;
+        var edge = ua.match(/Edge\/(\d{2})\./) || false;
+        return (msie > 0 || trident || edge);
       },
       Simulator: function() {
         // http://iphone4simulator.com/ maybe
         return (window.top != window);
       },
       ChromeOn_iOS: function() {
-        return navigator.userAgent.match(/CriOS/i);
+        return window.navigator.userAgent.match(/CriOS/i);
       },
       any: function() {
         var _me = this;
@@ -90,12 +97,39 @@ CELEMENTS.mobile.Dimensions.prototype = {
 
     version: function() {
       var _me = this;
+      var ua = window.navigator.userAgent;
       if (_me.isMobile.Safari()) {
-        return navigator.userAgent.match(/Version\/(\d+\.\d+)/)[1];
+        return ua.match(/Version\/(\d+\.\d+)/)[1];
       } else if (_me.isMobile.Chrome()) {
-        return navigator.userAgent.match(/Chrome\/(\d+\.\d+)/)[1];
+        return ua.match(/Chrome\/(\d+\.\d+)/)[1];
+      } else  if (_me.isMobile.IE()) {
+        var msie = ua.indexOf("MSIE ");
+        var trident = ua.match(/Trident.*rv\:(\d{2})\./) || false;
+        var edge = ua.match(/Edge\/(\d{2})\./) || false;
+        if (trident) {
+          return parseInt(trident[1]);
+        } else if (edge) {
+          return parseInt(edge[1]);
+        } else {
+          return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+        }
       }
       return $j.browser.version;
+    },
+
+    getZoomStyles : function(zoomFactor, fullWidth, fullHeight) {
+      var _me = this;
+      var zoomStyles = {};
+      //zoom for IE < 9 else transform:scale
+      if (_me.isMobile.IE() && (_me.version() < 9)) {
+        zoomStyles['zoom'] = zoomFactor;
+      } else {
+        zoomStyles['transformOrigin'] = '0 0 0';
+        zoomStyles['transform'] = 'scale(' + zoomFactor + ')';
+        zoomStyles['height'] = fullHeight + 'px';  // important for FF
+        zoomStyles['width'] = fullWidth + 'px';  // important for FF
+      }
+      return zoomStyles;
     },
 
     isOrientationLandscape : function() {
@@ -203,7 +237,7 @@ CELEMENTS.mobile.Dimensions.prototype = {
           'xpage' : 'celements_ajax',
           'ajax_mode' : 'MobileLogDimAndAgent',
           'mobileDim' : Object.toJSON(_me.getDimensions()),
-          'userAgent' : navigator.userAgent,
+          'userAgent' : window.navigator.userAgent,
           'isOrientationLandscape' : _me.isOrientationLandscape(),
           'message' : logMessage
         },
