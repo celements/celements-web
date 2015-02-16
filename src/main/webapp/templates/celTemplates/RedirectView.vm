@@ -13,7 +13,7 @@
 #if(!$redURL.startsWith('http://') && !$redURL.startsWith('https://'))
   #set($redExternalURL = $xwiki.getURL($redURL, "view", "${redirectedParams}"))
   #set($redFN = $!redURL)
-  #set($redURL = $xwiki.getURL($redURL, "view"))
+  #set($redURL = $xwiki.getURL($redFN, "view"))
   #set($showIFrame = false)
 #else
   #set($redFN = '')
