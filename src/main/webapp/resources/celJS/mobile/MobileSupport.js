@@ -124,11 +124,11 @@ CELEMENTS.mobile.Dimensions.prototype = {
       if (_me.isMobile.IE() && (_me.version() < 9)) {
         zoomStyles['zoom'] = zoomFactor;
       } else if (_me.isMobile.IE() && (_me.version() < 10)) {
-        zoomStyles['-ms-transformOrigin'] = '0 0 0';
-        zoomStyles['-ms-transform'] = 'scale(' + zoomFactor + ')';
+        zoomStyles['msTransformOrigin'] = '0 0 0';
+        zoomStyles['msTransform'] = 'scale(' + zoomFactor + ')';
       } else {
-        zoomStyles['-webkit-transformOrigin'] = '0 0 0';
-        zoomStyles['-webkit-transform'] = 'scale(' + zoomFactor + ')';
+        zoomStyles['webkitTransformOrigin'] = '0 0 0';
+        zoomStyles['webkitTransform'] = 'scale(' + zoomFactor + ')';
         zoomStyles['transformOrigin'] = '0 0 0';
         zoomStyles['transform'] = 'scale(' + zoomFactor + ')';
       }
