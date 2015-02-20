@@ -321,8 +321,6 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
               if (typeof(startAtIndexOrName) === 'string') {
                 if (startAtIndexOrName === '!RANDOM!')  {
                   startAtIndex = Math.floor(Math.random() * (jsonObj.length - 1));
-                  console.log('loadMainSlides: RANDOM start ', startAtIndex,
-                      jsonObj.length);
                 } else {
                   startAtIndex = jsonObj.indexOf(spaceName + '.' + startAtIndexOrName);
                 }
