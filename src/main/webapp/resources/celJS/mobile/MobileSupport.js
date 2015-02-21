@@ -124,7 +124,7 @@ CELEMENTS.mobile.Dimensions.prototype = {
       if (_me.isMobile.IE() && (_me.version() < 9)) {
         zoomStyles['zoom'] = zoomFactor;
       } else if (_me.isMobile.IE() && (_me.version() < 10)) {
-        zoomStyles['msTransformOrigin'] = '0 0';
+        zoomStyles['msTransformOrigin'] = '0 0'; //IE9 only supports 2D values
         zoomStyles['msTransform'] = 'scale(' + zoomFactor + ')';
         zoomStyles['transformOrigin'] = '0 0 0';
         zoomStyles['transform'] = 'scale(' + zoomFactor + ')';
