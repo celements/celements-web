@@ -124,8 +124,10 @@ CELEMENTS.mobile.Dimensions.prototype = {
       if (_me.isMobile.IE() && (_me.version() < 9)) {
         zoomStyles['zoom'] = zoomFactor;
       } else if (_me.isMobile.IE() && (_me.version() < 10)) {
-        zoomStyles['msTransformOrigin'] = '0 0 0';
+        zoomStyles['msTransformOrigin'] = '0 0';
         zoomStyles['msTransform'] = 'scale(' + zoomFactor + ')';
+        zoomStyles['transformOrigin'] = '0 0 0';
+        zoomStyles['transform'] = 'scale(' + zoomFactor + ')';
       } else {
         zoomStyles['webkitTransformOrigin'] = '0 0 0';
         zoomStyles['webkitTransform'] = 'scale(' + zoomFactor + ')';
