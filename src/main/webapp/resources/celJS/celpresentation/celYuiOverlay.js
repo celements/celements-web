@@ -152,6 +152,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       getOverlayDialog : function(openConfig) {
         var _me = this;
         _me.updateOpenConfig(openConfig);
+        console.log('celYuiOverlay: getOverlayDialog ', _me._dialogConfig);
         if(!_me._overlayDialog) {
           _me._overlayDialog = new YAHOO.widget.SimpleDialog(_me._dialogConfig.dialogId,
               _me._dialogConfig);
