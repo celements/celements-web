@@ -80,10 +80,10 @@ var checkIframeTarget = function(formElm, fileUploadElm) {
   $('beforeUploadFormTarget').value = formElm.target;
   $('celementsFormId').value = Element.readAttribute(formElm, 'id');
   formElm.target = "uploadFrame";
-  if (formElem.elements['beforeUploadXpage']) {
-    formElem.elements['beforeUploadXpage'].value = formElem.elements['xpage'].value; 
+  if (formElm.elements['beforeUploadXpage']) {
+    formElm.elements['beforeUploadXpage'].value = formElm.elements['xpage'].value; 
   }
-  formElem.elements['xpage'].value = 'celements_ajax';
+  formElm.elements['xpage'].value = 'celements_ajax';
   $('uploadFrame').stopObserving('load', celUploadCallbackHandler);
   $('uploadFrame').observe('load', celUploadCallbackHandler);
 };
@@ -158,16 +158,16 @@ var uploadAtt_Cancel_ResetFormAfter = function(fileUploadInputElem) {
 };
 
 var uploadAttResetFormAfter = function(fileUploadInputElem) {
-  var formElem = fileUploadInputElem.up('form');
+  var formElm = fileUploadInputElem.up('form');
   if ($('beforeUploadFormTarget')) {
     fileUploadInputElem.up('form').target = $('beforeUploadFormTarget').value;
     $('beforeUploadFormTarget').remove();
   }
-  if (formElem.elements['beforeUploadXpage']) {
-    formElem.elements['xpage'].value = formElem.elements['beforeUploadXpage'].value;
-    formElem.elements['beforeUploadXpage'].remove();
-  } else if (formElem.elements['xpage'] != null) {
-    formElem.elements['xpage'].remove();
+  if (formElm.elements['beforeUploadXpage']) {
+    formElm.elements['xpage'].value = formElm.elements['beforeUploadXpage'].value;
+    formElm.elements['beforeUploadXpage'].remove();
+  } else if (formElm.elements['xpage'] != null) {
+    formElm.elements['xpage'].remove();
   }
   fileUploadInputElem.value = '';
   fileUploadInputElem.clear();
