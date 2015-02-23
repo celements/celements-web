@@ -184,6 +184,7 @@ var registerOnInputFields = function() {
     if((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
       console.debug('registerOnInputFields: change observer for ' + inputElem.inspect());
     }
+    inputElem.stopObserving('change', celFileSelectionChanged);
     inputElem.observe('change', celFileSelectionChanged);
   });
 };
@@ -201,4 +202,8 @@ var celFileSelectionChanged = function(event) {
   }
 };
 
-Event.observe(window, 'load', registerOnInputFields);
+
+window.celAddOnBeforeLoadListener(function() {
+  $(document.body).observe('cel_yuiOverlay:contentChanged', registerOnInputFields);
+  registerOnInputFields();
+});
