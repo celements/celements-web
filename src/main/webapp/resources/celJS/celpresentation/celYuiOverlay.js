@@ -301,13 +301,17 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var loadContentEvent = $(_me._dialogConfig.containerId).fire(
             'cel_yuiOverlay:loadFirstContent', _me._dialogConfig);
         if (!loadContentEvent.stopped) {
+          var params = {
+            'xpage' : 'celements_ajax',
+            'ajax_mode' : 'pageTypeWithLayout',
+            'ajax' : '1'
+          };
+          if (_me._dialogConfig.overlayLayout) {
+            params['overwriteLayout'] = _me._dialogConfig.overlayLayout;
+          }
           new Ajax.Request(_me._dialogConfig.overlayURL, {
             method: 'post',
-            parameters: {
-              'xpage' : 'celements_ajax',
-              'ajax_mode' : 'pageTypeWithLayout',
-              'ajax' : '1'
-            },
+            parameters: params,
             onSuccess: function(transport) {
               var yuiOverlayContainer = $(_me._dialogConfig.containerId);
               yuiOverlayContainer.update(transport.responseText);
