@@ -193,9 +193,9 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me._overlayDialog.render(yuiSamSkinDiv);
         if (_me._dialogConfig.fixedcenter) {
           $(_me._dialogConfig.containerId).stopObserving('cel_yuiOverlay:contentChanged',
-              _centerBind);
+              _me._centerBind);
           $(_me._dialogConfig.containerId).observe('cel_yuiOverlay:contentChanged',
-              _centerBind);
+              _me._centerBind);
         }
         $(document.body).fire('cel_yuiOverlay:afterRenderDialog', _me);
         return _me._overlayDialog;
