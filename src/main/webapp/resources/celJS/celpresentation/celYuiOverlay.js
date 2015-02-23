@@ -297,8 +297,12 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           var link = openConfig.link;
           var width = parseInt(link.id.split(':')[4]) + 5;
           var height = link.id.split(':')[5];
-          openConfig['width'] = width + 'px';
-          openConfig['height'] = height + 'px';
+          if (!isNaN(width)) {
+            openConfig['width'] = width + 'px';
+          }
+          if (!isNaN(height)) {
+            openConfig['height'] = height + 'px';
+          }
         }
         _me.openCelPageInOverlay(openConfig);
       },
