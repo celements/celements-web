@@ -351,7 +351,9 @@ var celMessages = {};
   celAddOnBeforeLoadListener(function() {
     if (CELEMENTS && CELEMENTS.presentation && CELEMENTS.presentation.getOverlayObj
         && CELEMENTS.presentation.getOverlayObj()) {
-      CELEMENTS.presentation.getOverlayObj().registerOpenHandler();
+      CELEMENTS.presentation.getOverlayObj({
+        'overlayLayout' : 'SimpleLayout'
+      }).registerOpenHandler();
     }
   });
 
