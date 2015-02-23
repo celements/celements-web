@@ -345,4 +345,14 @@ var celMessages = {};
     }
   });
 
+  /**
+   * Register default overlay opener for .cel_yuiOverlay cssSelector
+   */
+  celAddOnBeforeLoadListener(function() {
+    if (CELEMENTS && CELEMENTS.presentation && CELEMENTS.presentation.getOverlayObj
+        && CELEMENTS.presentation.getOverlayObj()) {
+      CELEMENTS.presentation.getOverlayObj().registerOpenHandler();
+    }
+  });
+
 })(window);
