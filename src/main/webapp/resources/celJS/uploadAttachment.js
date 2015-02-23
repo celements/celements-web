@@ -50,11 +50,15 @@ var checkIframeTarget = function(formElm, fileUploadElm) {
   }
   if (formElm.elements['xpage'] == null) {
     var inputElem = new Element('input', {
+      'type' : 'hidden',
+      'name' : 'xpage',
+      });
+     Element.insert(formElm,inputElem);
+  } else if (formElm.elements['xpage'] && (formElm.elements['beforeUploadXpage'] == null)) {
+    var inputElem = new Element('input', {
      'type' : 'hidden',
-     'id' : 'xpage',
-     'name' : 'xpage',
-     'value' : 'celements_ajax'
-     });
+     'name' : 'beforeUploadXpage',
+     }).addClassName('beforeUploadXpage');
     Element.insert(formElm,inputElem);
   }
   if (formElm.elements['ajax_mode'] == null) {
@@ -76,6 +80,10 @@ var checkIframeTarget = function(formElm, fileUploadElm) {
   $('beforeUploadFormTarget').value = formElm.target;
   $('celementsFormId').value = Element.readAttribute(formElm, 'id');
   formElm.target = "uploadFrame";
+  if (formElem.elements['beforeUploadXpage']) {
+    formElem.elements['beforeUploadXpage'].value = formElem.elements['xpage'].value; 
+  }
+  formElem.elements['xpage'].value = 'celements_ajax';
   $('uploadFrame').stopObserving('load', celUploadCallbackHandler);
   $('uploadFrame').observe('load', celUploadCallbackHandler);
 };
@@ -150,15 +158,19 @@ var uploadAtt_Cancel_ResetFormAfter = function(fileUploadInputElem) {
 };
 
 var uploadAttResetFormAfter = function(fileUploadInputElem) {
+  var formElem = fileUploadInputElem.up('form');
   if ($('beforeUploadFormTarget')) {
     fileUploadInputElem.up('form').target = $('beforeUploadFormTarget').value;
     $('beforeUploadFormTarget').remove();
   }
+  if (formElem.elements['beforeUploadXpage']) {
+    formElem.elements['xpage'].value = formElem.elements['beforeUploadXpage'].value;
+    formElem.elements['beforeUploadXpage'].remove();
+  } else if (formElem.elements['xpage'] != null) {
+    formElem.elements['xpage'].remove();
+  }
   fileUploadInputElem.value = '';
   fileUploadInputElem.clear();
-  if ($('xpage') != null) {
-    $('xpage').remove();
-  }
   if ($('celementsFormId')) {
     $('celementsFormId').remove();
   }
