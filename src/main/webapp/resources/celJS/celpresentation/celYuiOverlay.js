@@ -86,18 +86,19 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         return {
           'dialogId' : 'modal dialog',
           'containerId' : 'yuiOverlayContainer',
-          "width" : "300px",
-          fixedcenter: true, 
-          visible: false, 
-          draggable: false, 
-          close: false, 
-          zindex: 101, 
-          modal:true,
-          monitorresize:false,
-          suppressDimFromId: false,
+          'width' : '300px',
+          'height' : 'auto',
+          'fixedcenter' : true, 
+          'visible' : false, 
+          'draggable' : false, 
+          'close' : false, 
+          'zindex' : 101, 
+          'modal' : true,
+          'monitorresize' : false,
+          'suppressDimFromId' : false,
 //          icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
-          icon: null, 
-          constraintoviewport: true
+          'icon' : null, 
+          'constraintoviewport' : true
         };
       },
 
