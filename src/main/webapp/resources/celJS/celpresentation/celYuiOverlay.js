@@ -72,6 +72,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _dialogConfig : undefined,
       _bindOpenHandler : undefined,
       _bindCleanUpAfterClose : undefined,
+      _centerBind : undefined,
       
       _init : function(configObj) {
         var _me = this;
@@ -80,6 +81,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me.updateOpenConfig(configObj);
         _me._bindOpenHandler = _me._openHandler.bind(_me);
         _me._bindCleanUpAfterClose = _me._cleanUpAfterClose.bind(_me);
+        _me._centerBind = _me.center.bind(_me);
       },
 
       _getDefaultConfig : function() {
@@ -149,6 +151,13 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me._overlayDialog = null;
       },
 
+      center : function() {
+        var _me = this;
+        if(!_me._overlayDialog) {
+          _me._overlayDialog.center();
+        }
+      },
+
       getOverlayDialog : function(openConfig) {
         var _me = this;
         _me.updateOpenConfig(openConfig);
@@ -182,6 +191,12 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         }
         $(document.body).insert(yuiSamSkinDiv);
         _me._overlayDialog.render(yuiSamSkinDiv);
+        if (_me._dialogConfig.fixedcenter) {
+          $(_me._dialogConfig.containerId).stopObserving('cel_yuiOverlay:contentChanged',
+              _centerBind);
+          $(_me._dialogConfig.containerId).observe('cel_yuiOverlay:contentChanged',
+              _centerBind);
+        }
         $(document.body).fire('cel_yuiOverlay:afterRenderDialog', _me);
         return _me._overlayDialog;
       },
