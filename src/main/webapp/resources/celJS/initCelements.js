@@ -155,10 +155,16 @@ Ajax.Request.addMethods({
   onStateChange: function() {
     var readyState = this.transport.readyState;
     if (readyState > 1 && !((readyState == 4) && this._complete)) {
-      if ((readyState == 4)) {
-        this._status = this.transport.status || 400;
+      try {
+        if ((readyState == 4)) {
+          this._status = this.transport.status || 400;
+        }
+      } catch (e) {
+        //IE9 problem if ajax request gets aborted
+        this._status = 400;
+        this._readyState = 4;
+        this._isAbortedBug = true;
       }
-      var checkResponse = new Ajax.Response(this)
       this.respondToReadyState(readyState);
     }
   },
@@ -209,11 +215,15 @@ Ajax.Response.addMethods({
     if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
       this.status       = this.getStatus();
       this.statusText   = this.getStatusText();
-      this.responseText = String.interpret(transport.responseText);
-      this.headerJSON   = this._getHeaderJSON();
+      if (request._isAbortedBug) {
+        this.responseText = '';
+      } else {
+        this.responseText = String.interpret(transport.responseText);
+        this.headerJSON   = this._getHeaderJSON();
+      }
     }
 
-    if (readyState == 4) {
+    if ((readyState == 4) && !(request._isAbortedBug)) {
       var xml = transport.responseXML;
       this.responseXML  = Object.isUndefined(xml) ? null : xml;
       this.responseJSON = this._getResponseJSON();
