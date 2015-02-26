@@ -143,15 +143,26 @@ Ajax.Request.addMethods({
       this.transport.send(this.body);
 
       /* Force Firefox to handle ready state 4 for synchronous requests */
-      if (!this.options.asynchronous && this.transport.overrideMimeType)
+      if (!this.options.asynchronous && this.transport.overrideMimeType) {
         this.onStateChange();
-
+      }
     }
     catch (e) {
       this.dispatchException(e);
     }
   },
 
+  onStateChange: function() {
+    var readyState = this.transport.readyState;
+    if (readyState > 1 && !((readyState == 4) && this._complete)) {
+      if ((readyState == 4)) {
+        this._status = this.transport.status || 400;
+      }
+      var checkResponse = new Ajax.Response(this)
+      this.respondToReadyState(readyState);
+    }
+  },
+  
   onLoad : function() {
     this._status = this.transport.status || 200;
     this._readyState = this.transport.readyState || 4;
