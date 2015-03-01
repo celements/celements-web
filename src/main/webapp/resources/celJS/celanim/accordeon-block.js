@@ -65,6 +65,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     stepsToHide.each(function(step) {
       step.down(_me.cssContent).hide();
       step.down(_me.cssTitle).observe('click', _me.toggleAccordeon.bind(_me));
+      step.addClassName('inactive');
     });
     _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
   },
