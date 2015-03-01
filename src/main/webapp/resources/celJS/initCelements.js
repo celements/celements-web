@@ -143,15 +143,32 @@ Ajax.Request.addMethods({
       this.transport.send(this.body);
 
       /* Force Firefox to handle ready state 4 for synchronous requests */
-      if (!this.options.asynchronous && this.transport.overrideMimeType)
+      if (!this.options.asynchronous && this.transport.overrideMimeType) {
         this.onStateChange();
-
+      }
     }
     catch (e) {
       this.dispatchException(e);
     }
   },
 
+  onStateChange: function() {
+    var readyState = this.transport.readyState;
+    if (readyState > 1 && !((readyState == 4) && this._complete)) {
+      try {
+        if ((readyState == 4)) {
+          this._status = this.transport.status || 400;
+        }
+      } catch (e) {
+        //IE9 problem if ajax request gets aborted
+        this._status = 400;
+        this._readyState = 4;
+        this._isAbortedBug = true;
+      }
+      this.respondToReadyState(readyState);
+    }
+  },
+  
   onLoad : function() {
     this._status = this.transport.status || 200;
     this._readyState = this.transport.readyState || 4;
@@ -198,11 +215,15 @@ Ajax.Response.addMethods({
     if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
       this.status       = this.getStatus();
       this.statusText   = this.getStatusText();
-      this.responseText = String.interpret(transport.responseText);
-      this.headerJSON   = this._getHeaderJSON();
+      if (request._isAbortedBug) {
+        this.responseText = '';
+      } else {
+        this.responseText = String.interpret(transport.responseText);
+        this.headerJSON   = this._getHeaderJSON();
+      }
     }
 
-    if (readyState == 4) {
+    if ((readyState == 4) && !(request._isAbortedBug)) {
       var xml = transport.responseXML;
       this.responseXML  = Object.isUndefined(xml) ? null : xml;
       this.responseJSON = this._getResponseJSON();
