@@ -283,7 +283,11 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
 if (typeof getCelHost === 'undefined') {
 var getCelHost = function() {
   var celHost = document.location + '?';
-  celHost = celHost.substring(0, celHost.indexOf('?'));
+  if (document.location.pathname.startsWith('/skin/resources/')) {
+    celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
+  } else {
+    celHost = celHost.substring(0, celHost.indexOf('?'));
+  }
   return celHost;
 };
 }
