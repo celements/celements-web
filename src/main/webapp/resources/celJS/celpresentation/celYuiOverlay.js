@@ -153,7 +153,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       center : function() {
         var _me = this;
-        if(!_me._overlayDialog) {
+        if(_me._overlayDialog) {
           _me._overlayDialog.center();
         }
       },
