@@ -197,9 +197,10 @@ var registerOnInputFields = function() {
       console.debug('registerOnInputFields: change observer for ' + inputElem.inspect(), 
           inputElem);
     }
-    inputElem.id = 'uploadId';
     inputElem.stopObserving('change', celFileSelectionChanged);
     inputElem.observe('change', celFileSelectionChanged);
+    inputElem.observe('click', function() { console.log('click on file select'); });
+    inputElem.observe('change', function() { console.log('change on file select'); });
   });
 };
 
