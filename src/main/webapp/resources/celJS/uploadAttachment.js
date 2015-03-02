@@ -202,15 +202,21 @@ var registerOnInputFields = function() {
 };
 
 var celFileSelectionChanged = function(event) {
-   var fileUploadElm = event.findElement();
-   var formElm = event.findElement('form');
-   if (checkUploadFileName(fileUploadElm)) {
-     checkAttachmentList(fileUploadElm);
-     checkIframeTarget(formElm, fileUploadElm);
-     var beforeEvent = fileUploadElm.fire('celements:beforeUpload');
-     if (!beforeEvent.stopped) {
-       formElm.submit();
-     }
+  var fileUploadElm = event.findElement();
+  var formElm = event.findElement('form');
+  console.log('celFileSelectionChanged: file selected ', fileUploadElem.inspect());
+  if (checkUploadFileName(fileUploadElm)) {
+    checkAttachmentList(fileUploadElm);
+    checkIframeTarget(formElm, fileUploadElm);
+    var beforeEvent = fileUploadElm.fire('celements:beforeUpload');
+    if (!beforeEvent.stopped) {
+      formElm.submit();
+    } else {
+      console.log('celFileSelectionChanged: skip submit ', fileUploadElem.inspect());
+    }
+  } else {
+    console.log('celFileSelectionChanged: checkUploadFileName failed ',
+        fileUploadElem.inspect());
   }
 };
 
