@@ -199,8 +199,8 @@ var registerOnInputFields = function() {
     }
     inputElem.stopObserving('change', celFileSelectionChanged);
     inputElem.observe('change', celFileSelectionChanged);
-    inputElem.observe('click', function() { console.log('click on file select'); });
-    inputElem.observe('change', function() { console.log('change on file select'); });
+    alert('registred');
+    inputElem.observe('change', function() { alert('change on file select'); });
   });
 };
 
