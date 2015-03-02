@@ -194,8 +194,10 @@ var registerOnInputFields = function() {
   }
   $$('input.celfileupload').each(function(inputElem) {
     if((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-      console.debug('registerOnInputFields: change observer for ' + inputElem.inspect(), inputElem);
+      console.debug('registerOnInputFields: change observer for ' + inputElem.inspect(), 
+          inputElem);
     }
+    inputElem.id = 'uploadId';
     inputElem.stopObserving('change', celFileSelectionChanged);
     inputElem.observe('change', celFileSelectionChanged);
   });
