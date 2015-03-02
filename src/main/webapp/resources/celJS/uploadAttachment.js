@@ -204,7 +204,6 @@ var registerOnInputFields = function() {
 var celFileSelectionChanged = function(event) {
   var fileUploadElm = event.findElement();
   var formElm = event.findElement('form');
-  console.log('celFileSelectionChanged: file selected ', fileUploadElem.inspect());
   if (checkUploadFileName(fileUploadElm)) {
     checkAttachmentList(fileUploadElm);
     checkIframeTarget(formElm, fileUploadElm);
@@ -220,8 +219,9 @@ var celFileSelectionChanged = function(event) {
   }
 };
 
-
-window.celAddOnBeforeLoadListener(function() {
+//IMPORTANT!!! This MUST be onLoad because in ImagePicker tinyMCE is rewriting the
+//DOM-tree onLoad. Listeners registered in celAddOnBeforeLoadListener will fail!
+Event.observe(window, 'load', function() {
   $(document.body).observe('cel_yuiOverlay:contentChanged', registerOnInputFields);
   registerOnInputFields();
 });
