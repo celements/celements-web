@@ -219,3 +219,5 @@ window.celAddOnBeforeLoadListener(function() {
   $(document.body).observe('cel_yuiOverlay:contentChanged', registerOnInputFields);
   registerOnInputFields();
 });
+
+console.log('uploadAttachment.js: TEST ', window, this);
