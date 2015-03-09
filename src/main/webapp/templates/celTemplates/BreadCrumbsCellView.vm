@@ -8,17 +8,19 @@
 #foreach($theDocRef in $util.reverseList($parentRefList))
     #set($fullName = $services.model.serialize($theDocRef, 'local'))
   <li>
-  <a href="$xwiki.getURL($theDocRef)" class="cel_cm_navigation_menuitem" id="PZ1:${fullName}">
-  #set($menuName = $helpNav.getMultilingualMenuName($fullName, $language))
+  #if($velocityCount > 1)
+    <span class="cel_breadCrumbs_delimiter">$!delim</span>
+  #end
+  <a href="$xwiki.getURL($theDocRef)" class="cel_cm_navigation_menuitem" id="CELBC1:${fullName}">
+    #set($menuName = $helpNav.getMultilingualMenuName($fullName, $language, false))
     #set($theDocPageType = $services.pageType.getPageTypeRef($theDocRef))
     #if(("$!menuName" == "$!theDocRef.name") && ($theDocPageType.configName == 'Article'))
       ##TODO add java component role to excend the parent listing.
       #set($article = $xwiki.celementsblog.getArticle($xwiki.getDocument($theDocRef)))
       #set($menuName = $article.getTitle($language))
     #end
-    $menuName
+    $!menuName
   </a>
-  <span class="cel_breadCrumbs_delimiter">$!delim</span>
   </li>
 #end
   </ul>
