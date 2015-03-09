@@ -1,3 +1,4 @@
+#set($helpNav = $xwiki.celementsweb.createNavigation())
 #set($delim = $msg.get('cel_breadcrumbs_delimiter'))
 #if("$!delim" == 'cel_breadcrumbs_delimiter')
   #set($delim = '')
