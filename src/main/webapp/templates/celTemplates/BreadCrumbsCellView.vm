@@ -1,0 +1,25 @@
+#set($delim = $msg.get('cel_breadcrumbs_delimiter'))
+#if("$!delim" == 'cel_breadcrumbs_delimiter')
+  #set($delim = '')
+#end
+#set($parentRefList = $xwiki.celementsweb.getDocumentParentsDocRefList($doc.documentReference, true))
+<div class="cel_breadCrumbs">
+  <ul>
+#foreach($theDocRef in $util.reverseList($parentRefList))
+    #set($fullName = $services.model.serialize($theDocRef, 'local'))
+  <li>
+  <a href="$xwiki.getURL($theDocRef)" class="cel_cm_navigation_menuitem" id="PZ1:${fullName}">
+  #set($menuName = $helpNav.getMultilingualMenuName($fullName, $language))
+    #set($theDocPageType = $services.pageType.getPageTypeRef($theDocRef))
+    #if(("$!menuName" == "$!theDocRef.name") && ($theDocPageType.configName == 'Article'))
+      ##TODO add java component role to excend the parent listing.
+      #set($article = $xwiki.celementsblog.getArticle($xwiki.getDocument($theDocRef)))
+      #set($menuName = $article.getTitle($language))
+    #end
+    $menuName
+  </a>
+  <span class="cel_breadCrumbs_delimiter">$!delim</span>
+  </li>
+#end
+  </ul>
+</div>
