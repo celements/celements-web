@@ -12,7 +12,7 @@
   #if($velocityCount > 1)
     <span class="cel_breadCrumbs_delimiter">$!delim</span>
   #end
-  #set($menuName = $helpNav.getMultilingualMenuName($fullName, $language, false))
+  #set($menuName = $helpNav.getMultilingualMenuNameOnly($fullName, $language, false))
   #set($theDocPageType = $services.pageType.getPageTypeRef($theDocRef))
   #if(("$!menuName" == "$!theDocRef.name") && ($theDocPageType.configName == 'Article'))
     ##TODO add java component role to excend the parent listing.
