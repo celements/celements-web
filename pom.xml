@@ -82,7 +82,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>1.41-SNAPSHOT</version>
+      <version>1.41</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -133,12 +133,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.115-SNAPSHOT</version>
+      <version>1.115</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-subsystem-migration-manager</artifactId>
-      <version>1.3-SNAPSHOT</version>
+      <version>1.3</version>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
