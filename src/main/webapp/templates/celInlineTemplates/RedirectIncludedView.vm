@@ -15,8 +15,9 @@
   ##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
   ##           get not correctly interpreted in an embedded getRenderedContent call.
   #set($redDocRef = $services.model.resolveDocument("$redFN"))
-  $services.celementsweb.renderCelementsDocument($redDocRef, true)
-##  #set($renderDocument = $xwiki.getDocument("$redFN"))
+  #set($renderDocument = $xwiki.getDocument($redDocRef))
+  #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
+  ## $services.celementsweb.renderCelementsDocument($redDocRef)
 ##  $xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocument').getContent()",$doc)
   ##
 #end ## if($showIFrame)
