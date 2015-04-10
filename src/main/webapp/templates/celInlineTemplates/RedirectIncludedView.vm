@@ -17,7 +17,5 @@
   #set($redDocRef = $services.model.resolveDocument("$redFN"))
   #set($renderDocument = $xwiki.getDocument($redDocRef))
   #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
-  ## $services.celementsweb.renderCelementsDocument($redDocRef)
-##  $xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocument').getContent()",$doc)
   ##
 #end ## if($showIFrame)
