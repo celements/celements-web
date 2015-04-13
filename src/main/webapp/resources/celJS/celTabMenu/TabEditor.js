@@ -471,11 +471,15 @@ TE.prototype = {
          parameters: loadTabParams,
          onSuccess: function(transport) {
            div.update(transport.responseText);
+           console.log('TabEditor.js: after async tab load before LazyLoadJS ',
+               tabBodyId);
            _me.lazyLoadJS(div);
            _me.lazyLoadCSS(div);
            //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
            //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
            //TODO following fired event. -> Workaround: execute registered method once after registration.
+           console.log('TabEditor.js: after async tab load before tabedit:tabchange' 
+               + ' event', tabBodyId);
            $(tabBodyId).fire('tabedit:tabchange', {
              'newTabId' : tabBodyId
            });
