@@ -39,6 +39,7 @@
   };
 
   var initCelRTE = function() {
+    console.log('initCelRTE: start');
     if(!!window.MSStream && (navigator.userAgent.indexOf("MSIE") < 0)) { // if is IE11
       alert('Der RichText Editor ist zur Zeit nicht für den Internet Explorer 11 verfügbar. Bitte verwenden Sie einen unterstützten Browser (Chrome, FireFox, Safari, IE10, IE9 oder IE8).');
       return;
@@ -52,15 +53,18 @@
     if (hrefSearch.match(templateRegEx)) {
       params['template'] = window.location.search.replace(templateRegEx, '$3');
     }
+    console.log('initCelRTE: befor Ajax tinymce');
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: params,
       onSuccess: function(transport) {
         var tinyConfigJSON = transport.responseText.replace(/\n/g,' ');
         if (tinyConfigJSON.isJSON()) {
+          //tinyMCE.execCommand("mceAddControl", false, 'txt'+id);
           window.tinymce.dom.Event.domLoaded = true;
           var tinyConfigObj = tinyConfigJSON.evalJSON();
           tinyConfigObj["body_class"] = getAllEditorBodyClasses(tinyConfigObj).join(',');
+          console.log('initCelRTE: tinyMCE.init');
           tinyMCE.init(tinyConfigObj);
         } else {
           console.error('TinyConfig is no json!', tinyConfigJSON);
