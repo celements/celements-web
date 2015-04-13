@@ -120,7 +120,7 @@ $adminMsg.get('cel_tm_rte_edit')
 
 	<form id="contentEdit" method="post" action="?">
     <input type="hidden" name="update" value="1" />
-    <input type="hidden" name="tab" value="1" />
+    <input type="hidden" name="tab" value="tb1" />
     <input type="hidden" name="xpage" value="celements_ajax" />
     <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 ##	    <input type="hidden" name="template" value="$!doc.getTemplate()" />

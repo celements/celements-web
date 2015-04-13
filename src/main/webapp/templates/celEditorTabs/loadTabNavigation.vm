@@ -15,7 +15,7 @@
 <div id="nav_langBar" class="editblock" onfocus="setFocus('nav_langBar');" onblur="removeFocus('nav_langBar');">
 <form action="$doc.getURL('edit')" name="nav_langBar_form" method="post">
     $adminMsg.get('cel_tm_edit_translation'): 
-    <input type="hidden" name="tab" value="2"/>
+    <input type="hidden" name="tab" value="tb2"/>
     <select name="language" size="1" style="width:100px;" onchange="document.forms['nav_langBar_form'].submit();">
           #foreach($dl in $langs)
           <option #if($!language == "$dl")selected="selected"#end value="$dl" label="$adminMsg.get("cel_$dl")">$adminMsg.get("cel_$dl")</option>
@@ -59,7 +59,7 @@
 #if("$!xwiki.getSpacePreference('extract_active')" == "1")
 <form id="nav_extractEdit" action="?" method="post">
 <input type="hidden" name="update" value="1" />
-<input type="hidden" name="tab" value="2" />
+<input type="hidden" name="tab" value="tb2" />
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
     #parse("celMacros/includeCelementsRTE.vm")
