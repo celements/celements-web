@@ -549,7 +549,10 @@ TE.prototype = {
 //      eval(scriptEle.innerHTML);
     }
   });
-  if(scripts.length > 0) { _me.loadScripts(scripts); }
+  if(scripts.length > 0) {
+    console.log('lazyLoadJS scripts ', scripts);
+    _me.loadScripts(scripts);
+  }
  },
 
  lazyLoadCSS : function(parentEle) {
@@ -644,6 +647,7 @@ TE.prototype = {
         newEle.onerror = scriptLoaded;
       }
       _me.scriptLoading = true;
+      console.log('loadScripts insert ', newEle);
       $$('head')[0].insert(newEle);
     } else {
       eval(loadScript.value);
