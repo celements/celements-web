@@ -59,7 +59,7 @@
 #if("$!xwiki.getSpacePreference('extract_active')" == "1")
 <form id="nav_extractEdit" action="?" method="post">
 <input type="hidden" name="update" value="1" />
-<input type="hidden" name="tab" value="tbrights" />
+<input type="hidden" name="tab" value="2" />
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
     #parse("celMacros/includeCelementsRTE.vm")
