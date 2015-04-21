@@ -525,14 +525,16 @@ TE.prototype = {
   var scripts = [];
   parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec').each(
       function(scriptEle) {
-    if(scriptEle.hasClassName('cel_lazyloadJS')) {
+    if (scriptEle.hasClassName('cel_lazyloadJS')) {
       var scriptPath = scriptEle.innerHTML;
       var scriptPathObj = "";
+      var scriptURL = "";
       if (scriptPath.isJSON()) {
         scriptPathObj = scriptPath.evalJSON();
         scriptPath = scriptPathObj.url;
+        scriptURL = scriptPathObj.fullURL;
       }
-      if(scriptPath != '') {
+      if (scriptPath != '') {
         if (scriptPath.indexOf('?') > 0) {
           scriptPath += '&';
         } else {
@@ -544,13 +546,14 @@ TE.prototype = {
         } else {
           scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
         }
-        if(!_me.scriptIsLoaded(scriptPath)) {
-          scripts.push( { isUrl: true, value: scriptPath } );
-//          var newEle = new Element('script', { type: 'text/javascript', src: scriptPath });
-//          $$('head')[0].insert(newEle);
-        }
+        scriptURL = scriptPath;
       }
-    } else if(scriptEle.hasClassName('cel_lazyloadJS_exec')) {
+      if(scriptURL && (scriptURL !== '') && !_me.scriptIsLoaded(scriptURL)) {
+        scripts.push( { isUrl: true, value: scriptURL } );
+//          var newEle = new Element('script', { type: 'text/javascript', src: scriptURL });
+//          $$('head')[0].insert(newEle);
+      }
+    } else if (scriptEle.hasClassName('cel_lazyloadJS_exec')) {
       scripts.push( { isUrl: false, value: scriptEle.innerHTML } );
 //      eval(scriptEle.innerHTML);
     }
@@ -642,7 +645,7 @@ TE.prototype = {
     _me.scriptQueue = _me.scriptQueue.slice(1); // remove first element
     if(loadScript.isUrl) {
       var newEle = new Element('script', { type: 'text/javascript', src: loadScript.value });
-    if(Prototype.Browser.IE) {
+      if(Prototype.Browser.IE) {
         newEle.onreadystatechange = function () {
           if (this.readyState === 'loaded' || this.readyState === 'complete') {
             scriptLoaded();
