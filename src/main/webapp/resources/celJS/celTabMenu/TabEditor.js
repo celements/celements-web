@@ -164,6 +164,9 @@ TE.prototype = {
             alert('Failed to load editor. Please try to reload the page and if it happens '
                + 'again, contact support. ');
           }
+          $$('body')[0].observe('scroll', function(event) {
+            event.target.scrollTop = 0;
+          })
         }
       });
     }
