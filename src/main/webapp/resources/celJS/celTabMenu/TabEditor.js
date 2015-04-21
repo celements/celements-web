@@ -168,7 +168,10 @@ TE.prototype = {
             event.target.scrollTop = 0; //FF and IE fix
           });
           Event.observe(window, 'scroll', function() {
+            console.log('scrollTop before: ', $j(window).scrollTop());
             $j(window).scrollTop(0); //webkit 
+            console.log('scrollTop after: ', $j(window).scrollTop());
+            console.log.delay(1, "scrollTop after 1s", $j(window).scrollTop());
           });
         }
       });
