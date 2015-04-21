@@ -165,8 +165,11 @@ TE.prototype = {
                + 'again, contact support. ');
           }
           $$('body')[0].observe('scroll', function(event) {
-            event.target.scrollTop = 0;
-          })
+            event.target.scrollTop = 0; //FF and IE fix
+          });
+          Event.observe(window, 'scroll', function() {
+            $j(window).scrollTop(0); //webkit 
+          });
         }
       });
     }
