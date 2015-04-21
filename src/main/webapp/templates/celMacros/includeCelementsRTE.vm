@@ -1,2 +1,2 @@
-$services.javascript.addLazyExtJSfile(":celRTE/tiny_mce_src.js")
-$services.javascript.addLazyExtJSfile(":celJS/celTabMenu/loadTinyMCE-async.js")
+$services.javascript.addLazyExtJSfile(":celRTE/tiny_mce_src.js", "file")
+$services.javascript.addLazyExtJSfile(":celJS/celTabMenu/loadTinyMCE-async.js", "file")
