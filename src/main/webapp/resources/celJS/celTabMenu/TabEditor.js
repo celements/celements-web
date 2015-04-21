@@ -497,6 +497,7 @@ TE.prototype = {
          }
       });
     } else {
+      _me.lazyLoadJS($(tabBodyId), true);
       $(tabBodyId).select('form').each(function(formelem) {
         if (formelem && formelem.id && !_me.editorFormsInitialValues.get(formelem.id)) {
           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
@@ -520,8 +521,9 @@ TE.prototype = {
     _me.setButtonActive(tabId);
   },
 
- lazyLoadJS : function(parentEle) {
+ lazyLoadJS : function(parentEle, syncLoadOnly) {
   var _me = this;
+  syncLoadOnly = syncLoadOnly || false;
   var scripts = [];
   parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec').each(
       function(scriptEle) {
@@ -529,10 +531,12 @@ TE.prototype = {
       var scriptPath = scriptEle.innerHTML;
       var scriptPathObj = "";
       var scriptURL = "";
+      var loadScript = !syncLoadOnly;
       if (scriptPath.isJSON()) {
         scriptPathObj = scriptPath.evalJSON();
         scriptPath = scriptPathObj.url;
         scriptURL = scriptPathObj.fullURL;
+        loadScript = !syncLoadOnly || (scriptPathObj.initLoad);
       }
       if (scriptPath != '') {
         if (scriptPath.indexOf('?') > 0) {
@@ -548,7 +552,8 @@ TE.prototype = {
         }
         scriptURL = scriptPath;
       }
-      if(scriptURL && (scriptURL !== '') && !_me.scriptIsLoaded(scriptURL)) {
+      if (loadScript && scriptURL && (scriptURL !== '')
+          && !_me.scriptIsLoaded(scriptURL)) {
         scripts.push( { isUrl: true, value: scriptURL } );
 //          var newEle = new Element('script', { type: 'text/javascript', src: scriptURL });
 //          $$('head')[0].insert(newEle);
