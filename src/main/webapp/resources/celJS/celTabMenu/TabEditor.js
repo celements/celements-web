@@ -164,18 +164,12 @@ TE.prototype = {
             alert('Failed to load editor. Please try to reload the page and if it happens '
                + 'again, contact support. ');
           }
-          console.log("set body scroll observer");
           $$('body')[0].observe('scroll', function(event) {
             event.target.scrollTop = 0; //FF and IE fix
           });
-          console.log("set window scroll observer");
           Event.observe(window, 'scroll', function() {
-            console.log('scrollTop before: ', $j(window).scrollTop());
             $j(window).scrollTop(0); //webkit 
-            console.log('scrollTop after: ', $j(window).scrollTop());
-            (function(x, y) { console.log(x, y); }).delay(1, "scrollTop after 1s", $j(window).scrollTop());
           });
-          console.log("done setting window scroll observer");
         }
       });
     }
