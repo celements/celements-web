@@ -18,7 +18,7 @@
 #end
 #set($contextPath = ${request.contextPath})
 #parse("celMacros/includeCelementsRTE.vm")
-<script type="text/javascript">
+<script language="javascript" type="text/javascript">
 ##
 var cd = null;
 var rte_cancel_option = "$rte_cancel_option";
