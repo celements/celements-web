@@ -497,7 +497,9 @@ TE.prototype = {
          }
       });
     } else {
+      console.log('getTab: before lazyLoadJS ', tabBodyId, $(tabBodyId));
       _me.lazyLoadJS($(tabBodyId), true);
+      console.log('getTab: after lazyLoadJS ', tabBodyId, $(tabBodyId));
       $(tabBodyId).select('form').each(function(formelem) {
         if (formelem && formelem.id && !_me.editorFormsInitialValues.get(formelem.id)) {
           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
@@ -524,6 +526,7 @@ TE.prototype = {
  lazyLoadJS : function(parentEle, syncLoadOnly) {
   var _me = this;
   syncLoadOnly = syncLoadOnly || false;
+  console.log('lazyLoadJS: start ', parentEle, syncLoadOnly);
   var scripts = [];
   parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec').each(
       function(scriptEle) {
@@ -552,6 +555,7 @@ TE.prototype = {
         }
         scriptURL = scriptPath;
       }
+      console.log('lazyLoadJS: before check load script ', loadScript, scriptURL);
       if (loadScript && scriptURL && (scriptURL !== '')
           && !_me.scriptIsLoaded(scriptURL)) {
         scripts.push( { isUrl: true, value: scriptURL } );
