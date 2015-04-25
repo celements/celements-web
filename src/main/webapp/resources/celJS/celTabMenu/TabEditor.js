@@ -529,19 +529,20 @@ TE.prototype = {
   var scripts = [];
   var scriptElems = parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec');
   console.log('lazyLoadJS: start ', parentEle, syncLoadOnly, scriptElems);
-  scriptElems.each(
-      function(scriptEle) {
+  scriptElems.each(function(scriptEle) {
     if (scriptEle.hasClassName('cel_lazyloadJS')) {
       var scriptPath = scriptEle.innerHTML;
       var scriptPathObj = "";
       var scriptURL = "";
       var loadScript = !syncLoadOnly;
+      console.log('lazyLoadJS: scriptPath isJSON ', scriptPath, scriptPath.isJSON());
       if (scriptPath.isJSON()) {
         scriptPathObj = scriptPath.evalJSON();
         scriptPath = scriptPathObj.url;
         scriptURL = scriptPathObj.fullURL;
         loadScript = !syncLoadOnly || (scriptPathObj.initLoad);
       }
+      console.log('lazyLoadJS: scriptPath after isJSON ', scriptPath);
       if (scriptPath != '') {
         if (scriptPath.indexOf('?') > 0) {
           scriptPath += '&';
