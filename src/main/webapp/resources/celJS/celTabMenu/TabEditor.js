@@ -526,9 +526,10 @@ TE.prototype = {
  lazyLoadJS : function(parentEle, syncLoadOnly) {
   var _me = this;
   syncLoadOnly = syncLoadOnly || false;
-  console.log('lazyLoadJS: start ', parentEle, syncLoadOnly);
   var scripts = [];
-  parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec').each(
+  var scriptElems = parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec');
+  console.log('lazyLoadJS: start ', parentEle, syncLoadOnly, scriptElems);
+  scriptElems.each(
       function(scriptEle) {
     if (scriptEle.hasClassName('cel_lazyloadJS')) {
       var scriptPath = scriptEle.innerHTML;
@@ -558,11 +559,13 @@ TE.prototype = {
       console.log('lazyLoadJS: before check load script ', loadScript, scriptURL);
       if (loadScript && scriptURL && (scriptURL !== '')
           && !_me.scriptIsLoaded(scriptURL)) {
+        console.log('lazyLoadJS: add ', scriptURL);
         scripts.push( { isUrl: true, value: scriptURL } );
 //          var newEle = new Element('script', { type: 'text/javascript', src: scriptURL });
 //          $$('head')[0].insert(newEle);
       }
     } else if (scriptEle.hasClassName('cel_lazyloadJS_exec')) {
+      console.log('lazyLoadJS: elsif is URL false add ', scriptEle.innerHTML);
       scripts.push( { isUrl: false, value: scriptEle.innerHTML } );
 //      eval(scriptEle.innerHTML);
     }
@@ -571,6 +574,7 @@ TE.prototype = {
     console.log('lazyLoadJS scripts ', scripts);
     _me.loadScripts(scripts);
   }
+  console.log('lazyLoadJS: end');
  },
 
  lazyLoadCSS : function(parentEle) {
