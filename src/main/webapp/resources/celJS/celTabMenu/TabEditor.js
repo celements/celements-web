@@ -178,6 +178,7 @@ TE.prototype = {
 
   tabMenuSetup : function(tabMenuConf) {
     var _me = this;
+    console.log('tabMenuSetup start');
     _me.tabMenuConfig = tabMenuConf;
     var starttabId = '';
     var celstartab = '';
@@ -213,6 +214,7 @@ TE.prototype = {
         && (_me.tabMenuConfig.isDirtyOnLoad == true));
     _me.tmd = new YAHOO.widget.Panel("tabMenuPanel", _me.tabMenuConfig.tabMenuPanelConfig);
     _me.tmd.render();
+    console.log('tabMenuSetup after render');
 
     if (starttabId == '') {
       var starttablist = $$('.celements3_tabMenu .starttab');
@@ -226,6 +228,7 @@ TE.prototype = {
       }
     }
     if(starttabId != null) {
+      console.log('tabMenuSetup before showTabMenu');
       _me.showTabMenu(starttabId);
     }
     
@@ -270,6 +273,7 @@ TE.prototype = {
     } else {
       $('tabMenuPanel').fire('tabedit:afterDisplayNow');
     }
+    console.log('tabMenuSetup end');
   },
 
   _execOneListener : function(listener) {
