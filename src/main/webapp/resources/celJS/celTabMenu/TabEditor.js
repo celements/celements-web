@@ -436,6 +436,7 @@ TE.prototype = {
     var div = $(tabBodyId);
     var asyncLoading = false;
     var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
+    console.log('getTab: ', tabBodyId, div, reload);
     if ((div == null) || ((reload != 'undefined') && reload)) {
       if (div == null) {
         div = new Element('div', {
