@@ -145,9 +145,9 @@ TE.prototype = {
   },
 
   initTabMenu : function() {
-    var tabEditor = this;
+    var _me = this;
     if (!$('tabMenuPanel').down('.xwikimessage')) {
-      tabEditor._insertLoadingIndicator();
+      _me._insertLoadingIndicator();
       new Ajax.Request(getTMCelHost(), {
         method: 'post',
         parameters: {
@@ -157,7 +157,8 @@ TE.prototype = {
         },
         onSuccess: function(transport) {
           if (transport.responseText.isJSON()) {
-            tabEditor.tabMenuSetup(transport.responseText.evalJSON());
+            console.log('initTabMenu: before tabMenuSetup ');
+            _me.tabMenuSetup(transport.responseText.evalJSON());
           } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
             console.log('failed to get CelTabMenu config: no valid JSON!', transport);
           } else {
@@ -178,7 +179,6 @@ TE.prototype = {
   tabMenuSetup : function(tabMenuConf) {
     var _me = this;
     _me.tabMenuConfig = tabMenuConf;
-    
     var starttabId = '';
     var celstartab = '';
     if ($('cel_startab')) {
