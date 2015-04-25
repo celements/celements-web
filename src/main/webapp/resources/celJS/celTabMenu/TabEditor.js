@@ -542,8 +542,8 @@ TE.prototype = {
         scriptURL = scriptPathObj.fullURL;
         loadScript = !syncLoadOnly || (scriptPathObj.initLoad);
       }
-      console.log('lazyLoadJS: scriptPath after isJSON ', scriptPath);
-      if (scriptPath != '') {
+      console.log('lazyLoadJS: scriptPath after isJSON ', scriptPath, scriptURL);
+      if ((typeof scriptPath !== 'undefined') && (scriptPath != '')) {
         if (scriptPath.indexOf('?') > 0) {
           scriptPath += '&';
         } else {
