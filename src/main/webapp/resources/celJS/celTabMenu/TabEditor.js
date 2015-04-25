@@ -884,13 +884,11 @@ TE.prototype = {
 
  updateTinyMCETextAreas : function(formId) {
    document.forms[formId].select('textarea.mceEditor').each(function(formfield) {
-   if (tinyMCE && tinyMCE.get(formfield.id)) {
-       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-         console.log('updateTinyMCETextAreas: ', formfield.name,
-             tinyMCE.get(formfield.id).getContent());
-       }
+     if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
+       console.log('updateTinyMCETextAreas: ', formfield.name, tinyMCE.get(
+           formfield.id).getContent());
        formfield.value = tinyMCE.get(formfield.id).getContent();
-   }
+     }
    });
  },
 
