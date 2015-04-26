@@ -893,8 +893,13 @@ TE.prototype = {
 
  updateOneTinyMCETextArea : function(ed) {
    var formfield = $(ed.id);
-   console.log('updateOneTinyMCETextArea: for field ', formfield.id, ed.getContent());
-   formfield.value = ed.getContent();
+   try {
+     formfield.value = ed.getContent();
+     console.log('updateOneTinyMCETextArea: for field ', formfield.id, formfield.value);
+   } catch (exp) {
+     console.error('updateTinyMCETextAreas: failed with exception ' + formfield.id,
+         ed.serializer, exp);
+   }
  },
 
  updateTinyMCETextAreas : function(formId) {
@@ -902,19 +907,8 @@ TE.prototype = {
    var mceFields = document.forms[formId].select('textarea.mceEditor');
    console.log('updateTinyMCETextAreas: for ', formId, mceFields);
    mceFields.each(function(formfield) {
-     try {
-       if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
-         _me.updateOneTinyMCETextArea(tinyMCE.get(formfield.id));
-       } else {
-         console.log('updateTinyMCETextAreas: skip ', typeof(window.tinyMCE));
-         if (typeof tinyMCE !== 'undefined') {
-           console.log('updateTinyMCETextAreas: skip tinyMCE exists ', typeof(tinyMCE.get(
-               formfield.id)));
-         }
-       }
-     } catch(exp) {
-       console.error('updateTinyMCETextAreas: failed with exception ' + formfield.id,
-           exp);
+     if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
+       _me.updateOneTinyMCETextArea(tinyMCE.get(formfield.id));
      }
    });
    console.log('updateTinyMCETextAreas: end ', formId);
