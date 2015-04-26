@@ -895,18 +895,24 @@ TE.prototype = {
    var mceFields = document.forms[formId].select('textarea.mceEditor');
    console.log('updateTinyMCETextAreas: for ', formId, mceFields);
    mceFields.each(function(formfield) {
-     if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
-       console.log('updateTinyMCETextAreas: ', formfield.name, tinyMCE.get(
-           formfield.id).getContent());
-       formfield.value = tinyMCE.get(formfield.id).getContent();
-     } else {
-       console.log('updateTinyMCETextAreas: skip ', typeof(tinyMCE));
-       if (typeof tinyMCE !== 'undefined') {
-         console.log('updateTinyMCETextAreas: skip tinyMCE exists ', tinyMCE.get(
-             formfield.id));
+     try {
+       if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
+         console.log('updateTinyMCETextAreas: ', formfield.name, tinyMCE.get(
+             formfield.id).getContent());
+         formfield.value = tinyMCE.get(formfield.id).getContent();
+       } else {
+         console.log('updateTinyMCETextAreas: skip ', typeof(window.tinyMCE));
+         if (typeof tinyMCE !== 'undefined') {
+           console.log('updateTinyMCETextAreas: skip tinyMCE exists ', typeof(tinyMCE.get(
+               formfield.id)));
+         }
        }
+     } catch(exp) {
+       console.error('updateTinyMCETextAreas: failed with exception ' + formfield.id,
+           exp);
      }
    });
+   console.log('updateTinyMCETextAreas: end ', formId);
  },
 
  /**
