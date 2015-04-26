@@ -77,6 +77,9 @@
   window.celFinishTinyMCEStart = function() {
     console.log('celFinishTinyMCEStart: start');
     finishedCelRTE_tinyMCE_Load = true;
+    window.tinyMCE.onAddEditor.add(function(mgr,ed) {
+      console.debug('onAddEditor: A new editor is available' + ed.id);
+    });
     $$('body')[0].fire('celRTE:finishedInit');
   };
 
