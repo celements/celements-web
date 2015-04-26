@@ -498,6 +498,8 @@ TE.prototype = {
              'newTabId' : tabBodyId
            });
            $(tabBodyId).select('form').each(function(formelem) {
+             console.log('getTab async: before retrieveInitialValues ', tabBodyId,
+                 formelem);
              if (formelem && formelem.id) {
                _me.retrieveInitialValues(formelem.id);
              }
