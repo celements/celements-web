@@ -894,8 +894,12 @@ TE.prototype = {
  updateOneTinyMCETextArea : function(ed) {
    var formfield = $(ed.id);
    try {
-     formfield.value = ed.getContent();
-     console.log('updateOneTinyMCETextArea: for field ', formfield.id, formfield.value);
+     if (typeof ed.serializer !== 'undefined') {
+       formfield.value = ed.getContent();
+       console.log('updateOneTinyMCETextArea: for field ', formfield.id, formfield.value);
+     } else {
+       console.warn('updateOneTinyMCETextArea: no serializer -> skip ' + ed.id);
+     }
    } catch (exp) {
      console.error('updateTinyMCETextAreas: failed with exception ' + formfield.id,
          ed.serializer, exp);
