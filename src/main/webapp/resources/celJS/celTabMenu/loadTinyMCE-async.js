@@ -78,7 +78,12 @@
     console.log('celFinishTinyMCEStart: start');
     finishedCelRTE_tinyMCE_Load = true;
     window.tinyMCE.onAddEditor.add(function(mgr,ed) {
-      console.debug('onAddEditor: A new editor is available' + ed.id);
+      try {
+        console.debug('onAddEditor: A new editor is available ' + ed.id);
+        console.log('onAddEditor: ', window.tinyMCE.get(ed.id));
+      } catch (exp) {
+        console.error('onAddEditor failed. ', exp);
+      }
     });
     $$('body')[0].fire('celRTE:finishedInit');
   };
