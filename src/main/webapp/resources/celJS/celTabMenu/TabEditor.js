@@ -89,6 +89,7 @@ TE.prototype = {
 
   retrieveInitialValues : function(formId) {
     var _me = this;
+    console.log('retrieveInitialValues: ', formId);
     if (_me.isValidFormId(formId)) {
       var elementsValues = new Hash();
       _me.updateTinyMCETextAreas(formId);
@@ -108,8 +109,10 @@ TE.prototype = {
           elementsValues.set(elem.name, elemValue);
         }
       });
+      console.log('retrieveInitialValues: before add elementsValues ', formId);
       _me.editorFormsInitialValues.set(formId, elementsValues);
     }
+    console.log('retrieveInitialValues: end');
   },
 
   _insertLoadingIndicator : function() {
