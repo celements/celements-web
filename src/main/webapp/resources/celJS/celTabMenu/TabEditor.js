@@ -897,6 +897,7 @@ TE.prototype = {
    mceFields.each(function(formfield) {
      try {
        if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
+         console.log('updateTinyMCETextAreas: for field ', formfield.name);
          console.log('updateTinyMCETextAreas: ', formfield.name, tinyMCE.get(
              formfield.id).getContent());
          formfield.value = tinyMCE.get(formfield.id).getContent();
