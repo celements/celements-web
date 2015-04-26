@@ -24,6 +24,11 @@
 **/
 if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
 if(typeof CELEMENTS.widget=="undefined"){CELEMENTS.widget={};};
+
+
+(function(window, undefined) {
+  "use strict";
+
 CELEMENTS.widget.TabEditor = function() {
 };
 
@@ -252,7 +257,7 @@ TE.prototype = {
       titlediv.update(_me.tabMenuConfig.tabMenuPanelConfig.title);
       $('tabMenuPanel').down('.bd').insert({ top: titlediv });
     }
-    window.onbeforeunload = _me.checkBeforeUnload;
+    window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
     _me.afterInitListeners.each(_me._execOneListener);
     var displayNowEffect = new Effect.Parallel([
@@ -289,7 +294,7 @@ TE.prototype = {
   },
 
   checkBeforeUnload : function() {
-  var _me = getCelementsTabEditor();
+  var _me = this;
     if (_me.isDirty() && !_me.tabMenuConfig.supressBeforeUnload) {
       if (_me.tabMenuConfig && _me.tabMenuConfig.unsavedChangesOnCloseMessage && (_me.tabMenuConfig.unsavedChangesOnCloseMessage != '')) {
         return _me.tabMenuConfig.unsavedChangesOnCloseMessage;
@@ -1163,7 +1168,8 @@ TE.prototype = {
   }
 };
 
-YAHOO.register("tabeditor", CELEMENTS.widget.TabEditor, {version: "2.6", build: "7"});
+})(window);
+//YAHOO.register("tabeditor", CELEMENTS.widget.TabEditor, {version: "2.6", build: "7"});
 
 var getTMCelHost = function() {
   var celHost = document.location.href + '?';
