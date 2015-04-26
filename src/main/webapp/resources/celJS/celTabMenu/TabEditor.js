@@ -891,16 +891,20 @@ TE.prototype = {
    return isDirty;
  },
 
+ updateOneTinyMCETextArea : function(ed) {
+   var formfield = $(ed.id);
+   console.log('updateOneTinyMCETextArea: for field ', formfield.id, ed.getContent());
+   formfield.value = ed.getContent();
+ },
+
  updateTinyMCETextAreas : function(formId) {
+   var _me = this;
    var mceFields = document.forms[formId].select('textarea.mceEditor');
    console.log('updateTinyMCETextAreas: for ', formId, mceFields);
    mceFields.each(function(formfield) {
      try {
        if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
-         console.log('updateTinyMCETextAreas: for field ', formfield.name);
-         console.log('updateTinyMCETextAreas: ', formfield.name, tinyMCE.get(
-             formfield.id).getContent());
-         formfield.value = tinyMCE.get(formfield.id).getContent();
+         _me.updateOneTinyMCETextArea(tinyMCE.get(formfield.id));
        } else {
          console.log('updateTinyMCETextAreas: skip ', typeof(window.tinyMCE));
          if (typeof tinyMCE !== 'undefined') {
