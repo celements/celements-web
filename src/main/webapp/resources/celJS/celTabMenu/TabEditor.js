@@ -899,6 +899,12 @@ TE.prototype = {
        console.log('updateTinyMCETextAreas: ', formfield.name, tinyMCE.get(
            formfield.id).getContent());
        formfield.value = tinyMCE.get(formfield.id).getContent();
+     } else {
+       console.log('updateTinyMCETextAreas: skip ', typeof(tinyMCE));
+       if (typeof tinyMCE !== 'undefined') {
+         console.log('updateTinyMCETextAreas: skip tinyMCE exists ', tinyMCE.get(
+             formfield.id));
+       }
      }
    });
  },
