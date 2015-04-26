@@ -94,11 +94,10 @@ TE.prototype = {
       var elementsValues = new Hash();
       _me.updateTinyMCETextAreas(formId);
       $(formId).getElements().each(function(elem) {
+        console.log('retrieveInitialValues: check field ', formId, elem);
         if (_me._isSubmittableField(elem) && (!elementsValues.get(elem.name)
             || (elementsValues.get(elem.name) == ''))) {
-          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-            console.log('initValue for: ' + elem.name, elem.value);
-          }
+          console.log('initValue for: ' + elem.name, elem.value);
           var isInputElem = (elem.tagName.toLowerCase() == 'input');
           var elemValue = elem.value;
           if (isInputElem && (elem.type.toLowerCase() == 'radio')) {
@@ -888,7 +887,9 @@ TE.prototype = {
  },
 
  updateTinyMCETextAreas : function(formId) {
-   document.forms[formId].select('textarea.mceEditor').each(function(formfield) {
+   var mceFields = document.forms[formId].select('textarea.mceEditor');
+   console.log('updateTinyMCETextAreas: for ', formId, tinyMCE, mceFields);
+   mceFields.each(function(formfield) {
      if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
        console.log('updateTinyMCETextAreas: ', formfield.name, tinyMCE.get(
            formfield.id).getContent());
