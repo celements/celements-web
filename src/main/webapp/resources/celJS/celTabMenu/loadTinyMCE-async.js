@@ -81,6 +81,7 @@
       try {
         console.debug('onAddEditor: A new editor is available ' + ed.id);
         console.log('onAddEditor: ', window.tinyMCE.get(ed.id));
+        console.log('onAddEditor: ', window.tinyMCE.get(ed.id).getContent());
       } catch (exp) {
         console.error('onAddEditor failed. ', exp);
       }
