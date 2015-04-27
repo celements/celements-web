@@ -393,9 +393,8 @@ TE.prototype = {
     var closeClickHandler = function() {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         if (!failed) {
-          //TODO call async 'cancel' to release editor-lock
           window.onbeforeunload = null;
-          window.location.href = _me._getRedirectValue();
+          window.location.href = _me._getCancelURL();
         } else {
           console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
         }
@@ -405,7 +404,7 @@ TE.prototype = {
     _me.addActionButton(buttonLabel, closeClickHandler);
   },
 
-  _getRedirectValue : function() {
+  _getCancelURL : function() {
     var _me = this;
     var redirectValue = '';
     if ($$('input.celEditorRedirect').size() > 0) {
@@ -421,9 +420,10 @@ TE.prototype = {
         }
       }
     }
-    if (redirectValue == '')  {
-      redirectValue = window.location.pathname.replace(/\/edit\/|\/inline\//, '/view/');
-    }
+    var redirectBaseValue = window.location.pathname.replace(/\/edit\/|\/inline\//,
+        '/cancel/');
+    redirectValue = redirectBaseValue + '?xredirect=' + redirectValue;
+    console.log('_getCancelURL: return redirectValue ', redirectValue);
     return redirectValue;
   },
 
