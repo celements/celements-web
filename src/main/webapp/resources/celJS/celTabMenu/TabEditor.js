@@ -804,7 +804,7 @@ TE.prototype = {
     //TODO add possibility to add JS-listener which can execute alternative save actions
     _me.saveAllFormsAjax(function(transport, jsonResponses) {
       savingDialog.hide();
-      var failed = _me.showErrorMessages(jsonResponses);
+      var failed = !_me.showErrorMessages(jsonResponses);
       if ((typeof(execCallback) != 'undefined') && execCallback) {
         execCallback(transport, jsonResponses, failed);
         if (failed) {
@@ -1038,7 +1038,7 @@ TE.prototype = {
                  var _dialog = this;
                  _me.saveAllFormsAjax(function(transport, jsonResponses) {
                    _dialog.hide();
-                   var failed = _me.showErrorMessages(jsonResponses);
+                   var failed = !_me.showErrorMessages(jsonResponses);
                    if ((typeof console != 'undefined')
                        && (typeof console.log != 'undefined')) {
                      console.log('saveAllFormsAjax returning: ', failed, jsonResponses,
