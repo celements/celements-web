@@ -396,6 +396,8 @@ TE.prototype = {
           //TODO call async 'cancel' to release editor-lock
           window.onbeforeunload = null;
           window.location.href = _me._getRedirectValue();
+        } else {
+          console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
         }
       });
     };
