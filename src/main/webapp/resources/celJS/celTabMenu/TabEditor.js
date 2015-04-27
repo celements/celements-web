@@ -777,11 +777,12 @@ TE.prototype = {
  },
  
  getFirstFormWithId : function() {
+   var formName = '';
    if(document.forms['edit']) {
      formName = 'edit';
    } else {
      $A(document.forms).each(function(form) {
-       if(form.id != '') {
+       if (form.id != '') {
          formName = form.id;
          throw $break;
        }
