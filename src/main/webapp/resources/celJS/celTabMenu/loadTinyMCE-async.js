@@ -75,6 +75,7 @@
   var finishedCelRTE_tinyMCE_Load = false;
   
   window.celFinishTinyMCEStart = function() {
+    console.log('celFinishTinyMCEStart: start');
     finishedCelRTE_tinyMCE_Load = true;
     $$('body')[0].fire('celRTE:finishedInit');
   };

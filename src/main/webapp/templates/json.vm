@@ -2,5 +2,5 @@ $response.setContentType("application/json")##
 #if("$!request.renderedcontent" == '1')##
 $doc.getRenderedContent()##
 #else##
-$xwiki.celementsweb.getJSONContent($doc.documentReference)##
+$services.webUtils.getJSONContent($doc.documentReference)##
 #end##

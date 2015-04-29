@@ -62,8 +62,7 @@
 <input type="hidden" name="tab" value="tb2" />
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
-##FIXME fix double include of loadTinyMCE-async.js bug
-##    #parse("celMacros/includeCelementsRTE.vm")
+    #parse("celMacros/includeCelementsRTE.vm")
     #set($extractObj = $doc.getObject('Classes.DocumentExtract','language',"$language", false))
     #if ("$!extractObj" == '')
         #set($extractObj = $doc.newObject('Classes.DocumentExtract'))
