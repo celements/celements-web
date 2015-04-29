@@ -700,11 +700,11 @@ TE.prototype = {
   }
 },
 
- scriptIsLoaded : function(script) {
+ scriptIsLoaded : function(scriptURL) {
   var _me = this;
   var isLoaded = false;
   $$('script').each(function(loadedScript) {
-    if(loadedScript.src === _me.getTMCelDomain() + script) {
+    if(loadedScript.src === scriptURL) {
       isLoaded = true;
     }
   });
