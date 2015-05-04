@@ -704,10 +704,13 @@ TE.prototype = {
   var _me = this;
   var isLoaded = false;
   $$('script').each(function(loadedScript) {
-    if(loadedScript.src === new URL(scriptURL, window.location).toString()) {
+    var scriptNewURL = new URL(scriptURL, window.location.href);
+    console.log('scriptIsLoaded: ', loadedScript.src, scriptNewURL);
+    if(loadedScript.src === scriptNewURL.toString()) {
       isLoaded = true;
     }
   });
+  console.log('scriptIsLoaded: return ', isLoaded, scriptURL);
   return isLoaded;
 },
 
