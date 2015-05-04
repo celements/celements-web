@@ -704,9 +704,10 @@ TE.prototype = {
   var _me = this;
   var isLoaded = false;
   $$('script').each(function(loadedScript) {
-    var scriptNewURL = new URL(scriptURL, window.location.href);
-    console.log('scriptIsLoaded: ', loadedScript.src, scriptNewURL);
-    if(loadedScript.src === scriptNewURL.toString()) {
+    //as long as new URL() is not available in IE use a-Element
+    var scriptNewURLLink = new Element('a', { 'href' : scriptURL});
+    console.log('scriptIsLoaded: ', loadedScript.src, scriptNewURLLink);
+    if(loadedScript.src === scriptNewURLLink.href) {
       isLoaded = true;
     }
   });
