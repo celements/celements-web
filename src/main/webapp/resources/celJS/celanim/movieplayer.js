@@ -465,7 +465,7 @@ var celanimOpenInOverlay = function(e, fixWidth, fixHeight) {
   var cssClassNames = $w($(elem).className).without('celanim_overlay');
   var overlaySrc = getCelHost() + '?xpage=celements_ajax&ajax_mode=FlowplayerInOverlay';
   overlaySrc += '&cssclassname=' + cssClassNames.join(',');
-  overlaySrc += '&flvfilename=' + flvLink;
+  overlaySrc += '&flvfilename=' + encodeURIComponent(flvLink);
   hs.graphicsDir = 'highslide/graphics/';
   hs.outlineType = '';
   hs.wrapperClassName = 'no-footer no-move draggable-header celanim_overlay_wrapper '
