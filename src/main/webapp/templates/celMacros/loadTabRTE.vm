@@ -118,11 +118,16 @@ $adminMsg.get('cel_tm_rte_edit')
 
 #parse("celMacros/includeRTELanguageSelect.vm")
 
-	<form id="contentEdit" method="post" action="?">
-    <input type="hidden" name="update" value="1" />
-    <input type="hidden" name="tab" value="tb1" />
+#set($celNewButtons = $services.celementsweb.useNewButtons())
+#if($celNewButtons)
+  <form id="contentEdit" method="post" action="?">
     <input type="hidden" name="xpage" value="celements_ajax" />
     <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+#else
+  <form id="contentEdit" method="post" action="$doc.getURL("save")">
+#end
+    <input type="hidden" name="update" value="1" />
+    <input type="hidden" name="tab" value="tb1" />
 ##	    <input type="hidden" name="template" value="$!doc.getTemplate()" />
       <input type="hidden" name="template" value="$!request.template" />
 	    <input type="hidden" id="formeditxred" name="xredirect" value="$!cel_tiny_xredirect" />
