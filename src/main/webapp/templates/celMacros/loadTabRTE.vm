@@ -118,13 +118,13 @@ $adminMsg.get('cel_tm_rte_edit')
 
 #parse("celMacros/includeRTELanguageSelect.vm")
 
-## #set($celNewButtons = $services.celementsweb.useNewButtons())
-##FIXME storing async fails if translation does not exist yet.
-#set($celNewButtons = false)
+#set($celNewButtons = $services.celementsweb.useNewButtons())
 #if($celNewButtons)
   <form id="contentEdit" method="post" action="?">
     <input type="hidden" name="xpage" value="celements_ajax" />
     <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+    ##TODO if translation or document does not exist, ask user if it should be created.
+    <input type="hidden" name="createIfNotExists" value="true" />
 #else
   <form id="contentEdit" method="post" action="$doc.getURL("save")">
 #end
