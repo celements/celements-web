@@ -118,7 +118,9 @@ $adminMsg.get('cel_tm_rte_edit')
 
 #parse("celMacros/includeRTELanguageSelect.vm")
 
-#set($celNewButtons = $services.celementsweb.useNewButtons())
+## #set($celNewButtons = $services.celementsweb.useNewButtons())
+##FIXME storing async fails if translation does not exist yet.
+#set($celNewButtons = false)
 #if($celNewButtons)
   <form id="contentEdit" method="post" action="?">
     <input type="hidden" name="xpage" value="celements_ajax" />
