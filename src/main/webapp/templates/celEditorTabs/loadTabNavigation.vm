@@ -23,8 +23,11 @@
     </select>
 </form>
 </div>
-<form id="navigation_form" action="$doc.getURL('save')" method="post">
+<form id="navigation_form" action="?" method="post">
         <input name="language" type="hidden" value="$!default_language">
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="template" value="$!request.template" />
 <div id="nav_menunameEdit" class="editblock">
     #set($theMenuName = $doc.getObject('Celements2.MenuName','lang',"$language", false))
     #if("$!theMenuName" == '')
@@ -62,6 +65,7 @@
 <input type="hidden" name="tab" value="tb2" />
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="template" value="$!request.template" />
     #parse("celMacros/includeCelementsRTE.vm")
     #set($extractObj = $doc.getObject('Classes.DocumentExtract','language',"$language", false))
     #if ("$!extractObj" == '')
@@ -90,7 +94,10 @@
 #* Extract End *#
 
 #if ("$!xwiki.getSpacePreference('use_navigation_images')" == "1")
-<form id="nav_imagePicker_form" action="$doc.getURL('save')" method="post">
+<form id="nav_imagePicker_form" action="?" method="post">
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="template" value="$!request.template" />
 <div id="nav_imagePicker" class="editblock">
 <span style="display:none;" id="image_prefix">${doc.fullName}</span>
   $adminMsg.get('cel_tm_menu_image'): <input type="hidden" value="$!theMenuName.getProperty('image').getValue()" id="image" name="Celements2.MenuName_${navObjNb}_image"></input>
