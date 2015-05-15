@@ -48,7 +48,7 @@
     <tag>celements-web-2.55.0</tag>
   </scm>
   <properties>
-    <platform.core.version>2.55</platform.core.version>
+    <platform.core.version>2.63</platform.core.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <catalina.port>10081</catalina.port>
     <catalina.home.celementsweb-platform>${env.CATALINA_HOME}</catalina.home.celementsweb-platform>
@@ -133,7 +133,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.118-SNAPSHOT</version>
+      <version>1.118</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
