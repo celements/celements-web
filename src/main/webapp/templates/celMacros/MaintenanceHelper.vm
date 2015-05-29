@@ -20,10 +20,21 @@
     </a>
     #if("$!request.checkClasses" == 'true')
       <br/>
-      $celementsweb.checkClasses() done.
+      $services.celementsweb.checkClasses() done.
     #end
     </p>
     ##end: checkClasses
+    ##checkMandatoryDocuments
+    <p>
+    <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkMandatoryDocuments=true")">
+        Check Celements Mandatory Documents
+    </a>
+    #if("$!request.checkMandatoryDocuments" == 'true')
+      <br/>
+      $services.celementsweb.checkMandatoryDocuments() done.
+    #end
+    </p>
+    ##end: checkMandatoryDocuments
     ##check lucene queue
     <p>
     <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=true")">
