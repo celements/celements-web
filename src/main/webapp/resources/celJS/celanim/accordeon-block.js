@@ -66,14 +66,12 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     _me.cssContent = cssContent;
     var stepsToHide = _me.htmlElem.select(_me.cssBox);
     stepsToHide.each(function(step) {
-      var stepContent = step.down(_me.cssContent);
-      var stepTitle = step.down(_me.cssTitle);
-      if (stepContent && stepTitle) {
+      if (_me.isValidStep(step)) {
         step.down(_me.cssContent).hide();
         step.down(_me.cssTitle).observe('click', _me.toggleAccordeon.bind(_me));
         step.addClassName('inactive');
       } else if (_me._debug) {
-        console.log('stepsToHide: skip step ', stepContent, stepTitle);
+        console.log('stepsToHide: skip step ', step, _me.cssContent, _me.cssTitle);
       }
     });
     _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
@@ -138,21 +136,34 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     }
   },
 
+  isValidStep : function(step) {
+    var _me = this;
+    var stepContent = step.down(_me.cssContent);
+    var stepTitle = step.down(_me.cssTitle);
+    return (stepContent && stepTitle);
+  },
+
   isStepVisible : function(step) {
     var _me = this;
     return step.down(_me.cssContent).visible();
+    return false;
   },
 
   toggleAccordeon : function(event) {
     var _me = this;
     event.stop();
     var step = event.findElement(_me.cssBox);
-    if (_me.isStepVisible(step)) {
-      var accordeonEffects = [];
-      accordeonEffects.push(_me.accordeonHide(step));
-      _me._accordeonExecute(accordeonEffects, step);
-    } else {
-      _me.activateStep(step);
+    if ((typeof step !== 'undefined') && (_me.isValidStep(step))) {
+      if (_me.isStepVisible(step)) {
+        var accordeonEffects = [];
+        accordeonEffects.push(_me.accordeonHide(step));
+        _me._accordeonExecute(accordeonEffects, step);
+      } else {
+        _me.activateStep(step);
+      }
+    } else if (_me._debug) {
+      console.log('toggleAccordeon: failed to get valid step. ', _me.cssBox,
+          event.findElement());
     }
   },
 
@@ -161,7 +172,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     var activeSteps = _me.htmlElem.select(_me.cssBox);
     var accordeonEffects = [];
     activeSteps.each(function(step) {
-      if ((step != nextStep) && (_me.isStepVisible(step))) {
+      if (_me.isValidStep(step) && (step != nextStep) && (_me.isStepVisible(step))) {
         accordeonEffects.push(_me.accordeonHide(step));
       }
     });
