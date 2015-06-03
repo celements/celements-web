@@ -38,11 +38,11 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
 // cssContent  css selector for content box which is open and closed by a click on the
 //              title box. 
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent) {
+CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent, debug) {
   // constructor
   cssTitle = cssTitle || '.accordeonTitle';
   cssContent = cssContent || '.accordeonContent';
-  this._init(id, cssBox, cssTitle, cssContent);
+  this._init(id, cssBox, cssTitle, cssContent, debug);
 };
 
 (function() {
@@ -53,10 +53,13 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   cssTitle : undefined,
   cssContent : undefined,
 
-  _effectRunning : false,
+  _effectRunning : undefined,
+  _debug : undefined,
 
-  _init : function(elemId, cssBox, cssTitle, cssContent) {
+  _init : function(elemId, cssBox, cssTitle, cssContent, debug) {
     var _me = this;
+    _me._debug = debug || false;
+    _me._effectRunning = false;
     _me.htmlElem = $(elemId);
     _me.cssBox = cssBox;
     _me.cssTitle = cssTitle;
@@ -69,6 +72,8 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
         step.down(_me.cssContent).hide();
         step.down(_me.cssTitle).observe('click', _me.toggleAccordeon.bind(_me));
         step.addClassName('inactive');
+      } else if (_me._debug) {
+        console.log('stepsToHide: skip step ', stepContent, stepTitle);
       }
     });
     _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
