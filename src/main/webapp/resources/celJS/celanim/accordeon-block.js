@@ -63,9 +63,13 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     _me.cssContent = cssContent;
     var stepsToHide = _me.htmlElem.select(_me.cssBox);
     stepsToHide.each(function(step) {
-      step.down(_me.cssContent).hide();
-      step.down(_me.cssTitle).observe('click', _me.toggleAccordeon.bind(_me));
-      step.addClassName('inactive');
+      var stepContent = step.down(_me.cssContent);
+      var stepTitle = step.down(_me.cssTitle);
+      if (stepContent && stepTitle) {
+        step.down(_me.cssContent).hide();
+        step.down(_me.cssTitle).observe('click', _me.toggleAccordeon.bind(_me));
+        step.addClassName('inactive');
+      }
     });
     _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
   },
