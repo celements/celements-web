@@ -68,7 +68,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     stepsToHide.each(function(step) {
       if (_me.isValidStep(step)) {
         step.down(_me.cssContent).hide();
-        step.down(_me.cssTitle).observe('click', _me.toggleAccordeon.bind(_me));
+        step.down(_me.cssTitle).observe('click', _me.clickHandler.bind(_me));
         step.addClassName('inactive');
       } else if (_me._debug) {
         console.log('stepsToHide: skip step ', step, _me.cssContent, _me.cssTitle);
@@ -149,21 +149,29 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     return false;
   },
 
-  toggleAccordeon : function(event) {
+  clickHandler : function(event) {
     var _me = this;
     event.stop();
     var step = event.findElement(_me.cssBox);
     if ((typeof step !== 'undefined') && (_me.isValidStep(step))) {
-      if (_me.isStepVisible(step)) {
-        var accordeonEffects = [];
-        accordeonEffects.push(_me.accordeonHide(step));
-        _me._accordeonExecute(accordeonEffects, step);
-      } else {
-        _me.activateStep(step);
+      var clickEvent = step.fire('celanim_accordeon-block:beforeClickHandler', step);
+      if (!clickEvent.stopped) {
+        _me.toggleAccordeon(step);
       }
     } else if (_me._debug) {
-      console.log('toggleAccordeon: failed to get valid step. ', _me.cssBox,
+      console.log('clickHandler: failed to get valid step. ', _me.cssBox,
           event.findElement());
+    }
+  },
+
+  toggleAccordeon : function(step) {
+    var _me = this;
+    if (_me.isStepVisible(step)) {
+      var accordeonEffects = [];
+      accordeonEffects.push(_me.accordeonHide(step));
+      _me._accordeonExecute(accordeonEffects, step);
+    } else {
+      _me.activateStep(step);
     }
   },
 
