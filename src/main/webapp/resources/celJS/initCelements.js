@@ -386,7 +386,7 @@ var celMessages = {};
    * Register default orientation css classes setter
    */
   var mobileDim = null;
-  var cel_cel_updateOrientationCSSclasses = function() {
+  var cel_updateOrientationCSSclasses = function() {
     var innerWidth = mobileDim.getInnerWidth();
     var innerHeight = mobileDim.getInnerHeight();
     if (innerWidth > innerHeight) {
