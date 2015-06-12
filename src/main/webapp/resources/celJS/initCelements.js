@@ -382,4 +382,28 @@ var celMessages = {};
     }
   });
 
+  /**
+   * Register default orientation css classes setter
+   */
+  var mobileDim = null;
+  var cel_cel_updateOrientationCSSclasses = function() {
+    var innerWidth = mobileDim.getInnerWidth();
+    var innerHeight = mobileDim.getInnerHeight();
+    if (innerWidth > innerHeight) {
+      $(document.body).removeClassName('cel_orientation_portrait');
+      $(document.body).addClassName('cel_orientation_landscape');
+    } else {
+      $(document.body).removeClassName('cel_orientation_landscape');
+      $(document.body).addClassName('cel_orientation_portrait');
+    }
+  };
+
+  celAddOnBeforeLoadListener(function() {
+    if (CELEMENTS && CELEMENTS.mobile && CELEMENTS.mobile.Dimensions) {
+      mobileDim = new CELEMENTS.mobile.Dimensions();
+      Event.stopObserving(window, "orientationchange", cel_updateOrientationCSSclasses);
+      Event.observe(window, "orientationchange", cel_updateOrientationCSSclasses);
+    }
+  });
+
 })(window);
