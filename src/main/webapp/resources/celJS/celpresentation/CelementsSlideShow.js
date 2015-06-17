@@ -630,6 +630,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         var slideWrapper = slideWrapperIn || _me._getSlideWrapper();
         var slideRoot = _me._getSlideRootElem(slideWrapper);
+        console.log('_centerCurrentSlide for ', slideWrapper, slideRoot);
 //        slideWrapper.setStyle({
 //          'position' : 'absolute',
 //          'width' : 'auto',
@@ -655,6 +656,8 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var parentDiv = _me._htmlContainer;
         var parentHeight = parentDiv.getHeight();
         var parentWidth = parentDiv.getWidth();
+        console.log('_centerCurrentSlide for dim ', slideOuterWidth, slideOuterHeight,
+            parentWidth, parentHeight);
         //FIXED: why slideOuterHeight? !!! FP; 2/1/2014
         //--> it must be slideOuterHeight to get correct size of scaled down slides.
         //--> see method comment
