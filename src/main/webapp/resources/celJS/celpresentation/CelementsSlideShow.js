@@ -75,6 +75,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _gotoSlideClickHandlerBind : undefined,
       _counterLeadingZeros : undefined,
       _centerSlide : undefined,
+      _resizeSlide : undefined,
       _autoresize : undefined,
       _mobileDim : undefined, 
 
@@ -86,6 +87,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._preloadSlideParams = new Hash();
         _me._counterLeadingZeros = false;
         _me._centerSlide = true;
+        _me._resizeSlide = true;
         _me._autoresize = false;
         _me._preloadSlideImagesHash = new Hash();
         _me._nextElements = [];
@@ -518,6 +520,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._preloadSlideParams = _me._preloadSlideParams.merge(params);
       },
 
+      setResizeSlide : function(isResizeSlide) {
+        var _me = this;
+        _me._resizeSlide = isResizeSlide;
+      },
+
       setCenterSlide : function(isCenterSlide) {
         var _me = this;
         _me._centerSlide = isCenterSlide;
@@ -684,7 +691,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _resizeAndCenterSlide : function(slideWrapper) {
         var _me = this;
-        _me._resizeCurrentSlide(slideWrapper);
+        if (_me._resizeSlide) {
+          _me._resizeCurrentSlide(slideWrapper);
+        }
         if (_me._centerSlide) {
           var centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
               _me);
