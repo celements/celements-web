@@ -76,13 +76,13 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>1.11-SNAPSHOT</version>
+      <version>1.11</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>1.44-SNAPSHOT</version>
+      <version>1.44</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -133,7 +133,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.119-SNAPSHOT</version>
+      <version>1.119</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
