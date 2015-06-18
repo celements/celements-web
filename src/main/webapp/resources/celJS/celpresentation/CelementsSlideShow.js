@@ -862,6 +862,22 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         }
       },
 
+      /**
+       * needed for responsive design changing container sizes
+       */
+      changeContainerSize : function(newMaxWidth, newMaxHeight, preserveAspectRatio) {
+        var _me = this;
+        var currentWidth = $j(_me.getHtmlContainer()).width();
+        var currentHeight= $j(_me.getHtmlContainer()).height();
+        var newWidth = newMaxWidth || currentWidth;
+        var newHeight = newMaxHeight || currentHeight;
+        if (preserveAspectRatio) {
+          var aspectRatio = currentWidth / currentHeight;
+          
+        }
+        _me.getHtmlContainer().setStyle();
+      },
+
       _showSlideAfterPreloadingImg : function() {
         var _me = this;
         var slides = _me.getHtmlContainer().select('> .cel_slideShow_slideRoot');
