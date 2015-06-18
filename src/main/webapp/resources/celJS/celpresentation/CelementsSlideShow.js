@@ -617,6 +617,11 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         return _me.getHtmlContainer().down('.cel_slideShow_slideWrapper');
       },
 
+      _getAllSlideWrappers : function() {
+        var _me = this;
+        return _me.getHtmlContainer().select('.cel_slideShow_slideWrapper');
+      },
+
       /**
        * if the slide is scaled down to fit in the _me._htmlContainer element then
        * we need an additional div between the slideWrapper and the _htmlContainer
@@ -874,6 +879,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         _me.getHtmlContainer().setStyle({
           'height' : newHeight + 'px',
           'width' : newWidth + 'px'
+        });
+        _me._getAllSlideWrappers().each(function(slideWrapper) {
+          _me._resizeAndCenterSlide(slideWrapper);
         });
       },
 
