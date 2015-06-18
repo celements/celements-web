@@ -630,7 +630,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         var slideWrapper = slideWrapperIn || _me._getSlideWrapper();
         var slideRoot = _me._getSlideRootElem(slideWrapper);
-        console.log('_centerCurrentSlide for ', slideWrapper, slideRoot);
+//        console.log('_centerCurrentSlide for ', slideWrapper, slideRoot);
 //        slideWrapper.setStyle({
 //          'position' : 'absolute',
 //          'width' : 'auto',
@@ -656,8 +656,8 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var parentDiv = _me._htmlContainer;
         var parentHeight = parentDiv.getHeight();
         var parentWidth = parentDiv.getWidth();
-        console.log('_centerCurrentSlide for dim ', slideOuterWidth, slideOuterHeight,
-            parentWidth, parentHeight);
+//        console.log('_centerCurrentSlide for dim ', slideOuterWidth, slideOuterHeight,
+//            parentWidth, parentHeight);
         //FIXED: why slideOuterHeight? !!! FP; 2/1/2014
         //--> it must be slideOuterHeight to get correct size of scaled down slides.
         //--> see method comment
@@ -723,9 +723,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
                 'newWidth' : zoomFactorObj.newWidth,
                 'newHeight' : zoomFactorObj.newHeight
             };
-            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-              console.log('final resize factor: ', eventMemo);
-            }
+            console.log('final resize factor: ', eventMemo);
             var resizeEvent = _me._htmlContainer.fire(
                 'cel_slideShow:resizeSlideContent', eventMemo);
             if (!resizeEvent.stopped) {
@@ -741,14 +739,10 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             }
         } else {
           if (zoomFactorObj.zoomFactor > 1) {
-            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-              console.log('no resize needed.', zoomFactorObj.zoomFactor);
-            }
+            console.log('no resize needed.', zoomFactorObj.zoomFactor);
           } else {
-            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-              console.log('resize skipped.', { 'zoomFactor' : zoomFactorObj.zoomFactor,
-                '_autoresize' : _me._autoresize });
-            }
+            console.log('resize skipped.', { 'zoomFactor' : zoomFactorObj.zoomFactor,
+              '_autoresize' : _me._autoresize });
           }
           //set sizes without zoom too. Important for centering
           slideWrapper.setStyle({
