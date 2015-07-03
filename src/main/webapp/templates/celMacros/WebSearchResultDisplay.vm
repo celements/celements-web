@@ -36,13 +36,12 @@
     #set($parentDocRefList = $xwiki.celementsweb.getDocumentParentsDocRefList($resultRef, false))
     #set($resultDate = $resultDoc.getDate())
   #elseif("$!resultRef.getType()" == "ATTACHMENT")
-    #set($resultAttch = $services.webUtils.getAttachment($resultRef))
+    #set($resultAtt = $services.webUtils.getAttachment($resultRef))
     #set($pageTitle = $resultRef.getName())
     #set($pageLink = $xwiki.getAttachmentURL($services.model.serialize($resultRef.getDocumentReference()), $pageTitle))
-    #set($pageLinkExt = $pageLink)
+    #set($pageLinkExt = '')
     #set($parentDocRefList = [])
-    #set($resultDoc = '')
-    #set($resultDate = $resultAttch.getDate())
+    #set($resultDate = $resultAtt.getDate())
   #end
   <li class="result_item">
     #set($score = $resultScoreMap.get($resultRef))
@@ -65,7 +64,9 @@
       #end
     </span>
     #end
+    #if("$!pageLinkExt" != '')
     <a class="result_url" href="${pageLink}">$pageLinkExt</a>
+    #end
     <span class="result_date">
       $msg.get('search_result_last_change'): $datetool.format($formatDate, $resultDate, $locale)
     </span>
