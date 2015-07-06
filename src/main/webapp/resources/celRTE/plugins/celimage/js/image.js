@@ -194,7 +194,7 @@ var CelImageDialog = {
     callbackFN = callbackFN || function() {};
     var imageFullName = _me._getImageFullName(imgSrc);
     if (!_me._origDim.get(imageFullName)) {
-      console.log('getOrigDimensionsForImg: load async for ', imageFullName);
+//      console.log('getOrigDimensionsForImg: load async for ', imageFullName);
       tinymce.plugins.CelementsImagePlugin.prototype.loadOrigDimensionsAsync(ed,
           imageFullName, callbackFN);
     } else {
@@ -218,7 +218,7 @@ var CelImageDialog = {
     } else {
       var imgSrc = decodeURI(nl.src.value);
       _me.getOrigDimensionsForImg(imgSrc, function(imageFullName, origDim) {
-          console.log('resetMaxDimension: callback ', imageFullName, origDim);
+//          console.log('resetMaxDimension: callback ', imageFullName, origDim);
           $('resetMaxLabel').update(origDim.width + ' x ' + origDim.height);
           _me._updateAfterResettingMaxDimension(newIsCropped);
           callbackFN();
@@ -1107,9 +1107,9 @@ var CelImageDialog = {
       $('cropY').value = '';
       $('cropWidth').value = '';
       $('cropHeight').value = '';
-      console.log('showPreviewImage: image changed');
+//      console.log('showPreviewImage: image changed');
     } else {
-      console.log('showPreviewImage: image NOT changed');
+//      console.log('showPreviewImage: image NOT changed');
     }
 
 //    console.log('showPreviewImage: new URL ', u);
