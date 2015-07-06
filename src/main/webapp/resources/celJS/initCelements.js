@@ -300,7 +300,8 @@ var celMessages = {};
   "use strict";
 
   try {
-    new Ajax.Request(window.getCelHost(), {
+    var topFrame = top || window;
+    new Ajax.Request(topFrame.getCelHost(), {
       method : 'post',
       parameters : {
         xpage : 'celements_ajax',
