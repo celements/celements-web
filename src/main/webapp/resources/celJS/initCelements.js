@@ -297,7 +297,7 @@ var celMessages = {};
 (function(window, undefined) {
   "use strict";
 
-  new Ajax.Request(getCelHost(), {
+  new Ajax.Request(window.getCelDomain(), {
     method : 'post',
     parameters : {
       xpage : 'celements_ajax',
