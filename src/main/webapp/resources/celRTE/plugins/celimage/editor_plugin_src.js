@@ -129,7 +129,7 @@
     checkResizeEnd : function(ed, cm, e) {
       if (e.nodeName != 'IMG')
         return;
-      var imgSrc = decodeURIComponent(e.src);
+      var imgSrc = decodeURI(e.src);
       var imageFullName = this._getImageFullName(imgSrc);
       console.log('checkResizeEnd: e.src _getImageFullName ', e.src, imageFullName);
       if (!ed.origData.get(imageFullName)) {
