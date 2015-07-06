@@ -301,7 +301,6 @@ var celMessages = {};
 
   try {
     var topFrame = top || window;
-    console.log('before message ajax call: ', topFrame, topFrame.getCelHost());
     new Ajax.Request(topFrame.getCelHost(), {
       method : 'post',
       parameters : {
