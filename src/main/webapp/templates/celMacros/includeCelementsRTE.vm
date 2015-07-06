@@ -1,2 +1,2 @@
-$services.javascript.addLazyExtJSfile(":celRTE/tiny_mce_src.js?version=${services.celementsweb.getLastStartupTimeStamp()}", "file")
+$services.javascript.addLazyExtJSfile(":celRTE/tiny_mce_src.js", "file", "ver=$!{services.celementsweb.getLastStartupTimeStamp()}")
 $services.javascript.addLazyExtJSfile(":celJS/celTabMenu/loadTinyMCE-async.js", "file")
