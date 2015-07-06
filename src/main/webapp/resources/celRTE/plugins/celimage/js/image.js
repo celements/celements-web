@@ -194,7 +194,7 @@ var CelImageDialog = {
     callbackFN = callbackFN || function() {};
     var imageFullName = _me._getImageFullName(imgSrc);
     if (!_me._origDim.get(imageFullName)) {
-//      console.log('getOrigDimensionsForImg: load async for ', imageFullName);
+      console.log('getOrigDimensionsForImg: load async for ', imageFullName);
       tinymce.plugins.CelementsImagePlugin.prototype.loadOrigDimensionsAsync(ed,
           imageFullName, callbackFN);
     } else {

@@ -51,6 +51,7 @@
 
     loadOrigDimensionsAsync : function(ed, imageFullName, callbackFN) {
       if (imageFullName && (imageFullName != '')) {
+        console.log('loadOrigDimensionsAsync: called with imageFullName ', imageFullName);
         callbackFN = callbackFN || function() {};
         new Ajax.Request(getCelHost(), {
           method: 'post',
