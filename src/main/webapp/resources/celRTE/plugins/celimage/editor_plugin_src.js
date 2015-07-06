@@ -129,7 +129,8 @@
     checkResizeEnd : function(ed, cm, e) {
       if (e.nodeName != 'IMG')
         return;
-      var imageFullName = this._getImageFullName(e.src);
+      var imgSrc = decodeURIComponent(e.src);
+      var imageFullName = this._getImageFullName(imgSrc);
       console.log('checkResizeEnd: e.src _getImageFullName ', e.src, imageFullName);
       if (!ed.origData.get(imageFullName)) {
         var cropW = parseInt(e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropW=(\d*)\D?.*)|.*/g, '$4'));
