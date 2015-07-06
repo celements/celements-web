@@ -280,16 +280,18 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
 /**
  * getCelHost function
  **/
-if (typeof getCelHost === 'undefined') {
-var getCelHost = function() {
-  var celHost = document.location + '?';
-  if (document.location.pathname.startsWith('/skin/resources/')) {
-    celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
-  } else {
-    celHost = celHost.substring(0, celHost.indexOf('?'));
-  }
-  return celHost;
-};
+if (typeof window.getCelHost === 'undefined') {
+  window.getCelHost = function() {
+    var celHost = document.location + '?';
+    if (document.location.pathname.startsWith('/skin/resources/')) {
+      celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
+    } else if (document.location.pathname.startsWith('/file/resources/')) {
+        celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
+    } else {
+      celHost = celHost.substring(0, celHost.indexOf('?'));
+    }
+    return celHost;
+  };
 }
 
 var celMessages = {};
@@ -298,7 +300,7 @@ var celMessages = {};
   "use strict";
 
   try {
-    new Ajax.Request(window.getCelDomain(), {
+    new Ajax.Request(window.getCelHost(), {
       method : 'post',
       parameters : {
         xpage : 'celements_ajax',
