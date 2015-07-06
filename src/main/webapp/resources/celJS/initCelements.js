@@ -297,24 +297,28 @@ var celMessages = {};
 (function(window, undefined) {
   "use strict";
 
-  new Ajax.Request(window.getCelDomain(), {
-    method : 'post',
-    parameters : {
-      xpage : 'celements_ajax',
-      ajax_mode : 'Messages'
-    },
-    onSuccess : function(transport) {
-      if (transport.responseText.isJSON()) {
-        celMessages = transport.responseText.evalJSON();
-        if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-          console.log('initCelements.js: finished getting dictionary messages.');
+  try {
+    new Ajax.Request(window.getCelDomain(), {
+      method : 'post',
+      parameters : {
+        xpage : 'celements_ajax',
+        ajax_mode : 'Messages'
+      },
+      onSuccess : function(transport) {
+        if (transport.responseText.isJSON()) {
+          celMessages = transport.responseText.evalJSON();
+          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+            console.log('initCelements.js: finished getting dictionary messages.');
+          }
+          $(document.body).fire('cel:messagesLoaded', celMessages);
+        } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+          console.error('noJSON!!! ', transport.responseText);
         }
-        $(document.body).fire('cel:messagesLoaded', celMessages);
-      } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-        console.error('noJSON!!! ', transport.responseText);
       }
-    }
-  });
+    });
+  } catch (exp) {
+    console.error('Failed to get Cel-Messages async!', exp);
+  }
 
   var formValidations = new Hash();
 
