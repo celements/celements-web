@@ -286,7 +286,7 @@ if (typeof window.getCelHost === 'undefined') {
     if (document.location.pathname.startsWith('/skin/resources/')) {
       celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
     } else if (document.location.pathname.startsWith('/file/resources/')) {
-        celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
+      celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
     } else {
       celHost = celHost.substring(0, celHost.indexOf('?'));
     }
@@ -301,6 +301,7 @@ var celMessages = {};
 
   try {
     var topFrame = top || window;
+    console.log('before message ajax call: ', topFrame, topFrame.getCelHost());
     new Ajax.Request(topFrame.getCelHost(), {
       method : 'post',
       parameters : {
