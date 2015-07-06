@@ -217,7 +217,7 @@ var CelImageDialog = {
       callbackFN();
     } else {
       _me.getOrigDimensionsForImg(nl.src.value, function(imageFullName, origDim) {
-//          console.log('resetMaxDimension: callback ', imageFullName, origDim);
+          console.log('resetMaxDimension: callback ', imageFullName, origDim);
           $('resetMaxLabel').update(origDim.width + ' x ' + origDim.height);
           _me._updateAfterResettingMaxDimension(newIsCropped);
           callbackFN();
