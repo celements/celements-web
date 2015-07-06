@@ -129,6 +129,7 @@
       if (e.nodeName != 'IMG')
         return;
       var imageFullName = this._getImageFullName(e.src);
+      console.log('checkResizeEnd: e.src _getImageFullName ', e.src, imageFullName);
       if (!ed.origData.get(imageFullName)) {
         var cropW = parseInt(e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropW=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropW || (typeof(cropW) == 'undefined') || (cropW <= 0)) {
