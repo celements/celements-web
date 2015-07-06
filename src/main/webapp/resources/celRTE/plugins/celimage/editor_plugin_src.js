@@ -93,7 +93,10 @@
     },
 
     _resizeHappend : function(ed, e) {
-      var lastDim = ed.lastSize.get(this._getImageFullName(e.src));
+      var _me = this;
+      var imgSrc = decodeURI(e.src);
+      var imageFullName = _me._getImageFullName(imgSrc);
+      var lastDim = ed.lastSize.get(imageFullName);
       return lastDim && ((lastDim.width != e.width) || (lastDim.height != e.height));
     },
 
