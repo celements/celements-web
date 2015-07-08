@@ -12,7 +12,7 @@
   #if($resultScoreMap.size() < $limit)
     $msg.get('cel_search_results_total', [$resultScoreMap.size()])
   #else
-    $msg.get('cel_search_results_total_1000', [$limit])
+    $msg.get('cel_search_results_total_over', [$limit])
   #end
   </span>
 #end
@@ -68,7 +68,7 @@
     <a class="result_url" href="${pageLink}">$pageLinkExt</a>
     #end
     <span class="result_date">
-      $msg.get('search_result_last_change'): $datetool.format($formatDate, $resultDate, $locale)
+      $msg.get('cel_search_result_last_change'): $datetool.format($formatDate, $resultDate, $locale)
     </span>
     <div class="clearright"><!--ie--></div>
   </li>
