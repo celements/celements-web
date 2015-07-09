@@ -3,9 +3,6 @@
 #set($splitRegex = '[,;\| ]+')
 #set($text = "$!request.get('text')")
 #set($text = $text.trim())
-#if("$!maxInputFieldSize" == '')
-  #set($maxInputFieldSize = 20)
-#end
 #set($configObj = $doc.getObject('Celements2.WebSearchConfigClass'))
 #set($attConfigObj = $doc.getObject('Celements2.WebAttachmentSearchConfigClass'))
 
@@ -22,15 +19,9 @@
   #end
   <div class="websearch_form">
   <form action="$doc.getURL()">
-#*    Unscharfe Suche: 
-    <select name="fuzzy">
-      <option#if("$!fuzzySearch" == '1') selected="selected"#end value="1">1 (exakte Suche)</option>
-      <option#if("$!fuzzySearch" == '0.9') selected="selected"#end value="0.9">0.9</option>
-      <option#if("$!fuzzySearch" == '0.8') selected="selected"#end value="0.8">0.8</option>
-      <option#if("$!fuzzySearch" == '0.7') selected="selected"#end value="0.7">0.7</option>
-      <option#if("$!fuzzySearch" == '0.6') selected="selected"#end value="0.6">0.6</option>
-      <option#if("$!fuzzySearch" == '0.5') selected="selected"#end value="0.5">0.5 (standard Fuzzy)</option>
-    </select><br />*#
+  #if("$!maxInputFieldSize" == '')
+    #set($maxInputFieldSize = 20)
+  #end
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
   #if("$!request.get('spaces')" != '')
     <input type="hidden" name="spaces" value="$!request.get('spaces')" />
@@ -45,7 +36,7 @@
 #set($restrictions = $services.lucene.createAndRestrictionGroup())
 
 ## exclude WebPreferences
-#set($webPrefRestr = $services.lucene.createRestriction('name' 'WebPreferences'))
+#set($webPrefRestr = $services.lucene.createRestriction('name', 'WebPreferences'))
 #set($devNull = $webPrefRestr.setNegate(true))
 #set($devNull = $restrictions.add($webPrefRestr))
 
@@ -121,9 +112,10 @@
 
 ## start packages
 #set($searchpackages = "$!configObj.get('packages') $!searchpackages")
-#set($searchpackages = $searchpackages.trim().split($splitRegex))
-#if($searchpackages.isEmpty())
+#if($searchpackages.trim().isEmpty())
   #set($searchpackages = ['content', 'menu', 'blog'])
+#else
+  #set($searchpackages = $searchpackages.split($splitRegex))
 #end
 #if(!$searchpackages.contains('attachment') && ("$!attConfigObj" != ''))
   #set($devNull = $searchpackages.add('attachment'))
@@ -189,7 +181,7 @@
   #set($mimeTypesBlackList = $mimeTypesBlackList.trim().split($splitRegex))
   #set($filenamePrefs = "$!attConfigObj.get('filenamePrefs') $!filenamePrefs")
   #set($filenamePrefs = $filenamePrefs.trim().split($splitRegex))
-  #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($mimeTypes, $mimeTypesBlackList, $filenamePrefs)
+  #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($mimeTypes, $mimeTypesBlackList, $filenamePrefs))
   #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
   #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
   #set($devNull = $attRestrGrp.add($restr))
@@ -208,12 +200,12 @@
   #set($devNull = $doctypes.add('wikipage'))
 #end
 #set($query = $services.lucene.createQuery($doctypes))
-#set($devNull = $query.add($restrictions))
+#set($devNull = $query.addAll($restrictions))
 #set($result = $services.lucene.search($query, $nullVal, ['default', "$language"]))
 #if($isAdmin)
 <!--
   result: $!result
-  size : $!result.getSize()
+  size: $!result.getSize()
 -->
 #end
 #parse('celMacros/WebSearchResultDisplay.vm')
