@@ -1,62 +1,27 @@
 ## Generic Celements Search
-##
-## INPUT (optional): $searchpackages
-## INPUT (optional): $spaces
-## INPUT (optional): $negSpaces (only considered if no spaces set)
-## INPUT (optional): $hideForm [true|false] default: false
-## INPUT (optional): $linkedDocsOnly
-## INPUT (optional): $fuzzySearch [0-1] (the lower the fuzzyer) default: not fuzzy
-## INPUT (optional): $pageTypes
-## INPUT (optional): $negPageTypes
-## INPUT (optional): $docBlackList
-## INPUT (optional): $fileBaseDocRef (searchpackage attachment)
-## INPUT (optional): $mimetype (searchpackage attachment)
-## INPUT (optional): $filenamePrefs (searchpackage attachment)
 
+#set($splitRegex = '[,;\| ]+')
+#set($text = "$!request.get('text')")
+#set($text = $text.trim())
 #if("$!maxInputFieldSize" == '')
   #set($maxInputFieldSize = 20)
 #end
-<div id="websearch">
-#if(("$!hideForm" != 'true') && ("$msg.get('cel_search_page_title')" != 'cel_search_page_title'))
-  <h1>$msg.get('cel_search_page_title')</h1>
-#end
-#set($text = "$!request.get('text')")
-#set($text = $text.trim())
-## spaces
-#if("$!request.get('spaces')" != '')
-  #set($spaces = "$!request.get('spaces')")
-  #set($spaces = $spaces.replaceAll(';', ' '))
-  #set($spaces = $spaces.replaceAll(',', ' '))
-#end
-## negspaces
-#if("$!spaces" == '')
-  #set($negSpaces = "XWiki Templates Tools Celements2 Macros LocalMacros Ajax Overlay $!negSpaces")
-#end
-## negPageTypes
-#if("$!pageTypes" == '')
-  #set($negPageTypes = "Redirect $!negPageTypes")
-#end
-## searchpackages
-#if("$!searchpackages" != '')
-  #set($searchpackages = $searchpackages.split(','))
-#else
-  #set($searchpackages = ['content', 'menu', 'blog'])
-#end
-## linkedDocsOnly
-#set($linkedDocsOnly = ("$!linkedDocsOnly" != 'false'))
-## docBlackList
-#set($docRefBlackList = [])
-#if("$!docBlackList" != '')
-  #foreach($docFN in $docBlackList.split(','))
-    #if("$!docFN" != '')
-      #set($devNull = $docRefBlackList.add($services.model.resolveDocument($docFN)))
-    #end
-  #end
-#end
+#set($configObj = $doc.getObject('Celements2.WebSearchConfigClass'))
+#set($attConfigObj = $doc.getObject('Celements2.WebAttachmentSearchConfigClass'))
 
+<div id="websearch">
+
+#if("$!hideForm" != '')
+  #set($hideForm = ("$!hideForm" == 'true'))
+#else
+  #set($hideForm = ("$!configObj.get('hideForm')" == 'true'))
+#end
 #if("$!hideForm" != 'true')
-<div class="websearch_form">
-<form action="$doc.getURL()">
+  #if("$msg.get('cel_search_page_title')" != 'cel_search_page_title')
+    <h1>$msg.get('cel_search_page_title')</h1>
+  #end
+  <div class="websearch_form">
+  <form action="$doc.getURL()">
 #*    Unscharfe Suche: 
     <select name="fuzzy">
       <option#if("$!fuzzySearch" == '1') selected="selected"#end value="1">1 (exakte Suche)</option>
@@ -67,15 +32,174 @@
       <option#if("$!fuzzySearch" == '0.5') selected="selected"#end value="0.5">0.5 (standard Fuzzy)</option>
     </select><br />*#
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
-  #if("$!spaces" != '')
-    <input type="hidden" name="spaces" value="$!spaces" />
+  #if("$!request.get('spaces')" != '')
+    <input type="hidden" name="spaces" value="$!request.get('spaces')" />
   #end
-</form>
-</div>
+  </form>
+  </div>
 #end
 
-#if("$!text" != "")  
+## execute search
+#if("$!text" != "")
 
+#set($restrictions = $services.lucene.createAndRestrictionGroup())
+
+## exclude WebPreferences
+#set($webPrefRestr = $services.lucene.createRestriction('name' 'WebPreferences'))
+#set($devNull = $webPrefRestr.setNegate(true))
+#set($devNull = $restrictions.add($webPrefRestr))
+
+## linkedDocsOnly
+#if("$!linkedDocsOnly" != '')
+  #set($linkedDocsOnly = ("$!linkedDocsOnly" == 'true'))
+#else
+  #set($linkedDocsOnly = ("$!configObj.get('linkedDocsOnly')" == 'true'))
+#end
+#if($linkedDocsOnly)
+  #set($devNull = $restrictions.add($services.lucene.createObjectRestriction('Celements2.MenuItem')))
+#end
+
+## docs
+#set($docs = "$!configObj.get('docs') $!docs")
+#set($docs = $docs.trim().split($splitRegex))
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#foreach($elem in $docs)
+  #set($devNull = $orGrp.add($services.lucene.createDocRestriction("$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## docsBlackList
+#set($docsBlackList = "$!configObj.get('docsBlackList') $!docsBlackList")
+#set($docsBlackList = $docsBlackList.trim().split($splitRegex))
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#set($devNull = $orGrp.setNegate(true))
+#foreach($elem in $docsBlackList)
+  #set($devNull = $orGrp.add($services.lucene.createDocRestriction("$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## spaces
+#set($spaces = "$!configObj.get('spaces') $!spaces $!request.get('spaces')")
+#set($spaces = $spaces.trim().split($splitRegex))
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#foreach($elem in $spaces)
+  #set($devNull = $orGrp.add($services.lucene.createSpaceRestriction("$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## spacesBlackList
+#set($spacesBlackList = "XWiki Templates Tools Celements2 Macros LocalMacros Ajax Overlay $!spacesBlackList")
+#set($spacesBlackList = "$!configObj.get('spacesBlackList') $!spacesBlackList")
+#set($spacesBlackList = $spacesBlackList.trim().split($splitRegex))
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#set($devNull = $orGrp.setNegate(true))
+#foreach($elem in $spacesBlackList)
+  #set($devNull = $orGrp.add($services.lucene.createSpaceRestriction("$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## pageTypes
+#set($pageTypes = "$!configObj.get('pageTypes') $!pageTypes")
+#set($pageTypes = $pageTypes.trim().split($splitRegex))
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#foreach($elem in $pageTypes)
+  #set($devNull = $orGrp.add($services.lucene.createObjectFieldRestriction('Celements2.PageType', 'page_type', "$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## pageTypesBlackList
+#set($pageTypesBlackList = "Redirect $!pageTypesBlackList")
+#set($pageTypesBlackList = "$!configObj.get('pageTypesBlackList') $!pageTypesBlackList")
+#set($pageTypesBlackList = $pageTypesBlackList.trim().split($splitRegex))
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#set($devNull = $orGrp.setNegate(true))
+#foreach($elem in $pageTypesBlackList)
+  #set($devNull = $orGrp.add($services.lucene.createObjectFieldRestriction('Celements2.PageType', 'page_type', "$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+
+## start packages
+#set($searchpackages = "$!configObj.get('packages') $!searchpackages")
+#set($searchpackages = $searchpackages.trim().split($splitRegex))
+#if($searchpackages.isEmpty())
+  #set($searchpackages = ['content', 'menu', 'blog'])
+#end
+#if(!$searchpackages.contains('attachment') && ("$!attConfigObj" != ''))
+  #set($devNull = $searchpackages.add('attachment'))
+#end
+#if("$!fuzzySearch" != '')
+  #set($fuzzySearch = $!configObj.getProperty('fuzzySearch').getValue())
+#end
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+
+## package content
+#if($searchpackages.contains('content'))
+  #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+#end
+
+## package menu
+#if($searchpackages.contains('menu'))
+  #set($restr = $services.lucene.createObjectFieldRestriction('Celements2.MenuName', 'menu_name', "$!text").setBoost('30'))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #set($restr = $services.lucene.createRestriction('title', "$!text").setBoost('30'))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+#end
+
+## package blog
+#if($searchpackages.contains('blog'))
+  #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'title', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'extract', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'content', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
+    #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'publishdate', "$!text"))
+    #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+    #set($devNull = $orGrp.add($restr))
+  #end
+#end
+
+## package chronoblog
+#if($searchpackages.contains('chronoblog'))
+  #set($restr = $services.lucene.createObjectFieldRestriction('Chronoskop.ChronoBlogClass', 'project', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #set($restr = $services.lucene.createObjectFieldRestriction('Chronoskop.ChronoBlogClass', 'description', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
+    #set($devNull = $orGrp.add($services.lucene.createObjectFieldRestriction('Chronoskop.ChronoBlogClass', 'date', "$!text")))
+  #end
+#end
+
+## package attachment
+#if($searchpackages.contains('attachment'))
+  #set($mimeTypes = "$!attConfigObj.get('mimeTypes') $!mimeTypes")
+  #set($mimeTypes = $mimeTypes.trim().split($splitRegex))
+  #set($mimeTypesBlackList = "$!attConfigObj.get('mimeTypesBlackList') $!mimeTypesBlackList")
+  #set($mimeTypesBlackList = $mimeTypesBlackList.trim().split($splitRegex))
+  #set($filenamePrefs = "$!attConfigObj.get('filenamePrefs') $!filenamePrefs")
+  #set($filenamePrefs = $filenamePrefs.trim().split($splitRegex))
+  #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($mimeTypes, $mimeTypesBlackList, $filenamePrefs)
+  #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $attRestrGrp.add($restr))
+  #set($devNull = $orGrp.add($attRestrGrp))
+#end
+
+#set($devNull = $restrictions.add($orGrp))
+## end packages
+
+## create query and search
 #set($doctypes = [])
 #if($searchpackages.contains('attachment'))
   #set($devNull = $doctypes.add('attachment'))
@@ -84,122 +208,14 @@
   #set($devNull = $doctypes.add('wikipage'))
 #end
 #set($query = $services.lucene.createQuery($doctypes))
-
-## spaces
-#set($spaceGrp = $services.lucene.createOrRestrictionGroup())
-#if("$!spaces" != '')
-  #foreach($spc in $spaces.split(' '))
-    #set($devNull = $spaceGrp.add($services.lucene.createSpaceRestriction("$spc")))
-  #end
-#else
-  #foreach($spc in $negSpaces.split(' '))
-    #set($devNull = $spaceGrp.add($services.lucene.createSpaceRestriction("$spc")))
-  #end
-  #set($devNull = $spaceGrp.setNegate(true))
-#end
-#set($devNull = $query.add($spaceGrp))
-
-## pageTypes
-#set($pageTypeGrp = $services.lucene.createOrRestrictionGroup())
-#if("$!pageTypes" != '')
-  #foreach($pt in $pageTypes.split(' '))
-    #set($devNull = $pageTypeGrp.add($services.lucene.createObjectFieldRestriction('Celements2.PageType', 'page_type', "${pt}")))
-  #end
-#else
-  #foreach($pt in $negPageTypes.split(' '))
-    #set($devNull = $pageTypeGrp.add($services.lucene.createObjectFieldRestriction('Celements2.PageType', 'page_type', "${pt}")))
-  #end
-  #set($devNull = $pageTypeGrp.setNegate(true))
-#end
-#set($devNull = $query.add($pageTypeGrp))
-
-## linkedDocsOnly
-#if($linkedDocsOnly)
-  #set($devNull = $query.add($services.lucene.createObjectRestriction('Celements2.MenuItem')))
-#end
-
-## packages
-#set($packageGrp = $services.lucene.createOrRestrictionGroup())
-## package content
-#if($searchpackages.contains('content'))
-  #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
-  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-  #set($devNull = $packageGrp.add($restr))
-#end
-## package menu
-#if($searchpackages.contains('menu'))
-  #set($restr = $services.lucene.createObjectFieldRestriction('Celements2.MenuName', 'menu_name', "$!text").setBoost('30'))
-  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-  #set($devNull = $packageGrp.add($restr))
-  #set($restr = $services.lucene.createRestriction('title', "$!text").setBoost('30'))
-  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-  #set($devNull = $packageGrp.add($restr))
-#end
-## package blog
-#if($searchpackages.contains('blog'))
-  #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'title', "$!text"))
-  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-  #set($devNull = $packageGrp.add($restr))
-  #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'extract', "$!text"))
-  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-  #set($devNull = $packageGrp.add($restr))
-  #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'content', "$!text"))
-  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-  #set($devNull = $packageGrp.add($restr))
-  #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
-    #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'publishdate', "$!text"))
-    #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-    #set($devNull = $packageGrp.add($restr))
-  #end
-#end
-## package chronoblog
-#if($searchpackages.contains('chronoblog'))
-  #set($restr = $services.lucene.createObjectFieldRestriction('Chronoskop.ChronoBlogClass', 'project', "$!text"))
-  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-  #set($devNull = $packageGrp.add($restr))
-  #set($restr = $services.lucene.createObjectFieldRestriction('Chronoskop.ChronoBlogClass', 'description', "$!text"))
-  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-  #set($devNull = $packageGrp.add($restr))
-  #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
-    #set($devNull = $packageGrp.add($services.lucene.createObjectFieldRestriction('Chronoskop.ChronoBlogClass', 'date', "$!text")))
-  #end
-#end
-## package attachment
-#if($searchpackages.contains('attachment'))
-  #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($fileBaseDocRef, $mimetype, $filenamePrefs))
-  #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
-  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
-  #set($devNull = $attRestrGrp.add($restr))
-  #set($devNull = $packageGrp.add($attRestrGrp))
-#end
-#set($devNull = $query.add($packageGrp))
-
-#set($luceneResult = $services.lucene.search($query, $nullVal, ['default', "$language"]))
-
-## remove blacklisted and WebPreference docs
-#set($toRemove = [])
-#foreach($resultRef in $luceneResult.getResults())
-  #set($inBlackList = $docRefBlackList.contains($resultRef))
-  #set($isWebPreferences = $resultRef.getName().equals('WebPreferences'))
-  #if($inBlackList || $isWebPreferences)
-    #set($devNull = $toRemove.add($resultRef))
-  #end
-#end
-
+#set($devNull = $query.add($restrictions))
+#set($result = $services.lucene.search($query, $nullVal, ['default', "$language"]))
 #if($isAdmin)
 <!--
-  luceneResult: $!luceneResult
-  size : $!luceneResult.getSize()
-  spaces: $!spaces
-  negSpaces: $!negSpaces
-  pageTypes: $!pageTypes
-  negPageTypes: $!negPageTypes
-  toRemove : $!toRemove
+  result: $!result
+  size : $!result.getSize()
 -->
 #end
-
-#set($resultScoreMap = $luceneResult.getResultsScoreMap())
-#set($devNull = $resultScoreMap.keySet().removeAll($toRemove))
 #parse('celMacros/WebSearchResultDisplay.vm')
 
 #end ## if text

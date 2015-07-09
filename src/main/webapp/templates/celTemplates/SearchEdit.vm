@@ -1,7 +1,4 @@
-
 <div id="cel_websearch_config_editor" class="c3_scrollable">
-
-<h1>$msg.get('cel_search_edit_title')</h1>
 
 <form id="webSearchConfigForm" method="post" action="?" onsubmit="cancelCancelEdit()">
 <input type="hidden" name="xpage" value="celements_ajax" />
@@ -28,7 +25,7 @@
 #set($cel_editobj_nb = $obj.getNumber())
 #set($cel_editobj_hasObjAddLink = ("$!obj" == ''))
 #set($cel_editobj_hasObjRemoveLink = ("$!obj" != ''))
-#set($cel_editobj_properties = "mimeType,fileNamePrefixes")
+#set($cel_editobj_properties = "mimeTypes,mimeTypesBlackList,fileNamePrefixes")
 #parse("celTemplates/ObjectEdit.vm")
 
 </form>

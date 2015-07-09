@@ -1,6 +1,6 @@
-## INPUT resultScoreMap (Map<EntityReference, Float>)
+## INPUT result (LuceneSearchResult)
 
-#if("$!resultScoreMap" != '')
+#if("$!result" != '')
 <div class="results">
 #set($formatDate = "d. MMMM yyyy")
 #set($locale = $services.celementsweb.getLocal($language))
@@ -9,24 +9,25 @@
   <h2>$msg.get('cel_search_results_title')</h2>
   <span class="cel_search_results_total">
   #set($limit = $services.lucene.getResultLimit())
-  #if($resultScoreMap.size() < $limit)
-    $msg.get('cel_search_results_total', [$resultScoreMap.size()])
+  #if($result.size < $limit)
+    $msg.get('cel_search_results_total', [$result.size])
   #else
     $msg.get('cel_search_results_total_over', [$limit])
   #end
   </span>
 #end
 
-#if($resultScoreMap.size() == 0)
+#if($result.size == 0)
   #if($xwiki.exists('Tools.WebSearch_nothingFound'))
     #set($ws_nf_content = $xwiki.getDocument("Tools.WebSearch_nothingFound").getContent())
     $xwiki.renderText("{pre}$!{ws_nf_content}{/pre}", $doc)
   #else
     $msg.get('cel_search_noresults')
   #end
-#else ## resultScoreMap.size
+#else ## result.size
 
 <ul>
+#set($resultScoreMap = $result.getResultsScoreMap())
 #foreach($resultRef in $resultScoreMap.keySet())
   #if("$!resultRef.getType()" == "DOCUMENT")
     #set($resultDoc = $xwiki.getDocument($resultRef))
@@ -75,7 +76,7 @@
 #end ## foreach resultScoreMap
 </ul>
 
-#end ## resultScoreMap.size
+#end ## result.size
 
 </div>
-#end ## resultScoreMap null check
+#end ## result null check
