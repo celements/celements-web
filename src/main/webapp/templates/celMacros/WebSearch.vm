@@ -193,6 +193,7 @@
 #set($result = $services.lucene.search($query, $nullVal, ['default', "$language"]))
 #if($isAdmin)
 <!--
+  doc/celldoc: $!doc/$!celldoc
   result: $!result
   size: $!result.getSize()
 -->
