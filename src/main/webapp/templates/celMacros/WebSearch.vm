@@ -36,7 +36,7 @@
 #if("$!linkedDocsOnly" != '')
   #set($linkedDocsOnly = ("$!linkedDocsOnly" == 'true'))
 #else
-  #set($linkedDocsOnly = ("$!configObj.get('linkedDocsOnly')" == 'true'))
+  #set($linkedDocsOnly = ("$!configObj.getProperty('linkedDocsOnly').getValue()" == '1'))
 #end
 #if($linkedDocsOnly)
   #set($devNull = $restrictions.add($services.lucene.createObjectRestriction('Celements2.MenuItem')))
