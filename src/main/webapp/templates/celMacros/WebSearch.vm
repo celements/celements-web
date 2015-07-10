@@ -103,11 +103,11 @@
 ## start packages
 #asList("$!configObj.get('packages') $!searchpackages")
 #set($searchpackages = $list)
-#if($searchpackages.isEmpty())
-  #set($searchpackages = ['content', 'menu', 'blog'])
-#end
 #if(!$searchpackages.contains('attachment') && ("$!attConfigObj" != ''))
   #set($devNull = $searchpackages.add('attachment'))
+#end
+#if($searchpackages.isEmpty())
+  #set($searchpackages = ['content', 'menu', 'blog'])
 #end
 #if("$!fuzzySearch" != '')
   #set($fuzzySearch = $!configObj.getProperty('fuzzySearch').getValue())
@@ -168,9 +168,9 @@
   #set($mimeTypes = $list)
   #asList("$!attConfigObj.get('mimeTypesBlackList') $!mimeTypesBlackList")
   #set($mimeTypesBlackList = $list)
-  #asList("$!attConfigObj.get('filenamePrefs') $!filenamePrefs")
-  #set($filenamePrefs = $list)
-  #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($mimeTypes, $mimeTypesBlackList, $filenamePrefs))
+  #asList("$!attConfigObj.get('fileNamePrefixes') $!fileNamePrefixes")
+  #set($fileNamePrefixes = $list)
+  #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($mimeTypes, $mimeTypesBlackList, $fileNamePrefixes))
   #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
   #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
   #set($devNull = $attRestrGrp.add($restr))
