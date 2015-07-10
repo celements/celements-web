@@ -7,27 +7,20 @@
 
 <div id="websearch">
 
-#if("$!hideForm" != '')
-  #set($hideForm = ("$!hideForm" == 'true'))
-#else
-  #set($hideForm = ("$!configObj.get('hideForm')" == 'true'))
+<div class="websearch_form" #if("$!hideForm" == 'true') style="display: none" #end >
+#if("$msg.get('cel_search_page_title')" != 'cel_search_page_title')
+  <h1>$msg.get('cel_search_page_title')</h1>
 #end
-#if("$!hideForm" != 'true')
-  #if("$msg.get('cel_search_page_title')" != 'cel_search_page_title')
-    <h1>$msg.get('cel_search_page_title')</h1>
-  #end
-  <div class="websearch_form">
-  <form action="$doc.getURL()">
+<form action="$doc.getURL()">
   #if("$!maxInputFieldSize" == '')
     #set($maxInputFieldSize = 20)
   #end
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
-  #if("$!request.get('spaces')" != '')
-    <input type="hidden" name="spaces" value="$!request.get('spaces')" />
-  #end
-  </form>
-  </div>
+#if("$!request.get('spaces')" != '')
+  <input type="hidden" name="spaces" value="$!request.get('spaces')" />
 #end
+</form>
+</div>
 
 ## execute search
 #if("$!text" != "")

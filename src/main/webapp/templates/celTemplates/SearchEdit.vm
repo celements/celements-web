@@ -16,8 +16,8 @@
 #set($cel_editobj_hasObjAddLink = ("$!obj" == ''))
 #set($cel_editobj_hasObjRemoveLink = ("$!obj" != ''))
 #set($cel_editobj_properties = "packages,linkedDocsOnly,fuzzySearch,docs,docsBlackList")
-#set($cel_editobj_properties = "$cel_editobj_properties,spaces,spacesBlackList,pageTypes")
-#set($cel_editobj_properties = "$cel_editobj_properties,pageTypesBlackList,hideForm")
+#set($cel_editobj_properties = "$cel_editobj_properties,spaces,spacesBlackList")
+#set($cel_editobj_properties = "$cel_editobj_properties,pageTypes,pageTypesBlackList")
 #parse("celTemplates/ObjectEdit.vm")
 
 #set($cel_editobj_classname = 'Celements2.WebAttachmentSearchConfigClass')
