@@ -2,8 +2,8 @@
 
 #set($text = "$!request.get('text')")
 #set($text = $text.trim())
-#set($configObj = $doc.getObject('Celements2.WebSearchConfigClass'))
-#set($attConfigObj = $doc.getObject('Celements2.WebAttachmentSearchConfigClass'))
+#set($configObj = $celldoc.getObject('Celements2.WebSearchConfigClass'))
+#set($attConfigObj = $celldoc.getObject('Celements2.WebAttachmentSearchConfigClass'))
 
 <div id="websearch">
 
