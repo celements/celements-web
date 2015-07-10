@@ -10,6 +10,10 @@ $services.celementsweb.renderDocument($services.model.resolveDocument($overwrite
 #set($overwriteRenderDocument = '')
 #else
 #set($celPDCdocPageType = $services.pageType.getPageTypeRef($pageDocRef).getConfigName())
+<!--
+pageDocRef : $pageDocRef
+celPDCdocPageType : $celPDCdocPageType
+-->
 #set($celPDCdocCssPTclass = "cel_pagetype_$!{celPDCdocPageType}")
 #if($isAddPdDiv)
 #set($isInheritable = $services.cells.isInheritable($cellDocRef))
