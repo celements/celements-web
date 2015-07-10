@@ -1,6 +1,5 @@
 ## Generic Celements Search
 
-#set($splitRegex = '[,;\| ]+')
 #set($text = "$!request.get('text')")
 #set($text = $text.trim())
 #set($configObj = $doc.getObject('Celements2.WebSearchConfigClass'))
@@ -51,8 +50,8 @@
 #end
 
 ## docs
-#set($docs = "$!configObj.get('docs') $!docs")
-#set($docs = $docs.trim().split($splitRegex))
+#asList("$!configObj.get('docs') $!docs")
+#set($docs = $list)
 #set($orGrp = $services.lucene.createOrRestrictionGroup())
 #foreach($elem in $docs)
   #set($devNull = $orGrp.add($services.lucene.createDocRestriction("$elem")))
@@ -60,8 +59,8 @@
 #set($devNull = $restrictions.add($orGrp))
 
 ## docsBlackList
-#set($docsBlackList = "$!configObj.get('docsBlackList') $!docsBlackList")
-#set($docsBlackList = $docsBlackList.trim().split($splitRegex))
+#asList("$!configObj.get('docsBlackList') $!docsBlackList")
+#set($docsBlackList = $list)
 #set($orGrp = $services.lucene.createOrRestrictionGroup())
 #set($devNull = $orGrp.setNegate(true))
 #foreach($elem in $docsBlackList)
@@ -70,8 +69,8 @@
 #set($devNull = $restrictions.add($orGrp))
 
 ## spaces
-#set($spaces = "$!configObj.get('spaces') $!spaces $!request.get('spaces')")
-#set($spaces = $spaces.trim().split($splitRegex))
+#asList("$!configObj.get('spaces') $!spaces $!request.get('spaces')")
+#set($spaces = $list)
 #set($orGrp = $services.lucene.createOrRestrictionGroup())
 #foreach($elem in $spaces)
   #set($devNull = $orGrp.add($services.lucene.createSpaceRestriction("$elem")))
@@ -79,9 +78,8 @@
 #set($devNull = $restrictions.add($orGrp))
 
 ## spacesBlackList
-#set($spacesBlackList = "XWiki Templates Tools Celements2 Macros LocalMacros Ajax Overlay $!spacesBlackList")
-#set($spacesBlackList = "$!configObj.get('spacesBlackList') $!spacesBlackList")
-#set($spacesBlackList = $spacesBlackList.trim().split($splitRegex))
+#asList("XWiki Templates Tools Celements2 Macros LocalMacros Ajax Overlay $!configObj.get('spacesBlackList') $!spacesBlackList")
+#set($spacesBlackList = $list)
 #set($orGrp = $services.lucene.createOrRestrictionGroup())
 #set($devNull = $orGrp.setNegate(true))
 #foreach($elem in $spacesBlackList)
@@ -90,8 +88,8 @@
 #set($devNull = $restrictions.add($orGrp))
 
 ## pageTypes
-#set($pageTypes = "$!configObj.get('pageTypes') $!pageTypes")
-#set($pageTypes = $pageTypes.trim().split($splitRegex))
+#asList("$!configObj.get('pageTypes') $!pageTypes")
+#set($pageTypes = $list)
 #set($orGrp = $services.lucene.createOrRestrictionGroup())
 #foreach($elem in $pageTypes)
   #set($devNull = $orGrp.add($services.lucene.createObjectFieldRestriction('Celements2.PageType', 'page_type', "$elem")))
@@ -99,9 +97,8 @@
 #set($devNull = $restrictions.add($orGrp))
 
 ## pageTypesBlackList
-#set($pageTypesBlackList = "Redirect $!pageTypesBlackList")
-#set($pageTypesBlackList = "$!configObj.get('pageTypesBlackList') $!pageTypesBlackList")
-#set($pageTypesBlackList = $pageTypesBlackList.trim().split($splitRegex))
+#asList("Redirect $!configObj.get('pageTypesBlackList') $!pageTypesBlackList")
+#set($pageTypesBlackList = $list)
 #set($orGrp = $services.lucene.createOrRestrictionGroup())
 #set($devNull = $orGrp.setNegate(true))
 #foreach($elem in $pageTypesBlackList)
@@ -111,11 +108,10 @@
 
 
 ## start packages
-#set($searchpackages = "$!configObj.get('packages') $!searchpackages")
-#if($searchpackages.trim().isEmpty())
+#asList("$!configObj.get('packages') $!searchpackages")
+#set($searchpackages = $list)
+#if($searchpackages.isEmpty())
   #set($searchpackages = ['content', 'menu', 'blog'])
-#else
-  #set($searchpackages = $searchpackages.split($splitRegex))
 #end
 #if(!$searchpackages.contains('attachment') && ("$!attConfigObj" != ''))
   #set($devNull = $searchpackages.add('attachment'))
@@ -175,12 +171,12 @@
 
 ## package attachment
 #if($searchpackages.contains('attachment'))
-  #set($mimeTypes = "$!attConfigObj.get('mimeTypes') $!mimeTypes")
-  #set($mimeTypes = $mimeTypes.trim().split($splitRegex))
-  #set($mimeTypesBlackList = "$!attConfigObj.get('mimeTypesBlackList') $!mimeTypesBlackList")
-  #set($mimeTypesBlackList = $mimeTypesBlackList.trim().split($splitRegex))
-  #set($filenamePrefs = "$!attConfigObj.get('filenamePrefs') $!filenamePrefs")
-  #set($filenamePrefs = $filenamePrefs.trim().split($splitRegex))
+  #asList("$!attConfigObj.get('mimeTypes') $!mimeTypes")
+  #set($mimeTypes = $list)
+  #asList("$!attConfigObj.get('mimeTypesBlackList') $!mimeTypesBlackList")
+  #set($mimeTypesBlackList = $list)
+  #asList("$!attConfigObj.get('filenamePrefs') $!filenamePrefs")
+  #set($filenamePrefs = $list)
   #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($mimeTypes, $mimeTypesBlackList, $filenamePrefs))
   #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
   #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
@@ -213,3 +209,12 @@
 #end ## if text
 
 </div>
+
+#macro(asList $str)
+  #set($list = $util.getArrayList())
+  #foreach($elem in $str.trim().split('[,;\| ]+'))
+    #if($elem.trim() != '')
+      #set($devNull = $list.add($elem))
+    #end
+  #end
+#end
