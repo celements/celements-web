@@ -114,6 +114,11 @@
     <listener-class>org.xwiki.container.servlet.SetThreadNameServletRequestListener</listener-class>
   </listener>
 
+  <listener>
+      <display-name>ImageIO service provider loader/unloader</display-name>
+      <listener-class>com.twelvemonkeys.servlet.image.IIOProviderContextListener</listener-class>
+  </listener>
+
   <servlet>
     <servlet-name>action</servlet-name>
     <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
