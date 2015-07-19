@@ -760,12 +760,16 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
               '_autoresize' : _me._autoresize, 'zoomFactorObj' : zoomFactorObj });
           }
           //set sizes without zoom too. Important for centering
+          console.log('_resizeCurrentSlide: setting wrapper size ',
+              zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
           slideWrapper.setStyle({
             'height' : zoomFactorObj.oldHeight + 'px',
             'width' : zoomFactorObj.oldWidth + 'px'
           });
           var parentDiv = _me._getSlideRootElem(slideWrapper);
           if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
+            console.log('_resizeCurrentSlide: setting rootEllem size ',
+                zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
             parentDiv.setStyle({
               'width' : zoomFactorObj.oldWidth + 'px',
               'height' : zoomFactorObj.oldHeight + 'px'
