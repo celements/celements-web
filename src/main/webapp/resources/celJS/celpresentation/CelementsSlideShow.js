@@ -862,6 +862,10 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         if (_me._preloadingImageQueue.size() == 0) {
           console.log('_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide'
               + 'for ', slideWrapperElem);
+          slideWrapperElem.select('img').each(function(imgElem) {
+            console.log('_preloadImagesAndResizeCenterSlide: img loaded ', imgElem,
+                imgElem.complete);
+          });
           _me._resizeAndCenterSlide(slideWrapperElem);
           if (callbackFN) {
             callbackFN();
