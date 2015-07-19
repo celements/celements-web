@@ -708,7 +708,13 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         console.log('_resizeAndCenterSlide: ', slideWrapper, _me._resizeSlide,
             _me._centerSlide);
         if (_me._resizeSlide) {
-          _me._resizeCurrentSlide(slideWrapper);
+          var resizeSlideEvent = _me._htmlContainer.fire('cel_slideShow:resizeSlide',
+              _me);
+          if (!resizeSlideEvent.stopped) {
+            _me._resizeCurrentSlide(slideWrapper);
+          } else {
+            console.log('_resizeAndCenterSlide: resizeSlideEvent.stopped ', slideWrapper);
+          }
         }
         if (_me._centerSlide) {
           var centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
