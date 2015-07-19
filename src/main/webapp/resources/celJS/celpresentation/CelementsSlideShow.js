@@ -728,7 +728,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
                 'newWidth' : zoomFactorObj.newWidth,
                 'newHeight' : zoomFactorObj.newHeight
             };
-            console.log('final resize factor: ', eventMemo);
+            console.log('final resize factor: ', _me._htmlContainer, eventMemo);
             var resizeEvent = _me._htmlContainer.fire(
                 'cel_slideShow:resizeSlideContent', eventMemo);
             if (!resizeEvent.stopped) {
