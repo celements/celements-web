@@ -860,6 +860,8 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
           }
         });
         if (_me._preloadingImageQueue.size() == 0) {
+          console.log('_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide'
+              + 'for ', slideWrapperElem);
           _me._resizeAndCenterSlide(slideWrapperElem);
           if (callbackFN) {
             callbackFN();
