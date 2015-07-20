@@ -268,7 +268,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _resetContainerElem : function(event) {
         var _me = this;
         var celOverlayObj = event.memo;
-        console.log('_resetContainerElem: for htmlElem ', _me.getHtmlContainer());
+        if (_me._debug) {
+          console.log('_resetContainerElem: for htmlElem ', _me.getHtmlContainer());
+        }
         if (celOverlayObj.getContainerId() == _me._htmlContainerId) {
           _me._htmlContainer = null;
         }
@@ -407,8 +409,10 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _updateSlideCounter : function(newSlideWrapperElem) {
         var _me = this;
         var numSlides = _me._navObj.getNumSlides();
-        console.log('_updateSlideCounter: ', numSlides, _me._htmlContainer.select(
-            '.celPresSlideShow_countSlideNum'));
+        if (_me._debug) {
+          console.log('_updateSlideCounter: ', numSlides, _me._htmlContainer.select(
+              '.celPresSlideShow_countSlideNum'));
+        }
         _me._htmlContainer.select('.celPresSlideShow_countSlideNum').each(
             function(countSlideElem) {
               countSlideElem.update(numSlides);
@@ -873,16 +877,20 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
         var slideRootElem = _me._addWrapperElements(slideContent).hide();
         var slideWrapperElem = slideRootElem.down('.cel_slideShow_slideWrapper');
-        console.log('_showSlide: before cel_yuiOverlay:beforeSlideInsert ',
-            _me._htmlContainer);
+        if (_me._debug) {
+          console.log('_showSlide: before cel_yuiOverlay:beforeSlideInsert ',
+              _me._htmlContainer);
+        }
         _me._htmlContainer.fire('cel_yuiOverlay:beforeSlideInsert', {
           'celSlideShow' : _me,
           'newSlideWrapperElem' : slideWrapperElem,
           'newSlideRootElem' : slideRootElem
         });
         _me.getHtmlContainer().insert({ bottom: slideRootElem });
-        console.log('_showSlide: before cel_yuiOverlay:afterSlideInsert event ',
-            _me.getHtmlContainer());
+        if (_me._debug) {
+          console.log('_showSlide: before cel_yuiOverlay:afterSlideInsert event ',
+              _me.getHtmlContainer());
+        }
         _me._htmlContainer.fire('cel_yuiOverlay:afterSlideInsert', {
           'celSlideShow' : _me,
           'newSlideWrapperElem' : slideWrapperElem,
