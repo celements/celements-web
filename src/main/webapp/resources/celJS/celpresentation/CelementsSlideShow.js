@@ -707,6 +707,12 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         console.log('_resizeAndCenterSlide: ', slideWrapper, _me._resizeSlide,
             _me._centerSlide);
+        slideWrapper.select('img').each(function(imgElem) {
+          //reset possible image css 'possition' : absolute settings
+          imgElem.setStyle({
+            'position' : 'relative'
+          });
+        });
         _me._htmlContainer.fire('cel_slideShow:beforeResizeAndCenterSlide', _me);
         if (_me._resizeSlide) {
           var resizeSlideEvent = _me._htmlContainer.fire('cel_slideShow:resizeSlide',
@@ -726,6 +732,12 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             console.log('_resizeAndCenterSlide: centerSlideEvent.stopped ', slideWrapper);
           }
         }
+        slideWrapper.select('img').each(function(imgElem) {
+          //reset img elem position values
+          imgElem.setStyle({
+            'position' : ''
+          });
+        });
         _me._htmlContainer.fire('cel_slideShow:afterResizeAndCenterSlide', _me);
       },
 
