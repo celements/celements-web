@@ -4,11 +4,13 @@
 <div class="results">
 #set($formatDate = "d. MMMM yyyy")
 #set($locale = $services.celementsweb.getLocal($language))
+#set($limit = $services.lucene.getResultLimit())
 
+<div class="cel_search_results_count" style="display: none;">$result.size</div>
+<div class="cel_search_results_limit" style="display: none;">$limit</div>
 #if("$msg.get('cel_search_results_title')" != 'cel_search_results_title')
   <h2>$msg.get('cel_search_results_title')</h2>
   <span class="cel_search_results_total">
-  #set($limit = $services.lucene.getResultLimit())
   #if($result.size < $limit)
     $msg.get('cel_search_results_total', [$result.size])
   #else
