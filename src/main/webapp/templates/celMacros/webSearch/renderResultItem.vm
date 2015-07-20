@@ -1,0 +1,50 @@
+## INPUT resultRef (EntityReference)
+## INPUT score (float)
+## INPUT pageTitleOverwrite (optional)
+
+#if("$!resultRef.getType()" == "DOCUMENT")
+  #set($resultDoc = $xwiki.getDocument($resultRef))
+  #set($pageTitle = $services.celementsweb.getDocHeaderTitle($resultRef))
+  #set($pageLink = $xwiki.getURL($resultRef))
+  #set($parentDocRefList = $xwiki.celementsweb.getDocumentParentsDocRefList($resultRef, false))
+  #set($resultDate = $resultDoc.getDate())
+#elseif("$!resultRef.getType()" == "ATTACHMENT")
+  #set($resultAtt = $services.webUtils.getAttachment($resultRef))
+  #set($pageTitle = $resultRef.getName())
+  #set($pageLink = $xwiki.getAttachmentURL($services.model.serialize($resultRef.getDocumentReference()), $pageTitle))
+  #set($parentDocRefList = [])
+  #set($resultDate = $resultAtt.getDate())
+#end
+#if("$!pageTitleOverwrite" != '')
+  #set($pageTitle = $pageTitleOverwrite)
+  #set($pageTitleOverwrite = '')
+#end
+
+<li class="result_item">
+  #set($bgcolor = 'red')
+  #if($score > 0.5)
+    #set($bgcolor = 'green')
+  #elseif($score > 0.1)
+    #set($bgcolor = 'orange')
+  #end
+  <span class="result_ranking_color" style="background-color: ${bgcolor};">&nbsp;</span>
+  <span class="result_ranking_score" >${mathtool.roundTo(2, $mathtool.mul(100, $score))}</span>
+  <a class="result_page_link" href="$pageLink">$pageTitle</a>
+  #if($parentDocRefList.size() > 0)
+  <span class="result_bread_crumbs"><span class="result_bread_crumbs_title">$msg.get('cel_search_breadcrumbs_title')</span>
+    #foreach($parentDocRef in $util.reverseList($parentDocRefList))
+      #if($velocityCount > 1)
+        $msg.get('cel_search_breadcrumbs_delimiter')
+      #end
+      <a href="$xwiki.getURL($parentDocRef)">$services.celementsweb.getDocHeaderTitle($parentDocRef)</a>
+    #end
+  </span>
+  #end
+  #if("$!resultRef.getType()" == "DOCUMENT")
+  <a class="result_url" href="${pageLink}">$pageLink</a>
+  #end
+  <span class="result_date">
+    $msg.get('cel_search_result_last_change'): $datetool.format("d. MMMM yyyy", $resultDate, $services.celementsweb.getLocal($language))
+  </span>
+  <div class="clearright"><!--ie--></div>
+</li>
