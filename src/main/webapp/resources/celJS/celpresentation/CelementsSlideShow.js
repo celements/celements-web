@@ -873,6 +873,8 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
         var slideRootElem = _me._addWrapperElements(slideContent).hide();
         var slideWrapperElem = slideRootElem.down('.cel_slideShow_slideWrapper');
+        console.log('_showSlide: before cel_yuiOverlay:beforeSlideInsert ',
+            _me._htmlContainer);
         _me._htmlContainer.fire('cel_yuiOverlay:beforeSlideInsert', {
           'celSlideShow' : _me,
           'newSlideWrapperElem' : slideWrapperElem,
