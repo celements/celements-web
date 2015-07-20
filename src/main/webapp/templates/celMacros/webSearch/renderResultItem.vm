@@ -1,5 +1,6 @@
 ## INPUT resultRef (EntityReference)
 ## INPUT score (float)
+## INPUT pageTitleOverwrite (optional)
 
 #if("$!resultRef.getType()" == "DOCUMENT")
   #set($resultDoc = $xwiki.getDocument($resultRef))
@@ -13,6 +14,10 @@
   #set($pageLink = $xwiki.getAttachmentURL($services.model.serialize($resultRef.getDocumentReference()), $pageTitle))
   #set($parentDocRefList = [])
   #set($resultDate = $resultAtt.getDate())
+#end
+#if("$!pageTitleOverwrite" != '')
+  #set($pageTitle = $pageTitleOverwrite)
+  #set($pageTitleOverwrite = '')
 #end
 
 <li class="result_item">
