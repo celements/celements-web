@@ -268,6 +268,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _resetContainerElem : function(event) {
         var _me = this;
         var celOverlayObj = event.memo;
+        console.log('_resetContainerElem: for htmlElem ', _me.getHtmlContainer());
         if (celOverlayObj.getContainerId() == _me._htmlContainerId) {
           _me._htmlContainer = null;
         }
