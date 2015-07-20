@@ -1,5 +1,5 @@
 ## INPUT resultRef (EntityReference)
-## INPUT score (float)
+## INPUT score (float, optional)
 ## INPUT pageTitleOverwrite (optional)
 
 #if("$!resultRef.getType()" == "DOCUMENT")
@@ -20,6 +20,7 @@
   #set($pageTitleOverwrite = '')
 #end
 
+#if("$!resultRef" != '')
 <li class="result_item">
   #set($bgcolor = 'red')
   #if($score > 0.5)
@@ -28,7 +29,7 @@
     #set($bgcolor = 'orange')
   #end
   <span class="result_ranking_color" style="background-color: ${bgcolor};">&nbsp;</span>
-  <span class="result_ranking_score" >${mathtool.roundTo(2, $mathtool.mul(100, $score))}</span>
+  <span class="result_ranking_score" >$!{mathtool.roundTo(2, $mathtool.mul(100, $score))}</span>
   <a class="result_page_link" href="$pageLink">$pageTitle</a>
   #if($parentDocRefList.size() > 0)
   <span class="result_bread_crumbs"><span class="result_bread_crumbs_title">$msg.get('cel_search_breadcrumbs_title')</span>
@@ -48,3 +49,4 @@
   </span>
   <div class="clearright"><!--ie--></div>
 </li>
+#end
