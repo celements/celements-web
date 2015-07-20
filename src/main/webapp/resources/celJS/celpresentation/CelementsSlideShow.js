@@ -407,6 +407,8 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _updateSlideCounter : function(newSlideWrapperElem) {
         var _me = this;
         var numSlides = _me._navObj.getNumSlides();
+        console.log('_updateSlideCounter: ', numSlides, _me._htmlContainer.select(
+            '.celPresSlideShow_countSlideNum'));
         _me._htmlContainer.select('.celPresSlideShow_countSlideNum').each(
             function(countSlideElem) {
               countSlideElem.update(numSlides);
@@ -877,6 +879,8 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
           'newSlideRootElem' : slideRootElem
         });
         _me.getHtmlContainer().insert({ bottom: slideRootElem });
+        console.log('_showSlide: before cel_yuiOverlay:afterSlideInsert event ',
+            _me.getHtmlContainer());
         _me._htmlContainer.fire('cel_yuiOverlay:afterSlideInsert', {
           'celSlideShow' : _me,
           'newSlideWrapperElem' : slideWrapperElem,
