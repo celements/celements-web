@@ -18,6 +18,7 @@
 #set($cel_editobj_properties = "packages,linkedDocsOnly,fuzzySearch,docs,docsBlackList")
 #set($cel_editobj_properties = "$cel_editobj_properties,spaces,spacesBlackList")
 #set($cel_editobj_properties = "$cel_editobj_properties,pageTypes,pageTypesBlackList")
+#set($cel_editobj_properties = "$cel_editobj_properties,resultItemRenderScript")
 #parse("celTemplates/ObjectEdit.vm")
 
 #set($cel_editobj_classname = 'Celements2.WebAttachmentSearchConfigClass')

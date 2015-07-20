@@ -32,7 +32,7 @@
   #if("$!resultItemRenderScript" == '')
     #set($resultItemRenderScript = 'celMacros/webSearch/renderResultItem.vm')
   #end
-  #parse($resultItemRenderScript)
+  $xwiki.includeForm($resultItemRenderScript, false)
 #end
 </ul>
 #end ## result.size
