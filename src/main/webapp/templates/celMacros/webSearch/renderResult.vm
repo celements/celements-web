@@ -1,4 +1,5 @@
 ## INPUT result (LuceneSearchResult)
+## INPUT resultItemRenderScript (optional)
 
 #if("$!result" != '')
 <div class="results">
@@ -28,7 +29,10 @@
 #set($resultScoreMap = $result.getResultsScoreMap())
 #foreach($resultRef in $resultScoreMap.keySet())
   #set($score = $resultScoreMap.get($resultRef))
-  #parse('celMacros/webSearch/renderResultItem.vm')
+  #if("$!resultItemRenderScript" == '')
+    #set($resultItemRenderScript = 'celMacros/webSearch/renderResultItem.vm')
+  #end
+  #parse($resultItemRenderScript)
 #end
 </ul>
 #end ## result.size

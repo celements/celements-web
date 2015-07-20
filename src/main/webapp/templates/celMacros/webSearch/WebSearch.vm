@@ -198,6 +198,8 @@
   size: $!result.getSize()
 -->
 #end
+
+#set($resultItemRenderScript = $configObj.get('resultItemRenderScript'))
 #parse('celMacros/webSearch/renderResult.vm')
 
 #end ## if text
