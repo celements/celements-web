@@ -77,7 +77,8 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
       _centerSlide : undefined,
       _resizeSlide : undefined,
       _autoresize : undefined,
-      _mobileDim : undefined, 
+      _mobileDim : undefined,
+      _debug: undefined,
 
       _init : function(containerId) {
         var _me = this;
@@ -690,12 +691,14 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         imgElem.stopObserving('abort', _me._imgLoadedResizeAndCenterSlideBind);
         _me._preloadingImageQueue = _me._preloadingImageQueue.without(imgElem);
         if (_me._preloadingImageQueue.length == 0) {
-          console.log('_imgLoadedResizeAndCenterSlide before _resizeAndCenterSlidefor ',
-              slideWrapper);
-          slideWrapper.select('img').each(function(imgElem) {
-            console.log('_imgLoadedResizeAndCenterSlide: img loaded ', imgElem,
-                imgElem.complete);
-          });
+          if (_me._debug) {
+            console.log('_imgLoadedResizeAndCenterSlide before _resizeAndCenterSlidefor ',
+                slideWrapper);
+            slideWrapper.select('img').each(function(imgElem) {
+              console.log('_imgLoadedResizeAndCenterSlide: img loaded ', imgElem,
+                  imgElem.complete);
+            });
+          }
           _me._resizeAndCenterSlide(slideWrapper);
           if (callbackFN) {
             callbackFN();
@@ -705,8 +708,10 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
 
       _resizeAndCenterSlide : function(slideWrapper) {
         var _me = this;
-        console.log('_resizeAndCenterSlide: ', slideWrapper, _me._resizeSlide,
-            _me._centerSlide);
+        if (_me._debug) {
+          console.log('_resizeAndCenterSlide: ', slideWrapper, _me._resizeSlide,
+              _me._centerSlide);
+        }
         slideWrapper.select('img').each(function(imgElem) {
           //reset possible image css 'possition' : absolute settings
           imgElem.setStyle({
@@ -758,7 +763,9 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
                 'newWidth' : zoomFactorObj.newWidth,
                 'newHeight' : zoomFactorObj.newHeight
             };
-            console.log('final resize factor: ', _me._htmlContainer, eventMemo);
+            if (_me._debug) {
+              console.log('final resize factor: ', _me._htmlContainer, eventMemo);
+            }
             var resizeEvent = _me._htmlContainer.fire(
                 'cel_slideShow:resizeSlideContent', eventMemo);
             if (!resizeEvent.stopped) {
@@ -780,16 +787,20 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
               '_autoresize' : _me._autoresize, 'zoomFactorObj' : zoomFactorObj });
           }
           //set sizes without zoom too. Important for centering
-          console.log('_resizeCurrentSlide: setting wrapper size ',
-              zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
+          if (_me._debug) {
+            console.log('_resizeCurrentSlide: setting wrapper size ',
+                zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
+          }
           slideWrapper.setStyle({
             'height' : zoomFactorObj.oldHeight + 'px',
             'width' : zoomFactorObj.oldWidth + 'px'
           });
           var parentDiv = _me._getSlideRootElem(slideWrapper);
           if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
-            console.log('_resizeCurrentSlide: setting rootEllem size ',
-                zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
+            if (_me._debug) {
+              console.log('_resizeCurrentSlide: setting rootElem size ',
+                  zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
+            }
             parentDiv.setStyle({
               'width' : zoomFactorObj.oldWidth + 'px',
               'height' : zoomFactorObj.oldHeight + 'px'
@@ -894,12 +905,14 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
           }
         });
         if (_me._preloadingImageQueue.size() == 0) {
-          console.log('_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide'
-              + 'for ', slideWrapperElem);
-          slideWrapperElem.select('img').each(function(imgElem) {
-            console.log('_preloadImagesAndResizeCenterSlide: img loaded ', imgElem,
-                imgElem.complete);
-          });
+          if (_me._debug) {
+            console.log('_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide'
+                + 'for ', slideWrapperElem);
+            slideWrapperElem.select('img').each(function(imgElem) {
+              console.log('_preloadImagesAndResizeCenterSlide: img loaded ', imgElem,
+                  imgElem.complete);
+            });
+          }
           _me._resizeAndCenterSlide(slideWrapperElem);
           if (callbackFN) {
             callbackFN();
