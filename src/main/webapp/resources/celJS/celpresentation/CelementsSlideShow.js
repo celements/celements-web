@@ -707,6 +707,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         var _me = this;
         console.log('_resizeAndCenterSlide: ', slideWrapper, _me._resizeSlide,
             _me._centerSlide);
+        _me._htmlContainer.fire('cel_slideShow:beforeResizeAndCenterSlide', _me);
         if (_me._resizeSlide) {
           var resizeSlideEvent = _me._htmlContainer.fire('cel_slideShow:resizeSlide',
               _me);
@@ -725,6 +726,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             console.log('_resizeAndCenterSlide: centerSlideEvent.stopped ', slideWrapper);
           }
         }
+        _me._htmlContainer.fire('cel_slideShow:afterResizeAndCenterSlide', _me);
       },
 
       getZoomStyles : function(zoomFactor, fullWidth, fullHeight) {
