@@ -1,14 +1,13 @@
 #set($navObj = $doc.getObject('Celements2.NavigationConfigClass'))
-#set($needsSave = false)
 #if("$!navObj" == '')
   #set($navObj = $doc.newObject('Celements2.NavigationConfigClass'))
   $navObj.set('from_hierarchy_level', 1)
   $navObj.set('to_hierarchy_level', 1)
   $navObj.set('show_inactive_to_level', 1)
-  $navObj.set('menu_space', "$doc.getName()")
   $navObj.set('presentation_type', "renderedContent")
-  #set($needsSave = true)
-  $doc.save()
+#end
+#if("$!navObj.getProperty('menu_space').getValue().trim()" == '')
+  $navObj.set('menu_space', "$doc.getName()")
 #end
 <form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
   <input type="hidden" name="template" value="$!doc.getTemplate()" />
