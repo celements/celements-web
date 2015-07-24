@@ -11,8 +11,10 @@
 #end
 <div class="celements2_box">
 <div class="celements2_box_title">Edit Redirect</div>
-<form id="edit" method="post" action="$doc.getURL('save')">
-<input type="hidden" name="xredirect" value="$xwiki.getURL("$doc.getFullName()", 'view')" />
+<form id="redirectEdit" method="post" action="?">
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="xredirect" value="$!request.get('xredirect')" />
 
 <input type="hidden" name="Celements2.Redirect_nb" value="1" />
 <table class="celements2_table">

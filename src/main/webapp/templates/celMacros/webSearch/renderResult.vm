@@ -1,0 +1,42 @@
+## INPUT result (LuceneSearchResult)
+## INPUT resultItemRenderScript (optional)
+
+#if("$!result" != '')
+<div class="results">
+#set($limit = $services.lucene.getResultLimit())
+<div class="cel_search_results_count" style="display: none;">$result.size</div>
+<div class="cel_search_results_limit" style="display: none;">$limit</div>
+#if("$msg.get('cel_search_results_title')" != 'cel_search_results_title')
+  <h2>$msg.get('cel_search_results_title')</h2>
+  <span class="cel_search_results_total">
+  #if($result.size < $limit)
+    $msg.get('cel_search_results_total', [$result.size])
+  #else
+    $msg.get('cel_search_results_total_over', [$limit])
+  #end
+  </span>
+#end
+
+#if($result.size == 0)
+  #if($xwiki.exists('Tools.WebSearch_nothingFound'))
+    #set($ws_nf_content = $xwiki.getDocument("Tools.WebSearch_nothingFound").getContent())
+    $xwiki.renderText("{pre}$!{ws_nf_content}{/pre}", $doc)
+  #else
+    $msg.get('cel_search_noresults')
+  #end
+#else ## result.size
+<ul>
+#set($resultScoreMap = $result.getResultsScoreMap())
+#foreach($resultRef in $resultScoreMap.keySet())
+  #set($score = $resultScoreMap.get($resultRef))
+  #if(("$!resultItemRenderScript" != '') && $xwiki.exists($resultItemRenderScript))
+    $xwiki.includeForm($resultItemRenderScript, false)
+  #else
+    #parse('celMacros/webSearch/renderResultItem.vm')
+  #end
+#end
+</ul>
+#end ## result.size
+
+</div>
+#end ## result null check

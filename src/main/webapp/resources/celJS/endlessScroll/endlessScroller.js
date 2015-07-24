@@ -155,16 +155,34 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
       var _me = this;
       if (_me._isLogEnabled() && (typeof console != 'undefined')
           && (typeof console.log != 'undefined')) {
-        console.log('_checkIsScrollBottom: ', event);
+        console.log('_checkIsScrollBottom: ', event, _me._isLoading);
+      }
+      if (_me._isLoading) {
+        // already loading
+        return;
       }
       var pos = 0;
-      if(_me.isScrollBlockEle) {
-        pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
+      var params = {
+        'currentScrollOverflow' : null
+      };
+      var scrollPosEvent = _me.htmlElem.fire('celEndlessScroll:ScrollPosEvent', params); 
+      if (!scrollPosEvent.stopped) {
+        if(_me.isScrollBlockEle) {
+          pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
+        } else {
+          pos = -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
+        }
       } else {
-        pos = -1*_me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
+        pos = -params.currentScrollOverflow;
+        if (_me._isLogEnabled()) {
+          console.log('_checkIsScrollBottom: scrollPosEvent stopped and got pos ', pos);
+        }
       }
       if((pos + _me.overlap) >= 0) {
         _me._executeActionCallback();
+      } else if (_me._isLogEnabled()) {
+        console.log('_checkIsScrollBottom: skipp executeActionCallback ',
+            (pos + _me.overlap));
       }
     },
     

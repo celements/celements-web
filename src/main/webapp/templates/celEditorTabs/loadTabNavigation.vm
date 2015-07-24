@@ -14,30 +14,33 @@
 
 <div id="nav_langBar" class="editblock" onfocus="setFocus('nav_langBar');" onblur="removeFocus('nav_langBar');">
 <form action="$doc.getURL('edit')" name="nav_langBar_form" method="post">
-		$adminMsg.get('cel_tm_edit_translation'): 
-		<input type="hidden" name="tab" value="2"/>
-		<select name="language" size="1" style="width:100px;" onchange="document.forms['nav_langBar_form'].submit();">
-	        #foreach($dl in $langs)
-	        <option #if($!language == "$dl")selected="selected"#end value="$dl" label="$adminMsg.get("cel_$dl")">$adminMsg.get("cel_$dl")</option>
-			#end
-		</select>
+    $adminMsg.get('cel_tm_edit_translation'): 
+    <input type="hidden" name="tab" value="tb2"/>
+    <select name="language" size="1" style="width:100px;" onchange="document.forms['nav_langBar_form'].submit();">
+          #foreach($dl in $langs)
+          <option #if($!language == "$dl")selected="selected"#end value="$dl" label="$adminMsg.get("cel_$dl")">$adminMsg.get("cel_$dl")</option>
+      #end
+    </select>
 </form>
 </div>
-<form id="navigation_form" action="$doc.getURL('save')" method="post">
+<form id="navigation_form" action="?" method="post">
         <input name="language" type="hidden" value="$!default_language">
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="template" value="$!request.template" />
 <div id="nav_menunameEdit" class="editblock">
     #set($theMenuName = $doc.getObject('Celements2.MenuName','lang',"$language", false))
     #if("$!theMenuName" == '')
-	    #set($theMenuName = $doc.newObject('Celements2.MenuName'))
-	    $!theMenuName.set('lang',"$!language")
-		#if(!$doc.isNew())
-		  ##NEVER change new document on load. This would create the document in inline/template mode!
-		  $doc.save()
-		#end
+      #set($theMenuName = $doc.newObject('Celements2.MenuName'))
+      $!theMenuName.set('lang',"$!language")
+    #if(!$doc.isNew())
+      ##NEVER change new document on load. This would create the document in inline/template mode!
+      $doc.save()
+    #end
     #end
     #set($navObjNb = $theMenuName.getNumber())
     #set($escapedMenuNameValue = "$!escapetool.html($!theMenuName.getProperty('menu_name').getValue())")
-	$adminMsg.get('cel_tm_menu_name'): <input type="text" value="$!escapedMenuNameValue" id="menuname" name="Celements2.MenuName_${navObjNb}_menu_name" onfocus="setFocus('nav_menunameEdit');" onblur="removeFocus('nav_menunameEdit');"></input><br />
+  $adminMsg.get('cel_tm_menu_name'): <input type="text" value="$!escapedMenuNameValue" id="menuname" name="Celements2.MenuName_${navObjNb}_menu_name" onfocus="setFocus('nav_menunameEdit');" onblur="removeFocus('nav_menunameEdit');"></input><br />
 </div>
 
 #* TODO Finish the new Redirect concept
@@ -48,19 +51,21 @@
 #end
 #set($theMenuItem = $doc.getObject('Celements2.MenuItem'))
 <div id="nav_redirectEdit" class="editblock">
-	#set($isRedirectChecked = ("$!theMenuItem.getProperty('is_redirect').getValue()" == '1'))
-	$adminMsg.get('cel_tm_redirect'): <input type="checkbox" #if($isRedirectChecked)checked="checked"#end id="check_redirect" onfocus="setFocus('nav_redirectEdit');" onblur="removeFocus('nav_redirectEdit');"></input>
-	$adminMsg.get('cel_tm_target'): <input type="text" id="redirect_target"#if(!$isRedirectChecked) readonly="readonly"#end value="$!theObj.getProperty('redirect').getValue()" onfocus="setFocus('nav_redirectEdit');" onblur="removeFocus('nav_redirectEdit');"></input>
+  #set($isRedirectChecked = ("$!theMenuItem.getProperty('is_redirect').getValue()" == '1'))
+  $adminMsg.get('cel_tm_redirect'): <input type="checkbox" #if($isRedirectChecked)checked="checked"#end id="check_redirect" onfocus="setFocus('nav_redirectEdit');" onblur="removeFocus('nav_redirectEdit');"></input>
+  $adminMsg.get('cel_tm_target'): <input type="text" id="redirect_target"#if(!$isRedirectChecked) readonly="readonly"#end value="$!theObj.getProperty('redirect').getValue()" onfocus="setFocus('nav_redirectEdit');" onblur="removeFocus('nav_redirectEdit');"></input>
 </div>
 *#
 </form>
 
 #* Extract Start *#
+#if("$!xwiki.getSpacePreference('extract_active')" == "1")
 <form id="nav_extractEdit" action="?" method="post">
 <input type="hidden" name="update" value="1" />
-<input type="hidden" name="tab" value="tbrights" />
+<input type="hidden" name="tab" value="tb2" />
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="template" value="$!request.template" />
     #parse("celMacros/includeCelementsRTE.vm")
     #set($extractObj = $doc.getObject('Classes.DocumentExtract','language',"$language", false))
     #if ("$!extractObj" == '')
@@ -85,10 +90,14 @@
         #parse("celTemplates/ObjectEdit.vm")
     </div>
 </form>
+#end
 #* Extract End *#
 
 #if ("$!xwiki.getSpacePreference('use_navigation_images')" == "1")
-<form id="nav_imagePicker_form" action="$doc.getURL('save')" method="post">
+<form id="nav_imagePicker_form" action="?" method="post">
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="template" value="$!request.template" />
 <div id="nav_imagePicker" class="editblock">
 <span style="display:none;" id="image_prefix">${doc.fullName}</span>
   $adminMsg.get('cel_tm_menu_image'): <input type="hidden" value="$!theMenuName.getProperty('image').getValue()" id="image" name="Celements2.MenuName_${navObjNb}_image"></input>

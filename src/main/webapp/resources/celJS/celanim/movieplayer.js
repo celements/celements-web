@@ -148,6 +148,8 @@ var celanimSWFplayerHandler = function(event) {
   event.stop();
 };
 
+var celanimFlowPlayerObjectCounter = 0;
+
 var celanimLoadSWFplayer = function(playerLink) {
   if (playerLink && !playerLink.hasClassName('celanim_loaded')) {
     playerLink.addClassName('celanim_loaded');
@@ -157,7 +159,12 @@ var celanimLoadSWFplayer = function(playerLink) {
       //--> it solves issues at least with IE7!!!
 //      playerContainer.update(new Element('span', { 'id' : 'celanimFlowPlayer_object' }));
 //      swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%", "100%", "9.0.0", "expressInstall.swf");
-      playerLink.update(new Element('span', { 'id' : 'celanimFlowPlayer_object' }));
+      var playerId = 'celanimFlowPlayer_object';
+      celanimFlowPlayerObjectCounter = celanimFlowPlayerObjectCounter + 1;
+      if (celanimFlowPlayerObjectCounter > 1) {
+        playerId += '_' + celanimFlowPlayerObjectCounter;
+      }
+      playerLink.update(new Element('span', { 'id' : playerId }));
 //    var objectElem = new Element('object', {
 //    'type' : 'application/x-shockwave-flash',
 //    'data' : movieLink,
@@ -185,7 +192,7 @@ var celanimLoadSWFplayer = function(playerLink) {
       flashvars['scale'] = 'showall';
       flashvars['wmode'] = 'opaque';
       // more details on embedSWF function on http://code.google.com/p/swfobject/wiki/api
-      swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%", "100%", "9.0.0",
+      swfobject.embedSWF(movieLink, playerId, "100%", "100%", "9.0.0",
           "expressInstall.swf", flashvars, params);
 //      playerLink.update(objectElem);
       playerLink.fire('celanim_player:flashplayerloaded', { 'movielink' : movieLink });
@@ -234,9 +241,15 @@ var getCelAnimObject = function() {
       'cssClass' : 'celanim_youtube',
       'replaceOnLoad' : true
     },
+    { 'name' : 'sfaudioPortal',
+      'matchStr' : '^https?:\/\/(www.srf.ch)\/.*\/audio/.*[\/=]',
+      'replaceStr' : 'http://www.srf.ch/player/flash/srfplayer.swf?mode=embed&audio_id=',
+      'cssClass' : 'celanim_sfaudio',
+      'replaceOnLoad' : true
+    },
     { 'name' : 'sfvideoPortal',
-      'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv)\/.*[\/=]',
-      'replaceStr' : 'http://www.sf.tv/videoplayer/embed/',
+      'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv|www.srf.ch)\/.*[\/=]',
+      'replaceStr' : 'http://www.srf.ch/player/flash/srfplayer.swf?mode=embed&segment_id=',
       'cssClass' : 'celanim_sfvideo',
       'replaceOnLoad' : true
     }];
@@ -426,7 +439,11 @@ var initOverlayLinks = function(flowclassname) {
 var initOverlayLinksInsideParent = function(parentElem, flowclassname) {
   if (parentElem.select(flowclassname).size() > 0) {
     parentElem.select(flowclassname).each(function(flowLink) {
-      flowLink.observe('click', celanimOpenInOverlay);
+      if(flowLink.hasClassName('celanim_sfaudio')) {
+        flowLink.observe('click', celanimOpenInOverlaySFAudio);
+      } else {
+        flowLink.observe('click', celanimOpenInOverlay);
+      }
     });
     initEventTracking(flowclassname);
   }
@@ -438,26 +455,37 @@ var getCelHost = function() {
   return celHost;
 };
 
-var celanimOpenInOverlay = function(e) {
+var celanimOpenInOverlaySFAudio = function(e) {
+  celanimOpenInOverlay(e, 580, 70);
+};
+
+var celanimOpenInOverlay = function(e, fixWidth, fixHeight) {
   var elem = e.findElement('a');
   var flvLink = elem.href.replace(/^..\/..\//g, '/');
   var cssClassNames = $w($(elem).className).without('celanim_overlay');
   var overlaySrc = getCelHost() + '?xpage=celements_ajax&ajax_mode=FlowplayerInOverlay';
   overlaySrc += '&cssclassname=' + cssClassNames.join(',');
-  overlaySrc += '&flvfilename=' + flvLink;
+  overlaySrc += '&flvfilename=' + encodeURIComponent(flvLink);
   hs.graphicsDir = 'highslide/graphics/';
   hs.outlineType = '';
   hs.wrapperClassName = 'no-footer no-move draggable-header celanim_overlay_wrapper '
-    + cssClassNames.join(' '); 
-  hs.htmlExpand(null, {
-    src : overlaySrc,
-    objectType: 'iframe',
-    dimmingOpacity: 0.60,
-    dragByHeading : false,
-    align : 'center',
-    preserveContent : false,
-    objectHeight: '0' //important for IE!!!
-  });
+    + cssClassNames.join(' ');
+  var params = {
+      src : overlaySrc,
+      objectType: 'iframe',
+      dimmingOpacity: 0.60,
+      dragByHeading : false,
+      align : 'center',
+      preserveContent : false,
+      objectHeight: '0' //important for IE!!!
+  };
+  if(fixWidth) {
+    params.width = fixWidth;
+  }
+  if(fixHeight) {
+    params.height = fixHeight;
+  }
+  hs.htmlExpand(null, params);
   e.stop();
 };
 
@@ -490,7 +518,16 @@ var trackEvent = function(e) {
   if (this.hasClassName("celanim_audio")) {
     category = "Audio";
   }
-  _gaq.push(['_trackEvent',category,action,label]);
+  if (typeof(ga) !== 'undefined') {
+    ga('send', {
+      'hitType': 'event',          // Required.
+      'eventCategory': category,   // Required.
+      'eventAction': action,      // Required.
+      'eventLabel': label
+    });
+  } else if (typeof(_gaq) !== 'undefined') {
+    _gaq.push(['_trackEvent',category,action,label]);
+  }
 };
 
 var asyncLoadConf = function() {

@@ -50,11 +50,15 @@ var checkIframeTarget = function(formElm, fileUploadElm) {
   }
   if (formElm.elements['xpage'] == null) {
     var inputElem = new Element('input', {
+      'type' : 'hidden',
+      'name' : 'xpage',
+      });
+     Element.insert(formElm,inputElem);
+  } else if (formElm.elements['xpage'] && (formElm.elements['beforeUploadXpage'] == null)) {
+    var inputElem = new Element('input', {
      'type' : 'hidden',
-     'id' : 'xpage',
-     'name' : 'xpage',
-     'value' : 'celements_ajax'
-     });
+     'name' : 'beforeUploadXpage',
+     }).addClassName('beforeUploadXpage');
     Element.insert(formElm,inputElem);
   }
   if (formElm.elements['ajax_mode'] == null) {
@@ -76,6 +80,10 @@ var checkIframeTarget = function(formElm, fileUploadElm) {
   $('beforeUploadFormTarget').value = formElm.target;
   $('celementsFormId').value = Element.readAttribute(formElm, 'id');
   formElm.target = "uploadFrame";
+  if (formElm.elements['beforeUploadXpage']) {
+    formElm.elements['beforeUploadXpage'].value = formElm.elements['xpage'].value; 
+  }
+  formElm.elements['xpage'].value = 'celements_ajax';
   $('uploadFrame').stopObserving('load', celUploadCallbackHandler);
   $('uploadFrame').observe('load', celUploadCallbackHandler);
 };
@@ -150,15 +158,19 @@ var uploadAtt_Cancel_ResetFormAfter = function(fileUploadInputElem) {
 };
 
 var uploadAttResetFormAfter = function(fileUploadInputElem) {
+  var formElm = fileUploadInputElem.up('form');
   if ($('beforeUploadFormTarget')) {
     fileUploadInputElem.up('form').target = $('beforeUploadFormTarget').value;
     $('beforeUploadFormTarget').remove();
   }
+  if (formElm.elements['beforeUploadXpage']) {
+    formElm.elements['xpage'].value = formElm.elements['beforeUploadXpage'].value;
+    formElm.elements['beforeUploadXpage'].remove();
+  } else if (formElm.elements['xpage'] != null) {
+    formElm.elements['xpage'].remove();
+  }
   fileUploadInputElem.value = '';
   fileUploadInputElem.clear();
-  if ($('xpage') != null) {
-    $('xpage').remove();
-  }
   if ($('celementsFormId')) {
     $('celementsFormId').remove();
   }
@@ -182,23 +194,35 @@ var registerOnInputFields = function() {
   }
   $$('input.celfileupload').each(function(inputElem) {
     if((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-      console.debug('registerOnInputFields: change observer for ' + inputElem.inspect());
+      console.debug('registerOnInputFields: change observer for ' + inputElem.inspect(), 
+          inputElem);
     }
+    inputElem.stopObserving('change', celFileSelectionChanged);
     inputElem.observe('change', celFileSelectionChanged);
   });
 };
 
 var celFileSelectionChanged = function(event) {
-   var fileUploadElm = event.findElement();
-   var formElm = event.findElement('form');
-   if (checkUploadFileName(fileUploadElm)) {
-     checkAttachmentList(fileUploadElm);
-     checkIframeTarget(formElm, fileUploadElm);
-     var beforeEvent = fileUploadElm.fire('celements:beforeUpload');
-     if (!beforeEvent.stopped) {
-       formElm.submit();
-     }
+  var fileUploadElm = event.findElement();
+  var formElm = event.findElement('form');
+  if (checkUploadFileName(fileUploadElm)) {
+    checkAttachmentList(fileUploadElm);
+    checkIframeTarget(formElm, fileUploadElm);
+    var beforeEvent = fileUploadElm.fire('celements:beforeUpload');
+    if (!beforeEvent.stopped) {
+      formElm.submit();
+    } else {
+      console.log('celFileSelectionChanged: skip submit ', fileUploadElem.inspect());
+    }
+  } else {
+    console.log('celFileSelectionChanged: checkUploadFileName failed ',
+        fileUploadElem.inspect());
   }
 };
 
-Event.observe(window, 'load', registerOnInputFields);
+//IMPORTANT!!! This MUST be onLoad because in ImagePicker tinyMCE is rewriting the
+//DOM-tree onLoad. Listeners registered in celAddOnBeforeLoadListener will fail!
+Event.observe(window, 'load', function() {
+  $(document.body).observe('cel_yuiOverlay:contentChanged', registerOnInputFields);
+  registerOnInputFields();
+});

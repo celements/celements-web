@@ -96,7 +96,13 @@ Validation.prototype = {
             _me.validateFieldHandler.bind(_me));
 			});
 		}
-		this.form.select('.celSubmitFormWithValidation').each(function(buttonElem) {
+		var submitButtons = _me.form.select('.celSubmitFormWithValidation');
+		if ((submitButtons.size() == 0) && $(_me.form.id + '_SubmitLink')) {
+		  submitButtons = [$(_me.form.id + '_SubmitLink')];
+	    console.warn('deprecated usage of submit link outside of form-tag: ',
+	        submitButtons);
+		}
+		submitButtons.each(function(buttonElem) {
       buttonElem.observe('click', _me.clickOnSubmitLinkHandler.bind(_me));
     });
 	},

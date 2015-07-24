@@ -337,7 +337,9 @@ YAHOO.extend(CELEMENTS.reorder.DDList, YAHOO.util.DDProxy, {
 
     _isMouseBeforeMedium : function(e, destEl) {
       var treeDiv = this.ddReorder.parentElem;
-      var destElOffset = destEl.cumulativeOffset();
+      //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
+      //counting margin-auto offsets. Thus we need to use jquery.offset
+      var destElOffset = $j(destEl).offset();
       var destElMedium = (destElOffset.top - treeDiv.scrollTop) + (destEl.getHeight() /2);
       return (YEvent.getPageY(e) < destElMedium);
     },

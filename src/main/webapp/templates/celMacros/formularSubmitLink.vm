@@ -6,6 +6,7 @@
 ## OUTPUT:
 ##
 #set($additionalClasses = "$!additionalClasses")
-<a href="#" class="celSubmitFormWithValidation submit$!additionalClasses"##
+<a #if("$!{celementsFormValidationName}" != '')id="$!{celementsFormValidationName}_SubmitLink"#end##
+ href="#" class="celSubmitFormWithValidation submit$!additionalClasses"##
  style="cursor:pointer">$linkText</a>
 #set($additionalClasses = '')

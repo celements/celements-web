@@ -1,0 +1,8 @@
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
+$jsonBuilder.openDictionary()
+#foreach($email in $request.getParameterValues('email'))
+$jsonBuilder.openProperty("$!email")
+$jsonBuilder.addBoolean($services.celmail.isValidEmail("$!email"))
+#end
+$jsonBuilder.closeDictionary()
+$jsonBuilder.getJSON()

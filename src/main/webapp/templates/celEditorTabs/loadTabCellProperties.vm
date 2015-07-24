@@ -8,7 +8,10 @@
         $doc.save()
 #end
 #end
-<form id="propertiesEdit" method="post" action="$doc.getURL('save')">
+<form id="propertiesEdit" method="post" action="?">
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="template" value="$!request.template" />
 <div id="pro_pagetypeEdit" class="editblock" onfocus="setFocus('pro_pagetypeEdit');" onblur="removeFocus('pro_pagetypeEdit');">
     $adminMsg.get('cel_tm_page_type'):
     #set($cel_pageTypeObj = $doc.getObject('Celements2.PageType'))

@@ -423,7 +423,12 @@ div.celements3_filebase .yui-panel-container {
 #fileBasePanel .c3_import_scrollable,
 .fileBasePanel .c3_import_scrollable {
   height: 260px;
-	width: auto;
+  width: auto;
+}
+#fileBasePanel #c2_ml_browser,
+.fileBasePanel #c2_ml_browser {
+  height: 285px;
+  overflow: auto;
 }
 .c2_ml_container_shadow .c2_ml_container,
 #c2_ml_container_shadow #c2_ml_container{

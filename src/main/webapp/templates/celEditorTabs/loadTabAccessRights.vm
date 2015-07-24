@@ -48,6 +48,7 @@
         <input type="hidden" name="update" value="1" />
         <input type="hidden" name="tab" value="tbrights" />
         <input type="hidden" name="xpage" value="celements_ajax" />
+        <input type="hidden" name="template" value="$!request.template" />
         <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
         #set($publishObjs = $doc.getObjects('Classes.DocumentPublication'))
         
@@ -78,6 +79,7 @@
 <input type="hidden" name="tab" value="tbrights" />
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="SaveAccessRights" />
+<input type="hidden" name="template" value="$!request.template" />
     <table class="cel_rightsTable editblock">
       <thead>
         <tr> 

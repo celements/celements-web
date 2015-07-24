@@ -143,15 +143,32 @@ Ajax.Request.addMethods({
       this.transport.send(this.body);
 
       /* Force Firefox to handle ready state 4 for synchronous requests */
-      if (!this.options.asynchronous && this.transport.overrideMimeType)
+      if (!this.options.asynchronous && this.transport.overrideMimeType) {
         this.onStateChange();
-
+      }
     }
     catch (e) {
       this.dispatchException(e);
     }
   },
 
+  onStateChange: function() {
+    var readyState = this.transport.readyState;
+    if (readyState > 1 && !((readyState == 4) && this._complete)) {
+      try {
+        if ((readyState == 4)) {
+          this._status = this.transport.status || 400;
+        }
+      } catch (e) {
+        //IE9 problem if ajax request gets aborted
+        this._status = 400;
+        this._readyState = 4;
+        this._isAbortedBug = true;
+      }
+      this.respondToReadyState(readyState);
+    }
+  },
+  
   onLoad : function() {
     this._status = this.transport.status || 200;
     this._readyState = this.transport.readyState || 4;
@@ -198,11 +215,15 @@ Ajax.Response.addMethods({
     if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
       this.status       = this.getStatus();
       this.statusText   = this.getStatusText();
-      this.responseText = String.interpret(transport.responseText);
-      this.headerJSON   = this._getHeaderJSON();
+      if (request._isAbortedBug) {
+        this.responseText = '';
+      } else {
+        this.responseText = String.interpret(transport.responseText);
+        this.headerJSON   = this._getHeaderJSON();
+      }
     }
 
-    if (readyState == 4) {
+    if ((readyState == 4) && !(request._isAbortedBug)) {
       var xml = transport.responseXML;
       this.responseXML  = Object.isUndefined(xml) ? null : xml;
       this.responseJSON = this._getResponseJSON();
@@ -223,12 +244,54 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
   celOnBeforeLoadListenerArray.push(listenerFunc);
 };
 
-if (typeof getCelHost === 'undefined') {
-var getCelHost = function() {
-  var celHost = document.location + '?';
-  celHost = celHost.substring(0, celHost.indexOf('?'));
-  return celHost;
-};
+(function(window, undefined) {
+  "use strict";
+
+  window.celOnFinishHeaderListenerArray = [];
+
+  window.celAddOnFinishHeaderListener = function(listenerFunc) {
+    window.celOnFinishHeaderListenerArray.push(listenerFunc);
+  };
+
+  window.celFinishHeaderHandler = function() {
+    $A(window.celOnFinishHeaderListenerArray).each(function(listener) {
+      try {
+        listener();
+      } catch (exp) {
+        console.error('Failed to execute celOnFinishHeader listener. ', exp);
+      }
+    });
+  };
+
+  /**
+   * getCelDomain function
+   **/
+  if (typeof window.getCelDomain === 'undefined') {
+    window.getCelDomain = function() {
+      var hostName = window.location.host;
+      var domainName = hostName.replace(/^www\./, '');
+      return domainName;
+    };
+  }
+
+})(window);
+
+
+/**
+ * getCelHost function
+ **/
+if (typeof window.getCelHost === 'undefined') {
+  window.getCelHost = function() {
+    var celHost = document.location + '?';
+    if (document.location.pathname.startsWith('/skin/resources/')) {
+      celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
+    } else if (document.location.pathname.startsWith('/file/resources/')) {
+      celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
+    } else {
+      celHost = celHost.substring(0, celHost.indexOf('?'));
+    }
+    return celHost;
+  };
 }
 
 var celMessages = {};
@@ -236,24 +299,29 @@ var celMessages = {};
 (function(window, undefined) {
   "use strict";
 
-  new Ajax.Request(getCelHost(), {
-    method : 'post',
-    parameters : {
-      xpage : 'celements_ajax',
-      ajax_mode : 'Messages'
-    },
-    onSuccess : function(transport) {
-      if (transport.responseText.isJSON()) {
-        celMessages = transport.responseText.evalJSON();
-        if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-          console.log('initCelements.js: finished getting dictionary messages.');
+  try {
+    var topFrame = top || window;
+    new Ajax.Request(topFrame.getCelHost(), {
+      method : 'post',
+      parameters : {
+        xpage : 'celements_ajax',
+        ajax_mode : 'Messages'
+      },
+      onSuccess : function(transport) {
+        if (transport.responseText.isJSON()) {
+          celMessages = transport.responseText.evalJSON();
+          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+            console.log('initCelements.js: finished getting dictionary messages.');
+          }
+          $(document.body).fire('cel:messagesLoaded', celMessages);
+        } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+          console.error('noJSON!!! ', transport.responseText);
         }
-        $(document.body).fire('cel:messagesLoaded', celMessages);
-      } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-        console.error('noJSON!!! ', transport.responseText);
       }
-    }
-  });
+    });
+  } catch (exp) {
+    console.error('Failed to get Cel-Messages async!', exp);
+  }
 
   var formValidations = new Hash();
 
@@ -278,6 +346,71 @@ var celMessages = {};
         containerElem.select('form.cel_form_validation').each(registerValidation);
       }
     });
+  });
+
+  /**
+   * Google Analytics integration
+   **/
+  window.celAddOnFinishHeaderListener(function() {
+    //get google Account Number from Meta-Tags
+    var metas = $$('meta[name="cel-GAA-Num"]');
+    if ((metas.size() > 0) && (metas[0].content != '')) {
+      var gaaNum = metas[0].content;
+
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', gaaNum, window.getCelDomain());
+      ga('send', 'pageview');
+      console.log('finish initalizing google universal analytics.', gaaNum);
+    }
+  });
+
+  /**
+   * Fluid Design image map support
+   */
+  celAddOnBeforeLoadListener(function() {
+    if (typeof $j('img[usemap]').rwdImageMaps !== 'undefined') {
+      $j('img[usemap]').rwdImageMaps();
+    }
+  });
+
+  /**
+   * Register default overlay opener for .cel_yuiOverlay cssSelector
+   */
+  celAddOnBeforeLoadListener(function() {
+    if (CELEMENTS && CELEMENTS.presentation && CELEMENTS.presentation.getOverlayObj
+        && CELEMENTS.presentation.getOverlayObj()) {
+      CELEMENTS.presentation.getOverlayObj({
+        'overlayLayout' : 'SimpleLayout'
+      }).registerOpenHandler();
+    }
+  });
+
+  /**
+   * Register default orientation css classes setter
+   */
+  var mobileDim = null;
+  var cel_updateOrientationCSSclasses = function() {
+    var innerWidth = mobileDim.getInnerWidth();
+    var innerHeight = mobileDim.getInnerHeight();
+    if (innerWidth > innerHeight) {
+      $(document.body).removeClassName('cel_orientation_portrait');
+      $(document.body).addClassName('cel_orientation_landscape');
+    } else {
+      $(document.body).removeClassName('cel_orientation_landscape');
+      $(document.body).addClassName('cel_orientation_portrait');
+    }
+  };
+
+  celAddOnBeforeLoadListener(function() {
+    if (CELEMENTS && CELEMENTS.mobile && CELEMENTS.mobile.Dimensions) {
+      mobileDim = new CELEMENTS.mobile.Dimensions();
+      Event.stopObserving(window, "orientationchange", cel_updateOrientationCSSclasses);
+      Event.observe(window, "orientationchange", cel_updateOrientationCSSclasses);
+    }
   });
 
 })(window);

@@ -10,6 +10,7 @@ $jsonBuilder.addBoolean($validationPassed)
 #if($validationPassed)
   #set($numSaved = 0)
   #foreach($d in $celementsweb.updateDocFromMap("$!doc.fullName", $map))
+   ## TODO implement validation for updated document before save
    #if(!$d.isNew() || ("$!request.createIfNotExists" == 'true'))
       $d.save()
       #set($numSaved = $numSaved + 1)
