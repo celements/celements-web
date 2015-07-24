@@ -1,6 +1,6 @@
 <div id="cel_websearch_config_editor" class="c3_scrollable">
 
-<form id="webSearchConfigForm" method="post" action="?" onsubmit="cancelCancelEdit()">
+<form id="webSearchConfigForm" method="post" action="?">
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 <input type="hidden" name="createIfNotExists" value="true" />
