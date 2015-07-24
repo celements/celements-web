@@ -9,10 +9,13 @@
 #if("$!navObj.getProperty('menu_space').getValue().trim()" == '')
   $navObj.set('menu_space', "$doc.getName()")
 #end
-<form id="edit" method="post" action="$xwiki.getURL($doc.getFullName(), 'save')" target="_parent">
-  <input type="hidden" name="template" value="$!doc.getTemplate()" />
+<form id="edit" method="post" action="?" target="_parent">
+  <input type="hidden" name="xpage" value="celements_ajax" />
+  <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+  <input type="hidden" name="createIfNotExists" value="true" />
   <input type="hidden" name="xredirect" value="$!xredirect" />
   <input type="hidden" name="language" value="$!tdoc.language" />
+  <input type="hidden" name="template" value="$!doc.getTemplate()" />
   <div id="editablecode_container">
   #set($cel_embedded_editobj = true)
   #set($cel_editobj_classname = "Celements2.NavigationConfigClass")
