@@ -16,7 +16,9 @@
   ##           get not correctly interpreted in an embedded getRenderedContent call.
   #set($redDocRef = $services.model.resolveDocument("$redFN"))
   #set($renderDocument = $xwiki.getDocument($redDocRef))
+  #set($insideRedirectIncludedView = true)
   #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
+  #set($insideRedirectIncludedView = false)
   #set($redDocRef = '') ## reset after loading content
   ##
 #end ## if($showIFrame)
