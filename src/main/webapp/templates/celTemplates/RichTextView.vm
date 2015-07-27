@@ -6,13 +6,14 @@
 #end
 #if("$request.xpage" != 'rdf')
 #set($theDoc = $contentDoc)
-$xwiki.includeForm('celements2web:Macros.getContentDblClick', false)
+#parse('celMacros/getContentDblClick.vm')
 #set($theDoc = '')
 ##
 #set($additionalCSS = '')
 #if($celementsweb.isEmptyRTEDocument($contentDoc.documentReference))
 #set($additionalCSS = "$!additionalCSS celRTEempty")
 #end
+<!-- insideRedirectIncludedView : $insideRedirectIncludedView -->
 #if(($contentDoc.documentReference == $doc.documentReference) || $insideRedirectIncludedView)
 #set($currentPagePart = 'currentPage:')
 #else
