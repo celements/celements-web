@@ -16,6 +16,10 @@
   ##           get not correctly interpreted in an embedded getRenderedContent call.
   #set($redDocRef = $services.model.resolveDocument("$redFN"))
   #set($renderDocument = $xwiki.getDocument($redDocRef))
+#set($celRedirDocPageType = $services.pageType.getPageTypeRef($redDocRef).getConfigName())
+#set($celRedirDocCssPTclass = "cel_pagetype_$!{celRedirDocPageType}")
+<div class="${celRedirDocCssPTclass} cel_redirectEmbedded">
   #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
+<!-- IE6 --></div>
   ##
 #end ## if($showIFrame)
