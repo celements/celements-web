@@ -3,7 +3,7 @@
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 <input type="hidden" name="template" value="$!request.template" />
-<div id="pro_pagetypeEdit" class="editblock" onfocus="setFocus('pro_pagetypeEdit');" onblur="removeFocus('pro_pagetypeEdit');">
+<div id="pro_pagetypeEdit" class="editblock">
 	$adminMsg.get('cel_tm_page_type'):
 	#set($cel_pageTypeObj = $doc.getObject('Celements2.PageType'))
 	#if(("$!cel_pageTypeObj" == ''))
@@ -42,7 +42,7 @@
       #end
       </select>
 </div>
-<div id="pro_pagemasterEdit" class="editblock" onfocus="setFocus('pro_pagemasterEdit');" onblur="removeFocus('pro_pagemasterEdit');">
+<div id="pro_pagemasterEdit" class="editblock">
     $adminMsg.get('cel_tm_page_master'):
     #set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
     #set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
@@ -54,7 +54,7 @@
     #end
     </select>
 </div>
-#if($isSuperAdmin)
+#if($isAdmin)
 #set($cel_editobj_dict_prefix = 'cel_pro_metaTag_' )
 #set($cel_editobj_externalForm = true)  
 #set($cel_embedded_editobj = true)
@@ -64,8 +64,8 @@
 #set($cel_editobj_hasObjAddLink = true)
 #set($cel_editobj_properties = "key,lang,value")
 #set($cel_editobj_xredirect_params = 'tab=tb4')
-<div id="pro_metaTagEdit" class="editblock" onfocus="setFocus('pro_metaTagEdit');" onblur="removeFocus('pro_metaTagEdit');">
-  $xwiki.includeForm('celements2web:Templates.ObjectEdit',false)
+<div id="pro_metaTagEdit" class="editblock">
+  #parse("celTemplates/ObjectEdit.vm")
 </div>
 #end
 </form>
