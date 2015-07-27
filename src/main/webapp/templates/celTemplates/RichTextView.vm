@@ -13,7 +13,7 @@ $xwiki.includeForm('celements2web:Macros.getContentDblClick', false)
 #if($celementsweb.isEmptyRTEDocument($contentDoc.documentReference))
 #set($additionalCSS = "$!additionalCSS celRTEempty")
 #end
-#if($contentDoc.documentReference == $doc.documentReference)
+#if(($contentDoc.documentReference == $doc.documentReference) || $insideRedirectIncludedView)
 #set($currentPagePart = 'currentPage:')
 #else
 #set($currentPagePart = '')
