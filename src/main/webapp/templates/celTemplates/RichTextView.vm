@@ -13,7 +13,13 @@
 #if($celementsweb.isEmptyRTEDocument($contentDoc.documentReference))
 #set($additionalCSS = "$!additionalCSS celRTEempty")
 #end
-<!-- insideRedirectIncludedView : $insideRedirectIncludedView -->
+#set($currentPageType = $services.pageType.getPageTypeRef($doc.documentReference).getConfigName())
+<!--
+insideRedirectIncludedView : $insideRedirectIncludedView ,
+$isAddPdDiv ,
+$cellDocRef ,
+$currentPageType
+-->
 #if(($contentDoc.documentReference == $doc.documentReference) || $insideRedirectIncludedView)
 #set($currentPagePart = 'currentPage:')
 #else
