@@ -49,9 +49,9 @@ $response.addHeader('X-JSON', $jsonStr)
 $jsonStr
 #else ## render view
   #if("$!showIncluded" == '1')
-  <!-- RedirectView before RedirectIncludeView: $contextIsFinished , $isCellSkin -->
     #set($overwriteRenderDocument = 'celInlineTemplates/RedirectIncludedView.vm')
 #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
+  <!-- RedirectView before RedirectIncludeView: $contextIsFinished , $isCellSkin , $overwriteRenderDocument -->
     $xwiki.parseTemplate("frameheader.vm")
     #if("$!overwriteRenderDocument" != '')
 ## redirectedParams get lost in calling:
