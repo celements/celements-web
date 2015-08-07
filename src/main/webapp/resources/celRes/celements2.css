@@ -814,3 +814,47 @@ div.presentationList > ul > li {
 div.presentationList > div.navigation-clear {
   clear: both;
 }
+
+/* ------------
+   SCROLLBALKEN
+   ------------ */
+.cel_pagetype_ImageGallery .scrollcontainer {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  margin: 28px 0px;
+}
+
+.cel_pagetype_ImageGallery .scrollwrapper {
+  width: 100%;
+}
+.swiper-scrollbar {
+  background: none;
+  position: absolute;
+  right: 0px;
+  top: 0;
+  height: 100%;
+  width: 13px;
+  background: rgba(152,152,152,0.2);
+}
+.swiper-scrollbar:hover {
+  opacity: 1 !important;
+}
+.swiper-scrollbar .swiper-scrollbar-drag {
+  background: rgba(152,152,152,0.4);
+}
+.swiper-scrollbar .swiper-scrollbar-drag:hover {
+  background: rgba(152,152,152,0.7);
+}
+.swiper-scrollbar .swiper-scrollbar-drag:active {
+  background: rgba(152,152,152,1);
+}
+.scrollbarPDC {
+  z-index: 3;
+}
+/** loading indicator **/
+#content div.attListLoading img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
