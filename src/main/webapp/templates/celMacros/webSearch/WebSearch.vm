@@ -180,7 +180,7 @@
 #set($devNull = $restrictions.add($orGrp))
 ## end packages
 
-## create query and search
+## create query, get sort fields and search
 #set($doctypes = [])
 #if($searchpackages.contains('attachment'))
   #set($devNull = $doctypes.add('attachment'))
@@ -190,10 +190,11 @@
 #end
 #set($query = $services.lucene.createQuery($doctypes))
 #set($devNull = $query.addAll($restrictions))
-#set($result = $services.lucene.search($query, $nullVal, ['default', "$language"]))
+#asList("$!configObj.get('sortFields')")
+#set($sortFields = $list)
+#set($result = $services.lucene.search($query, $sortFields, ['default', "$language"]))
 #if($isAdmin)
 <!--
-  doc/celldoc: $!doc/$!celldoc
   result: $!result
   size: $!result.getSize()
 -->
