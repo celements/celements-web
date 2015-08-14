@@ -156,3 +156,16 @@ div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container #
 	width:794px;
 }
 **/
+
+
+#importForm .c3_fb_upload_filter_wrapper {
+  margin-right: 180px;
+}
+#importForm .c3_fb_upload_filter {
+	float: left;
+	padding-right: 20px;
+}
+#importForm .c3_import_checkbox_all_none {
+  padding-top: 12px;
+  clear: left;
+}
