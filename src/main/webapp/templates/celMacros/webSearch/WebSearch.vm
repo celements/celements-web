@@ -32,16 +32,6 @@
 #set($devNull = $webPrefRestr.setNegate(true))
 #set($devNull = $restrictions.add($webPrefRestr))
 
-## linkedDocsOnly
-#if("$!linkedDocsOnly" != '')
-  #set($linkedDocsOnly = ("$!linkedDocsOnly" == 'true'))
-#else
-  #set($linkedDocsOnly = ("$!configObj.getProperty('linkedDocsOnly').getValue()" == '1'))
-#end
-#if($linkedDocsOnly)
-  #set($devNull = $restrictions.add($services.lucene.createObjectRestriction('Celements2.MenuItem')))
-#end
-
 ## docs
 #asList("$!configObj.get('docs') $!docs")
 #set($docs = $list)
@@ -180,7 +170,22 @@
 #set($devNull = $restrictions.add($orGrp))
 ## end packages
 
-## create query and search
+## linkedDocsOnly
+#if("$!linkedDocsOnly" != '')
+  #set($linkedDocsOnly = ("$!linkedDocsOnly" == 'true'))
+#else
+  #set($linkedDocsOnly = ("$!configObj.getProperty('linkedDocsOnly').getValue()" == '1'))
+#end
+#if($linkedDocsOnly)
+  #set($linkedDocsRestrGrp = $services.lucene.createOrRestrictionGroup())
+  #set($devNull = $linkedDocsRestrGrp.add($services.lucene.createObjectRestriction('Celements2.MenuItem')))
+  #if($searchpackages.contains('blog'))
+    #set($devNull = $linkedDocsRestrGrp.add($services.lucene.createObjectRestriction('XWiki.ArticleClass')))
+  #end
+  #set($devNull = $restrictions.add($linkedDocsRestrGrp))
+#end
+
+## create query, get sort fields and search
 #set($doctypes = [])
 #if($searchpackages.contains('attachment'))
   #set($devNull = $doctypes.add('attachment'))
@@ -190,10 +195,11 @@
 #end
 #set($query = $services.lucene.createQuery($doctypes))
 #set($devNull = $query.addAll($restrictions))
-#set($result = $services.lucene.search($query, $nullVal, ['default', "$language"]))
+#asList("$!configObj.get('sortFields')")
+#set($sortFields = $list)
+#set($result = $services.lucene.search($query, $sortFields, ['default', "$language"]))
 #if($isAdmin)
 <!--
-  doc/celldoc: $!doc/$!celldoc
   result: $!result
   size: $!result.getSize()
 -->
