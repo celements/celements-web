@@ -17,6 +17,7 @@
 #if("$!currentPageType" == 'Redirect')
   #set($red_objRT = $doc.getObject("Celements2.Redirect"))
   #set($origRedURLRT = "$!red_objRT.getProperty('redirect').getValue()")
+#set($insideRedirectIncludedView = $services.celementsweb.getGlobalContextValue("insideRedirectIncludedView"))
 <!--
 insideRedirectIncludedView : $insideRedirectIncludedView ,
 $isAddPdDiv ,
