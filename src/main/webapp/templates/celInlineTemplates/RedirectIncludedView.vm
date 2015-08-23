@@ -16,11 +16,11 @@
   ##           get not correctly interpreted in an embedded getRenderedContent call.
   #set($redDocRef = $services.model.resolveDocument("$redFN"))
   #set($renderDocument = $xwiki.getDocument($redDocRef))
-  #set($insideRedirectIncludedView = true)
-  <!-- insideRedirectIncludedView before : $insideRedirectIncludedView -->
+ $services.celementsweb.setGlobalContextValue("insideRedirectIncludedView", true)
+  <!-- insideRedirectIncludedView before : $services.celementsweb.getGlobalContextValue("insideRedirectIncludedView") -->
   #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
-  <!-- insideRedirectIncludedView after : $insideRedirectIncludedView -->
-  #set($insideRedirectIncludedView = false)
+  <!-- insideRedirectIncludedView after : $services.celementsweb.getGlobalContextValue("insideRedirectIncludedView") -->
+ $services.celementsweb.setGlobalContextValue("insideRedirectIncludedView", false)
   #set($redDocRef = '') ## reset after loading content
   ##
 #end ## if($showIFrame)
