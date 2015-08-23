@@ -17,10 +17,10 @@
   #set($redDocRef = $services.model.resolveDocument("$redFN"))
   #set($renderDocument = $xwiki.getDocument($redDocRef))
  $services.celementsweb.setGlobalContextValue("insideRedirectIncludedView", true)
-  <!-- insideRedirectIncludedView before : $services.celementsweb.getGlobalContextValue("insideRedirectIncludedView") -->
+  <!-- global var insideRedirectIncludedView before : $services.celementsweb.getGlobalContextValue("insideRedirectIncludedView") -->
   #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
-  <!-- insideRedirectIncludedView after : $services.celementsweb.getGlobalContextValue("insideRedirectIncludedView") -->
  $services.celementsweb.setGlobalContextValue("insideRedirectIncludedView", false)
+  <!-- global var insideRedirectIncludedView after : $services.celementsweb.getGlobalContextValue("insideRedirectIncludedView") -->
   #set($redDocRef = '') ## reset after loading content
   ##
 #end ## if($showIFrame)
