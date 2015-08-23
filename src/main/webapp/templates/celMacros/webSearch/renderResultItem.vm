@@ -11,7 +11,10 @@
 #elseif("$!resultRef.getType()" == "ATTACHMENT")
   #set($resultAtt = $services.webUtils.getAttachment($resultRef))
   #set($pageTitle = $resultRef.getName())
-  #set($pageLink = $xwiki.getAttachmentURL($services.model.serialize($resultRef.getDocumentReference()), $pageTitle))
+  #set($pageLink = $xwiki.getAttachmentURL($services.model.serialize($resultRef.getDocumentReference()), $resultRef.getName()))
+  #if($resultRef.getName().endsWith('.pdf'))
+    #set($pageLink = "$pageLink?search=$!text")
+  #end
   #set($parentDocRefList = [])
   #set($resultDate = $resultAtt.getDate())
 #end

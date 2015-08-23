@@ -1,0 +1,5 @@
+#if("$!request.query" == '1')
+  $celementsweb.addExtJSfileOnce(':celCookiesEnabled/cookiesEnabledQuery.js', 'file') 
+#elseif("$!request.response" == '1')
+  $celementsweb.addExtJSfileOnce(':celCookiesEnabled/cookiesEnabledResponse.js', 'file')
+#end

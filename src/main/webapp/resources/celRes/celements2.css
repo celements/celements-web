@@ -203,7 +203,7 @@ body > div#celements2_menu_bar {
   border-left: 1px solid #5e5e5e;
   border-right: 1px solid #5e5e5e;
 }
-.contextMenuCorner{
+.contextMenuCorner {
 	position:absolute;
 	top: 0px;
 	left: 0px;
@@ -231,7 +231,7 @@ body > div#celements2_menu_bar {
 	padding:0px 3px 0px 3px;
 	margin-bottom:2px;
 }
-.contextMenuItem{
+.contextMenuItem {
   border-top: 1px solid #5e5e5e;
  	position:relative;
   background: rgb(51,51,51);
@@ -240,7 +240,7 @@ body > div#celements2_menu_bar {
 	height:auto;
 	overflow:hidden;
 }
-.contextMenuIcon{
+.contextMenuIcon {
 	display:none;
 }
 .contextMenuLink {
@@ -264,7 +264,7 @@ body > div#celements2_menu_bar {
 	overflow:hidden;
 	text-align:left;
 }
-.contextMenuLinkOver{
+.contextMenuLinkOver {
 	position: static;
 	top:0px;
 	left:0px;
@@ -285,6 +285,9 @@ body > div#celements2_menu_bar {
   padding:5px 3px 5px 12px;
 	overflow:hidden;
 	text-align:left;
+}
+.cel_outline {
+  z-index: 99;
 }
 
 /* Form Validation Classes */
