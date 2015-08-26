@@ -88,6 +88,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         return {
           'dialogId' : 'modal dialog',
           'containerId' : 'yuiOverlayContainer',
+          'additionalCssClass' : '',
           'width' : '300px',
           'height' : 'auto',
           'fixedcenter' : true, 
