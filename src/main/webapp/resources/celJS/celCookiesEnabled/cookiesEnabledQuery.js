@@ -1,6 +1,7 @@
 (function(window, undefined) {
   var responseDomain = window.location.search.replace(/^.*[&\?]domain=(.*?)(&.*)?$/g, '$1');
-  var msgDoc = window.location.search.replace(/^.*[&\?]msgDoc=(.*?)(&.*)?$/g, '$1');
+//  var msgDoc = window.location.search.replace(/^.*[&\?]msgDoc=(.*?)(&.*)?$/g, '$1');
+  var cookiesAllowed = 'no';
   var cookieName = "CelementsTestThirdPartyCookieEnabled";
   document.cookie = cookieName + "=yes;";
   if(document.cookie.indexOf(cookieName + "=yes") > -1) {
@@ -8,7 +9,7 @@
     date.setTime(date.getTime()+(-1*24*60*60*1000));
     var expires = "; expires="+date.toGMTString();
     document.cookie = cookieName + "=no" + expires;
-    msgDoc = 'allowed';
+    cookiesAllowed = 'yes';
   }
   var locSearch = window.location.search;
   if(locSearch.match(/[&\?]domain=http/)) {
@@ -19,7 +20,7 @@
     } else {
       decodedLoc += '?';
     }
-    decodedLoc += 'xpage=plainpagetype&response=1&msgDoc=' + msgDoc;
+    decodedLoc += 'xpage=plainpagetype&response=1&cookiesAllowed=' + cookiesAllowed;
     var responseFrame = new Element('iframe', { src: decodedLoc });
     $(document.body).insert(responseFrame);
   } else {
