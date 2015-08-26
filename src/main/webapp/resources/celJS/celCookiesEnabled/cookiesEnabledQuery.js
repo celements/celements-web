@@ -20,9 +20,6 @@
       decodedLoc += '?';
     }
     decodedLoc += 'xpage=plainpagetype&response=1&msgDoc=' + msgDoc;
-    
-    alert('setting respone frame to ' + decodedLoc);
-    
     var responseFrame = new Element('iframe', { src: decodedLoc });
     $(document.body).insert(responseFrame);
   } else {
