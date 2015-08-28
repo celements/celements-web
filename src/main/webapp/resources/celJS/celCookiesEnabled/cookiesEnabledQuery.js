@@ -19,7 +19,7 @@
  */
 (function(window, undefined) {
   var responseDomain = window.location.search.replace(/^.*[&\?]domain=(.*?)(&.*)?$/g, '$1');
-  var cookiesAllowed = 'no';
+  var cookiesAllowed = false;
   var cookieName = "CelementsTestThirdPartyCookieEnabled";
   document.cookie = cookieName + "=yes;";
   if(document.cookie.indexOf(cookieName + "=yes") > -1) {
@@ -27,23 +27,13 @@
     date.setTime(date.getTime()+(-1*24*60*60*1000));
     var expires = "; expires="+date.toGMTString();
     document.cookie = cookieName + "=no" + expires;
-    cookiesAllowed = 'yes';
+    cookiesAllowed = true;
   }
   var locSearch = window.location.search;
   if(locSearch.match(/[&\?]domain=http/)) {
     var loc = locSearch.replace(/^.*[&\?]domain=(.*?)(&.*)?$/g, '$1');
     var decodedLoc = decodeURIComponent(loc);
-    alert('decodedLoc = ' + decodedLoc);
-    parent.postMessage('message from beyond the iframe-veil', decodedLoc);
-    
-    if(decodedLoc.indexOf('?') > -1) {
-      decodedLoc += '&';
-    } else {
-      decodedLoc += '?';
-    }
-    decodedLoc += 'xpage=plainpagetype&response=1&cookiesAllowed=' + cookiesAllowed;
-    var responseFrame = new Element('iframe', { src: decodedLoc });
-    $(document.body).insert(responseFrame);
+    parent.postMessage({ thirdPartyCookiesEnabled: cookiesAllowed }, decodedLoc);
   } else {
     var failMsg = 'Third party cookie enabled check failed.';
     alert(failMsg);
