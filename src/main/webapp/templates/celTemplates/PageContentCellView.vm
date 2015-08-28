@@ -3,9 +3,7 @@
 #set($isAddPdDiv = ("$request.xpage" != 'rdf') && ($pageDocRef != $doc.documentReference))
 #if(("$!overwriteRenderDocument" != '') && !$isAddPdDiv)
 #if($overwriteRenderDocument.endsWith('.vm'))
-  <!-- pageContentCellView before overwriteRenderDocument: $overwriteRenderDocument -->
 $xwiki.parseTemplate($overwriteRenderDocument)
-  <!-- pageContentCellView after overwriteRenderDocument: $overwriteRenderDocument -->
 #else
 $services.celementsweb.renderDocument($services.model.resolveDocument($overwriteRenderDocument))
 #end

@@ -51,7 +51,6 @@ $jsonStr
   #if("$!showIncluded" == '1')
     #set($overwriteRenderDocument = 'celInlineTemplates/RedirectIncludedView.vm')
 #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
-  <!-- RedirectView before RedirectIncludeView: $contextIsFinished , $isCellSkin , $overwriteRenderDocument -->
     $xwiki.parseTemplate("frameheader.vm")
     #if("$!overwriteRenderDocument" != '')
 ## redirectedParams get lost in calling:

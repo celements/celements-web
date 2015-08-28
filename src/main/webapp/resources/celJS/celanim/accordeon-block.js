@@ -145,8 +145,11 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
 
   isStepVisible : function(step) {
     var _me = this;
-    return step.down(_me.cssContent).visible();
-    return false;
+    if (step && step.down(_me.cssContent)) {
+      return step.down(_me.cssContent).visible();
+    } else {
+      return false;
+    }
   },
 
   clickHandler : function(event) {

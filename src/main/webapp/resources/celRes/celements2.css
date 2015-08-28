@@ -817,3 +817,6 @@ div.presentationList > ul > li {
 div.presentationList > div.navigation-clear {
   clear: both;
 }
+#sitecontainer .cel_nav_restricted_rights {
+  background: #ff9999;
+}
