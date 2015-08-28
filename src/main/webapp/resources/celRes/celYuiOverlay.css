@@ -1,0 +1,71 @@
+@CHARSET "UTF-8";
+
+/** yui overlay **/
+body div.mask.cel-YuiOverlay {
+  background: transparent;
+  /** please do not change to absolute. It must be fixed to prevent scroll away. **/
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  opacity: 0.85;
+  filter: alpha(opacity = 85);
+  display: none;
+  top: 0px;
+  left: 0px;
+  z-index: 99;
+}
+
+.cel-YuiOverlay .yui-panel .hd {
+  height: 0px;
+}
+.cel-YuiOverlay .yui-panel,
+.cel-YuiOverlay .yui-panel .hd, 
+.cel-YuiOverlay .yui-panel .bd, 
+.cel-YuiOverlay .yui-panel .ft {
+  background: white;
+  color: #333;
+  border: 0px solid white;
+}
+.cel-YuiOverlay .container-close {
+  position: absolute;
+  z-index: 10;
+  top: -15px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  background-image:url('/file/resources/celRes/close.png');
+  background-repeat: no-repeat;
+  background-position: top right;
+  cursor: pointer;
+}
+.cel-YuiOverlay .container-close:hover {
+  background-image:url('/file/resources/celRes/close-hover.png');
+}
+.cel-YuiOverlay .container-close:focus {
+  border: 0px solid black;
+  outline: none;
+}
+.cel-YuiOverlay .yui-panel .hd,
+.cel-YuiOverlay .yui-panel .bd,
+.cel-YuiOverlay .yui-panel .ft {
+  margin: 0;
+  padding: 0;
+}
+.cel-YuiOverlay .yui-panel .hd,
+.cel-YuiOverlay .yui-panel .ft {
+  display:none;
+}
+.cel-YuiOverlay .yui-panel-container {
+  padding: 0px;
+}
+.cel-YuiOverlay .yui-panel-container.shadow .underlay {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: none;
+}
+
+.cel-YuiOverlay .yui-panel .bd .cel_slideShow_slideRoot {
+  overflow: hidden;
+}
