@@ -85,7 +85,7 @@ if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
       
       _defaultCallback : function(response) {
         var _me = this;
-        var cookiesEnabled = ('true' == response.data.replaceAll('thirdPartyCookiesEnabled='));
+        var cookiesEnabled = ('true' == response.data.replace(/thirdPartyCookiesEnabled=/g, ''));
         $(_me._frameId).remove();
         var overlayConf = {
             fixedcenter: true,
