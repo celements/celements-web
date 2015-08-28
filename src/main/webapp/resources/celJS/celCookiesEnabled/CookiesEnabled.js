@@ -71,7 +71,7 @@ if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
       _thirdPartyURL : undefined,
       _cookiesDisabledMessageURL : undefined,
       _cookiesEnabledMessageURL : undefined,
-      _callbackFucntion : undefined,
+      _callbackFunction : undefined,
       
       _init : function(configObj) {
         var _me = this;
@@ -80,13 +80,13 @@ if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
         _me._thirdPartyURL = configObj.thirdPartyURL;
         _me._cookiesDisabledMessageURL = configObj.cookiesDisabledMessageURL;
         _me._cookiesEnabledMessageURL = configObj.cookiesEnabledMessageURL;
-        _me._callbackFucntion = configObj.callback;
+        _me._callbackFunction = configObj.callback;
       },
       
       _defaultCallback : function(response) {
         var _me = this;
         var cookiesEnabled = response.data.thirdPartyCookiesEnabled;
-        console.log('frame id', _me._frameId);
+        console.log('cookies enabled', cookiesEnabled);
         $(_me._frameId).remove();
         var overlayConf = {
             fixedcenter: true,
@@ -106,7 +106,7 @@ if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
       
       checkIsThirdPartyCookiesEnabled : function(callback) {
         var _me = this;
-        callback = callback || _me._callbackFucntion || _me._defaultCallback;
+        callback = callback || _me._callbackFunction || _me._defaultCallback;
         if(_me._thirdPartyURL) {
           var url = _me._thirdPartyURL + '&domain=' + window.location.origin;
           var checkFrame = new Element('iframe', { id : _me._frameId, src : url });
