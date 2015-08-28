@@ -88,7 +88,9 @@ if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
         var cookiesEnabled = response.data.thirdPartyCookiesEnabled;
         if(!cookiesEnabled) { // IE Fix
           console.log('IE response.data properties:', response.data['thirdPartyCookiesEnabled']);
-          for(var propertyName in response.data) { console.log(propertyName); }
+//          for(var propertyName in response.data) { console.log(propertyName); }
+          console.log('toArray ', response.data.toArray());
+          console.log('evalJSON  ', response.data.evalJSON().thirdPartyCookiesEnabled);
         }
         console.log('response ', response);
         console.log('response data ', response.data);
