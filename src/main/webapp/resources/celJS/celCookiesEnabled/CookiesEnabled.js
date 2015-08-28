@@ -86,6 +86,10 @@ if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
       _defaultCallback : function(response) {
         var _me = this;
         var cookiesEnabled = response.data.thirdPartyCookiesEnabled;
+        if(!cookiesEnabled) { // IE Fix
+          console.log('IE response.data properties:', response.data['thirdPartyCookiesEnabled']);
+          for(var propertyName in response.data) { console.log(propertyName); }
+        }
         console.log('response ', response);
         console.log('response data ', response.data);
         console.log('cookies enabled ', cookiesEnabled);
