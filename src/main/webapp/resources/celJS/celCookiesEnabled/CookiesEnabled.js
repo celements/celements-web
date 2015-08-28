@@ -108,6 +108,9 @@ if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
         var _me = this;
         callback = callback || _me._callbackFunction || _me._defaultCallback;
         if(_me._thirdPartyURL) {
+          if(!window.location.origin) { // IE Fix
+            window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+          }
           var url = _me._thirdPartyURL + '&domain=' + window.location.origin;
           var checkFrame = new Element('iframe', { id : _me._frameId, src : url });
           checkFrame.hide();
