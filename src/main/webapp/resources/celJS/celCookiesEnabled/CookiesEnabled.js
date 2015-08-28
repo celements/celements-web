@@ -85,18 +85,7 @@ if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
       
       _defaultCallback : function(response) {
         var _me = this;
-        var cookiesEnabled = response.data.thirdPartyCookiesEnabled;
-        if(!cookiesEnabled) { // IE Fix
-          console.log('IE response.data properties:', response.data['thirdPartyCookiesEnabled']);
-          s = '';
-          for(var propertyName in response.data) { 
-            s += propertyName + ', ';
-          }
-          console.log('properties ', s);
-        }
-        console.log('response ', response);
-        console.log('response data ', response.data);
-        console.log('cookies enabled ', cookiesEnabled);
+        var cookiesEnabled = ('true' == response.data.replaceAll('thirdPartyCookiesEnabled='));
         $(_me._frameId).remove();
         var overlayConf = {
             fixedcenter: true,

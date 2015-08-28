@@ -33,7 +33,8 @@
   if(locSearch.match(/[&\?]domain=http/)) {
     var loc = locSearch.replace(/^.*[&\?]domain=(.*?)(&.*)?$/g, '$1');
     var decodedLoc = decodeURIComponent(loc);
-    parent.postMessage({ thirdPartyCookiesEnabled: cookiesAllowed }, decodedLoc);
+    // DON'T use anything but string. (It's IE, what else?)
+    parent.postMessage('thirdPartyCookiesEnabled=' + cookiesAllowed, decodedLoc);
   } else {
     var failMsg = 'Third party cookie enabled check failed.';
     alert(failMsg);
