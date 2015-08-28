@@ -820,3 +820,7 @@ div.presentationList > div.navigation-clear {
 #sitecontainer .cel_nav_restricted_rights {
   background: #ff9999;
 }
+#sitecontainer li.cel_nav_restricted_rights > div {
+  opacity: 0.85;
+  filter: alpha(opacity = 85);
+}
