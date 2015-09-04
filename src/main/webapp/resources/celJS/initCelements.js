@@ -274,6 +274,55 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
     };
   }
 
+  Object.prototype._celEventHash = null;
+  Object.prototype._getCelEventHash = function(eventKey) {
+    var _me = this;
+    if (!_me._celEventHash) {
+      _me._celEventHash = new Hash();
+    }
+    if (eventKey) {
+      if (!_me._celEventHash.get(eventKey)) {
+        _me._celEventHash.set(eventKey, new Array());
+      }
+      return _me._celEventHash.get(eventKey);
+    }
+    return _me._celEventHash;
+  };
+
+  Object.prototype.celObserve = function(eventKey, callbackFN) {
+    console.log('cel celObserve: ', celEventHash, eventKey, callbackFN);
+    var _me = this;
+    if (!eventKey) {
+      throw "undefined eventKey in observe call ";
+    }
+    this._getCelEventHash(eventKey).push(callbackFN);
+  };
+
+  Object.prototype.celStopObserving = function(eventKey, callbackFN) {
+    console.log('cel celStopObserving: ', celEventHash, eventKey, callbackFN);
+    var _me = this;
+    if (!eventKey) {
+      throw "undefined eventKey in celStopObserving call ";
+    }
+    this._getCelEventHash().set(eventKey, this._getCelEventHash(eventKey
+        ).without(callbackFN));
+  };
+
+  Object.prototype.celFire = function(eventKey, memo) {
+    console.log('cel celFire: ', celEventHash, eventKey, memo);
+    var _me = this;
+    if (!eventKey) {
+      throw "undefined eventKey in celObserve call ";
+    }
+    this._getCelEventHash(eventKey).each(function(listenerFN) {
+      try {
+        listenerFN(_me, memo);
+      } catch (exp) {
+        console.error('listener in celFire failed for event ', eventKey, listenerFN, exp);
+      }
+    });
+  };
+
 })(window);
 
 
