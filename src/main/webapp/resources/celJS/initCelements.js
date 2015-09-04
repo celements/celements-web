@@ -44,6 +44,61 @@ if (typeof window.console.debug === 'undefined') {
  **/
 
 /**
+ * A generic javascript Object observer pattern
+ */
+Object.addMethods({
+  _celEventHash : null,
+
+  _getCelEventHash : function(eventKey) {
+    var _me = this;
+    if (!_me._celEventHash) {
+      _me._celEventHash = new Hash();
+    }
+    if (eventKey) {
+      if (!_me._celEventHash.get(eventKey)) {
+        _me._celEventHash.set(eventKey, new Array());
+      }
+      return _me._celEventHash.get(eventKey);
+    }
+    return _me._celEventHash;
+  },
+
+  celObserve : function(eventKey, callbackFN) {
+    console.log('cel celObserve: ', celEventHash, eventKey, callbackFN);
+    var _me = this;
+    if (!eventKey) {
+      throw "undefined eventKey in observe call ";
+    }
+    this._getCelEventHash(eventKey).push(callbackFN);
+  },
+
+  celStopObserving : function(eventKey, callbackFN) {
+    console.log('cel celStopObserving: ', celEventHash, eventKey, callbackFN);
+    var _me = this;
+    if (!eventKey) {
+      throw "undefined eventKey in celStopObserving call ";
+    }
+    this._getCelEventHash().set(eventKey, this._getCelEventHash(eventKey
+        ).without(callbackFN));
+  },
+
+  celFire : function(eventKey, memo) {
+    console.log('cel celFire: ', celEventHash, eventKey, memo);
+    var _me = this;
+    if (!eventKey) {
+      throw "undefined eventKey in celObserve call ";
+    }
+    this._getCelEventHash(eventKey).each(function(listenerFN) {
+      try {
+        listenerFN(_me, memo);
+      } catch (exp) {
+        console.error('listener in celFire failed for event ', eventKey, listenerFN, exp);
+      }
+    });
+  }
+}).bind(Object);
+
+/**
  * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
  **/
 var Try = {
@@ -275,59 +330,6 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
   }
 
 })(window);
-
-Object.extend(Object.prototype, {
-  _celEventHash : null,
-
-  _getCelEventHash : function(eventKey) {
-    var _me = this;
-    if (!_me._celEventHash) {
-      _me._celEventHash = new Hash();
-    }
-    if (eventKey) {
-      if (!_me._celEventHash.get(eventKey)) {
-        _me._celEventHash.set(eventKey, new Array());
-      }
-      return _me._celEventHash.get(eventKey);
-    }
-    return _me._celEventHash;
-  },
-
-  celObserve : function(eventKey, callbackFN) {
-    console.log('cel celObserve: ', celEventHash, eventKey, callbackFN);
-    var _me = this;
-    if (!eventKey) {
-      throw "undefined eventKey in observe call ";
-    }
-    this._getCelEventHash(eventKey).push(callbackFN);
-  },
-
-  celStopObserving : function(eventKey, callbackFN) {
-    console.log('cel celStopObserving: ', celEventHash, eventKey, callbackFN);
-    var _me = this;
-    if (!eventKey) {
-      throw "undefined eventKey in celStopObserving call ";
-    }
-    this._getCelEventHash().set(eventKey, this._getCelEventHash(eventKey
-        ).without(callbackFN));
-  },
-
-  celFire : function(eventKey, memo) {
-    console.log('cel celFire: ', celEventHash, eventKey, memo);
-    var _me = this;
-    if (!eventKey) {
-      throw "undefined eventKey in celObserve call ";
-    }
-    this._getCelEventHash(eventKey).each(function(listenerFN) {
-      try {
-        listenerFN(_me, memo);
-      } catch (exp) {
-        console.error('listener in celFire failed for event ', eventKey, listenerFN, exp);
-      }
-    });
-  }
-});
-
 
 /**
  * getCelHost function
