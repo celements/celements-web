@@ -20,15 +20,16 @@ var resizeFileBase = function(delayed) {
 var resizeFileBase = function(){
   var fileBaseBox = $$('.celements3_filebase')[0];
   var filesBox = $('c2_ml_content');
+  var browserBox = $('c2_ml_browser');
   var scrollBox = filesBox.down('.c3_import_scrollable');
   
   var titleHeight = 0;
   if($$('.c3_import_title') && ($$('.c3_import_title').length > 0)) {
-    $$('.c3_import_title').each(function(titleElem){
-	  titleHeight += titleElem.getHeight();
-	  titleHeight += parseInt(titleElem.getStyle('margin-top'));
-	  titleHeight += parseInt(titleElem.getStyle('margin-bottom'));
-	});   
+      $$('.c3_import_title').each(function(titleElem){
+  	  titleHeight += titleElem.getHeight();
+  	  titleHeight += parseInt(titleElem.getStyle('margin-top'));
+  	  titleHeight += parseInt(titleElem.getStyle('margin-bottom'));
+  	});
   }
   
   var uploadHeight = 0;
@@ -60,8 +61,15 @@ var resizeFileBase = function(){
   var fileBaseBoxSize = winHeight - mainBorders - titleHeight;
   var filesBoxSize = fileBaseBoxSize - uploadHeight;
   var scrollableSize = filesBoxSize - siblingHeight;
-  fileBaseBox.setStyle({ height: Math.max(50, fileBaseBoxSize) + "px" });
-  filesBox.setStyle({ height: Math.max(50, filesBoxSize) + "px" });
+  fileBaseBox.setStyle({
+    'height' : Math.max(50, fileBaseBoxSize) + "px"
+  });
+  filesBox.setStyle({
+    'height' : Math.max(50, filesBoxSize) + "px"
+  });
+  browserBox.setStyle({
+    'height' : Math.max(50, filesBoxSize) + "px"
+  });
   if(scrollBox){
     scrollBox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
     if (Prototype.Browser.IE && (ieCount > 0)) {
