@@ -49,8 +49,9 @@ if (typeof window.console.debug === 'undefined') {
 (function(window, undefined) {
   "use strict";
 
-  if (typeof CELEMENTS=="undefined"){var CELEMENTS={};};
-  CELEMENTS.Observable = Class.create({
+  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
+  if (typeof window.CELEMENTS.mixins=="undefined"){ window.CELEMENTS.mixins={};};
+  window.CELEMENTS.mixins.Observable = {
     _celEventHash : null,
   
     _getCelEventHash : function(eventKey) {
@@ -100,7 +101,7 @@ if (typeof window.console.debug === 'undefined') {
         }
       });
     }
-  });
+  };
 })(window);
 
 /**
