@@ -69,8 +69,8 @@ if (typeof window.console.debug === 'undefined') {
     },
   
     celObserve : function(eventKey, callbackFN) {
-      console.log('cel celObserve: ', celEventHash, eventKey, callbackFN);
       var _me = this;
+      console.log('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
       if (!eventKey) {
         throw "undefined eventKey in observe call ";
       }
@@ -78,8 +78,8 @@ if (typeof window.console.debug === 'undefined') {
     },
   
     celStopObserving : function(eventKey, callbackFN) {
-      console.log('cel celStopObserving: ', celEventHash, eventKey, callbackFN);
       var _me = this;
+      console.log('cel celStopObserving: ', _me._celEventHash, eventKey, callbackFN);
       if (!eventKey) {
         throw "undefined eventKey in celStopObserving call ";
       }
@@ -88,8 +88,8 @@ if (typeof window.console.debug === 'undefined') {
     },
   
     celFire : function(eventKey, memo) {
-      console.log('cel celFire: ', celEventHash, eventKey, memo);
       var _me = this;
+      console.log('cel celFire: ', _me._celEventHash, eventKey, memo);
       if (!eventKey) {
         throw "undefined eventKey in celObserve call ";
       }
