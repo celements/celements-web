@@ -563,6 +563,10 @@ function change() {
                                     $!adminMsg.get('cel_media_library')
                                 </div><!--c2_colheaders-->
                             </div><!--c2_ml_title-->
+                            <form action="" id="search_files" onSubmit="javascript:copy(); return false;" name="search_files" method="post">
+                                <input name="search_input" id="find_field" type="text" size="12" maxlength="100" value="" onKeyUp='javascript:copy();' />
+            ##                  <a href="" onClick="javascript:requestData(active_space, document.search_files.search_input.value); return false;">Find</a>
+                            </form>
                                 #foreach($item in $menu_list)
                                     <!-- menuitemis: $item -->
                                     #set($has_attachments = false)
@@ -604,10 +608,6 @@ function change() {
                                       <a class="c2_ml_label0" name="browser_category" href="?active=$!{space}"  onClick="document.search_files.search_input.value = ''; requestData('$!{space}', ''); setActive(); return false;">$space_name</a>
                                     #end
                                 #end
-                            <form action="" id="search_files" onSubmit="javascript:copy(); return false;" name="search_files" method="post">
-                                <input name="search_input" id="find_field" type="text" size="12" maxlength="100" value="" onKeyUp='javascript:copy();' />
-            ##                  <a href="" onClick="javascript:requestData(active_space, document.search_files.search_input.value); return false;">Find</a>
-                            </form>
                         </div><!--c2_ml_browser-->
                         #end
             
