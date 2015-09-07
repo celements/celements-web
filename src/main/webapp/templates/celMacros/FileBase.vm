@@ -553,6 +553,10 @@ function change() {
                     <div id="c2_ml_container">
                         #if("$!isInline" != '1')
                         <div id="c2_ml_browser">
+                            <form action="" id="search_files" onSubmit="javascript:copy(); return false;" name="search_files" method="post">
+                                <input name="search_input" id="find_field" type="text" size="12" maxlength="100" value="" onKeyUp='javascript:copy();' />
+            ##                  <a href="" onClick="javascript:requestData(active_space, document.search_files.search_input.value); return false;">Find</a>
+                            </form>
                             <div class="c2_ml_title">
                                 #if("$!picker" == 1)
                                   #set($closeStyle = "style='visibility:hidden'")
@@ -604,10 +608,6 @@ function change() {
                                       <a class="c2_ml_label0" name="browser_category" href="?active=$!{space}"  onClick="document.search_files.search_input.value = ''; requestData('$!{space}', ''); setActive(); return false;">$space_name</a>
                                     #end
                                 #end
-                            <form action="" id="search_files" onSubmit="javascript:copy(); return false;" name="search_files" method="post">
-                                <input name="search_input" id="find_field" type="text" size="12" maxlength="100" value="" onKeyUp='javascript:copy();' />
-            ##                  <a href="" onClick="javascript:requestData(active_space, document.search_files.search_input.value); return false;">Find</a>
-                            </form>
                         </div><!--c2_ml_browser-->
                         #end
             
