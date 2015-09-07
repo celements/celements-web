@@ -51,6 +51,28 @@ if (typeof window.console.debug === 'undefined') {
 
   if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
   if (typeof window.CELEMENTS.mixins=="undefined"){ window.CELEMENTS.mixins={};};
+  window.CELEMENTS.mixins.Event = Class.create({
+    memo : undefined,
+    stopped : undefined,
+    eventName : undefined,
+
+    initialize : function(eventName, memo) {
+      var _me = this;
+      _me.memo = memo;
+      _me.eventName = eventName;
+      _me.stopped = false;
+    },
+
+    stop : function() {
+      var _me = this;
+      _me.stopped = true;
+    },
+
+    findElement : function() {
+      return undefined;
+    }
+
+  });
   window.CELEMENTS.mixins.Observable = {
     _celEventHash : null,
   
@@ -93,11 +115,13 @@ if (typeof window.console.debug === 'undefined') {
       if (!eventKey) {
         throw "undefined eventKey in celObserve call ";
       }
+      var event = new CELEMENTS.mixins.Event(eventKey, memo);
       this._getCelEventHash(eventKey).each(function(listenerFN) {
         try {
-          listenerFN(_me, memo);
+          listenerFN(event);
         } catch (exp) {
-          console.error('listener in celFire failed for event ', eventKey, listenerFN, exp);
+          console.error('listener in celFire failed for event ', eventKey, listenerFN,
+              exp);
         }
       });
     }
