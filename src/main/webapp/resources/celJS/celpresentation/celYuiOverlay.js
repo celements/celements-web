@@ -189,8 +189,10 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         if (_me._dialogConfig.additionalCssClass
             && (_me._dialogConfig.additionalCssClass != '')) {
           yuiSamSkinDiv.addClassName(_me._dialogConfig.additionalCssClass);
-          $(_me._dialogConfig.dialogId + '_mask').addClassName(
-              _me._dialogConfig.additionalCssClass);
+          if($(_me._dialogConfig.dialogId + '_mask') != null) {
+            $(_me._dialogConfig.dialogId + '_mask').addClassName(
+                _me._dialogConfig.additionalCssClass);            
+          }
         }
         $(document.body).insert(yuiSamSkinDiv);
         _me._overlayDialog.render(yuiSamSkinDiv);
