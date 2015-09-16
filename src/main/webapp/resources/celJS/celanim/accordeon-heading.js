@@ -42,13 +42,14 @@ var CA = CELEMENTS.anim.AccordeonHeading;
 CELEMENTS.anim.AccordeonHeading.prototype = {
   htmlElem : undefined,
 
-  openOnlyOnePerLevel : false,
+  openOnlyOnePerLevel : undefined,
   
   _init : function(elemId) {
     var _me = this;
     _me.htmlElem = $(elemId);
     _me._hideAllBlocksAfter();
     _me._registerOpeningListeners();
+    _me.openOnlyOnePerLevel = false;
     _me.htmlElem.fire('celanim_accordeon-heading:initFinished', _me.htmlElem);
   },
 
