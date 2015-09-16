@@ -52,6 +52,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   cssBox : undefined,
   cssTitle : undefined,
   cssContent : undefined,
+  openOnlyOnePerLevel : undefined,
 
   _effectRunning : undefined,
   _debug : undefined,
@@ -60,6 +61,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     var _me = this;
     _me._debug = debug || false;
     _me._effectRunning = false;
+    _me.openOnlyOnePerLevel = true;
     _me.htmlElem = $(elemId);
     _me.cssBox = cssBox;
     _me.cssTitle = cssTitle;
@@ -75,6 +77,16 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
       }
     });
     _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
+  },
+  
+  setOpenOnlyOnePerLevel : function(openOnlyOnePerLevel) {
+    var _me = this;
+    _me.openOnlyOnePerLevel = openOnlyOnePerLevel;
+  },
+
+  getOpenOnlyOnePerLevel : function() {
+    var _me = this;
+    return _me.openOnlyOnePerLevel;
   },
 
   accordeonHide : function(stepToHide) {
@@ -179,14 +191,16 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   },
 
   activateStep : function(nextStep) {
-    var _me = this;
+    var _me = this; 
     var activeSteps = _me.htmlElem.select(_me.cssBox);
     var accordeonEffects = [];
-    activeSteps.each(function(step) {
-      if (_me.isValidStep(step) && (step != nextStep) && (_me.isStepVisible(step))) {
-        accordeonEffects.push(_me.accordeonHide(step));
-      }
-    });
+    if(_me.getOpenOnlyOnePerLevel()) {
+      activeSteps.each(function(step) {
+        if (_me.isValidStep(step) && (step != nextStep) && (_me.isStepVisible(step))) {
+          accordeonEffects.push(_me.accordeonHide(step));
+        }
+      });
+    }
     accordeonEffects.push(_me.accordeonShow(nextStep));
     _me._accordeonExecute(accordeonEffects, nextStep);
     _me.htmlElem.fire('celanim_accordeon-block:activateStepAfterFinish', nextStep);
