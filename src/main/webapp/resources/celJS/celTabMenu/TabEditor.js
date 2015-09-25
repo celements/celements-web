@@ -493,11 +493,20 @@ TE.prototype = {
            div.update(transport.responseText);
            console.log('TabEditor.js: after async tab load before LazyLoadJS ',
                tabBodyId);
+           var scriptLoadedHandler = function() {
+             $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
+             console.log('TabEditor: async loading tab firing celements:contentChanged');
+             $(tabBodyId).fire('celements:contentChanged', {
+               'htmlElem' : $(tabBodyId)
+             });
+           };
+           $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
            _me.lazyLoadJS(div);
            _me.lazyLoadCSS(div);
            //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
            //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
            //TODO following fired event. -> Workaround: execute registered method once after registration.
+           //TODO FP; 25.9.2015; maybe use 'tabedit:scriptsLoaded' instead
            console.log('TabEditor.js: after async tab load before tabedit:tabchange' 
                + ' event', tabBodyId);
            $(tabBodyId).fire('tabedit:tabchange', {
@@ -698,7 +707,16 @@ TE.prototype = {
     });
     _me.loadScripts();
   }
-},
+  _me._loadScriptsCheckFinished();
+ },
+
+ _loadScriptsCheckFinished : function() {
+   var _me = this;
+   if (!_me.scriptLoading && _me.scriptQueue.size() <= 0) {
+     console.log('TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded');
+     $('tabMenuPanel').fire('tabedit:scriptsLoaded');
+   }
+ },
 
  scriptIsLoaded : function(scriptURL) {
   var _me = this;
