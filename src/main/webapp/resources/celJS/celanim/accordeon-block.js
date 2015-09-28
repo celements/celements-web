@@ -53,6 +53,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   cssTitle : undefined,
   cssContent : undefined,
   openOnlyOnePerLevel : undefined,
+  _clickHandlerBind : undefined,
 
   _effectRunning : undefined,
   _debug : undefined,
@@ -61,24 +62,33 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     var _me = this;
     _me._debug = debug || false;
     _me._effectRunning = false;
+    _me._clickHandlerBind = _me.clickHandler.bind(_me);
     _me.openOnlyOnePerLevel = true;
     _me.htmlElem = $(elemId);
     _me.cssBox = cssBox;
     _me.cssTitle = cssTitle;
     _me.cssContent = cssContent;
+    _me.reInit();
+    _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
+  },
+
+  reInit : function() {
+    var _me = this;
     var stepsToHide = _me.htmlElem.select(_me.cssBox);
     stepsToHide.each(function(step) {
       if (_me.isValidStep(step)) {
-        step.down(_me.cssContent).hide();
-        step.down(_me.cssTitle).observe('click', _me.clickHandler.bind(_me));
-        step.addClassName('inactive');
+        step.down(_me.cssTitle).stopObserving('click', _me._clickHandlerBind);
+        step.down(_me.cssTitle).observe('click', _me._clickHandlerBind);
+        if (!step.hasClassName('active') && !step.hasClassName('inactive')) {
+          step.addClassName('inactive');
+          step.down(_me.cssContent).hide();
+        }
       } else if (_me._debug) {
         console.log('stepsToHide: skip step ', step, _me.cssContent, _me.cssTitle);
       }
     });
-    _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
   },
-  
+
   setOpenOnlyOnePerLevel : function(openOnlyOnePerLevel) {
     var _me = this;
     _me.openOnlyOnePerLevel = openOnlyOnePerLevel;
