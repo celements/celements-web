@@ -198,14 +198,6 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           $(_me._dialogConfig.containerId).observe('cel_yuiOverlay:contentChanged',
               _me._centerBind);
         }
-        console.log('add mask css ', _me._dialogConfig.additionalCssClass,
-            $(_me._dialogConfig.dialogId + '_mask'));
-        if (_me._dialogConfig.additionalCssClass
-            && (_me._dialogConfig.additionalCssClass != '')
-            && ($(_me._dialogConfig.dialogId + '_mask') != null)) {
-          $(_me._dialogConfig.dialogId + '_mask').addClassName(
-              _me._dialogConfig.additionalCssClass);            
-        }
         $(document.body).fire('cel_yuiOverlay:afterRenderDialog', _me);
         return _me._overlayDialog;
       },
@@ -222,9 +214,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var dialog = _me.getOverlayDialog();
         dialog.render();
         _me.show();
-        if ($(_me._dialogConfig.dialogId + '_mask')) {
-          $(_me._dialogConfig.dialogId + '_mask').addClassName('cel-YuiOverlay');
-        }
+        _me._addCSSclassesToMask();
         var bodyElem = $$('body')[0];
         bodyElem.setStyle({ 'overflow' : 'hidden' });
         bodyElem.fire('cel_yuiOverlay:afterShowDialog_General', _me);
@@ -260,7 +250,19 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         dialog.cfg.setProperty("close", false);
         dialog.render();
         _me.show();
-        $(_me._dialogConfig.dialogId + '_mask').addClassName('cel-YuiOverlay');
+        _me._addCSSclassesToMask();
+      },
+
+      _addCSSclassesToMask : function() {
+        var _me = this;
+        if ($(_me._dialogConfig.dialogId + '_mask')) {
+          $(_me._dialogConfig.dialogId + '_mask').addClassName('cel-YuiOverlay');
+          if (_me._dialogConfig.additionalCssClass
+              && (_me._dialogConfig.additionalCssClass != '')) {
+            $(_me._dialogConfig.dialogId + '_mask').addClassName(
+                _me._dialogConfig.additionalCssClass);            
+          }
+        }
       },
 
       openCelPageInOverlay : function(openConfig) {
