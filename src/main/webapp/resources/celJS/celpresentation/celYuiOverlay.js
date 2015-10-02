@@ -198,6 +198,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           $(_me._dialogConfig.containerId).observe('cel_yuiOverlay:contentChanged',
               _me._centerBind);
         }
+        console.log('add mask css ', _me._dialogConfig.additionalCssClass,
+            $(_me._dialogConfig.dialogId + '_mask'));
         if (_me._dialogConfig.additionalCssClass
             && (_me._dialogConfig.additionalCssClass != '')
             && ($(_me._dialogConfig.dialogId + '_mask') != null)) {
