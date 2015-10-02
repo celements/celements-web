@@ -189,10 +189,6 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         if (_me._dialogConfig.additionalCssClass
             && (_me._dialogConfig.additionalCssClass != '')) {
           yuiSamSkinDiv.addClassName(_me._dialogConfig.additionalCssClass);
-          if($(_me._dialogConfig.dialogId + '_mask') != null) {
-            $(_me._dialogConfig.dialogId + '_mask').addClassName(
-                _me._dialogConfig.additionalCssClass);            
-          }
         }
         $(document.body).insert(yuiSamSkinDiv);
         _me._overlayDialog.render(yuiSamSkinDiv);
@@ -201,6 +197,12 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
               _me._centerBind);
           $(_me._dialogConfig.containerId).observe('cel_yuiOverlay:contentChanged',
               _me._centerBind);
+        }
+        if (_me._dialogConfig.additionalCssClass
+            && (_me._dialogConfig.additionalCssClass != '')
+            && ($(_me._dialogConfig.dialogId + '_mask') != null)) {
+          $(_me._dialogConfig.dialogId + '_mask').addClassName(
+              _me._dialogConfig.additionalCssClass);            
         }
         $(document.body).fire('cel_yuiOverlay:afterRenderDialog', _me);
         return _me._overlayDialog;
