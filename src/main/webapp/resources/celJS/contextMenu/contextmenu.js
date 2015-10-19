@@ -233,22 +233,29 @@ var getCelHost = function() {
   return celHost;
 };
 
+var cmContextMenuClassNames = null;
+
 var initContextMenuAsync = function() {
-  new Ajax.Request(getCelHost(), {
-    method: 'post',
-    parameters: {
-       xpage : 'celements_ajax',
-       ajax_mode : 'ContextMenuAjax',
-       celCMIdClassName : ''
-    },
-    onSuccess: function(transport) {
-      if (transport.responseText.isJSON()) {
-        loadContextMenuForClassNames(transport.responseText.evalJSON());
-      } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-        console.debug('noJSON!!! ', transport.responseText);
+  if (!cmContextMenuClassNames) {
+    new Ajax.Request(getCelHost(), {
+      method: 'post',
+      parameters: {
+         xpage : 'celements_ajax',
+         ajax_mode : 'ContextMenuAjax',
+         celCMIdClassName : ''
+      },
+      onSuccess: function(transport) {
+        if (transport.responseText.isJSON()) {
+          cmContextMenuClassNames = transport.responseText.evalJSON();
+          loadContextMenuForClassNames(cmContextMenuClassNames);
+        } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+          console.debug('noJSON!!! ', transport.responseText);
+        }
       }
-    }
-  });
+    });
+  } else {
+    loadContextMenuForClassNames(cmContextMenuClassNames);
+  }
 };
 
 var getElemIdsForClassName = function(cssClassName) {
