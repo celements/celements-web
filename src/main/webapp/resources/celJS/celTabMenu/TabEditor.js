@@ -599,6 +599,9 @@ TE.prototype = {
   if(scripts.length > 0) {
     console.log('lazyLoadJS scripts ', scripts);
     _me.loadScripts(scripts);
+  } else {
+    console.log('TabEditor: lazyLoadJS NO scripts to add -> firing tabedit:scriptsLoaded');
+    $('tabMenuPanel').fire('tabedit:scriptsLoaded');
   }
   console.log('lazyLoadJS: end');
  },
