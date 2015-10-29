@@ -9,11 +9,10 @@
   #end
   #if ("$!version" != "")
     #set ($version = $xwiki.parseContent($version))
-  #else
-    #set ($version = $!xwiki.version)
   #end
-  <div id="xwikiplatformversion">$version</div>
-  <div id="celementsplatformversion">celements platfom-$!{celementsweb.getCelementsWebCoreVersion()}</div>
+  <div id="wikiversion">$version</div>
+  <div id="xwikiplatformversion">xwiki platform-$services.celementsweb.getVersion("xwiki")</div>
+  <div id="celementsplatformversion">celements platfom-$services.celementsweb.getVersion("celements-web")</div>
 <hr/>
 </div>
 #end
