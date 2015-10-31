@@ -13,7 +13,15 @@
   <div id="wikiversion">$version</div>
   <div id="xwikiplatformversion">xwiki platform-$services.celementsweb.getVersion("xwiki")</div>
   <div id="celementsplatformversion">celements platfom-$services.celementsweb.getVersion("celements-web")</div>
-  #set($appVersion = $!{celementsweb.getCelementsWebCoreVersion()})
+  #set($appName = $services.celementsweb.getCelementsMainAppName())
+  #if("$!appName" != '')
+    #set($appVersion = $!services.celementsweb.getVersion($appName))
+    #if("$!appVersion" != '')
+      #set($appVersion = "$!appName : $appVersion")
+    #end
+  #else
+    #set($appVersion = $!{services.celementsweb.getCelementsWebCoreVersion()})
+  #end
   #if("$!appVersion" != '')
   <div id="appversion">$appVersion</div>
   #end
