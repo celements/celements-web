@@ -268,8 +268,28 @@ var getElemIdsForClassName = function(cssClassName) {
   return elemNames;
 };
 
-var contextMenuItemDataForElemId = new Hash();
+var getCssClassNamesForIdMap = function(reqArray) {
+  var getCssNameArray = function(idClassNameMap, cssName) {
+    var cssNameArray = idClassNameMap.get(cssName);
+    if (!cssNameArray) {
+      cssNameArray = new Array();
+    }
+    return cssNameArray;
+  };
+  var idCssClassNameMap = new Hash();
+  reqArray.each(function(elem) {
+    var id = elem.elemIds;
+    var cmClassName = elem.cmClassName;
+    idCssClassNameMap.put(id, getCssNameArray(id, cmClassName));
+  });
+  return idCssClassNameMap;
+};
 
+var contextMenuItemDataForElemId = new Hash();
+/**
+ * TODO compute map(id, [cssClassNames])
+ */
+var contextMenuIdCssClassNamesMap = null;
 var loadContextMenuForClassNames = function (cssClassNames) {
   var reqArray = new Array();
   cssClassNames.each(function(cssClass) {
@@ -283,6 +303,9 @@ var loadContextMenuForClassNames = function (cssClassNames) {
   });
 
   if (reqArray.size() > 0) {
+    var cssClassMap = getCssClassNamesForIdMap(reqArray);
+    console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap);
+    console.log('cssClassMap new: ', cssClassMap);
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
@@ -309,6 +332,7 @@ var loadContextMenuForClassNames = function (cssClassNames) {
         }
       }
     });
+    contextMenuIdCssClassNamesMap = cssClassMap;
   } else {
     cm_mark_loading_finished();
   }
