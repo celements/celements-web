@@ -269,18 +269,20 @@ var getElemIdsForClassName = function(cssClassName) {
 };
 
 var getCssClassNamesForIdMap = function(reqArray) {
-  var getCssNameArray = function(idClassNameMap, cssName) {
-    var cssNameArray = idClassNameMap.get(cssName);
+  var idCssClassNameMap = new Hash();
+  var getAndAddCssNameArray = function(id, cssName) {
+    var cssNameArray = idCssClassNameMap.get(id);
     if (!cssNameArray) {
       cssNameArray = new Array();
     }
+    if (cssNameArray.indexOf(cssName) < 0) {
+      cssNameArray.push(cssName);
+    }
     return cssNameArray;
   };
-  var idCssClassNameMap = new Hash();
   reqArray.each(function(elem) {
     var id = elem.elemIds;
-    var cmClassName = elem.cmClassName;
-    idCssClassNameMap.put(id, getCssNameArray(id, cmClassName));
+    idCssClassNameMap.put(id, getAndAddCssNameArray(id, elem.cmClassName));
   });
   return idCssClassNameMap;
 };
