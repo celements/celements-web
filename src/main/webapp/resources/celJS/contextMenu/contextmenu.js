@@ -268,8 +268,7 @@ var getElemIdsForClassName = function(cssClassName) {
   return elemNames;
 };
 
-var getCssClassNamesForIdMap = function(reqArray) {
-  var idCssClassNameMap = new Hash();
+var addCssClassNamesToIdMap = function(idCssClassNameMap, idsForCssClass, cssClass) {
   var getAndAddCssNameArray = function(id, cssName) {
     var cssNameArray = idCssClassNameMap.get(id);
     if (!cssNameArray) {
@@ -280,22 +279,19 @@ var getCssClassNamesForIdMap = function(reqArray) {
     }
     return cssNameArray;
   };
-  reqArray.each(function(elem) {
-    var id = elem.elemIds;
-    idCssClassNameMap.set(id, getAndAddCssNameArray(id, elem.cmClassName));
+  idsForCssClass.each(function(id) {
+    idCssClassNameMap.set(id, getAndAddCssNameArray(id, cssClass));
   });
-  return idCssClassNameMap;
 };
 
 var contextMenuItemDataForElemId = new Hash();
-/**
- * TODO compute map(id, [cssClassNames])
- */
 var contextMenuIdCssClassNamesMap = null;
 var loadContextMenuForClassNames = function (cssClassNames) {
+  var cssClassMap = new Hash();
   var reqArray = new Array();
   cssClassNames.each(function(cssClass) {
     var idsForCssClass = getElemIdsForClassName(cssClass);
+    addCssClassNamesToIdMap(cssClassMap, idsForCssClass, cssClass);
     if (idsForCssClass.size() > 0) {
       var reqDict = new Hash();
       reqDict.set('cmClassName', cssClass);
@@ -304,8 +300,10 @@ var loadContextMenuForClassNames = function (cssClassNames) {
     }
   });
 
+  //TODO 1. remove ids from cssClassMap which cssClasses did not change compared to contextMenuIdCssClassNamesMap
+  //TODO 2. convert reduced cssClassMap to reqArray
+  
   if (reqArray.size() > 0) {
-    var cssClassMap = getCssClassNamesForIdMap(reqArray);
     console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap);
     console.log('cssClassMap new: ', cssClassMap);
     new Ajax.Request(getCelHost(), {
@@ -321,7 +319,8 @@ var loadContextMenuForClassNames = function (cssClassNames) {
           transport.responseText.evalJSON().each(function(elemIdMenuItems) {
             var articleCMenu = new Array();
             elemIdMenuItems.cmItems.each(function(menuItemObj) {
-              articleCMenu[articleCMenu.size()] = new ContextMenuItem(menuItemObj.link, menuItemObj.text, menuItemObj.icon, menuItemObj.shortcut);
+              articleCMenu[articleCMenu.size()] = new ContextMenuItem(menuItemObj.link,
+                  menuItemObj.text, menuItemObj.icon, menuItemObj.shortcut);
             });
             contextMenuItemDataForElemId.set(elemIdMenuItems.elemId, articleCMenu);
             $(elemIdMenuItems.elemId).stopObserving('contextmenu', contextClickHandler);
