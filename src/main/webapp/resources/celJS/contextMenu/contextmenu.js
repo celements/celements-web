@@ -284,6 +284,22 @@ var addCssClassNamesToIdMap = function(idCssClassNameMap, idsForCssClass, cssCla
   });
 };
 
+var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
+    oldCssClassMap) {
+  if (oldCssClassMap) {
+    oldCssClassMap.keys().each(function(id) {
+      var classNameArrayNew = newCssClassMap.get(id);
+      var classNameArrayOld = oldCssClassMap.get(id);
+      if (classNameArrayNew && classNameArrayOld
+          && (classNameArrayOld.size() === classNameArrayNew.size())) {
+        var diffArray = oldCssClassMap.get(id).without(classNameArray);
+        console.log('diffArray: ', id, diffArray);
+      }
+    });
+  }
+  return newCssClassMap;
+};
+
 var contextMenuItemDataForElemId = new Hash();
 var contextMenuIdCssClassNamesMap = null;
 var loadContextMenuForClassNames = function (cssClassNames) {
@@ -300,12 +316,14 @@ var loadContextMenuForClassNames = function (cssClassNames) {
     }
   });
 
+  cssClassMap = contextMenuRemoveEqualsFromCssClassNamesMap(cssClassMap,
+      contextMenuIdCssClassNamesMap);
   //TODO 1. remove ids from cssClassMap which cssClasses did not change compared to contextMenuIdCssClassNamesMap
   //TODO 2. convert reduced cssClassMap to reqArray
   
   if (reqArray.size() > 0) {
     console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap);
-    console.log('cssClassMap new: ', cssClassMap);
+    console.log('cssClassMap diff new: ', cssClassMap);
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
