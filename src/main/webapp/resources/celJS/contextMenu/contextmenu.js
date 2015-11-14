@@ -282,7 +282,7 @@ var getCssClassNamesForIdMap = function(reqArray) {
   };
   reqArray.each(function(elem) {
     var id = elem.elemIds;
-    idCssClassNameMap.put(id, getAndAddCssNameArray(id, elem.cmClassName));
+    idCssClassNameMap.set(id, getAndAddCssNameArray(id, elem.cmClassName));
   });
   return idCssClassNameMap;
 };
