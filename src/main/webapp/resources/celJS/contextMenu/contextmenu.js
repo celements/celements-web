@@ -292,7 +292,7 @@ var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
       var classNameArrayOld = oldCssClassMap.get(id);
       if (classNameArrayNew && classNameArrayOld
           && (classNameArrayOld.size() === classNameArrayNew.size())) {
-        var diffArray = oldCssClassMap.get(id).without(classNameArray);
+        var diffArray = oldCssClassMap.get(id).without(classNameArrayNew);
         console.log('diffArray: ', id, diffArray);
       }
     });
