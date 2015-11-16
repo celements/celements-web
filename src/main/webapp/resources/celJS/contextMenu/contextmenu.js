@@ -326,9 +326,9 @@ var loadContextMenuForClassNames = function (cssClassNames) {
   //TODO 1. remove ids from cssClassMap which cssClasses did not change compared to contextMenuIdCssClassNamesMap
   //TODO 2. convert reduced cssClassMap to reqArray
   
-  if (reqArray.size() > 0) {
-    console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap);
-    console.log('cssClassMap diff new: ', cssClassMap);
+  if (cssClassMap.size() > 0) {
+    console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
+    console.log('cssClassMap diff new: ', cssClassMap.size(), cssClassMap.inspect());
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
