@@ -286,23 +286,24 @@ var addCssClassNamesToIdMap = function(idCssClassNameMap, idsForCssClass, cssCla
 
 var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
     oldCssClassMap) {
+  var reducedCssClassMap = new Hash(newCssClassMap);
   if (oldCssClassMap) {
     oldCssClassMap.keys().each(function(id) {
-      var classNameArrayNew = newCssClassMap.get(id);
+      var classNameArrayNew = reducedCssClassMap.get(id);
       var classNameArrayOld = oldCssClassMap.get(id);
       if (classNameArrayNew && classNameArrayOld
           && (classNameArrayOld.size() === classNameArrayNew.size())) {
         var diffArray = classNameArrayOld.without(classNameArrayNew);
         if (diffArray.size() <= 0) {
-          console.log('diffArray: unset ', id, diffArray, classNameArrayOld, classNameArrayNew);
-          newCssClassMap.unset(id);
+//          console.log('diffArray: unset ', id, diffArray, classNameArrayOld, classNameArrayNew);
+          reducedCssClassMap.unset(id);
         } else {
           console.log('diffArray: keep ', id, diffArray, classNameArrayOld, classNameArrayNew);
         }
       }
     });
   }
-  return newCssClassMap;
+  return reducedCssClassMap;
 };
 
 var contextMenuItemDataForElemId = new Hash();
@@ -321,14 +322,14 @@ var loadContextMenuForClassNames = function (cssClassNames) {
     }
   });
 
-  cssClassMap = contextMenuRemoveEqualsFromCssClassNamesMap(cssClassMap,
+  var reducedCssClassMap = contextMenuRemoveEqualsFromCssClassNamesMap(cssClassMap,
       contextMenuIdCssClassNamesMap);
   
-  if (cssClassMap.size() > 0) {
+  if (reducedCssClassMap.size() > 0) {
     if(contextMenuIdCssClassNamesMap) {
   	  console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
   	}
-    console.log('cssClassMap diff new: ', cssClassMap.size(), cssClassMap.inspect());
+    console.log('cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
     //TODO 2. convert reduced cssClassMap to reqArray
     new Ajax.Request(getCelHost(), {
       method: 'post',
