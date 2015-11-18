@@ -360,6 +360,7 @@ var loadContextMenuForClassNames = function (cssClassNames) {
     });
     contextMenuIdCssClassNamesMap = cssClassMap;
   } else {
+    console.log('skip contextmenu reloading.');
     cm_mark_loading_finished();
   }
 };
