@@ -268,19 +268,19 @@ var getElemIdsForClassName = function(cssClassName) {
   return elemNames;
 };
 
-var addCssClassNamesToIdMap = function(idCssClassNameMap, idsForCssClass, cssClass) {
-  var getAndAddCssNameArray = function(id, cssName) {
-    var cssNameArray = idCssClassNameMap.get(id);
-    if (!cssNameArray) {
-      cssNameArray = new Array();
+var contextMenuAddValueForKeysToMap = function(resultMap, keysForValue, valueName) {
+  var getAndAddValueArray = function(id, theValue) {
+    var theValueArray = resultMap.get(id);
+    if (!theValueArray) {
+      theValueArray = new Array();
     }
-    if (cssNameArray.indexOf(cssName) < 0) {
-      cssNameArray.push(cssName);
+    if (theValueArray.indexOf(theValue) < 0) {
+      theValueArray.push(theValue);
     }
-    return cssNameArray;
+    return theValueArray;
   };
-  idsForCssClass.each(function(id) {
-    idCssClassNameMap.set(id, getAndAddCssNameArray(id, cssClass));
+  keysForValue.each(function(id) {
+    resultMap.set(id, getAndAddValueArray(id, valueName));
   });
 };
 
@@ -306,6 +306,14 @@ var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
   return reducedCssClassMap;
 };
 
+var contextMenuConvertIdClassMapToClassIdMap = function(cssClassMap) {
+  var classIdMap = new Hash();
+  cssClassMap.keys().each(function(idKey) {
+    classIdMap
+  });
+  return reqArray;
+};
+
 var contextMenuItemDataForElemId = new Hash();
 var contextMenuIdCssClassNamesMap = null;
 var loadContextMenuForClassNames = function (cssClassNames) {
@@ -313,7 +321,7 @@ var loadContextMenuForClassNames = function (cssClassNames) {
   var reqArray = new Array();
   cssClassNames.each(function(cssClass) {
     var idsForCssClass = getElemIdsForClassName(cssClass);
-    addCssClassNamesToIdMap(cssClassMap, idsForCssClass, cssClass);
+    contextMenuAddValueForKeysToMap(cssClassMap, idsForCssClass, cssClass);
     if (idsForCssClass.size() > 0) {
       var reqDict = new Hash();
       reqDict.set('cmClassName', cssClass);
