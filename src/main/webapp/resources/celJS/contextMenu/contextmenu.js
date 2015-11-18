@@ -309,9 +309,9 @@ var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
 var contextMenuConvertIdClassMapToClassIdMap = function(cssClassMap) {
   var classIdMap = new Hash();
   cssClassMap.keys().each(function(idKey) {
-    classIdMap
+    contextMenuAddValueForKeysToMap(classIdMap, cssClassMap.get(idKey), idKey);
   });
-  return reqArray;
+  return classIdMap;
 };
 
 var contextMenuItemDataForElemId = new Hash();
@@ -338,7 +338,9 @@ var loadContextMenuForClassNames = function (cssClassNames) {
   	  console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
   	}
     console.log('cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
-    //TODO 2. convert reduced cssClassMap to reqArray
+    var reducedClassNameIdMap = contextMenuConvertIdClassMapToClassIdMap(reducedCssClassMap);
+    console.log('reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
+    //TODO 2. convert reduced inverted reducedClassNameIdMap to reqArray
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
