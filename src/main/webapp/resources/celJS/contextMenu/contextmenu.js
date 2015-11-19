@@ -314,6 +314,19 @@ var contextMenuConvertIdClassMapToClassIdMap = function(cssClassMap) {
   return classIdMap;
 };
 
+var contextMenuWriteReqArray = function(cssClassNameIdMap) {
+  cssClassNameIdMap.keys().each(function(cssClass) {
+    var idsForCssClass = cssClassNameIdMap.get(cssClass);
+    if (idsForCssClass.size() > 0) {
+      var reqDict = new Hash();
+      reqDict.set('cmClassName', cssClass);
+      reqDict.set('elemIds', idsForCssClass);
+      reqArray.push(reqDict);
+    }
+  });
+  return reqArray;
+};
+
 var contextMenuItemDataForElemId = new Hash();
 var contextMenuIdCssClassNamesMap = null;
 var loadContextMenuForClassNames = function (cssClassNames) {
@@ -340,7 +353,11 @@ var loadContextMenuForClassNames = function (cssClassNames) {
     console.log('cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
     var reducedClassNameIdMap = contextMenuConvertIdClassMapToClassIdMap(reducedCssClassMap);
     console.log('reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
-    //TODO 2. convert reduced inverted reducedClassNameIdMap to reqArray
+    var reqArray2 = contextMenuWriteReqArray(reducedClassNameIdMap);
+    console.log('reduced reqArray2: ', reqArray2.size(), Object.toJSON(reqArray2));
+    console.log('reduced reqArray: ', reqArray.size(), Object.toJSON(reqArray));
+    console.log('reduced reqArray compare: ', (reqArray.size() === reqArray2.size()),
+        (Object.toJSON(reqArray) === Object.toJSON(reqArray2)));
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
