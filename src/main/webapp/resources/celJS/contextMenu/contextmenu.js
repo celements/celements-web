@@ -297,8 +297,8 @@ var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
         if (diffArray.size() <= 0) {
 //          console.log('diffArray: unset ', id, diffArray, classNameArrayOld, classNameArrayNew);
           reducedCssClassMap.unset(id);
-        } else {
-          console.log('diffArray: keep ', id, diffArray, classNameArrayOld, classNameArrayNew);
+//        } else {
+//          console.log('diffArray: keep ', id, diffArray, classNameArrayOld, classNameArrayNew);
         }
       }
     });
@@ -341,14 +341,14 @@ var loadContextMenuForClassNames = function (cssClassNames) {
       contextMenuIdCssClassNamesMap);
   
   if (reducedCssClassMap.size() > 0) {
-    if(contextMenuIdCssClassNamesMap) {
-  	  console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
-  	}
-    console.log('cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
+//    if(contextMenuIdCssClassNamesMap) {
+//  	  console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
+//  	}
+//    console.log('cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
     var reducedClassNameIdMap = contextMenuConvertIdClassMapToClassIdMap(reducedCssClassMap);
-    console.log('reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
+//    console.log('reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
     var reqArray = contextMenuWriteReqArray(reducedClassNameIdMap);
-    console.log('reduced reqArray: ', reqArray.size(), Object.toJSON(reqArray));
+//    console.log('reduced reqArray: ', reqArray.size(), Object.toJSON(reqArray));
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
@@ -378,7 +378,7 @@ var loadContextMenuForClassNames = function (cssClassNames) {
     });
     contextMenuIdCssClassNamesMap = cssClassMap;
   } else {
-    console.log('skip contextmenu reloading.');
+//    console.log('skip contextmenu reloading.');
     cm_mark_loading_finished();
   }
 };
