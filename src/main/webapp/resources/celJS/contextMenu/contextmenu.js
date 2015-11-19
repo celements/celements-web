@@ -332,16 +332,9 @@ var contextMenuItemDataForElemId = new Hash();
 var contextMenuIdCssClassNamesMap = null;
 var loadContextMenuForClassNames = function (cssClassNames) {
   var cssClassMap = new Hash();
-  var reqArray = new Array();
   cssClassNames.each(function(cssClass) {
     var idsForCssClass = getElemIdsForClassName(cssClass);
     contextMenuAddValueForKeysToMap(cssClassMap, idsForCssClass, cssClass);
-    if (idsForCssClass.size() > 0) {
-      var reqDict = new Hash();
-      reqDict.set('cmClassName', cssClass);
-      reqDict.set('elemIds', idsForCssClass);
-      reqArray.push(reqDict);
-    }
   });
 
   var reducedCssClassMap = contextMenuRemoveEqualsFromCssClassNamesMap(cssClassMap,
@@ -354,11 +347,8 @@ var loadContextMenuForClassNames = function (cssClassNames) {
     console.log('cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
     var reducedClassNameIdMap = contextMenuConvertIdClassMapToClassIdMap(reducedCssClassMap);
     console.log('reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
-    var reqArray2 = contextMenuWriteReqArray(reducedClassNameIdMap);
-    console.log('reduced reqArray2: ', reqArray2.size(), Object.toJSON(reqArray2));
+    var reqArray = contextMenuWriteReqArray(reducedClassNameIdMap);
     console.log('reduced reqArray: ', reqArray.size(), Object.toJSON(reqArray));
-    console.log('reduced reqArray compare: ', (reqArray.size() === reqArray2.size()),
-        (Object.toJSON(reqArray) === Object.toJSON(reqArray2)));
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
