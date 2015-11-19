@@ -315,6 +315,7 @@ var contextMenuConvertIdClassMapToClassIdMap = function(cssClassMap) {
 };
 
 var contextMenuWriteReqArray = function(cssClassNameIdMap) {
+  var reqArray = new Array();
   cssClassNameIdMap.keys().each(function(cssClass) {
     var idsForCssClass = cssClassNameIdMap.get(cssClass);
     if (idsForCssClass.size() > 0) {
