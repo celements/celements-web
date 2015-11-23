@@ -34,6 +34,7 @@ var registerCelAnimMoviePlayerInsideParent = function(parentElem) {
   if (!shouldRegisterBodyEvent.stopped) {
     var parentElemIn = parentElem || $$('body')[0];
     initMoviePlayerCssClassesInsideParent(parentElemIn, ['celanim_mp3_flowplayer',
+                               'celanim_overlay_mp3_flowplayer',
                                'celanim_flowplayer', 'celanim_overlay_flowplayer',
                                'celanim_flowplayer2', 'celanim_overlay_flowplayer2',
                                'celanim_oneflowplayer', 'celanim_overlay_oneflowplayer', 
