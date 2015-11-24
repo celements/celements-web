@@ -46,8 +46,8 @@ a.celanim_youtube {
     width: 790px;
 }
 .celanim_inoverlay .celanim_audio {
-    height: 463px !important;
-    width: 770px !important;
+    height: 40px !important;
+    width: 300px !important;
 }
 a.celanim_sfvideo {
     display: block;
