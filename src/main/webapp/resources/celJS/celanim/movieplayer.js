@@ -440,10 +440,11 @@ var initOverlayLinks = function(flowclassname) {
 var initOverlayLinksInsideParent = function(parentElem, flowclassname) {
   if (parentElem.select(flowclassname).size() > 0) {
     parentElem.select(flowclassname).each(function(flowLink) {
-      if(flowLink.hasClassName('celanim_sfaudio')
-          || flowLink.hasClassName('celanim_audio')) {
-        flowLink.observe('click', celanimOpenInOverlayAudio);
-      } else {
+      if(flowLink.hasClassName('celanim_sfaudio')) {
+        flowLink.observe('click', celanimOpenInOverlaySFAudio);
+      } else if(flowLink.hasClassName('celanim_audio')) {
+          flowLink.observe('click', celanimOpenInOverlayAudio);
+        } else {
         flowLink.observe('click', celanimOpenInOverlay);
       }
     });
@@ -457,8 +458,12 @@ var getCelHost = function() {
   return celHost;
 };
 
-var celanimOpenInOverlayAudio = function(e) {
+var celanimOpenInOverlaySFAudio = function(e) {
   celanimOpenInOverlay(e, 580, 70);
+};
+
+var celanimOpenInOverlayAudio = function(e) {
+  celanimOpenInOverlay(e, 580, 90);
 };
 
 var celanimOpenInOverlay = function(e, fixWidth, fixHeight) {
