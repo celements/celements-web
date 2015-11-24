@@ -41,6 +41,14 @@ a.celanim_youtube {
     height: 463px !important;
     width: 770px !important;
 }
+.celanim_audio .highslide-html-content {
+    height: 511px;
+    width: 790px;
+}
+.celanim_inoverlay .celanim_audio {
+    height: 463px !important;
+    width: 770px !important;
+}
 a.celanim_sfvideo {
     display: block;
     height: 331px;
