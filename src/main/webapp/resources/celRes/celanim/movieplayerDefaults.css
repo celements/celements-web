@@ -49,6 +49,9 @@ a.celanim_youtube {
     height: 40px !important;
     width: 536px !important;
 }
+.celanim_inoverlay .celanim_audio .flowplayer_start_audio_speaker {
+    padding-left: 249px;
+}
 a.celanim_sfvideo {
     display: block;
     height: 331px;
