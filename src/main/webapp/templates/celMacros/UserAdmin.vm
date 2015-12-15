@@ -3,9 +3,7 @@
   #if("$!request.get('update')" != "" && $!xwiki.exists($request.get("update")))
     #set($redirUser = $request.get("update"))
   #end
-  #foreach($d in $celementsweb.updateDocFromMap($redirUser, $request.getParameterMap()))
-    $d.save()
-  #end
+  $celementsweb.updateAndSaveDocFromMap($redirUser, $request.getParameterMap())
   ## compose redirect url
   #set($params = '')
   #if("$!request.skin" == 'cellskin')
