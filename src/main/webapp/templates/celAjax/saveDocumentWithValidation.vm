@@ -21,7 +21,7 @@ $jsonBuilder.openProperty("numSaveDocFailed")
 $jsonBuilder.addInteger($updateResult.get('failed').size())
 $jsonBuilder.openProperty("failedSave")
 $jsonBuilder.openArray()
-#foreach($savedDoc in $updateResult.get('successful'))
+#foreach($savedDoc in $updateResult.get('failed'))
 $jsonBuilder.addString($services.model.serialize($savedDoc))
 #end
 $jsonBuilder.closeArray()
