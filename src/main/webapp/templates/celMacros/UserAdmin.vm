@@ -3,7 +3,7 @@
   #if("$!request.get('update')" != "" && $!xwiki.exists($request.get("update")))
     #set($redirUser = $request.get("update"))
   #end
-  $services.docform.updateAndSaveDocFromMap($redirUser, $request.getParameterMap())
+  $services.docform.updateAndSaveDocFromMap($services.model.resolveDocument($redirUser), $request.getParameterMap())
   ## compose redirect url
   #set($params = '')
   #if("$!request.skin" == 'cellskin')
