@@ -99,6 +99,11 @@
 #end
 #foreach($class in $classes)
 #if($cel_editobj_hasObjAddLink)
+#set($cel_addobj_classname_dict_key = "${cel_editobj_dict_property_prefix}_addobject_$class.name")
+#if($adminMsg.get($cel_addobj_classname_dict_key) != $cel_addobj_classname_dict_key)
+#set($cel_objectedit_addobj = $adminMsg.get($cel_addobj_classname_dict_key))
+#else
+<!-- cel_addobj_classname_dict_key not found generating default for : $cel_addobj_classname_dict_key -->
 #set($classname_dict_key = "${cel_editobj_dict_property_prefix}$class.name")
 #if($adminMsg.get($classname_dict_key) != $classname_dict_key)
 #set($cel_objectedit_addobj_name = $adminMsg.get($classname_dict_key))
@@ -107,6 +112,7 @@
 #set($cel_objectedit_addobj_name = "$class.name")
 #end
 #set($cel_objectedit_addobj = $adminMsg.get("cel_objectedit_addsameobject", [$cel_objectedit_addobj_name]))
+#end
 <div class="xwikibuttonlink cel_button_add"><a href="$cel_editobj_doc.getURL("objectadd", "classname=${class.name}&amp;xredirect=$removeAddXredirect")">$cel_objectedit_addobj</a></div>
 #end
 #set($props = $class.getProperties())
