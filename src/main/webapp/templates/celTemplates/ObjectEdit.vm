@@ -107,7 +107,7 @@
 #set($cel_objectedit_addobj_name = "$class.name")
 #end
 #set($cel_objectedit_addobj = $adminMsg.get("cel_objectedit_addsameobject", [$cel_objectedit_addobj_name]))
-<div class="xwikibuttonlink"><a href="$cel_editobj_doc.getURL("objectadd", "classname=${class.name}&amp;xredirect=$removeAddXredirect")">$cel_objectedit_addobj</a></div>
+<div class="xwikibuttonlink cel_button_add"><a href="$cel_editobj_doc.getURL("objectadd", "classname=${class.name}&amp;xredirect=$removeAddXredirect")">$cel_objectedit_addobj</a></div>
 #end
 #set($props = $class.getProperties())
 #foreach($prop in $props)
@@ -271,7 +271,7 @@ $displayStr
 #else
 #set($cel_objectedit_removeobj = $adminMsg.get("removethisobject"))
 #end
-<div class="xwikibuttonlink"><a href="$cel_editobj_doc.getURL("objectremove", "classname=${class.name}&amp;classid=${obj.number}&amp;xredirect=$removeAddXredirect")" onclick="return confirm('$adminMsg.get("confirmobjectremove")')">$cel_objectedit_removeobj</a></div>
+<div class="xwikibuttonlink cel_button_remove"><a href="$cel_editobj_doc.getURL("objectremove", "classname=${class.name}&amp;classid=${obj.number}&amp;xredirect=$removeAddXredirect")" onclick="return confirm('$adminMsg.get("confirmobjectremove")')">$cel_objectedit_removeobj</a></div>
 #end
 #if(!$hasCustomObject)
 </div></div>
