@@ -8,16 +8,23 @@ $jsonBuilder.openDictionary()
 $jsonBuilder.openProperty('successful')
 $jsonBuilder.addBoolean($validationPassed)
 #if($validationPassed)
-  #set($numSaved = 0)
-  #foreach($d in $celementsweb.updateDocFromMap("$!doc.fullName", $map))
-   ## TODO implement validation for updated document before save
-   #if(!$d.isNew() || ("$!request.createIfNotExists" == 'true'))
-      $d.save("saveDocumentWithValidation")
-      #set($numSaved = $numSaved + 1)
-    #end
-  #end
+#set($updateResult = $services.docform.updateAndSaveDocFromMap($doc.documentReference, $map))
 $jsonBuilder.openProperty("numSavedDocVersions")
-$jsonBuilder.addInteger($numSaved)
+$jsonBuilder.addInteger($updateResult.get('successful').size())
+$jsonBuilder.openProperty("successfullySaved")
+$jsonBuilder.openArray()
+#foreach($savedDocRef in $updateResult.get('successful'))
+$jsonBuilder.addString($services.model.serialize($savedDocRef, 'local'))
+#end
+$jsonBuilder.closeArray()
+$jsonBuilder.openProperty("numSaveDocFailed")
+$jsonBuilder.addInteger($updateResult.get('failed').size())
+$jsonBuilder.openProperty("failedSave")
+$jsonBuilder.openArray()
+#foreach($savedDocRef in $updateResult.get('failed'))
+$jsonBuilder.addString($services.model.serialize($savedDocRef, 'local'))
+#end
+$jsonBuilder.closeArray()
 #else
   $jsonBuilder.openProperty('errorMessages')
   $jsonBuilder.openArray()

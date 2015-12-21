@@ -4,5 +4,6 @@ $jsonBuilder.openDictionary()
 $jsonBuilder.openProperty("$!email")
 $jsonBuilder.addBoolean($services.celmail.isValidEmail("$!email"))
 #end
+$jsonBuilder.addStringProperty('regexp', "$services.celmail.getEmailValidationRegex()") 
 $jsonBuilder.closeDictionary()
 $jsonBuilder.getJSON()
