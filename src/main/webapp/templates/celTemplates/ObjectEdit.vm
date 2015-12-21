@@ -99,11 +99,7 @@
 #end
 #foreach($class in $classes)
 #if($cel_editobj_hasObjAddLink)
-#set($cel_addobj_sep = '')
-#if(!$cel_editobj_dict_property_prefix.endsWith('_'))
-#set($cel_addobj_sep = '_')
-#end
-#set($cel_addobj_classname_dict_key = "${cel_editobj_dict_property_prefix}${cel_addobj_sep}addobject_$class.name")
+#set($cel_addobj_classname_dict_key = "${cel_editobj_dict_property_prefix}addobject_$class.name")
 #if($adminMsg.get($cel_addobj_classname_dict_key) != $cel_addobj_classname_dict_key)
 #set($cel_objectedit_addobj = $adminMsg.get($cel_addobj_classname_dict_key))
 #else
