@@ -7,7 +7,7 @@ var stepNumber = 25;
 var imagePickerMaxDimension = 100;
 
 var loadingImg = new Element('img', {
-    'src' : '/file/resources/celRes/ajax-loader.gif',
+    'src' : getCelementsTabEditor().tabMenuConfig.jsPathFileActionPrefix + 'celRes/ajax-loader.gif',
     'class' : 'attListLoading',
     'alt' : 'loading...'
   });
