@@ -51,6 +51,7 @@ TE.prototype = {
   _isEditorDirtyOnLoad : undefined,
   afterInitListeners : undefined,
   _log : undefined,
+  _loadingImg : undefined,
 
   _init : function() {
     var _me = this;
@@ -69,6 +70,7 @@ TE.prototype = {
     _me._isEditorDirtyOnLoad = false;
     _me.afterInitListeners = new Array();
     _me._log = new CELEMENTS.mobile.Dimensions();
+    _me._loadingImg = new Hash();
   },
 
   isValidFormId : function(formId) {
@@ -125,15 +127,29 @@ TE.prototype = {
     console.log('retrieveInitialValues: end');
   },
 
-  _getNewLoadingIdicator : function() {
+  _getLoadingIdicator : function(isSmall) {
     var _me = this;
-    _me.tabMenuConfig.jsPathFileActionPrefix
+    var loaderType = 'ajax-loader';
+    if (isSmall) {
+      loaderType = 'ajax-loader-small';
+    }
+    if (!_me._loadingImg.get(loaderType)) {
+      if (!_me.tabMenuConfig) {
+        console.error('TabEditor.js: _getLoadingIdicator called before setting tabMenuConfig.');
+        return null;
+      }
+      _me._loadingImg.set(loaderType, new Element('img', {
+        'src' : _me.tabMenuConfig.jsPathFileActionPrefix + 'celRes/' + loaderType + '.gif',
+        'class' : 'editorLoading',
+        'alt' : 'loading...'
+      }));
+    }
+    return _me._loadingImg.get(loaderType).clone();
   },
 
   _insertLoadingIndicator : function() {
-    var loaderimg = new Element('img', {
-      'src': '/file/resources/celRes/ajax-loader.gif'
-    }).setStyle({
+    var _me = this;
+    var loaderimg = _me._getLoadingIdicator().setStyle({
       'display' : 'block',
       'marginLeft' : 'auto',
       'marginRight' : 'auto'
@@ -472,10 +488,7 @@ TE.prototype = {
       }
       var loaderspan = new Element('span', { 'class': 'tabloader' });
       div.update(loaderspan);
-      var loaderimg = new Element('img', {
-        'src': '/file/resources/celRes/ajax-loader.gif'
-      });
-      loaderspan.update(loaderimg);
+      loaderspan.update(_me._getLoadingIdicator());
       $('tabMenuPanel').down('.bd').appendChild(div);
       var lang = '';
       if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
@@ -836,7 +849,7 @@ TE.prototype = {
     }
     var savingDialog = this._getModalDialog();
     savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader); 
-    savingDialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+    savingDialog.setBody(_me._getLoadingIdicator(true)); 
     savingDialog.cfg.queueProperty("buttons", null);
     savingDialog.render();
     savingDialog.show();
@@ -915,7 +928,7 @@ TE.prototype = {
  showProgressDialog : function(headerTxt) {
    var savingDialog = this._getModalDialog();
    savingDialog.setHeader(headerTxt); 
-   savingDialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+   savingDialog.setBody(_me._getLoadingIdicator(true)); 
    savingDialog.cfg.queueProperty("buttons", null);
    savingDialog.render();
    savingDialog.show();
@@ -1094,7 +1107,7 @@ TE.prototype = {
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
                  _dialog.cfg.queueProperty("buttons", null);
-                 _dialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+                 _dialog.setBody(_me._getLoadingIdicator(true)); 
                  _dialog.render();
                }, isDefault:true }
              ]);
