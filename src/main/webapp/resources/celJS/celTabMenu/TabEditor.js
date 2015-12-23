@@ -127,7 +127,7 @@ TE.prototype = {
     console.log('retrieveInitialValues: end');
   },
 
-  _getLoadingIdicator : function(isSmall) {
+  getLoadingIdicator : function(isSmall) {
     var _me = this;
     var loaderType = 'ajax-loader';
     if (isSmall) {
@@ -135,7 +135,7 @@ TE.prototype = {
     }
     if (!_me._loadingImg.get(loaderType)) {
       if (!_me.tabMenuConfig) {
-        console.error('TabEditor.js: _getLoadingIdicator called before setting tabMenuConfig.');
+        console.error('TabEditor.js: getLoadingIdicator called before setting tabMenuConfig.');
         return null;
       }
       _me._loadingImg.set(loaderType, new Element('img', {
@@ -149,7 +149,7 @@ TE.prototype = {
 
   _insertLoadingIndicator : function() {
     var _me = this;
-    var loaderimg = _me._getLoadingIdicator().setStyle({
+    var loaderimg = _me.getLoadingIdicator().setStyle({
       'display' : 'block',
       'marginLeft' : 'auto',
       'marginRight' : 'auto'
@@ -488,7 +488,7 @@ TE.prototype = {
       }
       var loaderspan = new Element('span', { 'class': 'tabloader' });
       div.update(loaderspan);
-      loaderspan.update(_me._getLoadingIdicator());
+      loaderspan.update(_me.getLoadingIdicator());
       $('tabMenuPanel').down('.bd').appendChild(div);
       var lang = '';
       if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
@@ -849,7 +849,7 @@ TE.prototype = {
     }
     var savingDialog = this._getModalDialog();
     savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader); 
-    savingDialog.setBody(_me._getLoadingIdicator(true)); 
+    savingDialog.setBody(_me.getLoadingIdicator(true)); 
     savingDialog.cfg.queueProperty("buttons", null);
     savingDialog.render();
     savingDialog.show();
@@ -928,7 +928,7 @@ TE.prototype = {
  showProgressDialog : function(headerTxt) {
    var savingDialog = this._getModalDialog();
    savingDialog.setHeader(headerTxt); 
-   savingDialog.setBody(_me._getLoadingIdicator(true)); 
+   savingDialog.setBody(_me.getLoadingIdicator(true)); 
    savingDialog.cfg.queueProperty("buttons", null);
    savingDialog.render();
    savingDialog.show();
@@ -1107,7 +1107,7 @@ TE.prototype = {
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
                  _dialog.cfg.queueProperty("buttons", null);
-                 _dialog.setBody(_me._getLoadingIdicator(true)); 
+                 _dialog.setBody(_me.getLoadingIdicator(true)); 
                  _dialog.render();
                }, isDefault:true }
              ]);

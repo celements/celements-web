@@ -6,11 +6,12 @@ var startPos = 0;
 var stepNumber = 25;
 var imagePickerMaxDimension = 100;
 
-var loadingImg = new Element('img', {
-    'src' : getCelementsTabEditor().tabMenuConfig.jsPathFileActionPrefix + 'celRes/ajax-loader.gif',
-    'class' : 'attListLoading',
-    'alt' : 'loading...'
-  });
+
+var getLoadingImg = function() {
+  var loadingImg = getCelementsTabEditor().getLoadingIdicator();
+  loadingImg.addClassName('attListLoading');
+  return loadingImg;
+};
 
 Event.observe(window, 'load', function(){
   baseurl = tinyMCEPopup.getParam("wiki_attach_path");
@@ -54,7 +55,9 @@ var getUploadToken = function() {
 var pickerUploadFinshed = function(event) {
   var uploadResult = event.memo.uploadResult;
   if (uploadResult && uploadResult.success && (uploadResult.success == 1)) {
-    $('attachments').insert({ top : loadingImg });
+    $('attachments').insert({
+      'top' : getLoadingImg()
+    });
     new Ajax.Request(baseurl, {
         method: 'post',
         parameters: {
@@ -81,7 +84,7 @@ var pickerUploadFinshed = function(event) {
 };
 
 var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
-  $('attachments').insert(loadingImg);
+  $('attachments').insert(getLoadingImg());
   var tag = '';
   if($('tagPicker_list')) {
     tag = $('tagPicker_list').value;
@@ -145,7 +148,7 @@ var loadTagList = function() {
 
 var tagSelectedLoadAttachmentList = function() {
   startPos = 0;
-  $('attachments').update(loadingImg);
+  $('attachments').update(getLoadingImg());
   loadAttachmentList(baseurl);
 };
 
@@ -238,7 +241,7 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck,
   } else {
     var attachEl = $('attachments');
     try {
-      loadingImg.remove();
+      attachEl.select('.attListLoading').each(Element.remove);
     } catch(err) {
       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
         console.log('error removing loader.', err);
