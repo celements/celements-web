@@ -22,51 +22,57 @@
 *
 *
 **/
-if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
-if(typeof CELEMENTS.widget=="undefined"){CELEMENTS.widget={};};
-
-
 (function(window, undefined) {
   "use strict";
 
-CELEMENTS.widget.TabEditor = function() {
-};
+  if(typeof window.CELEMENTS=="undefined"){window.CELEMENTS={};};
+  if(typeof window.CELEMENTS.widget=="undefined"){window.CELEMENTS.widget={};};
 
-var TE = CELEMENTS.widget.TabEditor;
+  window.CELEMENTS.widget.TabEditor = function() {
+    // constructor
+    this._init();
+  };
+
+var TE = window.CELEMENTS.widget.TabEditor;
 
 TE.prototype = {
-  tmd : null,
+  tmd : undefined,
+  tabMenuConfig : undefined,
+  scriptLoading : undefined,
+  CSSLoading : undefined,
+  scriptQueue : undefined,
+  CSSQueue : undefined,
+  tabButtons : undefined,
+  actionButtons : undefined,
+  dirtyFlag : undefined,
+  editorFormsInitialValues : undefined,
+  modalDialog : undefined,
+  initDone : undefined,
+  _isEditorDirtyOnLoad : undefined,
+  afterInitListeners : undefined,
+  _log : undefined,
 
-  tabMenuConfig : null,
-
-  scriptLoading : false,
-  
-  CSSLoading : false,
-
-  scriptQueue : new Array(),
-  
-  CSSQueue : new Array(),
-
-  tabButtons : new Hash(),
-  
-  actionButtons : new Hash(),
-
-  dirtyFlag : new Hash(),
-
-  editorFormsInitialValues : new Hash(),
-
-  modalDialog : null,
-
-  initDone : false,
-
-  _isEditorDirtyOnLoad : false,
-
-  afterInitListeners : new Array(),
-
-  _log : new CELEMENTS.mobile.Dimensions(),
+  _init : function() {
+    var _me = this;
+    _me.tmd = null;
+    _me.tabMenuConfig = null;
+    _me.scriptLoading = false;
+    _me.CSSLoading = false;
+    _me.scriptQueue = new Array();
+    _me.CSSQueue = new Array();
+    _me.tabButtons = new Hash();
+    _me.actionButtons = new Hash();
+    _me.dirtyFlag = new Hash();
+    _me.editorFormsInitialValues = new Hash();
+    _me.modalDialog = null;
+    _me.initDone = false;
+    _me._isEditorDirtyOnLoad = false;
+    _me.afterInitListeners = new Array();
+    _me._log = new CELEMENTS.mobile.Dimensions();
+  },
 
   isValidFormId : function(formId) {
-  return (typeof formId == 'string') && (formId != '') && $(formId)
+    return (typeof formId == 'string') && (formId != '') && $(formId)
       && (typeof $(formId).action != 'undefined') && ($(formId).action != '');
   },
 
@@ -117,6 +123,11 @@ TE.prototype = {
       _me.editorFormsInitialValues.set(formId, elementsValues);
     }
     console.log('retrieveInitialValues: end');
+  },
+
+  _getNewLoadingIdicator : function() {
+    var _me = this;
+    _me.tabMenuConfig.jsPathFileActionPrefix
   },
 
   _insertLoadingIndicator : function() {
