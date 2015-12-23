@@ -20,7 +20,8 @@ var wikiLinkpickerBaseurl = tinyMCE.activeEditor.getParam("wiki_linkpicker_baseu
                         alert('no callback defined');
                     }
                 } else {
-                    alert("There was a problem retrieving the xml data:\n" + ajaxRequest.status + ":\t" + ajaxRequest.statusText + "\n" + ajaxRequest.responseText);
+                    alert("There was a problem retrieving the xml data:\n" + ajaxRequest.status
+                        + ":\t" + ajaxRequest.statusText + "\n" + ajaxRequest.responseText);
                 }
             }
         }
