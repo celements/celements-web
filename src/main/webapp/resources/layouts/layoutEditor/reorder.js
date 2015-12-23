@@ -44,7 +44,8 @@ var saveNavReorderHandler = function(event) {
   button.stopObserving('click', saveNavReorderHandler);
     var savingDialog = getCelModalDialog();
   savingDialog.setHeader("Saving..."); 
-  savingDialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+  savingDialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="'
+      + window.CELEMENTS.getPathPrefix() + '/file/resources/celRes/ajax-loader-small.gif" />'); 
   savingDialog.cfg.queueProperty("buttons", null);
   savingDialog.render();
   savingDialog.show();

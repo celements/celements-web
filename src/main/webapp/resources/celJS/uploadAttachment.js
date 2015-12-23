@@ -11,7 +11,8 @@ var checkUploadFileName = function(fileUploadElm) {
      fileUploadElm.hide();
      fileUploadElm.insert({after : new Element('img', {
        'id' : 'attachmentloadingimg',
-       'src' : '/file/resources/celRes/ajax-loader-small.gif'
+       'src' : window.CELEMENTS.getPathPrefix()
+               + '/file/resources/celRes/ajax-loader-small.gif'
      })});
      if($('noAttachments')) {
        $('noAttachments').hide();
