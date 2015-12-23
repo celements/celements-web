@@ -275,6 +275,7 @@
   #set($allLinkPickerSpaces = "$!linkPickerSpace,$!services.rteconfig.getRTEConfigField('link_picker_spaces')")
   #set($allLinkPickerSpaces = $allLinkPickerSpaces.replaceAll(',,|^,|,$', ''))
   "wiki_linkpicker_space" : "$allLinkPickerSpaces",
+  "wiki_linkpicker_baseurl" : "$doc.getURL('view')",
   "wiki_filepicker_upload_space" : "$fileUploadSpace",
   "wiki_filepicker_space" : "$filePickerSpace",
   "wiki_filepicker_doc" : "$filePickerDoc",

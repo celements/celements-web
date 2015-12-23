@@ -595,7 +595,7 @@ body > .cel_reorderNodes_proxy {
 	font-style: normal;
 	color: black;
 	
-	list-style-image: url("/file/resources/celRes/document.gif");
+	list-style-image: url("document.gif");
 	list-style-position: inside;
 	border-left: 1px dotted gray;
 }

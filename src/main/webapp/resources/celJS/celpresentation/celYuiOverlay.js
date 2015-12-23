@@ -181,7 +181,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
             + '><img style="display:block; margin-left: auto; margin-right:auto;'
             + ' position: relative; top: 48%; height:32px; width:32px;"'
             + ' height="32" width="32px"'
-            + ' src="/file/resources/celRes/ajax-loader.gif" /></div>'); 
+            + ' src="' + window.CELEMENTS.getPathPrefix()
+            + '/file/resources/celRes/ajax-loader.gif" /></div>'); 
         //add skin-div to get default yui-skin-sam layouting for the dialog
         var yuiSamSkinDiv = new Element('div'
           ).addClassName('yui-skin-sam'
@@ -245,7 +246,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var dialog = _me.getOverlayDialog();
         dialog.setHeader(headerText); 
         dialog.setBody('<img style="margin-left: auto; margin-right:auto;"'
-           + ' src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+           + ' src="' + window.CELEMENTS.getPathPrefix()
+           + '/file/resources/celRes/ajax-loader-small.gif" />'); 
         dialog.cfg.queueProperty("buttons", null);
         dialog.cfg.setProperty("close", false);
         dialog.render();
