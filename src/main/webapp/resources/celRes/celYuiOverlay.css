@@ -33,13 +33,13 @@ body div.mask.cel-YuiOverlay {
   right: -15px;
   width: 30px;
   height: 30px;
-  background-image:url('/file/resources/celRes/close.png');
+  background-image:url('close.png');
   background-repeat: no-repeat;
   background-position: top right;
   cursor: pointer;
 }
 .cel-YuiOverlay .container-close:hover {
-  background-image:url('/file/resources/celRes/close-hover.png');
+  background-image:url('close-hover.png');
 }
 .cel-YuiOverlay .container-close:focus {
   border: 0px solid black;
