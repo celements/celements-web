@@ -373,7 +373,6 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
         while (len--) {
           src = scripts[len].src;
           var srcMatches = src.match(re);
-          console.log('Match: ', srcMatches);
           if (src && srcMatches) {
             srcOriginHost = srcMatches[1];
             var prefixPath = srcMatches[2];
@@ -382,10 +381,10 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
             if(prefixStr != '') {
               srcOriginHost += '/' + prefixStr;         
             }
-            console.log('srcOriginHost: ', srcOriginHost, ' Prefix: ', prefixPathSplit, ' prefixStr: ', prefixStr);
             break;
           }
         }
+        console.log('getPathPrefix computed prefixPath: ', srcOriginHost);
         window.CELEMENTS.srcOriginHost = srcOriginHost;
       }
       return window.CELEMENTS.srcOriginHost;
