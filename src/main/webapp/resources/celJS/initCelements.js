@@ -367,9 +367,9 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
 if (typeof window.getCelHost === 'undefined') {
   window.getCelHost = function() {
     var celHost = document.location + '?';
-    if (document.location.pathname.startsWith('/skin/resources/')) {
+    if (document.location.pathname.indexOf('/skin/resources/') > -1) {
       celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
-    } else if (document.location.pathname.startsWith('/file/resources/')) {
+    } else if (document.location.pathname.indexOf('/file/resources/') > -1) {
       celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
     } else {
       celHost = celHost.substring(0, celHost.indexOf('?'));
@@ -377,6 +377,40 @@ if (typeof window.getCelHost === 'undefined') {
     return celHost;
   };
 }
+
+/**
+ * getPathPrefix function
+ */
+if(typeof window.CELEMENTS.getPathPrefix === 'undefined') {
+  window.CELEMENTS.getPathPrefix = function() {
+    if (!window.CELEMENTS.srcOriginHost) {
+      var srcOriginHost = null;
+      var scripts = document.getElementsByTagName('script');
+      var len = scripts.length;
+      var re = new RegExp('(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements\.js(\?.*)?$');
+      var src;
+      while (len--) {
+        src = scripts[len].src;
+        var srcMatches = src.match(re);
+        console.log('Match: ', srcMatches);
+        if (src && srcMatches) {
+          srcOriginHost = srcMatches[1];
+          var prefixPath = srcMatches[2];
+          var prefixPathSplit = prefixPath.split('/');
+          var prefixStr = prefixPathSplit.splice(0, prefixPathSplit.length - 2).join('/');
+          if(prefixStr != '') {
+            srcOriginHost += '/' + prefixStr;         
+          }
+          console.log('srcOriginHost: ', srcOriginHost, ' Prefix: ', prefixPathSplit, ' prefixStr: ', prefixStr);
+          break;
+        }
+      }
+      window.CELEMENTS.srcOriginHost = srcOriginHost;
+    }
+    return window.CELEMENTS.srcOriginHost;
+  };
+}
+
 
 var celMessages = {};
 
