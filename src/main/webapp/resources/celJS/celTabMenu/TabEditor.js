@@ -134,12 +134,8 @@ TE.prototype = {
       loaderType = 'ajax-loader-small';
     }
     if (!_me._loadingImg.get(loaderType)) {
-      if (!_me.tabMenuConfig) {
-        console.error('TabEditor.js: getLoadingIdicator called before setting tabMenuConfig.');
-        return null;
-      }
       _me._loadingImg.set(loaderType, new Element('img', {
-        'src' : _me.tabMenuConfig.jsPathFileActionPrefix + 'celRes/' + loaderType + '.gif',
+        'src' : CELEMENTS.getPathPrefix() + '/file/resources/celRes/' + loaderType + '.gif',
         'class' : 'editorLoading',
         'alt' : 'loading...'
       }));
