@@ -18,37 +18,37 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-/**
- * START: patch for missing window.console object or methods
- **/
-if (typeof window.console === 'undefined') {
-  window.console = {};
-}
-if (typeof window.console.error === 'undefined') {
-  window.console.error = Prototype.emptyFunction;
-}
-if (typeof window.console.warn === 'undefined') {
-  window.console.warn = window.console.error;
-}
-if (typeof window.console.info === 'undefined') {
-  window.console.info = window.console.warn;
-}
-if (typeof window.console.log === 'undefined') {
-  window.console.log = window.console.info;
-}
-if (typeof window.console.debug === 'undefined') {
-  window.console.debug = window.console.log;
-}
-/**
- * END: patch for missing window.console object or methods
- **/
-
-/**
- * A generic javascript Object observer pattern
- */
 (function(window, undefined) {
   "use strict";
 
+  /**
+   * START: patch for missing window.console object or methods
+   **/
+  if (typeof window.console === 'undefined') {
+    window.console = {};
+  }
+  if (typeof window.console.error === 'undefined') {
+    window.console.error = Prototype.emptyFunction;
+  }
+  if (typeof window.console.warn === 'undefined') {
+    window.console.warn = window.console.error;
+  }
+  if (typeof window.console.info === 'undefined') {
+    window.console.info = window.console.warn;
+  }
+  if (typeof window.console.log === 'undefined') {
+    window.console.log = window.console.info;
+  }
+  if (typeof window.console.debug === 'undefined') {
+    window.console.debug = window.console.log;
+  }
+  /**
+   * END: patch for missing window.console object or methods
+   **/
+
+  /**
+   * A generic javascript Object observer pattern
+   */
   if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
   if (typeof window.CELEMENTS.mixins=="undefined"){ window.CELEMENTS.mixins={};};
   window.CELEMENTS.mixins.Event = Class.create({
