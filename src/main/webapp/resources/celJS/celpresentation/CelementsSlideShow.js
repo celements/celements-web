@@ -696,13 +696,17 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
         imgElem.stopObserving('load', _me._imgLoadedResizeAndCenterSlideBind);
         imgElem.stopObserving('error', _me._imgLoadedResizeAndCenterSlideBind);
         imgElem.stopObserving('abort', _me._imgLoadedResizeAndCenterSlideBind);
+        if (_me._debug) {
+          console.log('_imgLoadedResizeAndCenterSlide: preloading finished for ',
+              imgElem.inspect());
+        }
         _me._preloadingImageQueue = _me._preloadingImageQueue.without(imgElem);
         if (_me._preloadingImageQueue.length == 0) {
           if (_me._debug) {
             console.log('_imgLoadedResizeAndCenterSlide before _resizeAndCenterSlidefor ',
                 slideWrapper);
             slideWrapper.select('img').each(function(imgElem) {
-              console.log('_imgLoadedResizeAndCenterSlide: img loaded ', imgElem,
+              console.log('_imgLoadedResizeAndCenterSlide: img loaded ', imgElem.inspect(),
                   imgElem.complete);
             });
           }
@@ -917,6 +921,13 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             imgElem.observe('error', finishFnc);
             imgElem.observe('abort', finishFnc);
             _me._preloadingImageQueue.push(imgElem);
+            if (_me._debug) {
+              console.log('_preloadImagesAndResizeCenterSlide: preloading started for ',
+                  imgElem.inspect());
+            }
+          } else if (_me._debug) {
+            console.log('_preloadImagesAndResizeCenterSlide: NO preloading for ',
+                imgElem.inspect());
           }
         });
         if (_me._preloadingImageQueue.size() == 0) {
@@ -924,7 +935,7 @@ window.CELEMENTS.presentation.SlideShow = function(containerId) {
             console.log('_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide'
                 + 'for ', slideWrapperElem);
             slideWrapperElem.select('img').each(function(imgElem) {
-              console.log('_preloadImagesAndResizeCenterSlide: img loaded ', imgElem,
+              console.log('_preloadImagesAndResizeCenterSlide: img loaded ', imgElem.inspect(),
                   imgElem.complete);
             });
           }
