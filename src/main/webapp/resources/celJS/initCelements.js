@@ -396,31 +396,33 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
     };
   }
 
-  window.CELEMENTS.LoadingIndicator = Class.create({
-    _loadingImg : undefined,
-
-    initialize : function() {
-      var _me = this;
-      _me._loadingImg = new Hash();
-    },
-
-    getLoadingIndicator : function(isSmall) {
-      var _me = this;
-      var loaderType = 'ajax-loader';
-      if (isSmall) {
-        loaderType = 'ajax-loader-small';
+  if(typeof window.CELEMENTS.LoadingIndicator === 'undefined') {
+    window.CELEMENTS.LoadingIndicator = Class.create({
+      _loadingImg : undefined,
+  
+      initialize : function() {
+        var _me = this;
+        _me._loadingImg = new Hash();
+      },
+  
+      getLoadingIndicator : function(isSmall) {
+        var _me = this;
+        var loaderType = 'ajax-loader';
+        if (isSmall) {
+          loaderType = 'ajax-loader-small';
+        }
+        if (!_me._loadingImg.get(loaderType)) {
+          _me._loadingImg.set(loaderType, new Element('img', {
+            'src' : CELEMENTS.getPathPrefix() + '/file/resources/celRes/' + loaderType + '.gif',
+            'class' : 'editorLoading',
+            'alt' : 'loading...'
+          }));
+        }
+        return _me._loadingImg.get(loaderType).clone();
       }
-      if (!_me._loadingImg.get(loaderType)) {
-        _me._loadingImg.set(loaderType, new Element('img', {
-          'src' : CELEMENTS.getPathPrefix() + '/file/resources/celRes/' + loaderType + '.gif',
-          'class' : 'editorLoading',
-          'alt' : 'loading...'
-        }));
-      }
-      return _me._loadingImg.get(loaderType).clone();
-    }
-
-  });
+  
+    });
+  }
 
 })(window);
 
