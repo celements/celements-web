@@ -5,10 +5,10 @@ var attList = [];
 var startPos = 0;
 var stepNumber = 25;
 var imagePickerMaxDimension = 100;
-
+var loadingIndicator = new CELEMENTS.LoadingIndicator();
 
 var getLoadingImg = function() {
-  var loadingImg = getCelementsTabEditor().getLoadingIdicator();
+  var loadingImg = loadingIndicator.getLoadingIndicator();
   loadingImg.addClassName('attListLoading');
   return loadingImg;
 };

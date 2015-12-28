@@ -51,7 +51,6 @@ TE.prototype = {
   _isEditorDirtyOnLoad : undefined,
   afterInitListeners : undefined,
   _log : undefined,
-  _loadingImg : undefined,
 
   _init : function() {
     var _me = this;
@@ -70,7 +69,7 @@ TE.prototype = {
     _me._isEditorDirtyOnLoad = false;
     _me.afterInitListeners = new Array();
     _me._log = new CELEMENTS.mobile.Dimensions();
-    _me._loadingImg = new Hash();
+    _me._loading = new CELEMENTS.LoadingIndicator();
   },
 
   isValidFormId : function(formId) {
@@ -127,25 +126,9 @@ TE.prototype = {
     console.log('retrieveInitialValues: end');
   },
 
-  getLoadingIdicator : function(isSmall) {
-    var _me = this;
-    var loaderType = 'ajax-loader';
-    if (isSmall) {
-      loaderType = 'ajax-loader-small';
-    }
-    if (!_me._loadingImg.get(loaderType)) {
-      _me._loadingImg.set(loaderType, new Element('img', {
-        'src' : CELEMENTS.getPathPrefix() + '/file/resources/celRes/' + loaderType + '.gif',
-        'class' : 'editorLoading',
-        'alt' : 'loading...'
-      }));
-    }
-    return _me._loadingImg.get(loaderType).clone();
-  },
-
   _insertLoadingIndicator : function() {
     var _me = this;
-    var loaderimg = _me.getLoadingIdicator().setStyle({
+    var loaderimg = _me._loading.getLoadingIndicator().setStyle({
       'display' : 'block',
       'marginLeft' : 'auto',
       'marginRight' : 'auto'
@@ -484,7 +467,7 @@ TE.prototype = {
       }
       var loaderspan = new Element('span', { 'class': 'tabloader' });
       div.update(loaderspan);
-      loaderspan.update(_me.getLoadingIdicator());
+      loaderspan.update(_me._loading.getLoadingIndicator());
       $('tabMenuPanel').down('.bd').appendChild(div);
       var lang = '';
       if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
@@ -845,7 +828,7 @@ TE.prototype = {
     }
     var savingDialog = this._getModalDialog();
     savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader); 
-    savingDialog.setBody(_me.getLoadingIdicator(true)); 
+    savingDialog.setBody(_me._loading.getLoadingIndicator(true)); 
     savingDialog.cfg.queueProperty("buttons", null);
     savingDialog.render();
     savingDialog.show();
@@ -924,7 +907,7 @@ TE.prototype = {
  showProgressDialog : function(headerTxt) {
    var savingDialog = this._getModalDialog();
    savingDialog.setHeader(headerTxt); 
-   savingDialog.setBody(_me.getLoadingIdicator(true)); 
+   savingDialog.setBody(_me._loading.getLoadingIndicator(true)); 
    savingDialog.cfg.queueProperty("buttons", null);
    savingDialog.render();
    savingDialog.show();
@@ -1103,7 +1086,7 @@ TE.prototype = {
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
                  _dialog.cfg.queueProperty("buttons", null);
-                 _dialog.setBody(_me.getLoadingIdicator(true)); 
+                 _dialog.setBody(_me._loading.getLoadingIndicator(true)); 
                  _dialog.render();
                }, isDefault:true }
              ]);
