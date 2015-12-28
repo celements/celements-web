@@ -468,12 +468,12 @@ var celanimOpenInOverlayAudio = function(e) {
 
 var celanimOpenInOverlay = function(e, fixWidth, fixHeight) {
   var elem = e.findElement('a');
-  var flvLink = elem.href.replace(/^..\/..\//g, '/');
+  var flvLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getPathPrefix() + '/');
   var cssClassNames = $w($(elem).className).without('celanim_overlay');
   var overlaySrc = getCelHost() + '?xpage=celements_ajax&ajax_mode=FlowplayerInOverlay';
   overlaySrc += '&cssclassname=' + cssClassNames.join(',');
   overlaySrc += '&flvfilename=' + encodeURIComponent(flvLink);
-  hs.graphicsDir = 'highslide/graphics/';
+  hs.graphicsDir = window.CELEMENTS.getPathPrefix() + '/file/celJS/highslide/graphics/';
   hs.outlineType = '';
   hs.wrapperClassName = 'no-footer no-move draggable-header celanim_overlay_wrapper '
     + cssClassNames.join(' ');
