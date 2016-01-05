@@ -1,3 +1,4 @@
+$celementsweb.addExtJSfileOnce(':js/xwiki/xwiki.js')
 <h1>$adminMsg.get("xe.scheduler")</h1>
 ## First, set a shortcut to our Scheduler plugin
 ##
@@ -184,7 +185,11 @@ $adminMsg.get('xe.scheduler.welcome')
 <input type="hidden" name="name" value=""/>
 <label class="hidden" for="title">Job page name</label>
 <input id="title" name="title" size="30" type="text" value="Job page name"></input>
-<span class="buttonwrapper"><input type="button" class="button" value="$adminMsg.get('xe.scheduler.jobs.add')" onclick='if (updateName(this.form.title,this.form.name)) { action="../../inline/" + this.form.webname.value + "/" + this.form.name.value; this.form.submit(); }' /></span>
+<span class="buttonwrapper">
+  <input type="button" class="button" value="$adminMsg.get('xe.scheduler.jobs.add')" ##
+    onclick='if (updateName(this.form.title,this.form.name)) {##
+      action="../../inline/" + this.form.webname.value + "/" ##
+      + this.form.name.value; this.form.submit(); }' /></span>
 </div>
 </form>
 #else
