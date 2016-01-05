@@ -14,14 +14,22 @@ $!xwiki.getSpacePreference("meta")
 #if($services.celementsweb.hasGoogleAnalytics())
 <meta name="cel-GAA-Num" content="$services.celementsweb.getGoogleAnalytics()"/>
 #end
+#set($layoutName = $services.layout.getPageLayoutForDoc($doc.documentReference))
+#set($layoutPrefDoc = '')
+#if("$!layoutName" != '')
+#set($layoutPrefRef = $services.model.createDocumentReference('', $layoutName, 'WebPreferences'))
+#set($layoutPrefDoc = $services.modelAccess.getDocument($layoutPrefRef))
+#end
 #set($webprefDoc = $xwiki.getDocument("${doc.space}.WebPreferences"))
 #set($wikiprefDoc = $xwiki.getDocument("XWiki.XWikiPreferences"))
-#if("$!webprefDoc.getAttachment('favicon.ico')" != '')
-<link rel="shortcut icon" href="$webprefDoc.getAttachmentURL('favicon.ico','skin')" type="image/x-icon"/>
+#if(("$!layoutPrefDoc" != '') && ("$!layoutPrefDoc.getAttachment('favicon.ico')" != ''))
+<link rel="shortcut icon" href="$layoutPrefDoc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
+#elseif("$!webprefDoc.getAttachment('favicon.ico')" != '')
+<link rel="shortcut icon" href="$webprefDoc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
 #elseif("$!wikiprefDoc.getAttachment('favicon.ico')" != '')
-<link rel="shortcut icon" href="$wikiprefDoc.getAttachmentURL('favicon.ico','skin')" type="image/x-icon"/>
+<link rel="shortcut icon" href="$wikiprefDoc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
 #elseif("$!skin_doc.getAttachment('favicon.ico')" != '')
-<link rel="shortcut icon" href="$skin_doc.getAttachmentURL('favicon.ico','skin')" type="image/x-icon"/>
+<link rel="shortcut icon" href="$skin_doc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
 #elseif($xwiki.getSkinFile('skinRes/favicon.ico', true).contains('/resources/'))
 <link rel="shortcut icon" href="$xwiki.getSkinFile('skinRes/favicon.ico', true)" type="image/x-icon"/>
 #end
