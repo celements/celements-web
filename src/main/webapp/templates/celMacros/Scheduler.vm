@@ -188,7 +188,7 @@ $adminMsg.get('xe.scheduler.welcome')
 <span class="buttonwrapper">
   <input type="button" class="button" value="$adminMsg.get('xe.scheduler.jobs.add')" ##
     onclick='if (updateName(this.form.title,this.form.name)) {##
-      action="../../inline/" + this.form.webname.value + "/" ##
+      action=CELEMENTS.getPathPrefix() + "/inline/" + this.form.webname.value + "/" ##
       + this.form.name.value; this.form.submit(); }' /></span>
 </div>
 </form>
