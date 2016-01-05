@@ -1,4 +1,4 @@
-<h1>$msg.get("xe.scheduler")</h1>
+<h1>$adminMsg.get("xe.scheduler")</h1>
 ## First, set a shortcut to our Scheduler plugin
 ##
 #set($scheduler=$xwiki.scheduler)
@@ -24,7 +24,7 @@
   #else
    #set($jobName = "$jobObj.get('jobName')")
    <div class="infoMessage">
-     $msg.get('xe.scheduler.jobscheduled', [$jobName, $scheduler.getNextFireTime($jobObj)])
+     $adminMsg.get('xe.scheduler.jobscheduled', [$jobName, $scheduler.getNextFireTime($jobObj)])
    </div>
   #end
  #elseif($request.do=="pause")
@@ -37,7 +37,7 @@
    </div>
   #else
    <div class="infoMessage">
-     $msg.get('xe.scheduler.paused', [$jobObj.get('jobName')])
+     $adminMsg.get('xe.scheduler.paused', [$jobObj.get('jobName')])
    </div>
   #end
  #elseif($request.do=="resume")
@@ -50,7 +50,7 @@
    </div>
   #else
    <div class="infoMessage">
-     $msg.get('xe.scheduler.resumed', [$jobObj.get('jobName'), $scheduler.getNextFireTime($jobObj)])
+     $adminMsg.get('xe.scheduler.resumed', [$jobObj.get('jobName'), $scheduler.getNextFireTime($jobObj)])
    </div>
   #end
  #elseif($request.do=="unschedule")
@@ -63,7 +63,7 @@
    </div>
   #else
    <div class="infoMessage">
-     $msg.get('xe.scheduler.unscheduled', [$jobObj.get('jobName')])
+     $adminMsg.get('xe.scheduler.unscheduled', [$jobObj.get('jobName')])
    </div>
   #end
  #elseif($request.do=="delete")
@@ -95,23 +95,23 @@
    </div>
   #else
    <div class="infoMessage">
-     $msg.get('xe.scheduler.triggered', [$jobObj.get('jobName')])
+     $adminMsg.get('xe.scheduler.triggered', [$jobObj.get('jobName')])
    </div>
   #end
  #end
 #end
-$msg.get('xe.scheduler.welcome')
-<h2>$msg.get('xe.scheduler.jobs.list')</h2>
+$adminMsg.get('xe.scheduler.welcome')
+<h2>$adminMsg.get('xe.scheduler.jobs.list')</h2>
 ##
 ## Retrieve all scheduler jobs living in this space
 ## Display their name, status, possible next fire time, and available actions
 ##
 <table>
   <thead>
-    <th scope="col">$msg.get('xe.scheduler.jobs.name')</th>
-    <th scope="col">$msg.get('xe.scheduler.jobs.status')</th>
-    <th scope="col">$msg.get('xe.scheduler.jobs.next')</th>
-    <th scope="col">$msg.get('xe.scheduler.jobs.actions')</th>
+    <th scope="col">$adminMsg.get('xe.scheduler.jobs.name')</th>
+    <th scope="col">$adminMsg.get('xe.scheduler.jobs.status')</th>
+    <th scope="col">$adminMsg.get('xe.scheduler.jobs.next')</th>
+    <th scope="col">$adminMsg.get('xe.scheduler.jobs.actions')</th>
   </thead>
   <tbody>
 #set($xwql = "from doc.object(XWiki.SchedulerJobClass) as job")
@@ -147,12 +147,12 @@ $msg.get('xe.scheduler.welcome')
       <td><p>$status</p></td>
       <td><p>$firetime</p></td>
       <td><p>
-        <b>$msg.get('xe.scheduler.jobs.infos')</b>:
+        <b>$adminMsg.get('xe.scheduler.jobs.infos')</b>:
         <a href="$xwiki.getURL("${jobHolder.fullName}", 'view')">view</a>
         #if($jobHolder.hasAccessLevel("programming"))
-        <a href="${jobHolder.getExternalURL('inline')}">$msg.get("edit")</a>
+        <a href="${jobHolder.getExternalURL('inline')}">$adminMsg.get("edit")</a>
         #end
-        <b>$msg.get('job')</b>:
+        <b>$adminMsg.get('job')</b>:
         #foreach($action in $actions.keySet())
          <a href="${actions.get($action)}">$action</a>
         #end
@@ -168,12 +168,12 @@ $msg.get('xe.scheduler.welcome')
 ## However, this page should stay accessibles to admins, that can manipulate existing jobs :
 ## scheduler, pause, etc.
 ##
-<h2>$msg.get('xe.scheduler.jobs.create')</h2>
+<h2>$adminMsg.get('xe.scheduler.jobs.create')</h2>
 ##
 ## Form to create a new Job
 ##
 <div class="infoMessage">
-  $msg.get('xe.scheduler.jobs.explaincreate')
+  $adminMsg.get('xe.scheduler.jobs.explaincreate')
 </div>
 <form action="" id="newdoc">
 <div>
@@ -184,11 +184,11 @@ $msg.get('xe.scheduler.welcome')
 <input type="hidden" name="name" value=""/>
 <label class="hidden" for="title">Job page name</label>
 <input id="title" name="title" size="30" type="text" value="Job page name"></input>
-<span class="buttonwrapper"><input type="button" class="button" value="$msg.get('xe.scheduler.jobs.add')" onclick='if (updateName(this.form.title,this.form.name)) { action="../../inline/" + this.form.webname.value + "/" + this.form.name.value; this.form.submit(); }' /></span>
+<span class="buttonwrapper"><input type="button" class="button" value="$adminMsg.get('xe.scheduler.jobs.add')" onclick='if (updateName(this.form.title,this.form.name)) { action="../../inline/" + this.form.webname.value + "/" + this.form.name.value; this.form.submit(); }' /></span>
 </div>
 </form>
 #else
   <div class="warningMessage">
-    $msg.get('xe.scheduler.jobs.warning'))
+    $adminMsg.get('xe.scheduler.jobs.warning'))
   </div>
 #end
