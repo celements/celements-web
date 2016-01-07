@@ -26,16 +26,16 @@
 <link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile(':celRes/mediaLib/celements2medialib.css')" />
 ##TODO replace with default overlay
 #parse('celMacros/DarkBox.vm')
-$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
-$celementsweb.addExtJSfileOnce(':celJS/initCelements.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
-$celementsweb.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
-$celementsweb.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
-$celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
-$celementsweb.addExtJSfileOnce(':celJS/uploadAttachment.js')
-$celementsweb.addExtJSfileOnce(':celJS/filebase/filebase.js')
+$services.javascript.addExtJSfileOnce(':celJS/prototype.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/initCelements.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
+$services.javascript.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
+$services.javascript.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
+$services.javascript.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
+$services.javascript.addExtJSfileOnce(':celJS/uploadAttachment.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js' 'file')
 #if(("$!isInline" != '1') && ("$!request.get('inline')" == ''))
-  $celementsweb.addExtJSfileOnce(':celJS/mediaLib/resize.js')
+  $services.javascript.addExtJSfileOnce(':celJS/mediaLib/resize.js', 'file')
 #end
 ## colmn
 #if(("$!initColumns" == '') || ("$!request.get('columns')" != ''))
