@@ -66,7 +66,7 @@ body {
   line-height:16px;
   color:#fff;
 }
-.c3_filebase_upload {
+.celements3_filebase #fileBasePanel .c3_filebase_upload {
   clear:both;
   display:block;
   font-family: Tahoma, Geneva, Helvetica, Arial, sans-serif;
@@ -78,10 +78,10 @@ body {
   padding-top:3px;
   height:26px;
 }
-.c3_filebase_upload h2 {
+.celements3_filebase #fileBasePanel .c3_filebase_upload h2 {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size:10px;
-  line-height:10px;
+  font-size:12px;
+  line-height:14px;
   font-weight:bold;
   text-transform:uppercase;
   color:#fff;
@@ -231,15 +231,23 @@ body {
 /*Table Basics */
 .celements3_filebase .c2_ml_container table,
 .celements3_filebase #c2_ml_container table {
-    margin:0px;
+  margin:0px;
   padding:0px;
   white-space:nowrap;
   border-collapse:collapse;
   table-layout:auto;
 }
+.celements3_filebase .c2_ml_container table th,
+.celements3_filebase #c2_ml_container table th,
+.celements3_filebase .c2_ml_container table td,
+.celements3_filebase #c2_ml_container table td {
+  font-family: Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-size:13px;
+  line-height:16px;
+}
 .celements3_filebase .c2_ml_container thead,
 .celements3_filebase #c2_ml_container thead {
-    border-bottom:1px solid #c5c5c5;
+  border-bottom:1px solid #c5c5c5;
   height:18px;
   white-space:nowrap;
 }
@@ -515,9 +523,6 @@ div.celements3_filebase #c2_ml_container .yui-dt-col-del_attachment .yui-dt-line
 }
 .c3_import_scrollable tr{
   padding:0px;
-}
-.c3_filebase_upload h2{
-  float:left;
 }
 #cel_filebase_uploadForm{
   position:relative;

@@ -162,11 +162,6 @@ $services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js', 'file')
 #end 
 
 <script type="text/javascript">
-## needed to prevent IE from showing scrollbars and hiding half of the filebase by doing so.
-  if($('cel_overlaybody')) {
-    $('cel_overlaybody').setStyle({ 'overflow' : 'hidden' });
-  }
-  
   ##form <menu entry name , menu entry pretty name>
   var menu = new Array(
     #foreach($item in $menu_list)
@@ -248,7 +243,7 @@ var formatUrl = function(elCell, oRecord, oColumn, sData) {
 };
 
 var deleteAttachment = function(doc, file){
-  url = "/delattachment/" + doc.replace(".", "/") + "/" + file;
+  url = window.CELEMENTS.getPathPrefix() + "/delattachment/" + doc.replace(".", "/") + "/" + file;
   new Ajax.Request(url, {method: 'post', onComplete: function(transport){
     #foreach($item in $filters)
       url = "$doc.getURL('view')" + "?xpage=celements_ajax&ajax_mode=FileBaseTags&save=1&tag=$!{item}&att_doc=" + doc + "&att_name=" + file + "&active=false";
@@ -516,14 +511,6 @@ var showFileContent = function(url, name){
     }
 }*#
 
-var initFileBasePanel = function() {
-    fbp = new YAHOO.widget.Panel("fileBasePanel", {
-        width: "auto",
-        draggable:false,
-        close:false});
-    fbp.render();
-}
-
 var timeout;
 var waiting = false;
 var copy = function(){
@@ -542,6 +529,7 @@ function change() {
     requestData(active_space, '');
   #end
 }
+
 </script>
 
 <div class="celements3_filebase" >
@@ -681,12 +669,4 @@ function change() {
   </div><!--fileBasePanel-->
 </div><!--celements3_filebase-->
 
-<script type="text/javascript">
-##    #if()
-##                          <script type="text/javascript">setActive();</"script>
-##    #end
-    initFileBasePanel();
-    fbp.show();
-    $(document.body).fire('cel_filebase:loaded');
-</script>
 #end
