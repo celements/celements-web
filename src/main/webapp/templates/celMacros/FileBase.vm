@@ -33,7 +33,7 @@ $services.javascript.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
 $services.javascript.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
 $services.javascript.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
 $services.javascript.addExtJSfileOnce(':celJS/uploadAttachment.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js' 'file')
+$services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js', 'file')
 #if(("$!isInline" != '1') && ("$!request.get('inline')" == ''))
   $services.javascript.addExtJSfileOnce(':celJS/mediaLib/resize.js', 'file')
 #end
