@@ -227,7 +227,10 @@ form#newsletter_send span#testResultBoxSpan {
   width: 100%;
 }
 .generalOverlay .layoutsubsection,
-.generalOverlay .layoutsubsection p {
+.generalOverlay .layoutsubsection p,
+.generalOverlay .layoutsubsection td,
+.generalOverlay .layoutsubsection th,
+.generalOverlay .layoutsubsection li {
   font-size: 12px;
   line-height: 16px;
   font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
