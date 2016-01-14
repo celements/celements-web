@@ -308,3 +308,42 @@ body #cel_overlay {
 .celements3_tabMenu #navigation_form #nav_menunameEdit input {
   width: 300px;
 }
+
+.celements3_tabMenu #tabMenuPanel .bd h1 {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
+}
+.celements3_tabMenu #tabMenuPanel .bd h2 {
+  font-size: 22px;
+  line-height: 25px;
+  font-weight: 700;
+}
+.celements3_tabMenu #tabMenuPanel .bd h3 {
+  font-size: 20px;
+  line-height: 22px;
+  font-weight: 700;
+}
+.celements3_tabMenu #tabMenuPanel .bd h4 {
+  font-size: 17px;
+  line-height: 19px;
+  font-weight: 700;
+}
+.celements3_tabMenu #tabMenuPanel .bd h5 {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 700;
+}
+.celements3_tabMenu #tabMenuPanel .bd h6 {
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 700;
+}
+.celements3_tabMenu #tabMenuPanel .bd p,
+.celements3_tabMenu #tabMenuPanel .bd td,
+.celements3_tabMenu #tabMenuPanel .bd th,
+.celements3_tabMenu #tabMenuPanel .bd li {
+  font-size: 12px;
+  line-height: 17px;
+  font-weight: 400;
+}
