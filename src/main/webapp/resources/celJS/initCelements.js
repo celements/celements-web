@@ -436,7 +436,11 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
 
     });
 
-    window.CELEMENTS.getUtils = new window.CELEMENTS.Utils();
+    var globalUtilsInstance = new window.CELEMENTS.Utils();
+
+    window.CELEMENTS.getUtils = function() {
+      return globalUtilsInstance;
+    };
   }
 
   /**
