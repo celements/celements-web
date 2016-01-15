@@ -436,14 +436,19 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
 
     });
 
+    window.CELEMENTS.getUtils = new window.CELEMENTS.Utils();
   }
 
   /**
    * getPathPrefix function
+   * @deprecated Instead use window.CELEMENTS.getUtils().getPathPrefix()
    */
   if (typeof window.CELEMENTS.getPathPrefix === 'undefined') {
-    window.CELEMENTS.getUtils = new window.CELEMENTS.Utils();
-    window.CELEMENTS.getPathPrefix = window.CELEMENTS.getUtils().getPathPrefix();
+    window.CELEMENTS.getPathPrefix = function() {
+      console.warn('deprecated call of window.CELEMENTS.getPathPrefix.'
+          + ' Instead use window.CELEMENTS.getUtils().getPathPrefix()');
+      return window.CELEMENTS.getUtils().getPathPrefix();
+    };
   }
 
 })(window);
