@@ -553,28 +553,22 @@
     });
   }
 
-})(window);
-
-/**
- * getCelHost function
- **/
-if (typeof window.getCelHost === 'undefined') {
-  window.getCelHost = function() {
-    var celHost = document.location + '?';
-    if (document.location.pathname.indexOf('/skin/resources/') > -1) {
-      celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
-    } else if (document.location.pathname.indexOf('/file/resources/') > -1) {
-      celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
-    } else {
-      celHost = celHost.substring(0, celHost.indexOf('?'));
-    }
-    return celHost;
-  };
-}
-
-
-(function(window, undefined) {
-  "use strict";
+  /**
+   * getCelHost function
+   **/
+  if (typeof window.getCelHost === 'undefined') {
+    window.getCelHost = function() {
+      var celHost = document.location + '?';
+      if (document.location.pathname.indexOf('/skin/resources/') > -1) {
+        celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
+      } else if (document.location.pathname.indexOf('/file/resources/') > -1) {
+        celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
+      } else {
+        celHost = celHost.substring(0, celHost.indexOf('?'));
+      }
+      return celHost;
+    };
+  }
 
   window.celMessages = {};
 
