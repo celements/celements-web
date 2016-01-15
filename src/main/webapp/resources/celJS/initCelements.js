@@ -455,6 +455,108 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
     };
   }
 
+  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
+  if (typeof window.CELEMENTS.Ajax.Reconnector === 'undefined') {
+    window.CELEMENTS.Ajax.Reconnector = Class.create({
+      _htmlElem : undefined,
+      _callbackOnSuccess : undefined,
+      _reconnectWait : undefined,
+      _reconnectorHandlerBind : undefined,
+      _cancelAjaxOnTimeoutBind : undefined,
+      _reconnectorExecuter : undefined,
+      _reconnectWaitStart : undefined,
+      _minReconnectWait : undefined,
+      _maxReconnectWait : undefined,
+  
+      initialize : function(htmlElemId, callbackOnSuccess) {
+        var _me = this;
+        _me._htmlElem = $(htmlElemId);
+        _me._callbackOnSuccess = callbackOnSuccess;
+        _me._reconnectorHandlerBind = _me._reconnectorHandler.bind(_me);
+        _me._cancelAjaxOnTimeoutBind = _me._cancelAjaxOnTimeout.bind(_me);
+        _me._minReconnectWait = 10;
+        _me._maxReconnectWait = 30;
+        _me._reset();
+      },
+  
+      _reset : function() {
+        var _me = this;
+        _me._reconnectWaitStart = _me._minReconnectWait;
+      },
+
+      setMinRecconectWait : function(minReconnectWait) {
+        var _me = this;
+        _me._minReconnectWait = minReconnectWait;
+      },
+
+      setMaxRecconectWait : function(maxReconnectWait) {
+        var _me = this;
+        _me._maxReconnectWait = maxReconnectWait;
+      },
+
+      _reconnectorHandler : function() {
+        var _me = this;
+        _me._reconnectWait--;
+        if (_me._reconnectWait == 0) {
+          _me._reconnectorExecuter.stop();
+          var tryEv = _me._htmlElem.fire('celements:AjaxReconnectTrying');
+          if (!tryEv.stopped) {
+            var mesg = "Trying...";
+            if (window.celMessages && window.celMessages.Reconnector) {
+              mesg = window.celMessages.Reconnector.retryNotice;
+            }
+            _me._htmlElem.update(mesg);
+          }
+          _me._connectionTester();
+        } else {
+          var mesg = "Retrying in {} seconds.";
+          if (window.celMessages && window.celMessages.Reconnector) {
+            mesg = window.celMessages.Reconnector.retryDelayNotice;
+          }
+          mesg = mesg.replace('{}', _me._reconnectWait);
+          _me._htmlElem.update(mesg);
+          _me._htmlElem.fire('celements:AjaxReconnectFailed');
+        }
+      },
+  
+      start : function() {
+        var _me = this;
+        _me._reconnectWait = _me._reconnectWaitStart;
+        _me._reconnectorExecuter = new PeriodicalExecuter(_me._reconnectorHandlerBind, 1);
+      },
+  
+      _cancelAjaxOnTimeout : function(ajaxCall) {
+        if (!ajaxCall._complete) {
+          ajaxCall.transport.abort();
+        }
+      },
+  
+      _connectionTester : function() {
+        var _me = this;
+        var connectionTestAjax = new Ajax.Request(getCelHost(), {
+          'parameters' : {
+            'ajax' : 1,
+            'xpage' : 'celements_ajax',
+            'ajax_mode' : 'PredesLoaderStatus'
+          },
+          'onSuccess' : function() {
+            _me._reset();
+            _me._reconnectorExecuter = null;
+            _me._callbackOnSuccess();
+            _me._htmlElem.fire('celements:AjaxReconnectSuccess');
+          },
+          'onFailure' : function() {
+            _me._reconnectWaitStart = Math.min(_me._reconnectWaitStart * 2,
+                  _me._maxReconnectWait);
+            _me.start();
+          }
+        });
+        _me._cancelAjaxOnTimeoutBind.delay(10, connectionTestAjax);
+      }
+  
+    });
+  }
+
 })(window);
 
 /**
@@ -474,10 +576,11 @@ if (typeof window.getCelHost === 'undefined') {
   };
 }
 
-var celMessages = {};
 
 (function(window, undefined) {
   "use strict";
+
+  window.celMessages = {};
 
   try {
     var topFrame = top || window;

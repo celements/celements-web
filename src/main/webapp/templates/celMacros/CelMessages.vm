@@ -3,6 +3,12 @@ $jsonBuilder.openDictionary()
 $jsonBuilder.addStringProperty('language', "$language")
 $jsonBuilder.addStringProperty('admin-language', "$admin_language")
 $jsonBuilder.closeDictionary()
+## Reconnector
+$jsonBuilder.openProperty('Reconnector')
+$jsonBuilder.openDictionary()
+$jsonBuilder.addStringProperty('retryNotice', "$!adminMsg.get('cel_reconnector_retryNotice')")
+$jsonBuilder.addStringProperty('retryDelayNotice', "$!adminMsg.get('cel_reconnector_retryDelayNotice')")
+$jsonBuilder.closeDictionary()
 ## jquery.formater
 $jsonBuilder.openProperty('jqueryFormater')
 $jsonBuilder.openDictionary()
