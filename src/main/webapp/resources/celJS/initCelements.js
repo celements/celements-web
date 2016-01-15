@@ -364,38 +364,6 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
     };
   }
 
-  /**
-   * getPathPrefix function
-   */
-  if(typeof window.CELEMENTS.getPathPrefix === 'undefined') {
-    window.CELEMENTS.getPathPrefix = function() {
-      if (!window.CELEMENTS.srcOriginHost) {
-        var srcOriginHost = null;
-        var scripts = document.getElementsByTagName('script');
-        var len = scripts.length;
-        var re = new RegExp('(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements\\.js(\\?.*)?$');
-        var src;
-        while (len--) {
-          src = scripts[len].src;
-          var srcMatches = src.match(re);
-          if (src && srcMatches) {
-            srcOriginHost = srcMatches[1];
-            var prefixPath = srcMatches[2];
-            var prefixPathSplit = prefixPath.split('/');
-            var prefixStr = prefixPathSplit.splice(0, prefixPathSplit.length - 2).join('/');
-            if(prefixStr != '') {
-              srcOriginHost += '/' + prefixStr;         
-            }
-            break;
-          }
-        }
-        console.log('getPathPrefix computed prefixPath: ', srcOriginHost);
-        window.CELEMENTS.srcOriginHost = srcOriginHost;
-      }
-      return window.CELEMENTS.srcOriginHost;
-    };
-  }
-
   if(typeof window.CELEMENTS.LoadingIndicator === 'undefined') {
     window.CELEMENTS.LoadingIndicator = Class.create({
       _loadingImg : undefined,
@@ -422,6 +390,60 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
       }
   
     });
+  }
+
+  if(typeof window.CELEMENTS.Utils === 'undefined') {
+    window.CELEMENTS.Utils = Class.create({
+      _srcOriginHost : undefined,
+  
+      initialize : function() {
+        var _me = this;
+      },
+  
+      getPathPrefix : function() {
+        var _me = this;
+        if (!_me._srcOriginHost) {
+          var srcOriginHost = null;
+          var scripts = document.getElementsByTagName('script');
+          var len = scripts.length;
+          var re = new RegExp('(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements\\.js(\\?.*)?$');
+          var src;
+          while (len--) {
+            src = scripts[len].src;
+            var srcMatches = src.match(re);
+            if (src && srcMatches) {
+              srcOriginHost = srcMatches[1];
+              var prefixPath = srcMatches[2];
+              var prefixPathSplit = prefixPath.split('/');
+              var prefixStr = prefixPathSplit.splice(0, prefixPathSplit.length - 2).join('/');
+              if(prefixStr != '') {
+                srcOriginHost += '/' + prefixStr;         
+              }
+              break;
+            }
+          }
+          console.log('getPathPrefix computed prefixPath: ', srcOriginHost);
+          _me._srcOriginHost = srcOriginHost;
+        }
+        return _me._srcOriginHost;
+      },
+
+      convertFullNameToViewURL : function(fullName) {
+        var _me = this;
+        return _me.getPathPrefix()
+          + ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/');
+      }
+
+    });
+
+  }
+
+  /**
+   * getPathPrefix function
+   */
+  if (typeof window.CELEMENTS.getPathPrefix === 'undefined') {
+    window.CELEMENTS.getUtils = new window.CELEMENTS.Utils();
+    window.CELEMENTS.getPathPrefix = window.CELEMENTS.getUtils().getPathPrefix();
   }
 
 })(window);
