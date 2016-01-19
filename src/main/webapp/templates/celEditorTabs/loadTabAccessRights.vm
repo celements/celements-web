@@ -1,3 +1,18 @@
+
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/yahoo/yahoo-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/event/event-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/dom/dom-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/cookie/cookie-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/calendar/calendar-min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/jquery-format/jquery.format-1.2.min.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/editorsupport/DatePicker.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/jquery-datetimepicker/jquery.datetimepicker.js" }</span>
+<span class='cel_lazyloadJS' style='display: none;'>{ "action" : "file", "url": "celJS/celTabMenu/publishDatePicker.js" }</span>
+<span class='cel_lazyloadCSS' style='display: none;'>{ "action" : "file", "url": "celJS/yui/calendar/assets/skins/sam/calendar.css" }</span>
+<span class='cel_lazyloadCSS' style='display: none;'>{ "action" : "file", "url": "celJS/jquery-datetimepicker/jquery.datetimepicker.css" }</span>
+
+
+
 #macro(getAccessRights)
   #set($rights = '')
   #if($rightsobj.getProperty('levels').getValue() == 'view')
@@ -26,34 +41,36 @@
 
 <div class="cel_rightsTab">
 
-## #if($services.celementsRight.publicationActivated($doc.documentReference))
-##	
-##    ##cel_tm_rights_publication=Publikationszeitraum
-##    ##cel_tm_rights_publication_always=Immer
-##    ##cel_tm_rights_publication_add=Hinzufügen
-##    ##cel_tm_rights_publication_remove=Entfernen
-##    ##cel_tm_rights_publication_from=Von
-##    ##cel_tm_rights_publication_until=Bis
-##    ###cel_tm_rights_publication_published=Publiziert
-##    ##cel_tm_rights_publication_unpublished=Nicht publiziert
-##	
-##	<h1>$!adminMsg.get('cel_tm_rights_publication')</h1>
-##	<form id="publicationForm" name="publicationForm" action="" method="post">
-##        <input type="hidden" name="update" value="1" />
-##        <input type="hidden" name="tab" value="tbrights" />
-##        <input type="hidden" name="xpage" value="celements_ajax" />
-##        <input type="hidden" name="ajax_mode" value="SavePublication" />
-##	
-##	 #set($publiObj = $doc.getObject('Classes.DocumentPublication'))
-##		
-##	 #if("$!publicObj" != "")
-##		##TODO
-##	 #else
-##		$!adminMsg.get('cel_tm_rights_publication_always')
-##	 #end		     
-##	</form>	
-## #end
-		
+#if($services.celementsright.publicationActivated($doc.documentReference))
+	
+	<h1>$!adminMsg.get('cel_tm_rights_publication')</h1>
+	<form id="publicationForm" name="publicationForm" action="?" method="post">
+        <input type="hidden" name="update" value="1" />
+        <input type="hidden" name="tab" value="tbrights" />
+        <input type="hidden" name="xpage" value="celements_ajax" />
+        <input type="hidden" name="template" value="$!request.template" />
+        <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+        #set($publishObjs = $doc.getObjects('Classes.DocumentPublication'))
+        
+        #if(("$!publishObjs" == "") || ($publishObjs.size() == 0))
+            $!adminMsg.get('cel_tm_rights_publication_always')
+	    #end
+	        
+		<div id="publish_date" class="yui-skin-sam">
+			#set($cel_editobj_objects = $publishObjs)
+			#set($cel_editobj_hasObjAddLink = true)
+			#set($cel_editobj_hasObjRemoveLink = true)
+			#set($cel_editobj_properties = "publishDate,unpublishDate")
+			#set($cel_editobj_classname = 'Classes.DocumentPublication')
+	        #set($cel_editobj_dict_prefix = 'cel_tm_rights_' )
+	        #set($cel_editobj_externalForm = true)  
+	        #set($cel_embedded_editobj = true)
+	        #set($cel_editobj_title = $adminMsg.get('cel_tm_rights_publication'))
+	        #set($cel_editobj_xredirect_params = 'tab=tbrights')
+			#parse("celTemplates/ObjectEdit.vm")
+		</div>   
+	</form>	
+#end	
 <h1>$!adminMsg.get('cel_tm_rights_rights')</h1>
 #if($celementsweb.isCelementsRights($doc.fullName))
 <span class='cel_lazyloadJS' style='display: none;'>celJS/adminUi/accessRights.js</span>
@@ -62,6 +79,7 @@
 <input type="hidden" name="tab" value="tbrights" />
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="SaveAccessRights" />
+<input type="hidden" name="template" value="$!request.template" />
     <table class="cel_rightsTable editblock">
       <thead>
         <tr> 

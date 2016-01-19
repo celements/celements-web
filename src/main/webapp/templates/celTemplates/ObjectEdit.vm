@@ -36,6 +36,8 @@
 #end
 #set($cel_editobj_readonly_properties = ",$!{cel_editobj_readonly_properties.trim()},")
 #set($cel_editobj_readonly_properties = ${cel_editobj_readonly_properties.replaceAll(',,+',',')})
+#set($cel_editobj_linktag_properties = ",$!{cel_editobj_linktag_properties.trim()},")
+#set($cel_editobj_linktag_properties = ${cel_editobj_linktag_properties.replaceAll(',,+',',')})
 #if("$!cel_editobj_externalForm" == '')
 #set($cel_editobj_externalForm = false)
 #end
@@ -50,6 +52,7 @@
 <!-- cel_editobj_nb : $cel_editobj_nb -->
 <!-- cel_editobj_properties : $cel_editobj_properties -->
 <!-- cel_editobj_readonly_properties : $cel_editobj_readonly_properties -->
+<!-- cel_editobj_linktag_properties : $cel_editobj_linktag_properties -->
 #if($hasCustomClass)
 #set($classes = [$xwiki.getDocument($cel_editobj_classname).getxWikiClass()])
 #else
@@ -96,6 +99,11 @@
 #end
 #foreach($class in $classes)
 #if($cel_editobj_hasObjAddLink)
+#set($cel_addobj_classname_dict_key = "${cel_editobj_dict_property_prefix}addobject_$class.name")
+#if($adminMsg.get($cel_addobj_classname_dict_key) != $cel_addobj_classname_dict_key)
+#set($cel_objectedit_addobj = $adminMsg.get($cel_addobj_classname_dict_key))
+#else
+<!-- cel_addobj_classname_dict_key not found generating default for : $cel_addobj_classname_dict_key -->
 #set($classname_dict_key = "${cel_editobj_dict_property_prefix}$class.name")
 #if($adminMsg.get($classname_dict_key) != $classname_dict_key)
 #set($cel_objectedit_addobj_name = $adminMsg.get($classname_dict_key))
@@ -104,7 +112,8 @@
 #set($cel_objectedit_addobj_name = "$class.name")
 #end
 #set($cel_objectedit_addobj = $adminMsg.get("cel_objectedit_addsameobject", [$cel_objectedit_addobj_name]))
-<div class="xwikibuttonlink"><a href="$cel_editobj_doc.getURL("objectadd", "classname=${class.name}&amp;xredirect=$removeAddXredirect")">$cel_objectedit_addobj</a></div>
+#end
+<div class="xwikibuttonlink cel_button_add"><a href="$cel_editobj_doc.getURL("objectadd", "classname=${class.name}&amp;xredirect=$removeAddXredirect")">$cel_objectedit_addobj</a></div>
 #end
 #set($props = $class.getProperties())
 #foreach($prop in $props)
@@ -205,7 +214,24 @@ $celementsweb.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
        ##FIX xwiki 2.7.2 NPE-BUG in displayView if date is null 
        $obj.set($prop.name, '')
      #end
-    $cel_editobj_doc.displayView($prop, "${class.name}_${obj.number}_", $obj)
+     #set($displayStr = $cel_editobj_doc.displayView($prop, "${class.name}_${obj.number}_", $obj).trim())
+     #if($cel_editobj_linktag_properties.contains(",${prop.name},"))
+       #set($regexURL = '(((http|https|ftp|ftps|sftp)://)|(www\.))+(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&amp;%_\./-~-]*)?')
+       #set($regexMail = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$')
+       #set($regexTel = '[0-9+() ]*')
+       #if($displayStr.matches($regexURL))
+         #set($href = $displayStr)
+         #if(!$href.startsWith('http'))
+           #set($href = "http://$href")
+         #end
+         #set($displayStr = "<a href='$!href' target='_blank'>$!displayStr</a>")
+       #elseif($displayStr.matches($regexMail))
+         #set($displayStr = "<a href='mailto:$!displayStr'>$!displayStr</a>")
+       #elseif($displayStr.matches($regexTel))
+         #set($displayStr = "<a href='tel:$!displayStr'>$!displayStr</a>")
+       #end
+     #end
+     $!displayStr
   #else
     #if($cel_editobj_validate)
       #set($cel_editobj_propfullname = "${class.name}_${obj.number}_${prop.name}")
@@ -219,6 +245,11 @@ $celementsweb.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
 #set($displayStr = $cel_editobj_doc.displayEdit($prop, "${class.name}_${obj.number}_" , $obj))
 #if($displayStr.startsWith('<select ') && $displayStr.contains('<input '))
   #set($displayStr = $displayStr.substring(0, $displayStr.indexOf('<input ')))
+#end
+##Extension css-classnames
+#if(("$!cel_editobj_cssclasses" != '') && $cel_editobj_cssclasses.containsKey($prop.name))
+#set($dispReplaceStr = " class='${cel_editobj_cssclasses.get($prop.name)}'$1")
+#set($displayStr = $displayStr.replaceAll("( name=(${q}|${Q})[^${q}${Q}]*(${q}|${Q}))", $dispReplaceStr))
 #end
 $displayStr
   #end
@@ -246,7 +277,7 @@ $displayStr
 #else
 #set($cel_objectedit_removeobj = $adminMsg.get("removethisobject"))
 #end
-<div class="xwikibuttonlink"><a href="$cel_editobj_doc.getURL("objectremove", "classname=${class.name}&amp;classid=${obj.number}&amp;xredirect=$removeAddXredirect")" onclick="return confirm('$adminMsg.get("confirmobjectremove")')">$cel_objectedit_removeobj</a></div>
+<div class="xwikibuttonlink cel_button_remove"><a href="$cel_editobj_doc.getURL("objectremove", "classname=${class.name}&amp;classid=${obj.number}&amp;xredirect=$removeAddXredirect")" onclick="return confirm('$adminMsg.get("confirmobjectremove")')">$cel_objectedit_removeobj</a></div>
 #end
 #if(!$hasCustomObject)
 </div></div>

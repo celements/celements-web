@@ -26,16 +26,16 @@
 <link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile(':celRes/mediaLib/celements2medialib.css')" />
 ##TODO replace with default overlay
 #parse('celMacros/DarkBox.vm')
-$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
-$celementsweb.addExtJSfileOnce(':celJS/initCelements.js')
-$celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
-$celementsweb.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
-$celementsweb.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
-$celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
-$celementsweb.addExtJSfileOnce(':celJS/uploadAttachment.js')
-$celementsweb.addExtJSfileOnce(':celJS/filebase/filebase.js')
+$services.javascript.addExtJSfileOnce(':celJS/prototype.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/initCelements.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
+$services.javascript.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
+$services.javascript.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
+$services.javascript.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
+$services.javascript.addExtJSfileOnce(':celJS/uploadAttachment.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js', 'file')
 #if(("$!isInline" != '1') && ("$!request.get('inline')" == ''))
-  $celementsweb.addExtJSfileOnce(':celJS/mediaLib/resize.js')
+  $services.javascript.addExtJSfileOnce(':celJS/mediaLib/resize.js', 'file')
 #end
 ## colmn
 #if(("$!initColumns" == '') || ("$!request.get('columns')" != ''))
@@ -162,11 +162,6 @@ $celementsweb.addExtJSfileOnce(':celJS/filebase/filebase.js')
 #end 
 
 <script type="text/javascript">
-## needed to prevent IE from showing scrollbars and hiding half of the filebase by doing so.
-  if($('cel_overlaybody')) {
-    $('cel_overlaybody').setStyle({ 'overflow' : 'hidden' });
-  }
-  
   ##form <menu entry name , menu entry pretty name>
   var menu = new Array(
     #foreach($item in $menu_list)
@@ -248,7 +243,7 @@ var formatUrl = function(elCell, oRecord, oColumn, sData) {
 };
 
 var deleteAttachment = function(doc, file){
-  url = "/delattachment/" + doc.replace(".", "/") + "/" + file;
+  url = window.CELEMENTS.getPathPrefix() + "/delattachment/" + doc.replace(".", "/") + "/" + file;
   new Ajax.Request(url, {method: 'post', onComplete: function(transport){
     #foreach($item in $filters)
       url = "$doc.getURL('view')" + "?xpage=celements_ajax&ajax_mode=FileBaseTags&save=1&tag=$!{item}&att_doc=" + doc + "&att_name=" + file + "&active=false";
@@ -516,14 +511,6 @@ var showFileContent = function(url, name){
     }
 }*#
 
-var initFileBasePanel = function() {
-    fbp = new YAHOO.widget.Panel("fileBasePanel", {
-        width: "auto",
-        draggable:false,
-        close:false});
-    fbp.render();
-}
-
 var timeout;
 var waiting = false;
 var copy = function(){
@@ -542,6 +529,7 @@ function change() {
     requestData(active_space, '');
   #end
 }
+
 </script>
 
 <div class="celements3_filebase" >
@@ -563,6 +551,10 @@ function change() {
                                     $!adminMsg.get('cel_media_library')
                                 </div><!--c2_colheaders-->
                             </div><!--c2_ml_title-->
+                            <form action="" id="search_files" onSubmit="javascript:copy(); return false;" name="search_files" method="post">
+                                <input name="search_input" id="find_field" type="text" size="12" maxlength="100" value="" onKeyUp='javascript:copy();' />
+            ##                  <a href="" onClick="javascript:requestData(active_space, document.search_files.search_input.value); return false;">Find</a>
+                            </form>
                                 #foreach($item in $menu_list)
                                     <!-- menuitemis: $item -->
                                     #set($has_attachments = false)
@@ -604,10 +596,6 @@ function change() {
                                       <a class="c2_ml_label0" name="browser_category" href="?active=$!{space}"  onClick="document.search_files.search_input.value = ''; requestData('$!{space}', ''); setActive(); return false;">$space_name</a>
                                     #end
                                 #end
-                            <form action="" id="search_files" onSubmit="javascript:copy(); return false;" name="search_files" method="post">
-                                <input name="search_input" id="find_field" type="text" size="12" maxlength="100" value="" onKeyUp='javascript:copy();' />
-            ##                  <a href="" onClick="javascript:requestData(active_space, document.search_files.search_input.value); return false;">Find</a>
-                            </form>
                         </div><!--c2_ml_browser-->
                         #end
             
@@ -681,12 +669,4 @@ function change() {
   </div><!--fileBasePanel-->
 </div><!--celements3_filebase-->
 
-<script type="text/javascript">
-##    #if()
-##                          <script type="text/javascript">setActive();</"script>
-##    #end
-    initFileBasePanel();
-    fbp.show();
-    $(document.body).fire('cel_filebase:loaded');
-</script>
 #end

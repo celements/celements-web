@@ -5,12 +5,13 @@ var attList = [];
 var startPos = 0;
 var stepNumber = 25;
 var imagePickerMaxDimension = 100;
+var loadingIndicator = new CELEMENTS.LoadingIndicator();
 
-var loadingImg = new Element('img', {
-    'src' : '/file/resources/celRes/ajax-loader.gif',
-    'class' : 'attListLoading',
-    'alt' : 'loading...'
-  });
+var getLoadingImg = function() {
+  var loadingImg = loadingIndicator.getLoadingIndicator();
+  loadingImg.addClassName('attListLoading');
+  return loadingImg;
+};
 
 Event.observe(window, 'load', function(){
   baseurl = tinyMCEPopup.getParam("wiki_attach_path");
@@ -19,6 +20,7 @@ Event.observe(window, 'load', function(){
   $('imagePickerUploadAreaFieldset').hide();
   $('imagePickerForm').action = baseurl;
   getUploadToken();
+  loadTagList();
   $$('#imagePickerUploadArea .celfileupload').each(function(elem) {
     elem.observe('celements:uploadfinished', pickerUploadFinshed);
   });
@@ -53,7 +55,9 @@ var getUploadToken = function() {
 var pickerUploadFinshed = function(event) {
   var uploadResult = event.memo.uploadResult;
   if (uploadResult && uploadResult.success && (uploadResult.success == 1)) {
-    $('attachments').insert({ top : loadingImg });
+    $('attachments').insert({
+      'top' : getLoadingImg()
+    });
     new Ajax.Request(baseurl, {
         method: 'post',
         parameters: {
@@ -79,40 +83,83 @@ var pickerUploadFinshed = function(event) {
   }
 };
 
+var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
+  $('attachments').insert(getLoadingImg());
+  var tag = '';
+  if($('tagPicker_list')) {
+    tag = $('tagPicker_list').value;
+  }
+  new Ajax.Request(baseurl, {
+    method: 'post',
+    parameters: {
+       'xpage' : 'celements_ajax',
+       'ajax_mode' : 'imagePickerList',
+       'images' : '1',
+       'start' : startPos,
+       'nb' : stepNumber,
+       'tagList' : tag
+    },
+    onComplete: function(transport) {
+      if (transport.responseText.isJSON()) {
+        var json = transport.responseText.evalJSON();
+        loadAttachmentListCallback(json, true, false, false);
+        try {
+          callbackFnkt(json.length == stepNumber);
+        } catch (exp) {
+          console.error('endlessScrollLoadActionFnc: callback failed.', exp);
+        }
+        if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+          console.log('loadAttachmentList: total loaded [',
+              $$('.imagePickerSource').size() ,'] are there more? ',
+              (json.length == stepNumber));
+        }
+      } else if ((typeof console != 'undefined') 
+          && (typeof console.warn != 'undefined')) {
+        console.warn('loadAttachmentList: noJSON!!! ', transport.responseText);
+      }
+    }
+  });
+  startPos += stepNumber;
+};
+
+var loadTagList = function() {
+  $('tagPicker_list').observe('change', tagSelectedLoadAttachmentList);
+  new Ajax.Request(baseurl, {
+    method: 'post',
+    parameters: {
+       'xpage' : 'celements_ajax',
+       'ajax_mode' : 'imageFilterList'
+    },
+    onComplete: function(response) {
+      if(response.responseText.isJSON()) {
+        var json = response.responseText.evalJSON();
+        var select = $('tagPicker_list');
+        for(var i = 0; i < json.tagList.length; i++) {
+          var option = new Element('option', { 'value' : json.tagList[i].value });
+          option.update(json.tagList[i].label);
+          select.insert(option);
+        }
+      } else if((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+        console.warn('loadTagList: noJSON!!! ', response.responseText);
+      }
+    }
+  });
+};
+
+var tagSelectedLoadAttachmentList = function() {
+  startPos = 0;
+  $('attachments').update(getLoadingImg());
+  loadAttachmentList(baseurl);
+};
+
 var loadAttachmentList = function(baseurl) {
   var attachEl = document.getElementById("attachments");
-  var scroll = new CELEMENTS.anim.EndlessScroll(attachEl, function(attachEl, callbackFnkt) {
-    $('attachments').insert(loadingImg);
-    new Ajax.Request(baseurl, {
-      method: 'post',
-      parameters: {
-         'xpage' : 'celements_ajax',
-         'ajax_mode' : 'imagePickerList',
-         'images' : '1',
-         'start' : startPos,
-         'nb' : stepNumber
-      },
-      onComplete: function(transport) {
-        if (transport.responseText.isJSON()) {
-          var json = transport.responseText.evalJSON();
-          loadAttachmentListCallback(json, true, false, false);
-          callbackFnkt(json.length == stepNumber, scroll);
-          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-            console.log('loadAttachmentList: total loaded [',
-                $$('.imagePickerSource').size() ,'] are there more? ',
-                (json.length == stepNumber));
-          }
-        } else if ((typeof console != 'undefined') 
-            && (typeof console.warn != 'undefined')) {
-          console.warn('loadAttachmentList: noJSON!!! ', transport.responseText);
-        }
-      }
-    });
-    startPos += stepNumber;
-  }, {
+//  var scroll = 
+  new CELEMENTS.anim.EndlessScroll(attachEl, endlessScrollLoadActionFnc, {
     isScrollBlockEle : true,
     overlap : 150
   });
+//  scroll.setLogging(1);
 };
 
 var getCenteredImagePickerValue = function(diffValue) {
@@ -182,7 +229,7 @@ var goThroughStack = function() {
   } else {
     goThroughStack.delay(0.1);
   }
-}
+};
 
 var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck, fromStack) {
   if(!fromStack) {
@@ -194,7 +241,7 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck,
   } else {
     var attachEl = $('attachments');
     try {
-      loadingImg.remove();
+      attachEl.select('.attListLoading').each(Element.remove);
     } catch(err) {
       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
         console.log('error removing loader.', err);
@@ -206,9 +253,10 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck,
       if (imgElem.src == currentImgSrc) {
         cssClasses += ' selected';
       }
+      var thmbImgSrc = (decodeURI(imgElem.src) + '?celheight=' + imagePickerMaxDimension
+          + '&celwidth=' + imagePickerMaxDimension);
       var imgThmb = new Element('img', {
-        'src' : (imgElem.src + '?celheight=' + imagePickerMaxDimension + '&celwidth='
-            + imagePickerMaxDimension)
+        'src' : thmbImgSrc
       });
       var imgContainerDiv = new Element('div', {
         'class' : cssClasses
@@ -252,6 +300,7 @@ var clickOnFileAction = function (event) {
   if (!filename) {
     filename = selectElem.href;
   }
+  console.log('clickOnFileAction: filename ', filename);
   if (filename && document.forms[0].src) {
     filename = filename.replace(/^(.+)\?.*/, '$1');
     document.forms[0].src.value = filename;

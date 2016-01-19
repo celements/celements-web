@@ -27,9 +27,6 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
 
 (function() {
 
-var Dom = YAHOO.util.Dom;
-var YEvent = YAHOO.util.Event;
-
 //////////////////////////////////////////////////////////////////////////////
 // CELEMENTS accordeon heading animation
 // --> there will be a glitsh on slideup in some browsers if you use margins on headings.
@@ -45,14 +42,19 @@ var CA = CELEMENTS.anim.AccordeonHeading;
 CELEMENTS.anim.AccordeonHeading.prototype = {
   htmlElem : undefined,
 
-  openOnlyOnePerLevel : false,
+  openOnlyOnePerLevel : undefined,
   
   _init : function(elemId) {
     var _me = this;
     _me.htmlElem = $(elemId);
-    _me._hideAllBlocksAfter();
-    _me._registerOpeningListeners();
-    _me.htmlElem.fire('celanim_accordeon-heading:initFinished', _me.htmlElem);
+    if (_me.htmlElem) {
+      _me._hideAllBlocksAfter();
+      _me._registerOpeningListeners();
+      _me.openOnlyOnePerLevel = false;
+      _me.htmlElem.fire('celanim_accordeon-heading:initFinished', _me.htmlElem);
+    } else {
+      console.warn('Failed to initialize accordeon-heading for id "' + elemId + '".');
+    }
   },
 
   setOpenOnlyOne : function(newOpenOnlyOne) {
@@ -62,6 +64,7 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
 
   _hideAllBlocksAfter : function() {
     var _me = this;
+    if (!_me.htmlElem) return;
     _me.htmlElem.select(_me._getHeadings('h6')).each(function(headingBlock) {
       if (headingBlock.visible() && headingBlock.hasClassName('accordeon')) {
         _me.getAllSiblings(headingBlock, true).each(function(elem) {
@@ -120,6 +123,7 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
 
   _registerOpeningListeners : function() {
     var _me = this;
+    if (!_me.htmlElem) return;
     _me.htmlElem.select('h1.accordeon').concat(_me.htmlElem.select('h2.accordeon')
         ).concat(_me.htmlElem.select('h3.accordeon')).concat(_me.htmlElem.select(
             'h4.accordeon')).concat(_me.htmlElem.select('h5.accordeon')).concat(
@@ -176,6 +180,7 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
 
   _updateClickedHeading : function(isVisible, clickedHeading) {
     var _me = this;
+    if (!_me.htmlElem) return;
     if (isVisible) {
       clickedHeading.removeClassName('active');
       _me.htmlElem.fire('celanim_accordeon-heading:dropActive', clickedHeading);
@@ -187,6 +192,7 @@ CELEMENTS.anim.AccordeonHeading.prototype = {
 
   _checkCloseBeforeOpen : function(clickedHeading, isVisible) {
     var _me = this;
+    if (!_me.htmlElem) return;
     parallelEffects = [];
     if (!isVisible && _me.openOnlyOnePerLevel) {
       _me.htmlElem.select(clickedHeading.tagName + '.active').each(function(activElem) {

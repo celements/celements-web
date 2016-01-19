@@ -51,6 +51,7 @@
 
     loadOrigDimensionsAsync : function(ed, imageFullName, callbackFN) {
       if (imageFullName && (imageFullName != '')) {
+//        console.log('loadOrigDimensionsAsync: called with imageFullName ', imageFullName);
         callbackFN = callbackFN || function() {};
         new Ajax.Request(getCelHost(), {
           method: 'post',
@@ -92,7 +93,10 @@
     },
 
     _resizeHappend : function(ed, e) {
-      var lastDim = ed.lastSize.get(this._getImageFullName(e.src));
+      var _me = this;
+      var imgSrc = decodeURI(e.src);
+      var imageFullName = _me._getImageFullName(imgSrc);
+      var lastDim = ed.lastSize.get(imageFullName);
       return lastDim && ((lastDim.width != e.width) || (lastDim.height != e.height));
     },
 
@@ -128,13 +132,15 @@
     checkResizeEnd : function(ed, cm, e) {
       if (e.nodeName != 'IMG')
         return;
-      var imageFullName = this._getImageFullName(e.src);
+      var imgSrc = decodeURI(e.src);
+      var imageFullName = this._getImageFullName(imgSrc);
+//      console.log('checkResizeEnd: e.src _getImageFullName ', e.src, imageFullName);
       if (!ed.origData.get(imageFullName)) {
-        var cropW = parseInt(e.src.replace(/((^|(.*[\?&]))cropW=(\d*)\D?.*)|.*/g, '$4'));
+        var cropW = parseInt(e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropW=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropW || (typeof(cropW) == 'undefined') || (cropW <= 0)) {
           cropW = null;
         }
-        var cropH = parseInt(e.src.replace(/((^|(.*[\?&]))cropH=(\d*)\D?.*)|.*/g, '$4'));
+        var cropH = parseInt(e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropH=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropH || (typeof(cropH) == 'undefined') || (cropH <= 0)) {
           cropH = null;
         }
@@ -165,11 +171,11 @@
     },
     
     addAutoResizeToURL : function(src, width, height) {
-      var newSrc = src.replace(/(.*\?.*)(&celwidth=\d*|celwidth=\d*&)(\D?.*)/g, '$1$3');
-      newSrc = newSrc.replace(/(.*\?.*)(&celheight=\d*|celheight=\d*&)(\D?.*)/g, '$1$3');
+      var newSrc = src.replace(/(.*\?)(.*&(?:amp;)?celwidth=\d*|celwidth=\d*)(\D?.*)/g, '$1$3');
+      newSrc = newSrc.replace(/(.*\?)(.*&(?:amp;)?celheight=\d*|celheight=\d*)(\D?.*)/g, '$1$3');
       if(newSrc.indexOf('?') < 0) {
         newSrc += '?';
-      } else if(!newSrc.endsWith('&')) {
+      } else if(!newSrc.endsWith('&') && !newSrc.endsWith('&amp;')) {
         newSrc += '&';
       }
       newSrc += 'celwidth=' + width + '&celheight=' + height;

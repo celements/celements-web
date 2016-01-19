@@ -1,5 +1,5 @@
-@import url(http://fonts.googleapis.com/css?family=Terminal+Dosis:400,200,300,500,600,700,800);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Terminal+Dosis:400,200,300,500,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
 /* Floating Windows Classes */
 .sheet {
 	position: absolute;
@@ -203,7 +203,7 @@ body > div#celements2_menu_bar {
   border-left: 1px solid #5e5e5e;
   border-right: 1px solid #5e5e5e;
 }
-.contextMenuCorner{
+.contextMenuCorner {
 	position:absolute;
 	top: 0px;
 	left: 0px;
@@ -231,7 +231,7 @@ body > div#celements2_menu_bar {
 	padding:0px 3px 0px 3px;
 	margin-bottom:2px;
 }
-.contextMenuItem{
+.contextMenuItem {
   border-top: 1px solid #5e5e5e;
  	position:relative;
   background: rgb(51,51,51);
@@ -240,7 +240,7 @@ body > div#celements2_menu_bar {
 	height:auto;
 	overflow:hidden;
 }
-.contextMenuIcon{
+.contextMenuIcon {
 	display:none;
 }
 .contextMenuLink {
@@ -264,7 +264,7 @@ body > div#celements2_menu_bar {
 	overflow:hidden;
 	text-align:left;
 }
-.contextMenuLinkOver{
+.contextMenuLinkOver {
 	position: static;
 	top:0px;
 	left:0px;
@@ -285,6 +285,9 @@ body > div#celements2_menu_bar {
   padding:5px 3px 5px 12px;
 	overflow:hidden;
 	text-align:left;
+}
+.cel_outline {
+  z-index: 99;
 }
 
 /* Form Validation Classes */
@@ -592,7 +595,7 @@ body > .cel_reorderNodes_proxy {
 	font-style: normal;
 	color: black;
 	
-	list-style-image: url("/file/resources/celRes/document.gif");
+	list-style-image: url("document.gif");
 	list-style-position: inside;
 	border-left: 1px dotted gray;
 }
@@ -690,7 +693,10 @@ body #sitecontainer .cel_content_part {
 body #sitecontainer .cel_content_part,
 body #sitecontainer .cel_content_part p,
 body #sitecontainer .cel_content_part span,
-body #sitecontainer .cel_content_part a {
+body #sitecontainer .cel_content_part a,
+body #sitecontainer .cel_content_part table th,
+body #sitecontainer .cel_content_part table td,
+body #sitecontainer .cel_content_part li {
 	font-size: 12px;
 	line-height: 14px;
 	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
@@ -781,3 +787,43 @@ iframe.apn-toolbar + body #celements2_menu_bar {
   bottom: 0px !important;
 }
 
+/**
+ * Fluid design auto resize images
+ **/
+img.cel_fluidresizeWidth {
+  width: 100%;
+  height: auto;
+}
+
+img.cel_fluidresizeHeight {
+  width: auto;
+  height: 100%;
+}
+/**
+ * Presentation module
+ **/
+div.presentationList {
+  position: relative;
+  overflow: hidden; /** needed to bind clear both **/
+}
+div.presentationList > ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+div.presentationList > ul > li {
+  display: block;
+  float: left;
+  margin: 0px;
+  padding: 0px;
+}
+div.presentationList > div.navigation-clear {
+  clear: both;
+}
+#sitecontainer .cel_nav_restricted_rights {
+  background: #ff9999;
+}
+#sitecontainer li.cel_nav_restricted_rights > div {
+  opacity: 0.75;
+  filter: alpha(opacity = 75);
+}

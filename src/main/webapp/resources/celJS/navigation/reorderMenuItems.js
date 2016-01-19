@@ -65,15 +65,17 @@ CELEMENTS.reorder.DDReorder.prototype = {
       _me.maxLevel = maxLevel;
     }
     
-		$$('ul' + _me._ulSelector + ' li').each(function(listItem) {
-		  if (!listItem.id) {
-		    var menuItemId = (listItem.down('span,a')).id;
-		    listItem.id = 'LI' + menuItemId;
-		  }
-		  _me._addEmptySublists(listItem.id);
-      var ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
-      _me._addHandleIfPresent(ddElem, listItem);
-		});
+    $$('ul' + _me._ulSelector + ' li').each(function(listItem) {
+      if (!listItem.hasClassName('cel_nodrag')) {
+        if (!listItem.id) {
+          var menuItemId = (listItem.down('span,a')).id;
+          listItem.id = 'LI' + menuItemId;
+        }
+        _me._addEmptySublists(listItem.id);
+        var ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
+        _me._addHandleIfPresent(ddElem, listItem);
+      }
+    });
 		$$('ul' + _me._ulSelector).each(function(listElem) {
       new YAHOO.util.DDTarget(listElem.id);
 		});
@@ -335,7 +337,9 @@ YAHOO.extend(CELEMENTS.reorder.DDList, YAHOO.util.DDProxy, {
 
     _isMouseBeforeMedium : function(e, destEl) {
       var treeDiv = this.ddReorder.parentElem;
-      var destElOffset = destEl.cumulativeOffset();
+      //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
+      //counting margin-auto offsets. Thus we need to use jquery.offset
+      var destElOffset = $j(destEl).offset();
       var destElMedium = (destElOffset.top - treeDiv.scrollTop) + (destEl.getHeight() /2);
       return (YEvent.getPageY(e) < destElMedium);
     },

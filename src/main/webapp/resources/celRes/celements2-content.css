@@ -1,8 +1,12 @@
 html {
-  background-image: url("/file/resources/celRes/transpBGsmall.gif");
+  background-image: url("transpBGsmall.gif");
 }
 
 body.mceContentBody  {
   margin: 0px;
   padding: 0px;
+}
+
+body.mceContentBody td {
+	min-width: 5px;
 }

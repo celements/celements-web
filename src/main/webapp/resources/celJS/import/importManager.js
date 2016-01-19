@@ -22,7 +22,13 @@ var startObserversNewUniqueName = function(){
   updateObservers();
   Event.observe(window, 'resize', resizeTab);
   $$('.c3_import_box')[0].observe('filepicker:changed', updateObservers);
-  $('c3_import_box').observe('preimport:changed', preimportChanged);
+  if (typeof preimportChanged !== 'undefined') {
+    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+      console.warn('deprecated usage of direct preimportChanged registration.');
+    }
+    $('c3_import_box').observe('preimport:changed', preimportChanged);
+  }
+  $(document.body).fire('preimport:beforeShowBox');
   showTab($$('.c3_import_box')[0]);
   resizeTab();
 };
@@ -42,7 +48,13 @@ function updateObservers() {
 }
 
 var clickObserve = function(event) {
-  preimport(event);
+  if (typeof preimport !== 'undefined') {
+    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+      console.warn('deprecated usage of direct "preimport" global function call.');
+    }
+    preimport(event);
+  }
+  $('c3_import_box').fire('preimport:clickOnRow', event);
   showTab($$('.c3_import_middle')[0]);
 };
 
@@ -81,29 +93,25 @@ function resizeTab(){
   }
   
   var tabboxsize = winHeight - tabtitlesheight - mainborders;
-//  consoleMsg('tabboxsize: ' + tabboxsize + ' = ' + document.body.clientHeight + ' - ' + tabtitlesheight + ' - ' + mainborders);
   $$('.c3_import_tabbox').each(function(box){
-//    consoleMsg('box cum-offset: ' + box.cumulativeOffset());
     var scrollbox = box.down('.c3_import_scrollable');
     if(scrollbox){
-//      consoleMsg('scrollable cum-offset: ' + scrollbox.cumulativeOffset());
-      var offsetBefore = (scrollbox.cumulativeOffset().top - box.cumulativeOffset().top);
+      //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
+      //counting margin-auto offsets. Thus we need to use jquery.offset
+      var offsetBefore = ($j(scrollbox).offset().top - $j(box).offset().top);
       var ele = scrollbox;
-      var lastElemBottom = scrollbox.cumulativeOffset().top + scrollbox.getHeight();
+      var lastElemBottom = $j(scrollbox).offset().top + scrollbox.getHeight();
       while(ele && (!ele.hasClassName('c3_import_tabbox'))){
         ele.siblings().each(function(sibl){
           if(sibl.getStyle('position') != 'absolute') {
         	// use offsetHeight instead of getHeight() which is wrong for script and link elements
-        	  lastElemBottom = Math.max(lastElemBottom, sibl.cumulativeOffset().top + sibl.offsetHeight);
-//            consoleMsg('lastElemBottom after [' + sibl.inspect() + ']: ' + lastElemBottom);
+        	  lastElemBottom = Math.max(lastElemBottom, $j(sibl).offset().top + sibl.offsetHeight);
           }
         });
         ele = ele.up();
       }
-      var offsetAfter = lastElemBottom - (scrollbox.cumulativeOffset().top + scrollbox.getHeight());
+      var offsetAfter = lastElemBottom - ($j(scrollbox).offset().top + scrollbox.getHeight());
       var newScrollableHeight = tabboxsize - offsetAfter - offsetBefore;
-//      consoleMsg('offsetAfter [' + scrollbox.inspect() + ']: ' + offsetAfter);
-//      consoleMsg('scrollbox [' + scrollbox.inspect() + '] new height: ' + newScrollableHeight);
       scrollbox.setStyle({ height: Math.max(50, newScrollableHeight) + "px" });
     }
     box.setStyle({ height: Math.max(50, tabboxsize) + "px" });
@@ -117,10 +125,8 @@ function changeTabEvent(event) {
 function showTab(tab) {
   if (tab) {
     $$('.c3_import_box').each(function(elemTab) {
-         //consoleMsg('hide tab ' + elemTab.className);
          hideDisplay(elemTab.down('.c3_import_tabbox'));
       });
-    //consoleMsg('show tab ' + tab.className);
     showDisplay(tab.down('.c3_import_tabbox'));
     //needs two resizes!
     resizeTab();
@@ -143,12 +149,6 @@ function getProgressBar(title){
   var bardiv = "<div class='c3_import_tabbox'><img src='/skin/skins/albatross/icons/ajax%2Dloader.gif'></div>";
   titlediv.insert( {'after': bardiv} );
   resizeTab();
-}
-
-function consoleMsg(msg){
-//  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-//    console.debug(msg);
-//  }
 }
 
 Event.observe(window, 'load', startObserversNewUniqueName);

@@ -20,7 +20,7 @@
 ###else
   #set($filters =  [])
   #foreach($item in $find_space_req.split(','))
-    #if(("$!item" != '') && $item.startsWith('f'))
+    #if(("$!item" != '') && $item.startsWith('f') && ("$!item" != "f$all_doc_filter_id"))
       #set($preventOutput = $filters.add("$!item.substring(1)"))
     #end 
   #end

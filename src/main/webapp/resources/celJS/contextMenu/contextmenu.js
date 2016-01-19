@@ -58,11 +58,15 @@ function ContextMenuItem(link, text, icon, shortcut) {
   this.getHTML = function(nr){
   
     var tmpHTML = "<div class='contextMenuItem'><div class='contextMenuIcon'>";
+/**
     if (me.icon) {
       tmpHTML += "<img src='"+me.icon+"' alt='"+me.text+"' />";
     } else {
       tmpHTML += "&nbsp;";
     }
+    //icon deactivated for now
+ */
+    tmpHTML += "&nbsp;";
     
     tmpHTML += "</div><div class='contextMenuLink' onmouseover='javascript:contextMouseOver(this)' onmouseout='javascript:contextMouseOut(this)' onclick='javascript:";
     tmpHTML += me.link;
@@ -213,7 +217,8 @@ function ContextMenu(){
         tmpHTML += me.config[i].getHTML(i);
       }
     } else {
-      tmpHTML += "<div class='contextMenuItem'><img style='display:block; margin-right:auto; margin-left:auto;' src='/file/celRes/ajax-loader-small.gif'/></div>";
+      tmpHTML += "<div class='contextMenuItem'><img style='display:block; margin-right:auto; margin-left:auto;' src='"
+        + window.CELEMENTS.getPathPrefix() + "/file/celRes/ajax-loader-small.gif'/></div>";
     }
     me.menuDiv.innerHTML = tmpHTML;
   };
@@ -229,22 +234,29 @@ var getCelHost = function() {
   return celHost;
 };
 
+var cmContextMenuClassNames = null;
+
 var initContextMenuAsync = function() {
-  new Ajax.Request(getCelHost(), {
-    method: 'post',
-    parameters: {
-       xpage : 'celements_ajax',
-       ajax_mode : 'ContextMenuAjax',
-       celCMIdClassName : ''
-    },
-    onSuccess: function(transport) {
-      if (transport.responseText.isJSON()) {
-        loadContextMenuForClassNames(transport.responseText.evalJSON());
-      } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-        console.debug('noJSON!!! ', transport.responseText);
+  if (!cmContextMenuClassNames) {
+    new Ajax.Request(getCelHost(), {
+      method: 'post',
+      parameters: {
+         xpage : 'celements_ajax',
+         ajax_mode : 'ContextMenuAjax',
+         celCMIdClassName : ''
+      },
+      onSuccess: function(transport) {
+        if (transport.responseText.isJSON()) {
+          cmContextMenuClassNames = transport.responseText.evalJSON();
+          loadContextMenuForClassNames(cmContextMenuClassNames);
+        } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+          console.debug('noJSON!!! ', transport.responseText);
+        }
       }
-    }
-  });
+    });
+  } else {
+    loadContextMenuForClassNames(cmContextMenuClassNames);
+  }
 };
 
 var getElemIdsForClassName = function(cssClassName) {
@@ -257,12 +269,56 @@ var getElemIdsForClassName = function(cssClassName) {
   return elemNames;
 };
 
-var contextMenuItemDataForElemId = new Hash();
+var contextMenuAddValueForKeysToMap = function(resultMap, keysForValue, valueName) {
+  var getAndAddValueArray = function(id, theValue) {
+    var theValueArray = resultMap.get(id);
+    if (!theValueArray) {
+      theValueArray = new Array();
+    }
+    if (theValueArray.indexOf(theValue) < 0) {
+      theValueArray.push(theValue);
+    }
+    return theValueArray;
+  };
+  keysForValue.each(function(id) {
+    resultMap.set(id, getAndAddValueArray(id, valueName));
+  });
+};
 
-var loadContextMenuForClassNames = function (cssClassNames) {
+var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
+    oldCssClassMap) {
+  var reducedCssClassMap = new Hash(newCssClassMap);
+  if (oldCssClassMap) {
+    oldCssClassMap.keys().each(function(id) {
+      var classNameArrayNew = reducedCssClassMap.get(id);
+      var classNameArrayOld = oldCssClassMap.get(id);
+      if (classNameArrayNew && classNameArrayOld
+          && (classNameArrayOld.size() === classNameArrayNew.size())) {
+        var diffArray = classNameArrayOld.without(classNameArrayNew);
+        if (diffArray.size() <= 0) {
+//          console.log('diffArray: unset ', id, diffArray, classNameArrayOld, classNameArrayNew);
+          reducedCssClassMap.unset(id);
+//        } else {
+//          console.log('diffArray: keep ', id, diffArray, classNameArrayOld, classNameArrayNew);
+        }
+      }
+    });
+  }
+  return reducedCssClassMap;
+};
+
+var contextMenuConvertIdClassMapToClassIdMap = function(cssClassMap) {
+  var classIdMap = new Hash();
+  cssClassMap.keys().each(function(idKey) {
+    contextMenuAddValueForKeysToMap(classIdMap, cssClassMap.get(idKey), idKey);
+  });
+  return classIdMap;
+};
+
+var contextMenuWriteReqArray = function(cssClassNameIdMap) {
   var reqArray = new Array();
-  cssClassNames.each(function(cssClass) {
-    var idsForCssClass = getElemIdsForClassName(cssClass);
+  cssClassNameIdMap.keys().each(function(cssClass) {
+    var idsForCssClass = cssClassNameIdMap.get(cssClass);
     if (idsForCssClass.size() > 0) {
       var reqDict = new Hash();
       reqDict.set('cmClassName', cssClass);
@@ -270,8 +326,30 @@ var loadContextMenuForClassNames = function (cssClassNames) {
       reqArray.push(reqDict);
     }
   });
+  return reqArray;
+};
 
-  if (reqArray.size() > 0) {
+var contextMenuItemDataForElemId = new Hash();
+var contextMenuIdCssClassNamesMap = null;
+var loadContextMenuForClassNames = function (cssClassNames) {
+  var cssClassMap = new Hash();
+  cssClassNames.each(function(cssClass) {
+    var idsForCssClass = getElemIdsForClassName(cssClass);
+    contextMenuAddValueForKeysToMap(cssClassMap, idsForCssClass, cssClass);
+  });
+
+  var reducedCssClassMap = contextMenuRemoveEqualsFromCssClassNamesMap(cssClassMap,
+      contextMenuIdCssClassNamesMap);
+  
+  if (reducedCssClassMap.size() > 0) {
+//    if(contextMenuIdCssClassNamesMap) {
+//  	  console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
+//  	}
+//    console.log('cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
+    var reducedClassNameIdMap = contextMenuConvertIdClassMapToClassIdMap(reducedCssClassMap);
+//    console.log('reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
+    var reqArray = contextMenuWriteReqArray(reducedClassNameIdMap);
+//    console.log('reduced reqArray: ', reqArray.size(), Object.toJSON(reqArray));
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
@@ -285,7 +363,8 @@ var loadContextMenuForClassNames = function (cssClassNames) {
           transport.responseText.evalJSON().each(function(elemIdMenuItems) {
             var articleCMenu = new Array();
             elemIdMenuItems.cmItems.each(function(menuItemObj) {
-              articleCMenu[articleCMenu.size()] = new ContextMenuItem(menuItemObj.link, menuItemObj.text, menuItemObj.icon, menuItemObj.shortcut);
+              articleCMenu[articleCMenu.size()] = new ContextMenuItem(menuItemObj.link,
+                  menuItemObj.text, menuItemObj.icon, menuItemObj.shortcut);
             });
             contextMenuItemDataForElemId.set(elemIdMenuItems.elemId, articleCMenu);
             $(elemIdMenuItems.elemId).stopObserving('contextmenu', contextClickHandler);
@@ -298,7 +377,9 @@ var loadContextMenuForClassNames = function (cssClassNames) {
         }
       }
     });
+    contextMenuIdCssClassNamesMap = cssClassMap;
   } else {
+//    console.log('skip contextmenu reloading.');
     cm_mark_loading_finished();
   }
 };

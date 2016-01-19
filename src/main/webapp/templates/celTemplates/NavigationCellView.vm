@@ -12,5 +12,11 @@ $createdNav.setCMcssClass($overwriteNavCMcssClass)
 $createdNav.setEmptyDictKeySuffix($emptyDictKeySuffix)
 #set($emptyDictKeySuffix = '')
 #end
+#if("$!request.offset" != '')
+#set($offset = $xwiki.parseInt("$!request.offset"))
+#if("$!offset" != '')
+$createdNav.setOffset($offset)
+#end
+#end
 $createdNav.includeNavigation()
 <div class="navigation-clear"><!-- IE6 --></div>

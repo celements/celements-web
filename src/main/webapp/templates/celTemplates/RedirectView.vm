@@ -1,8 +1,29 @@
+#set($isAjaxCall = ("$!request.ajax" == '1'))
 #if($doc.fullName != "Templates.RedirectView")
 #set($red_obj = $doc.getObject("Celements2.Redirect"))
-#set($redURL = "$!red_obj.getProperty('redirect').getValue()")
+#set($origRedURL = "$!red_obj.getProperty('redirect').getValue()")
+#set($showIncluded = $!red_obj.getProperty("show_included").getValue())
+#set($redirectedParams = "$!red_obj.getProperty('querystr').getValue()")
+#foreach($param in $request.getParameterNames())
+  #if("$!redirectedParams" != '')
+    #set($redirectedParams = "${redirectedParams}&")
+  #end
+  #set($redirectedParams = "${redirectedParams}${param}=$!{request.get($param)}")
+#end
+#if(!$origRedURL.startsWith('http://') && !$origRedURL.startsWith('https://'))
+  #set($redExternalURL = $xwiki.getURL($origRedURL, "view", "${redirectedParams}"))
+  #set($redFN = $!origRedURL)
+  #set($redURL = $xwiki.getURL($redFN, "view"))
+  #set($showIFrame = false)
+#else
+  #set($redFN = '')
+  #set($redURL = $origRedURL)
+  #set($redExternalURL = "$!{origRedURL}?$!red_obj.get('querystr')")
+  #set($redExternalURL = "$!redExternalURL.replaceAll('\?$','')")
+  #set($showIFrame = true)
+#end
 #if("$context.action" == 'view')
-#if(("$!red_obj" == '') || ("$!redURL" == '') || (!$xwiki.exists($redURL) && !$redURL.startsWith('http://') && !$redURL.startsWith('https://')))
+#if(!$isAjaxCall && ("$!red_obj" == '') || ("$!origRedURL" == '') || (!$xwiki.exists($origRedURL) && !$origRedURL.startsWith('http://') && !$origRedURL.startsWith('https://')))
 #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
 #set($overwriteRenderDocument = 'celInlineTemplates/RedirectDoesNotExistView.vm')
 $xwiki.parseTemplate("frameheader.vm")
@@ -11,26 +32,22 @@ $xwiki.parseTemplate("frameheader.vm")
 ##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
 ## or  $xwiki.includeForm($overwriteRenderDocument, false)
       #parse($overwriteRenderDocument)
-#end
+#end ## if("$!overwriteRenderDocument" != '')
 #set($show_frame = true)
-#end
+#end ## if(!$contextIsFinished && !$isCellSkin)
+#elseif($isAjaxCall)
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
+$jsonBuilder.openDictionary()
+$jsonBuilder.addStringProperty('redirect', "$!redURL")
+$jsonBuilder.addStringProperty('querystr', "$!red_obj.getProperty('querystr').getValue()")
+$jsonBuilder.addStringProperty('showIncluded', "$!red_obj.getProperty('show_included').getValue()")
+$jsonBuilder.addStringProperty('redirectFN', "$redFN")
+$jsonBuilder.addStringProperty('redirectURL', "$!redExternalURL")
+$jsonBuilder.closeDictionary()
+#set($jsonStr = $jsonBuilder.getJSON())
+$response.addHeader('X-JSON', $jsonStr)
+$jsonStr
 #else ## render view
-  #set($showIncluded = $!red_obj.getProperty("show_included").getValue())
-  #set($redirectedParams = "$!red_obj.getProperty('querystr').getValue()")
-  #foreach($param in $request.getParameterNames())
-    #if("$!redirectedParams" != '')
-      #set($redirectedParams = "${redirectedParams}&")
-    #end
-    #set($redirectedParams = "${redirectedParams}${param}=$!{request.get($param)}")
-  #end
-  #if(!$redURL.startsWith('http://') && !$redURL.startsWith('https://'))
-    #set($redExternalURL = $xwiki.getURL($redURL, "view", "${redirectedParams}"))
-    #set($showIFrame = false)
-  #else
-    #set($redExternalURL = "$!{redURL}?$!red_obj.get('querystr')")
-    #set($redExternalURL = "$!redExternalURL.replaceAll('\?$','')")
-    #set($showIFrame = true)
-  #end
   #if("$!showIncluded" == '1')
     #set($overwriteRenderDocument = 'celInlineTemplates/RedirectIncludedView.vm')
 #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
@@ -60,4 +77,6 @@ $response.sendRedirect($redExternalURL)
   #end
 #end
 #end
+#else
+<p>Do not redirect on Template page.</p>
 #end

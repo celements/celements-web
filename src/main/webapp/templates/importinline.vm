@@ -32,6 +32,40 @@ resetting programming rights for celements2web: $celementsweb.resetProgrammingRi
 ##---------------------------------------------------------------------------
 #else
   #set($baseQueryString = "editor=$!{request.editor}&amp;section=$!{request.section}")
+  #set($ok = $xwiki.jsfx.use('js/xwiki/xwiki.js', true))
+#**
+<script type="text/javascript">
+// <![CDATA[
+XWiki.webapppath = "";
+XWiki.servletpath = "";
+XWiki.contextPath = "";
+XWiki.mainWiki = "xwiki";
+XWiki.currentWiki = "bellis";
+XWiki.currentSpace = "XWiki";
+XWiki.currentPage = "Import";
+XWiki.editor = "globaladmin";
+XWiki.viewer = "";
+XWiki.contextaction = "import";
+XWiki.docisnew = false;
+XWiki.docsyntax = "xwiki/1.0";
+XWiki.blacklistedSpaces = [  ];
+XWiki.hasEdit = true;
+XWiki.hasProgramming = true;
+XWiki.hasBackupPackImportRights = true;
+window.docviewurl = "/XWiki/Import";
+window.docediturl = "/edit/XWiki/Import";
+window.docsaveurl = "/save/XWiki/Import";
+window.docgeturl = "/get/XWiki/Import";
+// ]]>
+</script>
+<script type='text/javascript' src='/skin/skins/albatross/uicomponents/suggest/suggest.js' defer='defer'></script>
+**#
+  #set($ok = $xwiki.jsfx.use('js/xwiki/widgets/modalPopup.js', true))
+  #set($ok = $xwiki.jsfx.use('js/xwiki/widgets/jumpToPage.js', true))
+  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/confirmationBox.js', true))
+  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/confirmedAjaxRequest.js', true))
+  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/notification.js', true))
+  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/list/xlist.js', true))
   #set($ok = $xwiki.jsfx.use('js/xwiki/importer/import.js', true))
   #set($ok = $xwiki.ssfx.use('js/xwiki/importer/import.css', true))
   #set($attachments = $sorttool.sort($doc.attachmentList, ['date:desc']))

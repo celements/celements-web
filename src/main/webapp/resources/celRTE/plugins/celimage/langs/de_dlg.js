@@ -58,6 +58,7 @@ tinyMCE.addI18n('de.celimage_dlg', {
   hasSlideshowAddNavigation : "Navigation hinzuf\u00fcgen",
   gallery : "Bild Album",
   "galleryPicker" : "Bildstrecke",
+  "tagPicker" : "Filter",
   "slideshowFixStartImageNum" : "feste Startbild Nummer",
   delay : "Bildwechsel nach (Sekunden)",
   defaultEffect : "standard (Fade)",

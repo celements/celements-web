@@ -52,7 +52,9 @@ var getInnerMostScrollableElement = function(tab) {
     }
   }
   elements.each(function(ele) {
-    if((ele.cumulativeOffset().top != 0) || (ele.cumulativeOffset().left != 0)) {
+    //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
+    //counting margin-auto offsets. Thus we need to use jquery.offset
+    if(($j(ele).offset().top != 0) || ($j(ele).offset().left != 0)) {
       elementFound = ele;
     }
   });
@@ -95,7 +97,9 @@ function resize(){
   
   var boxSize = winHeight - bottomBorder;
   var scrollbox = getScrollbox();
-  var scrollableSize = boxSize - scrollbox.cumulativeOffset().top - bottomBorder;
+  //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
+  //counting margin-auto offsets. Thus we need to use jquery.offset
+  var scrollableSize = boxSize - $j(scrollbox).offset().top - bottomBorder;
   box.setStyle({ height: Math.max(50, boxSize) + "px" });
   scrollbox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
 }

@@ -6,6 +6,9 @@
 ## INPUT(optional) : $after_skin_cssdoc (default: '')
 ##
 #if(!$finaliseHeaderRUN) ## prevent from being run twice and allow lacy calls.
+## Hook for inserting CSS skin extensions
+<!-- com.xpn.xwiki.plugin.skinx.CssSkinExtensionPlugin -->
+<!-- com.xpn.xwiki.plugin.skinx.CssSkinFileExtensionPlugin -->
 $xwiki.celementsweb.displayAllCSS()
 ## get DocumentSpecific Meta-Tag
 #set($metaTags = $celementsweb.getDocMetaTags($language, $default_language))
@@ -20,7 +23,7 @@ $xwiki.celementsweb.displayAllCSS()
 <!-- 
     This website is powered by celements.web - inspiring people to share!
     celements.web is a free open source Content Management System based on the popular xwiki platform and licensed under LGPL.
-    celements.web is copyright 2005-2014 of synventis gmbh. Extensions are copyright of their respective owners.
+    celements.web is copyright 2005-2015 of synventis gmbh. Extensions are copyright of their respective owners.
     Information and contribution at http://celements.ch/ and http://synventis.com/
 -->
 <meta name="generator" content="celements.web" />

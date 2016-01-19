@@ -1,0 +1,14 @@
+// There templates will be displayed as a dropdown in all media dialog if the "template_external_list_url"
+// option is defined in TinyMCE init.
+
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
+$jsonBuilder.openArray()##
+#foreach($templObj in $services.celementsweb.getRTETemplateList())
+$jsonBuilder.openArray()##
+$jsonBuilder.addString("$!{templObj.getProperty('templateName').getValue()}")##
+$jsonBuilder.addString("$!{templObj.getProperty('templateUrl').getValue()}")##
+$jsonBuilder.addString("$!{templObj.getProperty('templateDesc').getValue()}")##
+$jsonBuilder.closeArray()##
+#end
+$jsonBuilder.closeArray()##
+var tinyMCETemplateList = $!{jsonBuilder.getJSON()};

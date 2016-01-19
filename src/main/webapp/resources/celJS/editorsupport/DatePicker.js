@@ -98,6 +98,7 @@ if(typeof CELEMENTS.editorsupport =="undefined"){CELEMENTS.editorsupport={};};
         _me._pickerDateCal.cfg.setProperty("WEEKDAYS_SHORT", ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"]); 
         _me._pickerDateCal.cfg.setProperty("WEEKDAYS_MEDIUM",["Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam"]); 
         _me._pickerDateCal.cfg.setProperty("WEEKDAYS_LONG",  ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"]); 
+        _me._pickerDateCal.cfg.setProperty("START_WEEKDAY",  1);
         _me._pickerDateCal.render();
         _me._pickerDateCal.selectEvent.subscribe(_me._handleDateSelected, _me, true);
         _me._pickerDateCal.hideEvent.subscribe(_me._calHideEventHandler, _me, true);

@@ -22,11 +22,7 @@
     $adminMsg.get('cel_tm_edit_translation'):
     <input type="hidden" id="langbar-initialEditorLanguage" name="initialEditorLanguage" value="$!language" />
     <select name="language" size="1" style="width:100px;"## 
-#if($services.celementsweb.useNewButtons())
   onchange="var langSelect = this; getCelementsTabEditor().changeEditLanguage(langSelect.value, function() { langSelect.value=$('langbar-initialEditorLanguage').value; }); return false;">
-#else
-  onchange="document.forms['edit'].formeditxred.value=('$doc.getURL("edit")' + encodeURI('?language=' + value + '&xredirect=' + document.forms['edit'].formeditxred.value));document.forms['edit'].submit();">
-#end
       #foreach($dl in $langs)
         <option #if("$!language" == "$dl")selected="selected"#end value="$dl" label="$adminMsg.get("cel_$dl")" >$adminMsg.get("cel_$dl")</option>
       #end

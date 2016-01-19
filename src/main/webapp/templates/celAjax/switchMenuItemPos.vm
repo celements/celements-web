@@ -10,8 +10,14 @@
  #set($space = "Content")
 #end
 #set($red = $!context.getRequest().get("xredirect"))
-#set($fullname1 = "${space}.$!context.getRequest().get('item1')")
-#set($fullname2 = "${space}.$!context.getRequest().get('item2')")
+#set($fullname1 = "$!context.getRequest().get('item1')")
+#if($fullname1.indexOf('.') <= 0)
+  #set($fullname1 = "${space}.$!fullname1")
+#end
+#set($fullname2 = "$!context.getRequest().get('item2')")
+#if($fullname2.indexOf('.') <= 0)
+  #set($fullname2 = "${space}.$!fullname2")
+#end
 
 ## check if the documents to switch exists
 #if($!context.getRequest().get('item1') != "" && $!context.getRequest().get('item2') != "" && $xwiki.exists($fullname1) && $xwiki.exists($fullname2))
@@ -35,10 +41,17 @@
 
     $doc1.save()
     $doc2.save()
-	$xwiki.celementsweb.flushCache()
+## FP 04/05/2014 removing flushCache. flushCache needed what for? since 2.45.0 menuItems
+## changes are taken care of by TreeNodeCacheListener
+##	$xwiki.celementsweb.flushCache()
   #end
+#elseif("$!request.ajax" != '')
+Failed.
 #end
 
+#if("$!request.ajax" != '')
+Done.
+#else
 ## redirect
 #if("$!red" != "Celements2.SwitchPos")
 #set($redURL = $xwiki.getURL($red,'view'))
@@ -46,4 +59,5 @@
 #set($redURL = '/')
 #end
 $context.getResponse().sendRedirect($redURL)
+#end
 #end

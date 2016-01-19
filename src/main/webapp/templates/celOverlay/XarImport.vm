@@ -1,0 +1,5 @@
+#set($cel_loadAdminMenuBar = false)
+#set($showOverlayLanguageBar = false)
+#set($showCloseOverlayButton = true)
+#set($closeOverlayRedirect = "$!request.get('xredirect')")
+#set($celementsLoadInOverlay = 'importinline.vm')

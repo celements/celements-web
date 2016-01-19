@@ -18,7 +18,7 @@
 #end
 #set($contextPath = ${request.contextPath})
 #parse("celMacros/includeCelementsRTE.vm")
-<script type="text/javascript">
+<script language="javascript" type="text/javascript">
 ##
 var cd = null;
 var rte_cancel_option = "$rte_cancel_option";
@@ -118,19 +118,30 @@ $adminMsg.get('cel_tm_rte_edit')
 
 #parse("celMacros/includeRTELanguageSelect.vm")
 
-	<form id="edit" method="post" action="$doc.getURL("save")">
+#set($celNewButtons = $services.celementsweb.useNewButtons())
+#if($celNewButtons)
+  <form id="contentEdit" method="post" action="?">
+    <input type="hidden" name="xpage" value="celements_ajax" />
+    <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+    ##TODO if translation or document does not exist, ask user if it should be created.
+    <input type="hidden" name="createIfNotExists" value="true" />
+#else
+  <form id="contentEdit" method="post" action="$doc.getURL("save")">
+#end
+    <input type="hidden" name="update" value="1" />
+    <input type="hidden" name="tab" value="tb1" />
 ##	    <input type="hidden" name="template" value="$!doc.getTemplate()" />
-        <input type="hidden" name="template" value="$!request.template" />
+      <input type="hidden" name="template" value="$!request.template" />
 	    <input type="hidden" id="formeditxred" name="xredirect" value="$!cel_tiny_xredirect" />
 	    <input type="hidden" name="language" value="$!language" />
 <!-- FIX? : $tdoc.fullName , $tdoc.language -->
 #if($rteHasTitle)
 <div id="con_titleEdit" class="editblock">$adminMsg.get('cel_tm_title'):
-    <input id="pagetitle" name="title" class="fullwidth" value="$!xwiki.getFormEncoded($!tdoc.getTitle())" type="text"  onfocus="setFocus('con_titleEdit');" onblur="removeFocus('con_titleEdit');">
+    <input id="pagetitle" name="title" class="fullwidth" value="$!xwiki.getFormEncoded($!tdoc.getTitle())" type="text">
 </div>
 #end
 <div id="con_contentEdit" class="editblock">
-		<textarea class="mceEditor" name="content" onfocus="setFocus('con_contentEdit');" onblur="removeFocus('con_contentEdit');">$xwiki.getXMLEncoded($tdoc.content)</textarea>
+		<textarea class="mceEditor" name="content">$xwiki.getXMLEncoded($tdoc.content)</textarea>
 </div>
 	</form>
 

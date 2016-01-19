@@ -22,46 +22,58 @@
 *
 *
 **/
-if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
-if(typeof CELEMENTS.widget=="undefined"){CELEMENTS.widget={};};
-CELEMENTS.widget.TabEditor = function() {
-};
+(function(window, undefined) {
+  "use strict";
 
-var TE = CELEMENTS.widget.TabEditor;
+  if(typeof window.CELEMENTS=="undefined"){window.CELEMENTS={};};
+  if(typeof window.CELEMENTS.widget=="undefined"){window.CELEMENTS.widget={};};
+
+  window.CELEMENTS.widget.TabEditor = function() {
+    // constructor
+    this._init();
+  };
+
+var TE = window.CELEMENTS.widget.TabEditor;
 
 TE.prototype = {
-  tmd : null,
+  tmd : undefined,
+  tabMenuConfig : undefined,
+  scriptLoading : undefined,
+  CSSLoading : undefined,
+  scriptQueue : undefined,
+  CSSQueue : undefined,
+  tabButtons : undefined,
+  actionButtons : undefined,
+  dirtyFlag : undefined,
+  editorFormsInitialValues : undefined,
+  modalDialog : undefined,
+  initDone : undefined,
+  _isEditorDirtyOnLoad : undefined,
+  afterInitListeners : undefined,
+  _log : undefined,
 
-  tabMenuConfig : null,
-
-  scriptLoading : false,
-  
-  CSSLoading : false,
-
-  scriptQueue : new Array(),
-  
-  CSSQueue : new Array(),
-
-  tabButtons : new Hash(),
-  
-  actionButtons : new Hash(),
-
-  dirtyFlag : new Hash(),
-
-  editorFormsInitialValues : new Hash(),
-
-  modalDialog : null,
-
-  initDone : false,
-
-  _isEditorDirtyOnLoad : false,
-
-  afterInitListeners : new Array(),
-
-  _log : new CELEMENTS.mobile.Dimensions(),
+  _init : function() {
+    var _me = this;
+    _me.tmd = null;
+    _me.tabMenuConfig = null;
+    _me.scriptLoading = false;
+    _me.CSSLoading = false;
+    _me.scriptQueue = new Array();
+    _me.CSSQueue = new Array();
+    _me.tabButtons = new Hash();
+    _me.actionButtons = new Hash();
+    _me.dirtyFlag = new Hash();
+    _me.editorFormsInitialValues = new Hash();
+    _me.modalDialog = null;
+    _me.initDone = false;
+    _me._isEditorDirtyOnLoad = false;
+    _me.afterInitListeners = new Array();
+    _me._log = new CELEMENTS.mobile.Dimensions();
+    _me._loading = new CELEMENTS.LoadingIndicator();
+  },
 
   isValidFormId : function(formId) {
-  return (typeof formId == 'string') && (formId != '') && $(formId)
+    return (typeof formId == 'string') && (formId != '') && $(formId)
       && (typeof $(formId).action != 'undefined') && ($(formId).action != '');
   },
 
@@ -89,15 +101,15 @@ TE.prototype = {
 
   retrieveInitialValues : function(formId) {
     var _me = this;
+    console.log('retrieveInitialValues: ', formId);
     if (_me.isValidFormId(formId)) {
       var elementsValues = new Hash();
       _me.updateTinyMCETextAreas(formId);
       $(formId).getElements().each(function(elem) {
+        console.log('retrieveInitialValues: check field ', formId, elem);
         if (_me._isSubmittableField(elem) && (!elementsValues.get(elem.name)
             || (elementsValues.get(elem.name) == ''))) {
-          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-            console.log('initValue for: ' + elem.name, elem.value);
-          }
+          console.log('initValue for: ', elem.name, elem.value);
           var isInputElem = (elem.tagName.toLowerCase() == 'input');
           var elemValue = elem.value;
           if (isInputElem && (elem.type.toLowerCase() == 'radio')) {
@@ -108,14 +120,15 @@ TE.prototype = {
           elementsValues.set(elem.name, elemValue);
         }
       });
+      console.log('retrieveInitialValues: before add elementsValues ', formId);
       _me.editorFormsInitialValues.set(formId, elementsValues);
     }
+    console.log('retrieveInitialValues: end');
   },
 
   _insertLoadingIndicator : function() {
-    var loaderimg = new Element('img', {
-      'src': '/file/resources/celRes/ajax-loader.gif'
-    }).setStyle({
+    var _me = this;
+    var loaderimg = _me._loading.getLoadingIndicator().setStyle({
       'display' : 'block',
       'marginLeft' : 'auto',
       'marginRight' : 'auto'
@@ -145,9 +158,9 @@ TE.prototype = {
   },
 
   initTabMenu : function() {
-    var tabEditor = this;
+    var _me = this;
     if (!$('tabMenuPanel').down('.xwikimessage')) {
-      tabEditor._insertLoadingIndicator();
+      _me._insertLoadingIndicator();
       new Ajax.Request(getTMCelHost(), {
         method: 'post',
         parameters: {
@@ -157,13 +170,20 @@ TE.prototype = {
         },
         onSuccess: function(transport) {
           if (transport.responseText.isJSON()) {
-            tabEditor.tabMenuSetup(transport.responseText.evalJSON());
+            console.log('initTabMenu: before tabMenuSetup ');
+            _me.tabMenuSetup(transport.responseText.evalJSON());
           } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
             console.log('failed to get CelTabMenu config: no valid JSON!', transport);
           } else {
             alert('Failed to load editor. Please try to reload the page and if it happens '
                + 'again, contact support. ');
           }
+          $$('body')[0].observe('scroll', function(event) {
+            event.target.scrollTop = 0; //FF and IE fix
+          });
+          Event.observe(window, 'scroll', function() {
+            $j(window).scrollTop(0); //webkit 
+          });
         }
       });
     }
@@ -171,8 +191,8 @@ TE.prototype = {
 
   tabMenuSetup : function(tabMenuConf) {
     var _me = this;
+    console.log('tabMenuSetup start');
     _me.tabMenuConfig = tabMenuConf;
-    
     var starttabId = '';
     var celstartab = '';
     if ($('cel_startab')) {
@@ -207,6 +227,7 @@ TE.prototype = {
         && (_me.tabMenuConfig.isDirtyOnLoad == true));
     _me.tmd = new YAHOO.widget.Panel("tabMenuPanel", _me.tabMenuConfig.tabMenuPanelConfig);
     _me.tmd.render();
+    console.log('tabMenuSetup after render');
 
     if (starttabId == '') {
       var starttablist = $$('.celements3_tabMenu .starttab');
@@ -220,6 +241,7 @@ TE.prototype = {
       }
     }
     if(starttabId != null) {
+      console.log('tabMenuSetup before showTabMenu');
       _me.showTabMenu(starttabId);
     }
     
@@ -241,7 +263,7 @@ TE.prototype = {
       titlediv.update(_me.tabMenuConfig.tabMenuPanelConfig.title);
       $('tabMenuPanel').down('.bd').insert({ top: titlediv });
     }
-    window.onbeforeunload = _me.checkBeforeUnload;
+    window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
     _me.afterInitListeners.each(_me._execOneListener);
     var displayNowEffect = new Effect.Parallel([
@@ -264,6 +286,7 @@ TE.prototype = {
     } else {
       $('tabMenuPanel').fire('tabedit:afterDisplayNow');
     }
+    console.log('tabMenuSetup end');
   },
 
   _execOneListener : function(listener) {
@@ -277,7 +300,7 @@ TE.prototype = {
   },
 
   checkBeforeUnload : function() {
-  var _me = getCelementsTabEditor();
+  var _me = this;
     if (_me.isDirty() && !_me.tabMenuConfig.supressBeforeUnload) {
       if (_me.tabMenuConfig && _me.tabMenuConfig.unsavedChangesOnCloseMessage && (_me.tabMenuConfig.unsavedChangesOnCloseMessage != '')) {
         return _me.tabMenuConfig.unsavedChangesOnCloseMessage;
@@ -333,6 +356,24 @@ TE.prototype = {
     }
   },
 
+  _deleteParamsFromURL : function() {
+    var newURL = "";
+    var standardWhiteList = ["xredirect", "xcontinue", "language"];
+    var additionalWhiteList = [];
+    $j("input[name=white_list_url]").each(function( index, value ) {
+      additionalWhiteList.add(value.value);
+    });
+    standardWhiteList = standardWhiteList.concat(additionalWhiteList);
+    for (var index = 0; index < standardWhiteList.length; index++) {
+      var regEx = new RegExp("^.*(" + standardWhiteList[index] + "=[^&]*).*$", "g");
+      var regExArray = regEx.exec(window.location.search);
+      if (regExArray != null) {
+        newURL += regExArray.slice(1).join("&");
+      }
+    } 
+    return newURL;
+  },
+
   initSaveButton : function() {
     var _me = this;
     var saveClickHandler = function() {
@@ -341,7 +382,7 @@ TE.prototype = {
           //remove template in url query after creating document in inline mode
           if (window.location.search.match(/\&?template=[^\&]+/)) {
             window.onbeforeunload = null;
-            window.location.search = window.location.search.replace(/\&?template=[^\&]+/, '');
+            window.location.search = _deleteParamsFromURL();
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
         } else {
@@ -358,9 +399,10 @@ TE.prototype = {
     var closeClickHandler = function() {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         if (!failed) {
-          //TODO call async 'cancel' to release editor-lock
           window.onbeforeunload = null;
-          window.location.href = _me._getRedirectValue();
+          window.location.href = _me._getCancelURL();
+        } else {
+          console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
         }
       });
     };
@@ -368,7 +410,7 @@ TE.prototype = {
     _me.addActionButton(buttonLabel, closeClickHandler);
   },
 
-  _getRedirectValue : function() {
+  _getCancelURL : function() {
     var _me = this;
     var redirectValue = '';
     if ($$('input.celEditorRedirect').size() > 0) {
@@ -384,9 +426,10 @@ TE.prototype = {
         }
       }
     }
-    if (redirectValue == '')  {
-      redirectValue = window.location.pathname.replace(/\/edit\/|\/inline\//, '/view/');
-    }
+    var redirectBaseValue = window.location.pathname.replace(/\/edit\/|\/inline\//,
+        '/cancel/');
+    redirectValue = redirectBaseValue + '?xredirect=' + redirectValue;
+    console.log('_getCancelURL: return redirectValue ', redirectValue);
     return redirectValue;
   },
 
@@ -411,21 +454,20 @@ TE.prototype = {
     var tabBodyId = tabId + '-tab';
     var div = $(tabBodyId);
     var asyncLoading = false;
+    var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
+    console.log('getTab: ', tabBodyId, div, reload);
     if ((div == null) || ((reload != 'undefined') && reload)) {
       if (div == null) {
-        var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
         div = new Element('div', {
           'class': 'menuTab ' + tabBodyId,
-          'id': tabBodyId,
-          'style': 'width: ' + width
+          'id': tabBodyId
+        }).setStyle({
+          'width' : width
         });
       }
       var loaderspan = new Element('span', { 'class': 'tabloader' });
       div.update(loaderspan);
-      var loaderimg = new Element('img', {
-        'src': '/file/resources/celRes/ajax-loader.gif'
-      });
-      loaderspan.update(loaderimg);
+      loaderspan.update(_me._loading.getLoadingIndicator());
       $('tabMenuPanel').down('.bd').appendChild(div);
       var lang = '';
       if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
@@ -452,15 +494,30 @@ TE.prototype = {
          parameters: loadTabParams,
          onSuccess: function(transport) {
            div.update(transport.responseText);
+           console.log('TabEditor.js: after async tab load before LazyLoadJS ',
+               tabBodyId);
+           var scriptLoadedHandler = function() {
+             $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
+             console.log('TabEditor: async loading tab firing celements:contentChanged');
+             $(tabBodyId).fire('celements:contentChanged', {
+               'htmlElem' : $(tabBodyId)
+             });
+           };
+           $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
            _me.lazyLoadJS(div);
            _me.lazyLoadCSS(div);
            //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
            //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
            //TODO following fired event. -> Workaround: execute registered method once after registration.
+           //TODO FP; 25.9.2015; maybe use 'tabedit:scriptsLoaded' instead
+           console.log('TabEditor.js: after async tab load before tabedit:tabchange' 
+               + ' event', tabBodyId);
            $(tabBodyId).fire('tabedit:tabchange', {
              'newTabId' : tabBodyId
            });
            $(tabBodyId).select('form').each(function(formelem) {
+             console.log('getTab async: before retrieveInitialValues ', tabBodyId,
+                 formelem);
              if (formelem && formelem.id) {
                _me.retrieveInitialValues(formelem.id);
              }
@@ -468,6 +525,9 @@ TE.prototype = {
          }
       });
     } else {
+      console.log('getTab: before lazyLoadJS ', tabBodyId, $(tabBodyId));
+      _me.lazyLoadJS($(tabBodyId), true);
+      console.log('getTab: after lazyLoadJS ', tabBodyId, $(tabBodyId));
       $(tabBodyId).select('form').each(function(formelem) {
         if (formelem && formelem.id && !_me.editorFormsInitialValues.get(formelem.id)) {
           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
@@ -478,6 +538,10 @@ TE.prototype = {
         }
       });
     }
+    //fix celements3_tabMenu width
+    $(tabBodyId).up('.celements3_tabMenu').setStyle({
+      'width' : width
+    });
     $(tabBodyId).show();
     if (!asyncLoading) {
       $(tabBodyId).fire('tabedit:tabchange', {
@@ -487,32 +551,62 @@ TE.prototype = {
     _me.setButtonActive(tabId);
   },
 
- lazyLoadJS : function(parentEle) {
+ lazyLoadJS : function(parentEle, syncLoadOnly) {
   var _me = this;
+  syncLoadOnly = syncLoadOnly || false;
   var scripts = [];
-  parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec').each(function(scriptEle) {
-    if(scriptEle.hasClassName('cel_lazyloadJS')) {
+  var scriptElems = parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec');
+  console.log('lazyLoadJS: start ', parentEle, syncLoadOnly, scriptElems);
+  scriptElems.each(function(scriptEle) {
+    if (scriptEle.hasClassName('cel_lazyloadJS')) {
       var scriptPath = scriptEle.innerHTML;
-      if(scriptPath != '') {
+      var scriptPathObj = "";
+      var scriptURL = "";
+      var loadScript = !syncLoadOnly;
+      console.log('lazyLoadJS: scriptPath isJSON ', scriptPath, scriptPath.isJSON());
+      if (scriptPath.isJSON()) {
+        scriptPathObj = scriptPath.evalJSON();
+        scriptPath = scriptPathObj.url;
+        scriptURL = scriptPathObj.fullURL;
+        loadScript = !syncLoadOnly || (scriptPathObj.initLoad);
+      }
+      console.log('lazyLoadJS: scriptPath after isJSON ', scriptPath, scriptURL);
+      if ((typeof scriptPath !== 'undefined') && (scriptPath != '')) {
         if (scriptPath.indexOf('?') > 0) {
           scriptPath += '&';
         } else {
           scriptPath += '?';
         }
         scriptPath += "version=" + _me.tabMenuConfig.startupTimeStamp;
-        scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
-        if(!_me.scriptIsLoaded(scriptPath)) {
-          scripts.push( { isUrl: true, value: scriptPath } );
-//          var newEle = new Element('script', { type: 'text/javascript', src: scriptPath });
-//          $$('head')[0].insert(newEle);
+        if ((typeof scriptPathObj === 'object') && (scriptPathObj.action == 'file')) {
+          scriptPath = _me.tabMenuConfig.jsPathFileActionPrefix + scriptPath;
+        } else {
+          scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
         }
+        scriptURL = scriptPath;
       }
-    } else if(scriptEle.hasClassName('cel_lazyloadJS_exec')) {
+      console.log('lazyLoadJS: before check load script ', loadScript, scriptURL);
+      if (loadScript && scriptURL && (scriptURL !== '')
+          && !_me.scriptIsLoaded(scriptURL)) {
+        console.log('lazyLoadJS: add ', scriptURL);
+        scripts.push( { isUrl: true, value: scriptURL } );
+//          var newEle = new Element('script', { type: 'text/javascript', src: scriptURL });
+//          $$('head')[0].insert(newEle);
+      }
+    } else if (scriptEle.hasClassName('cel_lazyloadJS_exec')) {
+      console.log('lazyLoadJS: elsif is URL false add ', scriptEle.innerHTML);
       scripts.push( { isUrl: false, value: scriptEle.innerHTML } );
 //      eval(scriptEle.innerHTML);
     }
   });
-  if(scripts.length > 0) { _me.loadScripts(scripts); }
+  if(scripts.length > 0) {
+    console.log('lazyLoadJS scripts ', scripts);
+    _me.loadScripts(scripts);
+  } else {
+    console.log('TabEditor: lazyLoadJS NO scripts to add -> firing tabedit:scriptsLoaded');
+    $('tabMenuPanel').fire('tabedit:scriptsLoaded');
+  }
+  console.log('lazyLoadJS: end');
  },
 
  lazyLoadCSS : function(parentEle) {
@@ -520,6 +614,11 @@ TE.prototype = {
   var scripts = [];
   parentEle.select('span.cel_lazyloadCSS').each(function(scriptEle) {
     var scriptPath = scriptEle.innerHTML;
+    var scriptPathObj = "";
+    if (scriptPath.isJSON()) {
+      scriptPathObj = scriptPath.evalJSON();
+      scriptPath = scriptPathObj.url;
+    }
     if(scriptPath != '') {
       if (scriptPath.indexOf('?') > 0) {
         scriptPath += '&';
@@ -527,7 +626,11 @@ TE.prototype = {
         scriptPath += '?';
       }
       scriptPath += "version=" + _me.tabMenuConfig.startupTimeStamp;
-      scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
+      if ((typeof scriptPathObj === 'object') && (scriptPathObj.action == 'file')) {
+        scriptPath = _me.tabMenuConfig.jsPathFileActionPrefix + scriptPath;
+      } else {
+        scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
+      }
       if(!_me.cssIsLoaded(scriptPath)) {
         scripts.push( { isUrl: true, value: scriptPath } );
       }
@@ -535,7 +638,7 @@ TE.prototype = {
   });
   if(scripts.length > 0) { _me.loadCSSScripts(scripts); }
  },
- 
+
  loadCSSScripts : function(scripts) {
   var _me = this;
   var CSSLoaded = function() {
@@ -587,7 +690,7 @@ TE.prototype = {
     _me.scriptQueue = _me.scriptQueue.slice(1); // remove first element
     if(loadScript.isUrl) {
       var newEle = new Element('script', { type: 'text/javascript', src: loadScript.value });
-    if(Prototype.Browser.IE) {
+      if(Prototype.Browser.IE) {
         newEle.onreadystatechange = function () {
           if (this.readyState === 'loaded' || this.readyState === 'complete') {
             scriptLoaded();
@@ -598,6 +701,7 @@ TE.prototype = {
         newEle.onerror = scriptLoaded;
       }
       _me.scriptLoading = true;
+      console.log('loadScripts insert ', newEle);
       $$('head')[0].insert(newEle);
     } else {
       eval(loadScript.value);
@@ -609,16 +713,29 @@ TE.prototype = {
     });
     _me.loadScripts();
   }
-},
+  _me._loadScriptsCheckFinished();
+ },
 
- scriptIsLoaded : function(script) {
+ _loadScriptsCheckFinished : function() {
+   var _me = this;
+   if (!_me.scriptLoading && _me.scriptQueue.size() <= 0) {
+     console.log('TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded');
+     $('tabMenuPanel').fire('tabedit:scriptsLoaded');
+   }
+ },
+
+ scriptIsLoaded : function(scriptURL) {
   var _me = this;
   var isLoaded = false;
   $$('script').each(function(loadedScript) {
-    if(loadedScript.src === _me.getTMCelDomain() + script) {
+    //as long as new URL() is not available in IE use a-Element
+    var scriptNewURLLink = new Element('a', { 'href' : scriptURL});
+    console.log('scriptIsLoaded: ', loadedScript.src, scriptNewURLLink);
+    if(loadedScript.src === scriptNewURLLink.href) {
       isLoaded = true;
     }
   });
+  console.log('scriptIsLoaded: return ', isLoaded, scriptURL);
   return isLoaded;
 },
 
@@ -688,11 +805,12 @@ TE.prototype = {
  },
  
  getFirstFormWithId : function() {
+   var formName = '';
    if(document.forms['edit']) {
      formName = 'edit';
    } else {
      $A(document.forms).each(function(form) {
-       if(form.id != '') {
+       if (form.id != '') {
          formName = form.id;
          throw $break;
        }
@@ -710,7 +828,7 @@ TE.prototype = {
     }
     var savingDialog = this._getModalDialog();
     savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader); 
-    savingDialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+    savingDialog.setBody(_me._loading.getLoadingIndicator(true)); 
     savingDialog.cfg.queueProperty("buttons", null);
     savingDialog.render();
     savingDialog.show();
@@ -730,6 +848,13 @@ TE.prototype = {
   }
  },
 
+ /**
+  * showErrorMessages display errors in jsonResponses to the user
+  * 
+  * @param jsonResponses
+  * @returns true if errors have been displayed
+  *          false if no errors have been displayed
+  */
  showErrorMessages : function(jsonResponses) {
    var _me = this;
    var errorMessages = new Array();
@@ -782,7 +907,7 @@ TE.prototype = {
  showProgressDialog : function(headerTxt) {
    var savingDialog = this._getModalDialog();
    savingDialog.setHeader(headerTxt); 
-   savingDialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+   savingDialog.setBody(_me._loading.getLoadingIndicator(true)); 
    savingDialog.cfg.queueProperty("buttons", null);
    savingDialog.render();
    savingDialog.show();
@@ -804,16 +929,31 @@ TE.prototype = {
    return isDirty;
  },
 
- updateTinyMCETextAreas : function(formId) {
-   document.forms[formId].select('textarea.mceEditor').each(function(formfield) {
-   if (tinyMCE && tinyMCE.get(formfield.id)) {
-       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-         console.log('updateTinyMCETextAreas: ', formfield.name,
-             tinyMCE.get(formfield.id).getContent());
-       }
-       formfield.value = tinyMCE.get(formfield.id).getContent();
+ updateOneTinyMCETextArea : function(ed) {
+   var formfield = $(ed.id);
+   try {
+     if (typeof ed.serializer !== 'undefined') {
+       formfield.value = ed.getContent();
+       console.log('updateOneTinyMCETextArea: for field ', formfield.id, formfield.value);
+     } else {
+       console.warn('updateOneTinyMCETextArea: no serializer -> skip ' + ed.id);
+     }
+   } catch (exp) {
+     console.error('updateTinyMCETextAreas: failed with exception ' + formfield.id,
+         ed.serializer, exp);
    }
+ },
+
+ updateTinyMCETextAreas : function(formId) {
+   var _me = this;
+   var mceFields = document.forms[formId].select('textarea.mceEditor');
+   console.log('updateTinyMCETextAreas: for ', formId, mceFields);
+   mceFields.each(function(formfield) {
+     if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
+       _me.updateOneTinyMCETextArea(tinyMCE.get(formfield.id));
+     }
    });
+   console.log('updateTinyMCETextAreas: end ', formId);
  },
 
  /**
@@ -862,8 +1002,10 @@ TE.prototype = {
  },
 
  _formDirtyOnLoad : function(formId) {
-   return (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
-     && ($(formId).celFormDirtyOnLoad.value == 'true');
+   var _me = this;
+   return _me._isEditorDirtyOnLoad ||
+     (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
+       && ($(formId).celFormDirtyOnLoad.value == 'true');
  },
 
  getDirtyFormIds : function() {
@@ -935,11 +1077,16 @@ TE.prototype = {
                  _me.saveAllFormsAjax(function(transport, jsonResponses) {
                    _dialog.hide();
                    var failed = _me.showErrorMessages(jsonResponses);
+                   if ((typeof console != 'undefined')
+                       && (typeof console.log != 'undefined')) {
+                     console.log('saveAllFormsAjax returning: ', failed, jsonResponses,
+                         execCallback);
+                   }
              execCallback(transport, jsonResponses, failed);
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
                  _dialog.cfg.queueProperty("buttons", null);
-                 _dialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+                 _dialog.setBody(_me._loading.getLoadingIndicator(true)); 
                  _dialog.render();
                }, isDefault:true }
              ]);
@@ -1074,7 +1221,8 @@ TE.prototype = {
   }
 };
 
-YAHOO.register("tabeditor", CELEMENTS.widget.TabEditor, {version: "2.6", build: "7"});
+})(window);
+//YAHOO.register("tabeditor", CELEMENTS.widget.TabEditor, {version: "2.6", build: "7"});
 
 var getTMCelHost = function() {
   var celHost = document.location.href + '?';

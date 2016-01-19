@@ -1,0 +1,156 @@
+#macro(checkAction $formActionObj)
+#if($hasedit && $debug)
+doc: $doc, $doc.fullName<br/>
+formDoc: $formDoc $formDoc.fullName <br/>
+tdoc: $tdoc,$tdoc.fullName<br/>
+formActionObj: $formActionObj<br/>
+formActionObj Class: $formActionObj.getClass()<br/>
+action docfullname: $formActionObj.get("doc_fullName")<br/>
+action docfullname 2: $formActionObj.getProperty("doc_fullName")<br/>
+action docfullname 3: $formActionObj.getProperty("doc_fullName").getValue()<br/>
+action completeRuleSnippet: $formActionObj.getProperty("completeRuleSnippet").getValue()<br/>
+<!-- $formActionObj.get('docfullname') , $formActionObj.get('docfullname').getValue() -->
+<!-- $formActionObj.get('completeRuleSnippet') , $formActionObj.get('completeRuleSnippet').getValue() -->
+#end
+#set($actionDocFullName = "$!{formActionObj.getProperty('doc_fullName').getValue()}")
+##TODO: check if database prefix is needed if FormView lies (not) in celements2web
+#set($formActionDoc = $xwiki.getDocument("$actionDocFullName"))
+## get the action type and templateDoc
+#set($theDoc = $formActionDoc)
+$xwiki.includeForm("celements2web:Macros.getActionTypeAndActionTemplateDoc", false)
+## get the specific exec template
+#set($action_exec = $ataatd_spec_exec)
+##IMPORTANT: if you change this if condition PLEASE add an appropriate debugging information at the
+##           end of this script.
+#set($isExecutable = $isExecutable && ("$!actionDocFullName" != '') && $xwiki.exists("$!actionDocFullName") && ("$!formActionDoc" != '') && $xwiki.exists($action_exec))
+#end  ## macro checkAction
+## start script
+#set($errorMsg = '') ## initalize
+#if("$!celldoc" != '')
+#set($contentDoc = $celldoc)
+#else   
+#set($contentDoc = $tdoc)
+#end
+#if("$!formDoc" == '')
+ #set($checkActionObjs = $!{doc.getObjects('Celements2.FormActionClass')})
+ #if(("$!celldoc" != '') && ($checkActionObjs.size() == 0))
+   #set($formDoc = $celldoc)
+ #else
+   #set($formDoc = $doc)
+ #end
+#end
+#set($formActionObjs = $!{formDoc.getObjects('Celements2.FormActionClass')})
+#set($isExecutable = ($formActionObjs.size() > 0))
+#foreach($actionObj in $formActionObjs)
+  #if($isExecutable)
+    ## to preserve the first error message
+    ## check only if all Actions before are executable
+    #checkAction($actionObj)
+    #set($formActionObj=$actionObj)
+  #end
+#end
+#if($isExecutable)
+## the form is correctly configured show the form or if it is filled correctly
+## start the FormAction.
+##set($filled = ($request.getParameterMap().size()>1))
+##TODO: moved excludeFromIsFilledCheck to FormConfigClass instead of FormActionClass
+##      left in check on formAction doc for backward compatibility
+#set($formConfigObj = $formDoc.getObject('Celements2.FormConfigClass'))
+#set($excludeFromIsFilled = "$!formConfigObj.getProperty('excludeFromIsFilledCheck').getValue()")
+#set($excludeFromIsFilled = "$!{excludeFromIsFilled},$!formActionObj.getProperty('excludeFromIsFilledCheck').getValue()")
+#set($filled = $celementsweb.isFormFilled($excludeFromIsFilled))
+##
+## check all actions completeRuleSnippet
+#set($complete = true)
+#foreach($formActionObj in $formActionObjs)
+  #set($oneComplete = false)
+  #if("$!{formActionObj.getProperty('completeRuleSnippet').getValue()}" != "")
+    #set($H = '#') #set($d = '$')
+    #set($execStr = "${H}set(${d}oneComplete = $!{formActionObj.completeRuleSnippet})")
+    #set($!res = $!xwiki.renderText($execStr, $doc))
+  #else
+    #set($oneComplete = $filled)
+  #end
+  #set($complete = $complete && $oneComplete)
+#end ## foreach
+##
+#if($complete)
+  #set($successful = false)
+  #set($theDoc = $formDoc)
+  $xwiki.includeForm('celements2web:Macros.executeActions', false)
+  #set($formConfigObj = $formDoc.getObject('Celements2.FormConfigClass'))
+#if($hasedit && $debug)
+formDoc: $formDoc <br />
+formConfigObj: <pre>$formConfigObj</pre><br/>
+successfulpage: $!formConfigObj.getProperty('successfulpage').getValue() <br />
+failedpage: $!formConfigObj.getProperty('failedpage').getValue()<br />
+successful: $successful <br />
+#end
+  #if("$!formConfigObj" != '')
+    #set($successfulpage = "$!formConfigObj.getProperty('successfulpage').getValue()")
+    #set($failedpage = "$!formConfigObj.getProperty('failedpage').getValue()")
+    #if($successful && ("$!successfulpage" != '') && $xwiki.exists($successfulpage))
+      $xwiki.includeForm($successfulpage, false)
+    #elseif(!$successful && ("$!failedpage" != '') && $xwiki.exists($failedpage))
+      $xwiki.includeForm($failedpage, false)
+    #else
+      $actionScriptOutput
+    #end
+  #else
+    $actionScriptOutput
+  #end
+  #if($hasedit && $debug)
+  debugging: <br/>
+$actionScriptOutput
+  #end
+#else
+## display form from the page content
+##TODO: make this configurable: withJSvalidation
+$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
+$celementsweb.addExtJSfileOnce(':celJS/validation.js')
+$celementsweb.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
+#if($hasedit && $debug)
+execStr: $execStr<br/>
+complete: $complete<br/>
+#end
+#if($filled && !$complete)
+    ##TODO: get this Message from some multilingual Crumbs.
+    #if("$!errorMsg" == '')
+    #set($errorMsg = $msg.get('cel_form_validation_failed_msg'))
+    #end
+<p class="box_red"><strong>$errorMsg</strong></p>
+#end
+ #set($celementsFormValidationName = '')
+ #if("$!renderedFormContent" == '')
+  #set($rteContent = $xwiki.celementsweb.renderDocument($!contentDoc))
+  $rteContent
+ #else
+   $!renderedFormContent
+ #end
+ #if("$!celementsFormValidationName" != '')
+  <!--
+  deprecated usage of celementsFormValidationName variable instead add the css tricker
+  class celAddValidationToForm to the form and do NOT set celementsFormValidationName
+   -->
+  <script type="text/javascript">
+   var valid = Validation.addValidationToForm(${q}${celementsFormValidationName}${q});
+  </script>  
+ #end
+#end
+#else ## config check
+## if an editor logged in give error details else tell only something is wrong.
+#if($hasedit)
+  #if("$!actionDocFullName" == '')
+    #set($errMsg = "ERROR: no action document defined.")
+  #elseif(!$xwiki.exists("$!actionDocFullName") || ("$!formActionDoc" == ''))
+    #set($errMsg = "ERROR: Cannot find action document ${actionDocFullName}.")
+  #elseif(!$xwiki.exists($action_exec))
+    #set($errMsg = "ERROR: Cannot find action exec template ${action_exec} for action document ${actionDocFullName}.")
+  #else
+    #set($errMsg = "ERROR: unknown error.")
+  #end
+#else
+  #set($errMsg = $msg.get('cel_general_form_failure_msg'))
+#end
+<p class="box_red"><strong>$errMsg</strong></p>
+#end

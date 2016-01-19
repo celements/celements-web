@@ -6,14 +6,20 @@
 #end
 #if("$request.xpage" != 'rdf')
 #set($theDoc = $contentDoc)
-$xwiki.includeForm('celements2web:Macros.getContentDblClick', false)
+#parse('celMacros/getContentDblClick.vm')
 #set($theDoc = '')
 ##
 #set($additionalCSS = '')
 #if($celementsweb.isEmptyRTEDocument($contentDoc.documentReference))
 #set($additionalCSS = "$!additionalCSS celRTEempty")
 #end
-#if($contentDoc.documentReference == $doc.documentReference)
+#set($currentPageType = $services.pageType.getPageTypeRef($doc.documentReference).getConfigName())
+#if("$!currentPageType" == 'Redirect')
+  #set($red_objRT = $doc.getObject("Celements2.Redirect"))
+  #set($origRedURLRT = "$!red_objRT.getProperty('redirect').getValue()")
+  #set($insideRedirectIncludedView = $services.celementsweb.getGlobalContextValue("insideRedirectIncludedView"))
+#end
+#if(($contentDoc.documentReference == $doc.documentReference) || $insideRedirectIncludedView)
 #set($currentPagePart = 'currentPage:')
 #else
 #set($currentPagePart = '')

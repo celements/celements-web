@@ -12,6 +12,9 @@
 ##$menu.name ; ##
 ###end
 ## -->
+<script type="text/javascript">
+  window.celFinishHeaderHandler();
+</script>
 #set($cel_loadAdminMenuBar = ("$context.action" != 'edit') && ("$context.action" != 'inline') && ("$!doc.space" != "Celements2") && ("$!request.picker" != '1') && ("$!doc.fullName" != 'Tools.EditBanner'))
 #set($cel_loadAdminMenuBar = ($isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0)) && $cel_loadAdminMenuBar)
 #end

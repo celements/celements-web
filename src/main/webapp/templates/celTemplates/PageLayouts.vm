@@ -3,10 +3,10 @@
     #if(!$isLayoutEditorAvailable)
         <p>The celements LayoutEditor is missing. Please get a current version from
  <a target="_blank" href="http://maven.celements.ch/releases/celLayoutEditor/?C=M;O=D">http://maven.celements.ch/releases/celLayoutEditor/</a>
- and install it with the <a href="$xwiki.getURL('XWiki.Import', 'import', 'skin=toucan')">Import Manager</a>.</p>
+ and install it with the <a href="$xwiki.getURL('XWiki.Import','import','xpage=overlay&conf=XarImport')">Import Manager</a>.</p>
     #else
     <p>click Pretty Name to edit</p>
-    <p>Import additional Layouts with the <a href="$xwiki.getURL('XWiki.Import', 'import', 'skin=toucan')">Import Manager</a>.
+    <p>Import additional Layouts with the <a href="$xwiki.getURL('XWiki.Import','import','xpage=overlay&conf=XarImport')">Import Manager</a>.
     #end
   #set($layoutsMap = $celementsweb.getAllPageLayouts())
   #if($layoutsMap.keySet().size() > 0)

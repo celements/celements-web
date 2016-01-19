@@ -1,0 +1,22 @@
+#set($cellObj = "")
+#set($transboxObj = $celldoc.getObject('Celements.TranslationBoxCellConfigClass'))
+#set($pageExpStr = "$!transboxObj.getProperty("page_exceptions").getValue()")
+#set($pageExps = $pageExpStr.split('[, ]'))
+#set($pagetypeExpStr = "$!transboxObj.getProperty("pagetype_exceptions").getValue()")
+#set($pagetypeExps = $pageExpStr.split('[, ]'))
+#set($docPageTypeRef = $services.pageType.getPageTypeRef($doc.documentReference))
+#if(("$!language" != "$!default_language") && ("$!language" != "$tdoc.getLanguage()") && !$pageExps.contains($doc.getFullName()) && !$pagetypeExps.contains($docPageTypeRef.getConfigName()))
+  #set($effLang = "$tdoc.getLanguage()")
+  #if("$!effLang" == '')
+    #set($effLang = "$default_language")
+  #end
+  #set($effLang = $msg.get("cel_$effLang"))
+  #set($wantLang = $msg.get("cel_$language"))
+  #set($editNow = '')
+  #if($hasedit) 
+    #set($Qu = '"')
+    #set($editNow = " (<a href=${Qu}$doc.getURL('edit')${Qu}>$adminMsg.get('cel_editnow')</a>)")
+  #end
+  <p>$msg.get('cel_notranslation',["$effLang", "$wantLang"])$!{editNow}</p>
+#end
+<!--iE6.0-->
