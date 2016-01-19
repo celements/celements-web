@@ -96,6 +96,15 @@ Validation.prototype = {
             _me.validateFieldHandler.bind(_me));
 			});
 		}
+		var submitButtons = _me.form.select('.celSubmitFormWithValidation');
+		if ((submitButtons.size() == 0) && $(_me.form.id + '_SubmitLink')) {
+		  submitButtons = [$(_me.form.id + '_SubmitLink')];
+	    console.warn('deprecated usage of submit link outside of form-tag: ',
+	        submitButtons);
+		}
+		submitButtons.each(function(buttonElem) {
+      buttonElem.observe('click', _me.clickOnSubmitLinkHandler.bind(_me));
+    });
 	},
 	validateFieldHandler : function(ev) {
     var _me = this;
@@ -111,6 +120,14 @@ Validation.prototype = {
 		if(!this.validate()) {
 		  Event.stop(ev);
 	    this.form.fire('celValidation:validationFailedSubmitCancel', this.form);
+		} else {
+      var valSubEv = this.form.fire('celValidation:submitFormAfterValidation', {
+        form: this.form,
+        submitEvent : ev
+      });
+      if (valSubEv.stopped) {
+        ev.stop();
+      }
 		}
 	},
 	validate : function() {
@@ -132,6 +149,13 @@ Validation.prototype = {
 	},
 	reset : function() {
 		Form.getElements(this.form).each(Validation.reset);
+	},
+	clickOnSubmitLinkHandler : function(event) {
+	  var _me = this;
+	  event.stop();
+	  if (_me.validate()) {
+	    _me.form.submit();
+	  }
 	}
 };
 
@@ -182,7 +206,12 @@ Object.extend(Validation, {
 			}
 			elm[prop] = true;
 			elm.removeClassName('validation-passed');
-			elm.addClassName('validation-failed');
+      elm.addClassName('validation-failed');
+			var elmWrapper = elm.up('.validation-field-wrapper');
+			if (elmWrapper) {
+			  elmWrapper.removeClassName('validation-passed');
+			  elmWrapper.addClassName('validation-failed');
+			}
 			return false;
 		} else {
 			var advice = Validation.getAdvice(name, elm);
@@ -190,6 +219,11 @@ Object.extend(Validation, {
 			elm[prop] = '';
 			elm.removeClassName('validation-failed');
 			elm.addClassName('validation-passed');
+      var elmWrapper = elm.up('.validation-field-wrapper');
+      if (elmWrapper) {
+        elmWrapper.removeClassName('validation-failed');
+        elmWrapper.addClassName('validation-passed');
+      }
 			return true;
 		}
 		} catch(e) {
@@ -221,6 +255,11 @@ Object.extend(Validation, {
 			}
 			elm.removeClassName('validation-failed');
 			elm.removeClassName('validation-passed');
+      var elmWrapper = elm.up('.validation-field-wrapper');
+      if (elmWrapper) {
+        elmWrapper.removeClassName('validation-failed');
+        elmWrapper.removeClassName('validation-passed');
+      }
 		});
 	},
 	add : function(className, error, test, options) {
@@ -254,33 +293,8 @@ Validation.add('IsEmpty', '', function(v) {
   return ((v == null) || (v.length == 0)); // || /^\s+$/.test(v));
   });
 
-var getCelHost = function() {
-  var celHost = document.location + '?';
-  celHost = celHost.substring(0, celHost.indexOf('?'));
-  return celHost;
-};
-
 Validation.messages = new Hash( {
   '_unknown_' : 'unkown error'
-});
-
-new Ajax.Request(getCelHost(), {
-  method : 'post',
-  parameters : {
-    xpage : 'celements_ajax',
-    ajax_mode : 'ValidationMessages'
-  },
-  onSuccess : function(transport) {
-    if (transport.responseText.isJSON()) {
-      Validation.messages = Validation.messages.merge(transport.responseText.evalJSON());
-      Validation.addAllThese(Validation.defaultFunctions);
-      if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-        console.debug('validation.js: finished adding default functions.');
-      }
-    } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
-      console.error('noJSON!!! ', transport.responseText);
-    }
-  }
 });
 
 Validation.defaultFunctions = [
@@ -339,11 +353,11 @@ Validation.defaultFunctions = [
 				// [$].##
 				return Validation.get('IsEmpty').test(v) ||  /^\$?\-?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}\d*(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/.test(v);
 			}],
-	['validate-selection', null, function(v,elm){
+	['validate-selection', null, function(v, elm){
 				return elm.options ? elm.selectedIndex > 0 : !Validation.get('IsEmpty').test(v);
 			}],
-  ['validate-one-required', null, function (v,elm) {
-        var p = elm.parentNode;
+  ['validate-one-required', null, function (v, elm) {
+        var p = elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
         var options = p.getElementsByTagName('INPUT');
         return $A(options).any(function(elm) {
           return $F(elm);
@@ -352,3 +366,49 @@ Validation.defaultFunctions = [
   ['validate-email-equal', 'email', Validator.methods.equalToField ],
   ['validate-docname', null, Validator.methods.validDocName ]
 ];
+
+new Ajax.Request(getCelHost(), {
+  method : 'post',
+  parameters : {
+    xpage : 'celements_ajax',
+    ajax_mode : 'ValidationMessages'
+  },
+  onSuccess : function(transport) {
+    if (transport.responseText.isJSON()) {
+      Validation.messages = Validation.messages.merge(transport.responseText.evalJSON());
+      Validation.addAllThese(Validation.defaultFunctions);
+      if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+        console.debug('validation.js: finished adding default functions.');
+      }
+    } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+      console.error('noJSON!!! ', transport.responseText);
+    }
+  }
+});
+
+Validation.addValidationToForm = function(form) {
+  var valid = null;
+  if (form.tagName.toLowerCase() == 'form') {
+    valid = new Validation(form, {
+      immediate : true,
+      useTitles : true,
+      stopOnFirst : false
+    });
+  }
+  return valid;
+};
+
+Validation.addValidationToFormListener = function(event) {
+  var elem = event.findElement();
+  if (elem.tagName.toLowerCase() == 'form') {
+    Validation.addValidationToForm(elem);
+  } else {
+    elem.select('form.celAddValidationToForm').each(Validation.addValidationToForm);
+  }
+};
+
+celAddOnBeforeLoadListener(function() {
+  $(document.body).observe('celValidation:addValidation',
+      Validation.addValidationToFormListener);
+  $(document.body).fire('celValidation:addValidation');
+});

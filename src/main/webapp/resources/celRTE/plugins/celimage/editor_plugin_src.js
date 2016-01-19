@@ -51,6 +51,7 @@
 
     loadOrigDimensionsAsync : function(ed, imageFullName, callbackFN) {
       if (imageFullName && (imageFullName != '')) {
+//        console.log('loadOrigDimensionsAsync: called with imageFullName ', imageFullName);
         callbackFN = callbackFN || function() {};
         new Ajax.Request(getCelHost(), {
           method: 'post',
@@ -92,7 +93,10 @@
     },
 
     _resizeHappend : function(ed, e) {
-      var lastDim = ed.lastSize.get(this._getImageFullName(e.src));
+      var _me = this;
+      var imgSrc = decodeURI(e.src);
+      var imageFullName = _me._getImageFullName(imgSrc);
+      var lastDim = ed.lastSize.get(imageFullName);
       return lastDim && ((lastDim.width != e.width) || (lastDim.height != e.height));
     },
 
@@ -128,7 +132,9 @@
     checkResizeEnd : function(ed, cm, e) {
       if (e.nodeName != 'IMG')
         return;
-      var imageFullName = this._getImageFullName(e.src);
+      var imgSrc = decodeURI(e.src);
+      var imageFullName = this._getImageFullName(imgSrc);
+//      console.log('checkResizeEnd: e.src _getImageFullName ', e.src, imageFullName);
       if (!ed.origData.get(imageFullName)) {
         var cropW = parseInt(e.src.replace(/((^|(.*(?:[\?&]|&amp;)))cropW=(\d*)\D?.*)|.*/g, '$4'));
         if(!cropW || (typeof(cropW) == 'undefined') || (cropW <= 0)) {

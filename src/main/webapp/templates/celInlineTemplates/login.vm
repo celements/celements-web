@@ -27,7 +27,7 @@
 #end
   #set($url = "$!request.xredirect")
   #if("$!url" == '')
-  #set($url = "/")
+  #set($url = "$!services.authentication.getLoginRedirectURL()")
   #end
   #set($loginUser = $celementsweb.checkAuth("$request.get('j_username')", "$request.get('j_password')", $rememberme, "$celUserDataFieldLogin"))
   #if("$!loginUser.getUser()" != '')

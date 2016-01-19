@@ -1,4 +1,2 @@
-$celementsweb.addExtJSfileOnce("${xwiki.getSkinFile('celRTE/tiny_mce_src.js', true)}?version=${xwiki.celementsweb.getLastStartupTimeStamp()}")
-<span class='cel_lazyloadJS' style='display: none;'>celRTE/tiny_mce_src.js</span>
-$celementsweb.addExtJSfileOnce(":celJS/celTabMenu/loadTinyMCE-async.js")
-<span class='cel_lazyloadJS' style='display: none;'>celJS/celTabMenu/loadTinyMCE-async.js</span>
+$services.javascript.addLazyExtJSfile(":celRTE/tiny_mce_src.js", "file", "ver=$!{services.celementsweb.getLastStartupTimeStamp()}")
+$services.javascript.addLazyExtJSfile(":celJS/celTabMenu/loadTinyMCE-async.js", "file")

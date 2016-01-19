@@ -27,44 +27,76 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
 
 (function() {
 
-var Dom = YAHOO.util.Dom;
-var YEvent = YAHOO.util.Event;
-
 //////////////////////////////////////////////////////////////////////////////
 // CELEMENTS accordeon animation
 // --> there will be a glitsh on slideup in some browsers if you use margins on headings.
+// id          parent html element. Wrapper of all boxes
+// cssBox      css selector for all boxes (each box containing one title and one content
+//              element)
+// cssTitle    css selector for clickable title element. On a click on the title box, the
+//              content box will toggle between open or close.
+// cssContent  css selector for content box which is open and closed by a click on the
+//              title box. 
 //////////////////////////////////////////////////////////////////////////////
-CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent) {
+CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent, debug) {
   // constructor
   cssTitle = cssTitle || '.accordeonTitle';
   cssContent = cssContent || '.accordeonContent';
-  this._init(id, cssBox, cssTitle, cssContent);
+  this._init(id, cssBox, cssTitle, cssContent, debug);
 };
 
 (function() {
-var AAAE = CELEMENTS.anim.AccordeonEffect;
-
 CELEMENTS.anim.AccordeonEffect.prototype = {
   htmlElem : undefined,
 
   cssBox : undefined,
   cssTitle : undefined,
   cssContent : undefined,
+  openOnlyOnePerLevel : undefined,
+  _clickHandlerBind : undefined,
 
-  _effectRunning : false,
+  _effectRunning : undefined,
+  _debug : undefined,
 
-  _init : function(elemId, cssBox, cssTitle, cssContent) {
+  _init : function(elemId, cssBox, cssTitle, cssContent, debug) {
     var _me = this;
+    _me._debug = debug || false;
+    _me._effectRunning = false;
+    _me._clickHandlerBind = _me.clickHandler.bind(_me);
+    _me.openOnlyOnePerLevel = true;
     _me.htmlElem = $(elemId);
     _me.cssBox = cssBox;
     _me.cssTitle = cssTitle;
     _me.cssContent = cssContent;
+    _me.reInit();
+    _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
+  },
+
+  reInit : function() {
+    var _me = this;
     var stepsToHide = _me.htmlElem.select(_me.cssBox);
     stepsToHide.each(function(step) {
-      step.down(_me.cssContent).hide();
-      step.down(_me.cssTitle).observe('click', _me.toggleAccordeon.bind(_me));
+      if (_me.isValidStep(step)) {
+        step.down(_me.cssTitle).stopObserving('click', _me._clickHandlerBind);
+        step.down(_me.cssTitle).observe('click', _me._clickHandlerBind);
+        if (!step.hasClassName('active') && !step.hasClassName('inactive')) {
+          step.addClassName('inactive');
+          step.down(_me.cssContent).hide();
+        }
+      } else if (_me._debug) {
+        console.log('stepsToHide: skip step ', step, _me.cssContent, _me.cssTitle);
+      }
     });
-    _me.htmlElem.fire('celanim_accordeon-block:accordeonInitFinished', _me);
+  },
+
+  setOpenOnlyOnePerLevel : function(openOnlyOnePerLevel) {
+    var _me = this;
+    _me.openOnlyOnePerLevel = openOnlyOnePerLevel;
+  },
+
+  getOpenOnlyOnePerLevel : function() {
+    var _me = this;
+    return _me.openOnlyOnePerLevel;
   },
 
   accordeonHide : function(stepToHide) {
@@ -126,15 +158,39 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
     }
   },
 
-  isStepVisible : function(step) {
+  isValidStep : function(step) {
     var _me = this;
-    return step.down(_me.cssContent).visible();
+    var stepContent = step.down(_me.cssContent);
+    var stepTitle = step.down(_me.cssTitle);
+    return (stepContent && stepTitle);
   },
 
-  toggleAccordeon : function(event) {
+  isStepVisible : function(step) {
+    var _me = this;
+    if (step && step.down(_me.cssContent)) {
+      return step.down(_me.cssContent).visible();
+    } else {
+      return false;
+    }
+  },
+
+  clickHandler : function(event) {
     var _me = this;
     event.stop();
     var step = event.findElement(_me.cssBox);
+    if ((typeof step !== 'undefined') && (_me.isValidStep(step))) {
+      var clickEvent = step.fire('celanim_accordeon-block:beforeClickHandler', step);
+      if (!clickEvent.stopped) {
+        _me.toggleAccordeon(step);
+      }
+    } else if (_me._debug) {
+      console.log('clickHandler: failed to get valid step. ', _me.cssBox,
+          event.findElement());
+    }
+  },
+
+  toggleAccordeon : function(step) {
+    var _me = this;
     if (_me.isStepVisible(step)) {
       var accordeonEffects = [];
       accordeonEffects.push(_me.accordeonHide(step));
@@ -145,14 +201,16 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   },
 
   activateStep : function(nextStep) {
-    var _me = this;
+    var _me = this; 
     var activeSteps = _me.htmlElem.select(_me.cssBox);
     var accordeonEffects = [];
-    activeSteps.each(function(step) {
-      if ((step != nextStep) && (_me.isStepVisible(step))) {
-        accordeonEffects.push(_me.accordeonHide(step));
-      }
-    });
+    if(_me.getOpenOnlyOnePerLevel()) {
+      activeSteps.each(function(step) {
+        if (_me.isValidStep(step) && (step != nextStep) && (_me.isStepVisible(step))) {
+          accordeonEffects.push(_me.accordeonHide(step));
+        }
+      });
+    }
     accordeonEffects.push(_me.accordeonShow(nextStep));
     _me._accordeonExecute(accordeonEffects, nextStep);
     _me.htmlElem.fire('celanim_accordeon-block:activateStepAfterFinish', nextStep);

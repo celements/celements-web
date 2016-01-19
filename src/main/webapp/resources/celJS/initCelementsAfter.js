@@ -18,6 +18,22 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
+(function(window, undefined) {
+  "use strict";
+
+  var updateCelMessages = function() {
+    if (typeof $j.format !== 'undefined') {
+      $j.format.locale({ 'date' : celMessages.jqueryFormater });
+    }
+  };
+
+  $(document.body).observe('cel:messagesLoaded', updateCelMessages);
+  if (typeof celMessages.jqueryFormater === 'object') {
+    updateCelMessages();
+  }
+
+})(window);
+
 if(celOnBeforeLoadListenerArray
     && (typeof celOnBeforeLoadListenerArray !== 'undefined')) {
   $A(celOnBeforeLoadListenerArray).each(function(listener) {

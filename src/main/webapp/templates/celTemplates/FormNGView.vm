@@ -24,6 +24,7 @@ $xwiki.includeForm("celements2web:Macros.getActionTypeAndActionTemplateDoc", fal
 ##           end of this script.
 #set($isExecutable = $isExecutable && ("$!actionDocFullName" != '') && $xwiki.exists("$!actionDocFullName") && ("$!formActionDoc" != '') && $xwiki.exists($action_exec))
 #end  ## macro checkAction
+## start script
 #set($errorMsg = '') ## initalize
 #if("$!celldoc" != '')
 #set($contentDoc = $celldoc)
@@ -127,9 +128,12 @@ complete: $complete<br/>
    $!renderedFormContent
  #end
  #if("$!celementsFormValidationName" != '')
+  <!--
+  deprecated usage of celementsFormValidationName variable instead add the css tricker
+  class celAddValidationToForm to the form and do NOT set celementsFormValidationName
+   -->
   <script type="text/javascript">
-   var valid = new Validation(${q}${celementsFormValidationName}${q},{immediate : true , useTitles : true, stopOnFirst : false}); // OR new Validation(document.forms[0]);
-   Event.observe(window, 'load', function(){ $!onLoadScript });
+   var valid = Validation.addValidationToForm(${q}${celementsFormValidationName}${q});
   </script>  
  #end
 #end

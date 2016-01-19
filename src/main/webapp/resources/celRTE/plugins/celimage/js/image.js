@@ -216,7 +216,8 @@ var CelImageDialog = {
       _me._updateAfterResettingMaxDimension(newIsCropped);
       callbackFN();
     } else {
-      _me.getOrigDimensionsForImg(nl.src.value, function(imageFullName, origDim) {
+      var imgSrc = decodeURI(nl.src.value);
+      _me.getOrigDimensionsForImg(imgSrc, function(imageFullName, origDim) {
 //          console.log('resetMaxDimension: callback ', imageFullName, origDim);
           $('resetMaxLabel').update(origDim.width + ' x ' + origDim.height);
           _me._updateAfterResettingMaxDimension(newIsCropped);
@@ -246,7 +247,7 @@ var CelImageDialog = {
     $$('.panel_wrapper .panel, .panel_wrapper .current').each(function(panel) {
       panel.setStyle( { 'height' : newMaxSize + 'px' });
     });
-    var newPickerMaxSize = newMaxSize - 62 - 41;
+    var newPickerMaxSize = newMaxSize - 62 - 41 - 41;
     $('attachments').setStyle({ 'height' : newPickerMaxSize + 'px' });
     //TODO add minimal height depending on content
   },
@@ -1107,6 +1108,8 @@ var CelImageDialog = {
       $('cropWidth').value = '';
       $('cropHeight').value = '';
 //      console.log('showPreviewImage: image changed');
+    } else {
+//      console.log('showPreviewImage: image NOT changed');
     }
 
 //    console.log('showPreviewImage: new URL ', u);

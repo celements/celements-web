@@ -14,7 +14,11 @@
   #end
   ##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
   ##           get not correctly interpreted in an embedded getRenderedContent call.
-  #set($renderDocument = $xwiki.getDocument("$redURL"))
-  $xwiki.renderText("$!xwiki.getDocument('celements2web:Macros.renderCelementsDocument').getContent()",$doc)
+  #set($redDocRef = $services.model.resolveDocument("$redFN"))
+  #set($renderDocument = $xwiki.getDocument($redDocRef))
+ $services.celementsweb.setGlobalContextValue("insideRedirectIncludedView", true)
+  #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
+ $services.celementsweb.setGlobalContextValue("insideRedirectIncludedView", false)
+  #set($redDocRef = '') ## reset after loading content
   ##
 #end ## if($showIFrame)

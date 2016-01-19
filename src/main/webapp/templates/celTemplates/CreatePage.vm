@@ -43,6 +43,11 @@
 		  #set($pageTypeObj = $new_doc.getObject('Celements2.PageType'))
 		  $pageTypeObj.set('page_layout', "$!request.get('page_layout')")
 		#end
+		#if(("$!request.templateDoc" != '') && $xwiki.exists("$!request.templateDoc"))
+		  #set($templateDocRef = $services.model.resolveDocument("$!request.templateDoc"))
+		  #set($templateDoc = $xwiki.getDocument($templateDocRef))
+		  $new_doc.setContent($templateDoc.getContent())
+		#end
 		## save
 		$new_doc.save()
 		## send redirect
@@ -84,6 +89,7 @@
 
 	<form id="update" method="post" action="">
     <input name='submitted' type='hidden' value='1' />
+    <input name='templateDoc' type='hidden' value="$!request.templateDoc" />
     <input name='space' type='hidden' value='$!request.get("space")' />
 
 	<div id="celements2_addpage_mandatory">

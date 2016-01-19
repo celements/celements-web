@@ -27,7 +27,7 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #end
 <div class="lang_${language} doclang_$doclang">
 <!-- start celements cells -->
-#if(("$!overwriteLayoutRef" != '') && $celementsweb.layoutExists($overwriteLayoutRef))
+#if(("$!overwriteLayoutRef" != '') && $celementsweb.canRenderLayout($overwriteLayoutRef))
 #set($pageContent = $celementsweb.renderPageLayout($overwriteLayoutRef))
 #else
 #set($pageContent = $celementsweb.renderPageLayout())
