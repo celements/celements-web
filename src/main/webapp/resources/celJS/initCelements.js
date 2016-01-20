@@ -130,7 +130,7 @@
   /**
    * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
    **/
-  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
+  if (typeof window.CELEMENTS.Ajax=="undefined"){ window.CELEMENTS.Ajax={};};
   if(window.Ajax && !window.CELEMENTS.Ajax_CORSfixInstalled) {
     window.Try = {
       logging : false, 
@@ -574,7 +574,7 @@
 
   try {
     var topFrame = top || window;
-    new Ajax.Request(topFrame.getCelHost(), {
+    new Ajax.Request(window.getCelHost(), {
       method : 'post',
       parameters : {
         xpage : 'celements_ajax',
