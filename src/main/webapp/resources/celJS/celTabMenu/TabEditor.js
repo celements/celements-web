@@ -527,7 +527,7 @@ TE.prototype = {
            _me._tabsInitalized.push(tabBodyId);
          }
       });
-    } else if (_me._tabsInitalized.indexOf(tabBodyId) > -1 ) {
+    } else if (_me._tabsInitalized.indexOf(tabBodyId) <= -1 ) {
       console.log('getTab: before lazyLoadJS ', tabBodyId, $(tabBodyId));
       _me.lazyLoadJS($(tabBodyId), true);
       console.log('getTab: after lazyLoadJS ', tabBodyId, $(tabBodyId));
