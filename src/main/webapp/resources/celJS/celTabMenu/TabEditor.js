@@ -457,7 +457,6 @@ TE.prototype = {
     var div = $(tabBodyId);
     var asyncLoading = false;
     var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
-    $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
     var scriptLoadedHandler = function() {
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
       console.log('TabEditor: async loading tab firing celements:contentChanged');
@@ -465,6 +464,7 @@ TE.prototype = {
         'htmlElem' : $(tabBodyId)
       });
     };
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
     console.log('getTab: ', tabBodyId, div, reload);
     if ((div == null) || ((reload != 'undefined') && reload)) {
       if (div == null) {
