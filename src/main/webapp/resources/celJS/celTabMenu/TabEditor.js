@@ -48,6 +48,7 @@ TE.prototype = {
   editorFormsInitialValues : undefined,
   modalDialog : undefined,
   initDone : undefined,
+  _tabsInitalized : undefined,
   _isEditorDirtyOnLoad : undefined,
   afterInitListeners : undefined,
   _log : undefined,
@@ -68,6 +69,7 @@ TE.prototype = {
     _me.initDone = false;
     _me._isEditorDirtyOnLoad = false;
     _me.afterInitListeners = new Array();
+    _me._tabsInitalized = new Array();
     _me._log = new CELEMENTS.mobile.Dimensions();
     _me._loading = new CELEMENTS.LoadingIndicator();
   },
@@ -455,6 +457,14 @@ TE.prototype = {
     var div = $(tabBodyId);
     var asyncLoading = false;
     var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
+    var scriptLoadedHandler = function() {
+      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
+      console.log('TabEditor: async loading tab firing celements:contentChanged');
+      $(tabBodyId).fire('celements:contentChanged', {
+        'htmlElem' : $(tabBodyId)
+      });
+    };
     console.log('getTab: ', tabBodyId, div, reload);
     if ((div == null) || ((reload != 'undefined') && reload)) {
       if (div == null) {
@@ -496,14 +506,6 @@ TE.prototype = {
            div.update(transport.responseText);
            console.log('TabEditor.js: after async tab load before LazyLoadJS ',
                tabBodyId);
-           var scriptLoadedHandler = function() {
-             $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
-             console.log('TabEditor: async loading tab firing celements:contentChanged');
-             $(tabBodyId).fire('celements:contentChanged', {
-               'htmlElem' : $(tabBodyId)
-             });
-           };
-           $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
            _me.lazyLoadJS(div);
            _me.lazyLoadCSS(div);
            //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
@@ -522,9 +524,10 @@ TE.prototype = {
                _me.retrieveInitialValues(formelem.id);
              }
            });
+           _me._tabsInitalized.push(tabBodyId);
          }
       });
-    } else {
+    } else if (_me._tabsInitalized.indexOf(tabBodyId) > -1 ) {
       console.log('getTab: before lazyLoadJS ', tabBodyId, $(tabBodyId));
       _me.lazyLoadJS($(tabBodyId), true);
       console.log('getTab: after lazyLoadJS ', tabBodyId, $(tabBodyId));
@@ -537,6 +540,9 @@ TE.prototype = {
           _me.retrieveInitialValues(formelem.id);
         }
       });
+      _me._tabsInitalized.push(tabBodyId);
+    } else {
+      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
     }
     //fix celements3_tabMenu width
     $(tabBodyId).up('.celements3_tabMenu').setStyle({
