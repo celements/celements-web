@@ -126,216 +126,212 @@
       });
     }
   };
-})(window);
 
-/**
- * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
- **/
-if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
-if(window.Ajax && !window.CELEMENTS.Ajax_CORSfixInstalled) {
-  var Try = {
-    logging : false, 
-    these : function() {
-      var returnValue = undefined;
-  
-      for (var i = 0, length = arguments.length; i < length; i++) {
-        var lambda = arguments[i];
-        try {
-          returnValue = lambda();
-          break;
-        } catch (e) {
-          if (Try.logging && (typeof console != 'undefined')
-              && (typeof console.log != 'undefined')) {
-            console.log('Try.these skip lambda ', lambda, e);
+  /**
+   * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
+   **/
+  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
+  if(window.Ajax && !window.CELEMENTS.Ajax_CORSfixInstalled) {
+    window.Try = {
+      logging : false, 
+      these : function() {
+        var returnValue = undefined;
+    
+        for (var i = 0, length = arguments.length; i < length; i++) {
+          var lambda = arguments[i];
+          try {
+            returnValue = lambda();
+            break;
+          } catch (e) {
+            if (Try.logging && (typeof console != 'undefined')
+                && (typeof console.log != 'undefined')) {
+              console.log('Try.these skip lambda ', lambda, e);
+            }
           }
         }
+    
+        return returnValue;
       }
-  
-      return returnValue;
-    }
-  };
-  
-  Ajax.getCORS_Transport = function() {
-    return Try.these(
-      function() {return new XDomainRequest();},
-      function() {return new XMLHttpRequest();},
-      function() {return new ActiveXObject('Msxml2.XMLHTTP');},
-      function() {return new ActiveXObject('Microsoft.XMLHTTP');}
-    ) || false;
-  };
-  
-  Ajax.Request.logging = false;
-  Ajax.Request.addMethods({
-    _status : undefined,
-    _readyState : undefined,
-  
-    initialize : function($super, url, options) {
-      $super(options);
-      this.url = url;
-      if (!this.isSameOrigin() || this.options.crossSite) {
-        this.transport = Ajax.getCORS_Transport();
-      } else {
-        this.transport = Ajax.getTransport();
-      }
-      this.request(url);
-    },
-  
-    request: function(url) {
-      this.url = url;
-      this.method = this.options.method;
-      this._status = 0;
-      if (!this.transport.setRequestHeader) {
-        this.method = 'get';
-      }
-      var params = Object.isString(this.options.parameters) ?
-            this.options.parameters :
-            Object.toQueryString(this.options.parameters);
-  
-      if (!['get', 'post'].include(this.method)) {
-        params += (params ? '&' : '') + "_method=" + this.method;
-        this.method = 'post';
-      }
-  
-      if (params && this.method === 'get') {
-        this.url += (this.url.include('?') ? '&' : '?') + params;
-      }
-  
-      this.parameters = params.toQueryParams();
-  
-      try {
-        var response = new Ajax.Response(this);
-        if (this.options.onCreate) this.options.onCreate(response);
-        Ajax.Responders.dispatch('onCreate ', this, response);
-  
-        this.transport.open(this.method.toUpperCase(), this.url,
-          this.options.asynchronous);
-  
-        if (this.options.asynchronous) this.respondToReadyState.bind(this).defer(1);
-  
-        this.transport.onprogress = Prototype.emptyFunction;
-        this.transport.onreadystatechange = this.onStateChange.bind(this);
-        this.transport.onload = this.onLoad.bind(this);
-        this.transport.onerror = this.onError.bind(this);
-  
+    };
+    
+    window.Ajax.getCORS_Transport = function() {
+      return Try.these(
+        function() {return new XDomainRequest();},
+        function() {return new XMLHttpRequest();},
+        function() {return new ActiveXObject('Msxml2.XMLHTTP');},
+        function() {return new ActiveXObject('Microsoft.XMLHTTP');}
+      ) || false;
+    };
+    
+    window.Ajax.Request.logging = false;
+    window.Ajax.Request.addMethods({
+      _status : undefined,
+      _readyState : undefined,
+    
+      initialize : function($super, url, options) {
+        $super(options);
+        this.url = url;
+        if (!this.isSameOrigin() || this.options.crossSite) {
+          this.transport = Ajax.getCORS_Transport();
+        } else {
+          this.transport = Ajax.getTransport();
+        }
+        this.request(url);
+      },
+    
+      request: function(url) {
+        this.url = url;
+        this.method = this.options.method;
+        this._status = 0;
+        if (!this.transport.setRequestHeader) {
+          this.method = 'get';
+        }
+        var params = Object.isString(this.options.parameters) ?
+              this.options.parameters :
+              Object.toQueryString(this.options.parameters);
+    
+        if (!['get', 'post'].include(this.method)) {
+          params += (params ? '&' : '') + "_method=" + this.method;
+          this.method = 'post';
+        }
+    
+        if (params && this.method === 'get') {
+          this.url += (this.url.include('?') ? '&' : '?') + params;
+        }
+    
+        this.parameters = params.toQueryParams();
+    
         try {
-          this.setRequestHeaders();
+          var response = new Ajax.Response(this);
+          if (this.options.onCreate) this.options.onCreate(response);
+          Ajax.Responders.dispatch('onCreate ', this, response);
+    
+          this.transport.open(this.method.toUpperCase(), this.url,
+            this.options.asynchronous);
+    
+          if (this.options.asynchronous) this.respondToReadyState.bind(this).defer(1);
+    
+          this.transport.onprogress = Prototype.emptyFunction;
+          this.transport.onreadystatechange = this.onStateChange.bind(this);
+          this.transport.onload = this.onLoad.bind(this);
+          this.transport.onerror = this.onError.bind(this);
+    
+          try {
+            this.setRequestHeaders();
+          } catch (exp) {
+            if (Ajax.Request.logging && (typeof console != 'undefined')
+                && (typeof console.warn != 'undefined')) {
+              console.warn('setRequestHeaders failed ', this.url, exp);
+            }
+          }
+    
+          this.body = this.method == 'post' ? (this.options.postBody || params) : null;
+          this.transport.send(this.body);
+    
+          /* Force Firefox to handle ready state 4 for synchronous requests */
+          if (!this.options.asynchronous && this.transport.overrideMimeType) {
+            this.onStateChange();
+          }
+        }
+        catch (e) {
+          this.dispatchException(e);
+        }
+      },
+    
+      onStateChange: function() {
+        var readyState = this.transport.readyState;
+        if (readyState > 1 && !((readyState == 4) && this._complete)) {
+          try {
+            if ((readyState == 4)) {
+              this._status = this.transport.status || 400;
+            }
+          } catch (e) {
+            //IE9 problem if ajax request gets aborted
+            this._status = 400;
+            this._readyState = 4;
+            this._isAbortedBug = true;
+          }
+          this.respondToReadyState(readyState);
+        }
+      },
+      
+      onLoad : function() {
+        this._status = this.transport.status || 200;
+        this._readyState = this.transport.readyState || 4;
+        if (!this._complete) {
+          this.respondToReadyState(this._readyState);
+        }
+      },
+    
+      onError : function() {
+        this._status = this.transport.status || 400;
+        this._readyState = this.transport.readyState || 4;
+        if (!this._complete) {
+          this.respondToReadyState(4);
+        }
+      },
+    
+      getStatus: function() {
+        if (!this._status) {
+          this._status = this.transport.status;
+        }
+        try {
+          if (this._status === 1223) return 204;
+          return this._status || 0;
         } catch (exp) {
           if (Ajax.Request.logging && (typeof console != 'undefined')
               && (typeof console.warn != 'undefined')) {
-            console.warn('setRequestHeaders failed ', this.url, exp);
+            console.warn('failed to getStauts ', exp);
           }
-        }
-  
-        this.body = this.method == 'post' ? (this.options.postBody || params) : null;
-        this.transport.send(this.body);
-  
-        /* Force Firefox to handle ready state 4 for synchronous requests */
-        if (!this.options.asynchronous && this.transport.overrideMimeType) {
-          this.onStateChange();
+          return 0;
         }
       }
-      catch (e) {
-        this.dispatchException(e);
-      }
-    },
-  
-    onStateChange: function() {
-      var readyState = this.transport.readyState;
-      if (readyState > 1 && !((readyState == 4) && this._complete)) {
-        try {
-          if ((readyState == 4)) {
-            this._status = this.transport.status || 400;
-          }
-        } catch (e) {
-          //IE9 problem if ajax request gets aborted
-          this._status = 400;
-          this._readyState = 4;
-          this._isAbortedBug = true;
-        }
-        this.respondToReadyState(readyState);
-      }
-    },
     
-    onLoad : function() {
-      this._status = this.transport.status || 200;
-      this._readyState = this.transport.readyState || 4;
-      if (!this._complete) {
-        this.respondToReadyState(this._readyState);
-      }
-    },
-  
-    onError : function() {
-      this._status = this.transport.status || 400;
-      this._readyState = this.transport.readyState || 4;
-      if (!this._complete) {
-        this.respondToReadyState(4);
-      }
-    },
-  
-    getStatus: function() {
-      if (!this._status) {
-        this._status = this.transport.status;
-      }
-      try {
-        if (this._status === 1223) return 204;
-        return this._status || 0;
-      } catch (exp) {
-        if (Ajax.Request.logging && (typeof console != 'undefined')
-            && (typeof console.warn != 'undefined')) {
-          console.warn('failed to getStauts ', exp);
+    }).bind(window.Ajax.Request);
+    
+    window.Ajax.Response.addMethods({
+      _status : undefined,
+    
+      initialize: function(request){
+        this.request = request;
+        var transport  = this.transport  = request.transport;
+        var readyState = this.readyState = transport.readyState || request._readyState;
+        this._status = request._status;
+    
+        if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
+          this.status       = this.getStatus();
+          this.statusText   = this.getStatusText();
+          if (request._isAbortedBug) {
+            this.responseText = '';
+          } else {
+            this.responseText = String.interpret(transport.responseText);
+            this.headerJSON   = this._getHeaderJSON();
+          }
         }
-        return 0;
-      }
-    }
-  
-  }).bind(Ajax.Request);
-  
-  Ajax.Response.addMethods({
-    _status : undefined,
-  
-    initialize: function(request){
-      this.request = request;
-      var transport  = this.transport  = request.transport;
-      var readyState = this.readyState = transport.readyState || request._readyState;
-      this._status = request._status;
-  
-      if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
-        this.status       = this.getStatus();
-        this.statusText   = this.getStatusText();
-        if (request._isAbortedBug) {
-          this.responseText = '';
-        } else {
-          this.responseText = String.interpret(transport.responseText);
-          this.headerJSON   = this._getHeaderJSON();
+    
+        if ((readyState == 4) && !(request._isAbortedBug)) {
+          var xml = transport.responseXML;
+          this.responseXML  = Object.isUndefined(xml) ? null : xml;
+          this.responseJSON = this._getResponseJSON();
         }
-      }
+      },
+    
+      getStatus: Ajax.Request.prototype.getStatus
+    
+    }).bind(window.Ajax.Response);
   
-      if ((readyState == 4) && !(request._isAbortedBug)) {
-        var xml = transport.responseXML;
-        this.responseXML  = Object.isUndefined(xml) ? null : xml;
-        this.responseJSON = this._getResponseJSON();
-      }
-    },
-  
-    getStatus: Ajax.Request.prototype.getStatus
-  
-  }).bind(Ajax.Response);
+    window.CELEMENTS.Ajax_CORSfixInstalled = true;
+  }
 
-  window.CELEMENTS.Ajax_CORSfixInstalled = true;
-}
+  /**
+   * END: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
+   **/
 
-/**
- * END: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
- **/
+  window.celOnBeforeLoadListenerArray = [];
 
-var celOnBeforeLoadListenerArray = [];
-
-var celAddOnBeforeLoadListener = function(listenerFunc) {
-  celOnBeforeLoadListenerArray.push(listenerFunc);
-};
-
-(function(window, undefined) {
-  "use strict";
+  window.celAddOnBeforeLoadListener = function(listenerFunc) {
+    celOnBeforeLoadListenerArray.push(listenerFunc);
+  };
 
   window.celOnFinishHeaderListenerArray = [];
 
@@ -455,29 +451,126 @@ var celAddOnBeforeLoadListener = function(listenerFunc) {
     };
   }
 
-})(window);
+  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
+  if (typeof window.CELEMENTS.Ajax.Reconnector === 'undefined') {
+    window.CELEMENTS.Ajax.Reconnector = Class.create({
+      _htmlElem : undefined,
+      _callbackOnSuccess : undefined,
+      _reconnectWait : undefined,
+      _reconnectorHandlerBind : undefined,
+      _cancelAjaxOnTimeoutBind : undefined,
+      _reconnectorExecuter : undefined,
+      _reconnectWaitStart : undefined,
+      _minReconnectWait : undefined,
+      _maxReconnectWait : undefined,
+  
+      initialize : function(htmlElemId, callbackOnSuccess) {
+        var _me = this;
+        _me._htmlElem = $(htmlElemId);
+        _me._callbackOnSuccess = callbackOnSuccess;
+        _me._reconnectorHandlerBind = _me._reconnectorHandler.bind(_me);
+        _me._cancelAjaxOnTimeoutBind = _me._cancelAjaxOnTimeout.bind(_me);
+        _me._minReconnectWait = 10;
+        _me._maxReconnectWait = 30;
+        _me._reset();
+      },
+  
+      _reset : function() {
+        var _me = this;
+        _me._reconnectWaitStart = _me._minReconnectWait;
+      },
 
-/**
- * getCelHost function
- **/
-if (typeof window.getCelHost === 'undefined') {
-  window.getCelHost = function() {
-    var celHost = document.location + '?';
-    if (document.location.pathname.indexOf('/skin/resources/') > -1) {
-      celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
-    } else if (document.location.pathname.indexOf('/file/resources/') > -1) {
-      celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
-    } else {
-      celHost = celHost.substring(0, celHost.indexOf('?'));
-    }
-    return celHost;
-  };
-}
+      setMinRecconectWait : function(minReconnectWait) {
+        var _me = this;
+        _me._minReconnectWait = minReconnectWait;
+      },
 
-var celMessages = {};
+      setMaxRecconectWait : function(maxReconnectWait) {
+        var _me = this;
+        _me._maxReconnectWait = maxReconnectWait;
+      },
 
-(function(window, undefined) {
-  "use strict";
+      _reconnectorHandler : function() {
+        var _me = this;
+        _me._reconnectWait--;
+        if (_me._reconnectWait == 0) {
+          _me._reconnectorExecuter.stop();
+          var tryEv = _me._htmlElem.fire('celements:AjaxReconnectTrying');
+          if (!tryEv.stopped) {
+            var mesg = "Trying...";
+            if (window.celMessages && window.celMessages.Reconnector) {
+              mesg = window.celMessages.Reconnector.retryNotice;
+            }
+            _me._htmlElem.update(mesg);
+          }
+          _me._connectionTester();
+        } else {
+          var mesg = "Retrying in {} seconds.";
+          if (window.celMessages && window.celMessages.Reconnector) {
+            mesg = window.celMessages.Reconnector.retryDelayNotice;
+          }
+          mesg = mesg.replace('{}', _me._reconnectWait);
+          _me._htmlElem.update(mesg);
+          _me._htmlElem.fire('celements:AjaxReconnectFailed');
+        }
+      },
+  
+      start : function() {
+        var _me = this;
+        _me._reconnectWait = _me._reconnectWaitStart;
+        _me._reconnectorExecuter = new PeriodicalExecuter(_me._reconnectorHandlerBind, 1);
+      },
+  
+      _cancelAjaxOnTimeout : function(ajaxCall) {
+        if (!ajaxCall._complete) {
+          ajaxCall.transport.abort();
+        }
+      },
+  
+      _connectionTester : function() {
+        var _me = this;
+        var connectionTestAjax = new Ajax.Request(getCelHost(), {
+          'parameters' : {
+            'ajax' : 1,
+            'xpage' : 'celements_ajax',
+            'ajax_mode' : 'PredesLoaderStatus'
+          },
+          'onSuccess' : function() {
+            _me._reset();
+            _me._reconnectorExecuter = null;
+            _me._callbackOnSuccess();
+            _me._htmlElem.fire('celements:AjaxReconnectSuccess');
+          },
+          'onFailure' : function() {
+            _me._reconnectWaitStart = Math.min(_me._reconnectWaitStart * 2,
+                  _me._maxReconnectWait);
+            _me.start();
+          }
+        });
+        _me._cancelAjaxOnTimeoutBind.delay(10, connectionTestAjax);
+      }
+  
+    });
+  }
+
+  /**
+   * getCelHost function
+   **/
+  if (typeof window.getCelHost === 'undefined') {
+    window.getCelHost = function() {
+      var celHost = document.location + '?';
+      if (document.location.pathname.indexOf('/skin/resources/') > -1) {
+        celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
+      } else if (document.location.pathname.indexOf('/file/resources/') > -1) {
+        celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
+      } else {
+        celHost = celHost.substring(0, celHost.indexOf('?'));
+      }
+      return celHost;
+    };
+  }
+
+  window.celMessages = {};
 
   try {
     var topFrame = top || window;
