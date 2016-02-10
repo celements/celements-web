@@ -1054,8 +1054,7 @@ this._init(preloadFunc, showFunc, waitingFunc);
       },
 
       _convertFullNameToViewURL : function(fullName) {
-        return window.CELEMENTS.getPathPrefix()
-               + ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/');
+        return window.CELEMENTS.getUtils().convertFullNameToViewURL(fullName);
       },
 
       _setAllSlides : function(slidesFNarray, startIndex) {

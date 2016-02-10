@@ -218,7 +218,7 @@ function ContextMenu(){
       }
     } else {
       tmpHTML += "<div class='contextMenuItem'><img style='display:block; margin-right:auto; margin-left:auto;' src='"
-        + window.CELEMENTS.getPathPrefix() + "/file/celRes/ajax-loader-small.gif'/></div>";
+        + window.CELEMENTS.getUtils().getPathPrefix() + "/file/celRes/ajax-loader-small.gif'/></div>";
     }
     me.menuDiv.innerHTML = tmpHTML;
   };

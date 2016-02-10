@@ -76,7 +76,7 @@ var celanimOverlay_addOpenConfig = function(elemId, openConfig) {
       }
       celanimOverlay_openConfig.set(elemId, openConfigObj);
       $(elemId).setStyle({
-        'cursor' : "url(" + window.CELEMENTS.getPathPrefix()
+        'cursor' : "url(" + window.CELEMENTS.getUtils().getPathPrefix()
                  + "/file/resources/celJS/highslide/graphics/zoomin.cur), pointer"
       });
       $(elemId).stopObserving('click', celanimOverlay_OpenInOverlay);
@@ -184,7 +184,8 @@ var celanimOverlay_OpenInOverlay = function(event) {
     if (hsConfig.get('objectType') == 'image') {
       hsConfig = celanimOverlay_HandleImageContent(hsConfig);
     }
-    hs.graphicsDir = window.CELEMENTS.getPathPrefix() + '/file/resources/celJS/highslide/graphics/';
+    hs.graphicsDir = window.CELEMENTS.getUtils().getPathPrefix()
+                    + '/file/resources/celJS/highslide/graphics/';
     hs.outlineType = hsConfig.outlineType || '';
     if (openConfig.addNavigation) {
       openConfig.cssClassNames.push('celanim_addNavigation');

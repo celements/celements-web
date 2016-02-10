@@ -128,7 +128,7 @@ CELEMENTS.presentation.ResponsiveDesignImage = function(containerId, wrapperId) 
           $(contentImg).observe('load', bindedResizeImageLoaded);
           contentImg.src = updatedImgSrc;
           $(contentImg).setStyle({
-            'backgroundImage' : 'url(' + window.CELEMENTS.getPathPrefix()
+            'backgroundImage' : 'url(' + window.CELEMENTS.getUtils().getPathPrefix()
                + '/file/resources/celRes/ajax-loader.gif)',
             'backgroundPosition' : 'center center',
             'backgroundRepeat' : 'no-repeat'
