@@ -42,7 +42,8 @@ CELEMENTS.mobile.Dimensions.prototype = {
     isMobile : {
       Safari: function() {
         var _me = this;
-        return window.navigator.userAgent.match(/Safari/i) && !_me.Chrome();
+        return window.navigator.userAgent.match(/Safari/i) && !_me.Chrome()
+                && !_me.Windows();
       },
       Chrome: function() {
         return window.navigator.userAgent.match(/Chrome/i);
