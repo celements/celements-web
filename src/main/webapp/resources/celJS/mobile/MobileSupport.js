@@ -46,7 +46,7 @@ CELEMENTS.mobile.Dimensions.prototype = {
                 && !_me.Windows();
       },
       Chrome: function() {
-        return window.navigator.userAgent.match(/Chrome/i);
+        return window.navigator.userAgent.match(/Chrome|CriOS/i);
       },
       Android: function() {
         return window.navigator.userAgent.match(/Android/i);
@@ -102,7 +102,7 @@ CELEMENTS.mobile.Dimensions.prototype = {
       if (_me.isMobile.Safari()) {
         return ua.match(/Version\/(\d+\.\d+)/)[1];
       } else if (_me.isMobile.Chrome()) {
-        return ua.match(/Chrome\/(\d+\.\d+)/)[1];
+        return ua.match(/Chrome|CriOS\/(\d+\.\d+)/)[1];
       } else  if (_me.isMobile.IE()) {
         var msie = ua.indexOf("MSIE ");
         var trident = ua.match(/Trident.*rv\:(\d{2})\./) || false;
