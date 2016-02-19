@@ -1,6 +1,7 @@
 #if("$!celldoc" != '')
-#set($contentDoc = $celldoc)
-#else   
+#set($contentDoc = $celldoc.getTranslatedDocument())
+#else
+#set($celldoc = $doc)
 #set($contentDoc = $tdoc)
 #end
 #if("$!overwritePresCmCssClass" == '')
@@ -16,6 +17,19 @@
 <h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>
 #end
 <div class="presentationList">
+#if("$!xwiki.getSpacePreference('extract_active')" == "1")
+  #set($extractObj = $celldoc.getObject('Classes.DocumentExtract','language',"$language", false))
+  #set($extractValue = "$!extractObj.getProperty('extract').getValue()")
+  #set($hasExtract = !$services.rteconfig.isEmptyRTEString($extractValue))
+  #if(!$hasExtract)
+    #set($extractObj = $celldoc.getObject('Classes.DocumentExtract','language',"$default_language", false))
+    #set($extractValue = "$!extractObj.getProperty('extract').getValue()")
+    #set($hasExtract = !$services.rteconfig.isEmptyRTEString($extractValue))
+  #end
+  #if($hasExtract)
+    <div class="presentationExtract">$extractValue</div>
+  #end
+#end
 #parse('celTemplates/NavigationCellView.vm')
 <!-- presentationList --></div>
 <!-- pres$!{contentDoc.getName()} --></div>
