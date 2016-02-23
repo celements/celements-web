@@ -7,7 +7,8 @@
 
   <display-name>celements-web</display-name>
   <description>Celements-Web Application</description>
-  
+  <distributable />
+
   <!-- Restlet Application class name -->
   <context-param>
     <param-name>org.restlet.application</param-name>
