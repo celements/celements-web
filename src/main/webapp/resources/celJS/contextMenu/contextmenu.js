@@ -235,27 +235,32 @@ var getCelHost = function() {
 };
 
 var cmContextMenuClassNames = null;
+var cmContextMenuClassNamesLoading = false;
 
 var initContextMenuAsync = function() {
-  if (!cmContextMenuClassNames) {
-    new Ajax.Request(getCelHost(), {
-      method: 'post',
-      parameters: {
-         xpage : 'celements_ajax',
-         ajax_mode : 'ContextMenuAjax',
-         celCMIdClassName : ''
-      },
-      onSuccess: function(transport) {
-        if (transport.responseText.isJSON()) {
-          cmContextMenuClassNames = transport.responseText.evalJSON();
-          loadContextMenuForClassNames(cmContextMenuClassNames);
-        } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-          console.debug('noJSON!!! ', transport.responseText);
+  if (!cmContextMenuClassNamesLoading) {
+    if (!cmContextMenuClassNames) {
+      cmContextMenuClassNamesLoading = true;
+      new Ajax.Request(getCelHost(), {
+        method: 'post',
+        parameters: {
+           xpage : 'celements_ajax',
+           ajax_mode : 'ContextMenuAjax',
+           celCMIdClassName : ''
+        },
+        onSuccess: function(transport) {
+          if (transport.responseText.isJSON()) {
+            cmContextMenuClassNames = transport.responseText.evalJSON();
+            cmContextMenuClassNamesLoading = false;
+            loadContextMenuForClassNames(cmContextMenuClassNames);
+          } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
+            console.debug('noJSON!!! ', transport.responseText);
+          }
         }
-      }
-    });
-  } else {
-    loadContextMenuForClassNames(cmContextMenuClassNames);
+      });
+    } else {
+      loadContextMenuForClassNames(cmContextMenuClassNames);
+    }
   }
 };
 
