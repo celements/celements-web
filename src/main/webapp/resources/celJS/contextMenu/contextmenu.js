@@ -253,8 +253,8 @@ var initContextMenuAsync = function() {
             cmContextMenuClassNames = transport.responseText.evalJSON();
             cmContextMenuClassNamesLoading = false;
             loadContextMenuForClassNames(cmContextMenuClassNames);
-          } else if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-            console.debug('noJSON!!! ', transport.responseText);
+          } else {
+            console.error('noJSON!!! ', transport.responseText);
           }
         }
       });
@@ -301,10 +301,10 @@ var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
           && (classNameArrayOld.size() === classNameArrayNew.size())) {
         var diffArray = classNameArrayOld.without(classNameArrayNew);
         if (diffArray.size() <= 0) {
-//          console.log('diffArray: unset ', id, diffArray, classNameArrayOld, classNameArrayNew);
+//          console.log('>>>diffArray: unset ', id, diffArray, classNameArrayOld, classNameArrayNew);
           reducedCssClassMap.unset(id);
-//        } else {
-//          console.log('diffArray: keep ', id, diffArray, classNameArrayOld, classNameArrayNew);
+        } else {
+//          console.log('>>>diffArray: keep ', id, diffArray, classNameArrayOld, classNameArrayNew);
         }
       }
     });
@@ -348,13 +348,13 @@ var loadContextMenuForClassNames = function (cssClassNames) {
   
   if (reducedCssClassMap.size() > 0) {
 //    if(contextMenuIdCssClassNamesMap) {
-//  	  console.log('contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
+//  	  console.log('>>>contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
 //  	}
-//    console.log('cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
+//    console.log('>>>cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
     var reducedClassNameIdMap = contextMenuConvertIdClassMapToClassIdMap(reducedCssClassMap);
-//    console.log('reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
+//    console.log('>>>reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
     var reqArray = contextMenuWriteReqArray(reducedClassNameIdMap);
-//    console.log('reduced reqArray: ', reqArray.size(), Object.toJSON(reqArray));
+//    console.log('>>>reduced reqArray: ', reqArray.size(), Object.toJSON(reqArray));
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
@@ -366,14 +366,24 @@ var loadContextMenuForClassNames = function (cssClassNames) {
       onSuccess: function(transport) {
         if (transport.responseText.isJSON()) {
           transport.responseText.evalJSON().each(function(elemIdMenuItems) {
-            var articleCMenu = new Array();
-            elemIdMenuItems.cmItems.each(function(menuItemObj) {
-              articleCMenu[articleCMenu.size()] = new ContextMenuItem(menuItemObj.link,
-                  menuItemObj.text, menuItemObj.icon, menuItemObj.shortcut);
-            });
-            contextMenuItemDataForElemId.set(elemIdMenuItems.elemId, articleCMenu);
-            $(elemIdMenuItems.elemId).stopObserving('contextmenu', contextClickHandler);
-            $(elemIdMenuItems.elemId).observe('contextmenu', contextClickHandler);
+            try {
+              var htmlElem = $(elemIdMenuItems.elemId);
+              if (htmlElem) {
+                var articleCMenu = new Array();
+                elemIdMenuItems.cmItems.each(function(menuItemObj) {
+                  articleCMenu[articleCMenu.size()] = new ContextMenuItem(menuItemObj.link,
+                      menuItemObj.text, menuItemObj.icon, menuItemObj.shortcut);
+                });
+                contextMenuItemDataForElemId.set(elemIdMenuItems.elemId, articleCMenu);
+                htmlElem.stopObserving('contextmenu', contextClickHandler);
+                htmlElem.observe('contextmenu', contextClickHandler);
+//              } else {
+//                console.warn('ContextMenuAjax ignore "vanished" element ', elemIdMenuItems.elemId);
+              }
+            } catch (exp) {
+              console.error('ContextMenuAjax failed to process elemIdMenuItems: ',
+                  exp, elemIdMenuItems);
+            }
           });
           cm_mark_loading_finished();
         /**} else {
@@ -384,7 +394,7 @@ var loadContextMenuForClassNames = function (cssClassNames) {
     });
     contextMenuIdCssClassNamesMap = cssClassMap;
   } else {
-//    console.log('skip contextmenu reloading.');
+//    console.log('>>>skip contextmenu reloading.');
     cm_mark_loading_finished();
   }
 };
