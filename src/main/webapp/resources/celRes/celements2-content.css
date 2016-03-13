@@ -10,3 +10,14 @@ body.mceContentBody  {
 body.mceContentBody td {
 	min-width: 5px;
 }
+
+body.mceContentBody,
+body.mceContentBody p,
+body.mceContentBody li,
+body.mceContentBody th,
+body.mceContentBody td,
+body.mceContentBody pre {
+  font-size: 12px;
+  line-height: 15px;
+}
+
