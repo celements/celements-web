@@ -171,7 +171,10 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   font-weight: 400;
   border:1px solid #C5C5C5;
 	font-size: 11px;
-	line-height: 12px;
+	/** do not reduce line-height for font-size:11px below 14px,
+	 because characters with underline (e.g. 'g') get chopped in input field on chrome.
+	**/
+	line-height: 14px;
 	padding:1px;
 }
 .celements3_tabMenu input.fullwidth {
