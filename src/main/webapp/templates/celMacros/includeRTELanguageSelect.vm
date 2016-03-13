@@ -4,7 +4,7 @@
   #if("$!docTransList" == '')
     #set($docTransList = $doc.getTranslationList())
   #end
-  #foreach($transLang in $xwiki.celementsweb.getAllowedLanguages())
+  #foreach($transLang in $services.webUtils.getAllowedLanguages())
     #set($transCssClass = '')
     #if("$!transLang" == "$!{doc.getDefaultLanguage()}")
       #set($transCssClass = "$!{transCssClass} defaultLanguage transExists")
