@@ -77,7 +77,7 @@
   "inline_styles" : true,
   "accessibility_warnings" : false,
   #set($content_css_filenameURL = "$celementsweb.getSkinFile(':celRes/celements2-content.css', 'file')")
-  #foreach($cssObj in $xwiki.celementsweb.getRTEContentCSS())
+  #foreach($cssObj in $services.css.getRTEContentCSS())
   #if("$!{cssObj.getCSS()}" != '')
       #set($content_css_filenameURL = "$!{content_css_filenameURL},$!{cssObj.getCSS()}")
     #end
