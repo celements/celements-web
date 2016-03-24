@@ -693,5 +693,13 @@
       Event.observe(window, "orientationchange", cel_updateOrientationCSSclasses);
     }
   });
+  
+  /**
+   * Register all Bootstrap-Multiselect
+   */
+  var selectedMultiselect = [];
+  celAddOnBeforeLoadListener(function() {
+    $j('.celMultiselect').multiselect();
+  });
 
 })(window);
