@@ -331,7 +331,7 @@
              * @param {jQuery} event
              */
             onDropdownHide: function(event) {
-
+              
             },
             /**
              * Triggered after the dropdown is shown.
@@ -347,7 +347,7 @@
              * @param {jQuery} event
              */
             onDropdownHidden: function(event) {
-                
+              
             },
             /**
              * Triggered on select all.
