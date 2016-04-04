@@ -1,7 +1,12 @@
+.btn-group {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
 .multiselect-container.dropdown-menu {
 	position: absolute;
 	top: 100%;
-	left: 0;
+	left: 0px;
 	z-index: 1000;
 	display: none;
 	float: left;
