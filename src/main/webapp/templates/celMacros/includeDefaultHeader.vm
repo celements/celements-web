@@ -46,7 +46,7 @@ $celementsweb.addExtJSfileOnce(':celJS/validation.js')
 $celementsweb.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/mobile/MobileSupport.js', 'file')
 
-$celementsweb.includeCSSPage(':celJS/bootstrap/bootstrap.min.css')
+##$celementsweb.includeCSSPage(':celJS/bootstrap/bootstrap.min.css')
 $celementsweb.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')
 $celementsweb.addExtJSfileOnce(':celJS/bootstrap/bootstrap.min.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js', 'file')
