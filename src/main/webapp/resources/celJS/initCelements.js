@@ -699,16 +699,18 @@
    */
   var selectedMultiselect = [];
   celAddOnBeforeLoadListener(function() {
-    $j('.celMultiselect').multiselect({
-      onDropdownHidden : function(event) {
-        var element = event.target;
-        var jElement = $j(event.target);
-        jElement.css('display', '');        
-        element.previous().select('option:selected').each(function(ele) {
-          console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
-        });
-      }
-    });
+    if($j().multiselect != undefined) {
+      $j('.celMultiselect').multiselect({
+        onDropdownHidden : function(event) {
+          var element = event.target;
+          var jElement = $j(event.target);
+          jElement.css('display', '');        
+          element.previous().select('option:selected').each(function(ele) {
+            console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
+          });
+        }
+      });
+    }
   });
 
 })(window);
