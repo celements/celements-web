@@ -44,12 +44,21 @@
       <br/>
       Queue Size: $xwiki.lucene.getQueueSize()<br/>
       Lucene Doc Count: $xwiki.lucene.getLuceneDocCount()<br/>
+      <br/>
       <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=rebuildNow")">
+        Rebuild local index now
+      </a><br/>
+      <br/>
+      <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=rebuildNow&wikiAll=true")">
         Rebuild complete index now
-      </a>
+      </a><br/>
     #elseif("$!request.checkLuceneQueue" == 'rebuildNow')
       <br/>
-      #set($result = $xwiki.lucene.rebuildIndex())
+      #if("$!request.wikiAll" == 'true')
+        #set($result = $services.lucene.rebuildIndexForAllWikis())
+      #else
+        #set($result = $services.lucene.rebuildIndex())
+      #end
       #if($result == -1)
         You are missing Admin Rights!
       #elseif($result == -2)
