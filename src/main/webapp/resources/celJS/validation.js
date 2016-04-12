@@ -371,6 +371,14 @@ Validation.defaultFunctions = [
         return $F(elm);
       }).length;
     }],
+  ['validate-minimum-required', null, function (v, elm) {
+      var nr = elm.className.replace(/^.*minimumIs(\d+)( .*|)$/g, '$1');
+      var p = elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
+      var options = p.getElementsByTagName('INPUT');
+      return nr <= $A(options).findAll(function(elm) {
+        return $F(elm);
+      }).length;
+    }],
   ['validate-email-equal', 'email', Validator.methods.equalToField ],
   ['validate-docname', null, Validator.methods.validDocName ]
 ];
