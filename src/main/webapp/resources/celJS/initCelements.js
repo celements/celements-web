@@ -693,5 +693,34 @@
       Event.observe(window, "orientationchange", cel_updateOrientationCSSclasses);
     }
   });
+  
+  /**
+   * Register all Bootstrap-Multiselect
+   */
+  var cel_initAllMultiselect = function() {
+    if($j().multiselect != undefined) {
+      $j('.celMultiselect').multiselect({
+        onDropdownHidden : function(event) {
+          var element = event.target;
+          /* 
+           * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
+           * this code is just a workaround, it set the box visible again
+           */
+          var jElement = $j(event.target);
+          jElement.css('display', '');
+          /*
+          element.previous().select('option:selected').each(function(ele) {
+            console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
+          });
+          */
+        }
+      });
+    }
+  };
+  celAddOnBeforeLoadListener(function() {
+    $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
+    $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
+    $(document.body).fire('cel:initMultiselect');
+  });
 
 })(window);
