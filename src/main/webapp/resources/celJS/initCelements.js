@@ -699,7 +699,7 @@
    */
   var cel_initAllMultiselect = function() {
     if($j().multiselect != undefined) {
-      $j('.celMultiselect').multiselect({
+      $j('.celMultiselect:not([style*="display: none"])').multiselect({
         onDropdownHidden : function(event) {
           var element = event.target;
           /* 
@@ -719,7 +719,9 @@
   };
   celAddOnBeforeLoadListener(function() {
     $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
+    $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
+    $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).fire('cel:initMultiselect');
   });
 
