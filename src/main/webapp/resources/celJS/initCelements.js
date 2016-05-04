@@ -697,9 +697,14 @@
   /**
    * Register all Bootstrap-Multiselect
    */
-  var cel_initAllMultiselect = function() {
+  var cel_initAllMultiselect = function(event) {
+    var numberDisplayed = 3;
+    if(celMessages.progOnMeta.numberDisplayed != null) {
+      numberDisplayed = celMessages.progOnMeta.numberDisplayed; 
+    }
     if($j().multiselect != undefined) {
-      $j('.celMultiselect:not([style*="display: none"])').multiselect({
+      var multiselect = $j('.celMultiselect:not([style*="display: none"])').multiselect({
+        numberDisplayed : numberDisplayed,
         onDropdownHidden : function(event) {
           var element = event.target;
           /* 
@@ -708,12 +713,24 @@
            */
           var jElement = $j(event.target);
           jElement.css('display', '');
+          element.fire("cel:multiselectOnDropdownHidden");
           /*
+           * Bsp Read selected values:
           element.previous().select('option:selected').each(function(ele) {
             console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
           });
           */
+        },
+        onChange: function(option, checked, select) {
+          $(option)[0].fire("cel:multiselectOnChange", {
+              'multiselect' : this,
+              'checked' : checked, 
+              'select' : select
+          });
         }
+      });
+      $(document.body).fire('cel:multiselectInitialized', {
+        'multiselect' : multiselect
       });
     }
   };
