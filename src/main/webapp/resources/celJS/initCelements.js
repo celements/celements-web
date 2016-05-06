@@ -699,7 +699,7 @@
    */
   var cel_initAllMultiselect = function(event) {
     if($j().multiselect != undefined) {
-      $j('.celMultiselect:not([style*="display: none"])').each(function(index, element) {
+      $$('.celMultiselect:not([style*="display: none"])').each(function(element) {
         var multiselect = $j(element).multiselect({
           numberDisplayed : element.getAttribute(
               "data-celmultisel-maxnum-displayed") || 3,
