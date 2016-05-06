@@ -701,8 +701,8 @@
     if($j().multiselect != undefined) {
       $$('.celMultiselect:not([style*="display: none"])').each(function(element) {
         var multiselect = $j(element).multiselect({
-          numberDisplayed : element.getAttribute(
-              "data-celmultisel-maxnum-displayed") || 3,
+          numberDisplayed : $j(element).data(
+              "celmultisel-maxnum-displayed") || 3,
           onDropdownHidden : function(event) {
             var element = event.target;
             /* 
