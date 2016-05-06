@@ -46,11 +46,9 @@ $celementsweb.addExtJSfileOnce(':celJS/validation.js')
 $celementsweb.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/mobile/MobileSupport.js', 'file')
 
-#if($services.celementsweb.useMultiselect())
-  $celementsweb.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')
-  $celementsweb.addExtJSfileOnce(':celJS/bootstrap/bootstrap.min.js', 'file')
-  $celementsweb.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js', 'file')
-#end
+$celementsweb.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')
+$celementsweb.addExtJSfileOnce(':celJS/bootstrap/bootstrap.min.js', 'file')
+$celementsweb.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js', 'file')
 
 #if($services.celementsphoto.useImageAnimations())
   $celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js')
