@@ -697,23 +697,39 @@
   /**
    * Register all Bootstrap-Multiselect
    */
-  var cel_initAllMultiselect = function() {
+  var cel_initAllMultiselect = function(event) {
     if($j().multiselect != undefined) {
-      $j('.celMultiselect:not([style*="display: none"])').multiselect({
-        onDropdownHidden : function(event) {
-          var element = event.target;
-          /* 
-           * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
-           * this code is just a workaround, it set the box visible again
-           */
-          var jElement = $j(event.target);
-          jElement.css('display', '');
-          /*
+      $$('.celMultiselect:not([style*="display: none"])').each(function(element) {
+        var multiselect = $j(element).multiselect({
+          numberDisplayed : $j(element).data(
+              "celmultisel-maxnum-displayed") || 3,
+          onDropdownHidden : function(event) {
+            var element = event.target;
+            /* 
+             * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
+             * this code is just a workaround, it set the box visible again
+             */
+            var jElement = $j(event.target);
+            jElement.css('display', '');
+            element.fire("cel:multiselectOnDropdownHidden");
+            /*
+             * Bsp Read selected values:
           element.previous().select('option:selected').each(function(ele) {
             console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
           });
-          */
-        }
+             */
+          },
+          onChange: function(option, checked, select) {
+            $(option)[0].fire("cel:multiselectOnChange", {
+              'multiselect' : this,
+              'checked' : checked, 
+              'select' : select
+            });
+          }
+        });
+        $(document.body).fire('cel:multiselectInitialized', {
+          'multiselect' : multiselect
+        });
       });
     }
   };
