@@ -30,17 +30,15 @@
     #end
   #end
   <div>
-  #set($elangs = $doc.translationList)
-  #set($translationHTML = "")
-  #foreach($olang in $xwiki.getXWikiPreference("languages").split("[|, ]"))
-    #if(!$elangs.contains($olang) && ($olang != $doc.defaultLanguage) && ($olang != $forcetrans))
-      #set($translationURL = $doc.getURL('edit', "editor=${editor}&amp;language=${olang}"))
-      #set($translationHTML = "${translationHTML}<a href=${Q}$translationURL${Q}>$olang</a><br />")
-    #end
+  $adminMsg.get("panels.translation.translate")
+  #set($elangs = ",")
+  #foreach($elang in $doc.translationList)
+    #set($elangs = "${elangs}$elang,")
   #end
-  #if($translationHTML != "")
-    $adminMsg.get("panels.translation.translate")<br />
-    $translationHTML
+  #foreach($olang in $xwiki.getXWikiPreference("languages").split("[|, ]"))
+    #if(($elangs.indexOf(",$olang,") == -1) && ($olang != $doc.defaultLanguage) && ($olang != $forcetrans))
+      <a href="$doc.getURL("edit", "editor=${editor}&amp;language=${olang}")">$olang</a>
+    #end
   #end
   </div>
   #panelfooter()
