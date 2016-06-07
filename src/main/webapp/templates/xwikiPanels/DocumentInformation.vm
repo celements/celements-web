@@ -1,0 +1,48 @@
+$xwiki.ssx.use('Panels.DocumentInformation')##
+#set($pages = $tdoc.includedPages)
+#largepanelheader($adminMsg.get("panels.documentInformation.title"))
+<dl>
+#if(($tdoc.language=="")&&($xwiki.isMultiLingual()))
+<dt><label for="xwikidoclanguageinput2">$adminMsg.get("panels.documentInformation.defaultLanguage")</label></dt> <dd><input type="text" id="xwikidoclanguageinput2" name="defaultLanguage" value="$!tdoc.defaultLanguage" size="30"/></dd>
+#end
+##--------------------------------------------------------------------------
+## Display wiki syntax combo box if there's more than one configured syntax.
+##--------------------------------------------------------------------------
+$xwiki.jsx.use($paneldoc.fullName)##
+#if($xwiki.getConfiguredSyntaxes().size() > 1)
+<dt><label for="xwikidocsyntaxinput2">$adminMsg.get('panels.documentInformation.syntax')</label></dt>
+<dd>
+<select name="syntaxId" id="xwikidocsyntaxinput2">
+<option value="xwiki/1.0"#if($tdoc.getSyntax().toIdString().equalsIgnoreCase('xwiki/1.0')) selected="selected"#end>XWiki 1.0</option>
+#set($configuredSyntaxes = $xwiki.getConfiguredSyntaxes())
+##
+## Starting with XE 2.3 the $syntaxFactory binding has been removed and the new $services binding added.
+## To make sure this Panel application still work with versions less than 2.3 we verify the availability of bindings.
+#set($availableParserSyntaxes = $services.rendering.getAvailableParserSyntaxes())
+#if (!$availableParserSyntaxes)
+  #set($availableParserSyntaxes = $syntaxFactory.getAvailableSyntaxes())
+#end
+##
+#foreach($syntax in $availableParserSyntaxes)
+  #if($configuredSyntaxes.contains($syntax.toIdString()) && !$syntax.toIdString().equalsIgnoreCase('xwiki/1.0'))
+    <option value="$syntax.toIdString()"#if($tdoc.getSyntax().toIdString().equalsIgnoreCase($syntax.toIdString())) selected="selected"#end>$syntax.toString()</option>
+  #end
+#end
+</select>
+</dd>
+#end
+##--------------------------------------------------------------------------
+#if($pages.size() != 0)
+  <dt>$adminMsg.get('panels.documentInformation.includesCount', [$pages.size()])</dt>
+  <dd>
+  <ul>
+  #foreach ($page in $pages)
+    <li><a href="$xwiki.getURL($page, 'view')">$page</a>
+    <a href="$xwiki.getURL($page, 'edit')"><img alt="$adminMsg.get('panels.documentInformation.editIncluded', [$page])" src="$xwiki.getSkinFile('icons/silk/page_white_edit.gif')" /></a></li>
+  #end
+  </ul>
+  </dd>
+#end
+</dl>
+#template("tagedit.vm")
+#panelfooter()
