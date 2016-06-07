@@ -1,0 +1,46 @@
+#if($xwiki.isMultiLingual()==true || $showEmptyPanels)
+  #largepanelheader($adminMsg.get("panels.translation.title"))
+  #if(($request.language)&&($request.language!="default")&&($doc.defaultLanguage!=$request.language))
+    #set($forcetrans = $request.language)
+    #set($rlanguage = $request.language)
+  #else
+    #set($forcetrans = "")
+    #set($rlanguage = $tdoc.language)
+  #end
+  #if((!$tdoc.language || $tdoc.language == "" || $tdoc.language == $doc.defaultLanguage)&&($forcetrans==""))
+    <div class="important"><strong>$adminMsg.get("panels.translation.editingOriginal", [${doc.defaultLanguage}])</strong></div>
+    #if($!doc.translationList.size() > 0)
+      <div>$adminMsg.get("panels.translation.existingTranslations")
+      #foreach($translation in $doc.translationList)
+        <a href="$doc.getURL("edit", "editor=${editor}&amp;language=${translation}")">$translation</a>
+      #end
+      </div>
+    #end
+  #else
+    <div class="important"><strong>$adminMsg.get("panels.translation.editingTranslation", [${rlanguage}])</strong></div>
+    <div>$adminMsg.get("panels.translation.originalLanguage", [$doc.getURL("edit", "editor=${editor}&amp;language=${doc.defaultLanguage}"), ${doc.defaultLanguage}])</div>
+    #if($doc.translationList.size() > 1)
+      <div>$adminMsg.get("panels.translation.otherTranslations")
+      #foreach($translation in $doc.translationList)
+        #if($translation != $tdoc.language)
+          <a href="$doc.getURL("edit", "editor=${editor}&amp;language=${translation}")">$translation</a>
+        #end
+      #end
+      </div>
+    #end
+  #end
+  <div>
+  #set($elangs = $doc.translationList)
+  #set($translationHTML = "")
+  #foreach($olang in $xwiki.getXWikiPreference("languages").split("[|, ]"))
+    #if(!$elangs.contains($olang) && ($olang != $doc.defaultLanguage) && ($olang != $forcetrans))
+      #set($translationHTML = "${translationHTML}<a href=""$doc.getURL(""edit"", ""editor=${editor}&amp;language=${olang}"")"">$olang</a><br />")
+    #end
+  #end
+  #if($translationHTML != "")
+    $adminMsg.get("panels.translation.translate")\\
+    $translationHTML
+  #end
+  </div>
+  #panelfooter()
+#end
