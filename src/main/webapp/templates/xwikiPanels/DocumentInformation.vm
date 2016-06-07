@@ -2,7 +2,7 @@ $xwiki.ssx.use('Panels.DocumentInformation')##
 #set($pages = $tdoc.includedPages)
 #largepanelheader($adminMsg.get("panels.documentInformation.title"))
 <dl>
-<dt><label for="xwikidocparentinput2">$adminMsg.get("panels.documentInformation.parent")</label></dt> <dd><input type="text" id="xwikidocparentinput2" name="parent" value="$!tdoc.parent" size="30"/></dd>
+<dt><label for="xwikidocparentinput2">$adminMsg.get("panels.documentInformation.parent")</label></dt> <dd><input type="text" id="xwikidocparentinput2" name="parent" value="$!doc.parent" size="30"/></dd>
 #if(($tdoc.language=="")&&($xwiki.isMultiLingual()))
 <dt><label for="xwikidoclanguageinput2">$adminMsg.get("panels.documentInformation.defaultLanguage")</label></dt> <dd><input type="text" id="xwikidoclanguageinput2" name="defaultLanguage" value="$!tdoc.defaultLanguage" size="30"/></dd>
 #end
