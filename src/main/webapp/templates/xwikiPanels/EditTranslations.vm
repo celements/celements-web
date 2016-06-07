@@ -34,7 +34,8 @@
   #set($translationHTML = "")
   #foreach($olang in $xwiki.getXWikiPreference("languages").split("[|, ]"))
     #if(!$elangs.contains($olang) && ($olang != $doc.defaultLanguage) && ($olang != $forcetrans))
-      #set($translationHTML = "${translationHTML}<a href=""$doc.getURL(""edit"", ""editor=${editor}&amp;language=${olang}"")"">$olang</a><br />")
+      #set($translationURL = $doc.getURL('edit', "editor=${editor}&amp;language=${olang}"))
+      #set($translationHTML = "${translationHTML}<a href=${Q}$ranslationURL${Q}>$olang</a><br />")
     #end
   #end
   #if($translationHTML != "")
