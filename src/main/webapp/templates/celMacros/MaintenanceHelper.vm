@@ -45,13 +45,22 @@
       Queue Size: $xwiki.lucene.getQueueSize()<br/>
       Lucene Doc Count: $xwiki.lucene.getLuceneDocCount()<br/>
       <br/>
+      <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=optimizeNow")">
+        Optimize index now
+      </a><br/>
       <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=rebuildNow")">
         Rebuild local index now
       </a><br/>
-      <br/>
       <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=rebuildNow&wikiAll=true")">
         Rebuild complete index now
       </a><br/>
+    #elseif("$!request.checkLuceneQueue" == 'optimizeNow')
+      <br/>
+      #if($services.lucene.optimizeIndex())
+        Optimizing started.
+      #else
+        You are missing Admin Rights!
+      #end
     #elseif("$!request.checkLuceneQueue" == 'rebuildNow')
       <br/>
       #if("$!request.wikiAll" == 'true')
@@ -64,9 +73,10 @@
       #elseif($result == -2)
         Rebuild already running!
       #else
-        got result = $result -&gt; assuming that rebuild started...
+        Rebuild started!
       #end
     #end
+    <br/>
     </p>
     ##end: check lucene queue
   </div>
