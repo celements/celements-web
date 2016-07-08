@@ -213,11 +213,11 @@ var celFileSelectionChanged = function(event) {
     if (!beforeEvent.stopped) {
       formElm.submit();
     } else {
-      console.log('celFileSelectionChanged: skip submit ', fileUploadElem.inspect());
+      console.log('celFileSelectionChanged: skip submit ', fileUploadElm.inspect());
     }
   } else {
     console.log('celFileSelectionChanged: checkUploadFileName failed ',
-        fileUploadElem.inspect());
+        fileUploadElm.inspect());
   }
 };
 
