@@ -1,6 +1,10 @@
 @charset "UTF-8";
 /* CSS Document */
 
+/**
+DEPRECATED since 2.80 instead use images/slideshow.css in image-web module
+**/
+
 .celanim_slideshow_wrapper { 
   display: inline-block; 
   position: relative; 

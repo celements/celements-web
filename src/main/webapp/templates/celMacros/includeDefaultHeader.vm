@@ -56,7 +56,7 @@ $services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js
   $celementsweb.addExtJSfileOnce(':celJS/celanim/overlaySlide.js')
   $celementsweb.addExtJSfileOnce(':celJS/celanim/slideshow.js')
   $celementsweb.includeCSSAfterSkin(':celJS/highslide/highslide.css')
-  $celementsweb.includeCSSAfterSkin(':celRes/celanim/slideshow.css')
+  $celementsweb.includeCSSAfterSkin(':celRes/images/slideshow.css')
   $celementsweb.includeCSSAfterSkin(':celRes/celanim/overlay.css')
   #if($xwiki.getSpacePreferenceAsInt('celNewImageGallery', 0) == 1)
     ##new image gallery slideshow
