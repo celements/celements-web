@@ -88,33 +88,3 @@
 .celimage_overlay {
   cursor: pointer;
 }
-
-/*
-  * ContextMenuSlideShow 
-*/
-#sitecontainer #content .contextMenuSlideShow {
-  min-width: 125px;
-}
-#sitecontainer #content .contextMenuSlideShow ul {
-  list-style: none;
-  margin: 0px;
-  padding: 0px;
-  background: #fff;
-  border-width: 1px 1px 0px 1px;
-  border-style: solid;
-  border-color: black;
-}
-#sitecontainer #content .contextMenuSlideShow li {
-  display: block;
-  cursor: pointer;
-  border-bottom: 1px solid black;
-  padding-bottom: 2px;
-  padding-left: 15px;
-  padding-right: 15px;
-  color: #900;
-  color: black;
-}
-#sitecontainer #content .contextMenuSlideShow li:hover {
-  background-color: #015470;
-  color: white;
-}
