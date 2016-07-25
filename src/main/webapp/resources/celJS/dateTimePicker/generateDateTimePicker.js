@@ -80,9 +80,4 @@
         });
       }
   };
-  
-  celAddOnBeforeLoadListener(function() {
-    var dateTimePickerGenerator = new CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator("content")
-    dateTimePickerGenerator.generateDateTimePicker();
-  });
 })(window)
