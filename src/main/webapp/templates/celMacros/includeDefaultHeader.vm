@@ -50,13 +50,9 @@ $services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')
 $services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap.min.js', 'file')
 $services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js', 'file')
 
-<script data-main="/celements%2Dweb/file/resources/celJS/requireJSMain" src="$celementsweb.getSkinFile(':celJS/requireJS/requireJS.js', 'file')"></script>
-## $services.javascript.addExtJSfileOnce(':celJS/requireJS/requireJS.js', 'file')
-
 $services.css.includeCSSPage(':celJS/jquery-datetimepicker/jquery.datetimepicker.css')
-## $services.javascript.addExtJSfileOnce(':celJS/jquery-datetimepicker/jquery.datetimepicker.js', 'file')
-## $services.javascript.addExtJSfileOnce(':celJS/dateTimePicker/generateDateTimePicker.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/dateTimePicker/initDateTimePickerGenerator.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/jquery-datetimepicker/jquery.datetimepicker.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/dateTimePicker/generateDateTimePicker.js', 'file')
 
 #if($services.celementsphoto.useImageAnimations())
   $celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js')

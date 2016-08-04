@@ -20,6 +20,7 @@
 
       _init : function(htmlElementName) {
         var _me = this;
+        console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< generateDateTimePicker _init htmlElementName: ", htmlElementName);
         _me._htmlElement = $j('#' + htmlElementName);
       },
 
