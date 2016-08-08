@@ -18,10 +18,9 @@
   CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator.prototype = {
       _htmlElement : undefined,
 
-      _init : function(htmlCSSElementName) {
+      _init : function(htmlCssSelector) {
         var _me = this;
-        // if 'id' then + "#" if 'class' then + "." ect.
-        _me._htmlElement = $j(htmlCSSElementName);
+        _me._htmlElement = $j(htmlCssSelector);
       },
 
       generateDateTimePicker : function() {
