@@ -735,6 +735,7 @@
   };
   
   var cel_initDateTimePicker = function(event) {
+    console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<< initCelements cel_initDateTimePicker event: ', event);
     var dateTimePickerGenerator = new CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator("body");
     dateTimePickerGenerator.generateDateTimePicker();
     $(document.body).stopObserving("celements:contentChanged", cel_initDateTimePicker);
