@@ -312,11 +312,7 @@
           #set($defaultPageType = 'RichText')
       #end
     #set($pageTypeCat = "$!request.pageTypeCat")
-    #if("$!pageTypeCat" == 'celltype')
-      #set($pageTypeList = $services.pageType.getAvailableCellTypes())
-    #else
-      #set($pageTypeList = $services.pageType.getAvailablePageTypes())
-    #end
+    #set($pageTypeList = $services.pageType.getAvailableTypesForCategory($pageTypeCat))
       #foreach($item in $pageTypeList)
         #set($cur_doc = $xwiki.getDocument($item))
         #set($page_type_properties_obj = '')
