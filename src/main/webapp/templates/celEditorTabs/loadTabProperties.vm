@@ -13,32 +13,30 @@
         $doc.save()
 #end
 	#end
-    #set($selectedFound = false)
-    #set($pageTypeCat = "$!celementsweb.getPageType($doc.fullName).getCategoryString()")
-    #if("$!pageTypeCat" == 'celltype')
-      #set($pageTypeList = $services.pageType.getAvailableCellTypes())
-    #else
-      #set($pageTypeList = $services.pageType.getAvailablePageTypes())
-    #end
+    #set($pageTypeCats = $!services.pageType.getPageTypeRef($doc.documentReference).getCategories())
+    <!-- pageTypeCats: $pageTypeCats -->
+    #set($pageTypeRefList = $services.pageType.getPageTypeRefsForCategories($pageTypeCats, true))
     #set($treeMap = $util.getTreeMap())
-    #foreach($item in $pageTypeList)
-      #set($ptConfig = $services.pageType.getPageTypeConfig($item))
-      #set($!devNull = $treeMap.put($!ptConfig.getPrettyName(), $item))
+    #foreach($item in $pageTypeRefList)
+      #set($ptConfig = $services.pageType.getPageTypeConfig($item.configName))
+      #set($!devNull = $treeMap.put($!ptConfig.getPrettyName(), $item.configName))
     #end
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_type" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_type">
+      #set($curSelectFound = false)
       #foreach($item in $treeMap.values())
-        <!-- pageType: $item -->
+        <!-- page-pageType: $item -->
         #set($ptConfig = $services.pageType.getPageTypeConfig($item))
         #if($ptConfig.isVisible())
         <option value="$!{ptConfig.getName()}"##
           #if("$!{ptConfig.getName()}" == "$!page_type")##
             selected="selected"##
+            #set($curSelectFound = true)
           #end##
           label="$!ptConfig.getPrettyName()">$!ptConfig.getPrettyName()</option>
         #end
       #end
-      #if(!$pageTypeList.contains("$!{page_type}"))
-        <option value="$page_type" selected="selected" label="Unknown PageType">Unknown PageType</option>
+      #if(!$curSelectFound)
+        <option value="$page_type" selected="selected" label="Unknown Type">Unknown Type ($page_type)</option>
       #end
       </select>
 </div>
