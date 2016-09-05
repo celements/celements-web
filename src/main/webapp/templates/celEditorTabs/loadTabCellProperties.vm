@@ -39,7 +39,7 @@
         <option value="$!{ptConfig.getName()}"##
           #if("$!{ptConfig.getName()}" == "$!page_type")##
             selected="selected"##
-            #set($curSelectFound = true)
+            #set($curSelectFound = true)##
           #end##
           label="$!ptConfig.getPrettyName()">$!ptConfig.getPrettyName()</option>
         #end
