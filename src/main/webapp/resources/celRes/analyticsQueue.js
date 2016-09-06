@@ -47,7 +47,7 @@
         _me._atHitsPerSessionLimitBind = _me._atHitsPerSessionLimit.bind(_me);
         _me._sendHitsBind = _me._sendHits.bind(_me);
         var metas = $$('meta[name="cel-GAA-Num"]');
-        if((metas.size() > 0) && (metas[0].content != '')) {
+        if((metas.size() > 0) && (metas[0].content !== '')) {
           _me._analyticsId = metas[0].content;
           _me._running = true;
           _me._sendHitsBind();
@@ -69,7 +69,7 @@
     
     sentHitsCount : function() {
       var _me = this;
-      if (typeof(gaData) != 'undefined') {
+      if (typeof(gaData) !== 'undefined') {
         return gaData[_me._analyticsId].hitcount;
       }
       return null;
@@ -126,8 +126,8 @@
   
   celAddOnBeforeLoadListener(function () {
     if (window.ga) {
-      if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
-      if (typeof window.CELEMENTS.analytics=="undefined"){ window.CELEMENTS.analytics={};};
+      if (typeof window.CELEMENTS === "undefined"){ window.CELEMENTS={}; };
+      if (typeof window.CELEMENTS.analytics === "undefined"){ window.CELEMENTS.analytics={}; };
       window.CELEMENTS.analytics.Queue = new Queue();
     }
   });
