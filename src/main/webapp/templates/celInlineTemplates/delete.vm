@@ -23,6 +23,8 @@
     #end
     #set($translanguagelist = "$translanguagelist.replaceFirst(',','')")
     #set($fullmsg="${fullmsg}<p class=${quote}xwikimessage${quote}>$adminMsg.get('cel_delete_doc_confirm_warn_translations', [$translanguagelist])</p>")
+  #else
+    #set($fullmsg="${fullmsg}<p class=${quote}xwikimessage${quote}>$adminMsg.get('cel_delete_doc_confirm_no_translations')</p>")
   #end
 #else
   #set($fullmsg="${fullmsg}<p class=${quote}xwikimessage${quote}>$adminMsg.get('cel_delete_translation_confirm', [$tdoc.realLanguage, $doc.fullName])</p>")
