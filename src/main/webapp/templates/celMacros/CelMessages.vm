@@ -67,5 +67,7 @@ $jsonBuilder.closeDictionary()
 $jsonBuilder.openProperty('celslideshow')
 $jsonBuilder.openDictionary()
 $jsonBuilder.addStringProperty('cmPause', "$!adminMsg.get('cel_slideshow_cm_pause')")
+$jsonBuilder.addStringProperty('cmContinue', "$!adminMsg.get('cel_slideshow_cm_continue')")
+$jsonBuilder.addStringProperty('cmOpenLink', "$!adminMsg.get('cel_slideshow_cm_openlink')")
 $jsonBuilder.closeDictionary()
 
