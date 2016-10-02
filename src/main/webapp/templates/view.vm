@@ -45,7 +45,7 @@
   #template("endpage.vm")
 #end
 ################### default xwiki-view-template !!!!!
-##FIXME Ticket #4067 : remove ("$!celementsLoadInOverlay" != '') after fixing isAppScriptRequest
+##FIXME CELDEV-354 : remove ("$!celementsLoadInOverlay" != '') after fixing isAppScriptRequest
 #elseif($services.celementsweb.isAppScriptRequest() && ("$!celementsLoadInOverlay" == ''))
 #set($celAppScript = $services.celementsweb.getScriptNameFromURL())
 #parse('app.vm')
