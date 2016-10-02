@@ -50,27 +50,7 @@
 #set($celAppScript = $services.celementsweb.getScriptNameFromURL())
 #parse('app.vm')
 #else
-## init Celements variables
-#set($isCellSkin = false)
-##only include if legacy celements2web.xar is installed
-#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
-$xwiki.includeForm("celements2web:Macros.initCelements", false)
-#end
-#set($pagetype_api = $celementsweb.getPageType($doc.fullName))
-#if("$!show_frame" == '')
-  #set($show_frame = $pagetype_api.showFrame())
-#end
-$xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
-#if("$!celementsLoadInOverlay" != '')
-$xwiki.celementsweb.includeCSSAfterPreferences(':celRes/celementsOverlay.css')
-#end
-#if($show_frame || ("$context.action" == 'edit'))
-  $xwiki.parseTemplate("frameheader.vm")
-#end
-#if(!$contextIsFinished && !$isCellSkin)
-## render page content for old skins ('old' = no CelkSkin and no xwiki Skin from disk)
-#parse('celMacros/noDuplicateRenderCelementsDocument.vm')
-##
+#parse('celInlineTemplates/view.vm')
 #end
 #if(!$contextIsFinished && ($show_frame || ("$context.action" == 'edit')))
   $xwiki.parseTemplate("framefooter.vm")
