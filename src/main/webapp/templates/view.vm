@@ -52,7 +52,3 @@
 #else
 #parse('celInlineTemplates/view.vm')
 #end
-#if(!$contextIsFinished && ($show_frame || ("$context.action" == 'edit')))
-  $xwiki.parseTemplate("framefooter.vm")
-#end
-#end
