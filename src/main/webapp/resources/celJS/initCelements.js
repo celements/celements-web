@@ -733,12 +733,30 @@
       });
     }
   };
+  
+  var cel_initDateTimePicker = function(event) {
+    var dateTimePickerGenerator = new CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator("body");
+    dateTimePickerGenerator.generateDateTimePicker();
+    $(document.body).stopObserving("celements:contentChanged", cel_initDateTimePicker);
+    $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
+  };
+  
+  /**
+   * Initialize all Multiselect-Boxes
+   */
   celAddOnBeforeLoadListener(function() {
     $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
     $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
     $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).fire('cel:initMultiselect');
+  });
+  
+  /**
+   * Initialize all DateTimePicker
+   */
+  celAddOnBeforeLoadListener(function() {
+    cel_initDateTimePicker();
   });
 
 })(window);

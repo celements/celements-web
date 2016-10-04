@@ -63,4 +63,11 @@ $jsonBuilder.addString("$!adminMsg.get('cel_date_formater_daysShort_friday')")
 $jsonBuilder.addString("$!adminMsg.get('cel_date_formater_daysShort_saturday')")
 $jsonBuilder.closeArray()
 $jsonBuilder.closeDictionary()
+## celements photo slideShow
+$jsonBuilder.openProperty('celslideshow')
+$jsonBuilder.openDictionary()
+$jsonBuilder.addStringProperty('cmPause', "$!adminMsg.get('cel_slideshow_cm_pause')")
+$jsonBuilder.addStringProperty('cmContinue', "$!adminMsg.get('cel_slideshow_cm_continue')")
+$jsonBuilder.addStringProperty('cmOpenLink', "$!adminMsg.get('cel_slideshow_cm_openlink')")
+$jsonBuilder.closeDictionary()
 

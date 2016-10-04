@@ -1,0 +1,15 @@
+#set($isCellSkin = true)
+#set($doclang = $tdoc.getLanguage())
+#if("$!doclang" == '')
+  #set($doclang = $tdoc.getDefaultLanguage())
+#end
+##TODO get pageStyles from pageType-scriptService
+#set($cel_pageTypeObj = $doc.getObject('Celements2.PageType', true))
+#set($pageStyles = "$!cel_pageTypeObj.getProperty('page_styles').getValue()")
+<div id="sitecontainer" class="lang_${language} doclang_$doclang $!{pageStyles.trim()}">
+<!-- start celements cells -->
+#if(("$!overwriteLayoutRef" != '') && $celementsweb.canRenderLayout($overwriteLayoutRef))
+$celementsweb.renderPageLayout($overwriteLayoutRef)
+#else
+$celementsweb.renderPageLayout()
+#end

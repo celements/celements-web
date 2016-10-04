@@ -152,6 +152,7 @@ Validation.prototype = {
 	},
 	clickOnSubmitLinkHandler : function(event) {
 	  var _me = this;
+	  console.log("<<<<<<<<<<<<<<<<<<<<<<<< validation clickOnSubmitLinkHandler event: ", event);
 	  event.stop();
 	  if (_me.validate()) {
 	    _me.form.submit();

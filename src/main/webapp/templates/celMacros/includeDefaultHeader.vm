@@ -50,13 +50,17 @@ $services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')
 $services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap.min.js', 'file')
 $services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js', 'file')
 
+$services.css.includeCSSPage(':celJS/jquery-datetimepicker/jquery.datetimepicker.css')
+$services.javascript.addExtJSfileOnce(':celJS/jquery-datetimepicker/jquery.datetimepicker.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/dateTimePicker/generateDateTimePicker.js', 'file')
+
 #if($services.celementsphoto.useImageAnimations())
   $celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js')
   $celementsweb.addExtJSfileOnce(':celJS/highslide/highslide-full.min.js')
   $celementsweb.addExtJSfileOnce(':celJS/celanim/overlaySlide.js')
   $celementsweb.addExtJSfileOnce(':celJS/celanim/slideshow.js')
   $celementsweb.includeCSSAfterSkin(':celJS/highslide/highslide.css')
-  $celementsweb.includeCSSAfterSkin(':celRes/celanim/slideshow.css')
+  $celementsweb.includeCSSAfterSkin(':celRes/images/slideshow.css')
   $celementsweb.includeCSSAfterSkin(':celRes/celanim/overlay.css')
   #if($xwiki.getSpacePreferenceAsInt('celNewImageGallery', 0) == 1)
     ##new image gallery slideshow
