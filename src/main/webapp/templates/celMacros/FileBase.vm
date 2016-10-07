@@ -1,4 +1,4 @@
-## INPUT (optional): 
+## INPUT (optional):
 ##      $initRoot
 ##      $isInline [1 | &#8800;1]
 ##      $initActive
@@ -148,7 +148,7 @@ $services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js', 'file')
   #end
 #else
   #set($filters = $filters.split(','))
-#end 
+#end
 #foreach($item in $filters)
   <!-- filteris: $item -->
   #if("$!item.getName()" != '')
@@ -159,7 +159,7 @@ $services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js', 'file')
     #set($item = $item.substring($dot))
   #end
   #set($tmp = $menu_list.add("f$item"))
-#end 
+#end
 
 <script type="text/javascript">
   ##form <menu entry name , menu entry pretty name>
@@ -184,11 +184,11 @@ $services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js', 'file')
   var active_space = "$!active";
 
 ##display the date as DD.MM.YYYY HH.MM.SS
-var celementsFormatDate = function(elCell, oRecord, oColumn, oData) { 
+var celementsFormatDate = function(elCell, oRecord, oColumn, oData) {
     var oDate = oData;
     var fullMonth = oDate.getMonth() + 1;
     var dateString = (oDate.getDate()<10?"0":"") + oDate.getDate() + ".";
-    dateString += (fullMonth<10?"0":"") + fullMonth + "."; 
+    dateString += (fullMonth<10?"0":"") + fullMonth + ".";
     dateString += oDate.getFullYear() + " ";
     dateString += (oDate.getHours()<10?"0":"") + oDate.getHours() + ":";
     dateString += (oDate.getMinutes()<10?"0":"") + oDate.getMinutes() + ".";
@@ -250,36 +250,14 @@ var deleteAttachment = function(doc, file){
       new parent.Ajax.Request(url, { method: 'get' });
     #end
     requestData(active_space, document.getElementById('find_field').value);
-/*New, not yet working    #foreach($item in $filters)
-      delAttAjax("$!{item}", doc, file, false);
-    #end
-    requestData(active_space, $('find_field').value); */
   }});
 }
-
-/*DADADADADADADADADADADADADADA: tagLink ist nur tag0 ohne space
-
-##TODO similar to setTag in filebase-upload.js
-var delAttAjax = function(tagLink, docName, attName, active){
-  new parent.Ajax.Request(getCelHost(), { 
-    method: 'post',
-    parameters: {
-      xpage: 'celements_ajax',
-      'ajax_mode' : 'FileBaseTags', 
-      save: 1,
-      tag: tagLink,
-      att_doc: docName,
-      att_name: attName,
-      active: active
-    }
-  });
-}*/
 
 var celementsFormatRev = function(elCell, oRecord, oColumn, sData) {
   var revUrl = oRecord.getData("url").replace(/\/download\//g, "/viewattachrev/");
   fieldContent = '<a href="' + revUrl + '" '
   fieldContent += 'target="_blank">' + oRecord.getData("revision") + '</a>';
-  
+
   elCell.innerHTML = fieldContent;
 }
 
@@ -292,7 +270,7 @@ var delFileFormatter = function(elCell, oRecord, oColumn, sData) {
   fieldContent += "var e = arguments[0] || window.event; if (e.stopPropagation) { e.stopPropagation(); } else { e.cancelBubble=true; }; ";
   fieldContent += "return false;";
   fieldContent += '">$!adminMsg.get('cel_ml_delete')</a>';
-  
+
   elCell.innerHTML = fieldContent;
 }
 
@@ -316,41 +294,41 @@ this.editTags = function(oEditor, oSelf){
   window.open(url, "TagEdit", "width=250,height=400,left=100,top=200,resizable=yes,scrollbars=yes");
 };
 
-// Custom editor for city column to save input on "enter" 
-this.editInlineTags = function(oEditor, oSelf) { 
-  var elCell = oEditor.cell; 
-  var oRecord = oEditor.record; 
-  var oColumn = oEditor.column; 
-  var elContainer = oEditor.container; 
-  var value = oRecord.getData(oColumn.key); 
+// Custom editor for city column to save input on "enter"
+this.editInlineTags = function(oEditor, oSelf) {
+  var elCell = oEditor.cell;
+  var oRecord = oEditor.record;
+  var oColumn = oEditor.column;
+  var elContainer = oEditor.container;
+  var value = oRecord.getData(oColumn.key);
 
-  // Textbox 
-  var elTextbox = elContainer.appendChild(document.createElement("input")); 
-  elTextbox.type = "checkbox"; 
-  elTextbox.style.width = (elCell.offsetWidth + 20) + "px"; 
-  elTextbox.value = value; 
+  // Textbox
+  var elTextbox = elContainer.appendChild(document.createElement("input"));
+  elTextbox.type = "checkbox";
+  elTextbox.style.width = (elCell.offsetWidth + 20) + "px";
+  elTextbox.value = value;
 
-  /*// Set up a listener 
-  YAHOO.util.Event.addListener(elTextbox, "keyup", function(v){ 
-    // Save on "enter" 
-    if(v.keyCode === 13) { 
-      oSelf.saveCellEditor(); 
-    } 
-    // Update the tracker value 
-    else { 
-      oSelf._oCellEditor.value = elTextbox.value; 
-    } 
+  /*// Set up a listener
+  YAHOO.util.Event.addListener(elTextbox, "keyup", function(v){
+    // Save on "enter"
+    if(v.keyCode === 13) {
+      oSelf.saveCellEditor();
+    }
+    // Update the tracker value
+    else {
+      oSelf._oCellEditor.value = elTextbox.value;
+    }
   }); */
 
-// Select the text 
-elTextbox.select(); 
+// Select the text
+elTextbox.select();
 };
 
 ##this function requests the data and displays them usin YUI
 var requestData = function(space, find){
 ##hier dann wenn find dargestellt wird find raus nehmen bzw. separat, da sonst beim space wechsel die suche erhalten bleibt (oder soll das?)
         active_space = space;
-        
+
         var allowedExtentions = '';
         if($('cel_filebase_allowed_file_extentions')){
           allowedExtentions = ',' + $('cel_filebase_allowed_file_extentions').value + ',';
@@ -369,7 +347,7 @@ var requestData = function(space, find){
         paramObj['find'] = find;
         //alert("/Celements2/FileBaseData?xpage=plain&img_only=$!{imgsOnly}&single_space=$!{single_doc_space}&single_doc=$!{single_doc_doc}&root=$!{initRoot}&columns=$!{initColumns}&active=" + space + "&find=" + find);
         //alert(getCelHost() + paramObj);
-        new Ajax.Request(getCelHost(), { 
+        new Ajax.Request(getCelHost(), {
           method: 'post',
           parameters: paramObj,
           onSuccess:function(transport){
@@ -394,7 +372,7 @@ var requestData = function(space, find){
                     #end
                   #end
                 ];
-            
+
                 var fileBaseData = eval(transport.responseText);
                 ##alert(fileBaseData.fileBase[0].name);
                 ##alert("Ajax.Request:\n" + transport.responseText);
@@ -403,9 +381,9 @@ var requestData = function(space, find){
                 this.fileBaseDataSource.responseSchema = {
                     fields: ['url','name','attached_to','mime_type','revision','date','del_attachment']
                 };
-                this.myDataTable = new YAHOO.widget.DataTable('c2_ml_content', fileBaseColumnDef, this.fileBaseDataSource, 
+                this.myDataTable = new YAHOO.widget.DataTable('c2_ml_content', fileBaseColumnDef, this.fileBaseDataSource,
                         { scrollable: true });
-            
+
                 ## Subscribe to events for row selection
     #* TODO wieder einfuegen wenn vorschau bereit
                 this.myDataTable.subscribe("rowMouseoverEvent", this.myDataTable.onEventHighlightRow);
@@ -418,12 +396,12 @@ var requestData = function(space, find){
                     var elCell = oArgs.target;
                     var oOldData = oArgs.oldData;
                     var oNewData = oArgs.newData;
-        
+
                     // Grab the row el and the 2 colors
                     var elRow = this.getTrEl(elCell);
                     var origColor = YAHOO.util.Dom.getStyle(elRow, "backgroundColor");
                     var pulseColor = "#ff0";
-        
+
                     // Create a temp anim instance that nulls out when anim is complete
                     var rowColorAnim = new YAHOO.util.ColorAnim(elRow, {
                             backgroundColor:{to:origColor, from:pulseColor}, duration:2});
@@ -440,9 +418,9 @@ var requestData = function(space, find){
                 var cellspacing = document.createAttribute("cellspacing");
                 cellspacing.nodeValue = "0";
                 document.getElementsByTagName("table")[0].setAttributeNode(cellspacing);
-                
-                
-                ## add onContentReady async caller 
+
+
+                ## add onContentReady async caller
                 YAHOO.util.Event.onDOMReady(function() {
                   $("c2_ml_content").down('.yui-dt-bd').addClassName("c3_import_scrollable");
                   $("c2_ml_content").fire("filepicker:changed");
@@ -598,7 +576,7 @@ function change() {
                                 #end
                         </div><!--c2_ml_browser-->
                         #end
-            
+
                         <div id="c2_ml_content"><!--ie6--></div><!--c2_ml_content-->
                         <div class="boxclear"><!--ie6--></div>
                         ##TODO display in a tooltip
@@ -651,7 +629,7 @@ function change() {
                               <input type="file" id="uploadBrowser" class="browser" name="filepath" value="" size="40" />
                               <input type="submit" class="upload" id="submitFileUpload" value="$adminMsg.get('cel_upload')" />
 *#
-      <input type="hidden" name="xredirect" value="" /> 
+      <input type="hidden" name="xredirect" value="" />
       <input type="hidden" id="uploadDoc" name="fullName" value="$services.model.serialize($uploadDoc.documentReference, 'local')" />
       <input type="hidden" id="uploadFilename" name="filename" value="" size="20" />
       <input type="hidden" id="celfileuploadToken" name="uploadToken" value="$!{celementsweb.getNewCelementsTokenForUser()}" />
@@ -665,7 +643,7 @@ function change() {
                 </div><!--c2_ml_container_shadow-->
             </div><!--c2_ml_overlay_box-->
         </div><!--fileBasePanel bd-->
-        <div class="ft"></div> 
+        <div class="ft"></div>
   </div><!--fileBasePanel-->
 </div><!--celements3_filebase-->
 
