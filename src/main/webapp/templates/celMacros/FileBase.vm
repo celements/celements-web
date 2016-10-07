@@ -381,8 +381,14 @@ var requestData = function(space, find){
                 this.fileBaseDataSource.responseSchema = {
                     fields: ['url','name','attached_to','mime_type','revision','date','del_attachment']
                 };
+                var additionalParams = { scrollable: true };
+#*                if (this.myDataTable.sortedBy) {
+                  additionalParams.sortedBy = this.myDataTable.sortedBy;
+                } else {*#
+                  additionalParams.sortedBy = {key:"date",dir:"desc"};
+##                }
                 this.myDataTable = new YAHOO.widget.DataTable('c2_ml_content', fileBaseColumnDef, this.fileBaseDataSource,
-                        { scrollable: true });
+                        additionalParams);
 
                 ## Subscribe to events for row selection
     #* TODO wieder einfuegen wenn vorschau bereit
