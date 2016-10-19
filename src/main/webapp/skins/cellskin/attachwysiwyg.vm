@@ -7,79 +7,90 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
   #set($fieldname = "$!request.get('fieldname')")
 #end
 <div id="xwikiattachmentscontent" class="xwikidatacontent">
-<script language="javascript">
-  //alert("test: hier js!");
-  function clickOnFileAction(filename) {
-    if (document.forms[0].${fieldname}) {
-      if (imgurl) {
-        filename = imgurl + "/" + filename; 
-      }
-      document.forms[0].${fieldname}.value = filename;
-    }
-    return false;
-  }
-</script>
-#set($counter=0)
-
-<p>fieldname: <b></b> $fieldname</p>
-
-<table>
-<tr><th></th><th> <b>$adminMsg.get("cel_rte_filename")</b> </th><th> <b>$adminMsg.get("cel_rte_version")</b> </th>
-<th> <b>$adminMsg.get("cel_rte_author")</b> </th></tr>
-#foreach ($attach in $attachments)
-#if(("$!request.images" == '0') || ($attach.isImage() && ("$!request.images" == '1')) || (!$attach.isImage() && ("$!request.images" == '2')))
-<tr>
-<td>
-#if ($attach.isImage())
-<a href="$doc.getAttachmentURL("${attach.filename}", 'download')" onclick="if(self.clickOnFileAction) return clickOnFileAction('$attach.filename'); else document.forms[0].${fieldname}.value = imgurl + '/$attach.filename'; return false;" >
-#set($resizeParams = 'celwidth=80&celheight=80')
-<img src="$doc.getAttachmentURL("${attach.filename}", 'download', "${resizeParams}&version=${attach.version}")" alt="${attach.filename}" border="0" />
-</a>
-#end
-</td><td><a href="$doc.getAttachmentURL("${attach.filename}", "download")" onclick="if(self.clickOnFileAction) return clickOnFileAction('$attach.filename'); else document.forms[0].${fieldname}.value = imgurl + '/$attach.filename'; return false;" >$attach.filename</a></td>
-<td>$attach.version</td><td>$xwiki.getLocalUserName($attach.author)</td>
-</tr>
-#end
-#set( $counter = $counter + 1)
-#end
-</table>
-<br />
+## Outcommented for jira issue CELDEV-361 never used because of duplicate declaration of function clickOnFileAction
+## in script templates/celAjax/ImagePicker.vm 
 #*
-<script language="javascript">
-  function verifyDoc(){
-    document.getElementById('attach').style.display = "none";
-    document.getElementById('progressBar').style.display = "";
-    #set($ext = "doc=${doc.space}&lang=$!{default_language}&xpage=plainpagetype")
-    url = "$xwiki.getDocument('Celements2.VerifyDoc').getURL('view', $ext)"
-    new Ajax.Request(url, {method: 'post', onComplete: function(transport){
-      document.forms.attach.submit();
-      document.getElementById('progressBar').style.display = "none";
-      document.getElementById('attach').style.display = "";
+  <script language="javascript">
+    ##alert("test: hier js!");
+    function clickOnFileAction(filename) {
+      if (document.forms[0].${fieldname}) {
+        if (imgurl) {
+          filename = imgurl + "/" + filename; 
+        }
+        document.forms[0].${fieldname}.value = filename;
+      }
+      return false;
     }
-  }
-</script>
+  </script>
 *#
-<div id="progressBar" style="display:none">
-  <img src='$xwiki.getSkinFile("/skins/albatross/icons/ajax%2Dloader.gif", true)'>
-</div>
-<form id="attach" action="$doc.getURL("upload")" enctype="multipart/form-data" method="post"
-      onsubmit="return updateAttachName(this)" >
-##      onsubmit="if(updateAttachName(this)){verifyDoc()}; return false;" >
-<input type="hidden" name="language" value="$!default_language" />
-<input type="hidden" name="xredirect" value="$!request.get('xredirect')" />
-<p>
-$adminMsg.get("cel_rte_choosetargetfilename"):
-<input type="text" name="filename" value="" size="20" />
-<br /><br />
-$adminMsg.get("cel_rte_choosefiletoupload"):
-<input type="file" name="filepath" value="" size="40"  />
-<br /><br />
-<input type="submit" value="$adminMsg.get('cel_rte_attachthisfile')" />
-</p>
-</form>
+  #set($counter=0)
+
+  <p>fieldname: <b></b> $fieldname</p>
+
+  <table>
+    <tr>
+      <th></th>
+      <th> <b>$adminMsg.get("cel_rte_filename")</b> </th>
+      <th> <b>$adminMsg.get("cel_rte_version")</b> </th>
+      <th> <b>$adminMsg.get("cel_rte_author")</b> </th>
+    </tr>
+    #foreach ($attach in $attachments)
+      #if(("$!request.images" == '0') || ($attach.isImage() && ("$!request.images" == '1')) || (!$attach.isImage() && ("$!request.images" == '2')))
+        <tr>
+          <td>
+            #if ($attach.isImage())
+              <a href="$doc.getAttachmentURL("${attach.filename}", 'download')" onclick="if(self.clickOnFileAction) return clickOnFileAction('$attach.filename'); else document.forms[0].${fieldname}.value = imgurl + '/$attach.filename'; return false;" >
+                #set($resizeParams = 'celwidth=80&celheight=80')
+                <img src="$doc.getAttachmentURL("${attach.filename}", 'download', "${resizeParams}&version=${attach.version}")" alt="${attach.filename}" border="0" />
+              </a>
+            #end
+          </td>
+          <td>
+            <a href="$doc.getAttachmentURL("${attach.filename}", "download")" onclick="if(self.clickOnFileAction) return clickOnFileAction('$attach.filename'); else document.forms[0].${fieldname}.value = imgurl + '/$attach.filename'; return false;" >$attach.filename</a>
+            ##<a href="$doc.getAttachmentURL("${attach.filename}", "download")" onclick="return clickOnFileAction('$attach.filename');" >$attach.filename</a>
+            ##<a href="$doc.getAttachmentURL("${attach.filename}", "download")" onclick="clickOnLinkAction()" >$attach.filename</a>
+          </td>
+          <td>$attach.version</td><td>$xwiki.getLocalUserName($attach.author)</td>
+        </tr>
+      #end
+      #set( $counter = $counter + 1)
+    #end
+  </table>
+  <br />
+  #*
+  <script language="javascript">
+    function verifyDoc(){
+      document.getElementById('attach').style.display = "none";
+      document.getElementById('progressBar').style.display = "";
+      #set($ext = "doc=${doc.space}&lang=$!{default_language}&xpage=plainpagetype")
+      url = "$xwiki.getDocument('Celements2.VerifyDoc').getURL('view', $ext)"
+      new Ajax.Request(url, {method: 'post', onComplete: function(transport){
+        document.forms.attach.submit();
+        document.getElementById('progressBar').style.display = "none";
+        document.getElementById('attach').style.display = "";
+      }
+    }
+  </script>
+  *#
+  <div id="progressBar" style="display:none">
+    <img src='$xwiki.getSkinFile("/skins/albatross/icons/ajax%2Dloader.gif", true)'>
+  </div>
+  <form id="attach" action="$doc.getURL("upload")" enctype="multipart/form-data" method="post" onsubmit="return updateAttachName(this)" >
+    ##onsubmit="if(updateAttachName(this)){verifyDoc()}; return false;" >
+    <input type="hidden" name="language" value="$!default_language" />
+    <input type="hidden" name="xredirect" value="$!request.get('xredirect')" />
+    <p>
+      $adminMsg.get("cel_rte_choosetargetfilename"):
+      <input type="text" name="filename" value="" size="20" />
+      <br /><br />
+      $adminMsg.get("cel_rte_choosefiletoupload"):
+      <input type="file" name="filepath" value="" size="40"  />
+      <br /><br />
+      <input type="submit" value="$adminMsg.get('cel_rte_attachthisfile')" />
+    </p>
+  </form>
 </div>
 <div class="xwikidatafooter2">
-<div class="xwikidatafooter1">&nbsp;</div>
-<div class="xwikidatafooter">&nbsp;</div>
-</div>
+  <div class="xwikidatafooter1">&nbsp;</div>
+  <div class="xwikidatafooter">&nbsp;</div>
 </div>
