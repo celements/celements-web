@@ -295,26 +295,31 @@ var loadAttachmentListCallback = function(attList, insertBottom, duplicateCheck,
 
 var clickOnFileAction = function (event) {
   event.stop();
+  console.log('<<<<<<<<<<<<<<<<<<< imagepicker clickOnFileAction: event/this ', event, this);
   var selectElem = this.down('img, a');
+  console.log('<<<<<<<<<<<<<<<<<<< imagepicker clickOnFileAction: selectElem ', selectElem);
   var filename = selectElem.src;
   if (!filename) {
     filename = selectElem.href;
   }
   console.log('clickOnFileAction: filename ', filename);
-  if (filename && document.forms[0].src) {
-    filename = filename.replace(/^(.+)\?.*/, '$1');
-    document.forms[0].src.value = filename;
-    var oldSelection = $$('.imagePickerSource.selected');
-    if (oldSelection.size() > 0) {
-      oldSelection[0].removeClassName('selected');
-      oldSelection[0].observe('click', clickOnFileAction);
-    }
-    this.addClassName('selected');
-    this.stopObserving('click', clickOnFileAction);
-    CelImageDialog.isNewImage = true;
-    CelImageDialog.showPreviewImage(filename);
-    mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
-  }
+  
+  console.log('<<<<<<<<<<<<<<<<<<< imagepicker clickOnFileAction: CelImageDialog ', CelImageDialog);
+  console.log('<<<<<<<<<<<<<<<<<<< imagepicker clickOnFileAction: mcTabs ', mcTabs);
+//  if (filename && document.forms[0].src) {
+//    filename = filename.replace(/^(.+)\?.*/, '$1');
+//    document.forms[0].src.value = filename;
+//    var oldSelection = $$('.imagePickerSource.selected');
+//    if (oldSelection.size() > 0) {
+//      oldSelection[0].removeClassName('selected');
+//      oldSelection[0].observe('click', clickOnFileAction);
+//    }
+//    this.addClassName('selected');
+//    this.stopObserving('click', clickOnFileAction);
+//    CelImageDialog.isNewImage = true;
+//    CelImageDialog.showPreviewImage(filename);
+//    mcTabs.displayTab('imageDetails_tab','imageDetails_panel');
+//  }
 };
 
 var updateAttachName = function(form) {
