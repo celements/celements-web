@@ -20,6 +20,9 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
   }
 </script>
 #set($counter=0)
+
+<p>fieldname: <b></b> $fieldname</p>
+
 <table>
 <tr><th></th><th> <b>$adminMsg.get("cel_rte_filename")</b> </th><th> <b>$adminMsg.get("cel_rte_version")</b> </th>
 <th> <b>$adminMsg.get("cel_rte_author")</b> </th></tr>
