@@ -1,0 +1,24 @@
+#if("$!contentType" == '')
+  #set($contentType = "application/json")
+#end
+$response.setContentType($contentType)##
+$response.setCharacterEncoding("UTF-8")##
+
+#set($success = false)
+#set($theMenuName = $doc.getObject('Celements2.MenuName','lang',"$language", false))
+#set($devNull = $theMenuName.set("image", ""))
+#set($devNull = $doc.save())
+#set($currentImage = "$!theMenuName.getProperty('image').getValue()")
+#if("$currentImage" == "")
+  #set($success = true)
+#end
+
+#set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
+$jsonBuilder.openDictionary()
+  $jsonBuilder.openProperty('JSONConfirmCheckout')
+  $jsonBuilder.openDictionary()
+    $jsonBuilder.openProperty('success')
+    $jsonBuilder.addBoolean($success)
+  $jsonBuilder.closeDictionary() ## JSONConfirmCheckout
+$jsonBuilder.closeDictionary()
+$jsonBuilder.getJSON()
