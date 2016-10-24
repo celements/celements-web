@@ -385,7 +385,8 @@ var requestData = function(space, find){
 #*                if (this.myDataTable.sortedBy) {
                   additionalParams.sortedBy = this.myDataTable.sortedBy;
                 } else {*#
-                  additionalParams.sortedBy = {key:"date",dir:"desc"};
+                  // does NOT sort, but jus mark as sorted when you expect a sorted input
+                  // additionalParams.sortedBy = {key:"date",dir:"desc"};
 ##                }
                 this.myDataTable = new YAHOO.widget.DataTable('c2_ml_content', fileBaseColumnDef, this.fileBaseDataSource,
                         additionalParams);
@@ -453,6 +454,13 @@ var setActive = function(){
         }
         if((categories[i].innerHTML == active) || ((active == '') && (categories[i].innerHTML == "$!adminMsg.get('cel_ml_all_docs')"))){
             newdef = newdef + 'c2_ml_labelactive';
+            var uploadCatEle = $('c2_fb_' + active);
+            if (uploadCatEle) {
+              $$('.c3_fb_upload_filter input').each(function(ele) {
+                ele.checked = false;
+              });
+              uploadCatEle.checked = true;
+            }
         }
         categories[i].className = newdef;
     }
