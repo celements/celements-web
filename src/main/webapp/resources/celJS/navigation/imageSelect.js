@@ -25,4 +25,5 @@ var imagePickerCallback = function(filename, origFieldName) {
   var celAttUrl = celAttFileName.replace(/^([^\.]+)\.([^\.]+);(.+)$/,
       '/download/$1/$2/$3') + '?celwidth=200&celheight=200';
   $('nav_imagePicker').down('img#celMenuImagePreview').src = celAttUrl;
+  $('nav_imagePicker').down('img#celMenuImagePreview').show();
 };
