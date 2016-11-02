@@ -1,9 +1,3 @@
-#if("$!contentType" == '')
-  #set($contentType = "application/json")
-#end
-$response.setContentType($contentType)##
-$response.setCharacterEncoding("UTF-8")##
-
 #set($success = false)
 #set($theMenuName = $doc.getObject('Celements2.MenuName','lang',"$language", false))
 #set($devNull = $theMenuName.set("image", ""))
