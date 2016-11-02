@@ -106,9 +106,13 @@
   #set($currentImage = "$!theMenuName.getProperty('image').getValue()")
   #if("$!{currentImage}" != '')
     #set($currentImageURL = $celementsweb.getSkinFile("${currentImage}", 'download'))
-  <img id="celMenuImagePreview" src="${currentImageURL}&celwidth=200&celheight=200" />
+    <div class="celMenuImagePreviewContainer">
+      <p class="imagePreview"><img id="celMenuImagePreview" src="${currentImageURL}&celwidth=200&celheight=200" /></p>
+      #set($cel_editobj_classname = 'Progon.AffiliationClass')
+      <p class="celMenuImagePreviewDelete"><a href="#">$adminMsg.get('cel_tm_menu_removeimage')</a></p>
+    </div>
   #else
-  <img style="display:none;" id="celMenuImagePreview" src="" />
+    <img style="display:none;" id="celMenuImagePreview" src="" />
   #end
 </div>
 </form>
