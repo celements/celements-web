@@ -40,6 +40,4 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 $!pageContent
 <!-- end celements cells -->
 </div><!-- main wrapper -->
-#if(!$isAjaxCall)
 #parse('celMacros/finaliseCelementsDocument.vm')
-#end
