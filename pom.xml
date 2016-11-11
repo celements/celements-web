@@ -29,7 +29,7 @@
     <artifactId>celementsweb</artifactId>
     <version>2.12</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>  
+  <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
   <version>2.85-SNAPSHOT</version>
@@ -59,7 +59,7 @@
         <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
   </properties>
   <dependencies>
-    <!-- xwiki platform dependency -->    
+    <!-- xwiki platform dependency -->
     <dependency>
       <groupId>org.xwiki.enterprise</groupId>
       <artifactId>xwiki-enterprise-web</artifactId>
@@ -133,7 +133,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.155</version>
+      <version>1.156-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -217,7 +217,7 @@
         <artifactId>reflections</artifactId>
         <version>0.9.6</version>
     </dependency>
-   </dependencies>  
+   </dependencies>
   <build>
     <finalName>celements-web</finalName>
     <plugins>
