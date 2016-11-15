@@ -25,8 +25,27 @@ var imagePickerCallback = function(filename, origFieldName) {
   '/download/$1/$2/$3') + '?celwidth=200&celheight=200';
   $('nav_imagePicker').down('img#celMenuImagePreview').src = celAttUrl;
   $('nav_imagePicker').down('img#celMenuImagePreview').show();
+  if(!$('nav_imagePicker').down(".celMenuImagePreviewDelete")) {
+    var element = new Element("p").addClassName("celMenuImagePreviewDelete").update(
+        new Element("a", {"href" : "#"}).update("Bild Löschen"));
+    $('nav_imagePicker').down(".celMenuImagePreviewContainer").insert(element);
+  }
+  $$('div.celMenuImagePreviewContainer').each(function(elem) {
+    elem.show();
+  });
+  $$('.celMenuImagePreviewDelete a').each(function(elem) {
+    elem.stopObserving('click', removeImageAfterUpload);
+    elem.observe('click', removeImageAfterUpload);
+  });
 };
 
+var removeImageAfterUpload = function (event) {
+  event.stop();
+  $$('div.celMenuImagePreviewContainer').each(function(elem) {
+    elem.hide();
+  });
+  $('nav_imagePicker').down('#image').value = "";
+};
 
 (function(window, undefined) {
   "use strict";
