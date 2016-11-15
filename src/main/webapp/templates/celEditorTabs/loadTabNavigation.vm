@@ -112,7 +112,9 @@
       <p class="celMenuImagePreviewDelete"><a href="#">$adminMsg.get('cel_tm_menu_removeimage')</a></p>
     </div>
   #else
-    <img style="display:none;" id="celMenuImagePreview" src="" />
+    <div class="celMenuImagePreviewContainer">
+      <p class="imagePreview"><img style="display:none;" id="celMenuImagePreview" src="" /></p>
+    </div>
   #end
 </div>
 </form>
