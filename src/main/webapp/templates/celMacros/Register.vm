@@ -127,7 +127,7 @@ ${xwiki.getURL('Content.login','view','xpage=celements_ajax&ajax_mode=CelRegiste
     <td><input type="text" name="cemail" value="$!request.get('cemail')" size="40" class="celements2_input validate-email required"/></td>
   </tr>
 #end
-#if(!$withEmailLogin || $context.isMainWiki())
+#if(!$withEmailLogin || $services.celementsweb.isMainWiki())
   <tr>
     <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">Password</td>
     <td><input type="password" name="$!{fieldprefix}password" value="$!request.get('$!{fieldprefix}password')" size="40" class="celements2_input required"/></td>
