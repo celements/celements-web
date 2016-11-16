@@ -26,8 +26,13 @@ var imagePickerCallback = function(filename, origFieldName) {
   $('nav_imagePicker').down('img#celMenuImagePreview').src = celAttUrl;
   $('nav_imagePicker').down('img#celMenuImagePreview').show();
   if(!$('nav_imagePicker').down(".celMenuImagePreviewDelete")) {
+    var imgElement = new Element('img', {
+      'src' : CELEMENTS.getUtils().getPathPrefix() + '/file/resources/layouts/img/cross.gif',
+      'class' : 'removeBackgroundImg',
+      'alt' : 'romove'
+    });
     var element = new Element("p").addClassName("celMenuImagePreviewDelete").update(
-        new Element("a", {"href" : "#"}).update("Bild Löschen"));
+        new Element("a", {"href" : "#"}).update(imgElement));
     $('nav_imagePicker').down(".celMenuImagePreviewContainer").insert(element);
   }
   $$('div.celMenuImagePreviewContainer').each(function(elem) {

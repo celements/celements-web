@@ -109,7 +109,9 @@
     <div class="celMenuImagePreviewContainer">
       <p class="imagePreview"><img id="celMenuImagePreview" src="${currentImageURL}&celwidth=200&celheight=200" /></p>
       #set($cel_editobj_classname = 'Progon.AffiliationClass')
-      <p class="celMenuImagePreviewDelete"><a href="#">$adminMsg.get('cel_tm_menu_removeimage')</a></p>
+      <p class="celMenuImagePreviewDelete">
+        <a href="#"><img class="removeBackgroundImg" alt="remove" src="$services.celementsweb.getSkinFile(':layouts/img/cross.gif', 'file')" /></a>
+      </p>
     </div>
   #else
     <div class="celMenuImagePreviewContainer">
