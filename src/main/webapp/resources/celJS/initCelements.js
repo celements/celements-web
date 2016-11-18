@@ -746,7 +746,7 @@
     var dateTimePickerGenerator = new CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator("body");
     dateTimePickerGenerator.generateDateTimePicker();
     $(document.body).stopObserving("celements:contentChanged", cel_initDateTimePicker);
-    $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
+    $(document.body).observe("celements:contentChanged", cel_initDateTimePicker);
   };
   
   /**
