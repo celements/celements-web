@@ -111,7 +111,7 @@ ${xwiki.getURL('Content.login','view','xpage=celements_ajax&ajax_mode=CelRegiste
     <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">$adminMsg.get("core.register.lastName")</td>
     <td><input type="text" name="$!{fieldprefix}last_name" value="$!request.get('$!{fieldprefix}last_name')" size="40" class="celements2_input required"/></td>
   </tr>
-#if(!$withEmailLogin || $context.isMainWiki())
+#if(!$withEmailLogin || $services.celementsweb.isMainWiki())
   <tr>
     <td style="text-align:right;vertical-align:top;vertical-align:top" class="celements2_input_mandatory">Login Name</td>
     <td><input type="text" name="xwikiname" value="$!request.get('xwikiname')" size="40" onfocus="prepareName(document.forms.register);" class="celements2_input validate-docname"/></td>
