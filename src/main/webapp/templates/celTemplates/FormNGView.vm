@@ -27,7 +27,7 @@ $xwiki.includeForm("celements2web:Macros.getActionTypeAndActionTemplateDoc", fal
 ## start script
 #set($errorMsg = '') ## initalize
 #if("$!celldoc" != '')
-#set($contentDoc = $celldoc)
+#set($contentDoc = $celldoc.getTranslatedDocument())
 #else   
 #set($contentDoc = $tdoc)
 #end
