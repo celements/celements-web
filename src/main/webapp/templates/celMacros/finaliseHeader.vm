@@ -15,12 +15,14 @@ $xwiki.celementsweb.displayAllCSS()
 #foreach($metaTagKey in $metaTags.keySet())
 #if("$metaTagKey" == 'refresh')
 #set($attributName = 'http-equiv')
+#set($propertyNameVal = '')
 #else
 #set($attributName = 'name')
+#set($propertyNameVal = "property=${Q}$metaTagKey${Q} ")
 #end
-<meta $attributName="$metaTagKey" content="$metaTags.get($metaTagKey)" />
+<meta $!{propertyNameVal}$attributName="$metaTagKey" content="$metaTags.get($metaTagKey)" />
 #end
-<!-- 
+<!--
     This website is powered by open-celements - inspiring people to share!
     open-celements is a free open source Content Management System based on the popular xwiki platform and licensed under LGPL.
     open-celements is copyright 2005-2016 of synventis gmbh. Extensions are copyright of their respective owners.
