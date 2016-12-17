@@ -16,22 +16,35 @@ celPDCdocPageType : $celPDCdocPageType
 -->
 #set($celPDCdocCssPTclass = "cel_pagetype_$!{celPDCdocPageType}")
 #if($isAddPdDiv)
-#set($isInheritable = $services.cells.isInheritable($cellDocRef))
-#set($pageDepDocRef = $services.cells.getPageDependentDocRef($doc.getDocumentReference(), $cellDocRef, false))
-#set($pageDepFN = $services.model.serialize($pageDepDocRef))
-#set($pdSpaceSuffix = $services.cells.getDepCellSpaceSuffix($cellDocRef))
-#if("$!pdCount" == '')
-  #set($pdCount = 0)
-#end
-#set($pdCount = $pdCount + 1)
-<div id="cellPDContent$!{pdCount}$!{pageDocRef.getName()}:$!{isInheritable}:$!{pdSpaceSuffix}:$!{pageDepFN}"##
- class="cel_cm_pagedependent_content">
- #set($celPDCdocCssPTclass = "cellPDContent-body ${celPDCdocCssPTclass}")
-#end
-<div class="${celPDCdocCssPTclass}">
-$services.celementsweb.renderCelementsDocument($pageDocRef, true)
-<!-- IE6 --></div>
-#if($isAddPdDiv)
-<!-- IE6 --></div>
-#end
+  #set($isInheritable = $services.cells.isInheritable($cellDocRef))
+  #set($pageDepDocRef = $services.cells.getPageDependentDocRef($doc.getDocumentReference(), $cellDocRef, false))
+  #set($pageDepFN = $services.model.serialize($pageDepDocRef))
+  #set($pdSpaceSuffix = $services.cells.getDepCellSpaceSuffix($cellDocRef))
+  #if("$!pdCount" == '')
+    #set($pdCount = 0)
+  #end
+  #set($pdCount = $pdCount + 1)
+  <div id="cellPDContent$!{pdCount}$!{pageDocRef.getName()}:$!{isInheritable}:$!{pdSpaceSuffix}:$!{pageDepFN}"##
+   class="cel_cm_pagedependent_content">
+   #set($celPDCdocCssPTclass = "cellPDContent-body ${celPDCdocCssPTclass}")
+  #end
+  <div class="${celPDCdocCssPTclass}">
+    #set($pageTypeConfig = $services.pageType.getPageTypeConfig($page_type))
+    #set($isRenderViewMode = ("$!context.action" == 'view'))
+    #set($isRenderViewMode = $isRenderViewMode || (!$pageTypeConfig || !$pageTypeConfig.useInlineEditorMode()))
+    #set($isRenderViewMode = $isRenderViewMode || ($doc.documentReference != $pageDocRef))
+    <!--
+      page_type : $page_type
+      useInlineEditorMode : $pageTypeConfig.useInlineEditorMode()
+      isRenderViewMode : $isRenderViewMode
+    -->
+    #if($isRenderViewMode)
+      $services.celementsweb.renderCelementsDocument($pageDocRef, true)
+    #else
+      $services.celementsweb.renderCelementsDocument($pageDocRef, "$!context.language", 'edit',  true)
+    #end
+  <!-- IE6 --></div>
+  #if($isAddPdDiv)
+  <!-- IE6 --></div>
+  #end
 #end
