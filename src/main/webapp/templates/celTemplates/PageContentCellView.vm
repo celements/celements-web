@@ -41,7 +41,18 @@ celPDCdocPageType : $celPDCdocPageType
     #if($isRenderViewMode)
       $services.celementsweb.renderCelementsDocument($pageDocRef, true)
     #else
-      $services.celementsweb.renderCelementsDocument($pageDocRef, "$!context.language", 'edit',  true)
+      ##
+      ## Content
+      ##
+      ## Is the document being edited by another user?
+      ## If yes, warn about it and show a forcing link:
+      ##
+      #set($force = $!request.get('force'))
+      #if (($tdoc.getLocked()==true)&&(!$force))
+        #parse('celMacros/editor/showEditorBlockerMessage.vm')
+      #else
+        $services.celementsweb.renderCelementsDocument($pageDocRef, "$!context.language", 'edit',  true)
+      #end
     #end
   <!-- IE6 --></div>
   #if($isAddPdDiv)
