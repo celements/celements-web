@@ -3,9 +3,11 @@
 ## INPUT: 
 ## OUTPUT: 
 ##
+#set($cel_useInlineEditorMode = $services.pageType.getPageTypeConfig($page_type).useInlineEditorMode())
+#set($cel_isEditMode = (("$context.action" == 'edit') || ("$context.action" == 'inline')))
 #if(!$finaliseCelementsDocumentHeaderRUN) ## prevent from being run twice and allow lacy calls.
-  $xwiki.parseTemplate("celMacros/loadAdminInterface.vm")
-  $xwiki.parseTemplate("celMacros/finaliseHeader.vm")
+  #parse("celMacros/loadAdminInterface.vm")
+  #parse("celMacros/finaliseHeader.vm")
 #if("$!cel_loadAdminMenuBar" == '')
 ##<!-- celmenubar : $services.celMenu.getMenuHeaders().size() ,## 
 ###foreach($menu in $services.celMenu.getMenuHeaders())
@@ -15,8 +17,9 @@
 <script type="text/javascript">
   window.celFinishHeaderHandler();
 </script>
-#set($cel_loadAdminMenuBar = ("$context.action" != 'edit') && ("$context.action" != 'inline') && ("$!doc.space" != "Celements2") && ("$!request.picker" != '1') && ("$!doc.fullName" != 'Tools.EditBanner'))
-#set($cel_loadAdminMenuBar = ($isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0)) && $cel_loadAdminMenuBar)
+#set($cel_loadAdminMenuBar = (!$cel_isEditMode && ("$!doc.space" != "Celements2") && ("$!request.picker" != '1') && ("$!doc.fullName" != 'Tools.EditBanner')))
+#set($cel_loadAdminMenuBar = $cel_loadAdminMenuBar && ($isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0)))
+#set($cel_loadAdminMenuBar = ($cel_loadAdminMenuBar || $cel_useInlineEditorMode))
 #end
 #set($finaliseCelementsDocumentHeaderRUN = true)
 #end
