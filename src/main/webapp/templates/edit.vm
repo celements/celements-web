@@ -119,5 +119,5 @@ $xwiki.parseTemplate("footer.vm")
 $xwiki.parseTemplate("htmlfooter.vm")
 ################### default xwiki-edit-template !!!!!
 #else
-$xwiki.parseTemplate("view.vm")
+  #parse("view.vm")
 #end

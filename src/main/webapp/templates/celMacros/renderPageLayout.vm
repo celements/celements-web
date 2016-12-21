@@ -8,8 +8,8 @@
 #set($pageStyles = "$!cel_pageTypeObj.getProperty('page_styles').getValue()")
 <div id="sitecontainer" class="lang_${language} doclang_$doclang $!{pageStyles.trim()}">
 <!-- start celements cells -->
-#if(("$!overwriteLayoutRef" != '') && $celementsweb.canRenderLayout($overwriteLayoutRef))
-$celementsweb.renderPageLayout($overwriteLayoutRef)
+#if(("$!overwriteLayoutRef" != '') && $services.layout.canRenderLayout($overwriteLayoutRef))
+$services.layout.renderPageLayout($overwriteLayoutRef)
 #else
-$celementsweb.renderPageLayout()
+$services.layout.renderPageLayout()
 #end

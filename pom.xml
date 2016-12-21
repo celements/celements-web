@@ -52,11 +52,13 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <catalina.port>10081</catalina.port>
     <catalina.home.celementsweb-platform>${env.CATALINA_HOME}</catalina.home.celementsweb-platform>
-        <catalina.home.celementsweb>${catalina.home.celementsweb-platform}</catalina.home.celementsweb>
-        <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
-        <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
-        <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
-        <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
+    <catalina.home.celementsweb>${catalina.home.celementsweb-platform}</catalina.home.celementsweb>
+    <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
+    <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
+    <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
+    <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
+    <hibernate.cfg.xml.connection.port />
+    <hibernate.cfg.xml.connection.host>localhost</hibernate.cfg.xml.connection.host>
   </properties>
   <dependencies>
     <!-- xwiki platform dependency -->
