@@ -164,6 +164,17 @@
   #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
   #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
   #set($devNull = $attRestrGrp.add($restr))
+  
+  ## workaround for CELDEV-208
+  #set($andGrp = $services.lucene.createAndRestrictionGroup())
+  #set($restr = $services.lucene.createRestriction('type', '"wikipage"'))
+  #set($devNull = $andGrp.add($restr))
+  #set($devNull = $andGrp.add($orGrp))
+  #set($orGrp = $services.lucene.createOrRestrictionGroup())
+  #set($devNull = $orGrp.add($andGrp))  
+  #set($restr = $services.lucene.createRestriction('type', '"attachment"'))
+  #set($devNull = $attRestrGrp.add($restr))
+  
   #set($devNull = $orGrp.add($attRestrGrp))
 #end
 
