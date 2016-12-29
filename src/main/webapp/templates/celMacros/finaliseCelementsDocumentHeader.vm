@@ -3,7 +3,8 @@
 ## INPUT: 
 ## OUTPUT: 
 ##
-#set($cel_useInlineEditorMode = $services.pageType.getPageTypeConfig($page_type).useInlineEditorMode())
+#set($cel_page_type_config = $services.pageType.getPageTypeConfig($page_type))
+#set($cel_useInlineEditorMode = (("$!cel_page_type_config" != '') && $cel_page_type_config.useInlineEditorMode()))
 #set($cel_isEditMode = (("$context.action" == 'edit') || ("$context.action" == 'inline')))
 #if(!$finaliseCelementsDocumentHeaderRUN) ## prevent from being run twice and allow lacy calls.
   #parse("celMacros/loadAdminInterface.vm")
