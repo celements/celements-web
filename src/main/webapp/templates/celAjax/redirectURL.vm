@@ -1,0 +1,6 @@
+## request url has to conform to HttpServletResponse.sendRedirect(String), see javadoc
+#set($url = $request.url)
+#if("$!url" == "")
+   #set($url = $doc.getURL())
+#end
+$response.sendRedirect($url)

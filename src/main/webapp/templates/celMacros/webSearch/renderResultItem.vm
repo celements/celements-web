@@ -6,6 +6,7 @@
   #set($resultDoc = $xwiki.getDocument($resultRef))
   #set($pageTitle = $services.celementsweb.getDocHeaderTitle($resultRef))
   #set($pageLink = $xwiki.getURL($resultRef))
+  #set($linkTarget = '_self')
   #set($parentDocRefList = $xwiki.celementsweb.getDocumentParentsDocRefList($resultRef, false))
   #set($resultDate = $resultDoc.getDate())
 #elseif("$!resultRef.getType()" == "ATTACHMENT")
@@ -13,8 +14,9 @@
   #set($pageTitle = $resultRef.getName())
   #set($pageLink = $xwiki.getAttachmentURL($services.model.serialize($resultRef.getDocumentReference()), $resultRef.getName()))
   #if($resultRef.getName().endsWith('.pdf'))
-    #set($pageLink = "$pageLink?search=$!text")
+    #set($pageLink = "${pageLink}#search=$!text")
   #end
+  #set($linkTarget = '_blank')
   #set($parentDocRefList = [])
   #set($resultDate = $resultAtt.getDate())
 #end
@@ -33,7 +35,7 @@
   #end
   <span class="result_ranking_color" style="background-color: ${bgcolor};">&nbsp;</span>
   <span class="result_ranking_score" >$!{mathtool.roundTo(2, $mathtool.mul(100, $score))}</span>
-  <a class="result_page_link" href="$pageLink">$pageTitle</a>
+  <a class="result_page_link" target="$linkTarget" href="$pageLink">$pageTitle</a>
   #if($parentDocRefList.size() > 0)
   <span class="result_bread_crumbs"><span class="result_bread_crumbs_title">$msg.get('cel_search_breadcrumbs_title')</span>
     #foreach($parentDocRef in $util.reverseList($parentDocRefList))
