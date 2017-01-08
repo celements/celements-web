@@ -3,18 +3,18 @@
 ## INPUT (optional): $charEncoding
 ## OUTPUT:
 ##
-$!xwiki.getSpacePreference("meta")
 #if("$!charEncoding" == '')
   #set($charEncoding = "$xwiki.encoding")
 #end
 $!services.celementsweb.getCharsetMetaTag("$!charEncoding").display()
-<title>##
-$xwiki.celementsweb.getDocHeaderTitle($doc.documentReference)##
-</title>
+$!xwiki.getSpacePreference("meta")
 #if($services.celementsweb.hasGoogleAnalytics())
   $services.celementsweb.addMetaTag('name', 'cel-GAA-Num', "$services.celementsweb.getGoogleAnalytics()")
 #end
 $!services.celementsweb.displayAllMetaTags()
+<title>##
+$xwiki.celementsweb.getDocHeaderTitle($doc.documentReference)##
+</title>
 #set($layoutName = $services.layout.getPageLayoutForDoc($doc.documentReference))
 #set($layoutWebHomeDoc = '')
 #if("$!layoutName" != '')
