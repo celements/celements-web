@@ -5,7 +5,7 @@
 ## INPUT (optional): $addPage_isMovable_LocalCheckMacro
 ##                    (is called to set $addPage_isMovable)
 ##                  $request.newDocBaseTitle
-## 
+##
 ## which space? default: Content
 #if($!request.get("space") != "")
   #set($space = $!request.get("space"))
@@ -97,14 +97,14 @@
         #set($pageTypeObj = $new_doc.getObject('Celements2.PageType'))
         $pageTypeObj.set('page_layout', "$!layout_type")
       #end
-    
+
       ## objects
       #set($menu_item_obj = $new_doc.newObject("Celements2.MenuItem"))
       $menu_item_obj.set("menu_link", $request_menu_link)
       $menu_item_obj.set("menu_position", $!position)
       $menu_item_obj.set("menu_parent", $!request.get('menu_parent'))
       $menu_item_obj.set('part_name', $!request.get('menuPart'))
-    
+
       #if($xwiki.isMultiLingual())
         #foreach($lang in $langs)
           #set($menu_name_obj = $new_doc.newObject("Celements2.MenuName"))
@@ -115,7 +115,7 @@
         $menu_item_obj.set("menu_name", $!request.get("menu_name"))
       #end
       ## parent
-      $new_doc.setParent($!request.get('doc_parent'))  
+      $new_doc.setParent($!request.get('doc_parent'))
       ## save
       $new_doc.save()
       #set($successfulAndRedirect = true)
@@ -156,7 +156,7 @@
       #else
         #set($title = "$!cur_doc.getName()")
       #end
-      
+
       ## get the page type and templateDoc
       #set($theDoc = $cur_doc)
       $xwiki.includeForm("celements2web:Macros.getPageTypeAndTemplateDoc", false)
@@ -166,11 +166,11 @@
       #else
         #set($pretty_name = "")
       #end
-      
+
     <div class="celements2_box">
     <div class="celements2_box_title">$adminMsg.get('cel_ctm_addpage')</div>
       <div class="celements2_error">$msg.get('cel_tm_warning_doc_exists_already', ["$!{request_menu_link}"])</div>
-      
+
         <form id="update" method="post" action="">
         <input name='submitted' type='hidden' value='1' />
         <input name='force_move' type='hidden' value='1' />
@@ -180,7 +180,7 @@
         <input name='menuPart' type='hidden' size='30' value='$!request.get("menuPart")'/>
         <input name='doc_parent' type='hidden' size='30' value='$!request.get("doc_parent")'/>
         <input name='space' type='hidden' value='$!request.get("space")' />
-    
+
         <table class="celements2_table">
           <tr>
             <td width="50%"><div class="celements2_input_mandatory">Link $adminMsg.get('cel_tm_document_name')</div></td>
@@ -204,7 +204,7 @@
     #set($menu_item_obj = $cur_doc.getObject("Celements2.MenuItem", true))
     $menu_item_obj.set("menu_link", $request_menu_link)
     $menu_item_obj.set("menu_position", $!position)
-    $menu_item_obj.set("menu_parent", $!request.get('menu_parent')) 
+    $menu_item_obj.set("menu_parent", $!request.get('menu_parent'))
         $menu_item_obj.set('part_name', $!request.get('menuPart'))
     #if($xwiki.isMultiLingual())
       #foreach($lang in $langs)
@@ -223,7 +223,7 @@
     #else
       $menu_item_obj.set("menu_name", $!request.get("menu_name"))
     #end
-     
+
   ## TODO: Adopt menu_positions!!
       $cur_doc.setParent($!request.get('doc_parent'))
       $cur_doc.save()
@@ -323,7 +323,7 @@
           #set($pretty_name = $cur_doc.getName())
         #end
         <option value="$cur_doc.getName()" #if("$!cur_doc.getName()" == "$!defaultPageType") selected="selected" #end>$!pretty_name</option>
-      #end      
+      #end
       </select>
       </td>
       </tr>
