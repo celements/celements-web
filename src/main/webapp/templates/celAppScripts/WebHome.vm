@@ -1,0 +1,20 @@
+#if($services.celementsweb.isMainWiki())
+<a href="${xwiki.getURL('WikiManager.WebHome', 'view')}">WikiManager</a><br/>
+#if("$context.user" != 'XWiki.XWikiGuest')
+#set($userAdminLink = "${xwiki.getURL('Content.WebHome', 'view', 'skin=cellskin&xpage=overlay&conf=UserAdmin')}")
+#if($userAdminLink.startsWith('?'))
+#set($userAdminLink = "/$userAdminLink")
+#end
+<a href="${userAdminLink}">User Admin</a><br/>
+#end
+#elseif(("$context.action" == 'view') && ($doc.isNew()))
+  #parse('celTemplates/RedirectToFirstChildView.vm')
+#else
+  #if(!$contextIsFinished && !$isCellSkin)
+    ## render page content for old skins ('old' = no CelkSkin and no xwiki Skin from disk)
+    #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
+  #else
+    #set($overwriteRenderDocument = '')
+    #parse('celTemplates/PageContentCellView.vm')
+  #end
+#end
