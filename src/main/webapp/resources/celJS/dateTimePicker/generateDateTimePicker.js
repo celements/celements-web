@@ -37,14 +37,14 @@
               format : 'd.m.Y',
               timepicker : false,
               closeOnDateSelect : true,
-              onChangeDateTime: onChangeDateTime
+              onChangeDateTime: _me._onChangeDateTime
           }
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          observeChange(element);
+          _me._observeChange(element);
         });
 
         /**
@@ -56,14 +56,14 @@
               lang : Validation.messages.get("language"),
               datepicker:false,
               format:'H:i',
-              onChangeDateTime: onChangeDateTime
+              onChangeDateTime: _me._onChangeDateTime
           }
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          observeChange(element);
+          _me._observeChange(element);
         });
 
         /**
@@ -76,24 +76,24 @@
               dayOfWeekStart : 1,
               minDate : 0,
               format : 'd.m.Y H:i',
-              onChangeDateTime: onChangeDateTime
+              onChangeDateTime: _me._onChangeDateTime
           }
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          observeChange(element);
+          _me._observeChange(element);
         });
 
 
-        var onChangeDateTime = function(currentValue, inputEle){
-          $(inputEle).fire('celForm:valueChanged', {
+        _me._onChangeDateTime = function(currentValue, element){
+          $(element).fire('celForm:valueChanged', {
             'currentValue' : currentValue
           });
         };
 
-        var observeChange = function(element) {
+        _me._observeChange = function(element) {
           $(element).observe('change', function(event) {
             event.element().fire('celForm:valueChanged', {
               'currentValue' : event.element().value
