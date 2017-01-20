@@ -24,6 +24,7 @@
       },
 
       generateDateTimePicker : function() {
+
         var _me = this;
         /**
          * Sample with additional Attribute cel_datePicker:
@@ -36,22 +37,14 @@
               format : 'd.m.Y',
               timepicker : false,
               closeOnDateSelect : true,
-              onChangeDateTime: function(currentDate, inputEle){
-                $(inputEle).fire('celForm:valueChanged', {
-                  'currentDate' : currentDate
-                });
-              }
+              onChangeDateTime: onChangeDateTime
           }
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          $(element).observe('change', function(event) {
-            event.element().fire('celForm:valueChanged', {
-              'currentDate' : event.element().value
-            });
-          });
+          observeChange(element);
         });
 
         /**
@@ -63,22 +56,14 @@
               lang : Validation.messages.get("language"),
               datepicker:false,
               format:'H:i',
-              onChangeDateTime: function(currentTime, inputEle){
-                $(inputEle).fire('celForm:valueChanged', {
-                  'currentTime' : currentTime
-                });
-              }
+              onChangeDateTime: onChangeDateTime
           }
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          $(element).observe('change', function(event) {
-            event.element().fire('celForm:valueChanged', {
-              'currentTime' : event.element().value
-            });
-          });
+          observeChange(element);
         });
 
         /**
@@ -91,23 +76,30 @@
               dayOfWeekStart : 1,
               minDate : 0,
               format : 'd.m.Y H:i',
-              onChangeDateTime: function(currentDateTime, inputEle) {
-                $(inputEle).fire('celForm:valueChanged', {
-                  'currentDateTime' : currentDateTime
-                });
-              }
+              onChangeDateTime: onChangeDateTime
           }
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
+          observeChange(element);
+        });
+
+
+        var onChangeDateTime = function(currentValue, inputEle){
+          $(inputEle).fire('celForm:valueChanged', {
+            'currentValue' : currentValue
+          });
+        };
+
+        var observeChange = function(element) {
           $(element).observe('change', function(event) {
             event.element().fire('celForm:valueChanged', {
-              'currentDateTime' : event.element().value
+              'currentValue' : event.element().value
             });
           });
-        });
+        };
       }
   };
 })(window)
