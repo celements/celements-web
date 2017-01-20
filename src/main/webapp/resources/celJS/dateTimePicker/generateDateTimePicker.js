@@ -17,28 +17,21 @@
    */
   CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator.prototype = {
       _htmlElement : undefined,
+      _onChangeEventBind :undefined,
+      _onChangeEvent : function(event) {
+        var _me = this;
+        _me._onChangeDateTime(event.element().value, event.element());
+      },
+      _onChangeDateTime : function(currentValue, element){
+        $(element).fire('celForm:valueChanged', {
+          'currentValue' : currentValue
+        });
+      },
 
       _init : function(htmlCssSelector) {
         var _me = this;
         _me._htmlElement = $j(htmlCssSelector);
-
-        _me._observeChangeBind = _me._observeChange.bind(_me);
-        _me._observeChange = function(element) {
-          var _me = this;
-          $(element).observe('change', _me._onChangeEventBind);
-        };
-
         _me._onChangeEventBind = _me._onChangeEvent.bind(_me);
-        _me._onChangeEvent = function(event) {
-          var _me = this;
-          _me._onChangeDateTime(event.element().value, event.element());
-        };
-
-        _me._onChangeDateTime = function(currentValue, element){
-          $(element).fire('celForm:valueChanged', {
-            'currentValue' : currentValue
-          });
-        };
       },
 
       generateDateTimePicker : function() {
@@ -61,7 +54,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          _me._observeChangeBind(element);
+          $(element).observe('change', _me._onChangeEventBind);
         });
 
         /**
@@ -80,7 +73,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          _me._observeChangeBind(element);
+          $(element).observe('change', _me._onChangeEventBind);
         });
 
         /**
@@ -100,7 +93,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          _me._observeChangeBind(element);
+          $(element).observe('change', _me._onChangeEventBind);
         });
       }
   };
