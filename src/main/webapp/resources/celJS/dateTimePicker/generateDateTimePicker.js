@@ -18,20 +18,22 @@
   CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator.prototype = {
       _htmlElement : undefined,
       _onChangeEventBind :undefined,
-      _onChangeEvent : function(event) {
-        var _me = this;
-        _me._onChangeDateTime(event.element().value, event.element());
-      },
-      _onChangeDateTime : function(currentValue, element){
-        $(element).fire('celForm:valueChanged', {
-          'currentValue' : currentValue
-        });
-      },
 
       _init : function(htmlCssSelector) {
         var _me = this;
         _me._htmlElement = $j(htmlCssSelector);
         _me._onChangeEventBind = _me._onChangeEvent.bind(_me);
+      },
+
+      _onChangeEvent : function(event) {
+        var _me = this;
+        _me._onChangeDateTime(event.element().value, event.element());
+      },
+
+      _onChangeDateTime : function(currentValue, element){
+        $(element).fire('celForm:valueChanged', {
+          'currentValue' : currentValue
+        });
       },
 
       generateDateTimePicker : function() {
@@ -42,13 +44,13 @@
          */
         _me._htmlElement.find('input.cel_datePicker').each(function(key, element){
           var pickerAttrObj = {
-              lang : Validation.messages.get("language"),
-              dayOfWeekStart : 1,
-              format : 'd.m.Y',
-              timepicker : false,
-              closeOnDateSelect : true,
-              onChangeDateTime: _me._onChangeDateTime
-          }
+              'lang' : Validation.messages.get("language"),
+              'dayOfWeekStart' : 1,
+              'format' : 'd.m.Y',
+              'timepicker' : false,
+              'closeOnDateSelect' : true,
+              'onChangeDateTime' : _me._onChangeDateTime
+          };
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
@@ -63,11 +65,11 @@
          */
         _me._htmlElement.find('input.cel_timePicker').each(function(key, element){
           var pickerAttrObj = {
-              lang : Validation.messages.get("language"),
-              datepicker:false,
-              format:'H:i',
-              onChangeDateTime: _me._onChangeDateTime
-          }
+              'lang' : Validation.messages.get("language"),
+              'datepicker' : false,
+              'format' : 'H:i',
+              'onChangeDateTime' : _me._onChangeDateTime
+          };
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
@@ -82,12 +84,12 @@
          */
         _me._htmlElement.find('input.cel_dateTimePicker').each(function(key, element){
           var pickerAttrObj = {
-              lang : Validation.messages.get("language"),
-              dayOfWeekStart : 1,
-              minDate : 0,
-              format : 'd.m.Y H:i',
-              onChangeDateTime: _me._onChangeDateTime
-          }
+              'lang' : Validation.messages.get("language"),
+              'dayOfWeekStart' : 1,
+              'minDate' : 0,
+              'format' : 'd.m.Y H:i',
+              'onChangeDateTime' : _me._onChangeDateTime
+          };
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
