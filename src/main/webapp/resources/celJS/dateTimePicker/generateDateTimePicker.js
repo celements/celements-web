@@ -24,7 +24,6 @@
       },
 
       generateDateTimePicker : function() {
-
         var _me = this;
         /**
          * Sample with additional Attribute cel_datePicker:
@@ -85,7 +84,6 @@
           $j(element).datetimepicker(pickerAttrObj);
           _me._observeChange(element);
         });
-
 
         _me._onChangeDateTime = function(currentValue, element){
           $(element).fire('celForm:valueChanged', {
