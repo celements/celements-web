@@ -21,6 +21,20 @@
       _init : function(htmlCssSelector) {
         var _me = this;
         _me._htmlElement = $j(htmlCssSelector);
+
+        _me._onChangeDateTime = function(currentValue, element){
+          $(element).fire('celForm:valueChanged', {
+            'currentValue' : currentValue
+          });
+        };
+
+        _me._observeChange = function(element) {
+          $(element).observe('change', function(event) {
+            event.element().fire('celForm:valueChanged', {
+              'currentValue' : event.element().value
+            });
+          });
+        };
       },
 
       generateDateTimePicker : function() {
@@ -84,20 +98,6 @@
           $j(element).datetimepicker(pickerAttrObj);
           _me._observeChange(element);
         });
-
-        _me._onChangeDateTime = function(currentValue, element){
-          $(element).fire('celForm:valueChanged', {
-            'currentValue' : currentValue
-          });
-        };
-
-        _me._observeChange = function(element) {
-          $(element).observe('change', function(event) {
-            event.element().fire('celForm:valueChanged', {
-              'currentValue' : event.element().value
-            });
-          });
-        };
       }
   };
 })(window)
