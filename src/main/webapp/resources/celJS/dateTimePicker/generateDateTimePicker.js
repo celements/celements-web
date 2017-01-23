@@ -31,7 +31,7 @@
       },
 
       _onChangeDateTime : function(currentValue, element){
-        $(element).fire('celForm:valueChanged', {
+        $j(element).trigger('celForm:valueChanged', {
           'currentValue' : currentValue
         });
       },
