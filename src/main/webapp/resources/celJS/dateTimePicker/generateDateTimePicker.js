@@ -31,9 +31,7 @@
       },
 
       _onChangeDateTime : function(currentValue, element){
-        $j(element).trigger('celForm:valueChanged', {
-          'currentValue' : currentValue
-        });
+        $j(element).trigger('celForm:valueChanged', currentValue);
       },
 
       generateDateTimePicker : function() {
@@ -56,7 +54,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          $j(element).on('change', _me._onChangeEventBind);
+          $(element).observe('change', _me._onChangeEventBind);
         });
 
         /**
@@ -75,7 +73,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          $j(element).on('change', _me._onChangeEventBind);
+          $(element).observe('change', _me._onChangeEventBind);
         });
 
         /**
@@ -95,7 +93,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          $j(element).on('change', _me._onChangeEventBind);
+          $(element).observe('change', _me._onChangeEventBind);
         });
       }
   };
