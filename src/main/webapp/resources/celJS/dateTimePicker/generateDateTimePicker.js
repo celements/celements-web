@@ -56,7 +56,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          $(element).observe('change', _me._onChangeEventBind);
+          $j(element).on('change', _me._onChangeEventBind);
         });
 
         /**
@@ -75,7 +75,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          $(element).observe('change', _me._onChangeEventBind);
+          $j(element).on('change', _me._onChangeEventBind);
         });
 
         /**
@@ -95,7 +95,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           $j(element).datetimepicker(pickerAttrObj);
-          $(element).observe('change', _me._onChangeEventBind);
+          $j(element).on('change', _me._onChangeEventBind);
         });
       }
   };
