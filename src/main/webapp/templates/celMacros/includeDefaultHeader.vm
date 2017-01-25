@@ -7,15 +7,15 @@
   #set($charEncoding = "$xwiki.encoding")
 #end
 #if(("$!layoutObj" != '') && ("$!layoutObj.getProperty('doctype').getValue()" == 'HTML 5'))
-$!services.celementsweb.getCharsetMetaTag("$!charEncoding").display()
+$!services.metatag.getCharsetMetaTag("$!charEncoding").display()
 #else
-$services.celementsweb.addMetaTag('http-equiv', 'Content-Type', "text/html; charset=$!charEncoding")
+$services.metatag.addMetaTagToCollector('http-equiv', 'Content-Type', "text/html; charset=$!charEncoding")
 #end
 $!xwiki.getSpacePreference("meta")
 #if($services.celementsweb.hasGoogleAnalytics())
-  $services.celementsweb.addMetaTag('name', 'cel-GAA-Num', "$services.celementsweb.getGoogleAnalytics()")
+  $services.metatag.addMetaTagToCollector('name', 'cel-GAA-Num', "$services.celementsweb.getGoogleAnalytics()")
 #end
-$!services.celementsweb.displayAllMetaTags()
+$!services.metatag.displayCollectedMetaTags()
 <title>##
 $xwiki.celementsweb.getDocHeaderTitle($doc.documentReference)##
 </title>
