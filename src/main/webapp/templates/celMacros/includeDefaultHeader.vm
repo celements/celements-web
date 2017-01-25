@@ -1,19 +1,20 @@
 ## includeDefaultHeader
 ## include standard title- and meta-tags for the HTML header.
-## INPUT (optional): $charEncoding 
-## OUTPUT: 
+## INPUT (optional): $charEncoding
+## OUTPUT:
 ##
-<title>##
-$xwiki.celementsweb.getDocHeaderTitle($doc.documentReference)##
-</title>
-$!xwiki.getSpacePreference("meta")
 #if("$!charEncoding" == '')
   #set($charEncoding = "$xwiki.encoding")
 #end
-<meta http-equiv="Content-Type" content="text/html; charset=$!charEncoding" />
+$!services.celementsweb.getCharsetMetaTag("$!charEncoding").display()
+$!xwiki.getSpacePreference("meta")
 #if($services.celementsweb.hasGoogleAnalytics())
-<meta name="cel-GAA-Num" content="$services.celementsweb.getGoogleAnalytics()"/>
+  $services.celementsweb.addMetaTag('name', 'cel-GAA-Num', "$services.celementsweb.getGoogleAnalytics()")
 #end
+$!services.celementsweb.displayAllMetaTags()
+<title>##
+$xwiki.celementsweb.getDocHeaderTitle($doc.documentReference)##
+</title>
 #set($layoutName = $services.layout.getPageLayoutForDoc($doc.documentReference))
 #set($layoutWebHomeDoc = '')
 #if("$!layoutName" != '')
