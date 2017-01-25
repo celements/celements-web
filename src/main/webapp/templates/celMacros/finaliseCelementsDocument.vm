@@ -2,6 +2,7 @@ $services.celementsweb.displayImageMapConfigs()
 #set($isAjaxCall = ("$!request.ajax" == '1'))
 #if(!$isAjaxCall)
 $celementsweb.addExtJSfileOnce(':celJS/initCelementsAfter.js', 'file')
+$!services.metatag.displayCollectedMetaTags()
 </body>
 </html>
 #end

@@ -2,11 +2,12 @@
 ## lacily finalise the celements header and then start the body allowing
 ## user specific onLoad JS.
 ## INPUT all optional: $skinBodyAttributes, $onLoadJS $HTMLBodyCSSClasses
-## OUTPUT: 
+## OUTPUT:
 ##
 #if(!$finaliseCelementsDocumentHeaderRUN) ## lacy call
 $xwiki.parseTemplate("celMacros/finaliseCelementsDocumentHeader.vm")
 #end
+$!services.metatag.displayCollectedMetaTags()
 </head>
 #set($docRefList = $celementsweb.getDocumentParentsDocRefList($doc.documentReference, true))
 #if($docRefList.isEmpty())
