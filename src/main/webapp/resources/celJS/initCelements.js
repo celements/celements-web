@@ -742,6 +742,19 @@
     }
   };
   
+  var cel_addMaxDimToFluidImg = function(event) {
+    $$("img.cel_fluidresizeWidth").each(function(imgElem) {
+      imgElem.setStyle({
+        'maxWidth' : imgElem.readAttribute('width') + 'px'
+      });
+    });
+    $$("img.cel_fluidresizeHeight").each(function(imgElem) {
+      imgElem.setStyle({
+        'maxWidth' : imgElem.readAttribute('width') + 'px'
+      });
+    });
+  };
+
   var cel_initDateTimePicker = function(event) {
     var dateTimePickerGenerator = new CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator("body");
     dateTimePickerGenerator.generateDateTimePicker();
@@ -754,9 +767,13 @@
    */
   celAddOnBeforeLoadListener(function() {
     $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
+    $(document.body).stopObserving("cel:initFluidImage", cel_addMaxDimToFluidImg);
     $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
+    $(document.body).stopObserving("celements:contentChanged", cel_addMaxDimToFluidImg);
     $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
+    $(document.body).observe("cel:initFluidImage", cel_addMaxDimToFluidImg);
     $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
+    $(document.body).observe("celements:contentChanged", cel_addMaxDimToFluidImg);
     $(document.body).fire('cel:initMultiselect');
   });
   
