@@ -750,7 +750,7 @@
     });
     $$("img.cel_fluidresizeHeight").each(function(imgElem) {
       imgElem.setStyle({
-        'maxWidth' : imgElem.readAttribute('width') + 'px'
+        'maxHeight' : imgElem.readAttribute('height') + 'px'
       });
     });
   };
