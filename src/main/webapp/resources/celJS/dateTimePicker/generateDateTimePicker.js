@@ -31,7 +31,8 @@
       },
 
       _onChangeDateTime : function(currentValue, element){
-        $j(element).trigger('celForm:valueChanged', currentValue);
+        var prototypejsEle = $(element[0]);
+        prototypejsEle.fire('celForm:valueChanged', { 'currentValue' : currentValue });
       },
 
       generateDateTimePicker : function() {
