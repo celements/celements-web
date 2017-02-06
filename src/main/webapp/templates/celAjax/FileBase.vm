@@ -1,24 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" media="all" type="text/css" href="$celementsweb.getSkinFile(':celRes/celements2.css', 'file')" />
-$celementsweb.addExtJSfileOnce(':celJS/prototype.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/jquery.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/initCelements.js', 'file')
+## start a Celements Document
+#parse("celMacros/startCelementsDocument.vm")
 $celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js', 'file')
-$!celementsweb.getAllExternalJavaScriptFiles()
-<title></title>
-</head>
-<body>
+## start the celements body (and lazily finalise the header)
+#parse("celMacros/startCelementsBody.vm")
 #if("$!request.filebase_mode" == 'FileBaseTags')
 #parse('celAjax/FileBaseTags.vm')
 #else
 ##$xwiki.celementsweb.renderCelementsDocument($services.model.resolveDocument('celements2web:Celements2.FileBase'))
 #parse('celMacros/FileBase.vm')
 #end
-$celementsweb.addExtJSfileOnce(':celJS/initCelementsAfter.js', 'file')
-</body>
-</html>
+#parse('celMacros/finaliseCelementsDocument.vm')
 ##
+
