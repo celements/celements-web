@@ -14,8 +14,8 @@
 #if("$doc.fullName" == 'Content.favicon.ico')
   $context.getResponse().sendRedirect($skin_doc.getAttachmentURL('favicon.ico','skin'))
 #end
-#set($layoutApi = $services.layout.getPageLayouApiForDocRef($doc.getDocumentReference()))
-#if(("$!layoutApi" != '') && ("$!layoutApi.getHTMLType()" == 'HTML 5'))
+#set($layoutApi = $services.layout.getPageLayoutApiForDocRef($doc.getDocumentReference()))
+#if(("$!layoutApi" != '') && ("$!layoutApi.getHTMLType().name" == 'HTML5'))
 <!DOCTYPE html>
 #if($language && ("$!language" != ""))
 <html lang="$!language">
