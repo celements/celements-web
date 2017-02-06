@@ -2,6 +2,7 @@
 ## att_doc - document containing all attachments (for single file base mode)
 ## tag_space - space containging the tag documents
 ## save - '1' to save changes, else != '1'
+<link rel="stylesheet" media="all" type="text/css" href="$celementsweb.getSkinFile(':celRes/filebasetags.css', 'skin')" />
 #set($helpNav = $celementsweb.createNavigation())
 #macro(addDocument)
   #if($context.getUser() != 'XWiki.XWikiGuest')
@@ -18,7 +19,7 @@
               #set($tagDoc = $xwiki.getDocument($treeNode.documentReference))
               #set($tagObj = '')
               #set($tagObj = $tagDoc.getObject("Classes.FilebaseTag", "attachment", "${attachment.getDocument().getFullName()}/$attachment.getFilename()", false))
-              <input type="checkbox" 
+              <input type="checkbox"
               #if("$!tagObj.get('attachment')" != '') checked="checked" #end
               #if($tagDoc.hasAccessLevel('edit'))
                 onClick="updateAttachmentTag('$attachment.getDocument().getFullName()', '$attachment.getFilename()', '${menuNodeFN}', checked);"
