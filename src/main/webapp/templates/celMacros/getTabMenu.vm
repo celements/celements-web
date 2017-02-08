@@ -18,9 +18,9 @@ $celementsweb.addExtJSfileOnce(":celJS/editResize.js")
 ## If yes, warn about it and show a forcing link:
 ##
 #parse('celMacros/editor/showEditorBlockerMessage.vm')
-#if(!isShowEditorBlocker)
+#if(!$isShowEditorBlocker)
 ## display editor
-<div id="tabMenuPanel" style="visibility:hidden"> 
+<div id="tabMenuPanel" style="visibility:hidden">
 		<div class="hd"></div>
 		<div class="bd">
 		     <span id="cel_startab" style="display:none;">$starttab</span>
@@ -29,7 +29,7 @@ $celementsweb.addExtJSfileOnce(":celJS/editResize.js")
 $xwiki.parseTemplate("celEditorTabs/loadTabContent.vm")
       </div>
     </div>
-		<div class="ft"></div> 
+		<div class="ft"></div>
 	</div>
 #end
 </div>

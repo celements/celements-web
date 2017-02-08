@@ -48,7 +48,7 @@ celPDCdocPageType : $celPDCdocPageType
       ## If yes, warn about it and show a forcing link:
       ##
       #parse('celMacros/editor/showEditorBlockerMessage.vm')
-      #if(!isShowEditorBlocker)
+      #if(!$isShowEditorBlocker)
         $services.celementsweb.renderCelementsDocument($pageDocRef, "$!context.language", 'edit',  true)
       #end
     #end
