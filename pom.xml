@@ -72,8 +72,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <!-- XXX: For Testing only, no changes yet. Revert to 1.50 when releasing 2.86 -->
-      <version>1.51-SNAPSHOT</version>
+      <version>1.50</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -136,7 +135,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.164-SNAPSHOT</version>
+      <version>1.163</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
