@@ -1,0 +1,13 @@
+#if(("$!elemId" != '') && $xwiki.exists($services.model.resolveDocument($elemId)))
+#set($menuItemDocRef = $services.model.resolveDocument($elemId))
+#set($xredirect = $doc.getURL('view'))
+#if("$!xredirect" == '')
+#set($xredirect = '/')
+#end
+#set($delURL = $xwiki.getURL($elemId,'view', "xpage=celements_ajax&ajax_mode=delMenuItem&space=${menuItemDocRef.getLastSpaceReference().getName()}&red=${xredirect}"))
+#set($l = "confirmURL(&quot;$adminMsg.get('cel_presentation_confirm_delete')&quot;,")
+#set($l = "${l}&quot;${delURL}")
+#set($l = "${l}&quot;)")
+#set($cmenu_pageLink = "${l}")
+$cmenu_pageLink##
+#end
