@@ -94,6 +94,3 @@ $!celementsweb.getAllExternalJavaScriptFiles()
 ## - Skin extension hook
 <!-- com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin -->
 ##
-#if('Article' == "$!services.pageType.getPageTypeRef($doc.getDocumentReference()).getConfigName()")
-  $!services.celblog.addArticleSocialMediaTagsToCollector($doc.getDocumentReference(), $language)
-#end
