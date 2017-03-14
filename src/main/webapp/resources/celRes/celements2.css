@@ -92,7 +92,7 @@ div#celements2_menu_bar{
 	height:28px;
   color:#CCCCCC !important;
   background-color: rgb(51,51,51);
-  border-bottom: 1px solid #4F4F2F; 
+  border-bottom: 1px solid #4F4F2F;
 	text-align:left;
 	z-index:100;
 }
@@ -121,7 +121,7 @@ body > div#celements2_menu_bar {
   word-spacing: 2px;
 	color: #CCCCCC;
 	display:block;
-	float:left;	
+	float:left;
 	/*width:92px;*/
 	width:auto;
 	cursor:pointer;
@@ -161,7 +161,7 @@ body > div#celements2_menu_bar {
 	overflow:hidden;
 	display:block;
 	cursor: pointer;
-	color:#CCCCCC !important;	
+	color:#CCCCCC !important;
 	background: rgb(51,51,51) !important;
 	background: rgba(51,51,51, 0.92) !important;
 	text-decoration:none !important;
@@ -280,7 +280,7 @@ body > div#celements2_menu_bar {
   letter-spacing: 0;
   word-spacing: 2px;
 	text-transform:none;
-	text-decoration:none;	
+	text-decoration:none;
 	cursor:pointer;
   padding:5px 3px 5px 12px;
 	overflow:hidden;
@@ -297,6 +297,10 @@ body > div#celements2_menu_bar {
 	font-weight:bold;
 	background-color:red;
 	padding:2px;
+}
+/** force show validation advices in celements overlays */
+#cel_overlaybody .celements2box form {
+	display: block;
 }
 /* General Classes */
 .celements2_error{
@@ -388,11 +392,11 @@ table.celements2_table td,
 	background-color:#AAAAAA;
 	color:#f9f9f9;
 	font:600 13px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	margin:10px 0px 10px 0px;	
+	margin:10px 0px 10px 0px;
 }
 .celements2_help_text{
 	font: 600 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	margin-bottom:10px;	
+	margin-bottom:10px;
 }
 .celements2_line{
 	border-bottom:1px solid #000000;
@@ -452,7 +456,7 @@ div.mask {
 
 .cel_newsletterImport th {
 	color: black;
-	background-color:auto;    
+	background-color:auto;
   font-weight: auto;
   line-height: auto;
   margin: auto;
@@ -594,7 +598,7 @@ body > .cel_reorderNodes_proxy {
 	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
 	font-style: normal;
 	color: black;
-	
+
 	list-style-image: url("document.gif");
 	list-style-position: inside;
 	border-left: 1px dotted gray;
