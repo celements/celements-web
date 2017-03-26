@@ -387,9 +387,9 @@ TE.prototype = {
           console.log('CELDEV-425: saveAndContinue not failed. ',
               window.location.search.match(/\&?template=[^\&]+/));
           if (window.location.search.match(/\&?template=[^\&]+/)) {
+            console.log('CELDEV-425: redirect to ', _deleteParamsFromURL());
             window.onbeforeunload = null;
 //            window.location.search = _deleteParamsFromURL();
-            console.log('CELDEV-425: redirect to ', _deleteParamsFromURL());
           } else {
             console.log('CELDEV-425: no template redirect needed');
           }
@@ -397,6 +397,7 @@ TE.prototype = {
         } else {
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonFailed', jsonResponses);
         }
+        console.log('CELDEV-425: finishing saveAndContinue callback');
       });
     };
     var buttonLabel = _me.tabMenuConfig.saveButtonLabel || 'Save';
