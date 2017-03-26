@@ -371,7 +371,7 @@ TE.prototype = {
       var regEx = new RegExp("^.*(" + standardWhiteList[index] + "=[^&]*).*$", "g");
       var regExArray = regEx.exec(window.location.search);
       if (regExArray != null) {
-        newUrlParams.concat(regExArray.slice(1));
+        newUrlParams = newUrlParams.concat(regExArray.slice(1));
       }
     }
     console.log('CELDEV-425: join ', newUrlParams.join('&'));
