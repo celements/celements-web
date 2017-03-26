@@ -359,7 +359,7 @@ TE.prototype = {
   },
 
   _deleteParamsFromURL : function() {
-    var newURLParams = [];
+    var newUrlParams = [];
     var standardWhiteList = ["xredirect", "xcontinue", "language"];
     var additionalWhiteList = [];
     $j("input[name=white_list_url]").each(function( index, value ) {
@@ -371,11 +371,11 @@ TE.prototype = {
       var regEx = new RegExp("^.*(" + standardWhiteList[index] + "=[^&]*).*$", "g");
       var regExArray = regEx.exec(window.location.search);
       if (regExArray != null) {
-        newURLParams.concat(regExArray.slice(1));
+        newUrlParams.concat(regExArray.slice(1));
       }
     }
-    console.log('CELDEV-425: join ', newURLParams.join('&'));
-    return newURLParams.join('&');
+    console.log('CELDEV-425: join ', newUrlParams.join('&'));
+    return newUrlParams.join('&');
   },
 
   initSaveButton : function() {
