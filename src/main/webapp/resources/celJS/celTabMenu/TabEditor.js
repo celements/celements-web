@@ -360,21 +360,19 @@ TE.prototype = {
 
   _deleteParamsFromURL : function() {
     var newUrlParams = [];
-    var standardWhiteList = ["xredirect", "xcontinue", "language"];
+    var standardWhiteList = ["language", "xredirect", "xcontinue"];
     var additionalWhiteList = [];
-    $j("input[name=white_list_url]").each(function( index, value ) {
-      additionalWhiteList.add(value.value);
+    $j("input[name=white_list_url]").each(function( index, inputElem ) {
+      additionalWhiteList.add(inputElem.value);
     });
     standardWhiteList = standardWhiteList.concat(additionalWhiteList);
     for (var index = 0; index < standardWhiteList.length; index++) {
-      console.log('CELDEV-425: standardWhiteList ', standardWhiteList);
       var regEx = new RegExp("^.*(" + standardWhiteList[index] + "=[^&]*).*$", "g");
       var regExArray = regEx.exec(window.location.search);
       if (regExArray != null) {
         newUrlParams = newUrlParams.concat(regExArray.slice(1));
       }
     }
-    console.log('CELDEV-425: join ', newUrlParams.join('&'));
     return newUrlParams.join('&');
   },
 
@@ -386,9 +384,8 @@ TE.prototype = {
           //remove template in url query after creating document in inline mode
           try {
             if (window.location.search.match(/\&?template=[^\&]+/)) {
-              console.log('CELDEV-425: redirect to ', _me._deleteParamsFromURL());
               window.onbeforeunload = null;
-  //            window.location.search = _me._deleteParamsFromURL();
+              window.location.search = _me._deleteParamsFromURL();
             }
           } catch (err) {
             console.error('initSaveButton: error in saveAndContinue callback ', err);
