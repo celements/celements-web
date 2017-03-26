@@ -184,7 +184,7 @@ TE.prototype = {
             event.target.scrollTop = 0; //FF and IE fix
           });
           Event.observe(window, 'scroll', function() {
-            $j(window).scrollTop(0); //webkit 
+            $j(window).scrollTop(0); //webkit
           });
         }
       });
@@ -246,7 +246,7 @@ TE.prototype = {
       console.log('tabMenuSetup before showTabMenu');
       _me.showTabMenu(starttabId);
     }
-    
+
     if($$('.container-close').size() > 0) {
       _me.initDefaultCloseButton();
       _me._addClearButtons();
@@ -275,9 +275,9 @@ TE.prototype = {
            $('tabMenuPanel').fire('tabedit:afterDisplayNow');
          },
          sync: true
-       }), 
-       new Effect.Fade('celementsLoadingIndicator', { sync: true }) 
-    ], { 
+       }),
+       new Effect.Fade('celementsLoadingIndicator', { sync: true })
+    ], {
        duration: 0.5,
        sync: true
     });
@@ -372,7 +372,7 @@ TE.prototype = {
       if (regExArray != null) {
         newURL += regExArray.slice(1).join("&");
       }
-    } 
+    }
     return newURL;
   },
 
@@ -384,7 +384,8 @@ TE.prototype = {
           //remove template in url query after creating document in inline mode
           if (window.location.search.match(/\&?template=[^\&]+/)) {
             window.onbeforeunload = null;
-            window.location.search = _deleteParamsFromURL();
+//            window.location.search = _deleteParamsFromURL();
+            console.log('CELDEV-425: redirect to ', _deleteParamsFromURL());
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
         } else {
@@ -420,7 +421,7 @@ TE.prototype = {
     } else {
       var firstFormName = _me.getFirstFormWithId() || 0;
       var firstForm = document.forms[firstFormName];
-      if (firstForm && firstForm['xredirect']) { 
+      if (firstForm && firstForm['xredirect']) {
         if (firstForm['xredirect'][0]) {
           redirectValue = $F(firstForm['xredirect'][0]);
         } else {
@@ -512,7 +513,7 @@ TE.prototype = {
            //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
            //TODO following fired event. -> Workaround: execute registered method once after registration.
            //TODO FP; 25.9.2015; maybe use 'tabedit:scriptsLoaded' instead
-           console.log('TabEditor.js: after async tab load before tabedit:tabchange' 
+           console.log('TabEditor.js: after async tab load before tabedit:tabchange'
                + ' event', tabBodyId);
            $(tabBodyId).fire('tabedit:tabchange', {
              'newTabId' : tabBodyId
@@ -655,7 +656,7 @@ TE.prototype = {
     var loadScript = _me.CSSQueue.first();
     _me.CSSQueue = _me.CSSQueue.slice(1); // remove first element
     if(loadScript.isUrl) {
-      var newEle = new Element('link', { 
+      var newEle = new Element('link', {
           'rel': 'stylesheet',
           'href': loadScript.value,
           'type': 'text/css',
@@ -809,7 +810,7 @@ TE.prototype = {
     alert("Error: No 'edit' form!");
   }
  },
- 
+
  getFirstFormWithId : function() {
    var formName = '';
    if(document.forms['edit']) {
@@ -833,8 +834,8 @@ TE.prototype = {
       doBeforeEditSubmit();
     }
     var savingDialog = this._getModalDialog();
-    savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader); 
-    savingDialog.setBody(_me._loading.getLoadingIndicator(true)); 
+    savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
+    savingDialog.setBody(_me._loading.getLoadingIndicator(true));
     savingDialog.cfg.queueProperty("buttons", null);
     savingDialog.render();
     savingDialog.show();
@@ -856,7 +857,7 @@ TE.prototype = {
 
  /**
   * showErrorMessages display errors in jsonResponses to the user
-  * 
+  *
   * @param jsonResponses
   * @returns true if errors have been displayed
   *          false if no errors have been displayed
@@ -874,9 +875,9 @@ TE.prototype = {
    });
    if (errorMessages.length > 0) {
      var errorMesgDialog = _me._getModalDialog();
-     errorMesgDialog.setHeader('Saving failed!'); 
+     errorMesgDialog.setHeader('Saving failed!');
      errorMesgDialog.setBody("saving failed for the following reasons:<ul><li>"
-         + errorMessages.join('</li><li>').replace(new RegExp('<li>$'),'') + "</ul>"); 
+         + errorMessages.join('</li><li>').replace(new RegExp('<li>$'),'') + "</ul>");
      errorMesgDialog.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
      errorMesgDialog.cfg.queueProperty("buttons",
        [ { text: "OK", handler:function() {
@@ -912,8 +913,8 @@ TE.prototype = {
 
  showProgressDialog : function(headerTxt) {
    var savingDialog = this._getModalDialog();
-   savingDialog.setHeader(headerTxt); 
-   savingDialog.setBody(_me._loading.getLoadingIndicator(true)); 
+   savingDialog.setHeader(headerTxt);
+   savingDialog.setBody(_me._loading.getLoadingIndicator(true));
    savingDialog.cfg.queueProperty("buttons", null);
    savingDialog.render();
    savingDialog.show();
@@ -963,7 +964,7 @@ TE.prototype = {
  },
 
  /**
-  * submittable fields must have a name attribute and maynot be disabled  
+  * submittable fields must have a name attribute and maynot be disabled
   * @param fieldElem
   * @returns {Boolean}
   */
@@ -973,7 +974,7 @@ TE.prototype = {
 
  /**
   * isDirtyField and needs saving
-  * 
+  *
   * @param fieldElem
   * @param optElementsValues optional hash with initial values of all elements in the form
   * @return
@@ -1065,8 +1066,8 @@ TE.prototype = {
    execCancelCallback = execCancelCallback || function() {};
    if (_me.isDirty()) {
    var saveBeforeCloseQuestion = _me._getModalDialog();
-     saveBeforeCloseQuestion.setHeader(_me.tabMenuConfig.savingDialogWarningHeader); 
-     saveBeforeCloseQuestion.setBody(_me.tabMenuConfig.savingDialogMessage); 
+     saveBeforeCloseQuestion.setHeader(_me.tabMenuConfig.savingDialogWarningHeader);
+     saveBeforeCloseQuestion.setBody(_me.tabMenuConfig.savingDialogMessage);
      saveBeforeCloseQuestion.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
      saveBeforeCloseQuestion.cfg.queueProperty("buttons",
          [ { text: _me.tabMenuConfig.savingDialogButtonDoNotSave, handler:function() {
@@ -1092,7 +1093,7 @@ TE.prototype = {
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
                  _dialog.cfg.queueProperty("buttons", null);
-                 _dialog.setBody(_me._loading.getLoadingIndicator(true)); 
+                 _dialog.setBody(_me._loading.getLoadingIndicator(true));
                  _dialog.render();
                }, isDefault:true }
              ]);
@@ -1189,7 +1190,7 @@ TE.prototype = {
         ajax : 'save',
         pagefullname : pageFullName,
         lang : lang
-     }).merge(paramsHash); 
+     }).merge(paramsHash);
     if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
       console.warn('DEPRECATED saveWithAjaxPOST on TabEditor: ', pageFullName, queryString);
     }
@@ -1207,15 +1208,15 @@ TE.prototype = {
   _getModalDialog : function() {
     if(!this.modalDialog) {
       this.modalDialog = new YAHOO.widget.SimpleDialog("modal dialog", {
-          width: "auto", 
-          fixedcenter: true, 
-          visible: false, 
-          draggable: false, 
-          close: false, 
-          zindex:4, 
+          width: "auto",
+          fixedcenter: true,
+          visible: false,
+          draggable: false,
+          close: false,
+          zindex:4,
           modal:true,
           monitorresize:false,
-          icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
+          icon: YAHOO.widget.SimpleDialog.ICON_HELP,
           constraintoviewport: true
           } );
     }
