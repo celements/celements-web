@@ -379,14 +379,19 @@ TE.prototype = {
   initSaveButton : function() {
     var _me = this;
     var saveClickHandler = function() {
+      console.log('CELDEV-425: saveClickHandler before saving');
       _me.saveAndContinue(function(transport, jsonResponses, failed) {
         console.log('CELDEV-425: saveAndContinue finished. ',jsonResponses, failed);
         if (!failed) {
           //remove template in url query after creating document in inline mode
+          console.log('CELDEV-425: saveAndContinue not failed. ',
+              window.location.search.match(/\&?template=[^\&]+/));
           if (window.location.search.match(/\&?template=[^\&]+/)) {
             window.onbeforeunload = null;
 //            window.location.search = _deleteParamsFromURL();
             console.log('CELDEV-425: redirect to ', _deleteParamsFromURL());
+          } else {
+            console.log('CELDEV-425: no template redirect needed');
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
         } else {
