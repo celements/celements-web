@@ -367,9 +367,11 @@ TE.prototype = {
     });
     standardWhiteList = standardWhiteList.concat(additionalWhiteList);
     for (var index = 0; index < standardWhiteList.length; index++) {
+      console.log('CELDEV-425: standardWhiteList ', standardWhiteList);
       var regEx = new RegExp("^.*(" + standardWhiteList[index] + "=[^&]*).*$", "g");
       var regExArray = regEx.exec(window.location.search);
       if (regExArray != null) {
+        console.log('CELDEV-425: join ', regExArray.slice(1).join("&"));
         newURL += regExArray.slice(1).join("&");
       }
     }
