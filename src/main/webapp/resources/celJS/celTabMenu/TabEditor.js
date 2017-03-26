@@ -385,23 +385,18 @@ TE.prototype = {
         if (!failed) {
           //remove template in url query after creating document in inline mode
           try {
-            console.log('CELDEV-425: saveAndContinue not failed. ',
-                window.location.search.match(/\&?template=[^\&]+/));
             if (window.location.search.match(/\&?template=[^\&]+/)) {
-              console.log('CELDEV-425: redirect to ', _deleteParamsFromURL());
+              console.log('CELDEV-425: redirect to ', _me._deleteParamsFromURL());
               window.onbeforeunload = null;
-  //            window.location.search = _deleteParamsFromURL();
-            } else {
-              console.log('CELDEV-425: no template redirect needed');
+  //            window.location.search = _me._deleteParamsFromURL();
             }
-            $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
           } catch (err) {
-            console.error('CELDEV-425: error in template check ', err);
+            console.error('initSaveButton: error in saveAndContinue callback ', err);
           }
+          $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
         } else {
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonFailed', jsonResponses);
         }
-        console.log('CELDEV-425: finishing saveAndContinue callback');
       });
     };
     var buttonLabel = _me.tabMenuConfig.saveButtonLabel || 'Save';
