@@ -1,0 +1,17 @@
+## usage: first call will start the benchmark and set the start time
+##        consequent usage will print the time since last call and total time since start
+##        only works for super admins
+## INPUT bench_label to distinguish time printouts
+
+#if($isSuperAdmin)
+  #set($bench_currTime = $datetool.date.time)
+  #if("$!bench_startTime" == '')
+    #set($bench_startTime = $bench_currTime)
+    <!-- start benchmark at timestamp ${bench_startTime} -->
+  #else  
+    #set($bench_totalTime = ($bench_currTime - $bench_startTime) / 1000.0)
+    #set($bench_time = ($bench_currTime - $bench_lastTime) / 1000.0)
+    <!-- $!bench_label - rendered in ${bench_time}s - total ${bench_totalTime}s -->  
+  #end
+  #set($bench_lastTime = $bench_currTime)  
+#end
