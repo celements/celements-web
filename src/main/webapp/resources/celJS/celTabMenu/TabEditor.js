@@ -385,6 +385,8 @@ TE.prototype = {
         if (!failed) {
           //remove template in url query after creating document in inline mode
           try {
+            console.log('CELDEV-425: saveAndContinue not failed. ',
+                window.location.search.match(/\&?template=[^\&]+/));
             if (window.location.search.match(/\&?template=[^\&]+/)) {
               console.log('CELDEV-425: redirect to ', _me._deleteParamsFromURL());
               window.onbeforeunload = null;
