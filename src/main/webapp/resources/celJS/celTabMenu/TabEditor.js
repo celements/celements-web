@@ -380,6 +380,7 @@ TE.prototype = {
     var _me = this;
     var saveClickHandler = function() {
       _me.saveAndContinue(function(transport, jsonResponses, failed) {
+        console.log('CELDEV-425: saveAndContinue finished. ',jsonResponses, failed);
         if (!failed) {
           //remove template in url query after creating document in inline mode
           if (window.location.search.match(/\&?template=[^\&]+/)) {
