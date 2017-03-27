@@ -8,12 +8,13 @@
 
 #macro(bench $label $visible)
 #if($isSuperAdmin)
-  #set($currTime = $datetool.date.time)  
+  #if($visible = $visible || ("$!request.showBenchmark" == 'true'))
+  #set($currTime = $datetool.date.time)
   #set($totalTime = ($currTime - $bench_startTime) / 1000.0)
   #set($time = ($currTime - $bench_lastTime) / 1000.0)
   #if($visible) <br/> #else <!-- #end
   $!label - rendered in ${time}s - total ${totalTime}s
   #if($visible) <br/> #else --> #end
-  #set($bench_lastTime = $currTime)  
+  #set($bench_lastTime = $currTime)
 #end
 #end
