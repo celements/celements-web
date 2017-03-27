@@ -11,7 +11,7 @@
   #set($currTime = $datetool.date.time)  
   #set($totalTime = ($currTime - $bench_startTime) / 1000.0)
   #set($time = ($currTime - $bench_lastTime) / 1000.0)
-  #if($!visible) <!-- #end
+  #if($visible) <br/> #else <!-- #end
   $!label - rendered in ${time}s - total ${totalTime}s
   #if($visible) <br/> #else --> #end
   #set($bench_lastTime = $currTime)  
