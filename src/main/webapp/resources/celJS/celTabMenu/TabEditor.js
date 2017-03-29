@@ -359,21 +359,21 @@ TE.prototype = {
   },
 
   _deleteParamsFromURL : function() {
-    var newURL = "";
-    var standardWhiteList = ["xredirect", "xcontinue", "language"];
+    var newUrlParams = [];
+    var standardWhiteList = ["language", "xredirect", "xcontinue"];
     var additionalWhiteList = [];
-    $j("input[name=white_list_url]").each(function( index, value ) {
-      additionalWhiteList.add(value.value);
+    $j("input[name=white_list_url]").each(function( index, inputElem ) {
+      additionalWhiteList.add(inputElem.value);
     });
     standardWhiteList = standardWhiteList.concat(additionalWhiteList);
     for (var index = 0; index < standardWhiteList.length; index++) {
       var regEx = new RegExp("^.*(" + standardWhiteList[index] + "=[^&]*).*$", "g");
       var regExArray = regEx.exec(window.location.search);
       if (regExArray != null) {
-        newURL += regExArray.slice(1).join("&");
+        newUrlParams = newUrlParams.concat(regExArray.slice(1));
       }
     }
-    return newURL;
+    return newUrlParams.join('&');
   },
 
   initSaveButton : function() {
@@ -382,11 +382,13 @@ TE.prototype = {
       _me.saveAndContinue(function(transport, jsonResponses, failed) {
         if (!failed) {
           //remove template in url query after creating document in inline mode
-          if (window.location.search.match(/\&?template=[^\&]+/)) {
-            window.onbeforeunload = null;
-            window.location.search = _deleteParamsFromURL();
-          } else {
-            console.log('CELDEV-425: no template redirect needed');
+          try {
+            if (window.location.search.match(/\&?template=[^\&]+/)) {
+              window.onbeforeunload = null;
+              window.location.search = _me._deleteParamsFromURL();
+            }
+          } catch (err) {
+            console.error('initSaveButton: error in saveAndContinue callback ', err);
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
         } else {
