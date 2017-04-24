@@ -16,6 +16,7 @@ $!xwiki.getSpacePreference("meta")
 #if($services.celementsweb.hasGoogleAnalytics())
   $services.metatag.addMetaTagToCollector('name', 'cel-GAA-Num', "$services.celementsweb.getGoogleAnalytics()")
 #end
+$!services.metatag.displayCollectedMetaTags()## cel-GAA-Num is needed in initCelements.js while loading
 <title>##
 $xwiki.celementsweb.getDocHeaderTitle($doc.documentReference)##
 </title>
