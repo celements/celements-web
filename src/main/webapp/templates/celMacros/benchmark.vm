@@ -12,9 +12,9 @@
   #set($currTime = $datetool.date.time)
   #set($totalTime = ($currTime - $bench_startTime) / 1000.0)
   #set($time = ($currTime - $bench_lastTime) / 1000.0)
-  #if($visible) <br/> #else <!-- #end
-  bench $!label - in ${time}s - total ${totalTime}s
-  #if($visible) <br/> #else --> #end
+  #if(!$visible) <!-- #end
+  bench $!label &mdash; in ${time}s &mdash; total ${totalTime}s
+  #if(!$visible) --> #end
   #set($bench_lastTime = $currTime)
 #end
 #end
