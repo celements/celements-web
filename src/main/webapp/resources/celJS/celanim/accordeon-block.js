@@ -36,7 +36,7 @@ if(typeof CELEMENTS.anim=="undefined"){CELEMENTS.anim={};};
 // cssTitle    css selector for clickable title element. On a click on the title box, the
 //              content box will toggle between open or close.
 // cssContent  css selector for content box which is open and closed by a click on the
-//              title box. 
+//              title box.
 //////////////////////////////////////////////////////////////////////////////
 CELEMENTS.anim.AccordeonEffect = function(id, cssBox, cssTitle, cssContent, debug) {
   // constructor
@@ -201,7 +201,7 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
   },
 
   activateStep : function(nextStep) {
-    var _me = this; 
+    var _me = this;
     var activeSteps = _me.htmlElem.select(_me.cssBox);
     var accordeonEffects = [];
     if(_me.getOpenOnlyOnePerLevel()) {
@@ -211,8 +211,12 @@ CELEMENTS.anim.AccordeonEffect.prototype = {
         }
       });
     }
-    accordeonEffects.push(_me.accordeonShow(nextStep));
-    _me._accordeonExecute(accordeonEffects, nextStep);
+    if (_me.isValidStep(nextStep)) {
+      accordeonEffects.push(_me.accordeonShow(nextStep));
+    }
+    if (accordeonEffects.size() > 0) {
+      _me._accordeonExecute(accordeonEffects, nextStep);
+    }
     _me.htmlElem.fire('celanim_accordeon-block:activateStepAfterFinish', nextStep);
   }
 
