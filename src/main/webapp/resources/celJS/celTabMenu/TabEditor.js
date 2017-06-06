@@ -949,7 +949,7 @@ TE.prototype = {
        console.warn('updateOneTinyMCETextArea: no serializer -> skip ' + ed.id);
      }
    } catch (exp) {
-     console.error('updateTinyMCETextAreas: failed with exception ' + formfield.id,
+     console.error('updateOneTinyMCETextArea: failed with exception ' + formfield.id,
          ed.serializer, exp);
    }
  },
