@@ -124,6 +124,7 @@
               exp);
         }
       });
+      return event;
     }
   };
 
