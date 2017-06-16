@@ -75,7 +75,7 @@
   });
   window.CELEMENTS.mixins.Observable = {
     _celEventHash : null,
-  
+
     _getCelEventHash : function(eventKey) {
       var _me = this;
       if (!_me._celEventHash) {
@@ -89,7 +89,7 @@
       }
       return _me._celEventHash;
     },
-  
+
     celObserve : function(eventKey, callbackFN) {
       var _me = this;
       console.log('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
@@ -98,7 +98,7 @@
       }
       this._getCelEventHash(eventKey).push(callbackFN);
     },
-  
+
     celStopObserving : function(eventKey, callbackFN) {
       var _me = this;
       console.log('cel celStopObserving: ', _me._celEventHash, eventKey, callbackFN);
@@ -108,7 +108,7 @@
       this._getCelEventHash().set(eventKey, this._getCelEventHash(eventKey
           ).without(callbackFN));
     },
-  
+
     celFire : function(eventKey, memo) {
       var _me = this;
       console.log('cel celFire: ', _me._celEventHash, eventKey, memo);
@@ -133,10 +133,10 @@
   if (typeof window.CELEMENTS.Ajax=="undefined"){ window.CELEMENTS.Ajax={};};
   if(window.Ajax && !window.CELEMENTS.Ajax_CORSfixInstalled) {
     window.Try = {
-      logging : false, 
+      logging : false,
       these : function() {
         var returnValue = undefined;
-    
+
         for (var i = 0, length = arguments.length; i < length; i++) {
           var lambda = arguments[i];
           try {
@@ -149,11 +149,11 @@
             }
           }
         }
-    
+
         return returnValue;
       }
     };
-    
+
     window.Ajax.getCORS_Transport = function() {
       return Try.these(
         function() {return new XDomainRequest();},
@@ -162,12 +162,12 @@
         function() {return new ActiveXObject('Microsoft.XMLHTTP');}
       ) || false;
     };
-    
+
     window.Ajax.Request.logging = false;
     window.Ajax.Request.addMethods({
       _status : undefined,
       _readyState : undefined,
-    
+
       initialize : function($super, url, options) {
         $super(options);
         this.url = url;
@@ -178,7 +178,7 @@
         }
         this.request(url);
       },
-    
+
       request: function(url) {
         this.url = url;
         this.method = this.options.method;
@@ -189,33 +189,33 @@
         var params = Object.isString(this.options.parameters) ?
               this.options.parameters :
               Object.toQueryString(this.options.parameters);
-    
+
         if (!['get', 'post'].include(this.method)) {
           params += (params ? '&' : '') + "_method=" + this.method;
           this.method = 'post';
         }
-    
+
         if (params && this.method === 'get') {
           this.url += (this.url.include('?') ? '&' : '?') + params;
         }
-    
+
         this.parameters = params.toQueryParams();
-    
+
         try {
           var response = new Ajax.Response(this);
           if (this.options.onCreate) this.options.onCreate(response);
           Ajax.Responders.dispatch('onCreate ', this, response);
-    
+
           this.transport.open(this.method.toUpperCase(), this.url,
             this.options.asynchronous);
-    
+
           if (this.options.asynchronous) this.respondToReadyState.bind(this).defer(1);
-    
+
           this.transport.onprogress = Prototype.emptyFunction;
           this.transport.onreadystatechange = this.onStateChange.bind(this);
           this.transport.onload = this.onLoad.bind(this);
           this.transport.onerror = this.onError.bind(this);
-    
+
           try {
             this.setRequestHeaders();
           } catch (exp) {
@@ -224,10 +224,10 @@
               console.warn('setRequestHeaders failed ', this.url, exp);
             }
           }
-    
+
           this.body = this.method == 'post' ? (this.options.postBody || params) : null;
           this.transport.send(this.body);
-    
+
           /* Force Firefox to handle ready state 4 for synchronous requests */
           if (!this.options.asynchronous && this.transport.overrideMimeType) {
             this.onStateChange();
@@ -237,7 +237,7 @@
           this.dispatchException(e);
         }
       },
-    
+
       onStateChange: function() {
         var readyState = this.transport.readyState;
         if (readyState > 1 && !((readyState == 4) && this._complete)) {
@@ -254,7 +254,7 @@
           this.respondToReadyState(readyState);
         }
       },
-      
+
       onLoad : function() {
         this._status = this.transport.status || 200;
         this._readyState = this.transport.readyState || 4;
@@ -262,7 +262,7 @@
           this.respondToReadyState(this._readyState);
         }
       },
-    
+
       onError : function() {
         this._status = this.transport.status || 400;
         this._readyState = this.transport.readyState || 4;
@@ -270,7 +270,7 @@
           this.respondToReadyState(4);
         }
       },
-    
+
       getStatus: function() {
         if (!this._status) {
           this._status = this.transport.status;
@@ -286,18 +286,18 @@
           return 0;
         }
       }
-    
+
     }).bind(window.Ajax.Request);
-    
+
     window.Ajax.Response.addMethods({
       _status : undefined,
-    
+
       initialize: function(request){
         this.request = request;
         var transport  = this.transport  = request.transport;
         var readyState = this.readyState = transport.readyState || request._readyState;
         this._status = request._status;
-    
+
         if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
           this.status       = this.getStatus();
           this.statusText   = this.getStatusText();
@@ -308,18 +308,18 @@
             this.headerJSON   = this._getHeaderJSON();
           }
         }
-    
+
         if ((readyState == 4) && !(request._isAbortedBug)) {
           var xml = transport.responseXML;
           this.responseXML  = Object.isUndefined(xml) ? null : xml;
           this.responseJSON = this._getResponseJSON();
         }
       },
-    
+
       getStatus: Ajax.Request.prototype.getStatus
-    
+
     }).bind(window.Ajax.Response);
-  
+
     window.CELEMENTS.Ajax_CORSfixInstalled = true;
   }
 
@@ -363,12 +363,12 @@
   if(typeof window.CELEMENTS.LoadingIndicator === 'undefined') {
     window.CELEMENTS.LoadingIndicator = Class.create({
       _loadingImg : undefined,
-  
+
       initialize : function() {
         var _me = this;
         _me._loadingImg = new Hash();
       },
-  
+
       getLoadingIndicator : function(isSmall) {
         var _me = this;
         var loaderType = 'ajax-loader';
@@ -384,18 +384,18 @@
         }
         return _me._loadingImg.get(loaderType).clone();
       }
-  
+
     });
   }
 
   if(typeof window.CELEMENTS.Utils === 'undefined') {
     window.CELEMENTS.Utils = Class.create({
       _srcOriginHost : undefined,
-  
+
       initialize : function() {
         var _me = this;
       },
-  
+
       getPathPrefix : function() {
         var _me = this;
         if (!_me._srcOriginHost) {
@@ -413,7 +413,7 @@
               var prefixPathSplit = prefixPath.split('/');
               var prefixStr = prefixPathSplit.splice(0, prefixPathSplit.length - 2).join('/');
               if(prefixStr != '') {
-                srcOriginHost += '/' + prefixStr;         
+                srcOriginHost += '/' + prefixStr;
               }
               break;
             }
@@ -465,7 +465,7 @@
       _maxReconnectWait : undefined,
       _url : undefined,
       _configObj : undefined,
-  
+
       initialize : function(htmlElemId, callbackOnSuccess, configObj) {
         var _me = this;
         _me._htmlElem = $(htmlElemId);
@@ -478,7 +478,7 @@
         _me._maxReconnectWait = _me._configObj.maxReconnectWait || 30;
         _me._reset();
       },
-  
+
       _reset : function() {
         var _me = this;
         _me._reconnectWaitStart = _me._minReconnectWait;
@@ -521,19 +521,19 @@
           }
         }
       },
-  
+
       start : function() {
         var _me = this;
         _me._reconnectWait = _me._reconnectWaitStart;
         _me._reconnectorExecuter = new PeriodicalExecuter(_me._reconnectorHandlerBind, 1);
       },
-  
+
       _cancelAjaxOnTimeout : function(ajaxCall) {
         if (!ajaxCall._complete) {
           ajaxCall.transport.abort();
         }
       },
-  
+
       _connectionTester : function() {
         var _me = this;
         var connectionTestAjax = new Ajax.Request(_me._url, {
@@ -557,9 +557,41 @@
         });
         _me._cancelAjaxOnTimeoutBind.delay(10, connectionTestAjax);
       }
-  
+
     });
   }
+
+  window.CELEMENTS.UrlUtils = Class.create({
+    getParams : function(search) {
+      search = search || window.location.search;
+      var paramSplit = search.split(new RegExp('[?&]'))
+      paramSplit.unshift(new Hash()); // add initial param as first array element
+      return paramSplit.reduce(_splitUriSearch) || new Hash();
+    },
+
+    joinParams : function(hash) {
+      var search = (window.location.search.startsWith('?')) ? '?' : '';
+      $H(hash).each(function(elem, idx) {
+        if(idx > 0) { search += '&'; }
+        search += elem.value.map(function(elem) { return key + '=' + encodeURI(elem) }).join('&');
+      });
+      return search;
+    },
+
+    _splitUriSearch : function(paramHash, elem){
+      var key = elem.split('=', 1);
+      if((key.length > 0) && (key[0].length > 0)) {
+        key = key[0];
+        var val = decodeURI(elem.substring(key.length + 1));
+        if(!param[key]) {
+          paramHash[key] = [val];
+        } else {
+          paramHash[key].push(val);
+        }
+      }
+      return paramHash;
+    }
+  });
 
   /**
    * getCelHost function
@@ -693,7 +725,7 @@
       Event.observe(window, "orientationchange", cel_updateOrientationCSSclasses);
     }
   });
-  
+
   /**
    * Register all Bootstrap-Multiselect
    */
@@ -708,7 +740,7 @@
             numberDisplayed : 3,
             onDropdownHidden : function(event) {
               var element = event.target;
-              /* 
+              /*
                * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
                * this code is just a workaround, it set the box visible again
                */
@@ -725,7 +757,7 @@
             onChange: function(option, checked, select) {
               $(option)[0].fire("cel:multiselectOnChange", {
                 'multiselect' : this,
-                'checked' : checked, 
+                'checked' : checked,
                 'select' : select
               });
             }
@@ -741,7 +773,7 @@
       });
     }
   };
-  
+
   var cel_addMaxDimToFluidImg = function(event) {
     $$("img.cel_fluidresizeWidth").each(function(imgElem) {
       imgElem.setStyle({
@@ -761,7 +793,7 @@
     $(document.body).stopObserving("celements:contentChanged", cel_initDateTimePicker);
     $(document.body).observe("celements:contentChanged", cel_initDateTimePicker);
   };
-  
+
   /**
    * Initialize all Multiselect-Boxes
    */
@@ -776,7 +808,7 @@
     $(document.body).observe("celements:contentChanged", cel_addMaxDimToFluidImg);
     $(document.body).fire('cel:initMultiselect');
   });
-  
+
   /**
    * Initialize all DateTimePicker
    */
