@@ -572,13 +572,12 @@
     },
 
     joinParams : function(hash) {
-      var startChar = (window.location.search.startsWith('?')) ? '?' : '';
       var paramsArray = [];
       $H(hash).each(function(pair) {
         var pairMapped = pair.value.map(function(elem) { return pair.key + '=' + encodeURI(elem) });
         paramsArray.push(pairMapped.join('&'));
       });
-      return startChar + paramsArray.join('&');
+      return paramsArray.join('&');
     },
 
     _splitUriSearch : function(paramHash, elem){
