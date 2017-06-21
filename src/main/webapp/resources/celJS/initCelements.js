@@ -564,10 +564,11 @@
 
   window.CELEMENTS.UrlUtils = Class.create({
     getParams : function(search) {
+      var _me = this;
       search = search || window.location.search;
       var paramSplit = search.split(new RegExp('[?&]'))
       paramSplit.unshift(new Hash()); // add initial param as first array element
-      return paramSplit.reduce(_splitUriSearch) || new Hash();
+      return paramSplit.reduce(_me._splitUriSearch) || new Hash();
     },
 
     joinParams : function(hash) {
