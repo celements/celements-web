@@ -562,6 +562,39 @@
     });
   }
 
+  window.CELEMENTS.UrlUtils = Class.create({
+    getParams : function(search) {
+      var _me = this;
+      search = search || window.location.search;
+      var paramSplit = search.split(new RegExp('[?&]'))
+      paramSplit.unshift(new Hash()); // add initial param as first array element
+      return paramSplit.reduce(_me._splitUriSearch.bind(_me)) || new Hash();
+    },
+
+    joinParams : function(hash) {
+      var paramsArray = [];
+      $H(hash).each(function(pair) {
+        var pairMapped = pair.value.map(function(elem) { return pair.key + '=' + encodeURI(elem) });
+        paramsArray = paramsArray.concat(pairMapped);
+      });
+      return paramsArray.join('&');
+    },
+
+    _splitUriSearch : function(paramHash, elem){
+      var key = elem.split('=', 1);
+      if((key.length > 0) && (key[0].length > 0)) {
+        key = key[0];
+        var val = decodeURI(elem.substring(key.length + 1));
+        if(!paramHash.get(key)) {
+          paramHash.set(key, [val]);
+        } else {
+          paramHash.get(key).push(val);
+        }
+      }
+      return paramHash;
+    }
+  });
+
   /**
    * getCelHost function
    **/
