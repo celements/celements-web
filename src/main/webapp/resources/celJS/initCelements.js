@@ -585,7 +585,7 @@
       if((key.length > 0) && (key[0].length > 0)) {
         key = key[0];
         var val = decodeURI(elem.substring(key.length + 1));
-        if(!param[key]) {
+        if(!paramHash[key]) {
           paramHash[key] = [val];
         } else {
           paramHash[key].push(val);
