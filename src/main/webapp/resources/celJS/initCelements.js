@@ -572,10 +572,9 @@
     },
 
     joinParams : function(hash) {
-      hash = (hash.each) ? hash : $H(hash);
       var startChar = (window.location.search.startsWith('?')) ? '?' : '';
       var paramsArray = [];
-      hash.each(function(pair) {
+      $H(hash).each(function(pair) {
         var pairMapped = pair.value.map(function(elem) { return pair.key + '=' + encodeURI(elem) });
         paramsArray.push(pairMapped.join('&'));
       });
