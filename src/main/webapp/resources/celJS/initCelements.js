@@ -575,7 +575,7 @@
       var paramsArray = [];
       $H(hash).each(function(pair) {
         var pairMapped = pair.value.map(function(elem) { return pair.key + '=' + encodeURI(elem) });
-        paramsArray.push(pairMapped.join('&'));
+        paramsArray = paramsArray.concat(pairMapped);
       });
       return paramsArray.join('&');
     },
