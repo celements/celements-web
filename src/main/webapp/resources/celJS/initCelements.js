@@ -572,12 +572,14 @@
     },
 
     joinParams : function(hash) {
-      var search = (window.location.search.startsWith('?')) ? '?' : '';
-      $H(hash).each(function(elem, idx) {
-        if(idx > 0) { search += '&'; }
-        search += elem.value.map(function(elem) { return key + '=' + encodeURI(elem) }).join('&');
+      hash = (hash.each) ? hash : $H(hash);
+      var startChar = (window.location.search.startsWith('?')) ? '?' : '';
+      var paramsArray = [];
+      hash.each(function(pair) {
+        var pairMapped = pair.value.map(function(elem) { return pair.key + '=' + encodeURI(elem) });
+        paramsArray.push(pairMapped.join('&'));
       });
-      return search;
+      return startChar + paramsArray.join('&');
     },
 
     _splitUriSearch : function(paramHash, elem){
@@ -585,10 +587,10 @@
       if((key.length > 0) && (key[0].length > 0)) {
         key = key[0];
         var val = decodeURI(elem.substring(key.length + 1));
-        if(!paramHash[key]) {
-          paramHash[key] = [val];
+        if(!paramHash.get(key)) {
+          paramHash.set(key, [val]);
         } else {
-          paramHash[key].push(val);
+          paramHash.get(key).push(val);
         }
       }
       return paramHash;
