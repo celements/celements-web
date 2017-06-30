@@ -232,25 +232,25 @@ var getCelAnimObject = function() {
     { 
       'name' : 'vimeo',
       'matchStr' : '^https?:\/\/vimeo.com\/.*?',
-      'replaceStr' : 'http://vimeo.com/moogaloop.swf?clip_id=',
+      'replaceStr' : 'https://vimeo.com/moogaloop.swf?clip_id=',
       'cssClass' : 'celanim_vimeo',
       'replaceOnLoad' : true
     },
     { 'name' : 'youtube',
       'matchStr' : '^https?:\/\/(www.youtube.com\/.*?[\/=]|youtu.be\/)',
-      'replaceStr' : 'http://www.youtube.com/v/',
+      'replaceStr' : 'https://www.youtube.com/v/',
       'cssClass' : 'celanim_youtube',
       'replaceOnLoad' : true
     },
     { 'name' : 'sfaudioPortal',
       'matchStr' : '^https?:\/\/(www.srf.ch)\/.*\/audio/.*[\/=]',
-      'replaceStr' : 'http://www.srf.ch/player/flash/srfplayer.swf?mode=embed&audio_id=',
+      'replaceStr' : 'https://www.srf.ch/player/flash/srfplayer.swf?mode=embed&audio_id=',
       'cssClass' : 'celanim_sfaudio',
       'replaceOnLoad' : true
     },
     { 'name' : 'sfvideoPortal',
       'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv|www.srf.ch)\/.*[\/=]',
-      'replaceStr' : 'http://www.srf.ch/player/flash/srfplayer.swf?mode=embed&segment_id=',
+      'replaceStr' : 'https://www.srf.ch/player/flash/srfplayer.swf?mode=embed&segment_id=',
       'cssClass' : 'celanim_sfvideo',
       'replaceOnLoad' : true
     }];
