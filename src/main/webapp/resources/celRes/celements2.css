@@ -803,6 +803,22 @@ img.cel_fluidresizeHeight {
   width: auto;
   height: 100%;
 }
+
+/**
+ * Box layouting / Flex support
+ **/
+.cel_displayflex {
+  display: box; /** old browsers **/
+  display: flexbox; /** for IE10 **/
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-flex-wrap: wrap; /** for IE10 **/
+  -webkit-flex-wrap: wrap; /** Safari 6.1+ **/
+  flex-wrap: wrap;
+}
 /**
  * Presentation module
  **/
