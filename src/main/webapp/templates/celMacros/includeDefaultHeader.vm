@@ -49,7 +49,9 @@ $celementsweb.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/initCelements.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
 $celementsweb.addExtJSfileOnce(':celJS/validation.js')
-$celementsweb.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')
+#if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 0) == 0)
+  $celementsweb.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')
+#end
 $celementsweb.addExtJSfileOnce(':celJS/mobile/MobileSupport.js', 'file')
 
 $services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')
