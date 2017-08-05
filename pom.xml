@@ -84,7 +84,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>1.71</version>
+      <version>1.72-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
