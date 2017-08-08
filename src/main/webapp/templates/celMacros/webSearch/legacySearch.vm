@@ -1,0 +1,196 @@
+#set($configObj = $celldoc.getObject('Celements2.WebSearchConfigClass'))
+#set($attConfigObj = $celldoc.getObject('Celements2.WebAttachmentSearchConfigClass'))
+
+#set($restrictions = $services.lucene.createAndRestrictionGroup())
+
+## exclude WebPreferences
+#set($webPrefRestr = $services.lucene.createRestriction('name', 'WebPreferences'))
+#set($devNull = $webPrefRestr.setNegate(true))
+#set($devNull = $restrictions.add($webPrefRestr))
+
+## docs
+#asList("$!configObj.get('docs') $!docs")
+#set($docs = $list)
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#foreach($elem in $docs)
+  #set($devNull = $orGrp.add($services.lucene.createDocRestriction("$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## docsBlackList
+#asList("$!configObj.get('docsBlackList') $!docsBlackList")
+#set($docsBlackList = $list)
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#set($devNull = $orGrp.setNegate(true))
+#foreach($elem in $docsBlackList)
+  #set($devNull = $orGrp.add($services.lucene.createDocRestriction("$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## spaces
+#asList("$!configObj.get('spaces') $!spaces $!request.get('spaces')")
+#set($spaces = $list)
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#foreach($elem in $spaces)
+  #set($devNull = $orGrp.add($services.lucene.createSpaceRestriction("$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## spacesBlackList
+#asList("XWiki Templates Tools Celements2 Macros LocalMacros Ajax Overlay $!configObj.get('spacesBlackList') $!spacesBlackList")
+#set($spacesBlackList = $list)
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#set($devNull = $orGrp.setNegate(true))
+#foreach($elem in $spacesBlackList)
+  #set($devNull = $orGrp.add($services.lucene.createSpaceRestriction("$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## pageTypes
+#asList("$!configObj.get('pageTypes') $!pageTypes")
+#set($pageTypes = $list)
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#foreach($elem in $pageTypes)
+  #set($devNull = $orGrp.add($services.lucene.createObjectFieldRestriction('Celements2.PageType', 'page_type', "$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+## pageTypesBlackList
+#asList("Redirect $!configObj.get('pageTypesBlackList') $!pageTypesBlackList")
+#set($pageTypesBlackList = $list)
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+#set($devNull = $orGrp.setNegate(true))
+#foreach($elem in $pageTypesBlackList)
+  #set($devNull = $orGrp.add($services.lucene.createObjectFieldRestriction('Celements2.PageType', 'page_type', "$elem")))
+#end
+#set($devNull = $restrictions.add($orGrp))
+
+
+## start packages
+#asList("$!configObj.get('packages') $!searchpackages")
+#set($searchpackages = $list)
+#if(!$searchpackages.contains('attachment') && ("$!attConfigObj" != ''))
+  #set($devNull = $searchpackages.add('attachment'))
+#end
+#if($searchpackages.isEmpty())
+  #set($searchpackages = ['content', 'menu', 'blog'])
+#end
+#if("$!fuzzySearch" != '')
+  #set($fuzzySearch = $!configObj.getProperty('fuzzySearch').getValue())
+#end
+#set($orGrp = $services.lucene.createOrRestrictionGroup())
+
+## package content
+#if($searchpackages.contains('content'))
+  #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+#end
+
+## package menu
+#if($searchpackages.contains('menu'))
+  #set($restr = $services.lucene.createObjectFieldRestriction('Celements2.MenuName', 'menu_name', "$!text").setBoost('30'))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #set($restr = $services.lucene.createRestriction('title', "$!text").setBoost('30'))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+#end
+
+## package blog
+#if($searchpackages.contains('blog'))
+  #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'title', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'extract', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'content', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
+    #set($restr = $services.lucene.createObjectFieldRestriction('XWiki.ArticleClass', 'publishdate', "$!text"))
+    #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+    #set($devNull = $orGrp.add($restr))
+  #end
+#end
+
+## package chronoblog
+#if($searchpackages.contains('chronoblog'))
+  #set($restr = $services.lucene.createObjectFieldRestriction('Chronoskop.ChronoBlogClass', 'project', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #set($restr = $services.lucene.createObjectFieldRestriction('Chronoskop.ChronoBlogClass', 'description', "$!text"))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $orGrp.add($restr))
+  #if($text.matches('^(\d{12}|\d{1,12}\*)$')) ## yyyyMMddHHmm
+    #set($devNull = $orGrp.add($services.lucene.createObjectFieldRestriction('Chronoskop.ChronoBlogClass', 'date', "$!text")))
+  #end
+#end
+
+## package attachment
+#if($searchpackages.contains('attachment'))
+  #asList("$!attConfigObj.get('mimeTypes') $!mimeTypes")
+  #set($mimeTypes = $list)
+  #asList("$!attConfigObj.get('mimeTypesBlackList') $!mimeTypesBlackList")
+  #set($mimeTypesBlackList = $list)
+  #asList("$!attConfigObj.get('fileNamePrefixes') $!fileNamePrefixes")
+  #set($fileNamePrefixes = $list)
+  #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($mimeTypes, $mimeTypesBlackList, $fileNamePrefixes))
+  #set($restr = $services.lucene.createRestriction('ft', "$!text").setBoost('20'))
+  #if("$!fuzzySearch" != '') #set($devNull = $restr.setFuzzy("$!{fuzzySearch}")) #end
+  #set($devNull = $attRestrGrp.add($restr))
+  
+  ## workaround for CELDEV-208
+  #set($andGrp = $services.lucene.createAndRestrictionGroup())
+  #set($restr = $services.lucene.createRestriction('type', '"wikipage"'))
+  #set($devNull = $andGrp.add($restr))
+  #set($devNull = $andGrp.add($orGrp))
+  #set($orGrp = $services.lucene.createOrRestrictionGroup())
+  #set($devNull = $orGrp.add($andGrp))  
+  #set($restr = $services.lucene.createRestriction('type', '"attachment"'))
+  #set($devNull = $attRestrGrp.add($restr))
+  
+  #set($devNull = $orGrp.add($attRestrGrp))
+#end
+
+#set($devNull = $restrictions.add($orGrp))
+## end packages
+
+## linkedDocsOnly
+#if("$!linkedDocsOnly" != '')
+  #set($linkedDocsOnly = ("$!linkedDocsOnly" == 'true'))
+#else
+  #set($linkedDocsOnly = ("$!configObj.getProperty('linkedDocsOnly').getValue()" == '1'))
+#end
+#if($linkedDocsOnly)
+  #set($linkedDocsRestrGrp = $services.lucene.createOrRestrictionGroup())
+  #set($devNull = $linkedDocsRestrGrp.add($services.lucene.createObjectRestriction('Celements2.MenuItem')))
+  #if($searchpackages.contains('blog'))
+    #set($devNull = $linkedDocsRestrGrp.add($services.lucene.createObjectRestriction('XWiki.ArticleClass')))
+  #end
+  #set($devNull = $restrictions.add($linkedDocsRestrGrp))
+#end
+
+## create query, get sort fields and search
+#set($doctypes = [])
+#if($searchpackages.contains('attachment'))
+  #set($devNull = $doctypes.add('attachment'))
+#end
+#if(!$searchpackages.contains('attachment') || ($searchpackages.size() > 1))
+  #set($devNull = $doctypes.add('wikipage'))
+#end
+#set($query = $services.lucene.createQuery($doctypes))
+#set($devNull = $query.addAll($restrictions))
+#asList("$!configObj.get('sortFields')")
+#set($sortFields = $list)
+#set($result = $services.lucene.search($query, $sortFields, ['default', "$language"]))
+
+#macro(asList $str)
+  #set($list = $util.getArrayList())
+  #foreach($elem in $str.trim().split('[,;\| ]+'))
+    #if($elem.trim() != '')
+      #set($devNull = $list.add($elem))
+    #end
+  #end
+#end
