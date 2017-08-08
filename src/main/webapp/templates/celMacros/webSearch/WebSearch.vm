@@ -41,6 +41,7 @@
   config: $!configDocRef
   text : $!text
   languages: $!languages
+  is legacy WebSearch: $!legacyWebSearch
 -->
 #end
 
