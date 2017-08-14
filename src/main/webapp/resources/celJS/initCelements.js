@@ -818,4 +818,32 @@
     cel_initDateTimePicker();
   });
 
+  /**
+   * Initialize all Jira-SupportBox
+   */
+  celAddOnBeforeLoadListener(function() {
+    openJiraSupportBoxInit();
+    window.ATL_JQ_PAGE_PROPS =  {
+      "triggerFunction": triggerFunction
+    };
+  });
+  
+  var triggerFunction = function(showCollectorDialog) {
+    //Requires that jQuery is available!
+    jQuery(".celements_menu_bar_support_item").click(function(e) {
+      e.preventDefault();
+      showCollectorDialog();
+    });
+  };
+
+  var openJiraSupportBoxInit = function() {
+    // Requires jQuery!
+    jQuery.ajax({
+        url: "https://synjira.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/-qxrqfl/b/c/3d70dff4c40bd20e976d5936642e2171/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector-embededjs.js?locale=en-UK&collectorId=3195cde3",
+        type: "get",
+        cache: true,
+        dataType: "script"
+    });
+  };
+
 })(window);
