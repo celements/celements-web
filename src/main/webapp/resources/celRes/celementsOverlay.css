@@ -385,3 +385,17 @@ form#newsletter_send span#testResultBoxSpan {
   margin: 0;
 }
 
+
+
+/* MOBILE */
+
+@media only screen and (max-width: 560px) { 
+	
+	.main.layoutsubsection {
+		width: 265px;
+	}
+	
+	.cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
+	}
+}
