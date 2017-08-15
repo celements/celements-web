@@ -389,11 +389,11 @@ form#newsletter_send span#testResultBoxSpan {
 		padding: 0 0 20px;
 }
 
-.generalOverlay .layoutsubsection #cel_overlaybody #cel_pwdrecovery_process_description form,
-.generalOverlay .layoutsubsection #cel_overlaybody #cel_pwdrecovery_process_description button,
-.generalOverlay .layoutsubsection #cel_overlaybody #cel_pwdrecovery_process_description input,
-.generalOverlay .layoutsubsection #cel_overlaybody #cel_pwdrecovery_process_description select,
-.generalOverlay .layoutsubsection #cel_overlaybody #cel_pwdrecovery_process_description textarea {
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description form,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description button,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description input,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description select,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description textarea {
 	margin: 5px;
 }
 
