@@ -387,13 +387,28 @@ form#newsletter_send span#testResultBoxSpan {
 
 
 
-/* MOBILE */
+/* MOBILE PORTRAIT */
 
 @media only screen and (max-width: 560px) { 
 	
 	.main.layoutsubsection {
 		position:relative;
 		width:265px;
+	}
+	
+	#cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
+	}
+}
+
+
+/* MOBILE LANDSCAPE */
+
+@media only screen and (max-width: 667px) { 
+	
+	.main.layoutsubsection {
+		position:relative;
+		width:400px;
 	}
 	
 	#cel_pwdrecovery_process_description {
