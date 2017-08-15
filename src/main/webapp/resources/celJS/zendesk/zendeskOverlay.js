@@ -1,3 +1,6 @@
+// After the Implementation of the Support-function over Jira, this zendeskOverlay JS-Script isn't
+// used anymore. If it isn't used in the future for other issues it could be deleted 
+
 // IE6+SSL fix courtesy of http://www.tribalogic.net/
 
 ;(function(window) {
