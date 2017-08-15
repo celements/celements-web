@@ -376,13 +376,17 @@ form#newsletter_send span#testResultBoxSpan {
 
 /* fix for password change form in baseskin */
 .generalOverlay .changePassword dl {
-  margin: 0;
+  margin: 5px;
 }
 .generalOverlay .changePassword dl dd input {
-  margin: 0;
+  margin: 5px;
 }
 .generalOverlay .changePassword dl dd input#xwikipassword {
-  margin: 0;
+  margin: 5px;
+}
+
+#cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
 }
 
 
