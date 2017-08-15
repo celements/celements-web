@@ -391,11 +391,12 @@ form#newsletter_send span#testResultBoxSpan {
 
 @media only screen and (max-width: 560px) { 
 	
-	.generalOverlay .main.layoutsubsection {
-		width: 265px;
+	.main.layoutsubsection {
+		position:relative;
+		width:265px;
 	}
 	
-	.generalOverlay #cel_pwdrecovery_process_description {
+	#cel_pwdrecovery_process_description {
 		padding: 0 0 20px;
 	}
 }
