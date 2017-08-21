@@ -22,7 +22,7 @@
   var openJiraSupportBoxInit = function() {
     // Requires jQuery!
     jQuery.ajax({
-        url: Validation.messages.get("supportLinkURL"),
+        url: window.celMessages.celmenu.supportLinkURL,
         type: "get",
         cache: true,
         dataType: "script"
