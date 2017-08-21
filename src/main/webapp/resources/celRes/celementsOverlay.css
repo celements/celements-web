@@ -376,12 +376,52 @@ form#newsletter_send span#testResultBoxSpan {
 
 /* fix for password change form in baseskin */
 .generalOverlay .changePassword dl {
-  margin: 0;
+  margin: 0px;
 }
 .generalOverlay .changePassword dl dd input {
-  margin: 0;
+  margin: 0px;
 }
 .generalOverlay .changePassword dl dd input#xwikipassword {
-  margin: 0;
+  margin: 0px;
 }
 
+#cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
+}
+
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description form,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description button,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description input,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description select,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description textarea {
+	margin: 5px;
+}
+
+/* MOBILE PORTRAIT */
+
+@media only screen and (max-width: 560px) { 
+	
+	.main.layoutsubsection {
+		position:relative;
+		width:265px;
+	}
+	
+	#cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
+	}
+}
+
+
+/* MOBILE LANDSCAPE */
+
+@media only screen and (min-width: 667px) and (max-width: 768px) { 
+	
+	.main.layoutsubsection {
+		position:relative;
+		width:400px;
+	}
+	
+	#cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
+	}
+}
