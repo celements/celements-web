@@ -397,31 +397,31 @@ form#newsletter_send span#testResultBoxSpan {
 	margin: 5px;
 }
 
-/* MOBILE PORTRAIT */
+/* MOBILE LANDSCAPE */
+
+@media only screen and (max-width: 800px) { 
+	
+	.main.layoutsubsection {
+		position:relative;
+		width:75%;
+	}
+	
+	#cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
+	}
+}
+
+
+/* MOBILE PORTRAIT 
 
 @media only screen and (max-width: 560px) { 
 	
 	.main.layoutsubsection {
 		position:relative;
-		width:265px;
+		width:75%;
 	}
 	
 	#cel_pwdrecovery_process_description {
 		padding: 0 0 20px;
 	}
-}
-
-
-/* MOBILE LANDSCAPE */
-
-@media only screen and (min-width: 667px) and (max-width: 768px) { 
-	
-	.main.layoutsubsection {
-		position:relative;
-		width:400px;
-	}
-	
-	#cel_pwdrecovery_process_description {
-		padding: 0 0 20px;
-	}
-}
+}*/
