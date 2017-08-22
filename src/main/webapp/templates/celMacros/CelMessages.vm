@@ -70,4 +70,8 @@ $jsonBuilder.addStringProperty('cmPause', "$!adminMsg.get('cel_slideshow_cm_paus
 $jsonBuilder.addStringProperty('cmContinue', "$!adminMsg.get('cel_slideshow_cm_continue')")
 $jsonBuilder.addStringProperty('cmOpenLink', "$!adminMsg.get('cel_slideshow_cm_openlink')")
 $jsonBuilder.closeDictionary()
-
+## celements menu
+$jsonBuilder.openProperty('celmenu')
+$jsonBuilder.openDictionary()
+$jsonBuilder.addStringProperty('supportLinkURL', "$!adminMsg.get('cel_supportLink_url')")
+$jsonBuilder.closeDictionary()

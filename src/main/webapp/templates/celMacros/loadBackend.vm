@@ -17,8 +17,7 @@ $celementsweb.addExtJSfileOnce(':celJS/contextMenu/contextmenu-hover.js', 'file'
 $celementsweb.addExtJSfileOnce(':celJS/contextMenu/contextmenu.js', 'file')
 ## $celementsweb.addExtJSfileOnce(':celJS/validation.js') ## always loaded in includeDefaultHeader.vm
 $celementsweb.addExtJSfileOnce(':celJS/adminUi/menubar.js')
-$celementsweb.addExtJSfileOnce(':celJS/zendesk/zendeskOverlay.js')
-$celementsweb.includeCSSAfterSkin(':celRes/zendesk/zendeskOverlay.css')
+$celementsweb.addExtJSfileOnce(':celJS/supportLink/supportLink.js')
 ## keep the following if async with the one in celMacros/startCelementsBody.vm to load getTabMenu!!
 #if($cel_isEditMode && !$cel_useInlineEditorMode)
 $xwiki.parseTemplate("celMacros/DarkBox.vm")
