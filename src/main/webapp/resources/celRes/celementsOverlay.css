@@ -399,11 +399,11 @@ form#newsletter_send span#testResultBoxSpan {
 
 /* MOBILE LANDSCAPE */
 
-@media only screen and (max-width: 800px) { 
+@media only screen and (max-width: 890px) { 
 	
 	.main.layoutsubsection {
 		position:relative;
-		width:75%;
+		width:85%;
 	}
 	
 	#cel_pwdrecovery_process_description {
