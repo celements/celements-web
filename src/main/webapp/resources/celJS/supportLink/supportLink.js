@@ -5,9 +5,13 @@
    * Initialize all Jira-SupportBox
    */
   celAddOnBeforeLoadListener(function() {
-    console.log("<<<<<<<<<<<<<<<<< supportLink IN celAddOnBeforeLoadListener");
-    $(document.body).stopObserving('cel:messagesLoaded', openJiraSupportBoxInit)
-    $(document.body).observe('cel:messagesLoaded', openJiraSupportBoxInit)
+    console.log("<<<<<<<<<<<<<<<<< supportLink IN celAddOnBeforeLoadListener window.celMessages.celmenu: ", window.celMessages.celmenu);
+    if(window.celMessages.celmenu == null) {
+      $(document.body).stopObserving('cel:messagesLoaded', openJiraSupportBoxInit)
+      $(document.body).observe('cel:messagesLoaded', openJiraSupportBoxInit)
+    } else {
+      openJiraSupportBoxInit();
+    }
     window.ATL_JQ_PAGE_PROPS =  {
       "triggerFunction": triggerFunction
     };
