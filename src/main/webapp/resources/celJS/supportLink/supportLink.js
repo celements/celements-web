@@ -5,7 +5,9 @@
    * Initialize all Jira-SupportBox
    */
   celAddOnBeforeLoadListener(function() {
-    openJiraSupportBoxInit();
+    console.log("<<<<<<<<<<<<<<<<< supportLink IN celAddOnBeforeLoadListener");
+    $(document.body).stopObserving('cel:messagesLoaded', openJiraSupportBoxInit)
+    $(document.body).observe('cel:messagesLoaded', openJiraSupportBoxInit)
     window.ATL_JQ_PAGE_PROPS =  {
       "triggerFunction": triggerFunction
     };
