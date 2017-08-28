@@ -5,7 +5,6 @@
    * Initialize all Jira-SupportBox
    */
   celAddOnBeforeLoadListener(function() {
-    console.log("<<<<<<<<<<<<<<<<< supportLink IN celAddOnBeforeLoadListener window.celMessages.celmenu: ", window.celMessages.celmenu);
     if(window.celMessages.celmenu == null) {
       $(document.body).stopObserving('cel:messagesLoaded', openJiraSupportBoxInit)
       $(document.body).observe('cel:messagesLoaded', openJiraSupportBoxInit)
@@ -26,14 +25,15 @@
   };
 
   var openJiraSupportBoxInit = function() {
-    // Requires jQuery!
-    console.log("<<<<<<<<<<<<<<<<< supportLink openJiraSupportBoxInit supportLinkURL: ", window.celMessages.celmenu.supportLinkURL);
-    jQuery.ajax({
-        url: window.celMessages.celmenu.supportLinkURL,
-        type: "get",
-        cache: true,
-        dataType: "script"
-    });
+    if((window.celMessages.celmenu != null) && (window.celMessages.celmenu.supportLinkURL != null)){
+      // Requires jQuery!
+      jQuery.ajax({
+          url: window.celMessages.celmenu.supportLinkURL,
+          type: "get",
+          cache: true,
+          dataType: "script"
+      });
+    }
   };
 
 })(window);
