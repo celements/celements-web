@@ -21,6 +21,7 @@
 
   var openJiraSupportBoxInit = function() {
     // Requires jQuery!
+    console.log("<<<<<<<<<<<<<<<<< supportLink openJiraSupportBoxInit supportLinkURL: ", window.celMessages.celmenu.supportLinkURL);
     jQuery.ajax({
         url: window.celMessages.celmenu.supportLinkURL,
         type: "get",
