@@ -5,7 +5,7 @@
    * Initialize all Jira-SupportBox
    */
   celAddOnBeforeLoadListener(function() {
-    if(window.celMessages.celmenu == null) {
+    if(!window.celMessages.celmenu) {
       $(document.body).stopObserving('cel:messagesLoaded', openJiraSupportBoxInit)
       $(document.body).observe('cel:messagesLoaded', openJiraSupportBoxInit)
     } else {
