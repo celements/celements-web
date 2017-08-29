@@ -5,7 +5,12 @@
    * Initialize all Jira-SupportBox
    */
   celAddOnBeforeLoadListener(function() {
-    openJiraSupportBoxInit();
+    if(!window.celMessages.celmenu) {
+      $(document.body).stopObserving('cel:messagesLoaded', openJiraSupportBoxInit)
+      $(document.body).observe('cel:messagesLoaded', openJiraSupportBoxInit)
+    } else {
+      openJiraSupportBoxInit();
+    }
     window.ATL_JQ_PAGE_PROPS =  {
       "triggerFunction": triggerFunction
     };
@@ -20,13 +25,15 @@
   };
 
   var openJiraSupportBoxInit = function() {
-    // Requires jQuery!
-    jQuery.ajax({
-        url: window.celMessages.celmenu.supportLinkURL,
-        type: "get",
-        cache: true,
-        dataType: "script"
-    });
+    if((window.celMessages.celmenu != null) && (window.celMessages.celmenu.supportLinkURL != null)){
+      // Requires jQuery!
+      jQuery.ajax({
+          url: window.celMessages.celmenu.supportLinkURL,
+          type: "get",
+          cache: true,
+          dataType: "script"
+      });
+    }
   };
 
 })(window);
