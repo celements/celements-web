@@ -73,5 +73,5 @@ $jsonBuilder.closeDictionary()
 ## celements menu
 $jsonBuilder.openProperty('celmenu')
 $jsonBuilder.openDictionary()
-$jsonBuilder.addStringProperty('supportLinkURL', "$!adminMsg.get('cel_supportLink_url')")
+$jsonBuilder.addStringProperty('supportLinkURL', "$!services.celementsweb.getSupportLinkURL()")
 $jsonBuilder.closeDictionary()
