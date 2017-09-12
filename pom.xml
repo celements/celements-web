@@ -135,7 +135,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>1.169</version>
+      <version>1.170</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
