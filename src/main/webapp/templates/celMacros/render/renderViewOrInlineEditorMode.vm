@@ -1,5 +1,5 @@
 #if("$!pageDocRef" == '')
-  #set($pageDocRef = doc.documentReference)
+  #set($pageDocRef = $doc.documentReference)
 #end
 #set($pageTypeConfig = $services.pageType.getPageTypeConfig($page_type))
 #set($isRenderViewMode = ("$!context.action" == 'view'))
