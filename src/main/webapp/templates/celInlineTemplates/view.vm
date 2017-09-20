@@ -17,7 +17,8 @@ $xwiki.celementsweb.includeCSSAfterPreferences(':celRes/celementsOverlay.css')
 #end
 #if(!$contextIsFinished && !$isCellSkin)
 ## render page content for old skins ('old' = no CelkSkin and no xwiki Skin from disk)
-#parse('celMacros/noDuplicateRenderCelementsDocument.vm')
+## #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
+#parse('celMacros/render/renderViewOrInlineEditorMode.vm')
 ##
 #end
 #if(!$contextIsFinished && ($show_frame || ("$context.action" == 'edit')))

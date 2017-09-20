@@ -1,0 +1,26 @@
+#if("$!pageDocRef" == '')
+  #set($pageDocRef = $doc.documentReference)
+#end
+#set($pageTypeConfig = $services.pageType.getPageTypeConfig($page_type))
+#set($isRenderViewMode = ("$!context.action" == 'view'))
+#set($isRenderViewMode = $isRenderViewMode || (!$pageTypeConfig || !$pageTypeConfig.useInlineEditorMode()))
+#set($isRenderViewMode = $isRenderViewMode || ($doc.documentReference != $pageDocRef))
+<!--
+  page_type : $page_type
+  useInlineEditorMode : $pageTypeConfig.useInlineEditorMode()
+  isRenderViewMode : $isRenderViewMode
+-->
+#if($isRenderViewMode)
+  $services.celementsweb.renderCelementsDocument($pageDocRef, true)
+#else
+  ##
+  ## Content
+  ##
+  ## Is the document being edited by another user?
+  ## If yes, warn about it and show a forcing link:
+  ##
+  #parse('celMacros/editor/showEditorBlockerMessage.vm')
+  #if(!$isShowEditorBlocker)
+    $services.celementsweb.renderCelementsDocument($pageDocRef, "$!context.language", 'edit',  true)
+  #end
+#end
