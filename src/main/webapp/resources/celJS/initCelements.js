@@ -817,5 +817,20 @@
   celAddOnBeforeLoadListener(function() {
     cel_initDateTimePicker();
   });
+  
+  /**
+   * Initialize close Window on Overlay CloseButton
+   */
+  celAddOnBeforeLoadListener(function() {
+    $$(".exitOnClose").each(function(elem) {
+      elem.stopObserving("click", cel_closeOverlayWindow)
+      elem.observe("click", cel_closeOverlayWindow)
+    });
+  });
+  
+  var cel_closeOverlayWindow = function(event) {
+    event.stop();
+    window.close();
+  }
 
 })(window);
