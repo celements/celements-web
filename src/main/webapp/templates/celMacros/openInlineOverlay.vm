@@ -47,7 +47,10 @@
 ##<![endif]-->
 <!-- request.exitOnClose: $request.exitOnClose -->
 #set($closeButtonClass = "cel_closebutton")
-#if("$!request.exitOnClose" == "1")
+#if("$!exitOnClose" == "")
+  #set($exitOnClose = ("$!request.exitOnClose" == "1"))
+#end
+#if($exitOnClose)
   #set($closeButtonClass = "${closeButtonClass} exitOnClose")
 #end
 <a id="closebutton" class="$closeButtonClass" href="$closeOverlayRedirect"></a>
