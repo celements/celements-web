@@ -45,7 +45,6 @@
 ##<!--[if lte IE 6]>
 ##$celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('supersleight-min.js', 'skin'))
 ##<![endif]-->
-<!-- request.exitOnClose: $request.exitOnClose -->
 #set($closeButtonClass = "cel_closebutton")
 #if("$!exitOnClose" == "")
   #set($exitOnClose = ("$!request.exitOnClose" == "1"))
