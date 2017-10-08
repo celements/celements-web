@@ -32,7 +32,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>2.92-SNAPSHOT</version>
+  <version>2.92-RC1</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -45,7 +45,7 @@
     <connection>scm:git:git://github.com/celements/celements-web</connection>
     <developerConnection>scm:git:git@github.com:celements/celements-web.git</developerConnection>
     <url>https://github.com/celements/celements-web</url>
-    <tag>HEAD</tag>
+    <tag>celements-web-2.92-RC1</tag>
   </scm>
   <properties>
     <platform.core.version>2.63</platform.core.version>
