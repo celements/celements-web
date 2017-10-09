@@ -822,7 +822,7 @@
    * Initialize close Window on Overlay CloseButton
    */
   celAddOnBeforeLoadListener(function() {
-    $$(".exitOnClose").each(function(elem) {
+    $$(".generalOverlayWrapper .generalOverlay .exitOnClose").each(function(elem) {
       elem.stopObserving("click", cel_closeOverlayWindow)
       elem.observe("click", cel_closeOverlayWindow)
     });
