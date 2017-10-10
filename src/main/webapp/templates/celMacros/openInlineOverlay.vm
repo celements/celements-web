@@ -45,7 +45,14 @@
 ##<!--[if lte IE 6]>
 ##$celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('supersleight-min.js', 'skin'))
 ##<![endif]-->
-<a id="closebutton" class="cel_closebutton" href="$closeOverlayRedirect"></a>
+#set($closeButtonClass = "cel_closebutton")
+#if("$!exitOnClose" == "")
+  #set($exitOnClose = ("$!request.exitOnClose" == "1"))
+#end
+#if($exitOnClose)
+  #set($closeButtonClass = "${closeButtonClass} exitOnClose")
+#end
+<a id="closebutton" class="$closeButtonClass" href="$closeOverlayRedirect"></a>
 #end
 <style type="text/css">
 #cel_overlaybody {
