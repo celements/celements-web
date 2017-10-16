@@ -3,8 +3,9 @@
 #if("$!url" == "")
    #set($url = $doc.getURL())
 #end
+#set($url = $services.celementsweb.convertToPlainText($url))
 <p><b>url: </b>$url</p>
-<p><b>url fixUmlHtmlEncodings: </b>$services.celementsweb.convertToPlainText($url)</p>
 <p><b>url utf8: </b>$services.celementsweb.encodeUrlToUtf8($url)</p>
+<p><b>url fixUmlHtmlEncodings: </b>$services.celementsweb.convertToPlainText($url)</p>
 
-## $response.sendRedirect($url)
+$response.sendRedirect($url)
