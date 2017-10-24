@@ -4,4 +4,6 @@
    #set($url = $doc.getURL())
 #end
 <p><b>url: </b>$url</p>
+<p><b>utf8 URL: </b>$services.celementsweb.encodeUrlToUtf8($url)</p>
+
 ## $services.celementsweb.sendRedirect($url)
