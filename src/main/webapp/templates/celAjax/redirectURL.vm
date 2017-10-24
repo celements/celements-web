@@ -3,4 +3,5 @@
 #if("$!url" == "")
    #set($url = $doc.getURL())
 #end
-$services.celementsweb.sendRedirect($url)
+<p><b>url: </b>$url</p>
+## $services.celementsweb.sendRedirect($url)
