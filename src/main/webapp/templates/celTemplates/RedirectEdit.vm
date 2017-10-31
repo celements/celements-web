@@ -21,7 +21,7 @@
 <tr><td width="50%" class="celements2_text">Redirect (e.g. Content.Portrait)</td>
 <td width="50%">
 <input value='$!red' name='Celements2.Redirect_0_redirect' type='text' class="celements2_input" style="float:left"/>
-<a href="#" onclick="javascript:window.open('$doc.getURL()?xpage=celements_ajax&ajax_mode=LinkPicker&space=${doc.getSpace()}&form=redirectEdit&field=Celements2.Redirect_0_redirect&mode=FullName','LinkPicker','dependent=yes,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes,width=370,height=450,left=100,top=200');return false;">
+<a href="#" onclick="javascript:window.open('$doc.getURL("view")?xpage=celements_ajax&ajax_mode=LinkPicker&space=${doc.getSpace()}&form=redirectEdit&field=Celements2.Redirect_0_redirect&mode=FullName','LinkPicker','dependent=yes,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes,width=370,height=450,left=100,top=200');return false;">
 <img src="$xwiki.celementsweb.getSkinFile(':celRes/link.gif','file')" alt="LinkPicker" title="LinkPicker" border="0" style="float:left;margin-left:5px;"/></a>
 </td>
 </tr>
