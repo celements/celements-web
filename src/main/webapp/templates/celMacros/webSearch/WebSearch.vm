@@ -24,11 +24,11 @@
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
   #if($advancedSearch == 1)
     <div class="advancedSearch">
-      <input type="radio" class="searchRelevance" name="advancedSearch" value="relevance"##
-        #if(("$!request.advancedSearch" == "") || ("$!request.advancedSearch" == "relevance"))checked#end
+      <input type="radio" class="searchRelevance searchRadioBtn" name="advancedSearch" value="score"##
+        #if(("$!request.advancedSearch" == "") || ("$!request.advancedSearch" == "score"))checked#end
       >
       <label for="relevance">Relevance</label>
-      <input type="radio" class="searchLastChange" name="advancedSearch" value="date"##
+      <input type="radio" class="searchLastChange searchRadioBtn" name="advancedSearch" value="date"##
         #if("$!request.advancedSearch" == "date") checked #end
       >
       <label for="lastChange">last change</label>
