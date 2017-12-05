@@ -74,7 +74,7 @@ document.observe("load", function() { new XWiki.viewers.Attachments(); });
         <div><label class="hidden" for="xwikiuploadfile">$msg.get('core.viewers.attachments.upload.file')</label><input id="xwikiuploadfile" type="file" name="filepath" value="" size="40" class="uploadFileInput"/></div>
         <div>
         <!-- request.exitOnClose: $request.exitOnClose -->
-        #if("$!request.exitOnClose" =! "")
+        #if("$!request.exitOnClose" != "")
           <input type="hidden" name="exitOnClose" value="1"/>
         #end
         <span class="buttonwrapper"><input type="submit" value="$msg.get('core.viewers.attachments.upload.submit')" class="button"/></span>
