@@ -25,17 +25,17 @@
     $msg.get('cel_search_noresults')
   #end
 #else ## result.size
-<ul>
-#set($resultScoreMap = $result.getResultsScoreMap())
-#foreach($resultRef in $resultScoreMap.keySet())
-  #set($score = $resultScoreMap.get($resultRef))
-  #if(("$!resultItemRenderScript" != '') && $xwiki.exists($resultItemRenderScript))
-    $xwiki.includeForm($resultItemRenderScript, false)
-  #else
-    #parse('celMacros/webSearch/renderResultItem.vm')
-  #end
-#end
-</ul>
+  <ul>
+    #set($resultScoreMap = $result.getResultsScoreMap())
+    #foreach($resultRef in $resultScoreMap.keySet())
+      #set($score = $resultScoreMap.get($resultRef))
+      #if(("$!resultItemRenderScript" != '') && $xwiki.exists($resultItemRenderScript))
+        $xwiki.includeForm($resultItemRenderScript, false)
+      #else
+        #parse('celMacros/webSearch/renderResultItem.vm')
+      #end
+    #end
+  </ul>
 #end ## result.size
 
 </div>
