@@ -24,7 +24,7 @@
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
   #if($advancedSearch == 1)
     <div class="advancedSearch">
-      <input type="radio" class="searchRelevance searchRadioBtn" name="advancedSearch" value="score"##
+      <input type="radio" class="searchRelevance searchRadioBtn" name="advancedSearch" value=""##
         #if(("$!request.advancedSearch" == "") || ("$!request.advancedSearch" == "score"))checked#end
       >
       <label for="relevance">Relevance</label>
@@ -51,6 +51,10 @@
   #if("$!sort" != "")
     #set($devNull = $sortList.add("-$sort"))
   #end
+  <p><b>text: </b>$text</p>
+  <p><b>configDocRef: </b>$configDocRef</p>
+  <p><b>languages: </b>$languages</p>
+  <p><b>sortList: </b>$sortList</p>
   #set($result = $services.lucene.webSearch($text, $configDocRef, $languages, $sortList))
 #end
 
