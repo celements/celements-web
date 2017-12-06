@@ -6,6 +6,9 @@
 #if("$!configObj" != '')
   #set($configDocRef = $celldoc.documentReference)
 #end
+#if("$!advancedSearch" == '')
+  #set($advancedSearch = $!configObj.getProperty('advancedSearch').getValue())
+#end
 #set($languages = ['default', "$language"])
 
 <div id="websearch">
@@ -19,6 +22,18 @@
     #set($maxInputFieldSize = 20)
   #end
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
+  #if($advancedSearch == 1)
+    <div class="advancedSearch">
+      <input type="radio" class="searchRelevance searchRadioBtn" name="sort" value="score"##
+        #if(("$!request.sort" == "") || ("$!request.sort" == "score"))checked#end
+      >
+      <label for="relevance">Relevance</label>
+      <input type="radio" class="searchLastChange searchRadioBtn" name="sort" value="-date"##
+        #if("$!request.sort" == "date") checked #end
+      >
+      <label for="lastChange">last change</label>
+    </div>
+  #end
 #if("$!request.get('spaces')" != '')
   <input type="hidden" name="spaces" value="$!request.get('spaces')" />
 #end
@@ -31,7 +46,12 @@
 #if($legacyWebSearch)
   #parse('celMacros/webSearch/legacySearch.vm')
 #else
-  #set($result = $services.lucene.webSearch($text, $configDocRef, $languages))
+  #set($sort = "$!request.sort")
+  #set($sortList = $util.getArrayList())
+  #if("$!sort" != "")
+    #set($devNull = $sortList.add("$sort"))
+  #end
+  #set($result = $services.lucene.webSearch($text, $configDocRef, $languages, $sortList))
 #end
 
 #if($isAdmin)
@@ -41,6 +61,7 @@
   config: $!configDocRef
   text : $!text
   languages: $!languages
+  sortList: $sortList
   is legacy WebSearch: $!legacyWebSearch
 -->
 #end
