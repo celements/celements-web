@@ -28,7 +28,7 @@
         #if(("$!request.sort" == "") || ("$!request.sort" == "score"))checked#end
       >
       <label for="relevance">Relevance</label>
-      <input type="radio" class="searchLastChange searchRadioBtn" name="sort" value="date"##
+      <input type="radio" class="searchLastChange searchRadioBtn" name="sort" value="-date"##
         #if("$!request.sort" == "date") checked #end
       >
       <label for="lastChange">last change</label>
