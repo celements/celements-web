@@ -24,12 +24,12 @@
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
   #if($advancedSearch == 1)
     <div class="advancedSearch">
-      <input type="radio" class="searchRelevance searchRadioBtn" name="advancedSearch" value=""##
-        #if(("$!request.advancedSearch" == "") || ("$!request.advancedSearch" == "score"))checked#end
+      <input type="radio" class="searchRelevance searchRadioBtn" name="sort" value="score"##
+        #if(("$!request.sort" == "") || ("$!request.sort" == "score"))checked#end
       >
       <label for="relevance">Relevance</label>
-      <input type="radio" class="searchLastChange searchRadioBtn" name="advancedSearch" value="date"##
-        #if("$!request.advancedSearch" == "date") checked #end
+      <input type="radio" class="searchLastChange searchRadioBtn" name="sort" value="date"##
+        #if("$!request.sort" == "date") checked #end
       >
       <label for="lastChange">last change</label>
     </div>
@@ -46,7 +46,7 @@
 #if($legacyWebSearch)
   #parse('celMacros/webSearch/legacySearch.vm')
 #else
-  #set($sort = "$!request.advancedSearch")
+  #set($sort = "$!request.sort")
   #set($sortList = $util.getArrayList())
   #if("$!sort" != "")
     #set($devNull = $sortList.add("-$sort"))
