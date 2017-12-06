@@ -49,7 +49,7 @@
   #set($sort = "$!request.sort")
   #set($sortList = $util.getArrayList())
   #if("$!sort" != "")
-    #set($devNull = $sortList.add("-$sort"))
+    #set($devNull = $sortList.add("$sort"))
   #end
   #set($result = $services.lucene.webSearch($text, $configDocRef, $languages, $sortList))
 #end
