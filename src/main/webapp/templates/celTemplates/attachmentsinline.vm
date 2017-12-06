@@ -65,7 +65,7 @@ document.observe("load", function() { new XWiki.viewers.Attachments(); });
 #if($hasEdit || $hasAdmin)
       <form action="$doc.getURL("upload")" enctype="multipart/form-data" method="post" id="AddAttachment">
 <div>
-<input type="hidden" name="xredirect" value="${xwiki.getFormEncoded($redirect)}#if("$!request.exitOnClose" != "")&exitOnClose=1#end" />
+<input type="hidden" name="xredirect" value="${xwiki.getFormEncoded($redirect)}#if("$!request.exitOnClose" == "1")&exitOnClose=1#end" />
 <fieldset id="attachform">
         <legend>$msg.get('core.viewers.attachments.upload.title')</legend>
         ## Temporarily disabled, until we fix attachment name handling
