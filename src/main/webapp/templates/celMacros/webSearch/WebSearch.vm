@@ -24,14 +24,16 @@
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
   #if($advancedSearch == 1)
     <div class="advancedSearch">
-      <input type="radio" class="searchRelevance searchRadioBtn" name="sort" value="score"##
+      <input type="radio" class="searchElement searchRelevance searchRadioBtn" name="sort" value="score"##
         #if(("$!request.sort" == "") || ("$!request.sort" == "score"))checked#end
       >
-      <label for="relevance">Relevance</label>
-      <input type="radio" class="searchLastChange searchRadioBtn" name="sort" value="-date"##
+      <label for="relevance">$msg.get('cel_search_page_relevance')</label>
+      <input type="radio" class="searchElement searchLastChange searchRadioBtn" name="sort" value="-date"##
         #if("$!request.sort" == "date") checked #end
       >
-      <label for="lastChange">last change</label>
+      <label for="lastChange">$msg.get('cel_search_page_lastChanged')</label>
+      <select name="ContentType" id="ContentType" class="searchElement searchSelect searchContentType">
+      </select>
     </div>
   #end
 #if("$!request.get('spaces')" != '')
