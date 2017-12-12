@@ -32,14 +32,16 @@
         #if("$!request.sort" == "date") checked #end
       >
       <label for="lastChange">$msg.get('cel_search_page_lastChanged')</label>
+      
+      #set($reqContentType = $request.getParameterValues("contentType"))
       <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
         data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
         multiple="multiple">
-        <option value="wikipage" selected="selected">Webseite</option>
+        <option value="wikipage" #if(("$!reqContentType" == "") || $reqContentType.contains("wikipage"))selected="selected"#end>Webseite</option>
         <optgroup label="Anhang">
-          <option value="attachment:pdf" selected="selected">PDF</option>
-          <option value="attachment:image" selected="selected">Bild</option>
-          <option value="attachment:doc" selected="selected">Doc</option>
+          <option value="attachment:pdf" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment:pdf"))selected="selected"#end>PDF</option>
+          <option value="attachment:image" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment:image"))selected="selected"#end>Bild</option>
+          <option value="attachment:doc" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment:doc"))selected="selected"#end>Doc</option>
         </optgroup>
       </select>
     </div>
@@ -61,12 +63,9 @@
   #if("$!sort" != "")
     #set($devNull = $sortList.add("$sort"))
   #end
-
-  #set($reqContentType = $request.getParameterValues("contentType"))
   #set($attrMimeList = [])
   #set($orGrp = $services.lucene.createOrRestrictionGroup())
   #foreach($value in $reqContentType)
-    <p><b>value: </b>$value</p>
     #set($splitVal = $value.trim().split(':'))
     #if($splitVal.size() > 1)
       #set($devNull = $attrMimeList.add($splitVal.get(1)))
