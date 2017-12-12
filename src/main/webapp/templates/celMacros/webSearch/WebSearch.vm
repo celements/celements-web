@@ -40,8 +40,6 @@
         <option value="wikipage" #if(("$!reqContentType" == "") || $reqContentType.contains("wikipage"))selected="selected"#end>Webseite</option>
         <optgroup label="Anhang">
           <option value="attachment:pdf" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment:pdf"))selected="selected"#end>PDF</option>
-          <option value="attachment:image" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment:image"))selected="selected"#end>Bild</option>
-          <option value="attachment:doc" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment:doc"))selected="selected"#end>Doc</option>
         </optgroup>
       </select>
     </div>
