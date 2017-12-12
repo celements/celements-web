@@ -32,7 +32,15 @@
         #if("$!request.sort" == "date") checked #end
       >
       <label for="lastChange">$msg.get('cel_search_page_lastChanged')</label>
-      <select name="ContentType" id="ContentType" class="searchElement searchSelect searchContentType">
+      <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
+        data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
+        multiple="multiple">
+        <option value="wikipage" selected="selected">Webseite</option>
+        <optgroup label="Anhang">
+          <option value="attachment:pdf" selected="selected">PDF</option>
+          <option value="attachment:image" selected="selected">Bild</option>
+          <option value="attachment:doc" selected="selected">Doc</option>
+        </optgroup>
       </select>
     </div>
   #end
@@ -53,7 +61,23 @@
   #if("$!sort" != "")
     #set($devNull = $sortList.add("$sort"))
   #end
-  #set($result = $services.lucene.webSearch($text, $configDocRef, $languages, $sortList))
+
+  #set($reqContentType = $request.getParameterValues("contentType"))
+  #set($attrMimeList = [])
+  #set($orGrp = $services.lucene.createOrRestrictionGroup())
+  #foreach($value in $reqContentType)
+    <p><b>value: </b>$value</p>
+    #set($splitVal = $value.trim().split(':'))
+    #if($splitVal.size() > 1)
+      #set($devNull = $attrMimeList.add($splitVal.get(1)))
+    #else
+      #set($restr = $services.lucene.createRestriction('type', "$!value").setBoost('20'))
+      #set($devNull = $orGrp.add($restr))
+    #end
+  #end
+  #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($attrMimeList, [], []))
+  #set($devNull = $orGrp.add($attRestrGrp))
+  #set($result = $services.lucene.webSearch($text, $configDocRef, $languages, $sortList, $orGrp))
 #end
 
 #if($isAdmin)
