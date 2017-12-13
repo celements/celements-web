@@ -14,8 +14,8 @@
 <div id="websearch">
 
 <div class="websearch_form" #if("$!hideForm" == 'true') style="display: none" #end >
-#if("$msg.get('cel_search_page_title')" != 'cel_search_page_title')
-  <h1>$msg.get('cel_search_page_title')</h1>
+#if("$adminMsg.get('cel_search_page_title')" != 'cel_search_page_title')
+  <h1>$adminMsg.get('cel_search_page_title')</h1>
 #end
 <form action="$doc.getURL()">
   #if("$!maxInputFieldSize" == '')
@@ -27,19 +27,19 @@
       <input type="radio" class="searchElement searchRelevance searchRadioBtn" name="sort" value="score"##
         #if(("$!request.sort" == "") || ("$!request.sort" == "score"))checked#end
       >
-      <label for="relevance">$msg.get('cel_search_page_relevance')</label>
+      <label for="relevance">$adminMsg.get('cel_search_page_relevance')</label>
       <input type="radio" class="searchElement searchLastChange searchRadioBtn" name="sort" value="-date"##
         #if("$!request.sort" == "date") checked #end
       >
-      <label for="lastChange">$msg.get('cel_search_page_lastChanged')</label>
+      <label for="lastChange">$adminMsg.get('cel_search_page_lastChanged')</label>
       
       #set($reqContentType = $request.getParameterValues("contentType"))
       <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
         data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
         multiple="multiple">
-        <option value="wikipage" #if(("$!reqContentType" == "") || $reqContentType.contains("wikipage"))selected="selected"#end>Webseite</option>
+        <option value="wikipage" #if(("$!reqContentType" == "") || $reqContentType.contains("wikipage"))selected="selected"#end>$adminMsg.get('cel_search_page_website')</option>
         <optgroup label="Anhang">
-          <option value="attachment:pdf" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment:pdf"))selected="selected"#end>PDF</option>
+          <option value="attachment:pdf" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment:pdf"))selected="selected"#end>$adminMsg.get('cel_search_page_pdf')</option>
         </optgroup>
       </select>
     </div>
