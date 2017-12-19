@@ -37,9 +37,9 @@
       <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
         data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
         multiple="multiple">
-        <option value="wikipage" #if(("$!reqContentType" == "") || $reqContentType.contains("wikipage"))selected="selected"#end>$adminMsg.get('cel_search_page_website')</option>
+        <option value="content:menu" #if(("$!reqContentType" == "") || $reqContentType.contains("content:menu"))selected="selected"#end>$adminMsg.get('cel_search_page_website')</option>
         <optgroup label="Anhang">
-          <option value="attachment:pdf" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment:pdf"))selected="selected"#end>$adminMsg.get('cel_search_page_pdf')</option>
+          <option value="attachment" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment"))selected="selected"#end>$adminMsg.get('cel_search_page_pdf')</option>
         </optgroup>
       </select>
     </div>
@@ -61,20 +61,22 @@
   #if("$!sort" != "")
     #set($devNull = $sortList.add("$sort"))
   #end
-  #set($attrMimeList = [])
-  #set($orGrp = $services.lucene.createOrRestrictionGroup())
+
+  #set($webSearchPackageNames = [])
   #foreach($value in $reqContentType)
     #set($splitVal = $value.trim().split(':'))
     #if($splitVal.size() > 1)
-      #set($devNull = $attrMimeList.add($splitVal.get(1)))
+      #foreach($val in $splitVal)
+        #set($devNull = $webSearchPackageNames.add($val))
+      #end
     #else
-      #set($restr = $services.lucene.createRestriction('type', "$!value").setBoost('20'))
-      #set($devNull = $orGrp.add($restr))
+      #set($devNull = $webSearchPackageNames.add($value))
     #end
   #end
   #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($attrMimeList, [], []))
   #set($devNull = $orGrp.add($attRestrGrp))
-  #set($result = $services.lucene.webSearch($text, $configDocRef, $languages, $sortList, $orGrp))
+
+  #set($result = $services.celwebsearch.webSearch($text, $configDocRef, $webSearchPackageNames, $languages, $sortList))
 #end
 
 #if($isAdmin)
