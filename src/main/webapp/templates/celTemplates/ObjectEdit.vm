@@ -211,7 +211,7 @@ $celementsweb.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
 <dd>
   #if($cel_editobj_readonly_properties.contains(",${prop.name},"))
      #if("$!obj.getProperty($prop.name).getValue()" == '')
-       ##FIX xwiki 2.7.2 NPE-BUG in displayView if date is null 
+       ##FIX xwiki 2.7.2 NPE-BUG in displayView if date is null
        $obj.set($prop.name, '')
      #end
      #set($displayStr = $cel_editobj_doc.displayView($prop, "${class.name}_${obj.number}_", $obj).trim())
@@ -241,6 +241,9 @@ $celementsweb.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
         $obj.set("${prop.name}", "$request.get($cel_editobj_propfullname)")
       #end
     #end
+#if("$!obj.getProperty($prop.name).getValue()" == '')
+  $obj.set($prop.name, '')
+#end
  ##BUG in xwiki 2.1.2 displayEdit generates sometimes a select and an input tag for the same property.
 #set($displayStr = $cel_editobj_doc.displayEdit($prop, "${class.name}_${obj.number}_" , $obj))
 #if($displayStr.startsWith('<select ') && $displayStr.contains('<input '))
