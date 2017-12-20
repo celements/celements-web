@@ -22,6 +22,7 @@
     #set($maxInputFieldSize = 20)
   #end
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
+  <button type="submit" name="submitSearch">$adminMsg.get('cel_search_page_search')</button>
   #if($advancedSearch == 1)
     <div class="advancedSearch">
       <input type="radio" class="searchElement searchRelevance searchRadioBtn" name="sort" value="score"##
@@ -39,9 +40,7 @@
         data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
         multiple="multiple">
         <option value="content:menu" #if(("$!reqContentType" == "") || $reqContentType.contains("content:menu"))selected="selected"#end>$adminMsg.get('cel_search_page_website')</option>
-        <optgroup label="Anhang">
-          <option value="attachment" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment"))selected="selected"#end>$adminMsg.get('cel_search_page_pdf')</option>
-        </optgroup>
+        <option value="attachment" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment"))selected="selected"#end>$adminMsg.get('cel_search_page_attachement')</option>
       </select>
     </div>
   #end
