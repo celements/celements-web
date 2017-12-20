@@ -76,7 +76,7 @@
   #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($attrMimeList, [], []))
   #set($devNull = $orGrp.add($attRestrGrp))
 
-  #set($result = $services.celwebsearch.webSearch($text, $configDocRef, $webSearchPackageNames, $languages, $sortList))
+  #set($result = $services.websearch.webSearch($text, $configDocRef, $webSearchPackageNames, $languages, $sortList))
 #end
 
 #if($isAdmin)
