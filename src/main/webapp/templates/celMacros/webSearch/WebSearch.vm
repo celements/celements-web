@@ -34,6 +34,7 @@
       <label for="lastChange">$adminMsg.get('cel_search_page_lastChanged')</label>
       
       #set($reqContentType = $request.getParameterValues("contentType"))
+      <label for="searchSection"> &#124; $adminMsg.get('cel_search_page_searchSection'):</label>
       <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
         data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
         multiple="multiple">
