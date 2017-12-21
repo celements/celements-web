@@ -14,24 +14,34 @@
 <div id="websearch">
 
 <div class="websearch_form" #if("$!hideForm" == 'true') style="display: none" #end >
-#if("$msg.get('cel_search_page_title')" != 'cel_search_page_title')
-  <h1>$msg.get('cel_search_page_title')</h1>
+#if("$adminMsg.get('cel_search_page_title')" != 'cel_search_page_title')
+  <h1>$adminMsg.get('cel_search_page_title')</h1>
 #end
 <form action="$doc.getURL()">
   #if("$!maxInputFieldSize" == '')
     #set($maxInputFieldSize = 20)
   #end
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
+  <button type="submit" name="submitSearch">$adminMsg.get('cel_search_page_search')</button>
   #if($advancedSearch == 1)
     <div class="advancedSearch">
-      <input type="radio" class="searchRelevance searchRadioBtn" name="sort" value="score"##
+      <input type="radio" class="searchElement searchRelevance searchRadioBtn" name="sort" value="score"##
         #if(("$!request.sort" == "") || ("$!request.sort" == "score"))checked#end
       >
-      <label for="relevance">Relevance</label>
-      <input type="radio" class="searchLastChange searchRadioBtn" name="sort" value="-date"##
+      <label for="relevance">$adminMsg.get('cel_search_page_relevance')</label>
+      <input type="radio" class="searchElement searchLastChange searchRadioBtn" name="sort" value="-date"##
         #if("$!request.sort" == "date") checked #end
       >
-      <label for="lastChange">last change</label>
+      <label for="lastChange">$adminMsg.get('cel_search_page_lastChanged')</label>
+      
+      #set($reqContentType = $request.getParameterValues("contentType"))
+      <label for="searchSection"> &#124; $adminMsg.get('cel_search_page_searchSection'):</label>
+      <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
+        data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
+        multiple="multiple">
+        <option value="content:menu" #if(("$!reqContentType" == "") || $reqContentType.contains("content:menu"))selected="selected"#end>$adminMsg.get('cel_search_page_website')</option>
+        <option value="attachment" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment"))selected="selected"#end>$adminMsg.get('cel_search_page_attachement')</option>
+      </select>
     </div>
   #end
 #if("$!request.get('spaces')" != '')
@@ -51,7 +61,22 @@
   #if("$!sort" != "")
     #set($devNull = $sortList.add("$sort"))
   #end
-  #set($result = $services.lucene.webSearch($text, $configDocRef, $languages, $sortList))
+
+  #set($webSearchPackageNames = [])
+  #foreach($value in $reqContentType)
+    #set($splitVal = $value.trim().split(':'))
+    #if($splitVal.size() > 1)
+      #foreach($val in $splitVal)
+        #set($devNull = $webSearchPackageNames.add($val))
+      #end
+    #else
+      #set($devNull = $webSearchPackageNames.add($value))
+    #end
+  #end
+  #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($attrMimeList, [], []))
+  #set($devNull = $orGrp.add($attRestrGrp))
+
+  #set($result = $services.websearch.webSearch($text, $configDocRef, $webSearchPackageNames, $languages, $sortList))
 #end
 
 #if($isAdmin)
