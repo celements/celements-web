@@ -29,6 +29,10 @@
   #if($hasExtract)
     <div class="presentationExtract">$extractValue</div>
   #end
+  
+  #if(($showDescription == 1) && ("$!description" != ""))
+    <div class="presentationDescription">$description</div>
+  #end
 #end
 #parse('celTemplates/NavigationCellView.vm')
 <!-- presentationList --></div>
