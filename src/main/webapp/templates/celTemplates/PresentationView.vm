@@ -1,3 +1,5 @@
+## INPUT Values: (showDescription) | (description)
+
 #if("$!celldoc" != '')
 #set($contentDoc = $celldoc.getTranslatedDocument())
 #else
@@ -29,7 +31,6 @@
   #if($hasExtract)
     <div class="presentationExtract">$extractValue</div>
   #end
-  
   #if(($showDescription == 1) && ("$!description" != ""))
     <div class="presentationDescription">$description</div>
   #end
