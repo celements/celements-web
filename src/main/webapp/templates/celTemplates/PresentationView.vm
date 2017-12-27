@@ -14,7 +14,7 @@
  class="$!{overwritePresCmCssClass}"##
 #end
  >
- #set($contentDocPageTypeRef = $services.pageType.getPageTypeRef($contentDoc.documentReference))
+#set($contentDocPageTypeRef = $services.pageType.getPageTypeRef($contentDoc.documentReference))
 #if(($services.pageType.getPageTypeConfig($contentDocPageTypeRef).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
 <h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>
 #end
@@ -31,9 +31,9 @@
   #if($hasExtract)
     <div class="presentationExtract">$extractValue</div>
   #end
-  #if(($showDescription == 1) && ("$!description" != ""))
-    <div class="presentationDescription">$description</div>
-  #end
+#end
+#if(($showDescription == 1) && ("$!description" != ""))
+  <div class="presentationDescription">$description</div>
 #end
 #parse('celTemplates/NavigationCellView.vm')
 <!-- presentationList --></div>
