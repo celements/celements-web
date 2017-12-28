@@ -43,10 +43,10 @@
       #set($doublePackages = [])
       <label for="searchSection"> &#124; $adminMsg.get('cel_search_page_searchSection'):</label>
       <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
-        data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
+        data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 2}'##
         multiple="multiple">
       #foreach($package in $availablePackages)
-        #if("$!searchOptionConnectionMap.get($package)" != "")
+        #if($!searchOptionConnectionMap.containsKey($package))
           #set($package = $!searchOptionConnectionMap.get($package))
         #end
         #if(!$doublePackages.contains($package))
@@ -55,15 +55,6 @@
         #end
       #end
       </select>
-#*      
-      <label for="searchSection"> &#124; $adminMsg.get('cel_search_page_searchSection'):</label>
-      <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
-        data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
-        multiple="multiple">
-        <option value="content:menu" #if(("$!reqContentType" == "") || $reqContentType.contains("content:menu"))selected="selected"#end>$adminMsg.get('cel_search_page_website')</option>
-        <option value="attachment" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment"))selected="selected"#end>$adminMsg.get('cel_search_page_attachement')</option>
-      </select>
-*#
     </div>
   #end
 #if("$!request.get('spaces')" != '')
@@ -86,7 +77,7 @@
 
   #set($webSearchPackageNames = [])
   #if("$!reqContentType" == "")
-    #set($webSearchPackageNames = $availablePackages)
+    #set($devNull = $webSearchPackageNames.addAll($availablePackages))
   #else
     #foreach($value in $reqContentType)
       #set($splitVal = $value.trim().split('_'))
