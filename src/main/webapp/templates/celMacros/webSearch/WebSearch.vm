@@ -87,7 +87,6 @@
   #set($webSearchPackageNames = [])
   #if("$!reqContentType" == "")
     #set($webSearchPackageNames = $availablePackages)
-    <p><b>webSearchPackageNames: </b>$webSearchPackageNames</p>
   #else
     #foreach($value in $reqContentType)
       #set($splitVal = $value.trim().split('_'))
