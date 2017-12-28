@@ -23,6 +23,7 @@
   #end
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
   <button type="submit" name="submitSearch">$adminMsg.get('cel_search_page_search')</button>
+  #set($availablePackages = $services.websearch.getAvailablePackages($configDocRef))
   #if($advancedSearch == 1)
     <div class="advancedSearch">
       <input type="radio" class="searchElement searchRelevance searchRadioBtn" name="sort" value="score"##
@@ -33,8 +34,28 @@
         #if("$!request.sort" == "date") checked #end
       >
       <label for="lastChange">$adminMsg.get('cel_search_page_lastChanged')</label>
-      
       #set($reqContentType = $request.getParameterValues("contentType"))
+      
+      
+      #set($searchOptionConnectionMap = $util.getHashMap())
+      #set($devNull = $searchOptionConnectionMap.put("content", "content_menu"))
+      #set($devNull = $searchOptionConnectionMap.put("menu", "content_menu"))
+      #set($doublePackages = [])
+      <label for="searchSection"> &#124; $adminMsg.get('cel_search_page_searchSection'):</label>
+      <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
+        data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
+        multiple="multiple">
+      #foreach($package in $availablePackages)
+        #if("$!searchOptionConnectionMap.get($package)" != "")
+          #set($package = $!searchOptionConnectionMap.get($package))
+        #end
+        #if(!$doublePackages.contains($package))
+          <option value="$package" #if(("$!reqContentType" == "") || $reqContentType.contains($package))selected="selected"#end>$adminMsg.get("cel_search_page_${package}")</option>
+          #set($devNull = $doublePackages.add($package))
+        #end
+      #end
+      </select>
+#*      
       <label for="searchSection"> &#124; $adminMsg.get('cel_search_page_searchSection'):</label>
       <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
         data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 1}'##
@@ -42,6 +63,7 @@
         <option value="content:menu" #if(("$!reqContentType" == "") || $reqContentType.contains("content:menu"))selected="selected"#end>$adminMsg.get('cel_search_page_website')</option>
         <option value="attachment" #if(("$!reqContentType" == "") || $reqContentType.contains("attachment"))selected="selected"#end>$adminMsg.get('cel_search_page_attachement')</option>
       </select>
+*#
     </div>
   #end
 #if("$!request.get('spaces')" != '')
@@ -63,14 +85,19 @@
   #end
 
   #set($webSearchPackageNames = [])
-  #foreach($value in $reqContentType)
-    #set($splitVal = $value.trim().split(':'))
-    #if($splitVal.size() > 1)
-      #foreach($val in $splitVal)
-        #set($devNull = $webSearchPackageNames.add($val))
+  #if("$!reqContentType" == "")
+    #set($webSearchPackageNames = $availablePackages)
+    <p><b>webSearchPackageNames: </b>$webSearchPackageNames</p>
+  #else
+    #foreach($value in $reqContentType)
+      #set($splitVal = $value.trim().split('_'))
+      #if($splitVal.size() > 1)
+        #foreach($val in $splitVal)
+          #set($devNull = $webSearchPackageNames.add($val))
+        #end
+      #else
+        #set($devNull = $webSearchPackageNames.add($value))
       #end
-    #else
-      #set($devNull = $webSearchPackageNames.add($value))
     #end
   #end
   #set($attRestrGrp = $services.lucene.createAttachmentRestrictionGroup($attrMimeList, [], []))
