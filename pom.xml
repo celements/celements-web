@@ -96,6 +96,16 @@
     <!-- Add here all your dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
+      <artifactId>celelements-xwiki-core</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-core</artifactId>
+      <version>1.172</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
       <version>2.26-SNAPSHOT</version>
     </dependency>
@@ -136,11 +146,6 @@
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
       <version>1.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.celements</groupId>
-      <artifactId>celements-core</artifactId>
-      <version>1.172</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
