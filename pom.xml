@@ -298,6 +298,7 @@
                 <exclude>WEB-INF/lib/commons-compress-1.1.jar</exclude>
                 <exclude>WEB-INF/lib/reflections-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-extension-*.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-core-2.7.2.jar</exclude>
 <!--                <exclude>WEB-INF/lib/xwiki-core-office-*.jar</exclude> -->
               </excludes>
             </overlay>
