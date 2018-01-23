@@ -1,40 +1,42 @@
 ## INPUT Values: (showDescription) | (description)
 
 #if("$!celldoc" != '')
-#set($contentDoc = $celldoc.getTranslatedDocument())
+  #set($contentDoc = $celldoc.getTranslatedDocument())
 #else
-#set($celldoc = $doc)
-#set($contentDoc = $tdoc)
+  #set($celldoc = $doc)
+  #set($contentDoc = $tdoc)
 #end
 #if("$!overwritePresCmCssClass" == '')
-#set($overwritePresCmCssClass = 'cel_cm_presentation')
+  #set($overwritePresCmCssClass = 'cel_cm_presentation')
 #end
 <div id="pres$!{contentDoc.getName()}:$!{contentDoc.getFullName()}"##
-#if("$!overwritePresCmCssClass.trim()" != '')
- class="$!{overwritePresCmCssClass}"##
-#end
- >
-#set($contentDocPageTypeRef = $services.pageType.getPageTypeRef($contentDoc.documentReference))
-#if(($services.pageType.getPageTypeConfig($contentDocPageTypeRef).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
-<h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>
-#end
-<div class="presentationList">
-#if("$!xwiki.getSpacePreference('extract_active')" == "1")
-  #set($extractObj = $celldoc.getObject('Classes.DocumentExtract','language',"$language", false))
-  #set($extractValue = "$!extractObj.getProperty('extract').getValue()")
-  #set($hasExtract = !$services.rteconfig.isEmptyRTEString($extractValue))
-  #if(!$hasExtract)
-    #set($extractObj = $celldoc.getObject('Classes.DocumentExtract','language',"$default_language", false))
-    #set($extractValue = "$!extractObj.getProperty('extract').getValue()")
-    #set($hasExtract = !$services.rteconfig.isEmptyRTEString($extractValue))
+  #if("$!overwritePresCmCssClass.trim()" != '')
+   class="$!{overwritePresCmCssClass}"##
   #end
-  #if($hasExtract)
-    <div class="presentationExtract">$extractValue</div>
+>
+  #set($contentDocPageTypeRef = $services.pageType.getPageTypeRef($contentDoc.documentReference))
+  #if(($services.pageType.getPageTypeConfig($contentDocPageTypeRef).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
+    <h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>
   #end
-#end
-#if(($showDescription == 1) && ("$!description" != ""))
-  <div class="presentationDescription">$description</div>
-#end
-#parse('celTemplates/NavigationCellView.vm')
-<!-- presentationList --></div>
-<!-- pres$!{contentDoc.getName()} --></div>
+  <div class="presentationListDescriptions">
+    #if("$!xwiki.getSpacePreference('extract_active')" == "1")
+      #set($extractObj = $celldoc.getObject('Classes.DocumentExtract','language',"$language", false))
+      #set($extractValue = "$!extractObj.getProperty('extract').getValue()")
+      #set($hasExtract = !$services.rteconfig.isEmptyRTEString($extractValue))
+      #if(!$hasExtract)
+        #set($extractObj = $celldoc.getObject('Classes.DocumentExtract','language',"$default_language", false))
+        #set($extractValue = "$!extractObj.getProperty('extract').getValue()")
+        #set($hasExtract = !$services.rteconfig.isEmptyRTEString($extractValue))
+      #end
+      #if($hasExtract)
+        <div class="presentationExtract">$extractValue</div>
+      #end
+    #end
+    #if(($showDescription == 1) && ("$!description" != ""))
+      <div class="presentationDescription">$description</div>
+    #end
+  </div><!-- presentationListDescriptions -->
+  <div class="presentationList">
+    #parse('celTemplates/NavigationCellView.vm')
+  </div>
+</div><!-- pres$!{contentDoc.getName()} -->
