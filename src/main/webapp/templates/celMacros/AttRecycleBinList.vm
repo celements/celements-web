@@ -16,12 +16,24 @@
 #end
 <div id="recylceBinAttachmentList">
 <h1>Attachment Recycle Bin ##
-#if($xwiki.hasAdminRights())
+#if($xwiki.hasAdminRights() && ("$request.deleteNow" == 'older30Days'))
+#set($deletedAttVersions = $services.celementsweb.permanentlyEmptyAttachmentTrash(30))
+</h1>
+<p>$adminMsg.get('cel_att_recyclebin_deleted', ["$deletedAttVersions"])</p>
+<p><a href="?xpage=overlay&conf=FullAttRecycleBin">$adminMsg.get('cel_att_recyclebin_deleted_backlink')</a>
+#elseif($hasedit)
 #set($allDeletedAttachments = $services.celementsweb.getDeletedAttachments())
 #if($allDeletedAttachments.size() > 0)
 ($allDeletedAttachments.size() documents)</h1>
   #set($dateFormat = 'dd/MM/yyyy, HH:mm')
 ##
+#if($xwiki.hasAdminRights())
+<p>$adminMsg.get('cel_att_recyclebin_delete_hint')<br/>
+$adminMsg.get('cel_att_recyclebin_delete_warning')<br/> 
+<a href="?xpage=overlay&conf=FullAttRecycleBin&deleteNow=older30Days">
+$adminMsg.get('cel_att_recyclebin_delete_now_link')</a></p>
+#end
+<p>$adminMsg.get('core.recyclebin.showlistmsg')</p>
   <table id="searchResults" class="xwiki-livetable xwiki-livetable-display">
     <thead class="xwiki-livetable-display-header"><tr>
       <th class="column_filename">$adminMsg.get('xe.index.trash.attachments.datt.filename')</th>
