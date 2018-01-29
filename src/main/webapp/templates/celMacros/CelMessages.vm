@@ -75,3 +75,8 @@ $jsonBuilder.openProperty('celmenu')
 $jsonBuilder.openDictionary()
 $jsonBuilder.addStringProperty('supportLinkURL', "$!services.celementsweb.getSupportLinkURL()")
 $jsonBuilder.closeDictionary()
+## celements select2
+$jsonBuilder.openProperty('select2')
+$jsonBuilder.openDictionary()
+$jsonBuilder.addStringProperty('cel_select2_autocompletePlaces_placeholder', "$!adminMsg.get('cel_select2_autocompletePlaces_placeholder')")
+$jsonBuilder.closeDictionary()
