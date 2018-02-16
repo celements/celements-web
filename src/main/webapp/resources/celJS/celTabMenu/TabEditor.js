@@ -845,6 +845,8 @@ TE.prototype = {
     //TODO add possibility to add JS-listener which can execute alternative save actions
     _me.saveAllFormsAjax(function(transport, jsonResponses) {
       savingDialog.hide();
+      console.log("<<<<<<<<<<<<<<< TabEditor saveAndContinue transport: ", transport);
+      console.log("<<<<<<<<<<<<<<< TabEditor saveAndContinue jsonResponses: ", jsonResponses);
       var failed = _me.showErrorMessages(jsonResponses);
       if ((typeof(execCallback) != 'undefined') && execCallback) {
         execCallback(transport, jsonResponses, failed);
@@ -1109,6 +1111,8 @@ TE.prototype = {
 
  saveAllFormsAjax : function(execCallback, doNotSaveFormId) {
    var _me = this;
+   console.log("<<<<<<<<<<<<<<< TabEditor saveAllFormsAjax doNotSaveFormId: ", doNotSaveFormId);
+   console.log("<<<<<<<<<<<<<<< TabEditor saveAllFormsAjax execCallback: ", execCallback);
 //   _me._log.logDimAndAgent('saveAllFormsAjax: start |' + doNotSaveFormId + '|');
    var dirtyFormIds = _me.getDirtyFormIds();
    var jsonResponses = new Hash();
