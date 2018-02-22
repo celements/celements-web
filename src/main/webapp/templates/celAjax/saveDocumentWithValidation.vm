@@ -28,7 +28,6 @@ $jsonBuilder.openDictionary()
 #else
   $jsonBuilder.openProperty('errorMessages')
   $jsonBuilder.openArray()
-  #set($errorMessages = '')
   #foreach($err in $validationResult.keySet())
     #if("$validationResult.get($err)" != '')
       $jsonBuilder.addString($adminMsg.get($validationResult.get($err)))
