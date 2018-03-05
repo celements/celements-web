@@ -48,7 +48,6 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <platform.core.version>3.x</platform.core.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <catalina.port>10081</catalina.port>
     <catalina.home.celementsweb-platform>${env.CATALINA_HOME}</catalina.home.celementsweb-platform>
