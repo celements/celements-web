@@ -160,7 +160,7 @@
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
     </dependency>
-    <!--  hibernate annotations needed for payment hbm-mapping -->
+    <!--  hibernate annotations needed for needed for org.hibernate.type.EnumType -->
     <dependency>
        <groupId>org.hibernate</groupId>
        <artifactId>hibernate-annotations</artifactId>
