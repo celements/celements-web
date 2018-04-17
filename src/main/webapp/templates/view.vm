@@ -13,7 +13,6 @@
 #if ($request.getParameter("raw").equals("1"))
   #template("code.vm")
 #else
-  #template("startpage.vm")
   ## ----------------------------------------------------------------------------------
   ## Use the "viewer" variable to decide which view template to call. If no
   ## "viewer" variable is specified, then checks if a "viewer" request parmaeter has
@@ -26,6 +25,7 @@
   #if("$!viewer" == '')
     #set($viewer = 'content')
   #end
+  #template("startpage.vm")
   #if($viewer == 'content')
     <div class="minwidthb"></div>
     <div class="main layoutsubsection">
