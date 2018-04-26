@@ -101,17 +101,17 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>3.2</version>
+      <version>3.3-RC1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>3.2-SNAPSHOT</version>
+      <version>3.2-RC1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>3.1-SNAPSHOT</version>
+      <version>3.1</version>
     </dependency>
     <dependency>
       <groupId>xalan</groupId>
