@@ -95,17 +95,17 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>3.2</version>
+      <version>3.3-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>3.2-SNAPSHOT</version>
+      <version>3.2-RC1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>3.1-SNAPSHOT</version>
+      <version>3.1</version>
     </dependency>
     <dependency>
       <groupId>xalan</groupId>
@@ -258,15 +258,6 @@
                 <exclude>WEB-INF/lib/slf4j-log4j12-*.jar</exclude>
                 <exclude>WEB-INF/lib/log4j-*.jar</exclude>
                 <exclude>WEB-INF/lib/xml-apis-*.jar</exclude>
-              </excludes>
-            </overlay>
-            <overlay>
-              <groupId>com.celements</groupId>
-              <artifactId>tickerCell-web</artifactId>
-              <excludes>
-                <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
-                <exclude>WEB-INF/lib/slf4j-log4j12-*.jar</exclude>
-                <exclude>WEB-INF/lib/log4j-*.jar</exclude>
               </excludes>
             </overlay>
             <overlay>
