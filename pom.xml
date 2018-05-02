@@ -95,12 +95,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>3.3-SNAPSHOT</version>
+      <version>3.3-RC2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>3.2-SNAPSHOT</version>
+      <version>3.2-RC2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
