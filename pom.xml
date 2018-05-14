@@ -137,7 +137,7 @@
     <dependency>
        <groupId>com.celements</groupId>
       <artifactId>tinymce-langs</artifactId>
-      <version>3.4.3.2-celRTE-b1</version>
+      <version>4.7.12-celRTE</version>
       <type>war</type>
     </dependency>
     <dependency>
