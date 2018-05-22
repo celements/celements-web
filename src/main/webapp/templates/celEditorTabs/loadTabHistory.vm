@@ -15,7 +15,7 @@ function onCancel_his() {}
 </div>
 <div id="his_revView" class="editblock" onfocus="setFocus('his_revView');" onblur="removeFocus('his_revView');" style="overflow:auto;height:400px;overflow-x:hidden;">
 	<h2>$adminMsg.get("cel_tm_document_history")</h2>
-	
+
 		<ul style="list-style-type:none;" >
 #set($minorVersions = (!$xwiki.hasMinorEdit()) || ("$!request.showminor" == 'true'))
 ## Revision criteria. The following requests for all versions, filtered by the minorVersions option.
@@ -32,9 +32,9 @@ function onCancel_his() {}
 #if($newdoc=="")
 ($adminMsg.get("cel_tm_cannotreaddocumentversion") $nextversion)
 #else
-$adminMsg.get("cel_tm_edited_by") $xwiki.getLocalUserName($newdoc.author) $adminMsg.get("cel_tm_on") 
-	#if ("$!newdoc.date" != "") 
-		$!datetool.format('dd.MM.yyyy hh:mm', $newdoc.date)
+$adminMsg.get("cel_tm_edited_by") $xwiki.getLocalUserName($newdoc.author) $adminMsg.get("cel_tm_on")
+	#if ("$!newdoc.date" != "")
+		$!datetool.format('dd.MM.yyyy HH:mm', $newdoc.date)
 	#else
 		N/A
 	#end
