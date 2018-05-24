@@ -678,6 +678,7 @@
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
       ga('create', gaaNum, window.getCelDomain());
+      ga('set', 'anonymizeIp', true);
       ga('send', 'pageview');
       console.log('finish initalizing google universal analytics.', gaaNum);
     }
@@ -817,7 +818,7 @@
   celAddOnBeforeLoadListener(function() {
     cel_initDateTimePicker();
   });
-  
+
   /**
    * Initialize close Window on Overlay CloseButton
    */
@@ -827,7 +828,7 @@
       elem.observe("click", cel_closeOverlayWindow)
     });
   });
-  
+
   var cel_closeOverlayWindow = function(event) {
     event.stop();
     window.close();
