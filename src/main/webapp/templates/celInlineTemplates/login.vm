@@ -11,7 +11,9 @@
 #end
 #end ##end macro passRecoveryLink
 ##
-## start login script
+#if($services.authentication.isLoginDisabled())
+  #parse('celInlineTemplates/loginDisabledMessage.vm')
+#else ## start login script
 #if("$!request.get('ac')" != '')
   #parse("activateaccount.vm")
 #end
@@ -128,3 +130,4 @@ $msg.get('cel_login_password')<br/>
 <div class="logoutlabel">$adminMsg.get('cel_login_loggedinas', ["$username"])</div><!--titel-->
 <a class="logoutbutton" href="$xwiki.getURL('XWiki.XWikiLogout','logout', "logout=1&xredirect=$!redLogout")" class="red">$adminMsg.get('cel_login_logoutbutton', ["$username"])</a>
 #end
+#end ##isLoginDisabled
