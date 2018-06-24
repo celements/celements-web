@@ -300,7 +300,9 @@
                 <exclude>WEB-INF/lib/reflections-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-extension-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-2.7.2.jar</exclude>
-<!--                <exclude>WEB-INF/lib/xwiki-core-office-*.jar</exclude> -->
+                <!-- exclude JAX-RS 1 in favor of Jersey 2 -->
+                <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
+                <exclude>WEB-INF/lib/org.restlet.ext.jaxrs-*</exclude>
               </excludes>
             </overlay>
           </overlays>
