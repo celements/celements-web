@@ -8,14 +8,6 @@
   <display-name>celements-web</display-name>
   <description>Celements-Web Application</description>
   <distributable />
-
-  <!-- Restlet Application class name -->
-  <context-param>
-    <param-name>org.restlet.application</param-name>
-    <param-value>
-      org.xwiki.rest.XWikiRestletJaxRsApplication  
-    </param-value>
-  </context-param> 
   
   <!-- Filter that sets a custom encoding to all requests, since usually clients don't specificy
        the encoding used for submitting the request, so by default containers fall back to the
@@ -201,20 +193,6 @@ https://synjira.atlassian.net/browse/INFRA-51
    <servlet-name>webdav</servlet-name>
    <servlet-class>com.xpn.xwiki.plugin.webdav.XWikiDavServlet</servlet-class>
   </servlet>
-
-  <!-- RESTful API Restlet servlet -->
-  <servlet>
-    <servlet-name>RestletServlet</servlet-name>
-    <servlet-class>
-      org.xwiki.rest.XWikiRestletServlet  
-    </servlet-class>
-  </servlet>
-
-  <!-- RESTful API mapping -->
-  <servlet-mapping>
-    <servlet-name>RestletServlet</servlet-name>
-    <url-pattern>/rest/*</url-pattern>
-  </servlet-mapping>
   
   <servlet-mapping>
     <servlet-name>action</servlet-name>
