@@ -177,7 +177,7 @@
       <exclusions>
         <exclusion>
           <groupId>batik</groupId>
-          <artifactId>*</artifactId>
+          <artifactId>batik-transcoder</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
