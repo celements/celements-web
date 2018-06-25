@@ -10,7 +10,7 @@
   <distributable />
 
   <!-- Restlet Application class name -->
-  <!-- [CELDEV-645] excluded org.restlet.ext.jaxrs-1.x 
+  <!-- [CELDEV-717] excluded org.restlet.ext.jaxrs-1.x 
   <context-param>
     <param-name>org.restlet.application</param-name>
     <param-value>
@@ -211,7 +211,7 @@ https://synjira.atlassian.net/browse/INFRA-51
  -->
  
   <!-- RESTful API Restlet servlet -->
-  <!-- [CELDEV-645] excluded org.restlet.ext.jaxrs-1.x 
+  <!-- [CELDEV-717] excluded org.restlet.ext.jaxrs-1.x 
   <servlet>
     <servlet-name>RestletServlet</servlet-name>
     <servlet-class>
@@ -220,7 +220,7 @@ https://synjira.atlassian.net/browse/INFRA-51
   </servlet> -->
 
   <!-- RESTful API mapping -->
-  <!-- [CELDEV-645] excluded org.restlet.ext.jaxrs-1.x 
+  <!-- [CELDEV-717] excluded org.restlet.ext.jaxrs-1.x 
   <servlet-mapping>
     <servlet-name>RestletServlet</servlet-name>
     <url-pattern>/rest/*</url-pattern>
