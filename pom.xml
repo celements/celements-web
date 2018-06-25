@@ -148,11 +148,15 @@
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
-      <version>1.7</version>
     </dependency>
     <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
+    </dependency>
+    <!-- JAX-RS implementation -->
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
     </dependency>
     <!--  hibernate annotations needed for org.hibernate.type.EnumType -->
     <dependency>
@@ -173,47 +177,7 @@
       <exclusions>
         <exclusion>
           <groupId>batik</groupId>
-          <artifactId>batik-awt-util</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-bridge</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-css</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-dom</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-gvt</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-parser</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-script</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-svg-dom</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-transcoder</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-util</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-xml</artifactId>
+          <artifactId>*</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
