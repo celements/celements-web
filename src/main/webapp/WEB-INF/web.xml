@@ -10,12 +10,13 @@
   <distributable />
 
   <!-- Restlet Application class name -->
+  <!-- [CELDEV-717] excluded org.restlet.ext.jaxrs-1.x 
   <context-param>
     <param-name>org.restlet.application</param-name>
     <param-value>
       org.xwiki.rest.XWikiRestletJaxRsApplication  
     </param-value>
-  </context-param> 
+  </context-param> -->
   
   <!-- Filter that sets a custom encoding to all requests, since usually clients don't specificy
        the encoding used for submitting the request, so by default containers fall back to the
@@ -56,11 +57,13 @@
   </filter>
 
   <!-- Filter used to 'steal' webdav requests made to the application root -->
+<!-- 
   <filter>
     <filter-name>DavFilter</filter-name>
     <filter-class>com.xpn.xwiki.plugin.webdav.XWikiDavFilter</filter-class>
   </filter>
-
+ -->
+ 
   <!-- A filter that dispatches requests to the right action depending on the button pressed in the editing form. This
        is needed when javascript is disabled, since the browser cannot send the form data to different URLs depending on
        the button pressed. -->
@@ -96,10 +99,12 @@
     <dispatcher>FORWARD</dispatcher>
   </filter-mapping>
 
+<!-- 
   <filter-mapping>
     <filter-name>DavFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+ -->
 
   <filter-mapping>
     <filter-name>ActionDispatcher</filter-name>
@@ -190,31 +195,36 @@ https://synjira.atlassian.net/browse/INFRA-51
     <servlet-class>com.xpn.xwiki.gwt.api.server.XWikiServiceImpl</servlet-class>
   </servlet>
 
-  <!-- This is the entry pointy for the new WYSIWYG's GWT services -->
+  <!-- This is the entry pointy for the new WYSIWYG's GWT services
   <servlet>
     <servlet-name>WysiwygService</servlet-name>
     <servlet-class>com.xpn.xwiki.wysiwyg.server.DefaultWysiwygService</servlet-class>
   </servlet>
+ -->
 
   <!-- WebDAV servlet -->
+<!-- 
   <servlet>
    <servlet-name>webdav</servlet-name>
    <servlet-class>com.xpn.xwiki.plugin.webdav.XWikiDavServlet</servlet-class>
   </servlet>
-
+ -->
+ 
   <!-- RESTful API Restlet servlet -->
+  <!-- [CELDEV-717] excluded org.restlet.ext.jaxrs-1.x 
   <servlet>
     <servlet-name>RestletServlet</servlet-name>
     <servlet-class>
       org.xwiki.rest.XWikiRestletServlet  
     </servlet-class>
-  </servlet>
+  </servlet> -->
 
   <!-- RESTful API mapping -->
+  <!-- [CELDEV-717] excluded org.restlet.ext.jaxrs-1.x 
   <servlet-mapping>
     <servlet-name>RestletServlet</servlet-name>
     <url-pattern>/rest/*</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> -->
   
   <servlet-mapping>
     <servlet-name>action</servlet-name>
@@ -264,6 +274,7 @@ https://synjira.atlassian.net/browse/INFRA-51
     <url-pattern>/XWikiService</url-pattern>
   </servlet-mapping>
 
+<!--
   <servlet-mapping>
     <servlet-name>WysiwygService</servlet-name>
     <url-pattern>/WysiwygService</url-pattern>
@@ -273,7 +284,8 @@ https://synjira.atlassian.net/browse/INFRA-51
    <servlet-name>webdav</servlet-name>
    <url-pattern>/webdav/*</url-pattern>
   </servlet-mapping>
-
+ -->
+ 
   <!-- We override the mime type definition for javascript and css files, as some containers don't
        provide it, causing problems for javascript files containg velocity code, like
        fullscreenEdit.js -->

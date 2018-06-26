@@ -148,11 +148,15 @@
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
-      <version>1.7</version>
     </dependency>
     <dependency>
       <groupId>commons-net</groupId>
       <artifactId>commons-net</artifactId>
+    </dependency>
+    <!-- JAX-RS implementation -->
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
     </dependency>
     <!--  hibernate annotations needed for org.hibernate.type.EnumType -->
     <dependency>
@@ -173,47 +177,7 @@
       <exclusions>
         <exclusion>
           <groupId>batik</groupId>
-          <artifactId>batik-awt-util</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-bridge</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-css</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-dom</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-gvt</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-parser</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-script</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-svg-dom</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
           <artifactId>batik-transcoder</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-util</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-xml</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -300,7 +264,9 @@
                 <exclude>WEB-INF/lib/reflections-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-extension-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-2.7.2.jar</exclude>
-<!--                <exclude>WEB-INF/lib/xwiki-core-office-*.jar</exclude> -->
+                <!-- exclude JAX-RS 1.x and restlet in favor of jersey 2.x -->
+                <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
+                <exclude>WEB-INF/lib/org.restlet.ext.jaxrs-*</exclude>
               </excludes>
             </overlay>
           </overlays>
