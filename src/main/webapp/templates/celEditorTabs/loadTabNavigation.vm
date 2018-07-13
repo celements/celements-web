@@ -28,6 +28,8 @@
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 <input type="hidden" name="template" value="$!request.template" />
+<input type="hidden" name="createIfNotExists" value="true" />
+
 <div id="nav_menunameEdit" class="editblock">
     #set($theMenuName = $doc.getObject('Celements2.MenuName','lang',"$language", false))
     #if("$!theMenuName" == '')
