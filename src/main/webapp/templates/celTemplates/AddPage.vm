@@ -123,8 +123,10 @@
       #set($successfulAndRedirect = false)
   <!-- "successful" : false , "fullName" : "${newDocFN}", "errorMsg" : "unkown reason." -->
     #end
+    #set($redMenuPosition = '')
   #else
     #set($successfulAndRedirect = true)
+    #set($redMenuPosition = $!position)
   #end  ## ("$!newDocTemplateFN" == '') => no template document
   ## send redirect
   #if($successfulAndRedirect)
@@ -133,6 +135,9 @@
         #set($redir = "$!{xwiki.getURL($newDocFN, 'view')}")
       #elseif("$!redirmode" == 'newpageedit')
         #set($redirXredirect = "$!{redirXredirect}&isCreate=1")
+        #if("$!redMenuPosition" != '')
+          #set($redirXredirect = "$!{redirXredirect}&menu_position=$!redMenuPosition")
+        #end
         #if("$!redir" != '')
           #set($redirXredirect = "$!{redirXredirect}&xredirect=$xwiki.getURLEncoded($redir)")
         #end
