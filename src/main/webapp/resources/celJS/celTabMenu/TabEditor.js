@@ -501,6 +501,12 @@ TE.prototype = {
         loadTabParams["language"] = window.location.search.replace(
             /.*\&?language=([^\&]+).*/, '$1');
       }
+      $A(window.location.search.match(/(\&|\?)data-[^=\&]+=[^\&]+/g)).each(function(elem) {
+        var elemArray = elem.split('=');
+        var key = elemArray[0].substr(1);
+        var value = elemArray[1];
+        loadTabParams[key] = value;
+      });
       // load tab content
       asyncLoading = true;
       new Ajax.Request(getTMCelHost(), {
