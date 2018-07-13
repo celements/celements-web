@@ -29,7 +29,7 @@
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 <input type="hidden" name="template" value="$!request.template" />
 <input type="hidden" name="createIfNotExists" value="true" />
-#set($menu_position = "$!request.menu_position")
+#set($menu_position = "$!request.data-menu_position")
 #if($menu_position != '')
   #set($navMenuItemObjNb = '-1')
   #set($theMenuItem = $doc.getObject('Celements2.MenuItem', false))
