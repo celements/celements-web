@@ -3,6 +3,8 @@
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 <input type="hidden" name="template" value="$!request.template" />
+<input type="hidden" name="createIfNotExists" value="true" />
+
 <div id="pro_pagetypeEdit" class="editblock">
 	$adminMsg.get('cel_tm_page_type'):
 	#set($cel_pageTypeObj = $doc.getObject('Celements2.PageType'))

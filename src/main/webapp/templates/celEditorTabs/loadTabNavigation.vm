@@ -28,6 +28,16 @@
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 <input type="hidden" name="template" value="$!request.template" />
+<input type="hidden" name="createIfNotExists" value="true" />
+#set($menu_position = "$!request.data-menu_position")
+#if($menu_position != '')
+  #set($navMenuItemObjNb = '-1')
+  #set($theMenuItem = $doc.getObject('Celements2.MenuItem', false))
+  #if("$!theMenuItem" != '')
+    #set($navMenuItemObjNb = $theMenuItem.getNumber())
+  #end
+  <input type="hidden" name="Celements2.MenuItem_${navMenuItemObjNb}_menu_position" value="$menu_position" />
+#end
 <div id="nav_menunameEdit" class="editblock">
     #set($theMenuName = $doc.getObject('Celements2.MenuName','lang',"$language", false))
     #if("$!theMenuName" == '')
@@ -66,6 +76,8 @@
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 <input type="hidden" name="template" value="$!request.template" />
+<input type="hidden" name="createIfNotExists" value="true" />
+
     #parse("celMacros/includeCelementsRTE.vm")
     #set($extractObj = $doc.getObject('Classes.DocumentExtract','language',"$language", false))
     #if ("$!extractObj" == '')
@@ -98,6 +110,8 @@
 <input type="hidden" name="xpage" value="celements_ajax" />
 <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
 <input type="hidden" name="template" value="$!request.template" />
+<input type="hidden" name="createIfNotExists" value="true" />
+
 <div id="nav_imagePicker" class="editblock">
 <span style="display:none;" id="image_prefix">${doc.fullName}</span>
   $adminMsg.get('cel_tm_menu_image'): <input type="hidden" value="$!theMenuName.getProperty('image').getValue()" id="image" name="Celements2.MenuName_${navObjNb}_image"></input>
