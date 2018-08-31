@@ -15,10 +15,15 @@
   ##IMPORTANT: Please do not use includeForm for Content, because the {pre}-tags
   ##           get not correctly interpreted in an embedded getRenderedContent call.
   #set($redDocRef = $services.model.resolveDocument("$redFN"))
-  #set($renderDocument = $xwiki.getDocument($redDocRef))
+#set($overwriteRenderDocument = '')
+#set($celPDCdocPageType = $services.pageType.getPageTypeRef($redDocRef).getConfigName())
+#set($pageDocRef = $redDocRef)
+#set($celPDCdocCssPTclass = "cel_pagetype_$!{celPDCdocPageType}")
+  <div class="${celPDCdocCssPTclass}">
  $services.celementsweb.setGlobalContextValue("insideRedirectIncludedView", true)
-  #parse('celMacros/noDuplicateRenderCelementsDocument.vm')
+#parse('celMacros/render/renderViewOrInlineEditorMode.vm')
  $services.celementsweb.setGlobalContextValue("insideRedirectIncludedView", false)
+  <!-- IE6 --></div>
   #set($redDocRef = '') ## reset after loading content
   ##
 #end ## if($showIFrame)
