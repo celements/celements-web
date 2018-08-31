@@ -34,7 +34,6 @@
 
 })(window);
 
-console.log("<<<<<<<<<<<<<<<<<<< innitCelementsAfter Outside celOnBeforeLoadListenerArray: ", celOnBeforeLoadListenerArray);
 if(celOnBeforeLoadListenerArray
     && (typeof celOnBeforeLoadListenerArray !== 'undefined')) {
   $A(celOnBeforeLoadListenerArray).each(function(listener) {
