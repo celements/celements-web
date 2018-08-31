@@ -50,33 +50,34 @@ $jsonStr
 #else ## render view
   #if("$!showIncluded" == '1')
     #set($overwriteRenderDocument = 'celInlineTemplates/RedirectIncludedView.vm')
-#if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
-    $xwiki.parseTemplate("frameheader.vm")
-    #if("$!overwriteRenderDocument" != '')
-## redirectedParams get lost in calling:
-##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
-## or  $xwiki.includeForm($overwriteRenderDocument, false)
-      #parse($overwriteRenderDocument)
+    #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
+      $xwiki.parseTemplate("frameheader.vm")
+        #if("$!overwriteRenderDocument" != '')
+          ## redirectedParams get lost in calling:
+          ##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
+          ## or  $xwiki.includeForm($overwriteRenderDocument, false)
+          #parse($overwriteRenderDocument)
+        #end
+      #set($show_frame = true)
+      $xwiki.parseTemplate("framefooter.vm")
     #end
-#set($show_frame = true)
-#end
   #else
-#if("$!redExternalURL" == '')
-  ## sendRedirect on an empty URL leads to a server crash!
-  #set($redExternalURL = '/')
-#end
-## ensure content is not empty (otherwise reset throws an IllegalStateException)
-Redirect to $redExternalURL
-## call reset to clear HTTP-HeaderData (otherwise sendRedirect throws an IllegalStateException)
-$response.reset()
-## set context to finish to prevent that not empty content is written to the Body
-$context.setFinished(true)
-#set($contextIsFinished = true)
-## set redirect HTTP-Header
-$response.sendRedirect($redExternalURL)
+    #if("$!redExternalURL" == '')
+      ## sendRedirect on an empty URL leads to a server crash!
+      #set($redExternalURL = '/')
+    #end
+    ## ensure content is not empty (otherwise reset throws an IllegalStateException)
+    Redirect to $redExternalURL
+    ## call reset to clear HTTP-HeaderData (otherwise sendRedirect throws an IllegalStateException)
+    $response.reset()
+    ## set context to finish to prevent that not empty content is written to the Body
+    $context.setFinished(true)
+    #set($contextIsFinished = true)
+    ## set redirect HTTP-Header
+    $response.sendRedirect($redExternalURL)
   #end
 #end
 #end
 #else
-<p>Do not redirect on Template page.</p>
+  <p>Do not redirect on Template page.</p>
 #end
