@@ -23,7 +23,7 @@
   ##IMPORTANT: overwrite spec_view if 'Templates.RedirectView' with target spec_view
   ##           to enforce call to renderCelementsDocument in
   ##           noDuplicateRenderCelementsDocument.vm
-  #set($ptatd_pagetype_api = $celementsweb.getPageType($renderDocument.fullName))
+  #set($ptatd_pagetype_api = $celementsweb.getPageType($redFN))
   #set($spec_view = $ptatd_pagetype_api.getRenderTemplate('view'))
   <div class="${celPDCdocCssPTclass}">
  $services.celementsweb.setGlobalContextValue("insideRedirectIncludedView", true)
