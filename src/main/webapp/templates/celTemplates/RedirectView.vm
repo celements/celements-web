@@ -50,17 +50,22 @@ $jsonStr
 #else ## render view
   #if("$!showIncluded" == '1')
     #set($overwriteRenderDocument = 'celInlineTemplates/RedirectIncludedView.vm')
-    #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
-      $xwiki.parseTemplate("frameheader.vm")
-        #if("$!overwriteRenderDocument" != '')
-          ## redirectedParams get lost in calling:
-          ##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
-          ## or  $xwiki.includeForm($overwriteRenderDocument, false)
-          #parse($overwriteRenderDocument)
-        #end
-      #set($show_frame = true)
-      $xwiki.parseTemplate("framefooter.vm")
+    #if(!$show_frame)
+        $xwiki.parseTemplate("frameheader.vm")
     #end
+    #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
+      #if($show_frame)
+          $xwiki.parseTemplate("frameheader.vm")
+      #end
+      #if("$!overwriteRenderDocument" != '')
+        ## redirectedParams get lost in calling:
+        ##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
+        ## or  $xwiki.includeForm($overwriteRenderDocument, false)
+        #parse($overwriteRenderDocument)
+      #end
+    #end
+    #set($show_frame = false)
+    $xwiki.parseTemplate("framefooter.vm")
   #else
     #if("$!redExternalURL" == '')
       ## sendRedirect on an empty URL leads to a server crash!
