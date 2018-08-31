@@ -54,9 +54,6 @@ $jsonStr
         $xwiki.parseTemplate("frameheader.vm")
     #end
     #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
-      #if($show_frame)
-          $xwiki.parseTemplate("frameheader.vm")
-      #end
       #if("$!overwriteRenderDocument" != '')
         ## redirectedParams get lost in calling:
         ##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
