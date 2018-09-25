@@ -3,7 +3,7 @@ $response.setStatus(501)
 Unkown ajax_mode [$!{request.ajax_mode}]!
 #end
 ## init Celements variables
-#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements'))) 
+#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #end
 #if("$!request.ajax_mode" == 'CelTabEditAjax')
@@ -18,9 +18,10 @@ $xwiki.includeForm("Ajax.${request.ajax_mode}", false)
 $xwiki.includeForm("celements2web:Ajax.${request.ajax_mode}", false)
 #else
 #set($ajaxResult = $xwiki.parseTemplate("celAjax/${request.ajax_mode}.vm"))
+#set($contentType = $context.getResponse().getContentType())
 #if("$!ajaxResult.trim()" != '')
 $ajaxResult
-#else
+#elseif(("$!ajaxModeKnown" != '1') && (("$!contentType" == '') || $contentType.startsWith('text/html')))
 #unkownScriptError()
 #end
 #end
