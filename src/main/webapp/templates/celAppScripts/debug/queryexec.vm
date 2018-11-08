@@ -1,0 +1,80 @@
+## INPUT values:
+## title [string]
+## xwql OR hql [string]
+## limit [int, default 1000]
+## printLimit [int, default 100], affects performance due to 'getDocument'
+## noResultList [bool, default false]
+## printResultLine($docRef) [macro]
+
+#if($isSuperAdmin)
+<div class="queryexec">
+
+#set($String = "")
+#if("$!title" != '')
+  <h4>$title</h4></br>
+#end
+#set($query = '')
+#if("$!xwql" != '')
+  #set($query = $services.query.xwql($!xwql))
+#elseif("$!hql" != '')
+  #set($query = $services.query.hql($!hql))
+#end
+#if("$!query" == '')
+  <p>no query set</p>
+#else
+
+  #if("$!request.limit" != '')
+    #set($limit = $util.parseInt($request.limit))
+  #end
+  #if("$!limit" == '')
+    #set($limit = 1000)
+  #end
+  #if($limit > 0)
+    #set($query = $query.setLimit($limit))
+  #end
+  #if("$!request.printLimit" != '')
+    #set($printLimit = $util.parseInt($request.printLimit))
+  #end
+  #if("$!printLimit" == '')
+    #set($printLimit = 100)
+  #end
+  
+  <p><b>${query.language}-query</b> &mdash; <i>$query.statement</i></p>
+  <p>limit: $limit &mdash; printLimit: $printLimit </p>
+  #parse('celMacros/benchmark.vm') ## start benchmark
+  #set($result = $query.execute())
+  <p>#bench('query execution time' true)</p>
+  <p>result count: $result.size() #if($limit > 0 && $result.size() >= $limit) (limited) #end</p>
+  <hr>
+  #if(!$noResultList)
+    #set($countFormatter = "%0${result.size().toString().length()}d")
+    #foreach($fullName in $result)
+      #set($docRef = $services.model.resolveDocument($fullName))
+      <div>
+      $String.format($countFormatter, $velocityCount)
+      &mdash;
+      <a href="$xwiki.getURL($docRef)" target="_blank">$fullName</a>
+      #if($velocityCount <= $printLimit)
+        #set($resultDoc = $services.modelAccess.getDocument($docRef))
+        #set($resultLine = "#printResultLine($resultDoc)")
+        #if("$!resultLine" == '#printResultLine($resultDoc)')
+          #set($resultLine = "#printResultLineDefault($resultDoc)")
+        #end
+        &mdash; $resultLine
+      #end
+      </div>
+    #end
+    <hr>
+    <p>#bench('printing result list' true)</p>
+  #end ## noResultList
+
+#end ## ("$!query" == '')
+
+</div>
+#end
+
+#macro(printResultLineDefault $resultDoc)
+  $datetool.format('yyyy.MM.dd HH:mm', $resultDoc.creationDate) created
+  &mdash;
+  $datetool.format('yyyy.MM.dd HH:mm', $resultDoc.date) changed
+#end
