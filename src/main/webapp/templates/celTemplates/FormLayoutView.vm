@@ -1,0 +1,24 @@
+#if("$!celldoc" != '')
+#set($contentDoc = $celldoc.getTranslatedDocument())
+#else   
+#set($contentDoc = $doc)
+#end
+#set($formConfigClassRef = $services.model.createDocumentReference("", "Celements2", "FormConfigClass"))
+#set($formConfigObj = $services.modelAccess.getObject($contentDoc.documentReference, $formConfigClassRef))
+#set($formLayoutName = "$!formConfigObj.getProperty('formLayout').getValue()")
+##
+<div class="structDataEditor formLayout">
+#set($structDataEditorDocRef = $services.model.createDocumentReference("", $formLayoutName, "WebHome"))
+#set($structDataEditorSpaceRef = $structDataEditorDocRef.lastSpaceReference)
+  #if($services.layout.canRenderLayout($structDataEditorSpaceRef))
+    #set($layoutApi = $services.layout.getPageLayoutApiForRef($structDataEditorSpaceRef))
+    #if($layoutApi.isEditorLayoutType())
+      #set($renderedFormContent = $services.layout.renderPageLayout($structDataEditorSpaceRef))
+      #parse('celTemplates/FormNGView.vm')
+    #else
+      <p>Wrong Layout Type (${layoutApi.getLayoutType()}) for '${formLayoutName}'!</p>
+    #end
+  #else
+    <p>Editor Layout for '${formLayoutName}' is missing!</p>
+  #end
+</div>
