@@ -4,6 +4,8 @@
 #set($contentDoc = $doc)
 #end
 #set($formConfigClassRef = $services.model.createDocumentReference("", "Celements2", "FormConfigClass"))
+#set($formDoc = $contentDoc) ## preserve contentDoc and inject in FormNGView,
+## because celldoc will be overwritten in renderPageLayout
 #set($formConfigObj = $services.modelAccess.getObject($contentDoc.documentReference, $formConfigClassRef))
 #set($formLayoutName = "$!formConfigObj.getProperty('formLayout').getValue()")
 ##
