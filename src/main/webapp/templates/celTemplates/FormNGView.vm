@@ -15,7 +15,7 @@ action completeRuleSnippet: $formActionObj.getProperty("completeRuleSnippet").ge
 #set($actionDocFullName = "$!{formActionObj.getProperty('doc_fullName').getValue()}")
 #set($actionDocRef = $util.null)
 #if("$!actionDocFullName" != '')
-  #set($actionDocRef = $services.model.resolveDocument($actionDocRef))
+  #set($actionDocRef = $services.model.resolveDocument($actionDocFullName))
 #end
 ##TODO: check if database prefix is needed if FormView lies (not) in celements2web
 #set($formActionDoc = $services.modelAccess.getDocument($actionDocRef))
