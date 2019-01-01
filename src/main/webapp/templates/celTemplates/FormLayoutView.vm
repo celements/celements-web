@@ -16,7 +16,6 @@
     #set($layoutApi = $services.layout.getPageLayoutApiForRef($structDataEditorSpaceRef))
     #if($layoutApi.isEditorLayoutType())
       #set($renderedFormContent = $services.layout.renderPageLayout($structDataEditorSpaceRef))
-      #set($debug = true)
       #parse('celTemplates/FormNGView.vm')
     #else
       <p>Wrong Layout Type (${layoutApi.getLayoutType()}) for '${formLayoutName}'!</p>
