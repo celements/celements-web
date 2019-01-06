@@ -90,12 +90,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>3.5</version>
+      <version>3.6</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>3.12</version>
+      <version>3.13</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
