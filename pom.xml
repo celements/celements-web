@@ -83,14 +83,14 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>3.3-SNAPSHOT</version>
+      <version>3.2</version>
       <type>war</type>
     </dependency>
     <!-- Add here all your dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>3.6-SNAPSHOT</version>
+      <version>3.6</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
