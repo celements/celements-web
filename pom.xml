@@ -83,7 +83,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>3.2</version>
+      <version>3.3-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- Add here all your dependencies -->
