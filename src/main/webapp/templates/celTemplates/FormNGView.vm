@@ -80,8 +80,6 @@ $xwiki.includeForm("celements2web:Macros.getActionTypeAndActionTemplateDoc", fal
 ##
 #if($complete)
   #set($successful = false)
-##  #set($theDoc = $formDoc)
-##  $xwiki.includeForm('celements2web:Macros.executeActions', false)
 #set($successful = $services.action.executeAction($formDoc))
 #set($formConfigObj = $formDoc.getObject('Celements2.FormConfigClass'))
 #if($hasedit && $debug)
