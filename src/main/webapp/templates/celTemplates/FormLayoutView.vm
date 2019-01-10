@@ -1,7 +1,7 @@
 #if("$!celldoc" != '')
   #set($contentDoc = $celldoc)
 #else   
-#set($contentDoc = $doc)
+  #set($contentDoc = $doc)
 #end
 #set($formConfigClassRef = $services.model.createDocumentReference("", "Celements2", "FormConfigClass"))
 #set($formDoc = $contentDoc) ## preserve contentDoc and inject in FormNGView,
