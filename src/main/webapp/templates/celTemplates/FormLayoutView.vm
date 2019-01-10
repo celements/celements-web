@@ -9,13 +9,13 @@
 #set($formConfigObj = $services.modelAccess.getObject($contentDoc.documentReference, $formConfigClassRef))
 #set($formLayoutName = "$!formConfigObj.getProperty('formLayout').getValue()")
 ##
-<div class="structDataEditor formLayout">
-#set($structDataEditorDocRef = $services.model.createDocumentReference("", $formLayoutName, "WebHome"))
-#set($structDataEditorSpaceRef = $structDataEditorDocRef.lastSpaceReference)
-  #if($services.layout.canRenderLayout($structDataEditorSpaceRef))
-    #set($layoutApi = $services.layout.getPageLayoutApiForRef($structDataEditorSpaceRef))
+<div class="formLayout">
+#set($formLayoutDocRef = $services.model.createDocumentReference("", $formLayoutName, "WebHome"))
+#set($formLayoutSpaceRef = $formLayoutDocRef.lastSpaceReference)
+  #if($services.layout.canRenderLayout($formLayoutSpaceRef))
+    #set($layoutApi = $services.layout.getPageLayoutApiForRef($formLayoutSpaceRef))
     #if($layoutApi.isEditorLayoutType())
-      #set($renderedFormContent = $services.layout.renderPageLayout($structDataEditorSpaceRef))
+      #set($renderedFormContent = $services.layout.renderPageLayout($formLayoutSpaceRef))
       #parse('celTemplates/FormNGView.vm')
     #else
       <p>Wrong Layout Type (${layoutApi.getLayoutType()}) for '${formLayoutName}'!</p>
