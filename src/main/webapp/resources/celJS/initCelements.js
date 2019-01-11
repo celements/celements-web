@@ -613,6 +613,7 @@
   }
 
   window.celMessages = {};
+  window.celMessages.isLoaded = false;
 
   try {
     var topFrame = top || window;
@@ -624,11 +625,13 @@
       },
       onSuccess : function(transport) {
         if (transport.responseText.isJSON()) {
-          celMessages = transport.responseText.evalJSON();
+          var newMessages = transport.responseText.evalJSON();
           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
             console.log('initCelements.js: finished getting dictionary messages.');
           }
-          $(document.body).fire('cel:messagesLoaded', celMessages);
+          newMessages.isLoaded = true;
+          window.celMessages = newMessages;
+          $(document.body).fire('cel:messagesLoaded', newMessages);
         } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
           console.error('noJSON!!! ', transport.responseText);
         }
