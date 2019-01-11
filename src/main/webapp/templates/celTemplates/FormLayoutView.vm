@@ -1,0 +1,26 @@
+#if("$!celldoc" != '')
+  #set($contentDoc = $celldoc)
+#else   
+  #set($contentDoc = $doc)
+#end
+#set($formConfigClassRef = $services.model.createDocumentReference("", "Celements2", "FormConfigClass"))
+#set($formDoc = $contentDoc) ## preserve contentDoc and inject in FormNGView,
+## because celldoc will be overwritten in renderPageLayout
+#set($formConfigObj = $services.modelAccess.getObject($contentDoc.documentReference, $formConfigClassRef))
+#set($formLayoutName = "$!formConfigObj.getProperty('formLayout').getValue()")
+##
+<div class="formLayout">
+#set($formLayoutDocRef = $services.model.createDocumentReference("", $formLayoutName, "WebHome"))
+#set($formLayoutSpaceRef = $formLayoutDocRef.lastSpaceReference)
+  #if($services.layout.canRenderLayout($formLayoutSpaceRef))
+    #set($layoutApi = $services.layout.getPageLayoutApiForRef($formLayoutSpaceRef))
+    #if($layoutApi.isEditorLayoutType())
+      #set($renderedFormContent = $services.layout.renderPageLayout($formLayoutSpaceRef))
+      #parse('celTemplates/FormNGView.vm')
+    #else
+      <p>Wrong Layout Type (${layoutApi.getLayoutType()}) for '${formLayoutName}'!</p>
+    #end
+  #else
+    <p>Editor Layout for '${formLayoutName}' is missing!</p>
+  #end
+</div>

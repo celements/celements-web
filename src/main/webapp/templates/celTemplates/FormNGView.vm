@@ -13,8 +13,12 @@ action completeRuleSnippet: $formActionObj.getProperty("completeRuleSnippet").ge
 <!-- $formActionObj.get('completeRuleSnippet') , $formActionObj.get('completeRuleSnippet').getValue() -->
 #end
 #set($actionDocFullName = "$!{formActionObj.getProperty('doc_fullName').getValue()}")
+#set($actionDocRef = $util.null)
+#if("$!actionDocFullName" != '')
+  #set($actionDocRef = $services.model.resolveDocument($actionDocFullName))
+#end
 ##TODO: check if database prefix is needed if FormView lies (not) in celements2web
-#set($formActionDoc = $xwiki.getDocument("$actionDocFullName"))
+#set($formActionDoc = $services.modelAccess.getDocument($actionDocRef))
 ## get the action type and templateDoc
 #set($theDoc = $formActionDoc)
 $xwiki.includeForm("celements2web:Macros.getActionTypeAndActionTemplateDoc", false)
@@ -22,7 +26,7 @@ $xwiki.includeForm("celements2web:Macros.getActionTypeAndActionTemplateDoc", fal
 #set($action_exec = $ataatd_spec_exec)
 ##IMPORTANT: if you change this if condition PLEASE add an appropriate debugging information at the
 ##           end of this script.
-#set($isExecutable = $isExecutable && ("$!actionDocFullName" != '') && $xwiki.exists("$!actionDocFullName") && ("$!formActionDoc" != '') && $xwiki.exists($action_exec))
+#set($isExecutable = $isExecutable && ("$!actionDocFullName" != '') && $services.modelAccess.exists($actionDocRef) && ("$!formActionDoc" != '') && $services.modelAccess.exists($services.model.resolveDocument($action_exec)))
 #end  ## macro checkAction
 ## start script
 #set($errorMsg = '') ## initalize
@@ -76,9 +80,8 @@ $xwiki.includeForm("celements2web:Macros.getActionTypeAndActionTemplateDoc", fal
 ##
 #if($complete)
   #set($successful = false)
-  #set($theDoc = $formDoc)
-  $xwiki.includeForm('celements2web:Macros.executeActions', false)
-  #set($formConfigObj = $formDoc.getObject('Celements2.FormConfigClass'))
+#set($successful = $services.action.executeAction($formDoc))
+#set($formConfigObj = $formDoc.getObject('Celements2.FormConfigClass'))
 #if($hasedit && $debug)
 formDoc: $formDoc <br />
 formConfigObj: <pre>$formConfigObj</pre><br/>
@@ -89,9 +92,9 @@ successful: $successful <br />
   #if("$!formConfigObj" != '')
     #set($successfulpage = "$!formConfigObj.getProperty('successfulpage').getValue()")
     #set($failedpage = "$!formConfigObj.getProperty('failedpage').getValue()")
-    #if($successful && ("$!successfulpage" != '') && $xwiki.exists($successfulpage))
+    #if($successful && ("$!successfulpage" != '') && $services.modelAccess.exists($services.model.resolveDocument($successfulpage)))
       $xwiki.includeForm($successfulpage, false)
-    #elseif(!$successful && ("$!failedpage" != '') && $xwiki.exists($failedpage))
+    #elseif(!$successful && ("$!failedpage" != '') && $services.modelAccess.exists($services.model.resolveDocument($failedpage)))
       $xwiki.includeForm($failedpage, false)
     #else
       $actionScriptOutput
@@ -122,7 +125,7 @@ complete: $complete<br/>
 #end
  #set($celementsFormValidationName = '')
  #if("$!renderedFormContent" == '')
-  #set($rteContent = $xwiki.celementsweb.renderDocument($!contentDoc))
+  #set($rteContent = $services.celementsweb.renderDocument($!contentDoc))
   $rteContent
  #else
    $!renderedFormContent
@@ -142,9 +145,9 @@ complete: $complete<br/>
 #if($hasedit)
   #if("$!actionDocFullName" == '')
     #set($errMsg = "ERROR: no action document defined.")
-  #elseif(!$xwiki.exists("$!actionDocFullName") || ("$!formActionDoc" == ''))
+  #elseif(!$services.modelAccess.exists($actionDocRef) || ("$!formActionDoc" == ''))
     #set($errMsg = "ERROR: Cannot find action document ${actionDocFullName}.")
-  #elseif(!$xwiki.exists($action_exec))
+  #elseif(!$services.modelAccess.exists($services.model.resolveDocument($action_exec)))
     #set($errMsg = "ERROR: Cannot find action exec template ${action_exec} for action document ${actionDocFullName}.")
   #else
     #set($errMsg = "ERROR: unknown error.")
