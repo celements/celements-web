@@ -21,6 +21,7 @@
       <p>Wrong Layout Type (${layoutApi.getLayoutType()}) for '${formLayoutName}'!</p>
     #end
   #else
-    <p>Editor Layout for '${formLayoutName}' is missing!</p>
+    ## fallback to render old formulars being defined in the wiki content
+    #parse('celTemplates/FormNGView.vm')
   #end
 </div>
