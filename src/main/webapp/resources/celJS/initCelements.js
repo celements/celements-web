@@ -612,6 +612,9 @@
     };
   }
 
+  /**
+   * celMessages functions and global variable
+   */
   window.celMessages = {};
   window.celMessages.isLoaded = false;
 
@@ -640,6 +643,18 @@
   } catch (exp) {
     console.error('Failed to get Cel-Messages async!', exp);
   }
+
+  window.celExecOnceAfterMessagesLoaded = function(callbackFn) {
+    if (!window.celMessages.isLoaded) {
+      $(document.body).stopObserving('cel:messagesLoaded', callbackFn);
+      $(document.body).observe('cel:messagesLoaded', callbackFn);
+    } else {
+      callbackFn(window.celMessages);
+    }
+  };
+ /**
+  * END of celMessages
+  */
 
   var formValidations = new Hash();
 
