@@ -728,7 +728,7 @@
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         var instrAttr = htmlElem.dataset.celEvent;
-        var newHtmlElem = {
+        var newElem = {
             'htmlElem' : htmlElem,
             'dataValue' : instrAttr, 
             'eventHandler' : new Array()
@@ -736,9 +736,9 @@
         var instrList = _me._splitDataCelEventList(instrAttr);
         for (var i = 0; i <= instrList.length; i++) {
           try {
-            newHtmlElem.eventHandler.push(_me._createEventHandler(htmlElem, instrList[i]));
+            newElem.eventHandler.push(_me._createEventHandler(htmlElem, instrList[i]));
           } catch(exp) {
-            console.error('skipping invalid celEvent instruction: ', exp, htmlElem);
+            console.error('skipping invalid celEvent instruction: ', exp, htmlElem, newElem);
           }
         }
         _me._eventHandlerList.push(newElem);
