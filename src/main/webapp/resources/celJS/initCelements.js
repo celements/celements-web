@@ -675,6 +675,8 @@
         _me._className = className;
         _me._action = action;
         //TODO implement listener and action handler
+        console.debug('create CssClassEventHanlder for ',htmlElement, eventName, cssSelector,
+            className, action);
       }
   
     });
@@ -684,9 +686,11 @@
     window.CELEMENTS.EventManager = Class.create({
       _parseEventInstrRegex : new RegExp('([\\w:]+)([-+%])([\\w]+):(.+)'),
       _eventHandlerList : undefined,
+      _interpretDataCelEventBind : undefined,
 
       initialize : function() {
         var _me = this;
+        _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._eventHandlerList = new Array();
         //TODO implement contentChanged/beforeLoad listener and implement updating eventHanlder
       },
@@ -718,10 +722,7 @@
             eventInstrData.cssSelector, eventInstrData.className, eventInstrData.action);
       },
 
-      /**
-       * TODO make interpretDataCelEvent private as soon as automatic initalizing is implemented
-       */
-      interpretDataCelEvent : function(htmlElem) {
+      _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         var instrAttr = htmlElem.dataset.celEvent;
         var newHtmlElem = new Hash({
@@ -730,7 +731,7 @@
             'eventHandler' : new Array()
         });
         var instrList = _me._splitDataCelEventList(instrAttr);
-        for (i = 0; i <= instrList.length; i++) {
+        for (var i = 0; i <= instrList.length; i++) {
           try {
             newHtmlElem.eventHandler.push(_me._createEventHandler(htmlElem, instrList[i]));
           } catch(exp) {
@@ -738,6 +739,12 @@
           }
         }
         _me._eventHandlerList.push(newElem);
+      },
+
+      registerCelEventHandler : function(htmlContainer) {
+        var _me = this;
+        _me.removeDisappearedElem();
+        $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
       },
 
       _removeDisappearedElem : function() {
