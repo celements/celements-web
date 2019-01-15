@@ -728,11 +728,11 @@
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         var instrAttr = htmlElem.dataset.celEvent;
-        var newHtmlElem = new Hash({
+        var newHtmlElem = {
             'htmlElem' : htmlElem,
             'dataValue' : instrAttr, 
             'eventHandler' : new Array()
-        });
+        };
         var instrList = _me._splitDataCelEventList(instrAttr);
         for (var i = 0; i <= instrList.length; i++) {
           try {
