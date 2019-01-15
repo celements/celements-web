@@ -706,7 +706,7 @@
       _parseEventInstruction : function(celEventInstruction) {
         var _me = this;
         var instrParts = celEventInstruction.match(_me._parseEventInstrRegex);
-        if (instrParts == 5) {
+        if (instrParts.length == 5) {
           return { 
             'eventName' : instrParts[1],
             'action' : instrParts[2],
