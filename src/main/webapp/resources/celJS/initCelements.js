@@ -692,8 +692,9 @@
       initialize : function() {
         var _me = this;
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
+        _me.registerCelEventHandlerBind = _me.registerCelEventHandler.bind(_me);
+
         _me._eventHandlerList = new Array();
-        _me.registerCelEventHandlerBind = registerCelEventHandler.bind(_me);
         //TODO implement contentChanged/beforeLoad listener and implement updating eventHanlder
       },
       
