@@ -748,7 +748,7 @@
         var _me = this;
         var theContainerElem = htmlContainer || $(document.body);
         _me._removeDisappearedElem();
-        $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
+        $(theContainerElem).select('.celOnEvent').each(_me._interpretDataCelEventBind);
       },
 
       _removeDisappearedElem : function() {
