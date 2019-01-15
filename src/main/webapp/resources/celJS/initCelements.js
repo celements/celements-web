@@ -747,7 +747,7 @@
       registerCelEventHandler : function(htmlContainer) {
         var _me = this;
         var theContainerElem = htmlContainer || $(document.body);
-        _me.removeDisappearedElem();
+        _me._removeDisappearedElem();
         $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
       },
 
