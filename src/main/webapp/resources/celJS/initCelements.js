@@ -687,11 +687,13 @@
       _parseEventInstrRegex : new RegExp('([\\w:]+)([-+%])([\\w]+):(.+)'),
       _eventHandlerList : undefined,
       _interpretDataCelEventBind : undefined,
+      registerCelEventHandlerBind : undefined,
 
       initialize : function() {
         var _me = this;
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._eventHandlerList = new Array();
+        _me.registerCelEventHandlerBind = registerCelEventHandler.bind(_me);
         //TODO implement contentChanged/beforeLoad listener and implement updating eventHanlder
       },
       
@@ -749,13 +751,14 @@
       },
 
       _removeDisappearedElem : function() {
+        var _me = this;
         //TODO remove disappeared html elem on contentChange event
       }
 
     });
 
     window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
-    celAddOnBeforeLoadListener(window.CELEMENTS.globalEventManager.registerCelEventHandler);
+    celAddOnBeforeLoadListener(window.CELEMENTS.globalEventManager.registerCelEventHandlerBind);
   }
   /**
    *  END: celEventManager
