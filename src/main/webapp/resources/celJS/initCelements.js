@@ -743,6 +743,7 @@
 
       registerCelEventHandler : function(htmlContainer) {
         var _me = this;
+        var theContainerElem = htmlContainer || $(document.body);
         _me.removeDisappearedElem();
         $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
       },
@@ -752,6 +753,9 @@
       }
 
     });
+
+    window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
+    celAddOnBeforeLoadListener(window.CELEMENTS.globalEventManager.registerCelEventHandler);
   }
   /**
    *  END: celEventManager
