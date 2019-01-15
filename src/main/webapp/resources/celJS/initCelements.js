@@ -741,6 +741,7 @@
             console.error('skipping invalid celEvent instruction: ', exp, htmlElem, newElem);
           }
         }
+        //TODO prevent double initialization by adding celOnEventInitialized class
         _me._eventHandlerList.push(newElem);
       },
 
