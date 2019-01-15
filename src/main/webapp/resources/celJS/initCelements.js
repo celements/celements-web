@@ -727,6 +727,7 @@
 
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
+        //TODO prevent double initialization by adding celOnEventInitialized class
         var instrAttr = htmlElem.dataset.celEvent;
         var newElem = {
             'htmlElem' : htmlElem,
@@ -741,7 +742,7 @@
             console.error('skipping invalid celEvent instruction: ', exp, htmlElem, newElem);
           }
         }
-        //TODO prevent double initialization by adding celOnEventInitialized class
+        //TODO only add if 'eventHandler' is not empty
         _me._eventHandlerList.push(newElem);
       },
 
@@ -754,7 +755,8 @@
 
       _removeDisappearedElem : function() {
         var _me = this;
-        //TODO remove disappeared html elem on contentChange event
+        //TODO remove disappeared html elem and unregister and remove those who's data-attribute
+        //TODO  changed on contentChange event
       }
 
     });
