@@ -675,7 +675,7 @@
         _me._className = className;
         _me._action = action;
         //TODO implement listener and action handler
-        console.debug('create CssClassEventHanlder for ',htmlElement, eventName, cssSelector,
+        console.debug('create CssClassEventHandler for ',htmlElement, eventName, cssSelector,
             className, action);
       }
   
