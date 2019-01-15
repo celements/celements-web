@@ -734,7 +734,7 @@
             'eventHandler' : new Array()
         };
         var instrList = _me._splitDataCelEventList(instrAttr);
-        for (var i = 0; i <= instrList.length; i++) {
+        for (var i = 0; i < instrList.length; i++) {
           try {
             newElem.eventHandler.push(_me._createEventHandler(htmlElem, instrList[i]));
           } catch(exp) {
