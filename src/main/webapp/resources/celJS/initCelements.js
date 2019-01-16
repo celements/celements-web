@@ -716,7 +716,7 @@
         _me._className = className;
         //TODO implement listener and action handler
         console.debug('create ToggleCssClassEventHandler for ',htmlElement, eventName, cssSelector,
-            className, action);
+            className);
       }
   
     });
@@ -746,7 +746,7 @@
       _parseEventInstruction : function(celEventInstruction) {
         var _me = this;
         var instrParts = celEventInstruction.match(_me._parseEventInstrRegex);
-        if (instrParts.length == 5) {
+        if (instrParts && instrParts.length == 5) {
           return { 
             'eventName' : instrParts[1],
             'action' : instrParts[2],
