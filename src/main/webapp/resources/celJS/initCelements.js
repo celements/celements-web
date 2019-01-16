@@ -659,23 +659,63 @@
   /**
    *  celEventManager
    */
-  if(typeof window.CELEMENTS.CssClassEventHandler === 'undefined') {
-    window.CELEMENTS.CssClassEventHandler = Class.create({
+  if(typeof window.CELEMENTS.AddCssClassEventHandler === 'undefined') {
+    window.CELEMENTS.AddCssClassEventHandler = Class.create({
       _htmlElement : undefined,
       _eventName : undefined,
       _cssSelector : undefined,
       _className : undefined,
-      _action : undefined,
   
-      initialize : function(htmlElement, eventName, cssSelector, className, action) {
+      initialize : function(htmlElement, eventName, cssSelector, className) {
         var _me = this;
         _me._htmlElement = $(htmlElement);
         _me._eventName = eventName;
         _me._cssSelector = cssSelector;
         _me._className = className;
-        _me._action = action;
         //TODO implement listener and action handler
-        console.debug('create CssClassEventHandler for ',htmlElement, eventName, cssSelector,
+        console.debug('create AddCssClassEventHandler for ',htmlElement, eventName, cssSelector,
+            className);
+      }
+  
+    });
+  }
+
+  if(typeof window.CELEMENTS.RemoveCssClassEventHandler === 'undefined') {
+    window.CELEMENTS.RemoveCssClassEventHandler = Class.create({
+      _htmlElement : undefined,
+      _eventName : undefined,
+      _cssSelector : undefined,
+      _className : undefined,
+  
+      initialize : function(htmlElement, eventName, cssSelector, className) {
+        var _me = this;
+        _me._htmlElement = $(htmlElement);
+        _me._eventName = eventName;
+        _me._cssSelector = cssSelector;
+        _me._className = className;
+        //TODO implement listener and action handler
+        console.debug('create RemoveCssClassEventHandler for ',htmlElement, eventName, cssSelector,
+            className);
+      }
+  
+    });
+  }
+
+  if(typeof window.CELEMENTS.ToggleCssClassEventHandler === 'undefined') {
+    window.CELEMENTS.ToggleCssClassEventHandler = Class.create({
+      _htmlElement : undefined,
+      _eventName : undefined,
+      _cssSelector : undefined,
+      _className : undefined,
+  
+      initialize : function(htmlElement, eventName, cssSelector, className) {
+        var _me = this;
+        _me._htmlElement = $(htmlElement);
+        _me._eventName = eventName;
+        _me._cssSelector = cssSelector;
+        _me._className = className;
+        //TODO implement listener and action handler
+        console.debug('create ToggleCssClassEventHandler for ',htmlElement, eventName, cssSelector,
             className, action);
       }
   
@@ -714,15 +754,26 @@
             'cssSelector' : instrParts[4],
           };
         } else {
-          throw "unable to parse event instruction '" + celEventInstruction + "'"; 
+          throw "_parseEventInstruction: unable to parse event instruction '"
+            + celEventInstruction + "'"; 
         }
       },
 
       _createEventHandler : function(htmlElem, celEventInstruction) {
         var _me = this;
         var eventInstrData = _me._parseEventInstruction(celEventInstruction);
-        return new window.CELEMENTS.CssClassEventHandler(htmlElem, eventInstrData.eventName,
-            eventInstrData.cssSelector, eventInstrData.className, eventInstrData.action);
+        if (eventInstrData.action === '+') {
+          return new window.CELEMENTS.AddCssClassEventHandler(htmlElem, eventInstrData.eventName,
+              eventInstrData.cssSelector, eventInstrData.className);
+        } else if (eventInstrData.action === '-') {
+          return new window.CELEMENTS.RemoveCssClassEventHandler(htmlElem, eventInstrData.eventName,
+              eventInstrData.cssSelector, eventInstrData.className);
+        } else if (eventInstrData.action === '%') {
+          return new window.CELEMENTS.ToggleCssClassEventHandler(htmlElem, eventInstrData.eventName,
+              eventInstrData.cssSelector, eventInstrData.className);
+        } else {
+          throw "_createEventHandler: unknown action '" + eventInstrData.action + '"';
+        } 
       },
 
       _interpretDataCelEvent : function(htmlElem) {
