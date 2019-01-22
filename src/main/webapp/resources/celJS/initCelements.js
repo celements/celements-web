@@ -659,8 +659,8 @@
   /**
    *  celEventManager
    */
-  if(typeof window.CELEMENTS.AddCssClassEventHandler === 'undefined') {
-    window.CELEMENTS.AddCssClassEventHandler = Class.create({
+  if(typeof window.CELEMENTS.AbstractCssClassEventHandler === 'undefined') {
+    window.CELEMENTS.AbstractCssClassEventHandler = Class.create({
       _htmlElement : undefined,
       _eventName : undefined,
       _cssSelector : undefined,
@@ -673,50 +673,54 @@
         _me._cssSelector = cssSelector;
         _me._className = className;
         //TODO implement listener and action handler
-        console.debug('create AddCssClassEventHandler for ',htmlElement, eventName, cssSelector,
-            className);
+        console.debug('create AbstractCssClassEventHandler for ',_me._htmlElement, _me._eventName,
+            _me._cssSelector, _me._className);
+      }
+  
+    });
+  }
+
+  if(typeof window.CELEMENTS.AddCssClassEventHandler === 'undefined') {
+    window.CELEMENTS.AddCssClassEventHandler = Class.create(
+        CELEMENTS.AbstractCssClassEventHandler, {
+          
+      initialize : function($super, htmlElement, eventName, cssSelector, className) {
+        var _me = this;
+        $super(htmlElement, eventName, cssSelector, className);
+        //TODO implement listener and action handler
+        console.debug('create AddCssClassEventHandler for ', _me._htmlElement, _me._eventName,
+            _me._cssSelector, _me._className);
       }
   
     });
   }
 
   if(typeof window.CELEMENTS.RemoveCssClassEventHandler === 'undefined') {
-    window.CELEMENTS.RemoveCssClassEventHandler = Class.create({
-      _htmlElement : undefined,
-      _eventName : undefined,
-      _cssSelector : undefined,
-      _className : undefined,
+    window.CELEMENTS.RemoveCssClassEventHandler = Class.create(
+        CELEMENTS.AbstractCssClassEventHandler, {
   
-      initialize : function(htmlElement, eventName, cssSelector, className) {
+      initialize : function($super, htmlElement, eventName, cssSelector, className) {
         var _me = this;
-        _me._htmlElement = $(htmlElement);
-        _me._eventName = eventName;
-        _me._cssSelector = cssSelector;
-        _me._className = className;
+        $super(htmlElement, eventName, cssSelector, className);
         //TODO implement listener and action handler
-        console.debug('create RemoveCssClassEventHandler for ',htmlElement, eventName, cssSelector,
-            className);
+        console.debug('create RemoveCssClassEventHandler for ', _me._htmlElement, _me._eventName,
+            _me._cssSelector, _me._className);
       }
   
     });
   }
 
   if(typeof window.CELEMENTS.ToggleCssClassEventHandler === 'undefined') {
-    window.CELEMENTS.ToggleCssClassEventHandler = Class.create({
-      _htmlElement : undefined,
-      _eventName : undefined,
-      _cssSelector : undefined,
-      _className : undefined,
+    window.CELEMENTS.ToggleCssClassEventHandler = Class.create(
+        CELEMENTS.AbstractCssClassEventHandler, {
   
-      initialize : function(htmlElement, eventName, cssSelector, className) {
+      initialize : function($super, htmlElement, eventName, cssSelector, className) {
         var _me = this;
-        _me._htmlElement = $(htmlElement);
-        _me._eventName = eventName;
-        _me._cssSelector = cssSelector;
-        _me._className = className;
+        $super(htmlElement, eventName, cssSelector, className);
         //TODO implement listener and action handler
-        console.debug('create ToggleCssClassEventHandler for ',htmlElement, eventName, cssSelector,
-            className);
+        //TODO implement listener and action handler
+        console.debug('create ToggleCssClassEventHandler for ', _me._htmlElement, _me._eventName,
+            _me._cssSelector, _me._className);
       }
   
     });
