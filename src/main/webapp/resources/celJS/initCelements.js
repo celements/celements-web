@@ -665,6 +665,7 @@
       _eventName : undefined,
       _cssSelector : undefined,
       _className : undefined,
+      _actionHandlerBind : undefined,
   
       initialize : function(htmlElement, eventName, cssSelector, className) {
         var _me = this;
@@ -672,9 +673,23 @@
         _me._eventName = eventName;
         _me._cssSelector = cssSelector;
         _me._className = className;
-        //TODO implement listener and action handler
+        _me._actionHandlerBind = _me._actionHandler.bind(_me);
+
+        _me._registerActionHandler();
         console.debug('create AbstractCssClassEventHandler for ',_me._htmlElement, _me._eventName,
             _me._cssSelector, _me._className);
+      },
+      
+      _registerActionHandler : function() {
+        var _me = this;
+        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
+        Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
+      },
+  
+      _actionHandler : function() {
+        var _me = this;
+        console.debug('_actionHandler: not implemented TODO ', _me.subclasses.first(),
+            _me._htmlElement, _me._eventName, _me._cssSelector, _me._className);
       }
   
     });
@@ -687,7 +702,6 @@
       initialize : function($super, htmlElement, eventName, cssSelector, className) {
         var _me = this;
         $super(htmlElement, eventName, cssSelector, className);
-        //TODO implement listener and action handler
         console.debug('create AddCssClassEventHandler for ', _me._htmlElement, _me._eventName,
             _me._cssSelector, _me._className);
       }
@@ -702,7 +716,6 @@
       initialize : function($super, htmlElement, eventName, cssSelector, className) {
         var _me = this;
         $super(htmlElement, eventName, cssSelector, className);
-        //TODO implement listener and action handler
         console.debug('create RemoveCssClassEventHandler for ', _me._htmlElement, _me._eventName,
             _me._cssSelector, _me._className);
       }
@@ -717,8 +730,6 @@
       initialize : function($super, htmlElement, eventName, cssSelector, className) {
         var _me = this;
         $super(htmlElement, eventName, cssSelector, className);
-        //TODO implement listener and action handler
-        //TODO implement listener and action handler
         console.debug('create ToggleCssClassEventHandler for ', _me._htmlElement, _me._eventName,
             _me._cssSelector, _me._className);
       }
