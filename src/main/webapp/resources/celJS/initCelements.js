@@ -676,8 +676,6 @@
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
 
         _me._registerActionHandler();
-        console.debug('create AbstractCssClassEventHandler for ',_me._htmlElement, _me._eventName,
-            _me._cssSelector, _me._className);
       },
       
       _registerActionHandler : function() {
@@ -713,7 +711,7 @@
       _executeAction : function(htmlElems, event) {
         var _me = this;
         console.debug('_executeAction: Add ', htmlElems.length, _me._className);
-        for (var i = 0; i < htmlElems.lenght; i++) {
+        for (var i = 0; i < htmlElems.length; i++) {
           console.debug('_executeAction: Add ', _me._className, " to ", htmlElems[i]);
           htmlElems[i].addClassName(_me._className);
         }
@@ -736,7 +734,7 @@
       _executeAction : function(htmlElems, event) {
         var _me = this;
         console.debug('_executeAction: Remove ', htmlElems.length, _me._className);
-        for (var i = 0; i < htmlElems.lenght; i++) {
+        for (var i = 0; i < htmlElems.length; i++) {
           console.debug('_executeAction: Remove ', _me._className, " from ", htmlElems[i]);
           htmlElems[i].removeClassName(_me._className);
         }
@@ -759,7 +757,7 @@
       _executeAction : function(htmlElems, event) {
         var _me = this;
         console.debug('_executeAction: Toggle ', htmlElems.length, _me._className);
-        for (var i = 0; i < htmlElems.lenght; i++) {
+        for (var i = 0; i < htmlElems.length; i++) {
           console.debug('_executeAction: Toggle ', _me._className, " on ", htmlElems[i]);
           htmlElems[i].toggleClassName(_me._className);
         }
