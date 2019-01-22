@@ -712,9 +712,11 @@
   
       _executeAction : function(htmlElems, event) {
         var _me = this;
-        console.debug('_executeAction: Add ', _me._htmlElement, _me._eventName,
-            htmlElems, _me._className);
-        htmlElems.each(Element.addClassName.curry(_me._className));
+        console.debug('_executeAction: Add ', htmlElems.length, _me._className);
+        for (var i = 0; i < htmlElems.lenght; i++) {
+          console.debug('_executeAction: Add ', _me._className, " to ", htmlElems[i]);
+          htmlElems[i].addClassName(_me._className);
+        }
       }
   
     });
@@ -733,8 +735,11 @@
   
       _executeAction : function(htmlElems, event) {
         var _me = this;
-        console.debug('_executeAction: not implemented Remove ', _me._htmlElement, _me._eventName,
-            htmlElems, _me._className);
+        console.debug('_executeAction: Remove ', htmlElems.length, _me._className);
+        for (var i = 0; i < htmlElems.lenght; i++) {
+          console.debug('_executeAction: Remove ', _me._className, " from ", htmlElems[i]);
+          htmlElems[i].removeClassName(_me._className);
+        }
       }
   
     });
@@ -753,8 +758,11 @@
   
       _executeAction : function(htmlElems, event) {
         var _me = this;
-        console.debug('_executeAction: not implemented Toggle ', _me._htmlElement, _me._eventName,
-            htmlElems, _me._className);
+        console.debug('_executeAction: Toggle ', htmlElems.length, _me._className);
+        for (var i = 0; i < htmlElems.lenght; i++) {
+          console.debug('_executeAction: Toggle ', _me._className, " on ", htmlElems[i]);
+          htmlElems[i].toggleClassName(_me._className);
+        }
       }
   
     });
