@@ -686,10 +686,14 @@
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
       },
   
-      _actionHandler : function() {
+      _actionHandler : function(event) {
         var _me = this;
-        console.debug('_actionHandler: not implemented TODO ', _me.subclasses.first(),
-            _me._htmlElement, _me._eventName, _me._cssSelector, _me._className);
+        _me._executeAction($$(_me._cssSelector));
+      },
+  
+      _executeAction : function(htmlElems, event) {
+        var _me = this;
+        console.error('_executeAction: not implemented for this action handler');
       }
   
     });
@@ -704,6 +708,13 @@
         $super(htmlElement, eventName, cssSelector, className);
         console.debug('create AddCssClassEventHandler for ', _me._htmlElement, _me._eventName,
             _me._cssSelector, _me._className);
+      },
+  
+      _executeAction : function(htmlElems, event) {
+        var _me = this;
+        console.debug('_executeAction: Add ', _me._htmlElement, _me._eventName,
+            htmlElems, _me._className);
+        htmlElems.each(Element.addClassName.curry(_me._className));
       }
   
     });
@@ -718,6 +729,12 @@
         $super(htmlElement, eventName, cssSelector, className);
         console.debug('create RemoveCssClassEventHandler for ', _me._htmlElement, _me._eventName,
             _me._cssSelector, _me._className);
+      },
+  
+      _executeAction : function(htmlElems, event) {
+        var _me = this;
+        console.debug('_executeAction: not implemented Remove ', _me._htmlElement, _me._eventName,
+            htmlElems, _me._className);
       }
   
     });
@@ -732,6 +749,12 @@
         $super(htmlElement, eventName, cssSelector, className);
         console.debug('create ToggleCssClassEventHandler for ', _me._htmlElement, _me._eventName,
             _me._cssSelector, _me._className);
+      },
+  
+      _executeAction : function(htmlElems, event) {
+        var _me = this;
+        console.debug('_executeAction: not implemented Toggle ', _me._htmlElement, _me._eventName,
+            htmlElems, _me._className);
       }
   
     });
