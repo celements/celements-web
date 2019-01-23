@@ -773,6 +773,11 @@
       _interpretDataCelEventBind : undefined,
       updateCelEventHandlersBind : undefined,
       _contentChangedHandlerBind : undefined,
+      _actionFunctionMap : {
+          '+' : Element.addClassName,
+          '-' : Element.removeClassName,
+          '%' : Element.toggleClassName
+        }, //TODO refactor createEventHandler and HandlerClass-es
 
       initialize : function() {
         var _me = this;
