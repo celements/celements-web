@@ -771,15 +771,19 @@
       _parseEventInstrRegex : new RegExp('([\\w:]+)([-+%])([\\w]+):(.+)'),
       _eventHandlerList : undefined,
       _interpretDataCelEventBind : undefined,
-      registerCelEventHandlerBind : undefined,
+      updateCelEventHandlersBind : undefined,
+      _contentChangedHandlerBind : undefined,
 
       initialize : function() {
         var _me = this;
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
-        _me.registerCelEventHandlerBind = _me.registerCelEventHandler.bind(_me);
+        _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
+        _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
 
         _me._eventHandlerList = new Array();
-        //TODO implement contentChanged/beforeLoad listener and implement updating eventHanlder
+        Event.stopObserving($(document.body), "celements:contentChanged",
+            _me._contentChangedHandlerBind);
+        Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
       },
       
       _splitDataCelEventList : function(dataAttribute) {
@@ -837,11 +841,17 @@
             console.error('skipping invalid celEvent instruction: ', exp, htmlElem, newElem);
           }
         }
-        //TODO only add if 'eventHandler' is not empty
+        //TODO only add if 'eventHandler' is not empty and add celOnEventInitialized css flag
         _me._eventHandlerList.push(newElem);
       },
 
-      registerCelEventHandler : function(htmlContainer) {
+      _contentChangedHandler : function(event) {
+        var _me = this;
+        console.debug('eventManager contentChanged ', event);
+        _me.updateCelEventHandlers(event.memo.htmlElem);
+      },
+
+      updateCelEventHandlers : function(htmlContainer) {
         var _me = this;
         var theContainerElem = htmlContainer || $(document.body);
         _me._removeDisappearedElem();
@@ -851,13 +861,14 @@
       _removeDisappearedElem : function() {
         var _me = this;
         //TODO remove disappeared html elem and unregister and remove those who's data-attribute
-        //TODO  changed on contentChange event
+        //TODO  changed on contentChange event. Remove celOnEventInitialized flag on elems with
+        //TODO changed data-attribute.
       }
 
     });
 
     window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
-    celAddOnBeforeLoadListener(window.CELEMENTS.globalEventManager.registerCelEventHandlerBind);
+    celAddOnBeforeLoadListener(window.CELEMENTS.globalEventManager.updateCelEventHandlersBind);
   }
   /**
    *  END: celEventManager
