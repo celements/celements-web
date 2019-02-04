@@ -1,26 +1,26 @@
 #if($elemParams.size() > 1)
-#set($overwriteWeb = $elemParams.get(1))
+#set($overwriteWeb = $elemParams.get(1))##
 #end
 #if("$!elemId" != '')
-#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
+#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))##
 #if("$!overwriteWeb" == '')
-#set($overwriteWeb = $menuItemDoc.getSpace())
+#set($overwriteWeb = $menuItemDoc.getSpace())##
 #end
-#set($menuItemObj = $menuItemDoc.getObject('Celements2.MenuItem'))
-#set($menuItem_parentDoc =  $menuItemDoc.getParent())
-#set($menuPart = $menuItemObj.getProperty('part_name').getValue())
+#set($menuItemObj = $menuItemDoc.getObject('Celements2.MenuItem'))##
+#set($menuItem_parentDoc =  $menuItemDoc.getParent())##
+#set($menuPart = $menuItemObj.getProperty('part_name').getValue())##
 #else
-#set($menuItem_parentDoc =  '')
+#set($menuItem_parentDoc =  '')##
 #if("$!overwriteWeb" == '')
-#set($overwriteWeb = $doc.getSpace())
+#set($overwriteWeb = $doc.getSpace())##
 #end
 #set($menuPart = '')
 #if($elemParams.size() > 2)
-#set($menuPart = $elemParams.get(2))
+#set($menuPart = $elemParams.get(2))##
 #end
 #end
-#set($l = $doc.getURL('view', 'xpage=overlay&conf=AddPage'))
-#set($l = "${l}&space=${overwriteWeb}&doc_parent=$!{menuItem_parentDoc}")
-#set($l = "${l}&menuPart=$!{menuPart}")
-#set($cmenu_pageLink = "${l}&menu_position=&language=${default_language}&redirmode=editMenu")
+#set($l = $doc.getURL('view', 'xpage=overlay&conf=AddPage'))##
+#set($l = "${l}&space=${overwriteWeb}&doc_parent=$!{menuItem_parentDoc}")##
+#set($l = "${l}&menuPart=$!{menuPart}")##
+#set($cmenu_pageLink = "${l}&menu_position=&language=${default_language}&redirmode=editMenu")##
 window.location.href=&quot;${cmenu_pageLink}&quot;
