@@ -1,0 +1,14 @@
+#if(("$!elemId" != '') && $xwiki.exists($services.model.resolveDocument($elemId)))
+#set($menuItemDocRef = $services.model.resolveDocument($elemId))
+#if(${elemId} == ${doc.fullName})
+  #set($red = "${doc.space}.WebHome")
+#else
+  #set($red = ${elemId})
+#end
+#set($delURL = $xwiki.getURL($elemId,'view', "xpage=celements_ajax&ajax_mode=delMenuItem&space=${menuItemDocRef.getLastSpaceReference().getName()}&red=${red}"))
+#set($l = "confirmURL(&quot;$adminMsg.get('cel_nav_confirm_delete')&quot;,")
+#set($l = "${l}&quot;${delURL}")
+#set($l = "${l}&quot;)")
+#set($cmenu_pageLink = "${l}")
+$cmenu_pageLink##
+#end
