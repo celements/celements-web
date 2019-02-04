@@ -1,15 +1,17 @@
-#if(("$!elemId" != '') && ($celementsweb.getMaxConfiguredNavigationLevel() > $celementsweb.getDocumentParentsList($elemId, true).size()))
+#if("$!elemId" != '')
+#set($elemDocRef = $services.model.resolveDocument("$!elemId"))##
+#if($services.treeNode.getMaxConfiguredNavigationLevel() > $services.getDocumentParentsDocRefList($elemDocRef, true).size())
 #if($elemParams.size() > 1)
 #set($overwriteWeb = $elemParams.get(1))##
 #else
-#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))##
-#set($overwriteWeb = $menuItemDoc.getSpace())##
+#set($overwriteWeb = $elemDocRef.lastSpaceReference.name)##
 #end
 #if("$!overwriteWeb" == '')
 #set($overwriteWeb = $doc.getSpace())##
 #end
-#set($l = $doc.getURL('view', 'xpage=overlay&conf=AddPage'))##
-#set($l = "${l}&space=${overwriteWeb}&doc_parent=${elemId}")##
-#set($cmenu_pageLink = "${l}&language=${default_language}&redirmode=editMenu")##
+#set($l = $services.url.getURL($doc.documentReference, 'view', 'xpage=overlay&conf=AddPage'))##
+#set($l = "$!{l}&space=$!{overwriteWeb}&doc_parent=$!{elemId}")##
+#set($cmenu_pageLink = "$!{l}&language=$!{default_language}&redirmode=editMenu")##
 window.location.href=&quot;${cmenu_pageLink}&quot;##
+#end
 #end

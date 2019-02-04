@@ -1,6 +1,8 @@
-#if(("$!elemId" != '') && $xwiki.exists($services.model.resolveDocument($elemId)))
-#set($fullname = $doc.getURL('view'))##
-#set($l = "$!xwiki.getURL($elemId, 'edit')")##
-#set($cmenu_pageLink = "${l}?xredirect=${fullname}")##
-window.location.href=&quot;${cmenu_pageLink}&quot;##
+#if("$!elemId" != '')
+#set($elemDocRef = $services.model.resolveDocument($elemId))##
+#if($services.modelAccess.exists($elemDocRef))
+#set($xredirect = $services.url.getURL($doc.documentReference, 'view'))##
+#set($editUrl = $services.url.getURL($elemDocRef, 'edit', "xredirect=$!{xredirect}"))##
+window.location.href=&quot;$!{editUrl}&quot;##
+#end
 #end
