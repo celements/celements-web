@@ -1,5 +1,5 @@
 #if(("$!elemId" != '') && $xwiki.exists($services.model.resolveDocument($elemId)))
-#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
-#set($cmenu_pageLink = "$!menuItemDoc.getURL('edit', 'tab=tb4')")
+#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))##
+#set($cmenu_pageLink = "$!menuItemDoc.getURL('edit', 'tab=tb4')")##
 window.location.href=&quot;${cmenu_pageLink}&quot;##
 #end
