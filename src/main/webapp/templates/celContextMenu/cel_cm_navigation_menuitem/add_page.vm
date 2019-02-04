@@ -14,7 +14,7 @@
 #if("$!overwriteWeb" == '')
 #set($overwriteWeb = $doc.getSpace())##
 #end
-#set($menuPart = '')
+#set($menuPart = '')##
 #if($elemParams.size() > 2)
 #set($menuPart = $elemParams.get(2))##
 #end
