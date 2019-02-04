@@ -1,6 +1,6 @@
 #if("$!elemId" != '')
 #set($elemDocRef = $services.model.resolveDocument("$!elemId"))##
-#if($services.treeNode.getMaxConfiguredNavigationLevel() > $services.getDocumentParentsDocRefList($elemDocRef, true).size())
+#if($services.treeNode.getMaxConfiguredNavigationLevel() > $services.webUtils.getDocumentParentsDocRefList($elemDocRef, true).size())
 #if($elemParams.size() > 1)
 #set($overwriteWeb = $elemParams.get(1))##
 #else
