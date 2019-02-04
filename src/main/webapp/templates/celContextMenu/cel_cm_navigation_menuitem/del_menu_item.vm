@@ -1,0 +1,16 @@
+#if("$!elemId" != '')
+#set($elemDocRef = $services.model.resolveDocument($elemId))##
+#if($services.modelAccess.exists($elemDocRef))
+#if(${elemId} == ${doc.fullName})
+  #set($red = "${doc.space}.WebHome")##
+#else
+  #set($red = ${elemId})##
+#end
+#set($delURL = $services.url.getURL($elemDocRef, 'view', "xpage=celements_ajax&ajax_mode=delMenuItem&space=${elemDocRef.lastSpaceReference.name}&red=${red}"))##
+#set($l = "confirmURL(&quot;$adminMsg.get('cel_nav_confirm_delete')&quot;,")##
+#set($l = "${l}&quot;${delURL}")##
+#set($l = "${l}&quot;)")##
+#set($cmenu_pageLink = "${l}")##
+$cmenu_pageLink##
+#end
+#end
