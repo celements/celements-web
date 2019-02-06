@@ -720,9 +720,6 @@
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
 
         _me._eventHandlerList = new Array();
-        Event.stopObserving($(document.body), "celements:contentChanged",
-            _me._contentChangedHandlerBind);
-        Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
       },
       
       _splitDataCelEventList : function(dataAttribute) {
@@ -789,6 +786,9 @@
       updateCelEventHandlers : function(htmlContainer) {
         var _me = this;
         var theContainerElem = htmlContainer || $(document.body);
+        Event.stopObserving($(document.body), "celements:contentChanged",
+            _me._contentChangedHandlerBind);
+        Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElem();
         $(theContainerElem).select('.celOnEvent').each(_me._interpretDataCelEventBind);
       },
