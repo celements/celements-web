@@ -692,7 +692,7 @@
         var htmlElems = $$(_me._cssSelector);
         console.debug('action: ', _me._actionFunction, _me._className, " to ", htmlElems.length);
         for (var i = 0; i < htmlElems.length; i++) {
-          console.debug('action: ', __me._actionFunction, _me._className, " to ", htmlElems[i]);
+          console.debug('action: ', _me._actionFunction, _me._className, " to ", htmlElems[i]);
           _me._actionFunction(htmlElems[i], _me._className);
         }
       }
