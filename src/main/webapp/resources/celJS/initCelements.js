@@ -760,6 +760,7 @@
 
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
+        console.debug('_interpretDataCelEvent: on element ', htmlElem);
         //TODO prevent double initialization by adding celOnEventInitialized class
         var instrAttr = htmlElem.dataset.celEvent;
         var newElem = {
