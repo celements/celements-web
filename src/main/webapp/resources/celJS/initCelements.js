@@ -692,7 +692,7 @@
         var htmlElems = $$(_me._cssSelector);
         console.debug('action: ', _me._actionFunction, _me._className, " to ", htmlElems.length);
         for (var i = 0; i < htmlElems.length; i++) {
-          console.debug('action: ', __me._actionFunction, me._className, " to ", htmlElems[i]);
+          console.debug('action: ', _me._actionFunction, _me._className, " to ", htmlElems[i]);
           _me._actionFunction(htmlElems[i], _me._className);
         }
       },
@@ -725,9 +725,6 @@
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
 
         _me._eventHandlerList = new Array();
-        Event.stopObserving($(document.body), "celements:contentChanged",
-            _me._contentChangedHandlerBind);
-        Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
       },
       
       _splitDataCelEventList : function(dataAttribute) {
@@ -765,6 +762,7 @@
 
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
+        console.debug('_interpretDataCelEvent: on element ', htmlElem);
         if (!htmlElem.classList.contains("celOnEventInitialized")) {
           var instrAttr = htmlElem.dataset.celEvent;
           var newElem = {
@@ -800,6 +798,9 @@
       updateCelEventHandlers : function(htmlContainer) {
         var _me = this;
         var theContainerElem = htmlContainer || $(document.body);
+        Event.stopObserving($(document.body), "celements:contentChanged",
+            _me._contentChangedHandlerBind);
+        Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
         $(theContainerElem).select('.celOnEvent').each(_me._interpretDataCelEventBind);
       },
