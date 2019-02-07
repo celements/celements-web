@@ -683,7 +683,7 @@
       
       _registerActionHandler : function() {
         var _me = this;
-        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
+        _me.unregister();
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
       },
   
@@ -695,6 +695,11 @@
           console.debug('action: ', __me._actionFunction, me._className, " to ", htmlElems[i]);
           _me._actionFunction(htmlElems[i], _me._className);
         }
+      },
+
+      unregister : function() {
+        var _me = this;
+        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
       }
   
     });
@@ -760,23 +765,30 @@
 
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
-        //TODO prevent double initialization by adding celOnEventInitialized class
-        var instrAttr = htmlElem.dataset.celEvent;
-        var newElem = {
-            'htmlElem' : htmlElem,
-            'dataValue' : instrAttr, 
-            'eventHandler' : new Array()
-        };
-        var instrList = _me._splitDataCelEventList(instrAttr);
-        for (var i = 0; i < instrList.length; i++) {
-          try {
-            newElem.eventHandler.push(_me._createEventHandler(htmlElem, instrList[i]));
-          } catch(exp) {
-            console.error('skipping invalid celEvent instruction: ', exp, htmlElem, newElem);
+        if (!htmlElem.classList.contains("celOnEventInitialized")) {
+          var instrAttr = htmlElem.dataset.celEvent;
+          var newElem = {
+              'htmlElem' : htmlElem,
+              'dataValue' : instrAttr,
+              'eventHandler' : new Array()
+          };
+          for (celEventInstruction of _me._splitDataCelEventList(instrAttr)) {
+            try {
+              newElem.eventHandler.push(_me._createEventHandler(htmlElem, celEventInstruction));
+            } catch (exp) {
+              console.error('skipping invalid celEvent instruction: ', exp, htmlElem, newElem);
+            }
           }
+          if (newElem.eventHandler.length > 0) {
+            _me._eventHandlerList.push(newElem);
+            console.debug('interpretData: new element ', htmlElem, newElem);
+          } else {
+            console.debug('interpretData: no valid instructions found on ', htmlElem);
+          }
+          htmlElem.addClassName("celOnEventInitialized");
+        } else {
+          console.debug('interpretData: skip already initialized ', htmlElem);
         }
-        //TODO only add if 'eventHandler' is not empty and add celOnEventInitialized css flag
-        _me._eventHandlerList.push(newElem);
       },
 
       _contentChangedHandler : function(event) {
@@ -788,15 +800,25 @@
       updateCelEventHandlers : function(htmlContainer) {
         var _me = this;
         var theContainerElem = htmlContainer || $(document.body);
-        _me._removeDisappearedElem();
+        _me._removeDisappearedElems();
         $(theContainerElem).select('.celOnEvent').each(_me._interpretDataCelEventBind);
       },
 
-      _removeDisappearedElem : function() {
+      _removeDisappearedElems : function() {
         var _me = this;
-        //TODO remove disappeared html elem and unregister and remove those who's data-attribute
-        //TODO  changed on contentChange event. Remove celOnEventInitialized flag on elems with
-        //TODO changed data-attribute.
+        for(var i = _me._eventHandlerList.length - 1; i >= 0; i--) {
+          var elem = _me._eventHandlerList[i];
+          var isInBody = $(document.body).contains(elem.htmlElem);
+          var changedDataValue = (elem.htmlElem.dataset.celEvent !== elem.dataValue);
+          if (!isInBody || changedDataValue) {
+            for (eventHandler of elem.eventHandler) {
+              eventHandler.unregister();
+            }
+            _me._eventHandlerList.splice(i, 1);
+            elem.htmlElem.removeClassName("celOnEventInitialized");
+            console.debug('removeDisappearedElem: ', elem);
+          }
+        }
       }
 
     });
