@@ -708,7 +708,7 @@
   if(typeof window.CELEMENTS.EventManager === 'undefined') {
     window.CELEMENTS.EventManager = Class.create({
       _parseEventInstrRegex : new RegExp('([\\w:]+)([-+%])([\\w]+):(.+)'),
-      _eventHandlerList : undefined,
+      _eventElements : undefined,
       _interpretDataCelEventBind : undefined,
       updateCelEventHandlersBind : undefined,
       _contentChangedHandlerBind : undefined,
@@ -720,11 +720,10 @@
 
       initialize : function() {
         var _me = this;
+        _me._eventElements = new Array();
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
-
-        _me._eventHandlerList = new Array();
       },
       
       _splitDataCelEventList : function(dataAttribute) {
@@ -763,22 +762,22 @@
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         console.debug('_interpretDataCelEvent: on element ', htmlElem);
-        if (!htmlElem.classList.contains("celOnEventInitialized")) {
-          var instrAttr = htmlElem.dataset.celEvent;
+        if (!htmlElem.hasClassName("celOnEventInitialized")) {
+          var instrAttr = htmlElem.readAttribute("data-cel-event");
           var newElem = {
               'htmlElem' : htmlElem,
               'dataValue' : instrAttr,
-              'eventHandler' : new Array()
+              'eventHandlers' : new Array()
           };
           for (celEventInstruction of _me._splitDataCelEventList(instrAttr)) {
             try {
-              newElem.eventHandler.push(_me._createEventHandler(htmlElem, celEventInstruction));
+              newElem.eventHandlers.add(_me._createEventHandler(htmlElem, celEventInstruction));
             } catch (exp) {
               console.error('skipping invalid celEvent instruction: ', exp, htmlElem, newElem);
             }
           }
-          if (newElem.eventHandler.length > 0) {
-            _me._eventHandlerList.push(newElem);
+          if (newElem.eventHandlers.length > 0) {
+            _me._eventElements.add(newElem);
             console.debug('interpretData: new element ', htmlElem, newElem);
           } else {
             console.debug('interpretData: no valid instructions found on ', htmlElem);
@@ -807,15 +806,15 @@
 
       _removeDisappearedElems : function() {
         var _me = this;
-        for(var i = _me._eventHandlerList.length - 1; i >= 0; i--) {
-          var elem = _me._eventHandlerList[i];
+        for (var i = _me._eventElements.length - 1; i >= 0; i--) {
+          var elem = _me._eventElements[i];
           var isInBody = $(document.body).contains(elem.htmlElem);
-          var changedDataValue = (elem.htmlElem.dataset.celEvent !== elem.dataValue);
+          var changedDataValue = (elem.htmlElem.readAttribute("data-cel-event") !== elem.dataValue);
           if (!isInBody || changedDataValue) {
-            for (eventHandler of elem.eventHandler) {
+            for (eventHandler of elem.eventHandlers) {
               eventHandler.unregister();
             }
-            _me._eventHandlerList.splice(i, 1);
+            _me._eventElements.splice(i, 1);
             elem.htmlElem.removeClassName("celOnEventInitialized");
             console.debug('removeDisappearedElem: ', elem);
           }
