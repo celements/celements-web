@@ -676,30 +676,30 @@
         _me._className = className;
         _me._actionFunction = actionFunction;
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
-        console.debug('create CssClassEventHandler for ', _me._htmlElement, _me._eventName,
-            _me._cssSelector, _me._className);
         _me._registerActionHandler();
       },
       
       _registerActionHandler : function() {
         var _me = this;
-        _me.unregister();
+        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
+        console.debug('register: ', _me._htmlElement, _me._eventName, _me._cssSelector,
+            _me._className, _me._actionFunction.name);
       },
   
       _actionHandler : function(event) {
         var _me = this;
-        var htmlElems = $$(_me._cssSelector);
-        console.debug('action: ', _me._actionFunction, _me._className, " to ", htmlElems.length);
-        for (var i = 0; i < htmlElems.length; i++) {
-          console.debug('action: ', _me._actionFunction, _me._className, " to ", htmlElems[i]);
-          _me._actionFunction(htmlElems[i], _me._className);
-        }
+        $$(_me._cssSelector).each(function(htmlElem) {
+          console.debug('action: ', _me._actionFunction.name, _me._className, " to ", htmlElem);
+          _me._actionFunction(htmlElem, _me._className);
+        });
       },
 
       unregister : function() {
         var _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
+        console.debug('unregister: ', _me._htmlElement, _me._eventName, _me._cssSelector,
+            _me._className, _me._actionFunction.name);
       }
   
     });
