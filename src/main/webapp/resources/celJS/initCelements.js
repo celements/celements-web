@@ -726,9 +726,13 @@
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
       },
       
-      _splitDataCelEventList : function(dataAttribute) {
+      _splitDataCelEventList : function(dataValue) {
         var _me = this;
-        return dataAttribute.split('&');
+        var ret = new Array();
+        if (dataValue) {
+          ret = dataValue.split('&');
+        }
+        return ret;
       },
 
       _parseEventInstruction : function(celEventInstruction) {
@@ -756,20 +760,20 @@
               eventInstrData.cssSelector, eventInstrData.className, actionFunction);
         } else {
           throw "_createEventHandler: unknown action '" + eventInstrData.action + '"';
-        } 
+        }
       },
 
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         console.debug('_interpretDataCelEvent: on element ', htmlElem);
         if (!htmlElem.hasClassName("celOnEventInitialized")) {
-          var instrAttr = htmlElem.readAttribute("data-cel-event");
+          var dataValue = htmlElem.readAttribute("data-cel-event");
           var newElem = {
               'htmlElem' : htmlElem,
-              'dataValue' : instrAttr,
+              'dataValue' : dataValue,
               'eventHandlers' : new Array()
           };
-          _me._splitDataCelEventList(instrAttr).each(function(celEventInstruction) {
+          _me._splitDataCelEventList(dataValue).each(function(celEventInstruction) {
             try {
               newElem.eventHandlers.push(_me._createEventHandler(htmlElem, celEventInstruction));
             } catch (exp) {
