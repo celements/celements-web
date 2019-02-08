@@ -683,23 +683,24 @@
         var _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
-        console.debug('register: ', _me._htmlElement, _me._eventName, _me._cssSelector,
-            _me._className, _me._actionFunction.name);
+        console.debug('EventHandler register: ', _me._htmlElement, _me._eventName,
+            _me._cssSelector, _me._className, _me._actionFunction.name);
       },
   
       _actionHandler : function(event) {
         var _me = this;
         $$(_me._cssSelector).each(function(htmlElem) {
-          console.debug('action: ', _me._actionFunction.name, _me._className, " to ", htmlElem);
           _me._actionFunction(htmlElem, _me._className);
+          console.debug('EventHandler action: ', _me._actionFunction.name, _me._className, " to ",
+              htmlElem);
         });
       },
 
       unregister : function() {
         var _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
-        console.debug('unregister: ', _me._htmlElement, _me._eventName, _me._cssSelector,
-            _me._className, _me._actionFunction.name);
+        console.debug('EventHandler unregister: ', _me._htmlElement, _me._eventName,
+            _me._cssSelector, _me._className, _me._actionFunction.name);
       }
   
     });
@@ -746,8 +747,8 @@
             'cssSelector' : instrParts[4],
           };
         } else {
-          throw "_parseEventInstruction: unable to parse event instruction '"
-            + celEventInstruction + "'"; 
+          throw "parseEventInstruction: unable to parse event instruction '"
+              + celEventInstruction + "'"; 
         }
       },
 
@@ -759,13 +760,13 @@
           return new window.CELEMENTS.CssClassEventHandler(htmlElem, eventInstrData.eventName,
               eventInstrData.cssSelector, eventInstrData.className, actionFunction);
         } else {
-          throw "_createEventHandler: unknown action '" + eventInstrData.action + '"';
+          throw "createEventHandler: unknown action '" + eventInstrData.action + '"';
         }
       },
 
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
-        console.debug('_interpretDataCelEvent: on element ', htmlElem);
+        var logPref = 'EventManager interpretData: ';
         if (!htmlElem.hasClassName("celOnEventInitialized")) {
           var dataValue = htmlElem.readAttribute("data-cel-event");
           var newElem = {
@@ -777,24 +778,24 @@
             try {
               newElem.eventHandlers.push(_me._createEventHandler(htmlElem, celEventInstruction));
             } catch (exp) {
-              console.error('skipping invalid celEvent instruction: ', exp, htmlElem, newElem);
+              console.error(logPref, 'invalid instruction ', exp, htmlElem);
             }
           });
           if (newElem.eventHandlers.length > 0) {
             _me._eventElements.push(newElem);
-            console.debug('interpretData: new element ', htmlElem, newElem);
+            console.debug(logPref, 'new element ', htmlElem);
           } else {
-            console.debug('interpretData: no valid instructions found on ', htmlElem);
+            console.debug(logPref, 'no valid instructions found on ', htmlElem);
           }
           htmlElem.addClassName("celOnEventInitialized");
         } else {
-          console.debug('interpretData: skip already initialized ', htmlElem);
+          console.debug(logPref, 'skip already initialized: ', htmlElem);
         }
       },
 
       _contentChangedHandler : function(event) {
         var _me = this;
-        console.debug('eventManager contentChanged ', event);
+        console.debug('EventManager contentChanged ', event);
         _me.updateCelEventHandlers(event.memo.htmlElem);
       },
 
@@ -818,7 +819,7 @@
         	elem.eventHandlers.each(function(handler) { handler.unregister(); });
             _me._eventElements.splice(i, 1);
             elem.htmlElem.removeClassName("celOnEventInitialized");
-            console.debug('removeDisappearedElem: ', elem);
+            console.debug('EventManager removeDisappearedElem: ', elem);
           }
         }
       }
