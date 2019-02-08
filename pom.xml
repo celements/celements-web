@@ -90,7 +90,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>3.6</version>
+      <version>3.7-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
