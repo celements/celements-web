@@ -708,7 +708,7 @@
 
   if(typeof window.CELEMENTS.EventManager === 'undefined') {
     window.CELEMENTS.EventManager = Class.create({
-      _parseEventInstrRegex : new RegExp('([\\w:]+)([-+%])([\\w]+):(.+)'),
+      _parseEventInstrRegex : new RegExp('([\\w]+)([%+-])([\\w-]+):(.+)'),
       _eventElements : undefined,
       _interpretDataCelEventBind : undefined,
       updateCelEventHandlersBind : undefined,
