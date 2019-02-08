@@ -691,7 +691,7 @@
         var _me = this;
         var htmlElems = $$(_me._cssSelector);
         console.debug('action: ', _me._actionFunction, _me._className, " to ", htmlElems.length);
-        for (var i = 0; i < htmlElems.length; i++) {
+        for (let i = 0; i < htmlElems.length; i++) {
           console.debug('action: ', _me._actionFunction, _me._className, " to ", htmlElems[i]);
           _me._actionFunction(htmlElems[i], _me._className);
         }
@@ -769,7 +769,7 @@
               'dataValue' : instrAttr,
               'eventHandlers' : new Array()
           };
-          for (celEventInstruction of _me._splitDataCelEventList(instrAttr)) {
+          for (let celEventInstruction of _me._splitDataCelEventList(instrAttr)) {
             try {
               newElem.eventHandlers.add(_me._createEventHandler(htmlElem, celEventInstruction));
             } catch (exp) {
@@ -806,12 +806,12 @@
 
       _removeDisappearedElems : function() {
         var _me = this;
-        for (var i = _me._eventElements.length - 1; i >= 0; i--) {
+        for (let i = _me._eventElements.length - 1; i >= 0; i--) {
           var elem = _me._eventElements[i];
           var isInBody = $(document.body).contains(elem.htmlElem);
           var changedDataValue = (elem.htmlElem.readAttribute("data-cel-event") !== elem.dataValue);
           if (!isInBody || changedDataValue) {
-            for (eventHandler of elem.eventHandlers) {
+            for (let eventHandler of elem.eventHandlers) {
               eventHandler.unregister();
             }
             _me._eventElements.splice(i, 1);
