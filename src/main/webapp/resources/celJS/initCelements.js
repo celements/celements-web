@@ -771,13 +771,13 @@
           };
           for (let celEventInstruction of _me._splitDataCelEventList(instrAttr)) {
             try {
-              newElem.eventHandlers.add(_me._createEventHandler(htmlElem, celEventInstruction));
+              newElem.eventHandlers.push(_me._createEventHandler(htmlElem, celEventInstruction));
             } catch (exp) {
               console.error('skipping invalid celEvent instruction: ', exp, htmlElem, newElem);
             }
           }
           if (newElem.eventHandlers.length > 0) {
-            _me._eventElements.add(newElem);
+            _me._eventElements.push(newElem);
             console.debug('interpretData: new element ', htmlElem, newElem);
           } else {
             console.debug('interpretData: no valid instructions found on ', htmlElem);
@@ -807,9 +807,9 @@
       _removeDisappearedElems : function() {
         var _me = this;
         for (let i = _me._eventElements.length - 1; i >= 0; i--) {
-          var elem = _me._eventElements[i];
-          var isInBody = $(document.body).contains(elem.htmlElem);
-          var changedDataValue = (elem.htmlElem.readAttribute("data-cel-event") !== elem.dataValue);
+          let elem = _me._eventElements[i];
+          let isInBody = $(document.body).contains(elem.htmlElem);
+          let changedDataValue = (elem.htmlElem.readAttribute("data-cel-event") !== elem.dataValue);
           if (!isInBody || changedDataValue) {
             for (let eventHandler of elem.eventHandlers) {
               eventHandler.unregister();
