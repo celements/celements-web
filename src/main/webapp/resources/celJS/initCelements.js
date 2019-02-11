@@ -686,8 +686,8 @@
         var _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
-        console.debug('EventHandler - register: ', _me._htmlElement, _me._eventName,
-            _me._cssSelector, _me._className, _me._actionFunction.name, _me._actionCondition);
+        console.debug('EventHandler - register: ', _me._eventName, _me._cssSelector,
+          _me._className, _me._actionFunction.name, _me._actionCondition, _me._htmlElement);
       },
   
       _actionHandler : function(event) {
@@ -708,8 +708,8 @@
       unregister : function() {
         var _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
-        console.debug('EventHandler - unregister: ', _me._htmlElement, _me._eventName,
-            _me._cssSelector, _me._className, _me._actionFunction.name);
+        console.debug('EventHandler - unregister: ', _me._eventName, _me._cssSelector,
+          _me._className, _me._actionFunction.name, _me._actionCondition, _me._htmlElement);
       }
   
     });
@@ -749,23 +749,22 @@
       _parseEventInstruction : function(instruction) {
         var _me = this;
         var parts = instruction.match(_me._instructionRegex) || [];
-        if (parts.length < 5) {
-          throw "parseEventInstruction: unable to parse event instruction '" + instruction + "'"; 
-        }
         var data = {
           eventName : parts[1],
           action : parts[2],
           className : parts[3],
-          cssSelector : parts[4]
+          cssSelector : parts[4],
+          condition : parts[5]
         };
         if (data.eventName === 'load') {
           // action won't ever trigger on load, using earliest possible
           data.eventName = 'cel:onEventInitialized';
         }
-        if (parts.length > 5) {
-          data.condition = parts[5];
+        if (data.eventName && data.action && data.className && data.cssSelector) {
+          return data;
+        } else {
+          throw "parseEventInstruction: unable to parse event instruction '" + instruction + "'"; 
         }
-        return data;
       },
 
       _createEventHandler : function(htmlElem, instruction) {
