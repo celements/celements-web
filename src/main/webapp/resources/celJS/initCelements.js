@@ -812,12 +812,13 @@
 
       updateCelEventHandlers : function(htmlContainer) {
         var _me = this;
-        var theContainerElem = htmlContainer || $(document.body);
+        htmlContainer = htmlContainer || $(document.body);
         Event.stopObserving($(document.body), "celements:contentChanged",
             _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
-        $(theContainerElem).select('.celOnEvent').each(_me._interpretDataCelEventBind);
+        $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
+        htmlContainer.fire('celOnEventInitialized');
       },
 
       _removeDisappearedElems : function() {
@@ -827,7 +828,7 @@
           var isInBody = $(document.body).contains(elem.htmlElem);
           var changedDataValue = (elem.htmlElem.readAttribute("data-cel-event") !== elem.dataValue);
           if (!isInBody || changedDataValue) {
-        	elem.eventHandlers.each(function(handler) { handler.unregister(); });
+            elem.eventHandlers.each(function(handler) { handler.unregister(); });
             _me._eventElements.splice(i, 1);
             elem.htmlElem.removeClassName("celOnEventInitialized");
             console.debug('EventManager removeDisappearedElem: ', elem);
