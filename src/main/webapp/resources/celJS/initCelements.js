@@ -757,6 +757,10 @@
           className : parts[3],
           cssSelector : parts[4]
         };
+        if (data.eventName === 'load') {
+          // action won't ever trigger on load, using earliest possible
+          data.eventName = 'cel:onEventInitialized';
+        }
         if (parts.length > 5) {
           data.condition = parts[5];
         }
@@ -778,8 +782,8 @@
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         var logPref = 'EventManager interpretData: ';
-        if (!htmlElem.hasClassName("celOnEventInitialized")) {
-          var dataValue = htmlElem.readAttribute("data-cel-event");
+        if (!htmlElem.hasClassName('celOnEventInitialized')) {
+          var dataValue = htmlElem.readAttribute('data-cel-event');
           var newElem = {
               'htmlElem' : htmlElem,
               'dataValue' : dataValue,
@@ -798,7 +802,8 @@
           } else {
             console.debug(logPref, 'no valid instructions found on ', htmlElem);
           }
-          htmlElem.addClassName("celOnEventInitialized");
+          htmlElem.addClassName('celOnEventInitialized');
+          htmlElem.fire('cel:onEventInitialized');
         } else {
           console.debug(logPref, 'skip already initialized: ', htmlElem);
         }
@@ -818,7 +823,6 @@
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
         $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
-        htmlContainer.fire('celOnEventInitialized');
       },
 
       _removeDisappearedElems : function() {
@@ -826,11 +830,11 @@
         for (var i = _me._eventElements.length - 1; i >= 0; i--) {
           var elem = _me._eventElements[i];
           var isInBody = $(document.body).contains(elem.htmlElem);
-          var changedDataValue = (elem.htmlElem.readAttribute("data-cel-event") !== elem.dataValue);
+          var changedDataValue = (elem.htmlElem.readAttribute('data-cel-event') !== elem.dataValue);
           if (!isInBody || changedDataValue) {
             elem.eventHandlers.each(function(handler) { handler.unregister(); });
             _me._eventElements.splice(i, 1);
-            elem.htmlElem.removeClassName("celOnEventInitialized");
+            elem.htmlElem.removeClassName('celOnEventInitialized');
             console.debug('EventManager removeDisappearedElem: ', elem);
           }
         }
