@@ -666,15 +666,18 @@
       _cssSelector : undefined,
       _className : undefined,
       _actionFunction : undefined,
+      _actionCondition : undefined,
       _actionHandlerBind : undefined,
   
-      initialize : function(htmlElement, eventName, cssSelector, className, actionFunction) {
+      initialize : function(htmlElement, eventName, cssSelector, className, actionFunction, 
+          actionCondition) {
         var _me = this;
         _me._htmlElement = $(htmlElement);
         _me._eventName = eventName;
         _me._cssSelector = cssSelector;
         _me._className = className;
         _me._actionFunction = actionFunction;
+        _me._actionCondition = actionCondition;
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
         _me._registerActionHandler();
       },
@@ -684,15 +687,20 @@
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug('EventHandler register: ', _me._htmlElement, _me._eventName,
-            _me._cssSelector, _me._className, _me._actionFunction.name);
+            _me._cssSelector, _me._className, _me._actionFunction.name, _me._actionCondition);
       },
   
       _actionHandler : function(event) {
         var _me = this;
-        $$(_me._cssSelector).each(function(htmlElem) {
-          _me._actionFunction(htmlElem, _me._className);
-          console.debug('EventHandler action: ', _me._actionFunction.name, _me._className, " to ",
-              htmlElem);
+        $$(_me._cssSelector).each(function(elem) {
+          var me = elem; // set me as elem for eval call
+          if (!_me._actionCondition || eval(_me._actionCondition)) {
+            _me._actionFunction(elem, _me._className);
+            console.debug('EventHandler action: ', _me._actionFunction.name, _me._className,
+              " to ", elem);
+          } else {
+            console.debug('EventHandler skip failed action condition: ', _me._actionCondition);
+          }
         });
       },
 
@@ -708,23 +716,24 @@
 
   if(typeof window.CELEMENTS.EventManager === 'undefined') {
     window.CELEMENTS.EventManager = Class.create({
-      _parseEventInstrRegex : new RegExp('([\\w]+)([%+-])([\\w-]+):(.+)'),
-      _eventElements : undefined,
-      _interpretDataCelEventBind : undefined,
-      updateCelEventHandlersBind : undefined,
-      _contentChangedHandlerBind : undefined,
+      _instructionRegex : new RegExp('([\\w]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
       _actionFunctionMap : {
+          // map may be extendend. also extend second regex group accordingly
           '+' : Element.addClassName,
           '-' : Element.removeClassName,
           '%' : Element.toggleClassName
-        },
+      },
+      _eventElements : undefined,
+      _interpretDataCelEventBind : undefined,
+      _contentChangedHandlerBind : undefined,
+      updateCelEventHandlersBind : undefined,
 
       initialize : function() {
         var _me = this;
         _me._eventElements = new Array();
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
-        _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
+        _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
       },
       
       _splitDataCelEventList : function(dataValue) {
@@ -736,31 +745,33 @@
         return ret;
       },
 
-      _parseEventInstruction : function(celEventInstruction) {
+      _parseEventInstruction : function(instruction) {
         var _me = this;
-        var instrParts = celEventInstruction.match(_me._parseEventInstrRegex);
-        if (instrParts && instrParts.length == 5) {
-          return { 
-            'eventName' : instrParts[1],
-            'action' : instrParts[2],
-            'className' : instrParts[3],
-            'cssSelector' : instrParts[4],
-          };
-        } else {
-          throw "parseEventInstruction: unable to parse event instruction '"
-              + celEventInstruction + "'"; 
+        var parts = instruction.match(_me._instructionRegex) || [];
+        if (parts.length < 5) {
+          throw "parseEventInstruction: unable to parse event instruction '" + instruction + "'"; 
         }
+        var data = {
+          eventName : parts[1],
+          action : parts[2],
+          className : parts[3],
+          cssSelector : parts[4]
+        };
+        if (parts.length > 5) {
+          data.condition = parts[5];
+        }
+        return data;
       },
 
-      _createEventHandler : function(htmlElem, celEventInstruction) {
+      _createEventHandler : function(htmlElem, instruction) {
         var _me = this;
-        var eventInstrData = _me._parseEventInstruction(celEventInstruction);
-        var actionFunction = _me._actionFunctionMap[eventInstrData.action];
+        var data = _me._parseEventInstruction(instruction);
+        var actionFunction = _me._actionFunctionMap[data.action];
         if (actionFunction) {
-          return new window.CELEMENTS.CssClassEventHandler(htmlElem, eventInstrData.eventName,
-              eventInstrData.cssSelector, eventInstrData.className, actionFunction);
+          return new window.CELEMENTS.CssClassEventHandler(htmlElem, data.eventName,
+              data.cssSelector, data.className, actionFunction, data.condition);
         } else {
-          throw "createEventHandler: unknown action '" + eventInstrData.action + '"';
+          throw "createEventHandler: unknown action '" + data.action + '"';
         }
       },
 
@@ -774,9 +785,9 @@
               'dataValue' : dataValue,
               'eventHandlers' : new Array()
           };
-          _me._splitDataCelEventList(dataValue).each(function(celEventInstruction) {
+          _me._splitDataCelEventList(dataValue).each(function(instruction) {
             try {
-              newElem.eventHandlers.push(_me._createEventHandler(htmlElem, celEventInstruction));
+              newElem.eventHandlers.push(_me._createEventHandler(htmlElem, instruction));
             } catch (exp) {
               console.error(logPref, 'invalid instruction ', exp, htmlElem);
             }
