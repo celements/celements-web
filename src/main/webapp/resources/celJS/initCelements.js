@@ -686,20 +686,21 @@
         var _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
-        console.debug('EventHandler register: ', _me._htmlElement, _me._eventName,
+        console.debug('EventHandler - register: ', _me._htmlElement, _me._eventName,
             _me._cssSelector, _me._className, _me._actionFunction.name, _me._actionCondition);
       },
   
       _actionHandler : function(event) {
         var _me = this;
-        $$(_me._cssSelector).each(function(elem) {
-          var me = elem; // set me as elem for eval call
+        $$(_me._cssSelector).each(function(htmlElement) {
+          var me = htmlElement; // set me to htmlElement for condition eval call
           if (!_me._actionCondition || eval(_me._actionCondition)) {
-            _me._actionFunction(elem, _me._className);
-            console.debug('EventHandler action: ', _me._actionFunction.name, _me._className,
-              " to ", elem);
+            _me._actionFunction(htmlElement, _me._className);
+            console.debug('EventHandler - action [', _me._actionFunction.name, _me._className,
+              "] executed on ", htmlElement);
           } else {
-            console.debug('EventHandler skip failed action condition: ', _me._actionCondition);
+            console.debug('EventHandler - action skipped for failed condition [',
+              _me._actionCondition, '] on ', htmlElement);
           }
         });
       },
@@ -707,7 +708,7 @@
       unregister : function() {
         var _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
-        console.debug('EventHandler unregister: ', _me._htmlElement, _me._eventName,
+        console.debug('EventHandler - unregister: ', _me._htmlElement, _me._eventName,
             _me._cssSelector, _me._className, _me._actionFunction.name);
       }
   
@@ -781,7 +782,7 @@
 
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
-        var logPref = 'EventManager interpretData: ';
+        var logPref = 'EventManager - interpretData: ';
         if (!htmlElem.hasClassName('celOnEventInitialized')) {
           var dataValue = htmlElem.readAttribute('data-cel-event');
           var newElem = {
@@ -811,7 +812,7 @@
 
       _contentChangedHandler : function(event) {
         var _me = this;
-        console.debug('EventManager contentChanged ', event);
+        console.debug('EventManager - contentChanged ', event);
         _me.updateCelEventHandlers(event.memo.htmlElem);
       },
 
@@ -835,7 +836,7 @@
             elem.eventHandlers.each(function(handler) { handler.unregister(); });
             _me._eventElements.splice(i, 1);
             elem.htmlElem.removeClassName('celOnEventInitialized');
-            console.debug('EventManager removeDisappearedElem: ', elem);
+            console.debug('EventManager - removeDisappearedElem: ', elem);
           }
         }
       }
