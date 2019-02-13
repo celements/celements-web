@@ -677,7 +677,7 @@
         _me._className = className;
         _me._actionFunction = actionFunction;
         if (condition && !/\s|;/.test(condition)) {
-          _me._conditionFunction = new Function('me', 'return ' + condition + ";");
+          _me._conditionFunction = new Function('me', 'return ' + condition + ';');
         }
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
         _me._registerActionHandler();
@@ -688,7 +688,7 @@
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug('EventHandler - register: ', _me._eventName, _me._cssSelector,
-          _me._className, _me._actionFunction.name, _me._conditionFunction, _me._htmlElement);
+          _me._className, _me._actionFunction.name, _me._htmlElement);
       },
   
       _actionHandler : function(event) {
@@ -709,7 +709,7 @@
         var _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug('EventHandler - unregister: ', _me._eventName, _me._cssSelector,
-          _me._className, _me._actionFunction.name, _me._conditionFunction, _me._htmlElement);
+          _me._className, _me._actionFunction.name, _me._htmlElement);
       }
   
     });
