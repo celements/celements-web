@@ -803,7 +803,7 @@
             console.debug(logPref, 'no valid instructions found on ', htmlElem);
           }
           htmlElem.addClassName('celOnEventInitialized');
-          htmlElem.fire('cel:onEventInitialized');
+          htmlElem.fire('celEM:init');
         } else {
           console.debug(logPref, 'skip already initialized: ', htmlElem);
         }
