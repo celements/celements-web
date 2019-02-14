@@ -612,7 +612,11 @@
     };
   }
 
+  /**
+   * celMessages functions and global variable
+   */
   window.celMessages = {};
+  window.celMessages.isLoaded = false;
 
   try {
     var topFrame = top || window;
@@ -624,11 +628,13 @@
       },
       onSuccess : function(transport) {
         if (transport.responseText.isJSON()) {
-          celMessages = transport.responseText.evalJSON();
+          var newMessages = transport.responseText.evalJSON();
           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
             console.log('initCelements.js: finished getting dictionary messages.');
           }
-          $(document.body).fire('cel:messagesLoaded', celMessages);
+          newMessages.isLoaded = true;
+          window.celMessages = newMessages;
+          $(document.body).fire('cel:messagesLoaded', newMessages);
         } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
           console.error('noJSON!!! ', transport.responseText);
         }
@@ -638,6 +644,210 @@
     console.error('Failed to get Cel-Messages async!', exp);
   }
 
+  window.celExecOnceAfterMessagesLoaded = function(callbackFn) {
+    if (!window.celMessages.isLoaded) {
+      $(document.body).stopObserving('cel:messagesLoaded', callbackFn);
+      $(document.body).observe('cel:messagesLoaded', callbackFn);
+    } else {
+      callbackFn(window.celMessages);
+    }
+  };
+ /**
+  * END of celMessages
+  */
+
+  /**
+   *  celEventManager
+   */
+  if(typeof window.CELEMENTS.CssClassEventHandler === 'undefined') {
+    window.CELEMENTS.CssClassEventHandler = Class.create({
+      _htmlElement : undefined,
+      _eventName : undefined,
+      _cssSelector : undefined,
+      _className : undefined,
+      _actionFunction : undefined,
+      _conditionFunction : undefined,
+      _actionHandlerBind : undefined,
+  
+      initialize : function(htmlElement, eventName, cssSelector, className, actionFunction, condition) {
+        var _me = this;
+        _me._htmlElement = $(htmlElement);
+        _me._eventName = eventName;
+        _me._cssSelector = cssSelector;
+        _me._className = className;
+        _me._actionFunction = actionFunction;
+        if (condition && !/\s|;/.test(condition)) {
+          _me._conditionFunction = new Function('me', 'return ' + condition + ';');
+        }
+        _me._actionHandlerBind = _me._actionHandler.bind(_me);
+        _me._registerActionHandler();
+      },
+      
+      _registerActionHandler : function() {
+        var _me = this;
+        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
+        Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
+        console.debug('EventHandler - register: ', _me._eventName, _me._cssSelector,
+          _me._className, _me._actionFunction.name, _me._htmlElement);
+      },
+  
+      _actionHandler : function(event) {
+        var _me = this;
+        $$(_me._cssSelector).each(function(htmlElement) {
+          if (!_me._conditionFunction || _me._conditionFunction(htmlElement)) {
+            _me._actionFunction(htmlElement, _me._className);
+            console.debug('EventHandler - action [', _me._actionFunction.name, _me._className,
+              "] executed on ", htmlElement);
+          } else {
+            console.debug('EventHandler - action skipped for failed condition [',
+              _me._conditionFunction, '] on ', htmlElement);
+          }
+        });
+      },
+
+      unregister : function() {
+        var _me = this;
+        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
+        console.debug('EventHandler - unregister: ', _me._eventName, _me._cssSelector,
+          _me._className, _me._actionFunction.name, _me._htmlElement);
+      }
+  
+    });
+  }
+
+  if(typeof window.CELEMENTS.EventManager === 'undefined') {
+    window.CELEMENTS.EventManager = Class.create({
+      _instructionRegex : new RegExp('([\\w:]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
+      _actionFunctionMap : {
+          // map may be extendend. also extend second regex group accordingly
+          '+' : Element.addClassName,
+          '-' : Element.removeClassName,
+          '%' : Element.toggleClassName
+      },
+      _eventElements : undefined,
+      _interpretDataCelEventBind : undefined,
+      _contentChangedHandlerBind : undefined,
+      updateCelEventHandlersBind : undefined,
+
+      initialize : function() {
+        var _me = this;
+        _me._eventElements = new Array();
+        _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
+        _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
+        _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
+      },
+      
+      _splitDataCelEventList : function(dataValue) {
+        var _me = this;
+        var ret = new Array();
+        if (dataValue) {
+          ret = dataValue.split('&');
+        }
+        return ret;
+      },
+
+      _parseEventInstruction : function(instruction) {
+        var _me = this;
+        var parts = instruction.match(_me._instructionRegex) || [];
+        var data = {
+          eventName : parts[1],
+          action : parts[2],
+          className : parts[3],
+          cssSelector : parts[4],
+          condition : parts[5]
+        };
+        if (data.eventName && data.action && data.className && data.cssSelector) {
+          return data;
+        } else {
+          throw "parseEventInstruction: unable to parse event instruction '" + instruction + "'"; 
+        }
+      },
+
+      _createEventHandler : function(htmlElem, instruction) {
+        var _me = this;
+        var data = _me._parseEventInstruction(instruction);
+        var actionFunction = _me._actionFunctionMap[data.action];
+        if (actionFunction) {
+          return new window.CELEMENTS.CssClassEventHandler(htmlElem, data.eventName,
+              data.cssSelector, data.className, actionFunction, data.condition);
+        } else {
+          throw "createEventHandler: unknown action '" + data.action + '"';
+        }
+      },
+
+      _interpretDataCelEvent : function(htmlElem) {
+        var _me = this;
+        var logPref = 'EventManager - interpretData: ';
+        if (!htmlElem.hasClassName('celOnEventInit')) {
+          var dataValue = htmlElem.readAttribute('data-cel-event');
+          var newElem = {
+              'htmlElem' : htmlElem,
+              'dataValue' : dataValue,
+              'eventHandlers' : new Array()
+          };
+          _me._splitDataCelEventList(dataValue).each(function(instruction) {
+            try {
+              newElem.eventHandlers.push(_me._createEventHandler(htmlElem, instruction));
+            } catch (exp) {
+              console.error(logPref, 'invalid instruction ', exp, htmlElem);
+            }
+          });
+          if (newElem.eventHandlers.length > 0) {
+            _me._eventElements.push(newElem);
+            console.debug(logPref, 'new element ', htmlElem);
+          } else {
+            console.debug(logPref, 'no valid instructions found on ', htmlElem);
+          }
+          htmlElem.addClassName('celOnEventInit');
+          htmlElem.fire('celEM:init');
+        } else {
+          console.debug(logPref, 'skip already initialized: ', htmlElem);
+        }
+      },
+
+      _contentChangedHandler : function(event) {
+        var _me = this;
+        console.debug('EventManager - contentChanged ', event);
+        _me.updateCelEventHandlers(event.memo.htmlElem);
+      },
+
+      updateCelEventHandlers : function(htmlContainer) {
+        var _me = this;
+        htmlContainer = htmlContainer || $(document.body);
+        Event.stopObserving($(document.body), "celements:contentChanged",
+            _me._contentChangedHandlerBind);
+        Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
+        _me._removeDisappearedElems();
+        $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
+      },
+
+      _removeDisappearedElems : function() {
+        var _me = this;
+        for (var i = _me._eventElements.length - 1; i >= 0; i--) {
+          var elem = _me._eventElements[i];
+          var isInBody = $(document.body).contains(elem.htmlElem);
+          var changedDataValue = (elem.htmlElem.readAttribute('data-cel-event') !== elem.dataValue);
+          if (!isInBody || changedDataValue || !elem.htmlElem.hasClassName('celOnEventInit')) {
+            elem.eventHandlers.each(function(handler) { handler.unregister(); });
+            _me._eventElements.splice(i, 1);
+            elem.htmlElem.removeClassName('celOnEventInit');
+            console.debug('EventManager - removeDisappearedElem: ', elem);
+          }
+        }
+      }
+
+    });
+
+    window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
+    celAddOnBeforeLoadListener(window.CELEMENTS.globalEventManager.updateCelEventHandlersBind);
+  }
+  /**
+   *  END: celEventManager
+   */
+
+  /**
+   *  celements form validations
+   */
   var formValidations = new Hash();
 
   var registerValidation = function(formElem) {
@@ -662,6 +872,9 @@
       }
     });
   });
+  /**
+   *  END: celements form validations
+   */
 
   /**
    * Google Analytics integration
