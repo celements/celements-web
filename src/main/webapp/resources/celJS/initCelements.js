@@ -827,7 +827,7 @@
           var elem = _me._eventElements[i];
           var isInBody = $(document.body).contains(elem.htmlElem);
           var changedDataValue = (elem.htmlElem.readAttribute('data-cel-event') !== elem.dataValue);
-          if (!isInBody || changedDataValue || !htmlElem.hasClassName('celOnEventInit')) {
+          if (!isInBody || changedDataValue || !elem.htmlElem.hasClassName('celOnEventInit')) {
             elem.eventHandlers.each(function(handler) { handler.unregister(); });
             _me._eventElements.splice(i, 1);
             elem.htmlElem.removeClassName('celOnEventInit');
