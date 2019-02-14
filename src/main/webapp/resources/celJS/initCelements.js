@@ -756,10 +756,6 @@
           cssSelector : parts[4],
           condition : parts[5]
         };
-        if (data.eventName === 'load') {
-          // action won't ever trigger on load, using earliest possible
-          data.eventName = 'cel:onEventInitialized';
-        }
         if (data.eventName && data.action && data.className && data.cssSelector) {
           return data;
         } else {
@@ -782,7 +778,7 @@
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         var logPref = 'EventManager - interpretData: ';
-        if (!htmlElem.hasClassName('celOnEventInitialized')) {
+        if (!htmlElem.hasClassName('celOnEventInit')) {
           var dataValue = htmlElem.readAttribute('data-cel-event');
           var newElem = {
               'htmlElem' : htmlElem,
@@ -802,7 +798,7 @@
           } else {
             console.debug(logPref, 'no valid instructions found on ', htmlElem);
           }
-          htmlElem.addClassName('celOnEventInitialized');
+          htmlElem.addClassName('celOnEventInit');
           htmlElem.fire('celEM:init');
         } else {
           console.debug(logPref, 'skip already initialized: ', htmlElem);
@@ -831,10 +827,10 @@
           var elem = _me._eventElements[i];
           var isInBody = $(document.body).contains(elem.htmlElem);
           var changedDataValue = (elem.htmlElem.readAttribute('data-cel-event') !== elem.dataValue);
-          if (!isInBody || changedDataValue) {
+          if (!isInBody || changedDataValue || !htmlElem.hasClassName('celOnEventInit')) {
             elem.eventHandlers.each(function(handler) { handler.unregister(); });
             _me._eventElements.splice(i, 1);
-            elem.htmlElem.removeClassName('celOnEventInitialized');
+            elem.htmlElem.removeClassName('celOnEventInit');
             console.debug('EventManager - removeDisappearedElem: ', elem);
           }
         }
