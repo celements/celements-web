@@ -717,7 +717,7 @@
 
   if(typeof window.CELEMENTS.EventManager === 'undefined') {
     window.CELEMENTS.EventManager = Class.create({
-      _instructionRegex : new RegExp('([\\w]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
+      _instructionRegex : new RegExp('([\\w:]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
       _actionFunctionMap : {
           // map may be extendend. also extend second regex group accordingly
           '+' : Element.addClassName,
