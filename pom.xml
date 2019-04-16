@@ -192,6 +192,13 @@
       <artifactId>fop</artifactId>
       <version>1.0</version>
       <scope>provided</scope>
+      <exclusions>
+        <!-- [CELDEV-808] exclude xml-apis compile dependency -->
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.xmlgraphics</groupId>
@@ -204,7 +211,7 @@
       <artifactId>reflections</artifactId>
       <version>0.9.6</version>      
       <exclusions>
-        <!-- [CELDEV-808] exclude xml-apis since it's included in different versions -->
+        <!-- [CELDEV-808] exclude xml-apis compile dependency -->
         <exclusion>
           <groupId>xml-apis</groupId>
           <artifactId>xml-apis</artifactId>
