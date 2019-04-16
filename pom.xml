@@ -194,15 +194,22 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-        <groupId>org.apache.xmlgraphics</groupId>
-        <artifactId>xmlgraphics-commons</artifactId>
-        <version>1.4</version>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>xmlgraphics-commons</artifactId>
+      <version>1.4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-        <groupId>org.reflections</groupId>
-        <artifactId>reflections</artifactId>
-        <version>0.9.6</version>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.9.6</version>      
+      <exclusions>
+        <!-- [CELDEV-808] exclude xml-apis since it's included in different versions -->
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
    </dependencies>
   <build>
