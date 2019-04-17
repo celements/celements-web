@@ -71,19 +71,19 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>3.0</version>
+      <version>3.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>3.1</version>
+      <version>3.2-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>3.3</version>
+      <version>3.4-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- Add here all your dependencies -->
