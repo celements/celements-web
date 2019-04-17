@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>3.3</version>
+    <version>3.4-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -71,26 +71,26 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>3.0</version>
+      <version>3.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>3.1</version>
+      <version>3.2-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>3.3</version>
+      <version>3.4-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- Add here all your dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>3.7</version>
+      <version>3.8-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -100,7 +100,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>3.11</version>
+      <version>3.12-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -192,17 +192,31 @@
       <artifactId>fop</artifactId>
       <version>1.0</version>
       <scope>provided</scope>
+      <exclusions>
+        <!-- [CELDEV-808] exclude xml-apis compile dependency -->
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
-        <groupId>org.apache.xmlgraphics</groupId>
-        <artifactId>xmlgraphics-commons</artifactId>
-        <version>1.4</version>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>xmlgraphics-commons</artifactId>
+      <version>1.4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-        <groupId>org.reflections</groupId>
-        <artifactId>reflections</artifactId>
-        <version>0.9.6</version>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.9.6</version>      
+      <exclusions>
+        <!-- [CELDEV-808] exclude xml-apis compile dependency -->
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
    </dependencies>
   <build>
