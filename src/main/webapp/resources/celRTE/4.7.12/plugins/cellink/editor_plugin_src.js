@@ -12,6 +12,23 @@
 	tinymce.create('tinymce.plugins.CelementsLinkPlugin', {
 		init : function(ed, url) {
 			this.editor = ed;
+	    var mceCelLinkCommand = function() {
+	      var se = ed.selection;
+
+	      // No selection and not in link
+	      if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A'))
+	        return;
+
+	      ed.windowManager.open({
+	        file : url + '/link.htm',
+	        width : 872 + parseInt(ed.getLang('advlink.delta_width', 0)),
+	        height : 450 + parseInt(ed.getLang('advlink.delta_height', 0)),
+	        inline : 1
+	      }, {
+	        plugin_url : url
+	      });
+	    };
+
 
 			// Register commands
       ed.addCommand('mceAdvLink', mceCelLinkCommand);
@@ -32,23 +49,6 @@
 			});
 		},
 
-    mceCelLinkCommand : function() {
-      var se = ed.selection;
-
-      // No selection and not in link
-      if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A'))
-        return;
-
-      ed.windowManager.open({
-        file : url + '/link.htm',
-        width : 872 + parseInt(ed.getLang('advlink.delta_width', 0)),
-        height : 450 + parseInt(ed.getLang('advlink.delta_height', 0)),
-        inline : 1
-      }, {
-        plugin_url : url
-      });
-    },
-
     getInfo : function() {
 			return {
 				longname : 'Advanced link',
@@ -61,5 +61,5 @@
 	});
 
 	// Register plugin
-	tinymce.PluginManager.add('cellink', tinymce.plugins.AdvancedLinkPlugin);
+	tinymce.PluginManager.add('cellink', tinymce.plugins.CelementsLinkPlugin);
 })();
