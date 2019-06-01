@@ -19,6 +19,7 @@
 
 			// Register buttons
 			ed.addButton('cellink', {
+        icon : "link",
 				title : 'advlink.link_desc',
 				cmd : 'mceCelLink'
 			});

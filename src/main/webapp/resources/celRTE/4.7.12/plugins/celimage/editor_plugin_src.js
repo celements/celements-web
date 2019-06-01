@@ -32,6 +32,7 @@
 
       // Register buttons
       ed.addButton('celimage', {
+        icon : "image",
         title : 'celimage.image_desc',
         cmd : 'mceCelImage'
       });
