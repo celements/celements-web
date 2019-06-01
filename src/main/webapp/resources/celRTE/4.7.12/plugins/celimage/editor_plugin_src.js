@@ -31,7 +31,7 @@
       ed.addCommand('mceCelImage', mceCelImageCommand);
 
       // Register buttons
-      ed.addButton('image', {
+      ed.addButton('celimage', {
         title : 'celimage.image_desc',
         cmd : 'mceCelImage'
       });

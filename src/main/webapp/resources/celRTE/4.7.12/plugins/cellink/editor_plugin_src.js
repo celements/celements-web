@@ -14,38 +14,41 @@
 			this.editor = ed;
 
 			// Register commands
-			ed.addCommand('mceAdvLink', function() {
-				var se = ed.selection;
-
-				// No selection and not in link
-				if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A'))
-					return;
-
-				ed.windowManager.open({
-					file : url + '/link.htm',
-					width : 872 + parseInt(ed.getLang('advlink.delta_width', 0)),
-					height : 450 + parseInt(ed.getLang('advlink.delta_height', 0)),
-					inline : 1
-				}, {
-					plugin_url : url
-				});
-			});
+      ed.addCommand('mceAdvLink', mceCelLinkCommand);
+      ed.addCommand('mceCelLink', mceCelLinkCommand);
 
 			// Register buttons
-			ed.addButton('link', {
+			ed.addButton('cellink', {
 				title : 'advlink.link_desc',
-				cmd : 'mceAdvLink'
+				cmd : 'mceCelLink'
 			});
 
-			ed.addShortcut('ctrl+k', 'advlink.advlink_desc', 'mceAdvLink');
+			ed.addShortcut('ctrl+k', 'advlink.advlink_desc', 'mceCelLink');
 
 			ed.onNodeChange.add(function(ed, cm, n, co) {
-				cm.setDisabled('link', co && n.nodeName != 'A');
-				cm.setActive('link', n.nodeName == 'A' && !n.name);
+				cm.setDisabled('cellink', co && n.nodeName != 'A');
+				cm.setActive('cellink', n.nodeName == 'A' && !n.name);
 			});
 		},
 
-		getInfo : function() {
+    mceCelLinkCommand : function() {
+      var se = ed.selection;
+
+      // No selection and not in link
+      if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A'))
+        return;
+
+      ed.windowManager.open({
+        file : url + '/link.htm',
+        width : 872 + parseInt(ed.getLang('advlink.delta_width', 0)),
+        height : 450 + parseInt(ed.getLang('advlink.delta_height', 0)),
+        inline : 1
+      }, {
+        plugin_url : url
+      });
+    },
+
+    getInfo : function() {
 			return {
 				longname : 'Advanced link',
 				author : 'Moxiecode Systems AB',
