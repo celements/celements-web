@@ -14,7 +14,6 @@ var getLoadingImg = function() {
 };
 
 Event.observe(window, 'load', function(){
-  console.log('start imagepicker.js onload');
   baseurl = tinyMCEPopup.getParam("wiki_attach_path");
   imgurl = tinyMCEPopup.getParam("wiki_imagedownload_path");
   editor_id = tinyMCEPopup.getWindowArg('editor_id');
@@ -25,7 +24,6 @@ Event.observe(window, 'load', function(){
   $$('#imagePickerUploadArea .celfileupload').each(function(elem) {
     elem.observe('celements:uploadfinished', pickerUploadFinshed);
   });
-  console.log('end imagepicker.js onload');
 });
 
 var imagePicker_pickerTabFirstClickHandler = function(event) {
@@ -86,11 +84,13 @@ var pickerUploadFinshed = function(event) {
 };
 
 var endlessScrollLoadActionFnc = function(attachEl, scroller, callbackFnkt) {
+  console.log('endlessScrollLoadActionFnc: start ');
   $('attachments').insert(getLoadingImg());
   var tag = '';
   if($('tagPicker_list')) {
     tag = $('tagPicker_list').value;
   }
+  console.log('endlessScrollLoadActionFnc: before ajax - tag value ', tag);
   new Ajax.Request(baseurl, {
     method: 'post',
     parameters: {
@@ -156,6 +156,7 @@ var tagSelectedLoadAttachmentList = function() {
 
 var loadAttachmentList = function(baseurl) {
   var attachEl = document.getElementById("attachments");
+  console.log('loadAttachmentList: start endlessScroll for ', attachEl);
 //  var scroll = 
   new CELEMENTS.anim.EndlessScroll(attachEl, endlessScrollLoadActionFnc, {
     isScrollBlockEle : true,
