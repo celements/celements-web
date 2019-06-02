@@ -1003,12 +1003,14 @@
     });
   };
 
-  var cel_initDateTimePicker = function(event) {
-    var dateTimePickerGenerator = new CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator("body");
-    dateTimePickerGenerator.generateDateTimePicker();
-    $(document.body).stopObserving("celements:contentChanged", cel_initDateTimePicker);
-    $(document.body).observe("celements:contentChanged", cel_initDateTimePicker);
-  };
+  if (typeof CELEMENTS.DATETIMEPICKER !== "undefined") {
+    var cel_initDateTimePicker = function(event) {
+      var dateTimePickerGenerator = new CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator("body");
+      dateTimePickerGenerator.generateDateTimePicker();
+      $(document.body).stopObserving("celements:contentChanged", cel_initDateTimePicker);
+      $(document.body).observe("celements:contentChanged", cel_initDateTimePicker);
+    };
+  }
 
   /**
    * Initialize all Multiselect-Boxes
