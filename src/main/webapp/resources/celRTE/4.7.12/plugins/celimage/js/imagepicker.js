@@ -141,6 +141,7 @@ var loadTagList = function() {
           option.update(json.tagList[i].label);
           select.insert(option);
         }
+        loadAttachmentList(baseurl);
       } else if((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
         console.warn('loadTagList: noJSON!!! ', response.responseText);
       }
