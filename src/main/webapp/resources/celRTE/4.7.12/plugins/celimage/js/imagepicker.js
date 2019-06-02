@@ -14,6 +14,7 @@ var getLoadingImg = function() {
 };
 
 Event.observe(window, 'load', function(){
+  console.log('start imagepicker.js onload');
   baseurl = tinyMCEPopup.getParam("wiki_attach_path");
   imgurl = tinyMCEPopup.getParam("wiki_imagedownload_path");
   editor_id = tinyMCEPopup.getWindowArg('editor_id');
@@ -24,6 +25,7 @@ Event.observe(window, 'load', function(){
   $$('#imagePickerUploadArea .celfileupload').each(function(elem) {
     elem.observe('celements:uploadfinished', pickerUploadFinshed);
   });
+  console.log('end imagepicker.js onload');
 });
 
 var imagePicker_pickerTabFirstClickHandler = function(event) {
