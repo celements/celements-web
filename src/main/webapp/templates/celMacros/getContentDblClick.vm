@@ -20,6 +20,6 @@
   #if("$!editXredirect" == '')
     #set($editXredirect = "${doc.getURL('view')}")
   #end
-  #set($editURL = "${celementsweb.getEditURL($getContentDblClickDoc)}&xredirect=${editXredirect}")
+  #set($editURL = "${celementsweb.getEditURL($getContentDblClickDoc)}&amp;xredirect=${editXredirect}")
   #set($dblClick = "ondblclick='window.location.href=${Q}$!{editURL}${Q}' onselectstart='javascript:return false;'")
 #end

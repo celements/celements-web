@@ -319,15 +319,12 @@
     #set($pageTypeCat = "$!request.pageTypeCat")
     #set($pageTypeList = $services.pageType.getAvailableTypesForCategory($pageTypeCat))
       #foreach($item in $pageTypeList)
-        #set($cur_doc = $xwiki.getDocument($item))
-        #set($page_type_properties_obj = '')
-        #set($page_type_properties_obj = $cur_doc.getObject('Celements2.PageTypeProperties'))
-         #if("$!page_type_properties_obj" != '')
-          #set($pretty_name = $!page_type_properties_obj.getProperty("type_name").getValue())
-        #else
-          #set($pretty_name = $cur_doc.getName())
+        #set($ptConfig = $services.pageType.getPageTypeConfig($item))
+        #set($selected = '')
+        #if("$!ptConfig.name" == "$!defaultPageType")
+          #set($selected = 'selected="selected"')
         #end
-        <option value="$cur_doc.getName()" #if("$!cur_doc.getName()" == "$!defaultPageType") selected="selected" #end>$!pretty_name</option>
+        <option value="$!{ptConfig.name}" $!{selected}>$!{ptConfig.prettyName}</option>
       #end
       </select>
       </td>
