@@ -1,0 +1,463 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>{#celimage_dlg.dialog_title}</title>
+  <script type="text/javascript" src="../../../../celJS/prototype.js"></script>
+  <script type="text/javascript" src="../../../../celJS/jcrop/jquery.legacy.1.7.2.js"></script>
+  <script type="text/javascript" src="../../../../celJS/jquery-noconflict.js"></script>
+  <script type="text/javascript" src="../../../../celJS/initCelements.js?version=201512282038"></script>
+  <script type="text/javascript" src="../../../../celJS/scriptaculous/effects.js?version=20130818163654"></script>
+  <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+  <script type="text/javascript" src="../../utils/mctabs.js"></script>
+  <script type="text/javascript" src="../../utils/form_utils.js"></script>
+  <script type="text/javascript" src="../../utils/validate.js"></script>
+  <script type="text/javascript" src="../../utils/editable_selects.js"></script>
+  <script type="text/javascript" src="js/image.js?version=201512282038"></script>
+  <script type="text/javascript" src="js/imagepicker.js?version=201512282038"></script>
+  <script type="text/javascript" src="../../../../celJS/images/galleryClass.js?version=201512241019"></script>
+  <script type="text/javascript" src="../../../../celJS/jcrop/jquery.Jcrop.min.js"></script>
+  <script type="text/javascript" src="../../../../celJS/uploadAttachment.js?version=201512241019"></script>
+  <script type="text/javascript" src="../../../../celJS/endlessScroll/endlessScroller.js?version=201512241019"></script>
+  <script type="text/javascript" src="../../../../celJS/images/cropClass.js?version=201512241019"></script>
+  <link href="../../../../celRes/images/crop.css?version=201512241019" rel="stylesheet" type="text/css" />
+  <link href="css/celimage.css?version=201512241019" rel="stylesheet" type="text/css" />
+  <link href="../../../../celRes/jcrop/jquery.Jcrop.css?version=201512241019" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript">
+	  window.celFinishHeaderHandler();
+	</script>
+</head>
+<body id="celimage" style="display: none">
+<div class="celimagepickertitle">Celements Image Picker</div>
+    <form id="imagePickerForm" onsubmit="CelImageDialog.insert();return false;" action="" method="post" enctype="multipart/form-data"> 
+    <div class="tabs">
+      <ul>
+        <li id="imagePicker_tab" class="current"><span><a href="javascript:mcTabs.displayTab('imagePicker_tab','imagePicker_panel');" onmousedown="return false;">{#celimage_dlg.tab_imagePicker}</a></span></li>
+        <li id="imageDetails_tab"><span><a href="javascript:mcTabs.displayTab('imageDetails_tab','imageDetails_panel');" onmousedown="return false;">{#celimage_dlg.tab_imageDetails}</a></span></li>
+        <li id="appearance_tab"><span><a href="javascript:mcTabs.displayTab('appearance_tab','appearance_panel');" onmousedown="return false;">{#celimage_dlg.tab_appearance}</a></span></li>
+        <li id="animation_tab" style="display:none;"><span><a href="javascript:mcTabs.displayTab('animation_tab','animation_panel');" onmousedown="return false;">{#celimage_dlg.tab_animation}</a></span></li>
+        <li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">{#celimage_dlg.tab_advanced}</a></span></li>
+        <li id="crop_tab" style="display: none;"><span><a href="javascript:mcTabs.displayTab('crop_tab','crop_panel');" onmousedown="return false;">{#celimage_dlg.tab_crop}</a></span></li>
+      </ul>
+    </div>
+
+    <div class="panel_wrapper">
+      <div id="imagePicker_panel" class="panel current" style="height: 422px;">
+        <fieldset id="imagePickerUploadAreaFieldset">
+            <legend>{#celimage_dlg.uploadImage}</legend>
+<div id="imagePickerUploadArea">
+    <div id="progressBar" style="display:none">
+<!-- velocity not interpreted so far... -->
+      <img src="../../../../celRes/ajax-loader.gif" />
+    </div>
+      <input type="hidden" name="xredirect" value="" /> 
+      <input type="hidden" id="celfileuploadToken" name="uploadToken" value="" />
+      <input class="celfileupload celSupressAttachmentList" name="filepath" type="file" size="50" />
+</div>
+        </fieldset>
+
+        <fieldset style="display:none;">
+            <legend>{#celimage_dlg.galleryPicker}</legend>
+
+<div id="galleryPicker" style="height:20px;width:auto;overflow:auto;">
+  <label id="galleryPickerLabel" for="galleryPicker_list">{#celimage_dlg.galleryPicker}</label> 
+  <select id="galleryPicker_list" name="galleryPicker">
+  </select>
+</div>
+        </fieldset>
+        <fieldset>
+          <legend>{#celimage_dlg.tagPicker}</legend>
+          <div id="tagPicker" style="height:20px;width:auto;overflow:auto;">
+            <label for="tagPicker_list">{#celimage_dlg.tagPicker}</label>
+            <select id="tagPicker_list" name="tagPicker">
+              <option value="">---</option>
+            </select>
+          </div>
+        </fieldset>
+        <fieldset>
+            <legend>{#celimage_dlg.imagePicker}</legend>
+
+<div id="attachments" style="height:360px;width:auto;overflow:auto;">
+</div>
+        </fieldset>
+      </div><!--  end imagePicker_panel  -->
+ 
+      <div id="imageDetails_panel" class="panel" style="height: 422px;">
+        <fieldset>
+            <legend>{#celimage_dlg.imageDetails}</legend>
+
+            <table class="properties">
+              <tr>
+                <td colspan="2" >
+                      <input name="marginTop" type="text" id="marginTop" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.updateStyle('marginTop');CelImageDialog.changeAppearance();" onblur="CelImageDialog.updateStyle('marginTop');CelImageDialog.changeAppearance();" />
+                      <input name="marginLeft" type="text" id="marginLeft" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.updateStyle('marginLeft');CelImageDialog.changeAppearance();" onblur="CelImageDialog.updateStyle('marginLeft');CelImageDialog.changeAppearance();" />
+                      <input name="marginRight" type="text" id="marginRight" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.updateStyle('marginRight');CelImageDialog.changeAppearance();" onblur="CelImageDialog.updateStyle('marginRight');CelImageDialog.changeAppearance();" />
+                      <div id="prev"></div>
+                      <input name="marginBottom" type="text" id="marginBottom" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.updateStyle('marginBottom');CelImageDialog.changeAppearance();" onblur="CelImageDialog.updateStyle('marginBottom');CelImageDialog.changeAppearance();" />
+                      <br/>
+                    </td>
+              </tr>
+            <tr>
+              <td class="column1"><label id="widthlabel" for="celwidth">{#celimage_dlg.dimensions}</label></td>
+              <td class="nowrap">
+                <input name="celwidth" type="text" id="celwidth" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.changeHeight();"/> px x 
+                <input name="celheight" type="text" id="celheight" value="" size="5" maxlength="5" class="size" onchange="CelImageDialog.changeWidth();"/> px
+                <input type="button" id="resetMax" value="{#celimage_dlg.resetMax}" />
+                <label for="resetMax" id="resetMaxLabel"></label>
+              </td>
+            </tr>
+              <tr> 
+                <td class="column1"><label id="altlabel" for="alt">{#celimage_dlg.alt}</label></td> 
+                <td colspan="2"><input id="alt" name="alt" type="text" value="" /></td> 
+              </tr> 
+              <tr> 
+                <td class="column1"><label id="titlelabel" for="title">{#celimage_dlg.title}</label></td> 
+                <td colspan="2"><input id="title" name="title" type="text" value="" /></td> 
+              </tr>
+            </table>
+        </fieldset>
+
+<!--
+        <fieldset>
+          <legend>{#celimage_dlg.preview}</legend>
+          <div id="prev"></div>
+        </fieldset>
+ -->
+      </div>
+ 
+      <div id="appearance_panel" class="panel">
+        <fieldset>
+          <legend>{#celimage_dlg.tab_appearance}</legend>
+
+          <table border="0" cellpadding="4" cellspacing="0">
+            <tr> 
+              <td class="column1"><label id="alignlabel" for="align">{#celimage_dlg.align}</label></td> 
+              <td><select id="align" name="align" onchange="CelImageDialog.updateStyle('align');CelImageDialog.changeAppearance();"> 
+                  <option value="">{#not_set}</option> 
+<!--                  <option value="baseline">{#celimage_dlg.align_baseline}</option>
+                  <option value="top">{#celimage_dlg.align_top}</option>
+                  <option value="bottom">{#celimage_dlg.align_bottom}</option>
+                  <option value="text-top">{#celimage_dlg.align_texttop}</option>
+                  <option value="text-bottom">{#celimage_dlg.align_textbottom}</option>
+ -->
+                  <option value="left">{#celimage_dlg.align_left}</option>
+                  <option value="right">{#celimage_dlg.align_right}</option>
+                  <option value="middle">{#celimage_dlg.align_middle}</option>
+                </select> 
+              </td>
+              <td rowspan="6" valign="top">
+                <div class="alignPreview">
+                  <img id="alignSampleImg" src="img/sample.gif" alt="{#celimage_dlg.example_img}" />
+                  Lorem ipsum, Dolor sit amet, consectetuer adipiscing loreum ipsum edipiscing elit, sed diam
+                  nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.Loreum ipsum
+                  edipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
+                  erat volutpat.
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="borderlabel" for="border">{#celimage_dlg.border}</label></td> 
+              <td><input id="border" name="border" type="text" value="" size="3" maxlength="3" class="number" onchange="CelImageDialog.updateStyle('border');CelImageDialog.changeAppearance();" onblur="CelImageDialog.updateStyle('border');CelImageDialog.changeAppearance();" /></td> 
+            </tr>
+
+            <tr>
+              <td><label for="class_list">{#class_name}</label></td>
+              <td><select id="class_list" name="class_list" class="mceEditableSelect"><option value=""></option></select></td>
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="stylelabel" for="style">{#celimage_dlg.style}</label></td> 
+              <td><input id="style" name="style" type="text" value="" onchange="CelImageDialog.changeAppearance();" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="classeslabel" for="classes">{#celimage_dlg.classes}</label></td> 
+              <td><input id="classes" name="classes" type="text" value="" onchange="selectByValue(this.form,'classlist',this.value,true);" /></td> 
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+
+      <div id="animation_panel" class="panel" style="display:none;">
+        <fieldset>
+          <legend>{#celimage_dlg.slideshow}</legend>
+
+          <table border="0" cellpadding="4" cellspacing="0">
+            <tr>
+              <td class="column1"><label id="hasSlideshowlabel" for="hasSlideshow">{#celimage_dlg.hasSlideshow}</label></td> 
+              <td><input id="hasSlideshow" name="hasSlideshow" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="hasAutoChangeLabel" for="hasAutoChange_list">{#celimage_dlg.hasAutoChange}</label></td>
+              <td>
+                <select id="hasAutoChange_list" name="hasAutoChange">
+                  <option value="autoStartNoStop">{#celimage_dlg.hasAutoChange_auto_start_no_stop}</option>
+                  <option value="autoStart">{#celimage_dlg.hasAutoChange_auto_start}</option>
+                  <option value="manuelStart">{#celimage_dlg.hasAutoChange_manuel_start}</option>
+                  <option value="none">{#celimage_dlg.hasAutoChange_none}</option>
+                </select>
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="addCounterLabel" for="addCounter_list">{#celimage_dlg.addCounter}</label></td>
+              <td>
+                <select id="addCounter_list" name="addCounter">
+                  <option value="none">{#celimage_dlg.addCounter_none}</option>
+                  <option value="normal">{#celimage_dlg.addCounter_normal}</option>
+                  <option value="leadingzeros">{#celimage_dlg.addCounter_leadingzeros}</option>
+                </select>
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="isSlideshowRandomStartLabel" for="isSlideshowRandomStart">{#celimage_dlg.isSlideshowRandomStart}</label></td> 
+              <td><input id="isSlideshowRandomStart" name="isSlideshowRandomStart" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="isSlideshowCustomStartLabel" for="isSlideshowCustomStart">{#celimage_dlg.isSlideshowCustomStart}</label></td> 
+              <td><input id="isSlideshowCustomStart" name="isSlideshowCustomStart" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="slideshowFixStartImageNumLabel" for="slideshowFixStartImageNum">{#celimage_dlg.slideshowFixStartImageNum}</label></td> 
+              <td><input id="slideshowFixStartImageNum" name="slideshowFixStartImageNum" type="text" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="hasSlideshowAddNavigationLabel" for="hasSlideshowAddNavigation">{#celimage_dlg.hasSlideshowAddNavigation}</label></td> 
+              <td><input id="hasSlideshowAddNavigation" name="hasSlideshowAddNavigation" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="gallerylabel" for="gallery_list">{#celimage_dlg.gallery}</label></td> 
+              <td>
+                <select id="gallery_list" name="gallery" onchange="CelImageDialog.changeAppearance();"> 
+                </select>
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="delaylabel" for="delay">{#celimage_dlg.delay}</label></td> 
+              <td>
+                <input id="delay" name="delay" type="text" value="" />
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="effectlabel" for="effect_list">{#celimage_dlg.effects}</label></td> 
+              <td>
+                <select id="effect_list" name="effect" onchange="CelImageDialog.changeAppearance();"> 
+                </select>
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="widthlabel" for="animWidth">{#celimage_dlg.dimensions}</label></td>
+              <td class="nowrap">
+                <input name="animWidth" type="text" id="animWidth" value="" size="5" maxlength="5" class="size" /> px x 
+                <input name="animHeight" type="text" id="animHeight" value="" size="5" maxlength="5" class="size" /> px
+              </td>
+            </tr>
+
+          </table>
+        </fieldset>
+
+        <fieldset>
+          <legend>{#celimage_dlg.overlay}</legend>
+
+          <table border="0" cellpadding="4" cellspacing="0">
+            <tr>
+              <td class="column1"><label id="hasOverlay" for="hasOverlay">{#celimage_dlg.hasOverlay}</label></td> 
+              <td><input id="hasOverlay" name="hasOverlay" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="hasCloseButton" for="hasCloseButton">{#celimage_dlg.hasCloseButton}</label></td> 
+              <td><input id="hasCloseButton" name="hasCloseButton" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr id="hasAddNavigationOverlayRow">
+              <td class="column1"><label id="hasAddNavigationOverlayLabel" for="hasAddNavigationOverlay">{#celimage_dlg.hasSlideshowAddNavigation}</label></td> 
+              <td><input id="hasAddNavigationOverlay" name="hasAddNavigationOverlay" type="checkbox" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="widthlabel" for="overlayWidth">{#celimage_dlg.dimensions}</label></td>
+              <td class="nowrap">
+                <input name="overlayWidth" type="text" id="overlayWidth" value="" size="5" maxlength="5" class="size" /> px x 
+                <input name="overlayHeight" type="text" id="overlayHeight" value="" size="5" maxlength="5" class="size" /> px
+              </td>
+            </tr>
+
+            <tr id="hasAutoChangeOverlayRow">
+              <td class="column1"><label id="hasAutoChangeOverlayLabel" for="hasAutoChangeOverlay_list">{#celimage_dlg.hasAutoChange}</label></td>
+              <td>
+                <select id="hasAutoChangeOverlay_list" name="hasAutoChangeOverlay">
+                  <option value="autoStartNoStop">{#celimage_dlg.hasAutoChange_auto_start_no_stop}</option>
+                  <option value="autoStart">{#celimage_dlg.hasAutoChange_auto_start}</option>
+                  <option value="manuelStart">{#celimage_dlg.hasAutoChange_manuel_start}</option>
+                  <option value="none">{#celimage_dlg.hasAutoChange_none}</option>
+                </select>
+              </td> 
+            </tr>
+
+            <tr id="addCounterOverlayRow">
+              <td class="column1"><label id="addCounterOverlayLabel" for="addCounterOverlay_list">{#celimage_dlg.addCounter}</label></td>
+              <td>
+                <select id="addCounterOverlay_list" name="addCounterOverlay">
+                  <option value="none">{#celimage_dlg.addCounter_none}</option>
+                  <option value="normal">{#celimage_dlg.addCounter_normal}</option>
+                  <option value="leadingzeros">{#celimage_dlg.addCounter_leadingzeros}</option>
+                </select>
+              </td> 
+            </tr>
+
+          </table>
+        </fieldset>
+      </div>
+
+      <div id="advanced_panel" class="panel">
+        <fieldset>
+          <legend>{#celimage_dlg.misc}</legend>
+
+          <table border="0" cellpadding="4" cellspacing="0">
+            <tr>
+              <td class="column1"><label id="idlabel" for="id">{#celimage_dlg.id}</label></td> 
+              <td><input id="id" name="id" type="text" value="" /></td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="srclabel" for="src">{#celimage_dlg.src}</label></td>
+              <td colspan="2"><table border="0" cellspacing="0" cellpadding="0">
+                <tr> 
+                  <td><input name="src" type="text" id="src" value="" class="mceFocus" onchange="ImageDialog.showPreviewImage(this.value);" /></td> 
+                  <td id="srcbrowsercontainer">&nbsp;</td>
+                </tr>
+                </table></td>
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="dirlabel" for="dir">{#celimage_dlg.langdir}</label></td> 
+              <td>
+                <select id="dir" name="dir" onchange="CelImageDialog.changeAppearance();"> 
+                    <option value="">{#not_set}</option> 
+                    <option value="ltr">{#celimage_dlg.ltr}</option> 
+                    <option value="rtl">{#celimage_dlg.rtl}</option> 
+                </select>
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="langlabel" for="lang">{#celimage_dlg.langcode}</label></td> 
+              <td>
+                <input id="lang" name="lang" type="text" value="" />
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="usemaplabel" for="usemap">{#celimage_dlg.map}</label></td> 
+              <td>
+                <input id="usemap" name="usemap" type="text" value="" />
+              </td> 
+            </tr>
+
+            <tr>
+              <td class="column1"><label id="longdesclabel" for="longdesc">{#celimage_dlg.long_desc}</label></td>
+              <td><table border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td><input id="longdesc" name="longdesc" type="text" value="" /></td>
+                    <td id="longdesccontainer">&nbsp;</td>
+                  </tr>
+                </table></td> 
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+      
+      <div id="crop_panel" class="panel" style="display: none;">
+        <fieldset>
+          <legend>{#celimage_dlg.tab_crop}</legend>
+          <table border="0" cellpadding="4" cellspacing="0" style="height: 360px;">
+            <tr>
+              <td class="column1" style="width: 400px;">
+                <div id="cropContainer" style="width: 390px; height: 350px; overflow: auto;">
+                  <img id="cropImage" src="" style="background: url(../../../celRes/transpBG.gif);" />
+                </div>
+              </td> 
+              <td style="width: 180px;">
+                <div class="previewContainer" style="width: 170px; height: 170px; overflow: hidden; margin-bottom: 10px; position: relative; background: url(../../../celRes/transpBG.gif);">
+                  <img id="cropZoom" src="" style="position: relative;"/>
+                  <img id="zoomPointer" src="../../../../celRes/crop_pointer.png" style="position: absolute; top: 69px; left: 69px;" />
+                  <div id=""></div>
+                </div>
+                <div class="previewContainer" style="width: 170px; height: 170px;">
+                  <div id="cropPreviewWrapper" style="width: 170px; height: 170px; overflow: hidden;">
+                    <img id="cropPreview" src="" style="position: relative; background: url(../../../celRes/transpBG.gif);" />
+                  </div>
+                </div>
+              </td> 
+            </tr>
+          </table>
+        </fieldset>
+        <fieldset>
+          <table>
+            <tbody>
+              <tr>
+                <td style="width: 290px;">
+                  <input type="hidden" id="isCropped" name="isCropped" value="0" />
+                  <label id="fitToScreen_label" for="fitToScreen">{#celimage_dlg.fitToScreen}</label> 
+                  <select id="fitToScreen" name="fitToScreen">
+                    <option value="0">Fit</option>
+                    <option value="1">100%</option>
+                    <option value=".75">75%</option>
+                    <option value=".5">50%</option>
+                    <option value=".25">25%</option>
+                    <option value=".1">10%</option>
+                  </select>
+                </td>
+                <td>
+                  <label for="crop_ratio">{#celimage_dlg.asp_ratio}</label>
+                  <label id="crop_ratio_label" for="crop_ratio">.</label>
+                  <input style="display:none;" name="crop_ratio" type="text" id="crop_ratio" value="1.0" size="5" class="cropPx" />
+                  <label for="crop_fixRatio">{#celimage_dlg.asp_ratio_fix}</label>
+                  <input name="crop_fixRatio" type="checkbox" id="crop_fixRatio" value="" class="cropPx" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label id="cropX_label" for="cropX">{#celimage_dlg.cropX}</label>
+                  <input name="cropX" type="text" id="cropX" value="" size="5" class="cropPx" /> : 
+                  <input name="cropY" type="text" id="cropY" value="" size="5" class="cropPx" />
+                  <br />
+                  <label id="cropWidth_label" for="cropWidth">{#celimage_dlg.cropWidth}</label>
+                  <input name="cropWidth" type="text" id="cropWidth" value="" size="5" class="cropPx" />px x 
+                  <input name="cropHeight" type="text" id="cropHeight" value="" size="5" class="cropPx" />px
+                </td>
+                <td>
+                  <input type="button" id="crop_release" value="{#celimage_dlg.release}"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="mceActionPanel">
+      <div style="float: left">
+        <input type="submit" id="insert" name="insert" value="{#insert}" />
+      </div>
+
+      <div style="float: right">
+        <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+      </div>
+    </div>
+    </form>
+
+  <script type="text/javascript" src="../../../../celJS/initCelementsAfter.js?version=201507062217"></script>
+</body> 
+</html> 

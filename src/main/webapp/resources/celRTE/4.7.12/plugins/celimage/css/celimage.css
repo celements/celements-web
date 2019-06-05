@@ -1,0 +1,78 @@
+@import url(http://fonts.googleapis.com/css?family=Terminal+Dosis:400,200,300,500,600,700,800);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+#src_list, #over_list, #out_list {width:280px;}
+.mceActionPanel {margin-top:7px;}
+.alignPreview {border:1px solid #000; width:140px; height:140px; overflow:hidden; padding:5px;}
+.checkbox {border:0;}
+.panel_wrapper div.current {height:305px;}
+#prev {
+  margin-top:15px; margin-bottom:15px; margin-left: auto; margin-right: auto;
+  border:1px solid #000; width:300px; height:250px; overflow:auto; display: block;}
+#prev img {
+  margin-left: auto; margin-right: auto;
+}
+#prev img#previewImg {
+  background: url(../../../../celRes/transpBG.gif);
+}
+#align, #classlist {width:150px;}
+#celwidth, #overlayWidth, #animWidth,
+#celheight, #overlayHeight, #animHeight,
+#marginTop, #marginBottom, #marginRight, #marginLeft {
+  vertical-align:middle; width:50px; text-align:center;
+}
+#marginTop, #marginBottom {margin-left: auto; margin-right: auto; display: block;}
+#marginLeft { float: left; margin-top: 120px;}
+#marginRight { float: right; margin-top: 120px;}
+#vspace, #hspace, #border {vertical-align:middle; width:30px; text-align:center;}
+#class_list {width:180px;}
+input {width: 280px;}
+#constrain, #onmousemovecheck {width:auto;}
+#id, #dir, #lang, #usemap, #longdesc {width:200px;}
+div.imagePickerWrapper {
+  width: 107px;
+  height: 107px;
+  display: inline-block;
+  float: left;
+  position: relative;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  border: 1px solid #D2D2D2;
+  line-height: 0px;
+  font-size: 0px;
+}
+div.imagePickerWrapper div.imagePickerSource {
+  display: block;
+  position: absolute;
+  border: 4px dashed transparent;
+}
+div.imagePickerWrapper div.imagePickerSource img {
+  background: url(../../../../celRes/transpBGsmall.gif);
+}
+div.imagePickerWrapper div.imagePickerSource.selected {
+  border: 4px dashed #ff9900;
+}
+img.attListLoading {
+  display: block;
+  width: 32px;
+  height:32px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+.celimagepickertitle {
+  color: #303030;
+  font-size: 14px;
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  line-height: 17px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+body#celimage .tabs span,
+body#celimage .tabs ul li {
+  padding: 0px;
+}
+body#celimage .tabs ul li a {
+  padding: 0px 10px 0px 10px;
+  height: 18px;
+  display: block;
+}
