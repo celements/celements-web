@@ -4,6 +4,20 @@
   if (typeof window.CELEMENTS == "undefined") { window.CELEMENTS={};};
   if (typeof window.CELEMENTS.DATETIMEPICKER == "undefined") { window.CELEMENTS.DATETIMEPICKER={};};
 
+  var cel_initDateTimePicker = function(event) {
+    window.CELEMENTS.dateTimePickerGenerator.generateDateTimePicker();
+    $(document.body).stopObserving("celements:contentChanged", cel_initDateTimePicker);
+    $(document.body).observe("celements:contentChanged", cel_initDateTimePicker);
+  };
+
+  /**
+   * Initialize all DateTimePicker
+   */
+  celAddOnBeforeLoadListener(function() {
+    window.CELEMENTS.dateTimePickerGenerator = new CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator("body");
+    cel_initDateTimePicker();
+  });
+
   /**
    * CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator constructor
    */
@@ -98,4 +112,5 @@
         });
       }
   };
+
 })(window)

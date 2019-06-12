@@ -1003,13 +1003,6 @@
     });
   };
 
-  var cel_initDateTimePicker = function(event) {
-    var dateTimePickerGenerator = new CELEMENTS.DATETIMEPICKER.DateTimePickerGenerator("body");
-    dateTimePickerGenerator.generateDateTimePicker();
-    $(document.body).stopObserving("celements:contentChanged", cel_initDateTimePicker);
-    $(document.body).observe("celements:contentChanged", cel_initDateTimePicker);
-  };
-
   /**
    * Initialize all Multiselect-Boxes
    */
@@ -1023,13 +1016,6 @@
     $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("celements:contentChanged", cel_addMaxDimToFluidImg);
     $(document.body).fire('cel:initMultiselect');
-  });
-
-  /**
-   * Initialize all DateTimePicker
-   */
-  celAddOnBeforeLoadListener(function() {
-    cel_initDateTimePicker();
   });
 
   /**
