@@ -65,6 +65,7 @@
           tinyConfigObj["body_class"] = getAllEditorBodyClasses(tinyConfigObj).join(',');
           console.log('initCelRTE: tinyMCE.init');
           tinyMCE.init(tinyConfigObj);
+          console.debug('initCelRTE: tinyMCE.init finished');
         } else {
           console.error('TinyConfig is no json!', tinyConfigJSON);
         }
