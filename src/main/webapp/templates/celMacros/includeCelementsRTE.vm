@@ -1,2 +1,10 @@
-$services.javascript.addLazyExtJSfile(":celRTE/tiny_mce_src.js", "file", "ver=$!{services.celementsweb.getLastStartupTimeStamp()}")
-$services.javascript.addLazyExtJSfile(":celJS/celTabMenu/loadTinyMCE-async.js", "file")
+#if("$!lazyAdd" == '')
+  #set($lazyAdd = true)
+#end
+#foreach($jsFile in $services.rteconfig.rteImplementation.javaScriptFiles)
+  #if($lazyAdd)
+    $services.javascript.addLazyExtJSfile($jsFile, 'file')
+  #else
+    $services.javascript.addExtJSfileOnce($jsFile, 'file')
+  #end
+#end
