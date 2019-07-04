@@ -268,6 +268,13 @@ TE.prototype = {
     window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
     _me.afterInitListeners.each(_me._execOneListener);
+    //** displayEditor
+    var editorReadyDisplayNow = function() {
+      console.log('editorReadyDisplayNow start');
+      console.log('editorReadyDisplayNow finish');
+    };
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', editorReadyDisplayNow.bind(_me));
+    console.log('editorReadyDisplayNow registered');
     var displayNowEffect = new Effect.Parallel([
        new Effect.Appear('tabMenuPanel', {
          afterFinish: function() {
@@ -281,6 +288,7 @@ TE.prototype = {
        duration: 0.5,
        sync: true
     });
+    console.log('tabMenuSetup: fire tabedit:finishedLoadingDisplayNow');
     var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow',
         displayNowEffect);
     if (!defaultShowEvent.stopped) {
