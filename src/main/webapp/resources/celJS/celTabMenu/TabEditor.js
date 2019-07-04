@@ -51,6 +51,7 @@ TE.prototype = {
   _tabsInitalized : undefined,
   _isEditorDirtyOnLoad : undefined,
   afterInitListeners : undefined,
+  _editorReadyDisplayNowBind : undefined,
   _log : undefined,
 
   _init : function() {
@@ -72,6 +73,7 @@ TE.prototype = {
     _me._tabsInitalized = new Array();
     _me._log = new CELEMENTS.mobile.Dimensions();
     _me._loading = new CELEMENTS.LoadingIndicator();
+    _me._editorReadyDisplayNowBind = _me._editorReadyDisplayNow.bind(_me);
   },
 
   isValidFormId : function(formId) {
@@ -268,22 +270,23 @@ TE.prototype = {
     window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
     _me.afterInitListeners.each(_me._execOneListener);
-    //** displayEditor
-    var editorReadyDisplayNow = function() {
-      console.log('editorReadyDisplayNow start');
-      console.log('editorReadyDisplayNow finish');
-    };
-    $('tabMenuPanel').observe('tabedit:scriptsLoaded', editorReadyDisplayNow.bind(_me));
-    console.log('editorReadyDisplayNow registered');
+    console.log('editorReadyDisplayNow register');
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
+    console.log('tabMenuSetup end');
+  },
+
+  _editorReadyDisplayNow : function() {
+    var _me = this;
+    console.log('editorReadyDisplayNow start');
     var displayNowEffect = new Effect.Parallel([
-       new Effect.Appear('tabMenuPanel', {
-         afterFinish: function() {
-           //afterFinish for parallel effect is not working!
-           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
-         },
-         sync: true
-       }),
-       new Effect.Fade('celementsLoadingIndicator', { sync: true })
+      new Effect.Appear('tabMenuPanel', {
+        afterFinish: function() {
+          //afterFinish for parallel effect is not working!
+          $('tabMenuPanel').fire('tabedit:afterDisplayNow');
+        },
+        sync: true
+      }),
+      new Effect.Fade('celementsLoadingIndicator', { sync: true })
     ], {
        duration: 0.5,
        sync: true
@@ -296,7 +299,7 @@ TE.prototype = {
     } else {
       $('tabMenuPanel').fire('tabedit:afterDisplayNow');
     }
-    console.log('tabMenuSetup end');
+    console.log('editorReadyDisplayNow finish');
   },
 
   _execOneListener : function(listener) {
