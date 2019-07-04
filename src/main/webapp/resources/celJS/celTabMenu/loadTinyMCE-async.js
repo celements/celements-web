@@ -60,11 +60,13 @@
       onSuccess: function(transport) {
         var tinyConfigJSON = transport.responseText.replace(/\n/g,' ');
         if (tinyConfigJSON.isJSON()) {
+          
           window.tinymce.dom.Event.domLoaded = true;
           var tinyConfigObj = tinyConfigJSON.evalJSON();
           tinyConfigObj["body_class"] = getAllEditorBodyClasses(tinyConfigObj).join(',');
           console.log('initCelRTE: tinyMCE.init');
-          tinyMCE.init(tinyConfigObj);
+          //TODO debugging
+          setTimeout(function() {tinyMCE.init(tinyConfigObj);}, 3000);
           console.debug('initCelRTE: tinyMCE.init finished');
         } else {
           console.error('TinyConfig is no json!', tinyConfigJSON);
