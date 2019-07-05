@@ -456,7 +456,7 @@ TE.prototype = {
     var _me = this;
     $('cel_overlay').setStyle({'display' : "block"});
     _me.getTab(tabId);
-    var tabBodyId = tabId + '-tab';
+    var tabBodyId = _me.getTabBodyId(tabId);
     $(tabBodyId).fire('tabedit:before-tabshow', {
       'newTabId' : tabBodyId
     });
@@ -537,9 +537,7 @@ TE.prototype = {
            //TODO FP; 25.9.2015; maybe use 'tabedit:scriptsLoaded' instead
            console.log('TabEditor.js: after async tab load before tabedit:tabchange'
                + ' event', tabBodyId);
-           $(tabBodyId).fire('tabedit:tabchange', {
-             'newTabId' : tabBodyId
-           });
+           _me._fireTabChange(tabId);
            $(tabBodyId).select('form').each(function(formelem) {
              console.log('getTab async: before retrieveInitialValues ', tabBodyId,
                  formelem);
@@ -571,16 +569,30 @@ TE.prototype = {
     $(tabBodyId).up('.celements3_tabMenu').setStyle({
       'width' : width
     });
-    $(tabBodyId).show();
+    //TODO debugging
+// $(tabBodyId).show()
+   ;
     if (!asyncLoading) {
-      $(tabBodyId).fire('tabedit:tabchange', {
-        'newTabId' : tabBodyId
-      });
+      _me._fireTabChange(tabId);
     }
     _me.setButtonActive(tabId);
   },
 
- lazyLoadJS : function(parentEle, syncLoadOnly) {
+  _getTabBodyId : function(tabId) {
+    return tabId + '-tab';
+  },
+
+  _fireTabChange : function(tabId) {
+    var _me = this;
+    console.log('_fireTabChange: fire tabedit:tabchange event for', tabId);
+    $(_me.getTabBodyId(tabId)).fire('tabedit:tabchange', {
+      'newTabId' : tabBodyId,
+      'newTabBodyId' : tabBodyId,
+      'newTabButtonId' : tabId
+    });
+  },
+
+  lazyLoadJS : function(parentEle, syncLoadOnly) {
   var _me = this;
   syncLoadOnly = syncLoadOnly || false;
   var scripts = [];
