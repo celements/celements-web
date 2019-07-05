@@ -64,7 +64,8 @@
           window.tinymce.dom.Event.domLoaded = true;
           var tinyConfigObj = tinyConfigJSON.evalJSON();
           tinyConfigObj["body_class"] = getAllEditorBodyClasses(tinyConfigObj).join(',');
-          console.log('initCelRTE: tinyMCE.init');
+          tinyConfigObj["setup"] = celSetupTinyMCE;
+         console.log('initCelRTE: tinyMCE.init');
           tinyMCE.init(tinyConfigObj);
           console.debug('initCelRTE: tinyMCE.init finished');
         } else {
@@ -74,13 +75,23 @@
     });
   };
   
+  var celSetupTinyMCE = function(editor) {
+    console.log('celSetupTinyMCE start');
+    editor.onInit.add(celFinishTinyMCEStart);
+    console.log('celSetupTinyMCE finish');
+  };
+
   var finishedCelRTE_tinyMCE_Load = false;
   
-  window.celFinishTinyMCEStart = function() {
-    console.log('celFinishTinyMCEStart: start');
-    finishedCelRTE_tinyMCE_Load = true;
-    console.log("celFinishTinyMCEStart: fire 'celRTE:finishedInit'");
-    $$('body')[0].fire('celRTE:finishedInit');
+  var celFinishTinyMCEStart = function() {
+    try {
+      console.log('celFinishTinyMCEStart: start');
+      finishedCelRTE_tinyMCE_Load = true;
+      $$('body')[0].fire('celRTE:finishedInit');
+      console.log('celFinishTinyMCEStart: finish');
+    } catch (exp) {
+      console.error('celFinishTinyMCEStart failed', exp);
+    }
   };
 
   var lacyLoadTinyMCEforTab = function(event) {
