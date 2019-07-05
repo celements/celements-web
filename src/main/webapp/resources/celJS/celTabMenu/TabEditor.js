@@ -470,7 +470,7 @@ TE.prototype = {
     var _me = this;
     $$('.menuTab').each(function(tab) { tab.hide(); });
     // create tab if it does not exist
-    var tabBodyId = tabId + '-tab';
+    var tabBodyId = _me.getTabBodyId(tabId);
     var div = $(tabBodyId);
     var asyncLoading = false;
     var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
@@ -583,8 +583,9 @@ TE.prototype = {
 
   _fireTabChange : function(tabId) {
     var _me = this;
-    console.log('_fireTabChange: fire tabedit:tabchange event for', tabId);
-    $(_me.getTabBodyId(tabId)).fire('tabedit:tabchange', {
+    var tabBodyId = _me.getTabBodyId(tabId);
+    console.log('_fireTabChange: fire tabedit:tabchange event for', tabId, tabBodyId);
+    $(tabBodyId).fire('tabedit:tabchange', {
       'newTabId' : tabBodyId,
       'newTabBodyId' : tabBodyId,
       'newTabButtonId' : tabId
