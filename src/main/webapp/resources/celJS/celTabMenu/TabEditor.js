@@ -464,6 +464,7 @@ TE.prototype = {
     $(tabBodyId).fire('tabedit:after-tabshow', {
       'newTabId' : tabBodyId
     });
+    console.log('showTabMenu done.');
   },
 
   getTab : function(tabId, reload) {
