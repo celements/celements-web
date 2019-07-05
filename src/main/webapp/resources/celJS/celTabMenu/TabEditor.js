@@ -456,7 +456,7 @@ TE.prototype = {
     var _me = this;
     $('cel_overlay').setStyle({'display' : "block"});
     _me.getTab(tabId);
-    var tabBodyId = _me.getTabBodyId(tabId);
+    var tabBodyId = _me._getTabBodyId(tabId);
     $(tabBodyId).fire('tabedit:before-tabshow', {
       'newTabId' : tabBodyId
     });
@@ -471,7 +471,7 @@ TE.prototype = {
     var _me = this;
     $$('.menuTab').each(function(tab) { tab.hide(); });
     // create tab if it does not exist
-    var tabBodyId = _me.getTabBodyId(tabId);
+    var tabBodyId = _me._getTabBodyId(tabId);
     var div = $(tabBodyId);
     var asyncLoading = false;
     var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
@@ -584,7 +584,7 @@ TE.prototype = {
 
   _fireTabChange : function(tabId) {
     var _me = this;
-    var tabBodyId = _me.getTabBodyId(tabId);
+    var tabBodyId = _me._getTabBodyId(tabId);
     console.log('_fireTabChange: fire tabedit:tabchange event for', tabId, tabBodyId);
     $(tabBodyId).fire('tabedit:tabchange', {
       'newTabId' : tabBodyId,
