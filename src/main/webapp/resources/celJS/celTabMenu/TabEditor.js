@@ -257,9 +257,11 @@ TE.prototype = {
       _me.initDefaultCloseButton();
       _me._addClearButtons();
     }
+    console.log('tabMenuSetup before initCloseButton');
     if(_me.tabMenuConfig.initCloseButton) {
       _me.initCloseButton();
     }
+    console.log('tabMenuSetup before initSaveButton');
     if(_me.tabMenuConfig.initSaveButton) {
       _me.initSaveButton();
     }
@@ -271,6 +273,7 @@ TE.prototype = {
       titlediv.update(_me.tabMenuConfig.tabMenuPanelConfig.title);
       $('tabMenuPanel').down('.bd').insert({ top: titlediv });
     }
+    console.log('tabMenuSetup activating browseaway check');
     window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
     console.log('tabMenuSetup before afterInitListeners');
@@ -532,16 +535,15 @@ TE.prototype = {
          parameters: loadTabParams,
          onSuccess: function(transport) {
            div.update(transport.responseText);
-           console.log('TabEditor.js: after async tab load before LazyLoadJS ',
-               tabBodyId);
+           console.log('TabEditor.js: after async tab load before LazyLoadJS ', tabBodyId);
            _me.lazyLoadJS(div);
            _me.lazyLoadCSS(div);
            //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
            //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
            //TODO following fired event. -> Workaround: execute registered method once after registration.
            //TODO FP; 25.9.2015; maybe use 'tabedit:scriptsLoaded' instead
-           console.log('TabEditor.js: after async tab load before tabedit:tabchange'
-               + ' event', tabBodyId);
+           console.log('TabEditor.js: after async tab load before tabedit:tabchange event',
+               tabBodyId);
            _me._fireTabChange(tabId);
            $(tabBodyId).select('form').each(function(formelem) {
              console.log('getTab async: before retrieveInitialValues ', tabBodyId,
