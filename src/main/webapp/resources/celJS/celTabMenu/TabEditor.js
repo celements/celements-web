@@ -478,11 +478,13 @@ TE.prototype = {
     var asyncLoading = false;
     var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
     var scriptLoadedHandler = function() {
+      console.log('scriptLoadedHandler: start');
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
       console.log('TabEditor: async loading tab firing celements:contentChanged');
       $(tabBodyId).fire('celements:contentChanged', {
         'htmlElem' : $(tabBodyId)
       });
+      console.log('scriptLoadedHandler: finish');
     };
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
     console.log('getTab: ', tabBodyId, div, reload);
