@@ -110,7 +110,7 @@
   };
 
   $j(document).ready(function() {
-    console.log("tinymce4: register document ready...");
+    console.log("tinymce: register document ready...");
     $('tabMenuPanel').observe('tabedit:finishedLoadingDisplayNow',
         delayedEditorOpeningHandler);
     $('tabMenuPanel').observe('tabedit:tabchange', lacyLoadTinyMCEforTab);
