@@ -251,6 +251,7 @@ TE.prototype = {
       console.log('tabMenuSetup before showTabMenu');
       _me.showTabMenu(starttabId);
     }
+    console.log('tabMenuSetup after showTabMenu');
 
     if($$('.container-close').size() > 0) {
       _me.initDefaultCloseButton();
@@ -272,6 +273,7 @@ TE.prototype = {
     }
     window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
+    console.log('tabMenuSetup before afterInitListeners');
     _me.afterInitListeners.each(_me._execOneListener);
     console.log('tabMenuSetup end');
   },
@@ -571,11 +573,13 @@ TE.prototype = {
       'width' : width
     });
     //TODO debugging
+    console.warn('getTab show deactivated for debugging!');
 //    $(tabBodyId).show();
     if (!asyncLoading) {
       _me._fireTabChange(tabId);
     }
     _me.setButtonActive(tabId);
+    console.log('getTab finish');
   },
 
   _getTabBodyId : function(tabId) {
