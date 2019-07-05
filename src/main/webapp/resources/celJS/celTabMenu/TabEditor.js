@@ -287,6 +287,7 @@ TE.prototype = {
   _editorReadyDisplayNow : function() {
     var _me = this;
     console.log('editorReadyDisplayNow start');
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
     var displayNowEffect = new Effect.Parallel([
       new Effect.Appear('tabMenuPanel', {
         afterFinish: function() {
