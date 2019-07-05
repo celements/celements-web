@@ -265,8 +265,9 @@ TE.prototype = {
     if(_me.tabMenuConfig.initSaveButton) {
       _me.initSaveButton();
     }
-    console.log('tabMenuSetup before resize');
-    if(typeof(resize) != 'undefined') {
+    console.log('tabMenuSetup before resize', typeof(resize));
+    if(typeof(resize) !== 'undefined') {
+      console.log('tabMenuSetup before calling resize');
       resize();
     }
     console.log('tabMenuSetup before con_titblock');
