@@ -570,8 +570,7 @@ TE.prototype = {
       'width' : width
     });
     //TODO debugging
-// $(tabBodyId).show()
-   ;
+//    $(tabBodyId).show();
     if (!asyncLoading) {
       _me._fireTabChange(tabId);
     }
