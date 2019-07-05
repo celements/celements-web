@@ -770,6 +770,7 @@ TE.prototype = {
      console.log('TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded');
      $('tabMenuPanel').fire('tabedit:scriptsLoaded');
    }
+   console.log('_loadScriptsCheckFinished: finish');
  },
 
  scriptIsLoaded : function(scriptURL) {
