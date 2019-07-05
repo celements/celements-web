@@ -579,9 +579,7 @@ TE.prototype = {
     $(tabBodyId).up('.celements3_tabMenu').setStyle({
       'width' : width
     });
-    //TODO debugging
-    console.warn('getTab show deactivated for debugging!');
-//    $(tabBodyId).show();
+    $(tabBodyId).show();
     if (!asyncLoading) {
       _me._fireTabChange(tabId);
     }
