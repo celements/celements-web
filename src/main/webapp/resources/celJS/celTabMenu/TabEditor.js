@@ -244,6 +244,9 @@ TE.prototype = {
         starttabId = _me.tabMenuConfig.tabMenuPanelData[0]['id'];
       }
     }
+    console.log('editorReadyDisplayNow register');
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
     if(starttabId != null) {
       console.log('tabMenuSetup before showTabMenu');
       _me.showTabMenu(starttabId);
@@ -270,8 +273,6 @@ TE.prototype = {
     window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
     _me.afterInitListeners.each(_me._execOneListener);
-    console.log('editorReadyDisplayNow register');
-    $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
     console.log('tabMenuSetup end');
   },
 
