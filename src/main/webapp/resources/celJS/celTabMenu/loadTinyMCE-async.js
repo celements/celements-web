@@ -65,8 +65,7 @@
           var tinyConfigObj = tinyConfigJSON.evalJSON();
           tinyConfigObj["body_class"] = getAllEditorBodyClasses(tinyConfigObj).join(',');
           console.log('initCelRTE: tinyMCE.init');
-          //TODO debugging
-          setTimeout(function() {tinyMCE.init(tinyConfigObj);}, 3000);
+          tinyMCE.init(tinyConfigObj);
           console.debug('initCelRTE: tinyMCE.init finished');
         } else {
           console.error('TinyConfig is no json!', tinyConfigJSON);
@@ -80,6 +79,7 @@
   window.celFinishTinyMCEStart = function() {
     console.log('celFinishTinyMCEStart: start');
     finishedCelRTE_tinyMCE_Load = true;
+    console.log("celFinishTinyMCEStart: fire 'celRTE:finishedInit'");
     $$('body')[0].fire('celRTE:finishedInit');
   };
 
@@ -88,7 +88,8 @@
     var tinyMceAreas = $(tabBodyId).select('textarea.mceEditor');
     console.log('lacyLoadTinyMCEforTab: for tabBodyId ', tabBodyId, tinyMceAreas);
     tinyMceAreas.each(function(editorArea) {
-      tinyMCE.execCommand("mceAddControl", false, editorArea.id);
+      setTimeout(function() {tinyMCE.execCommand("mceAddControl", false, editorArea.id);}, 3000);
+//      tinyMCE.execCommand("mceAddControl", false, editorArea.id);
     });
   };
 
