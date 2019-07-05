@@ -265,15 +265,17 @@ TE.prototype = {
     if(_me.tabMenuConfig.initSaveButton) {
       _me.initSaveButton();
     }
+    console.log('tabMenuSetup before resize');
     if(typeof(resize) != 'undefined') {
       resize();
     }
+    console.log('tabMenuSetup before con_titblock');
     if (!$('con_titblock')) {
       var titlediv = new Element('div', { 'id': 'con_titblock', 'class': 'titleblock' });
       titlediv.update(_me.tabMenuConfig.tabMenuPanelConfig.title);
       $('tabMenuPanel').down('.bd').insert({ top: titlediv });
     }
-    console.log('tabMenuSetup activating browseaway check');
+    console.log('tabMenuSetup activating browse away check');
     window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
     console.log('tabMenuSetup before afterInitListeners');
