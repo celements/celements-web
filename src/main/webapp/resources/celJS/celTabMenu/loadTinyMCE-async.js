@@ -96,8 +96,10 @@
     console.log('delayedEditorOpeningHandler: start');
     var mceEditorAreaAvailable = ($$('#tabMenuPanel .mceEditor').size() > 0);
     if (!finishedCelRTE_tinyMCE_Load && mceEditorAreaAvailable) {
+      console.debug('delayedEditorOpeningHandler: stopping display event');
       event.stop();
       $$('body')[0].observe('celRTE:finishedInit', function() {
+        console.debug('delayedEditorOpeningHandler: start display effect');
         event.memo.start();
       });
     }

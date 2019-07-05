@@ -296,6 +296,7 @@ TE.prototype = {
     var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow',
         displayNowEffect);
     if (!defaultShowEvent.stopped) {
+      console.log('displayNow event not stopped -> displaying instantly');
       displayNowEffect.start();
     } else {
       $('tabMenuPanel').fire('tabedit:afterDisplayNow');
