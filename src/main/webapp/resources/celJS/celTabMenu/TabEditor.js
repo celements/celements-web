@@ -336,6 +336,15 @@ TE.prototype = {
       //because afterFinish for parallel effect is not working!
       $('tabMenuPanel').fire('tabedit:afterDisplayNow');
     }
+    console.log('_displayNowEffect before resize', typeof(resize));
+    if(typeof(resize) !== 'undefined') {
+      console.log('tabMenuSetup before calling resize');
+      try {
+        resize();
+      } catch (exp) {
+        console.error('tabMenuSetup failed to execute resize ', exp);
+      }
+    }
     console.log('_displayNowEffect finish');
   },
 
