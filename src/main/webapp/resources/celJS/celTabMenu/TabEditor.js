@@ -523,7 +523,7 @@ TE.prototype = {
       _me._tabLoaderElem = new Element('div', {
         'class': 'menuTab celementsLoadingIndicator',
         'id': 'tabLoaderContainer'
-      }).update(loaderDiv);
+      }).update(_me.loaderDiv);
       $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
     }
     console.log('_getTabLoaderElement: end ', _me._tabLoaderElem);
