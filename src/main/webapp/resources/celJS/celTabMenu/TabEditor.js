@@ -521,8 +521,9 @@ TE.prototype = {
         'marginLeft' : 'auto',
         'marginRight' : 'auto'
       });
+      //.menuTab needed for resize!
       _me._tabLoaderElem = new Element('div', {
-        'class': 'celementsLoadingIndicator',
+        'class': 'menuTab celementsLoadingIndicator',
         'id': 'tabLoaderContainer'
       }).update(loaderimg).setStyle({
         'width' : _me.tabMenuConfig.tabMenuPanelConfig.width,
