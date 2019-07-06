@@ -499,20 +499,22 @@ TE.prototype = {
     console.log('_showTabLoaderElement: start');
     if (!_me._tabLoaderElem) {
       console.log('_showTabLoaderElement: create tabLoader');
+      var loaderimg = _me._loading.getLoadingIndicator().setStyle({
+        'display' : 'block',
+        'marginLeft' : 'auto',
+        'marginRight' : 'auto'
+      });
       _me._tabLoaderElem = new Element('div', {
         'class': 'tabLoaderContainer',
         'id': 'tabLoaderContainer'
-      }).setStyle({
+      }).update(loaderimg).setStyle({
         'width' : _me.tabMenuConfig.tabMenuPanelConfig.width,
-        'min-height' : '200px'
+        'min-height' : '50px',
+        'padding-top' : '100px',
+        'padding-bottom' : '100px'
       });
-      var loaderspan = new Element('span', { 'class': 'tabloader' }).setStyle({
-        'display' : 'inline-block',
-        'margin-left' : 'auto',
-        'margin-right' : 'auto'
-      });
-      _me._tabLoaderElem.update(loaderspan);
-      loaderspan.update(_me._loading.getLoadingIndicator());
+      var textLoading = new Element('p').update('loading ...');
+      _me._tabLoaderElem.insert(textLoading);
       $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
     }
     _me._tabLoaderElem.show();
