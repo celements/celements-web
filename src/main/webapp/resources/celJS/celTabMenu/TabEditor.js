@@ -568,7 +568,7 @@ TE.prototype = {
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
     console.log('getTab: ', tabBodyId, tabBodyElem, reload);
     if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
-      _me._getTabLoaderElement().show();
+      _me._getTabLoaderElement(tabBodyId).show();
       tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
       tabBodyElem.hide();
       _me._loadingTabId = tabBodyElem;
