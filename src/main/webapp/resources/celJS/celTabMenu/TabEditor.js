@@ -297,8 +297,10 @@ TE.prototype = {
   
   _tabReadyDisplayNow : function(tabBodyElem) {
     var _me = this;
+    console.log('_tabReadyDisplayNow start');
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
-    console.warn('TODO: implement _tabReadyDisplayNow ', tabBodyElem);
+    _me._displayNowEffect(tabBodyElem, _me._tabLoaderElem);
+    console.log('_tabReadyDisplayNow finish');
   },
 
   _displayNowEffect : function(appearElem, fadeElem) {
@@ -557,9 +559,9 @@ TE.prototype = {
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
     console.log('getTab: ', tabBodyId, tabBodyElem, reload);
     if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
+      _me._showTabLoaderElement();
       tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
       tabBodyElem.hide();
-      _me._showTabLoaderElement();
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
       $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
       var lang = '';
@@ -636,6 +638,9 @@ TE.prototype = {
     });
     if (!asyncLoading) {
       _me._fireTabChange(tabId);
+      if (_me._tabLoaderElem) {
+        _me._tabLoaderElem.hide();
+      }
       $(tabBodyId).show();
     }
     _me.setButtonActive(tabId);
