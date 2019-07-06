@@ -27,9 +27,6 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   padding-top: 100px;
   padding-bottom: 100px;
 }
-.celements3_tabMenu #celementsLoadingIndicator p {
-  text-align: center;
-}
 /* main panel */
 /* and panel header */
 .celements3_tabMenu #tabMenuPanel,
@@ -137,7 +134,8 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   width: auto;
 }
 .celements3_tabMenu .titleblock,
-.celements3_tabMenu .celementsLoadingIndicator p {
+.celements3_tabMenu .celementsLoadingIndicator p,
+body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
   display:block;
   padding: 10px;
   padding-left: 13px;
@@ -146,6 +144,10 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   line-height: 20px;
   margin-top: 8px;
   font-weight: bold;
+}
+.celements3_tabMenu .celementsLoadingIndicator p,
+body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
+  text-align: center;
 }
 .celements3_tabMenu .editblock {
   display:block;
