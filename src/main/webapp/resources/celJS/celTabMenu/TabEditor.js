@@ -511,16 +511,17 @@ TE.prototype = {
         'marginLeft' : 'auto',
         'marginRight' : 'auto'
       });
-      //.menuTab needed for resize!
-      _me._tabLoaderElem = new Element('div', {
-        'class': 'menuTab celementsLoadingIndicator',
-        'id': 'tabLoaderContainer'
-      }).update(loaderimg).setStyle({
+      var loaderDiv = new Element('div').update(loaderimg).setStyle({
         'width' : _me.tabMenuConfig.tabMenuPanelConfig.width,
         'min-height' : '50px',
         'padding-top' : '100px',
         'padding-bottom' : '100px'
       });
+      //.menuTab needed for resize!
+      _me._tabLoaderElem = new Element('div', {
+        'class': 'menuTab celementsLoadingIndicator',
+        'id': 'tabLoaderContainer'
+      }).update(loaderDiv);
       var textLoading = new Element('p').update('loading ...');
       _me._tabLoaderElem.insert(textLoading);
       $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
