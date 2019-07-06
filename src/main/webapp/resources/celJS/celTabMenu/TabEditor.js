@@ -52,7 +52,9 @@ TE.prototype = {
   _isEditorDirtyOnLoad : undefined,
   afterInitListeners : undefined,
   _editorReadyDisplayNowBind : undefined,
+  _tabReadyDisplayNow : undefined,
   _log : undefined,
+  _tabLoaderElem : undefined,
 
   _init : function() {
     var _me = this;
@@ -74,6 +76,7 @@ TE.prototype = {
     _me._log = new CELEMENTS.mobile.Dimensions();
     _me._loading = new CELEMENTS.LoadingIndicator();
     _me._editorReadyDisplayNowBind = _me._editorReadyDisplayNow.bind(_me);
+    _me._tabReadyDisplayNowBind = _me._tabReadyDisplayNow.bind(_me);
   },
 
   isValidFormId : function(formId) {
@@ -288,29 +291,44 @@ TE.prototype = {
     var _me = this;
     console.log('editorReadyDisplayNow start');
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
+    _me._displayNowEffect('tabMenuPanel','celementsLoadingIndicator');
+    console.log('editorReadyDisplayNow finish');
+  },
+  
+  _tabReadyDisplayNow : function(tabBodyElem) {
+    var _me = this;
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+    console.warn('TODO: implement _tabReadyDisplayNow ', tabBodyElem);
+  },
+
+  _displayNowEffect : function(appearElem, fadeElem) {
+    var _me = this;
+    console.log('_displayNowEffect start');
     var displayNowEffect = new Effect.Parallel([
-      new Effect.Appear('tabMenuPanel', {
+      new Effect.Appear(appearElem, {
         afterFinish: function() {
           //afterFinish for parallel effect is not working!
+          console.log("afterFinish: fire 'tabedit:afterDisplayNow'");
           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
         },
         sync: true
       }),
-      new Effect.Fade('celementsLoadingIndicator', { sync: true })
+      new Effect.Fade(fadeElem, { sync: true })
     ], {
        duration: 0.5,
        sync: true
     });
-    console.log('tabMenuSetup: fire tabedit:finishedLoadingDisplayNow');
+    console.log('_displayNowEffect: fire tabedit:finishedLoadingDisplayNow');
     var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow',
         displayNowEffect);
     if (!defaultShowEvent.stopped) {
       console.log('displayNow event not stopped -> displaying instantly');
       displayNowEffect.start();
     } else {
+      //because afterFinish for parallel effect is not working!
       $('tabMenuPanel').fire('tabedit:afterDisplayNow');
     }
-    console.log('editorReadyDisplayNow finish');
+    console.log('_displayNowEffect finish');
   },
 
   _execOneListener : function(listener) {
@@ -476,12 +494,49 @@ TE.prototype = {
     console.log('showTabMenu done.');
   },
 
+  _showTabLoaderElement : function(tabBodyElem) {
+    var _me = this;
+    if (!_me._tabLoaderElem) {
+      _me._tabLoaderElem = new Element('div', {
+        'class': 'tabLoaderContainer',
+        'id': 'tabLoaderContainer'
+      }).setStyle({
+        'width' : _me.tabMenuConfig.tabMenuPanelConfig.width,
+        'min-height' : '200px'
+      });
+      var loaderspan = new Element('span', { 'class': 'tabloader' }).setStyle({
+        'display' : 'inline-block',
+        'margin-left' : 'auto',
+        'margin-right' : 'auto'
+      });
+      _me._tabLoaderElem.update(loaderspan);
+      loaderspan.update(_me._loading.getLoadingIndicator());
+      $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
+    }
+    _me._tabLoaderElem.show();
+  },
+
+  _getOrCreateTabBody : function(tabBodyId) {
+    var _me = this;
+    var tabBodyElem = $(tabBodyId);
+    if (!tabBodyElem) {
+      tabBodyElem = new Element('div', {
+        'class': 'menuTab ' + tabBodyId,
+        'id': tabBodyId
+      }).setStyle({
+        'width' : width
+      });
+      $('tabMenuPanel').down('.bd').appendChild(tabBodyElem);
+    }
+    return tabBodyElem;
+  },
+
   getTab : function(tabId, reload) {
     var _me = this;
     $$('.menuTab').each(function(tab) { tab.hide(); });
     // create tab if it does not exist
     var tabBodyId = _me._getTabBodyId(tabId);
-    var div = $(tabBodyId);
+    var tabBodyElem = $(tabBodyId);
     var asyncLoading = false;
     var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
     var scriptLoadedHandler = function() {
@@ -494,20 +549,13 @@ TE.prototype = {
       console.log('scriptLoadedHandler: finish');
     };
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
-    console.log('getTab: ', tabBodyId, div, reload);
-    if ((div == null) || ((reload != 'undefined') && reload)) {
-      if (div == null) {
-        div = new Element('div', {
-          'class': 'menuTab ' + tabBodyId,
-          'id': tabBodyId
-        }).setStyle({
-          'width' : width
-        });
-      }
-      var loaderspan = new Element('span', { 'class': 'tabloader' });
-      div.update(loaderspan);
-      loaderspan.update(_me._loading.getLoadingIndicator());
-      $('tabMenuPanel').down('.bd').appendChild(div);
+    console.log('getTab: ', tabBodyId, tabBodyElem, reload);
+    if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
+      tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+      tabBodyElem.hide();
+      _me._showTabLoaderElement();
+      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+      $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
       var lang = '';
       if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
         lang = $$('.celTabLanguage')[0].value;
@@ -538,10 +586,10 @@ TE.prototype = {
          method: 'post',
          parameters: loadTabParams,
          onSuccess: function(transport) {
-           div.update(transport.responseText);
+           tabBodyElem.update(transport.responseText);
            console.log('TabEditor.js: after async tab load before LazyLoadJS ', tabBodyId);
-           _me.lazyLoadJS(div);
-           _me.lazyLoadCSS(div);
+           _me.lazyLoadJS(tabBodyElem);
+           _me.lazyLoadCSS(tabBodyElem);
            //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
            //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
            //TODO following fired event. -> Workaround: execute registered method once after registration.
@@ -580,9 +628,9 @@ TE.prototype = {
     $(tabBodyId).up('.celements3_tabMenu').setStyle({
       'width' : width
     });
-    $(tabBodyId).show();
     if (!asyncLoading) {
       _me._fireTabChange(tabId);
+      $(tabBodyId).show();
     }
     _me.setButtonActive(tabId);
     console.log('getTab finish');
