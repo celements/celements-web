@@ -137,7 +137,7 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   width: auto;
 }
 .celements3_tabMenu .titleblock,
-.celements3_tabMenu #celementsLoadingIndicator p {
+.celements3_tabMenu .celementsLoadingIndicator p {
   display:block;
   padding: 10px;
   padding-left: 13px;

@@ -142,7 +142,8 @@ TE.prototype = {
     });
     var tabMenuPanelWidth = $('tabMenuPanel').getWidth();
     var loadingElem = new Element('div', {
-      'id' : 'celementsLoadingIndicator'
+      'id' : 'celementsLoadingIndicator',
+      'class' : 'celementsLoadingIndicator'
     }).update(loaderimg).setStyle({
       'width' : tabMenuPanelWidth + 'px'
     });
@@ -507,7 +508,7 @@ TE.prototype = {
         'marginRight' : 'auto'
       });
       _me._tabLoaderElem = new Element('div', {
-        'class': 'tabLoaderContainer',
+        'class': 'celementsLoadingIndicator',
         'id': 'tabLoaderContainer'
       }).update(loaderimg).setStyle({
         'width' : _me.tabMenuConfig.tabMenuPanelConfig.width,
