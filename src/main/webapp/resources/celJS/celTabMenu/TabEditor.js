@@ -494,9 +494,11 @@ TE.prototype = {
     console.log('showTabMenu done.');
   },
 
-  _showTabLoaderElement : function(tabBodyElem) {
+  _showTabLoaderElement : function() {
     var _me = this;
+    console.log('_showTabLoaderElement: start');
     if (!_me._tabLoaderElem) {
+      console.log('_showTabLoaderElement: create tabLoader');
       _me._tabLoaderElem = new Element('div', {
         'class': 'tabLoaderContainer',
         'id': 'tabLoaderContainer'
@@ -518,13 +520,15 @@ TE.prototype = {
 
   _getOrCreateTabBody : function(tabBodyId) {
     var _me = this;
+    console.log('_getOrCreateTabBody: start ', tabBodyId);
     var tabBodyElem = $(tabBodyId);
     if (!tabBodyElem) {
+      console.log('_getOrCreateTabBody: creating ', tabBodyId);
       tabBodyElem = new Element('div', {
         'class': 'menuTab ' + tabBodyId,
         'id': tabBodyId
       }).setStyle({
-        'width' : width
+        'width' : _me.tabMenuConfig.tabMenuPanelConfig.width
       });
       $('tabMenuPanel').down('.bd').appendChild(tabBodyElem);
     }
