@@ -566,6 +566,7 @@ TE.prototype = {
       _me._getTabLoaderElement().show();
       tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
       tabBodyElem.hide();
+      _me._loadingTabId = tabBodyElem;
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
       $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
       var lang = '';
