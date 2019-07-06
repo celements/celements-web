@@ -315,8 +315,8 @@ TE.prototype = {
     var displayNowEffect = new Effect.Parallel([
       new Effect.Appear(appearElem, {
         afterFinish: function() {
-          //afterFinish for parallel effect is not working!
-          console.log("afterFinish: fire 'tabedit:afterDisplayNow'");
+          //afterFinish for parallel effect is not working! Instead placed on first effect is working.
+          console.log("afterFinish: in appear fire 'tabedit:afterDisplayNow'");
           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
         },
         sync: true
@@ -324,11 +324,6 @@ TE.prototype = {
       new Effect.Fade(fadeElem, { sync: true })
     ], {
        duration: 0.5,
-       afterFinish: function() {
-         //afterFinish for parallel effect is not working!
-         console.log("afterFinish: in parallel effect fire 'tabedit:afterDisplayNow'");
-         $('tabMenuPanel').fire('tabedit:afterDisplayNow');
-       },
        sync: true
     });
     console.log('_displayNowEffect: fire tabedit:finishedLoadingDisplayNow');
@@ -337,18 +332,6 @@ TE.prototype = {
     if (!defaultShowEvent.stopped) {
       console.log('displayNow event not stopped -> displaying instantly');
       displayNowEffect.start();
-    } else {
-      //because afterFinish for parallel effect is not working!
-      $('tabMenuPanel').fire('tabedit:afterDisplayNow');
-    }
-    console.log('_displayNowEffect before resize', typeof(resize));
-    if(typeof(resize) !== 'undefined') {
-      console.log('tabMenuSetup before calling resize');
-      try {
-        resize();
-      } catch (exp) {
-        console.error('tabMenuSetup failed to execute resize ', exp);
-      }
     }
     console.log('_displayNowEffect finish');
   },
