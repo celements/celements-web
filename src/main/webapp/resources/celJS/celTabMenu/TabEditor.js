@@ -501,7 +501,7 @@ TE.prototype = {
     console.log('showTabMenu done.');
   },
 
-  _getTabLoaderElement : function(loadingTabId) {
+  _getTabLoaderElement : function() {
     var _me = this;
     console.log('_getTabLoaderElement: start');
     if (!_me._tabLoaderElem) {
@@ -526,7 +526,6 @@ TE.prototype = {
       _me._tabLoaderElem.insert(textLoading);
       $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
     }
-    _me._loadingTabId = loadingTabId;
     console.log('_getTabLoaderElement: end ', _me._tabLoaderElem);
     return _me._tabLoaderElem;
   },
@@ -568,10 +567,10 @@ TE.prototype = {
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
     console.log('getTab: ', tabBodyId, tabBodyElem, reload);
     if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
-      _me._getTabLoaderElement(tabBodyId).show();
+      _me._getTabLoaderElement().show();
       tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
       tabBodyElem.hide();
-      _me._loadingTabId = tabBodyElem;
+      _me._loadingTabId = tabBodyId;
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
       $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
       var lang = '';
