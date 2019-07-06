@@ -55,6 +55,7 @@ TE.prototype = {
   _tabReadyDisplayNow : undefined,
   _log : undefined,
   _tabLoaderElem : undefined,
+  _loadingTabId : undefined,
 
   _init : function() {
     var _me = this;
@@ -296,11 +297,11 @@ TE.prototype = {
     console.log('editorReadyDisplayNow finish');
   },
   
-  _tabReadyDisplayNow : function(tabBodyElem) {
+  _tabReadyDisplayNow : function() {
     var _me = this;
-    console.log('_tabReadyDisplayNow start', tabBodyElem);
+    console.log('_tabReadyDisplayNow start', _me._loadingTabId);
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
-    _me._displayNowEffect(tabBodyElem, _me._getTabLoaderElement());
+    _me._displayNowEffect(_me._loadingTabId, _me._getTabLoaderElement());
     console.log('_tabReadyDisplayNow finish');
   },
 
@@ -497,7 +498,7 @@ TE.prototype = {
     console.log('showTabMenu done.');
   },
 
-  _getTabLoaderElement : function() {
+  _getTabLoaderElement : function(loadingTabId) {
     var _me = this;
     console.log('_getTabLoaderElement: start');
     if (!_me._tabLoaderElem) {
@@ -520,6 +521,7 @@ TE.prototype = {
       _me._tabLoaderElem.insert(textLoading);
       $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
     }
+    _me._loadingTabId = loadingTabId;
     console.log('_getTabLoaderElement: end ', _me._tabLoaderElem);
     return _me._tabLoaderElem;
   },
