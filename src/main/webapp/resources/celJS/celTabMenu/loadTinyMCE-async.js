@@ -81,12 +81,9 @@
     console.log('celSetupTinyMCE finish');
   };
 
-  var finishedCelRTE_tinyMCE_Load = false;
-  
   var celFinishTinyMCEStart = function() {
     try {
       console.log('celFinishTinyMCEStart: start');
-      finishedCelRTE_tinyMCE_Load = true;
       $$('body')[0].fire('celRTE:finishedInit');
       console.log('celFinishTinyMCEStart: finish');
     } catch (exp) {
@@ -107,7 +104,7 @@
   var delayedEditorOpeningHandler = function(event) {
     console.log('delayedEditorOpeningHandler: start');
     var mceEditorAreaAvailable = ($$('#tabMenuPanel .mceEditor').size() > 0);
-    if (!finishedCelRTE_tinyMCE_Load && mceEditorAreaAvailable) {
+    if (mceEditorAreaAvailable) {
       console.debug('delayedEditorOpeningHandler: stopping display event');
       event.stop();
       $$('body')[0].observe('celRTE:finishedInit', function() {
