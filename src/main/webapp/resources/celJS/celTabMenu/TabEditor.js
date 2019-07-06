@@ -273,7 +273,11 @@ TE.prototype = {
     console.log('tabMenuSetup before resize', typeof(resize));
     if(typeof(resize) !== 'undefined') {
       console.log('tabMenuSetup before calling resize');
-      resize();
+      try {
+        resize();
+      } catch (exp) {
+        console.error('tabMenuSetup failed to execute resize ', exp);
+      }
     }
     console.log('tabMenuSetup before con_titblock');
     if (!$('con_titblock')) {
