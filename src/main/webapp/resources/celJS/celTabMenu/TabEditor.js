@@ -324,6 +324,11 @@ TE.prototype = {
       new Effect.Fade(fadeElem, { sync: true })
     ], {
        duration: 0.5,
+       afterFinish: function() {
+         //afterFinish for parallel effect is not working!
+         console.log("afterFinish: in parallel effect fire 'tabedit:afterDisplayNow'");
+         $('tabMenuPanel').fire('tabedit:afterDisplayNow');
+       },
        sync: true
     });
     console.log('_displayNowEffect: fire tabedit:finishedLoadingDisplayNow');
