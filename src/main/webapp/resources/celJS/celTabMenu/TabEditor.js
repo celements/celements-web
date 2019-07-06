@@ -297,9 +297,9 @@ TE.prototype = {
   
   _tabReadyDisplayNow : function(tabBodyElem) {
     var _me = this;
-    console.log('_tabReadyDisplayNow start');
+    console.log('_tabReadyDisplayNow start', tabBodyElem);
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
-    _me._displayNowEffect(tabBodyElem, _me._tabLoaderElem);
+    _me._displayNowEffect(tabBodyElem, _me._getTabLoaderElement());
     console.log('_tabReadyDisplayNow finish');
   },
 
@@ -496,11 +496,11 @@ TE.prototype = {
     console.log('showTabMenu done.');
   },
 
-  _showTabLoaderElement : function() {
+  _getTabLoaderElement : function() {
     var _me = this;
-    console.log('_showTabLoaderElement: start');
+    console.log('_getTabLoaderElement: start');
     if (!_me._tabLoaderElem) {
-      console.log('_showTabLoaderElement: create tabLoader');
+      console.log('_getTabLoaderElement: create tabLoader');
       var loaderimg = _me._loading.getLoadingIndicator().setStyle({
         'display' : 'block',
         'marginLeft' : 'auto',
@@ -519,7 +519,8 @@ TE.prototype = {
       _me._tabLoaderElem.insert(textLoading);
       $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
     }
-    _me._tabLoaderElem.show();
+    console.log('_getTabLoaderElement: end ', _me._tabLoaderElem);
+    return _me._tabLoaderElem;
   },
 
   _getOrCreateTabBody : function(tabBodyId) {
@@ -559,7 +560,7 @@ TE.prototype = {
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
     console.log('getTab: ', tabBodyId, tabBodyElem, reload);
     if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
-      _me._showTabLoaderElement();
+      _me._getTabLoaderElement().show();
       tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
       tabBodyElem.hide();
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
@@ -638,9 +639,7 @@ TE.prototype = {
     });
     if (!asyncLoading) {
       _me._fireTabChange(tabId);
-      if (_me._tabLoaderElem) {
-        _me._tabLoaderElem.hide();
-      }
+      _me._getTabLoaderElement().hide();
       $(tabBodyId).show();
     }
     _me.setButtonActive(tabId);
