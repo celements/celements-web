@@ -311,7 +311,7 @@ TE.prototype = {
 
   _displayNowEffect : function(appearElem, fadeElem) {
     var _me = this;
-    console.log('_displayNowEffect start');
+    console.log('_displayNowEffect start ', _me._loadingTabId);
     var displayNowEffect = new Effect.Parallel([
       new Effect.Appear(appearElem, {
         afterFinish: function() {
@@ -327,8 +327,10 @@ TE.prototype = {
        sync: true
     });
     console.log('_displayNowEffect: fire tabedit:finishedLoadingDisplayNow');
-    var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow',
-        displayNowEffect);
+    var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
+      'effect' : displayNowEffect,
+      'tabBodyId' : _me._loadingTabId
+    });
     if (!defaultShowEvent.stopped) {
       console.log('displayNow event not stopped -> displaying instantly');
       displayNowEffect.start();
