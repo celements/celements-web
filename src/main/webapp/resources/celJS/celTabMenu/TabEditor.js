@@ -518,12 +518,12 @@ TE.prototype = {
         'padding-bottom' : '100px'
       });
       var textLoading = new Element('p').update('loading ...');
-      _me.loaderDiv.insert(textLoading);
+      loaderDiv.insert(textLoading);
       //.menuTab needed for resize!
       _me._tabLoaderElem = new Element('div', {
         'class': 'menuTab celementsLoadingIndicator',
         'id': 'tabLoaderContainer'
-      }).update(_me.loaderDiv);
+      }).update(loaderDiv);
       $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
     }
     console.log('_getTabLoaderElement: end ', _me._tabLoaderElem);
