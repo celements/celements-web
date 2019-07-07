@@ -567,6 +567,10 @@ TE.prototype = {
       $(tabBodyId).fire('celements:contentChanged', {
         'htmlElem' : $(tabBodyId)
       });
+      $(tabBodyId).fire('tabedit:tabLoadingFinished', {
+        'newTabBodyId' : tabBodyId,
+        'newTabButtonId' : tabId
+      });
       console.log('getTab.scriptLoadedHandler: after async tab load before tabedit:tabchange event',
           tabId);
       console.log('scriptLoadedHandler: finish');

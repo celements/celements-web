@@ -92,7 +92,7 @@
   };
 
   var lacyLoadTinyMCEforTab = function(event) {
-    var tabBodyId = event.memo.newTabId;
+    var tabBodyId = event.memo.newTabBodyId;
     var tinyMceAreas = $(tabBodyId).select('textarea.mceEditor');
     console.log('lacyLoadTinyMCEforTab: for tabBodyId ', tabBodyId, tinyMceAreas);
     tinyMceAreas.each(function(editorArea) {
@@ -127,7 +127,7 @@
     console.log("tinymce: register document ready...");
     $('tabMenuPanel').observe('tabedit:finishedLoadingDisplayNow',
         delayedEditorOpeningHandler);
-    $('tabMenuPanel').observe('tabedit:tabchange', lacyLoadTinyMCEforTab);
+    $('tabMenuPanel').observe('tabedit:tabLoadingFinished', lacyLoadTinyMCEforTab);
     console.log('loadTinyMCE-async on ready: before register initCelRTEListener');
     getCelementsTabEditor().addAfterInitListener(initCelRTEListener);
   });
