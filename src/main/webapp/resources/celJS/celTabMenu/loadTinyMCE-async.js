@@ -99,9 +99,6 @@
       var tinyMceAreas = $(tabBodyId).select('textarea.mceEditor');
       console.log('lacyLoadTinyMCEforTab: for tabBodyId ', tabBodyId, tinyMceAreas);
       tinyMceAreas.each(function(editorArea) {
-        var alreadyInitialized = (typeof(tinymce.getInstanceById(editorArea.id)) !== 'undefined');
-        console.log('start mceAddControl for ', editorArea.id, alreadyInitialized,
-            tinymce.getInstanceById(editorArea.id));
         setTimeout(function() {tinyMCE.execCommand("mceAddControl", false, editorArea.id);}, 3000);
 //      tinyMCE.execCommand("mceAddControl", false, editorArea.id);
       });
@@ -112,10 +109,24 @@
     }
   };
 
+  var getUninitializedMceEditors = function(mceParentElem) {
+    console.log('getUninitializedMceEditors: start ', mceParentElem);
+    var mceEditorsToInit = new Array();
+    $(mceParentElem).select('.mceEditor').each(function(editorArea) {
+      var alreadyInitialized = (typeof(tinymce.getInstanceById(editorArea.id)) !== 'undefined');
+      console.log('start mceAddControl for ', editorArea.id, alreadyInitialized);
+      if (!alreadyInitialized) {
+        mceEditorsToInit.push(editorArea);
+      }
+    });
+    console.log('getUninitializedMceEditors: returns ', mceParentElem, mceEditorsToInit);
+    return mceEditorsToInit;
+  };
+
   var delayedEditorOpeningHandler = function(event) {
     console.log('delayedEditorOpeningHandler: start ', event.memo);
     var mceParentElem = event.memo.tabBodyId || "tabMenuPanel";
-    var mceEditorAreaAvailable = ($(mceParentElem).select('.mceEditor').size() > 0);
+    var mceEditorAreaAvailable = (getUninitializedMceEditors().size() > 0);
     if (mceEditorAreaAvailable) {
       console.debug('delayedEditorOpeningHandler: stopping display event');
       event.stop();
