@@ -571,6 +571,7 @@ TE.prototype = {
     console.log('getTab: ', tabBodyId, tabBodyElem, reload);
     if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
       _me._hideTabShowLoadingIndicator(tabId);
+      asyncLoading = true;
       _me._loadTabAsync(tabId);
     } else if (_me._tabsInitalized.indexOf(tabBodyId) <= -1 ) {
       console.log('getTab: static loaded ; start initialize ', tabBodyId, $(tabBodyId));
@@ -644,6 +645,7 @@ TE.prototype = {
     if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
       lang = $$('.celTabLanguage')[0].value;
     }
+    console.log('_loadTabAsync: celTabLanguage? ', lang);
     var loadTabParams = {
         xpage : 'celements_ajax',
         ajax_mode : 'CelTabContent',
@@ -654,10 +656,12 @@ TE.prototype = {
       loadTabParams["template"] = window.location.search.replace(
           /.*\&?template=([^\&]+).*/, '$1');
     }
+    console.log('_loadTabAsync: template in URL? ', loadTabParams["template"]);
     if (window.location.search.match(/\&?language=[^\&]+/)) {
       loadTabParams["language"] = window.location.search.replace(
           /.*\&?language=([^\&]+).*/, '$1');
     }
+    console.log('_loadTabAsync: overwrite language from URL ? ', loadTabParams["language"]);
     $A(decodeURI(window.location.search).match(/(\&|\?)data-[^=\&]+=[^\&]+/g)).each(function(elem) {
       var elemArray = elem.split('=');
       var key = elemArray[0].substr(1);
@@ -665,7 +669,6 @@ TE.prototype = {
       loadTabParams[key] = value;
     });
     // load tab content
-    asyncLoading = true;
     new Ajax.Request(getTMCelHost(), {
        method: 'post',
        parameters: loadTabParams,
