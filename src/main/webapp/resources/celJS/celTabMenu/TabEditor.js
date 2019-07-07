@@ -316,6 +316,11 @@ TE.prototype = {
       new Effect.Appear(appearElem, {
         afterFinish: function() {
           //afterFinish for parallel effect is not working! Instead placed on first effect is working.
+          console.log("afterFinish: in appear start");
+          if (_me._loadingTabId) {
+            console.log("afterFinish: in appear before _fireTabChange");
+            _me._fireTabChange(_me._loadingTabId);
+          }
           console.log("afterFinish: in appear fire 'tabedit:afterDisplayNow'");
           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
         },
@@ -563,7 +568,6 @@ TE.prototype = {
       });
       console.log('getTab.scriptLoadedHandler: after async tab load before tabedit:tabchange event',
           tabId);
-      _me._fireTabChange(tabId);
       console.log('scriptLoadedHandler: finish');
     };
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
