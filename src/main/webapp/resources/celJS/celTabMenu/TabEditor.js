@@ -318,9 +318,9 @@ TE.prototype = {
         afterFinish: function() {
           //afterFinish for parallel effect is not working! Instead placed on first effect is working.
           console.log("afterFinish: in appear start");
-          if ($(tabBodyId)) {
+          if (_me._loadingTabId) {
             console.log("afterFinish: in appear before _fireTabChange");
-            _me._fireTabChange(tabBodyId);
+            _me._fireTabChange(_me._loadingTabId);
           }
           console.log("afterFinish: in appear fire 'tabedit:afterDisplayNow'");
           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
