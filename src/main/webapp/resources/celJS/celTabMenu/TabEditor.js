@@ -567,73 +567,16 @@ TE.prototype = {
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
     console.log('getTab: ', tabBodyId, tabBodyElem, reload);
     if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
-      _me._getTabLoaderElement().show();
-      tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
-      tabBodyElem.hide();
-      _me._loadingTabId = tabBodyId;
-      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
-      $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
-      var lang = '';
-      if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
-        lang = $$('.celTabLanguage')[0].value;
-      }
-      var loadTabParams = {
-          xpage : 'celements_ajax',
-          ajax_mode : 'CelTabContent',
-          id : tabId,
-          language : lang
-       };
-      if (window.location.search.match(/\&?template=[^\&]+/)) {
-        loadTabParams["template"] = window.location.search.replace(
-            /.*\&?template=([^\&]+).*/, '$1');
-      }
-      if (window.location.search.match(/\&?language=[^\&]+/)) {
-        loadTabParams["language"] = window.location.search.replace(
-            /.*\&?language=([^\&]+).*/, '$1');
-      }
-      $A(decodeURI(window.location.search).match(/(\&|\?)data-[^=\&]+=[^\&]+/g)).each(function(elem) {
-        var elemArray = elem.split('=');
-        var key = elemArray[0].substr(1);
-        var value = elemArray[1];
-        loadTabParams[key] = value;
-      });
-      // load tab content
-      asyncLoading = true;
-      new Ajax.Request(getTMCelHost(), {
-         method: 'post',
-         parameters: loadTabParams,
-         onSuccess: function(transport) {
-           tabBodyElem.update(transport.responseText);
-           console.log('TabEditor.js: after async tab load before LazyLoadJS ', tabBodyId);
-           _me.lazyLoadJS(tabBodyElem);
-           _me.lazyLoadCSS(tabBodyElem);
-           //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
-           //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
-           //TODO following fired event. -> Workaround: execute registered method once after registration.
-           //TODO FP; 25.9.2015; maybe use 'tabedit:scriptsLoaded' instead
-           console.log('TabEditor.js: after async tab load before tabedit:tabchange event',
-               tabBodyId);
-           _me._fireTabChange(tabId);
-           $(tabBodyId).select('form').each(function(formelem) {
-             console.log('getTab async: before retrieveInitialValues ', tabBodyId,
-                 formelem);
-             if (formelem && formelem.id) {
-               _me.retrieveInitialValues(formelem.id);
-             }
-           });
-           _me._tabsInitalized.push(tabBodyId);
-         }
-      });
+      _me._hideTabShowLoadingIndicator(tabId);
+      _me._loadTabAsync(tabId);
     } else if (_me._tabsInitalized.indexOf(tabBodyId) <= -1 ) {
       console.log('getTab: before lazyLoadJS ', tabBodyId, $(tabBodyId));
       _me.lazyLoadJS($(tabBodyId), true);
       console.log('getTab: after lazyLoadJS ', tabBodyId, $(tabBodyId));
       $(tabBodyId).select('form').each(function(formelem) {
         if (formelem && formelem.id && !_me.editorFormsInitialValues.get(formelem.id)) {
-          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-            console.log('tab already loaded: ', tabBodyId, $(tabBodyId),
-                ' but is new retrieveInitialValues.');
-          }
+          console.log('tab already loaded: ', tabBodyId, $(tabBodyId),
+              ' but is new retrieveInitialValues.');
           _me.retrieveInitialValues(formelem.id);
         }
       });
@@ -666,6 +609,77 @@ TE.prototype = {
       'newTabId' : tabBodyId,
       'newTabBodyId' : tabBodyId,
       'newTabButtonId' : tabId
+    });
+  },
+
+  _hideTabShowLoadingIndicator : function(tabId) {
+    var _me = this;
+    console.log('_hideTabShowLoadingIndicator: start ', tabId);
+    var tabBodyId = _me._getTabBodyId(tabId);
+    _me._getTabLoaderElement().show();
+    tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+    tabBodyElem.hide();
+    _me._loadingTabId = tabBodyId;
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+    console.log('_hideTabShowLoadingIndicator: finish ', tabId);
+  },
+
+  _loadTabAsync : function(tabId) {
+    var _me = this;
+    console.log('_loadTabAsync: start loading async ', tabId);
+    var lang = '';
+    if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
+      lang = $$('.celTabLanguage')[0].value;
+    }
+    var loadTabParams = {
+        xpage : 'celements_ajax',
+        ajax_mode : 'CelTabContent',
+        id : tabId,
+        language : lang
+     };
+    if (window.location.search.match(/\&?template=[^\&]+/)) {
+      loadTabParams["template"] = window.location.search.replace(
+          /.*\&?template=([^\&]+).*/, '$1');
+    }
+    if (window.location.search.match(/\&?language=[^\&]+/)) {
+      loadTabParams["language"] = window.location.search.replace(
+          /.*\&?language=([^\&]+).*/, '$1');
+    }
+    $A(decodeURI(window.location.search).match(/(\&|\?)data-[^=\&]+=[^\&]+/g)).each(function(elem) {
+      var elemArray = elem.split('=');
+      var key = elemArray[0].substr(1);
+      var value = elemArray[1];
+      loadTabParams[key] = value;
+    });
+    // load tab content
+    asyncLoading = true;
+    new Ajax.Request(getTMCelHost(), {
+       method: 'post',
+       parameters: loadTabParams,
+       onSuccess: function(transport) {
+         var tabBodyId = _me._getTabBodyId(tabId);
+         var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+         tabBodyElem.update(transport.responseText);
+         console.log('TabEditor.js: after async tab load before LazyLoadJS ', tabBodyId);
+         _me.lazyLoadJS(tabBodyElem);
+         _me.lazyLoadCSS(tabBodyElem);
+         //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
+         //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
+         //TODO following fired event. -> Workaround: execute registered method once after registration.
+         //TODO FP; 25.9.2015; maybe use 'tabedit:scriptsLoaded' instead
+         console.log('TabEditor.js: after async tab load before tabedit:tabchange event',
+             tabBodyId);
+         _me._fireTabChange(tabId);
+         $(tabBodyId).select('form').each(function(formelem) {
+           console.log('getTab async: before retrieveInitialValues ', tabBodyId,
+               formelem);
+           if (formelem && formelem.id) {
+             _me.retrieveInitialValues(formelem.id);
+           }
+         });
+         _me._tabsInitalized.push(tabBodyId);
+       }
     });
   },
 
