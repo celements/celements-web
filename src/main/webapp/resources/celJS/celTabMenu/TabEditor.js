@@ -668,16 +668,15 @@ TE.prototype = {
       var value = elemArray[1];
       loadTabParams[key] = value;
     });
-    // load tab content
+    console.log('_loadTabAsync: start Ajax call to load content ', loadTabParams);
     new Ajax.Request(getTMCelHost(), {
        method: 'post',
        parameters: loadTabParams,
        onSuccess: function(transport) {
          console.log('_loadTabAsync.Ajax: onSuccess', tabId);
          var tabBodyId = _me._getTabBodyId(tabId);
-         var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
          console.log('_loadTabAsync.Ajax: before update', tabId);
-         tabBodyElem.update(transport.responseText);
+         _me._getOrCreateTabBody(tabBodyId).update(transport.responseText);
          console.log('_loadTabAsync.Ajax: before _initializeLoadedTab', tabId);
          _me._initializeLoadedTab(tabBodyId);
          console.log('_loadTabAsync.Ajax: finish', tabId);
