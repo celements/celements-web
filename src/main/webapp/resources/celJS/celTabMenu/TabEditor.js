@@ -619,9 +619,9 @@ TE.prototype = {
   _hideTabShowLoadingIndicator : function(tabId) {
     var _me = this;
     console.log('_hideTabShowLoadingIndicator: start ', tabId);
-    var tabBodyId = _me._getTabBodyId(tabId);
     _me._getTabLoaderElement().show();
-    tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+    var tabBodyId = _me._getTabBodyId(tabId);
+    var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
     tabBodyElem.hide();
     _me._loadingTabId = tabBodyId;
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
