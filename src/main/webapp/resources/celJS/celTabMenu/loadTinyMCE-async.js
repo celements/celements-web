@@ -126,7 +126,7 @@
   var delayedEditorOpeningHandler = function(event) {
     console.log('delayedEditorOpeningHandler: start ', event.memo);
     var mceParentElem = event.memo.tabBodyId || "tabMenuPanel";
-    var mceEditorAreaAvailable = (getUninitializedMceEditors().size() > 0);
+    var mceEditorAreaAvailable = (getUninitializedMceEditors(mceParentElem).size() > 0);
     if (mceEditorAreaAvailable) {
       console.debug('delayedEditorOpeningHandler: stopping display event');
       event.stop();
