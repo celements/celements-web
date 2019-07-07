@@ -99,6 +99,9 @@
       var tinyMceAreas = $(tabBodyId).select('textarea.mceEditor');
       console.log('lacyLoadTinyMCEforTab: for tabBodyId ', tabBodyId, tinyMceAreas);
       tinyMceAreas.each(function(editorArea) {
+        var alreadyInitialized = (typeof(tinymce.getInstanceById(editorArea.id)) !== 'undefined');
+        console.log('start mceAddControl for ', editorArea.id, alreadyInitialized,
+            tinymce.getInstanceById(editorArea.id));
         setTimeout(function() {tinyMCE.execCommand("mceAddControl", false, editorArea.id);}, 3000);
 //      tinyMCE.execCommand("mceAddControl", false, editorArea.id);
       });
