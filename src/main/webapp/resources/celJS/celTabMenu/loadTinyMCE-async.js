@@ -112,11 +112,11 @@
   var getUninitializedMceEditors = function(mceParentElem) {
     console.log('getUninitializedMceEditors: start ', mceParentElem);
     var mceEditorsToInit = new Array();
-    $(mceParentElem).select('.mceEditor').each(function(editorArea) {
+    $(mceParentElem).select('textarea.mceEditor').each(function(editorArea) {
       var alreadyInitialized = (typeof(tinymce.getInstanceById(editorArea.id)) !== 'undefined');
       console.log('start mceAddControl for ', editorArea.id, alreadyInitialized);
       if (!alreadyInitialized) {
-        mceEditorsToInit.push(editorArea);
+        mceEditorsToInit.push(editorArea.id);
       }
     });
     console.log('getUninitializedMceEditors: returns ', mceParentElem, mceEditorsToInit);
