@@ -553,7 +553,6 @@ TE.prototype = {
     // create tab if it does not exist
     var tabBodyId = _me._getTabBodyId(tabId);
     var tabBodyElem = $(tabBodyId);
-    var asyncLoading = false;
     var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
     var scriptLoadedHandler = function() {
       console.log('scriptLoadedHandler: start');
@@ -569,9 +568,8 @@ TE.prototype = {
     };
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
     console.log('getTab: ', tabBodyId, tabBodyElem, reload);
+    _me._hideTabShowLoadingIndicator(tabId);
     if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
-      _me._hideTabShowLoadingIndicator(tabId);
-      asyncLoading = true;
       _me._loadTabAsync(tabId);
     } else if (_me._tabsInitalized.indexOf(tabBodyId) <= -1 ) {
       console.log('getTab: static loaded ; start initialize ', tabBodyId, $(tabBodyId));
@@ -579,16 +577,15 @@ TE.prototype = {
       console.log('getTab: finish static loaded', tabId);
     } else {
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
+      _me._getTabLoaderElement().hide();
+      $(tabBodyId).show();
+      //_fireTabChange must be last because resize() will be triggered and search for active tab
+      _me._fireTabChange(tabId);
     }
     //fix celements3_tabMenu width
     $(tabBodyId).up('.celements3_tabMenu').setStyle({
       'width' : width
     });
-    if (!asyncLoading) {
-      _me._fireTabChange(tabId);
-      _me._getTabLoaderElement().hide();
-      $(tabBodyId).show();
-    }
     _me.setButtonActive(tabId);
     console.log('getTab finish');
   },
