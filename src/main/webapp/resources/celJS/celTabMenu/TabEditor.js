@@ -214,6 +214,7 @@ TE.prototype = {
       if (elemId && $(elemId + '-button')) {
         _me.getTab(elemId);
         event.stop();
+        console.log('tabClickHandler finish.');
       }
     };
     // set html and body overflow to hidden
