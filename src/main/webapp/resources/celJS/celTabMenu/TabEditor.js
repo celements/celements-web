@@ -574,17 +574,8 @@ TE.prototype = {
       _me._loadTabAsync(tabId);
     } else if (_me._tabsInitalized.indexOf(tabBodyId) <= -1 ) {
       console.log('getTab: static loaded ; start initialize ', tabBodyId, $(tabBodyId));
-      console.log('getTab: before lazyLoadJS ', tabBodyId, $(tabBodyId));
-      _me.lazyLoadJS($(tabBodyId), true);
-      console.log('getTab: after lazyLoadJS ', tabBodyId, $(tabBodyId));
-      $(tabBodyId).select('form').each(function(formelem) {
-        if (formelem && formelem.id && !_me.editorFormsInitialValues.get(formelem.id)) {
-          console.log('tab already loaded: ', tabBodyId, $(tabBodyId),
-              ' but is new retrieveInitialValues.');
-          _me.retrieveInitialValues(formelem.id);
-        }
-      });
-      _me._tabsInitalized.push(tabBodyId);
+      _me._initializeLoadedTab(tabBodyId);
+      console.log('getTab: finish static loaded', tabId);
     } else {
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
     }
@@ -629,6 +620,23 @@ TE.prototype = {
     console.log('_hideTabShowLoadingIndicator: finish ', tabId);
   },
 
+  _initializeLoadedTab : function(tabBodyId) {
+    var _me = this;
+    console.log('_initializeLoadedTab: before LazyLoadJS ', tabBodyId);
+    var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+    _me.lazyLoadJS(tabBodyElem);
+    _me.lazyLoadCSS(tabBodyElem);
+    $(tabBodyId).select('form').each(function(formelem) {
+      console.log('_loadTabAsync: before retrieveInitialValues ', tabBodyId,
+          formelem);
+      if (formelem && formelem.id) {
+        _me.retrieveInitialValues(formelem.id);
+      }
+    });
+    _me._tabsInitalized.push(tabBodyId);
+    console.log('_initializeLoadedTab: finish ', tabBodyId);
+  },
+
   _loadTabAsync : function(tabId) {
     var _me = this;
     console.log('_loadTabAsync: start loading async ', tabId);
@@ -662,22 +670,17 @@ TE.prototype = {
        method: 'post',
        parameters: loadTabParams,
        onSuccess: function(transport) {
+         console.log('_loadTabAsync.Ajax: onSuccess', tabId);
          var tabBodyId = _me._getTabBodyId(tabId);
          var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+         console.log('_loadTabAsync.Ajax: before update', tabId);
          tabBodyElem.update(transport.responseText);
-         console.log('_loadTabAsync: after async tab load before LazyLoadJS ', tabBodyId);
-         _me.lazyLoadJS(tabBodyElem);
-         _me.lazyLoadCSS(tabBodyElem);
-         $(tabBodyId).select('form').each(function(formelem) {
-           console.log('_loadTabAsync: before retrieveInitialValues ', tabBodyId,
-               formelem);
-           if (formelem && formelem.id) {
-             _me.retrieveInitialValues(formelem.id);
-           }
-         });
-         _me._tabsInitalized.push(tabBodyId);
+         console.log('_loadTabAsync.Ajax: before _initializeLoadedTab', tabId);
+         _me._initializeLoadedTab(tabBodyId);
+         console.log('_loadTabAsync.Ajax: finish', tabId);
        }
     });
+    console.log('_loadTabAsync: finish', tabId);
   },
 
   lazyLoadJS : function(parentEle, syncLoadOnly) {
