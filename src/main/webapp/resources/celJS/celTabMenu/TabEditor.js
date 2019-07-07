@@ -305,21 +305,22 @@ TE.prototype = {
     var _me = this;
     console.log('_tabReadyDisplayNow start', _me._loadingTabId);
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
-    _me._displayNowEffect(_me._loadingTabId, _me._getTabLoaderElement());
+    _me._displayNowEffect(_me._getTabBodyId(_me._loadingTabId), _me._getTabLoaderElement());
     console.log('_tabReadyDisplayNow finish');
   },
 
   _displayNowEffect : function(appearElem, fadeElem) {
     var _me = this;
+    var tabBodyId = _me._getTabBodyId(_me._loadingTabId);
     console.log('_displayNowEffect start ', _me._loadingTabId);
     var displayNowEffect = new Effect.Parallel([
       new Effect.Appear(appearElem, {
         afterFinish: function() {
           //afterFinish for parallel effect is not working! Instead placed on first effect is working.
           console.log("afterFinish: in appear start");
-          if (_me._loadingTabId) {
+          if ($(tabBodyId)) {
             console.log("afterFinish: in appear before _fireTabChange");
-            _me._fireTabChange(_me._loadingTabId);
+            _me._fireTabChange(tabBodyId);
           }
           console.log("afterFinish: in appear fire 'tabedit:afterDisplayNow'");
           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
@@ -334,7 +335,7 @@ TE.prototype = {
     console.log('_displayNowEffect: fire tabedit:finishedLoadingDisplayNow');
     var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
       'effect' : displayNowEffect,
-      'tabBodyId' : _me._loadingTabId
+      'tabBodyId' : tabBodyId
     });
     if (!defaultShowEvent.stopped) {
       console.log('displayNow event not stopped -> displaying instantly');
@@ -616,7 +617,7 @@ TE.prototype = {
     var tabBodyId = _me._getTabBodyId(tabId);
     var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
     tabBodyElem.hide();
-    _me._loadingTabId = tabBodyId;
+    _me._loadingTabId = tabId;
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
     console.log('_hideTabShowLoadingIndicator: finish ', tabId);
