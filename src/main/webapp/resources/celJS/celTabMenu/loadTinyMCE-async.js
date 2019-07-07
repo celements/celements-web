@@ -38,6 +38,8 @@
     return bodyClassArray;
   };
 
+  var tinyConfigLoaded = false;
+
   var initCelRTE = function() {
     console.log('initCelRTE: start');
     if(!!window.MSStream && (navigator.userAgent.indexOf("MSIE") < 0)) { // if is IE11
@@ -60,13 +62,13 @@
       onSuccess: function(transport) {
         var tinyConfigJSON = transport.responseText.replace(/\n/g,' ');
         if (tinyConfigJSON.isJSON()) {
-          
           window.tinymce.dom.Event.domLoaded = true;
           var tinyConfigObj = tinyConfigJSON.evalJSON();
           tinyConfigObj["body_class"] = getAllEditorBodyClasses(tinyConfigObj).join(',');
           tinyConfigObj["setup"] = celSetupTinyMCE;
          console.log('initCelRTE: tinyMCE.init');
-         setTimeout(function() {tinyMCE.init(tinyConfigObj);}, 3000);
+         setTimeout(function() {tinyMCE.init(tinyConfigObj);
+         tinyConfigLoaded = true; }, 3000);
           console.debug('initCelRTE: tinyMCE.init finished');
         } else {
           console.error('TinyConfig is no json!', tinyConfigJSON);
@@ -93,12 +95,18 @@
 
   var lacyLoadTinyMCEforTab = function(event) {
     var tabBodyId = event.memo.newTabBodyId;
-    var tinyMceAreas = $(tabBodyId).select('textarea.mceEditor');
-    console.log('lacyLoadTinyMCEforTab: for tabBodyId ', tabBodyId, tinyMceAreas);
-    tinyMceAreas.each(function(editorArea) {
-      setTimeout(function() {tinyMCE.execCommand("mceAddControl", false, editorArea.id);}, 3000);
+    if (tinyConfigLoaded) {
+      var tinyMceAreas = $(tabBodyId).select('textarea.mceEditor');
+      console.log('lacyLoadTinyMCEforTab: for tabBodyId ', tabBodyId, tinyMceAreas);
+      tinyMceAreas.each(function(editorArea) {
+        setTimeout(function() {tinyMCE.execCommand("mceAddControl", false, editorArea.id);}, 3000);
 //      tinyMCE.execCommand("mceAddControl", false, editorArea.id);
-    });
+      });
+      console.log('lacyLoadTinyMCEforTab: finish', tabBodyId);
+    } else {
+      console.log('lacyLoadTinyMCEforTab: skip mceAddControl because tinyConfig not yet loaded.',
+          tabBodyId);
+    }
   };
 
   var delayedEditorOpeningHandler = function(event) {
