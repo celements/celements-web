@@ -562,6 +562,9 @@ TE.prototype = {
       $(tabBodyId).fire('celements:contentChanged', {
         'htmlElem' : $(tabBodyId)
       });
+      console.log('getTab.scriptLoadedHandler: after async tab load before tabedit:tabchange event',
+          tabId);
+      _me._fireTabChange(tabId);
       console.log('scriptLoadedHandler: finish');
     };
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
@@ -570,6 +573,7 @@ TE.prototype = {
       _me._hideTabShowLoadingIndicator(tabId);
       _me._loadTabAsync(tabId);
     } else if (_me._tabsInitalized.indexOf(tabBodyId) <= -1 ) {
+      console.log('getTab: static loaded ; start initialize ', tabBodyId, $(tabBodyId));
       console.log('getTab: before lazyLoadJS ', tabBodyId, $(tabBodyId));
       _me.lazyLoadJS($(tabBodyId), true);
       console.log('getTab: after lazyLoadJS ', tabBodyId, $(tabBodyId));
@@ -661,18 +665,11 @@ TE.prototype = {
          var tabBodyId = _me._getTabBodyId(tabId);
          var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
          tabBodyElem.update(transport.responseText);
-         console.log('TabEditor.js: after async tab load before LazyLoadJS ', tabBodyId);
+         console.log('_loadTabAsync: after async tab load before LazyLoadJS ', tabBodyId);
          _me.lazyLoadJS(tabBodyElem);
          _me.lazyLoadCSS(tabBodyElem);
-         //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
-         //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
-         //TODO following fired event. -> Workaround: execute registered method once after registration.
-         //TODO FP; 25.9.2015; maybe use 'tabedit:scriptsLoaded' instead
-         console.log('TabEditor.js: after async tab load before tabedit:tabchange event',
-             tabBodyId);
-         _me._fireTabChange(tabId);
          $(tabBodyId).select('form').each(function(formelem) {
-           console.log('getTab async: before retrieveInitialValues ', tabBodyId,
+           console.log('_loadTabAsync: before retrieveInitialValues ', tabBodyId,
                formelem);
            if (formelem && formelem.id) {
              _me.retrieveInitialValues(formelem.id);
