@@ -52,7 +52,6 @@ TE.prototype = {
   _isEditorDirtyOnLoad : undefined,
   afterInitListeners : undefined,
   _editorReadyDisplayNowBind : undefined,
-  _afterFinishResizeBind : undefined,
   _tabReadyDisplayNow : undefined,
   _log : undefined,
   _tabLoaderElem : undefined,
@@ -79,7 +78,6 @@ TE.prototype = {
     _me._loading = new CELEMENTS.LoadingIndicator();
     _me._editorReadyDisplayNowBind = _me._editorReadyDisplayNow.bind(_me);
     _me._tabReadyDisplayNowBind = _me._tabReadyDisplayNow.bind(_me);
-    _me._afterFinishResizeBind = _me._afterFinishResize.bind(_me);
   },
 
   isValidFormId : function(formId) {
