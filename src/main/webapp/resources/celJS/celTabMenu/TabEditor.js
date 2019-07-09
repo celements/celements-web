@@ -52,6 +52,7 @@ TE.prototype = {
   _isEditorDirtyOnLoad : undefined,
   afterInitListeners : undefined,
   _editorReadyDisplayNowBind : undefined,
+  _afterFinishResizeBind : undefined,
   _tabReadyDisplayNow : undefined,
   _log : undefined,
   _tabLoaderElem : undefined,
@@ -78,6 +79,7 @@ TE.prototype = {
     _me._loading = new CELEMENTS.LoadingIndicator();
     _me._editorReadyDisplayNowBind = _me._editorReadyDisplayNow.bind(_me);
     _me._tabReadyDisplayNowBind = _me._tabReadyDisplayNow.bind(_me);
+    _me._afterFinishResizeBind = _me._afterFinishResize.bind(_me);
   },
 
   isValidFormId : function(formId) {
@@ -301,10 +303,26 @@ TE.prototype = {
     console.log('_tabReadyDisplayNow finish');
   },
 
+  _afterFinishResize : function() {
+    var _me = this;
+    $('tabMenuPanel').stopObserving('tabedit:afterDisplayNow', _afterFinishResizeBind);
+    console.log('_afterFinishResize: before resize', typeof(resize));
+    if(typeof(resize) !== 'undefined') {
+      console.log('_afterFinishResize: before calling resize');
+      try {
+        resize();
+      } catch (exp) {
+        console.error('_afterFinishResize: failed to execute resize ', exp);
+      }
+    }
+  },
+
   _displayNowEffect : function(appearElem, fadeElem) {
     var _me = this;
     var tabBodyId = _me._getTabBodyId(_me._loadingTabId);
     console.log('_displayNowEffect start ', _me._loadingTabId);
+    $('tabMenuPanel').stopObserving('tabedit:afterDisplayNow', _afterFinishResizeBind);
+    $('tabMenuPanel').observe('tabedit:afterDisplayNow', _afterFinishResizeBind);
     var displayNowEffect = new Effect.Parallel([
       new Effect.Appear(appearElem, {
         afterFinish: function() {
@@ -316,15 +334,6 @@ TE.prototype = {
           }
           console.log("afterFinish: in appear fire 'tabedit:afterDisplayNow'");
           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
-          console.log('_displayNowEffect: before resize', typeof(resize));
-          if(typeof(resize) !== 'undefined') {
-            console.log('_displayNowEffect: before calling resize');
-            try {
-              resize();
-            } catch (exp) {
-              console.error('_displayNowEffect: failed to execute resize ', exp);
-            }
-          }
         },
         sync: true
       }),
