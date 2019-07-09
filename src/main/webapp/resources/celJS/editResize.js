@@ -36,6 +36,7 @@ var getActiveEditorTab = function() {
   var activeTab = null;
   $$('.celements3_tabMenu .bd .menuTab').each(function(tab) {
     if(tab.visible()) {
+      console.log('getActiveEditorTab: found active tab ', tab.id);
       activeTab = tab;
     }
   });
