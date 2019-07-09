@@ -101,7 +101,9 @@ function resize(){
   //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
   //counting margin-auto offsets. Thus we need to use jquery.offset
   var scrollableSize = boxSize - $j(scrollbox).offset().top - bottomBorder;
+  console.log('resize: scrollableSize ', boxSize, $j(scrollbox).offset().top, bottomBorder,
+      scrollableSize);
   box.setStyle({ height: Math.max(50, boxSize) + "px" });
   scrollbox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
-  console.log('resize: finish ',boxSize, scrollableSize, scrollbox);
+  console.log('resize: finish ', boxSize, scrollableSize, scrollbox);
 }
