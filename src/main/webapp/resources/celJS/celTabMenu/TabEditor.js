@@ -305,7 +305,7 @@ TE.prototype = {
 
   _afterFinishResize : function() {
     var _me = this;
-    $('tabMenuPanel').stopObserving('tabedit:afterDisplayNow', _afterFinishResizeBind);
+    $('tabMenuPanel').stopObserving('tabedit:afterDisplayNow', _me._afterFinishResizeBind);
     console.log('_afterFinishResize: before resize', typeof(resize));
     if(typeof(resize) !== 'undefined') {
       console.log('_afterFinishResize: before calling resize');
@@ -321,8 +321,8 @@ TE.prototype = {
     var _me = this;
     var tabBodyId = _me._getTabBodyId(_me._loadingTabId);
     console.log('_displayNowEffect start ', _me._loadingTabId);
-    $('tabMenuPanel').stopObserving('tabedit:afterDisplayNow', _afterFinishResizeBind);
-    $('tabMenuPanel').observe('tabedit:afterDisplayNow', _afterFinishResizeBind);
+    $('tabMenuPanel').stopObserving('tabedit:afterDisplayNow', _me._afterFinishResizeBind);
+    $('tabMenuPanel').observe('tabedit:afterDisplayNow', _me._afterFinishResizeBind);
     var displayNowEffect = new Effect.Parallel([
       new Effect.Appear(appearElem, {
         afterFinish: function() {
