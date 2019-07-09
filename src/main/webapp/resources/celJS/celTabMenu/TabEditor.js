@@ -303,26 +303,10 @@ TE.prototype = {
     console.log('_tabReadyDisplayNow finish');
   },
 
-  _afterFinishResize : function() {
-    var _me = this;
-    $('tabMenuPanel').stopObserving('tabedit:afterDisplayNow', _me._afterFinishResizeBind);
-    console.log('_afterFinishResize: before resize', typeof(resize));
-    if(typeof(resize) !== 'undefined') {
-      console.log('_afterFinishResize: before calling resize');
-      try {
-        resize();
-      } catch (exp) {
-        console.error('_afterFinishResize: failed to execute resize ', exp);
-      }
-    }
-  },
-
   _displayNowEffect : function(appearElem, fadeElem) {
     var _me = this;
     var tabBodyId = _me._getTabBodyId(_me._loadingTabId);
     console.log('_displayNowEffect start ', _me._loadingTabId);
-    $('tabMenuPanel').stopObserving('tabedit:afterDisplayNow', _me._afterFinishResizeBind);
-    $('tabMenuPanel').observe('tabedit:afterDisplayNow', _me._afterFinishResizeBind);
     var displayNowEffect = new Effect.Parallel([
       new Effect.Appear(appearElem, {
         afterFinish: function() {
@@ -598,7 +582,6 @@ TE.prototype = {
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
       _me._getTabLoaderElement().hide();
       $(tabBodyId).show();
-      //_fireTabChange must be last because resize() will be triggered and search for active tab
       _me._fireTabChange(tabId);
     }
     //fix celements3_tabMenu width

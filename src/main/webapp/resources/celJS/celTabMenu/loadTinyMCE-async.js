@@ -140,9 +140,6 @@
   var initCelRTEListener = function() {
     console.log('initCelRTEListener: before initCelRTE');
     initCelRTE();
-    if(typeof(resize) != 'undefined') {
-      resize();
-    }
   };
 
   $j(document).ready(function() {
