@@ -116,9 +116,10 @@
     console.log('getUninitializedMceEditors: start ', mceParentElem);
     var mceEditorsToInit = new Array();
     $(mceParentElem).select('textarea.mceEditor').each(function(editorArea) {
-      var alreadyInitialized = (typeof(tinymce.getInstanceById(editorArea.id)) !== 'undefined');
-      console.log('start mceAddControl for ', editorArea.id, alreadyInitialized);
-      if (!alreadyInitialized) {
+      var notInitialized = !tinymce.getInstanceById(editorArea.id);
+      console.log('getUninitializedMceEditors: found new editorArea ', editorArea.id,
+          notInitialized);
+      if (notInitialized) {
         mceEditorsToInit.push(editorArea.id);
       }
     });
