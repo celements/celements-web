@@ -271,15 +271,6 @@ TE.prototype = {
     if(_me.tabMenuConfig.initSaveButton) {
       _me.initSaveButton();
     }
-    console.log('tabMenuSetup before resize', typeof(resize));
-    if(typeof(resize) !== 'undefined') {
-      console.log('tabMenuSetup before calling resize');
-      try {
-        resize();
-      } catch (exp) {
-        console.error('tabMenuSetup failed to execute resize ', exp);
-      }
-    }
     console.log('tabMenuSetup before con_titblock');
     if (!$('con_titblock')) {
       var titlediv = new Element('div', { 'id': 'con_titblock', 'class': 'titleblock' });
@@ -325,6 +316,15 @@ TE.prototype = {
           }
           console.log("afterFinish: in appear fire 'tabedit:afterDisplayNow'");
           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
+          console.log('_displayNowEffect: before resize', typeof(resize));
+          if(typeof(resize) !== 'undefined') {
+            console.log('_displayNowEffect: before calling resize');
+            try {
+              resize();
+            } catch (exp) {
+              console.error('_displayNowEffect: failed to execute resize ', exp);
+            }
+          }
         },
         sync: true
       }),

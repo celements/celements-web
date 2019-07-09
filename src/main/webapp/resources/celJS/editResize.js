@@ -82,6 +82,7 @@ var setOverflow = function() {
 };
 
 function resize(){
+  console.log('resize: start');
   setOverflow();
   var box = $('tabMenuPanel');
   var bottomBorder = 15;
@@ -94,7 +95,7 @@ function resize(){
   } else if(document.body && document.body.clientHeight) {
     winHeight = document.body.clientHeight;
   }
-  
+
   var boxSize = winHeight - bottomBorder;
   var scrollbox = getScrollbox();
   //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
@@ -102,4 +103,5 @@ function resize(){
   var scrollableSize = boxSize - $j(scrollbox).offset().top - bottomBorder;
   box.setStyle({ height: Math.max(50, boxSize) + "px" });
   scrollbox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
+  console.log('resize: finish ',boxSize, scrollableSize, scrollbox);
 }
