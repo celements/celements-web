@@ -10,17 +10,14 @@
 <!-- com.xpn.xwiki.plugin.skinx.CssSkinExtensionPlugin -->
 <!-- com.xpn.xwiki.plugin.skinx.CssSkinFileExtensionPlugin -->
 $xwiki.celementsweb.displayAllCSS()
-## get DocumentSpecific Meta-Tag
+## get DocumentSpecific Meta-Tag - as of yet refresh can not be handled by BaseObjectMetaTagProvider because of different attribute name.
 #set($metaTags = $celementsweb.getDocMetaTags($language, $default_language))
 #foreach($metaTagKey in $metaTags.keySet())
 #if("$metaTagKey" == 'refresh')
 #set($attributName = 'http-equiv')
 #set($propertyNameVal = '')
-#else
-#set($attributName = 'name')
-#set($propertyNameVal = "property=${Q}$metaTagKey${Q} ")
-#end
 <meta $!{propertyNameVal}$attributName="$metaTagKey" content="$metaTags.get($metaTagKey)" />
+#end
 #end
 <!--
     This website is powered by open-celements - inspiring people to share!
