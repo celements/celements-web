@@ -67,8 +67,8 @@
           tinyConfigObj["body_class"] = getAllEditorBodyClasses(tinyConfigObj).join(',');
           tinyConfigObj["setup"] = celSetupTinyMCE;
          console.log('initCelRTE: tinyMCE.init');
-         setTimeout(function() {tinyMCE.init(tinyConfigObj);
-         tinyConfigLoaded = true; }, 3000);
+         tinyMCE.init(tinyConfigObj);
+         tinyConfigLoaded = true;
           console.debug('initCelRTE: tinyMCE.init finished');
         } else {
           console.error('TinyConfig is no json!', tinyConfigJSON);
@@ -93,19 +93,22 @@
     }
   };
 
-  var lacyLoadTinyMCEforTab = function(event) {
-    var tabBodyId = event.memo.newTabBodyId;
-    if (tinyConfigLoaded) {
-      var tinyMceAreas = $(tabBodyId).select('textarea.mceEditor');
-      console.log('lacyLoadTinyMCEforTab: for tabBodyId ', tabBodyId, tinyMceAreas);
-      tinyMceAreas.each(function(editorArea) {
-        setTimeout(function() {tinyMCE.execCommand("mceAddControl", false, editorArea.id);}, 3000);
-//      tinyMCE.execCommand("mceAddControl", false, editorArea.id);
-      });
-      console.log('lacyLoadTinyMCEforTab: finish', tabBodyId);
-    } else {
-      console.log('lacyLoadTinyMCEforTab: skip mceAddControl because tinyConfig not yet loaded.',
-          tabBodyId);
+  var lazyLoadTinyMCEforTab = function(event) {
+    try {
+      var tabBodyId = event.memo.newTabBodyId;
+      if (tinyConfigLoaded) {
+        var tinyMceAreas = $(tabBodyId).select('textarea.mceEditor');
+        console.log('lazyLoadTinyMCEforTab: for tabBodyId ', tabBodyId, tinyMceAreas);
+        tinyMceAreas.each(function(editorArea) {
+          tinyMCE.execCommand("mceAddControl", false, editorArea.id);
+        });
+        console.log('lazyLoadTinyMCEforTab: finish', tabBodyId);
+      } else {
+        console.log('lazyLoadTinyMCEforTab: skip mceAddControl because tinyConfig not yet loaded.',
+            tabBodyId);
+      }
+    } catch (exp) {
+      console.error("lazyLoadTinyMCEforTab failed. ", exp);
     }
   };
 
@@ -146,7 +149,7 @@
     console.log("tinymce: register document ready...");
     $('tabMenuPanel').observe('tabedit:finishedLoadingDisplayNow',
         delayedEditorOpeningHandler);
-    $('tabMenuPanel').observe('tabedit:tabLoadingFinished', lacyLoadTinyMCEforTab);
+    $('tabMenuPanel').observe('tabedit:tabLoadingFinished', lazyLoadTinyMCEforTab);
     console.log('loadTinyMCE-async on ready: before register initCelRTEListener');
     getCelementsTabEditor().addAfterInitListener(initCelRTEListener);
   });
