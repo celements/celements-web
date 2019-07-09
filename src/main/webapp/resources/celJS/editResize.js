@@ -32,15 +32,15 @@ function startResizeObservers() {
   resize();
 }
 
-var getActiveEditorTab = function() {
-  var activeTab = null;
+var getActiveEditorTabs = function() {
+  var activeTabs = new Array();
   $$('.celements3_tabMenu .bd .menuTab').each(function(tab) {
     if(tab.visible()) {
-      console.log('getActiveEditorTab: found active tab ', tab.id);
-      activeTab = tab;
+      console.log('getActiveEditorTabs: found active tab ', tab.id);
+      activeTabs.push(tab);
     }
   });
-  return activeTab;
+  return activeTabs;
 };
 
 var getInnerMostScrollableElement = function(tab) {
@@ -62,27 +62,29 @@ var getInnerMostScrollableElement = function(tab) {
   return elementFound;
 };
 
-var getScrollbox = function() {
+var getScrollboxes = function() {
   // ele.visible() does not work for scrollable if not the scrollable part itself, but a 
   // parent element (the tab) is set to display: none
-  var activeTab = getActiveEditorTab();
-  var scrollElem = getInnerMostScrollableElement(activeTab);
-  if (scrollElem) {
-    return scrollElem;
-  }
-  return activeTab;
+  var activeTabs = getActiveEditorTabs();
+  var scrollElems = new Array();
+  activeTabs.each(function(theTab) {
+    var scrollElem = getInnerMostScrollableElement(theTab) || theTab;
+    scrollElems.push(scrollElem);
+  });
+  return scrollElems;
 };
 
 var setOverflow = function() {
 	// getStyle('overflow-y') returns null for 'auto'
-	var scrollbox = getScrollbox();
-	if ((scrollbox.getStyle('overflow-y') != null)
-		&& (scrollbox.getStyle('overflow-y') != 'scroll')) {
-		scrollbox.setStyle({'overflowY' : 'auto'}); //IE6 only supports overflowY
-	}
+  getScrollboxes().each(function(scrollbox){
+    if ((scrollbox.getStyle('overflow-y') != null)
+        && (scrollbox.getStyle('overflow-y') != 'scroll')) {
+        scrollbox.setStyle({'overflowY' : 'auto'}); //IE6 only supports overflowY
+      }
+  });
 };
 
-function resize(){
+var resize = function(){
   console.log('resize: start');
   setOverflow();
   var box = $('tabMenuPanel');
@@ -98,13 +100,15 @@ function resize(){
   }
 
   var boxSize = winHeight - bottomBorder;
-  var scrollbox = getScrollbox();
-  //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
-  //counting margin-auto offsets. Thus we need to use jquery.offset
-  var scrollableSize = boxSize - $j(scrollbox).offset().top - bottomBorder;
-  console.log('resize: scrollableSize ', boxSize, $j(scrollbox).offset().top, bottomBorder,
-      scrollableSize);
-  box.setStyle({ height: Math.max(50, boxSize) + "px" });
-  scrollbox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
-  console.log('resize: finish ', boxSize, scrollableSize, scrollbox);
-}
+  getScrollboxes().each(function(scrollbox){
+    //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
+    //counting margin-auto offsets. Thus we need to use jquery.offset
+    var scrollableSize = boxSize - $j(scrollbox).offset().top - bottomBorder;
+    console.log('resize: scrollableSize ', boxSize, $j(scrollbox).offset().top, bottomBorder,
+        scrollableSize);
+    box.setStyle({ height: Math.max(50, boxSize) + "px" });
+    scrollbox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
+    console.log('resize: set height ', boxSize, scrollableSize, scrollbox);
+  });
+  console.log('resize: finish');
+};
