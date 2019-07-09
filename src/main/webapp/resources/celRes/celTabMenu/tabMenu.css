@@ -147,7 +147,7 @@ body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
   padding-right: 13px;
   font-size: 16px;
   line-height: 20px;
-  margin-top: 8px;
+  padding-top: 18px;
   font-weight: bold;
 }
 .celements3_tabMenu .celementsLoadingIndicator p,
