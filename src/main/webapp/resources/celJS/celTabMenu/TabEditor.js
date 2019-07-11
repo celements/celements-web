@@ -1026,9 +1026,9 @@ TE.prototype = {
     }
     document.forms[formName].select('textarea.mceEditor').each(function(formfield) {
       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('textarea save tinymce: ', formfield.name, tinyMCE.get(formfield.id).save());
+        console.log('textarea save tinymce: ', formfield.name, tinymce.get(formfield.id).save());
       }
-      formfield.value = tinyMCE.get(formfield.id).save();
+      formfield.value = tinymce.get(formfield.id).save();
     });
     $(formName).request(handler);
   } else {
@@ -1081,8 +1081,8 @@ TE.prototype = {
    var mceFields = document.forms[formId].select('textarea.mceEditor');
    console.log('updateTinyMCETextAreas: for ', formId, mceFields);
    mceFields.each(function(formfield) {
-     if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
-       _me.updateOneTinyMCETextArea(tinyMCE.get(formfield.id));
+     if ((typeof tinymce !== 'undefined') && tinymce.get(formfield.id)) {
+       _me.updateOneTinyMCETextArea(tinymce.get(formfield.id));
      }
    });
    console.log('updateTinyMCETextAreas: end ', formId);
@@ -1111,11 +1111,11 @@ TE.prototype = {
    }
    var formId = fieldElem.up('form').id;
    var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
-   if (fieldElem.hasClassName('mceEditor') && tinyMCE && tinyMCE.get(fieldElem.id)) {
-     //FIXME sometimes isDirty from tinyMCE is wrong... thus we compare the .getContent
+   if (fieldElem.hasClassName('mceEditor') && tinymce && tinymce.get(fieldElem.id)) {
+     //FIXME sometimes isDirty from tinymce is wrong... thus we compare the .getContent
      //FIXME with the editorFormsInitialValues instead.
-//     return tinyMCE.get(fieldElem.id).isDirty();
-     return (elementsValues.get(fieldElem.name) != tinyMCE.get(fieldElem.id).getContent());
+//     return tinymce.get(fieldElem.id).isDirty();
+     return (elementsValues.get(fieldElem.name) != tinymce.get(fieldElem.id).getContent());
    } else if (!fieldElem.hasClassName('celIgnoreDirty')) {
      var isInputElem = (fieldElem.tagName.toLowerCase() == 'input');
      var elemValue = fieldElem.value;
