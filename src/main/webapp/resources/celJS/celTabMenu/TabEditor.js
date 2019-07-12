@@ -51,7 +51,11 @@ TE.prototype = {
   _tabsInitalized : undefined,
   _isEditorDirtyOnLoad : undefined,
   afterInitListeners : undefined,
+  _editorReadyDisplayNowBind : undefined,
+  _tabReadyDisplayNow : undefined,
   _log : undefined,
+  _tabLoaderElem : undefined,
+  _loadingTabId : undefined,
 
   _init : function() {
     var _me = this;
@@ -72,6 +76,8 @@ TE.prototype = {
     _me._tabsInitalized = new Array();
     _me._log = new CELEMENTS.mobile.Dimensions();
     _me._loading = new CELEMENTS.LoadingIndicator();
+    _me._editorReadyDisplayNowBind = _me._editorReadyDisplayNow.bind(_me);
+    _me._tabReadyDisplayNowBind = _me._tabReadyDisplayNow.bind(_me);
   },
 
   isValidFormId : function(formId) {
@@ -137,7 +143,8 @@ TE.prototype = {
     });
     var tabMenuPanelWidth = $('tabMenuPanel').getWidth();
     var loadingElem = new Element('div', {
-      'id' : 'celementsLoadingIndicator'
+      'id' : 'celementsLoadingIndicator',
+      'class' : 'celementsLoadingIndicator'
     }).update(loaderimg).setStyle({
       'width' : tabMenuPanelWidth + 'px'
     });
@@ -207,6 +214,7 @@ TE.prototype = {
       if (elemId && $(elemId + '-button')) {
         _me.getTab(elemId);
         event.stop();
+        console.log('tabClickHandler finish.');
       }
     };
     // set html and body overflow to hidden
@@ -242,53 +250,90 @@ TE.prototype = {
         starttabId = _me.tabMenuConfig.tabMenuPanelData[0]['id'];
       }
     }
+    console.log('editorReadyDisplayNow register');
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
     if(starttabId != null) {
       console.log('tabMenuSetup before showTabMenu');
       _me.showTabMenu(starttabId);
     }
+    console.log('tabMenuSetup after showTabMenu');
 
     if($$('.container-close').size() > 0) {
       _me.initDefaultCloseButton();
       _me._addClearButtons();
     }
+    console.log('tabMenuSetup before initCloseButton');
     if(_me.tabMenuConfig.initCloseButton) {
       _me.initCloseButton();
     }
+    console.log('tabMenuSetup before initSaveButton');
     if(_me.tabMenuConfig.initSaveButton) {
       _me.initSaveButton();
     }
-    if(typeof(resize) != 'undefined') {
-      resize();
-    }
+    console.log('tabMenuSetup before con_titblock');
     if (!$('con_titblock')) {
       var titlediv = new Element('div', { 'id': 'con_titblock', 'class': 'titleblock' });
       titlediv.update(_me.tabMenuConfig.tabMenuPanelConfig.title);
       $('tabMenuPanel').down('.bd').insert({ top: titlediv });
     }
+    console.log('tabMenuSetup activating browse away check');
     window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
+    console.log('tabMenuSetup before afterInitListeners');
     _me.afterInitListeners.each(_me._execOneListener);
+    console.log('tabMenuSetup end');
+  },
+
+  _editorReadyDisplayNow : function() {
+    var _me = this;
+    console.log('editorReadyDisplayNow start');
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
+    _me._displayNowEffect('tabMenuPanel','celementsLoadingIndicator');
+    console.log('editorReadyDisplayNow finish');
+  },
+  
+  _tabReadyDisplayNow : function() {
+    var _me = this;
+    console.log('_tabReadyDisplayNow start', _me._loadingTabId);
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+    _me._displayNowEffect(_me._getTabBodyId(_me._loadingTabId), _me._getTabLoaderElement());
+    console.log('_tabReadyDisplayNow finish');
+  },
+
+  _displayNowEffect : function(appearElem, fadeElem) {
+    var _me = this;
+    var tabBodyId = _me._getTabBodyId(_me._loadingTabId);
+    console.log('_displayNowEffect start ', _me._loadingTabId);
     var displayNowEffect = new Effect.Parallel([
-       new Effect.Appear('tabMenuPanel', {
-         afterFinish: function() {
-           //afterFinish for parallel effect is not working!
-           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
-         },
-         sync: true
-       }),
-       new Effect.Fade('celementsLoadingIndicator', { sync: true })
+      new Effect.Appear(appearElem, {
+        afterFinish: function() {
+          //afterFinish for parallel effect is not working! Instead placed on first effect is working.
+          console.log("afterFinish: in appear start");
+          if (_me._loadingTabId) {
+            console.log("afterFinish: in appear before _fireTabChange");
+            _me._fireTabChange(_me._loadingTabId);
+          }
+          console.log("afterFinish: in appear fire 'tabedit:afterDisplayNow'");
+          $('tabMenuPanel').fire('tabedit:afterDisplayNow');
+        },
+        sync: true
+      }),
+      new Effect.Fade(fadeElem, { sync: true })
     ], {
        duration: 0.5,
        sync: true
     });
-    var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow',
-        displayNowEffect);
+    console.log('_displayNowEffect: fire tabedit:finishedLoadingDisplayNow');
+    var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
+      'effect' : displayNowEffect,
+      'tabBodyId' : tabBodyId
+    });
     if (!defaultShowEvent.stopped) {
+      console.log('displayNow event not stopped -> displaying instantly');
       displayNowEffect.start();
-    } else {
-      $('tabMenuPanel').fire('tabedit:afterDisplayNow');
     }
-    console.log('tabMenuSetup end');
+    console.log('_displayNowEffect finish');
   },
 
   _execOneListener : function(listener) {
@@ -443,7 +488,7 @@ TE.prototype = {
     var _me = this;
     $('cel_overlay').setStyle({'display' : "block"});
     _me.getTab(tabId);
-    var tabBodyId = tabId + '-tab';
+    var tabBodyId = _me._getTabBodyId(tabId);
     $(tabBodyId).fire('tabedit:before-tabshow', {
       'newTabId' : tabBodyId
     });
@@ -451,123 +496,193 @@ TE.prototype = {
     $(tabBodyId).fire('tabedit:after-tabshow', {
       'newTabId' : tabBodyId
     });
+    console.log('showTabMenu done.');
+  },
+
+  _getTabLoaderElement : function() {
+    var _me = this;
+    console.log('_getTabLoaderElement: start');
+    if (!_me._tabLoaderElem) {
+      console.log('_getTabLoaderElement: create tabLoader');
+      var loaderimg = _me._loading.getLoadingIndicator().setStyle({
+        'display' : 'block',
+        'marginLeft' : 'auto',
+        'marginRight' : 'auto'
+      });
+      var loaderDiv = new Element('div').update(loaderimg).setStyle({
+        'width' : _me.tabMenuConfig.tabMenuPanelConfig.width,
+        'min-height' : '50px',
+        'padding-top' : '100px',
+        'padding-bottom' : '100px'
+      });
+      var textLoading = new Element('p').update('loading ...');
+      loaderDiv.insert(textLoading);
+      //.menuTab needed for resize!
+      _me._tabLoaderElem = new Element('div', {
+        'class': 'menuTab celementsLoadingIndicator',
+        'id': 'tabLoaderContainer'
+      }).update(loaderDiv);
+      $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
+    }
+    console.log('_getTabLoaderElement: end ', _me._tabLoaderElem);
+    return _me._tabLoaderElem;
+  },
+
+  _getOrCreateTabBody : function(tabBodyId) {
+    var _me = this;
+    console.log('_getOrCreateTabBody: start ', tabBodyId);
+    var tabBodyElem = $(tabBodyId);
+    if (!tabBodyElem) {
+      console.log('_getOrCreateTabBody: creating ', tabBodyId);
+      tabBodyElem = new Element('div', {
+        'class': 'menuTab ' + tabBodyId,
+        'id': tabBodyId
+      }).setStyle({
+        'width' : _me.tabMenuConfig.tabMenuPanelConfig.width
+      });
+      $('tabMenuPanel').down('.bd').appendChild(tabBodyElem);
+    }
+    return tabBodyElem;
   },
 
   getTab : function(tabId, reload) {
     var _me = this;
     $$('.menuTab').each(function(tab) { tab.hide(); });
     // create tab if it does not exist
-    var tabBodyId = tabId + '-tab';
-    var div = $(tabBodyId);
-    var asyncLoading = false;
+    var tabBodyId = _me._getTabBodyId(tabId);
+    var tabBodyElem = $(tabBodyId);
     var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
     var scriptLoadedHandler = function() {
+      console.log('scriptLoadedHandler: start');
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
       console.log('TabEditor: async loading tab firing celements:contentChanged');
       $(tabBodyId).fire('celements:contentChanged', {
         'htmlElem' : $(tabBodyId)
       });
+      $(tabBodyId).fire('tabedit:tabLoadingFinished', {
+        'newTabBodyId' : tabBodyId,
+        'newTabButtonId' : tabId
+      });
+      console.log('getTab.scriptLoadedHandler: after async tab load before tabedit:tabchange event',
+          tabId);
+      console.log('scriptLoadedHandler: finish');
     };
     $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
-    console.log('getTab: ', tabBodyId, div, reload);
-    if ((div == null) || ((reload != 'undefined') && reload)) {
-      if (div == null) {
-        div = new Element('div', {
-          'class': 'menuTab ' + tabBodyId,
-          'id': tabBodyId
-        }).setStyle({
-          'width' : width
-        });
-      }
-      var loaderspan = new Element('span', { 'class': 'tabloader' });
-      div.update(loaderspan);
-      loaderspan.update(_me._loading.getLoadingIndicator());
-      $('tabMenuPanel').down('.bd').appendChild(div);
-      var lang = '';
-      if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
-        lang = $$('.celTabLanguage')[0].value;
-      }
-      var loadTabParams = {
-          xpage : 'celements_ajax',
-          ajax_mode : 'CelTabContent',
-          id : tabId,
-          language : lang
-       };
-      if (window.location.search.match(/\&?template=[^\&]+/)) {
-        loadTabParams["template"] = window.location.search.replace(
-            /.*\&?template=([^\&]+).*/, '$1');
-      }
-      if (window.location.search.match(/\&?language=[^\&]+/)) {
-        loadTabParams["language"] = window.location.search.replace(
-            /.*\&?language=([^\&]+).*/, '$1');
-      }
-      $A(decodeURI(window.location.search).match(/(\&|\?)data-[^=\&]+=[^\&]+/g)).each(function(elem) {
-        var elemArray = elem.split('=');
-        var key = elemArray[0].substr(1);
-        var value = elemArray[1];
-        loadTabParams[key] = value;
-      });
-      // load tab content
-      asyncLoading = true;
-      new Ajax.Request(getTMCelHost(), {
-         method: 'post',
-         parameters: loadTabParams,
-         onSuccess: function(transport) {
-           div.update(transport.responseText);
-           console.log('TabEditor.js: after async tab load before LazyLoadJS ',
-               tabBodyId);
-           _me.lazyLoadJS(div);
-           _me.lazyLoadCSS(div);
-           //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
-           //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
-           //TODO following fired event. -> Workaround: execute registered method once after registration.
-           //TODO FP; 25.9.2015; maybe use 'tabedit:scriptsLoaded' instead
-           console.log('TabEditor.js: after async tab load before tabedit:tabchange'
-               + ' event', tabBodyId);
-           $(tabBodyId).fire('tabedit:tabchange', {
-             'newTabId' : tabBodyId
-           });
-           $(tabBodyId).select('form').each(function(formelem) {
-             console.log('getTab async: before retrieveInitialValues ', tabBodyId,
-                 formelem);
-             if (formelem && formelem.id) {
-               _me.retrieveInitialValues(formelem.id);
-             }
-           });
-           _me._tabsInitalized.push(tabBodyId);
-         }
-      });
+    console.log('getTab: ', tabBodyId, tabBodyElem, reload);
+    _me._hideTabShowLoadingIndicator(tabId);
+    if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
+      _me._loadTabAsync(tabId);
     } else if (_me._tabsInitalized.indexOf(tabBodyId) <= -1 ) {
-      console.log('getTab: before lazyLoadJS ', tabBodyId, $(tabBodyId));
-      _me.lazyLoadJS($(tabBodyId), true);
-      console.log('getTab: after lazyLoadJS ', tabBodyId, $(tabBodyId));
-      $(tabBodyId).select('form').each(function(formelem) {
-        if (formelem && formelem.id && !_me.editorFormsInitialValues.get(formelem.id)) {
-          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-            console.log('tab already loaded: ', tabBodyId, $(tabBodyId),
-                ' but is new retrieveInitialValues.');
-          }
-          _me.retrieveInitialValues(formelem.id);
-        }
-      });
-      _me._tabsInitalized.push(tabBodyId);
+      console.log('getTab: static loaded ; start initialize ', tabBodyId, $(tabBodyId));
+      _me._initializeLoadedTab(tabBodyId);
+      console.log('getTab: finish static loaded', tabId);
     } else {
       $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
+      _me._getTabLoaderElement().hide();
+      $(tabBodyId).show();
+      _me._fireTabChange(tabId);
     }
     //fix celements3_tabMenu width
     $(tabBodyId).up('.celements3_tabMenu').setStyle({
       'width' : width
     });
-    $(tabBodyId).show();
-    if (!asyncLoading) {
-      $(tabBodyId).fire('tabedit:tabchange', {
-        'newTabId' : tabBodyId
-      });
-    }
     _me.setButtonActive(tabId);
+    console.log('getTab finish');
   },
 
- lazyLoadJS : function(parentEle, syncLoadOnly) {
+  _getTabBodyId : function(tabId) {
+    return tabId + '-tab';
+  },
+
+  _fireTabChange : function(tabId) {
+    var _me = this;
+    var tabBodyId = _me._getTabBodyId(tabId);
+    console.log('_fireTabChange: fire tabedit:tabchange event for', tabId, tabBodyId);
+    $(tabBodyId).fire('tabedit:tabchange', {
+      'newTabId' : tabBodyId,
+      'newTabBodyId' : tabBodyId,
+      'newTabButtonId' : tabId
+    });
+  },
+
+  _hideTabShowLoadingIndicator : function(tabId) {
+    var _me = this;
+    console.log('_hideTabShowLoadingIndicator: start ', tabId);
+    _me._getTabLoaderElement().show();
+    var tabBodyId = _me._getTabBodyId(tabId);
+    var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+    tabBodyElem.hide();
+    _me._loadingTabId = tabId;
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+    console.log('_hideTabShowLoadingIndicator: finish ', tabId);
+  },
+
+  _initializeLoadedTab : function(tabBodyId) {
+    var _me = this;
+    console.log('_initializeLoadedTab: before LazyLoadJS ', tabBodyId);
+    var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+    _me.lazyLoadJS(tabBodyElem);
+    _me.lazyLoadCSS(tabBodyElem);
+    $(tabBodyId).select('form').each(function(formelem) {
+      console.log('_loadTabAsync: before retrieveInitialValues ', tabBodyId,
+          formelem);
+      if (formelem && formelem.id) {
+        _me.retrieveInitialValues(formelem.id);
+      }
+    });
+    _me._tabsInitalized.push(tabBodyId);
+    console.log('_initializeLoadedTab: finish ', tabBodyId);
+  },
+
+  _loadTabAsync : function(tabId) {
+    var _me = this;
+    console.log('_loadTabAsync: start loading async ', tabId);
+    var lang = '';
+    if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
+      lang = $$('.celTabLanguage')[0].value;
+    }
+    console.log('_loadTabAsync: celTabLanguage? ', lang);
+    var loadTabParams = {
+        xpage : 'celements_ajax',
+        ajax_mode : 'CelTabContent',
+        id : tabId,
+        language : lang
+     };
+    if (window.location.search.match(/\&?template=[^\&]+/)) {
+      loadTabParams["template"] = window.location.search.replace(
+          /.*\&?template=([^\&]+).*/, '$1');
+    }
+    console.log('_loadTabAsync: template in URL? ', loadTabParams["template"]);
+    if (window.location.search.match(/\&?language=[^\&]+/)) {
+      loadTabParams["language"] = window.location.search.replace(
+          /.*\&?language=([^\&]+).*/, '$1');
+    }
+    console.log('_loadTabAsync: overwrite language from URL ? ', loadTabParams["language"]);
+    $A(decodeURI(window.location.search).match(/(\&|\?)data-[^=\&]+=[^\&]+/g)).each(function(elem) {
+      var elemArray = elem.split('=');
+      var key = elemArray[0].substr(1);
+      var value = elemArray[1];
+      loadTabParams[key] = value;
+    });
+    console.log('_loadTabAsync: start Ajax call to load content ', loadTabParams);
+    new Ajax.Request(getTMCelHost(), {
+       method: 'post',
+       parameters: loadTabParams,
+       onSuccess: function(transport) {
+         console.log('_loadTabAsync.Ajax: onSuccess', tabId);
+         var tabBodyId = _me._getTabBodyId(tabId);
+         console.log('_loadTabAsync.Ajax: before update', tabId);
+         _me._getOrCreateTabBody(tabBodyId).update(transport.responseText);
+         console.log('_loadTabAsync.Ajax: before _initializeLoadedTab', tabId);
+         _me._initializeLoadedTab(tabBodyId);
+         console.log('_loadTabAsync.Ajax: finish', tabId);
+       }
+    });
+    console.log('_loadTabAsync: finish', tabId);
+  },
+
+  lazyLoadJS : function(parentEle, syncLoadOnly) {
   var _me = this;
   syncLoadOnly = syncLoadOnly || false;
   var scripts = [];
@@ -738,6 +853,7 @@ TE.prototype = {
      console.log('TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded');
      $('tabMenuPanel').fire('tabedit:scriptsLoaded');
    }
+   console.log('_loadScriptsCheckFinished: finish');
  },
 
  scriptIsLoaded : function(scriptURL) {
@@ -910,9 +1026,9 @@ TE.prototype = {
     }
     document.forms[formName].select('textarea.mceEditor').each(function(formfield) {
       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('textarea save tinymce: ', formfield.name, tinyMCE.get(formfield.id).save());
+        console.log('textarea save tinymce: ', formfield.name, tinymce.get(formfield.id).save());
       }
-      formfield.value = tinyMCE.get(formfield.id).save();
+      formfield.value = tinymce.get(formfield.id).save();
     });
     $(formName).request(handler);
   } else {
@@ -965,8 +1081,8 @@ TE.prototype = {
    var mceFields = document.forms[formId].select('textarea.mceEditor');
    console.log('updateTinyMCETextAreas: for ', formId, mceFields);
    mceFields.each(function(formfield) {
-     if ((typeof tinyMCE !== 'undefined') && tinyMCE.get(formfield.id)) {
-       _me.updateOneTinyMCETextArea(tinyMCE.get(formfield.id));
+     if ((typeof tinymce !== 'undefined') && tinymce.get(formfield.id)) {
+       _me.updateOneTinyMCETextArea(tinymce.get(formfield.id));
      }
    });
    console.log('updateTinyMCETextAreas: end ', formId);
@@ -995,11 +1111,11 @@ TE.prototype = {
    }
    var formId = fieldElem.up('form').id;
    var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
-   if (fieldElem.hasClassName('mceEditor') && tinyMCE && tinyMCE.get(fieldElem.id)) {
-     //FIXME sometimes isDirty from tinyMCE is wrong... thus we compare the .getContent
+   if (fieldElem.hasClassName('mceEditor') && tinymce && tinymce.get(fieldElem.id)) {
+     //FIXME sometimes isDirty from tinymce is wrong... thus we compare the .getContent
      //FIXME with the editorFormsInitialValues instead.
-//     return tinyMCE.get(fieldElem.id).isDirty();
-     return (elementsValues.get(fieldElem.name) != tinyMCE.get(fieldElem.id).getContent());
+//     return tinymce.get(fieldElem.id).isDirty();
+     return (elementsValues.get(fieldElem.name) != tinymce.get(fieldElem.id).getContent());
    } else if (!fieldElem.hasClassName('celIgnoreDirty')) {
      var isInputElem = (fieldElem.tagName.toLowerCase() == 'input');
      var elemValue = fieldElem.value;
