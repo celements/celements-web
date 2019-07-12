@@ -35,7 +35,6 @@
   "body_class" : "$!{pageStyles.trim()}",
   "language" : "$admin_language",
   "theme" : "advanced",
-  "oninit" : "celFinishTinyMCEStart",
   "editor_css" : "$services.celementsweb.getSkinFile(':celRTE/celements-ui.css')",
   ## lookup the additional rte_plugins field in the XWiki and WebPreference
   #set($rtePluginsConfig = $celementsweb.getRTEConfigField('plugins'))
