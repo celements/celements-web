@@ -230,7 +230,7 @@ var celFileUploadRegisterListeners = function() {
   }
 };
 
-//IMPORTANT!!! This MUST be onLoad because in ImagePicker tinyMCE is rewriting the
+//IMPORTANT!!! This MUST be onLoad because in ImagePicker tinymce is rewriting the
 //DOM-tree onLoad. Listeners registered in celAddOnBeforeLoadListener will fail!
 Event.observe(window, 'load', function() {
   celFileUploadRegisterListeners();
