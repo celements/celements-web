@@ -625,8 +625,7 @@ TE.prototype = {
     _me.lazyLoadJS(tabBodyElem);
     _me.lazyLoadCSS(tabBodyElem);
     $(tabBodyId).select('form').each(function(formelem) {
-      console.log('_initializeLoadedTab: before retrieveInitialValues ', tabBodyId,
-          formelem);
+      console.log('_initializeLoadedTab: before retrieveInitialValues ', tabBodyId, formelem);
       if (formelem && formelem.id) {
         _me.retrieveInitialValues(formelem.id);
       }
