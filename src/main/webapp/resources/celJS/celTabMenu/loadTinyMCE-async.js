@@ -39,6 +39,7 @@
   };
 
   var tinyConfigLoaded = false;
+  var editorCounter = 0;
 
   var initCelRTE = function() {
     console.log('initCelRTE: start');
@@ -116,6 +117,9 @@
     console.log('getUninitializedMceEditors: start ', mceParentElem);
     var mceEditorsToInit = new Array();
     $(mceParentElem).select('textarea.mceEditor').each(function(editorArea) {
+      if (!editorArea.id) {
+        editorArea.writeAttribute('id', editorArea.name + 'Editor' + (++editorCounter));
+      }
       var notInitialized = !tinymce.getInstanceById(editorArea.id);
       console.log('getUninitializedMceEditors: found new editorArea ', editorArea.id,
           notInitialized);
@@ -148,11 +152,13 @@
 
   $j(document).ready(function() {
     console.log("tinymce: register document ready...");
-    $('tabMenuPanel').observe('tabedit:finishedLoadingDisplayNow',
-        delayedEditorOpeningHandler);
-    $('tabMenuPanel').observe('tabedit:tabLoadingFinished', lazyLoadTinyMCEforTab);
-    console.log('loadTinyMCE-async on ready: before register initCelRTEListener');
-    getCelementsTabEditor().addAfterInitListener(initCelRTEListener);
+    if ($('tabMenuPanel')) {
+      $('tabMenuPanel').observe('tabedit:finishedLoadingDisplayNow',
+          delayedEditorOpeningHandler);
+      $('tabMenuPanel').observe('tabedit:tabLoadingFinished', lazyLoadTinyMCEforTab);
+      console.log('loadTinyMCE-async on ready: before register initCelRTEListener');
+      getCelementsTabEditor().addAfterInitListener(initCelRTEListener);
+    }
   });
   
 })(window);
