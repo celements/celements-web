@@ -52,7 +52,7 @@ TE.prototype = {
   _isEditorDirtyOnLoad : undefined,
   afterInitListeners : undefined,
   _editorReadyDisplayNowBind : undefined,
-  _tabReadyDisplayNow : undefined,
+  _tabReadyDisplayNowBind : undefined,
   _log : undefined,
   _tabLoaderElem : undefined,
   _loadingTabId : undefined,
