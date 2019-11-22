@@ -7,7 +7,8 @@
     <table>
   #foreach($rteConfigRef in $rteConfigsList)
     <tr>
-      #set($editLink = $services.url.getURL($rteConfigRef, 'edit', "editor=object&xredirect=$!{doc.getURL('view')}"))
+      #set($xredirect = $escapetool.url("$!{doc.getURL('view')}"))
+      #set($editLink = $services.url.getURL($rteConfigRef, 'edit', "editor=object&xredirect=$!xredirect"))
       <td><a href="$editLink">$services.model.serialize($rteConfigRef, 'local')</a></td>
     </tr>
   #end
