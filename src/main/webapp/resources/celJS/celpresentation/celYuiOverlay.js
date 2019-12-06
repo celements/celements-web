@@ -295,7 +295,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         var _me = this;
         event.stop();
         //TODO implement configProvider
-        var overlayURL = link.href;
+        var overlayURL = link.getAttribute("data-overlaylink") || link.href;
         var openConfig = {
             'link' : link,
             'overlayURL' : overlayURL
