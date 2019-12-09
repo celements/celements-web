@@ -294,12 +294,12 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _openHandler : function(link, event) {
         var _me = this;
         event.stop();
-        //TODO implement configProvider
-        var overlayURL = link.href;
         var openConfig = {
-            'link' : link,
-            'overlayURL' : overlayURL
-          };
+          'link' : link,
+          'overlayURL' : link.getAttribute("data-celOverlayLink") || link.href
+        };
+        // allow 'configProvider' listener to change the openConfig object
+        $(document.body).fire('cel_yuiOverlay:configProvider', openConfig);
         _me.intermediatOpenHandler(openConfig);
       },
 
