@@ -246,6 +246,11 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       showConfirmDialog : function(openConfig) {
         var _me = this;
         var dialog = _me.getOverlayDialog();
+        var dialogHeight = '';
+        if ((_me._dialogConfig.height != undefined) && (_me._dialogConfig.height != '')) {
+          dialogHeight = 'style="height: ' + _me._dialogConfig.height
+            + '; position: relative;"';
+        }
         dialog.setHeader("Confirmation"); //TODO get from celMessage
         _me._overlayDialog.setBody('<div id="' + _me._dialogConfig.containerId + '"'
             + dialogHeight
