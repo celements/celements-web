@@ -260,7 +260,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           { text: openConfig.confirmBtn, handler: handleYes, isDefault:true }, 
           { text: openConfig.cancelBtn,  handler: _me._closeBind } ]);
         dialog.cfg.setProperty("close", false);
-        _me.open();
+        _me.show();
+        _me._addCSSclassesToMask();
       },
 
       showProgressDialog : function(headerText) {
