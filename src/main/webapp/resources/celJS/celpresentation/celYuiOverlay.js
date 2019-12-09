@@ -257,6 +257,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
             + dialogHeight
             + '><p>' + _me._dialogConfig.confirmMsg +'</p></div>'); 
         var handleYes = _me._internalOpenCelPageInOverlay.bind(_me);
+        dialog.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
         dialog.cfg.queueProperty("buttons", [
           { text: _me._dialogConfig.confirmBtn, handler: handleYes, isDefault:true }, 
           { text: _me._dialogConfig.cancelBtn,  handler: _me._closeBind } ]);
