@@ -73,6 +73,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _bindOpenHandler : undefined,
       _bindCleanUpAfterClose : undefined,
       _centerBind : undefined,
+      _closeBind : undefined,
       
       _init : function(configObj) {
         var _me = this;
@@ -82,6 +83,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me._bindOpenHandler = _me._openHandler.bind(_me);
         _me._bindCleanUpAfterClose = _me._cleanUpAfterClose.bind(_me);
         _me._centerBind = _me.center.bind(_me);
+        _me._closeBind = _me.close.bind(_me);
       },
 
       _getDefaultConfig : function() {
@@ -241,6 +243,21 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           });
       },
 
+      showConfirmDialog : function(openConfig) {
+        var _me = this;
+        var dialog = _me.getOverlayDialog();
+        dialog.setHeader("Confirmation"); //TODO get from celMessage
+        _me._overlayDialog.setBody('<div id="' + _me._dialogConfig.containerId + '"'
+            + dialogHeight
+            + '><p>' + openConfig.confirmMsg +'</p></div>'); 
+        var handleYes = _me._internalOpenCelPageInOverlay.bind(_me).curry(openConfig);
+        dialog.cfg.queueProperty("buttons", [
+          { text: openConfig.confirmBtn, handler: handleYes, isDefault:true }, 
+          { text: openConfig.cancelBtn,  handler: _me._closeBind } ]);
+        dialog.cfg.setProperty("close", false);
+        _me.open();
+      },
+
       showProgressDialog : function(headerText) {
         var _me = this;
         var dialog = _me.getOverlayDialog();
@@ -267,6 +284,17 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         }
       },
 
+      _internalOpenCelPageInOverlay : function(openConfig) {
+        var _me = this;
+        console.debug('_internalOpenCelPageInOverlay: ', openConfig);
+        var openDialogEvent = $(document.body).fire('cel_yuiOverlay:openDialog', openConfig);
+        if (!openDialogEvent.stopped) {
+          _me._defaultOpenDialog(openConfig);
+        } else {
+          console.log('openCelPageInOverlay skipping defaultOpenDialog.');
+        }
+      },
+
       openCelPageInOverlay : function(openConfig) {
         var _me = this;
         if (typeof openConfig === 'string') {
@@ -275,14 +303,10 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           };
         }
         if (openConfig.overlayURL != '') {
-          var openDialogEvent = $(document.body).fire('cel_yuiOverlay:openDialog',
-              openConfig);
-          if (!openDialogEvent.stopped) {
-            _me._defaultOpenDialog(openConfig);
+          if (openConfig.confirmMsg && openConfig.confirmMsg != '') {
+            _me.showConfirmDialog(openConfig);
           } else {
-            if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-              console.log('openCelPageInOverlay skipping defaultOpenDialog.');
-            }
+            _me._internalOpenCelPageInOverlay(openConfig);
           }
         } else {
           if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
@@ -296,7 +320,10 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         event.stop();
         var openConfig = {
           'link' : link,
-          'overlayURL' : link.getAttribute("data-celOverlayLink") || link.href
+          'overlayURL' : link.getAttribute("data-celOverlayLink") || link.href,
+          'confirmMsg' : link.getAttribute("data-celOverlayConfirmMessage"),
+          'confirmBtn' : link.getAttribute("data-celOverlayConfirmButton") || "OK",
+          'cancelBtn' :  link.getAttribute("data-celOverlayCancelButton") || "Cancel"
         };
         // allow 'configProvider' listener to change the openConfig object
         $(document.body).fire('cel_yuiOverlay:configProvider', openConfig);
