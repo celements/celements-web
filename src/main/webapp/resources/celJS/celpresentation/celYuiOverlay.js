@@ -262,6 +262,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
           { text: _me._dialogConfig.confirmBtn, handler: handleYes, isDefault:true }, 
           { text: _me._dialogConfig.cancelBtn,  handler: _me._closeBind } ]);
         dialog.cfg.setProperty("close", false);
+        dialog.render();
         _me.show();
         _me._addCSSclassesToMask();
       },
