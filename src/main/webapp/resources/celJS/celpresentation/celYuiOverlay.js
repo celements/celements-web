@@ -245,7 +245,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       showConfirmDialog : function(openConfig) {
         var _me = this;
-        var dialog = _me.getOverlayDialog();
+        openConfig = openConfig || _me._dialogConfig;
+        var dialog = _me.getOverlayDialog(openConfig);
         var dialogHeight = '';
         if ((_me._dialogConfig.height != undefined) && (_me._dialogConfig.height != '')) {
           dialogHeight = 'style="height: ' + _me._dialogConfig.height
@@ -254,11 +255,11 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         dialog.setHeader("Confirmation"); //TODO get from celMessage
         _me._overlayDialog.setBody('<div id="' + _me._dialogConfig.containerId + '"'
             + dialogHeight
-            + '><p>' + openConfig.confirmMsg +'</p></div>'); 
-        var handleYes = _me._internalOpenCelPageInOverlay.bind(_me).curry(openConfig);
+            + '><p>' + _me._dialogConfig.confirmMsg +'</p></div>'); 
+        var handleYes = _me._internalOpenCelPageInOverlay.bind(_me);
         dialog.cfg.queueProperty("buttons", [
-          { text: openConfig.confirmBtn, handler: handleYes, isDefault:true }, 
-          { text: openConfig.cancelBtn,  handler: _me._closeBind } ]);
+          { text: _me._dialogConfig.confirmBtn, handler: handleYes, isDefault:true }, 
+          { text: _me._dialogConfig.cancelBtn,  handler: _me._closeBind } ]);
         dialog.cfg.setProperty("close", false);
         _me.show();
         _me._addCSSclassesToMask();
@@ -292,6 +293,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
 
       _internalOpenCelPageInOverlay : function(openConfig) {
         var _me = this;
+        openConfig = openConfig || _me._dialogConfig;
         console.debug('_internalOpenCelPageInOverlay: ', openConfig);
         var openDialogEvent = $(document.body).fire('cel_yuiOverlay:openDialog', openConfig);
         if (!openDialogEvent.stopped) {
@@ -333,7 +335,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         };
         // allow 'configProvider' listener to change the openConfig object
         $(document.body).fire('cel_yuiOverlay:configProvider', openConfig);
-        _me.intermediatOpenHandler(openConfig);
+        _me.updateOpenConfig(openConfig);
+        _me.intermediatOpenHandler();
       },
 
       intermediatOpenHandler : function(openConfig) {
