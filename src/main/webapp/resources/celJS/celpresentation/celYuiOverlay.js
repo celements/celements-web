@@ -246,6 +246,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       showConfirmDialog : function(openConfig) {
         var _me = this;
         openConfig = openConfig || _me._dialogConfig;
+        console.log('showConfirmDialog: ', openConfig);
         var dialog = _me.getOverlayDialog(openConfig);
         var dialogHeight = '';
         if ((_me._dialogConfig.height != undefined) && (_me._dialogConfig.height != '')) {
@@ -301,7 +302,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         if (!openDialogEvent.stopped) {
           _me._defaultOpenDialog(openConfig);
         } else {
-          console.log('openCelPageInOverlay skipping defaultOpenDialog.');
+          console.log('_internalOpenCelPageInOverlay skipping defaultOpenDialog.');
         }
       },
 
