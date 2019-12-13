@@ -261,8 +261,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
             + '><p>' + _me._dialogConfig.confirmMsg +'</p></div>'); 
         dialog.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
         dialog.cfg.queueProperty("buttons", [
-          { text: _me._dialogConfig.confirmBtn, handler: _me._confirmYesHandlerBind,
-            isDefault:true }, 
+          { text: _me._dialogConfig.confirmBtn,
+            handler: _me._confirmYesHandlerBind.curry(_me._dialogConfig), isDefault:true }, 
           { text: _me._dialogConfig.cancelBtn,  handler: _me._closeBind } ]);
         dialog.cfg.setProperty("close", false);
         dialog.render();
@@ -270,8 +270,9 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me._addCSSclassesToMask();
       },
 
-      _confirmYesHandler : function() {
+      _confirmYesHandler : function(openConfig) {
         var _me = this;
+        console.debug('_confirmYesHandler: start', openConfig);
         var confirmYesEvent = $(document.body).fire('cel_yuiOverlay:confirmYes', openConfig);
         if (!confirmYesEvent.stopped) {
           _me._internalOpenCelPageInOverlay();
