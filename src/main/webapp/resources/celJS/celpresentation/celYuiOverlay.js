@@ -74,6 +74,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _bindCleanUpAfterClose : undefined,
       _centerBind : undefined,
       _closeBind : undefined,
+      _confirmYesHandlerBind : undefined,
       
       _init : function(configObj) {
         var _me = this;
@@ -84,6 +85,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me._bindCleanUpAfterClose = _me._cleanUpAfterClose.bind(_me);
         _me._centerBind = _me.center.bind(_me);
         _me._closeBind = _me.close.bind(_me);
+        _me._confirmYesHandlerBind = _me._confirmYesHandler.bind(_me);
       },
 
       _getDefaultConfig : function() {
@@ -257,15 +259,25 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         _me._overlayDialog.setBody('<div id="' + _me._dialogConfig.containerId + '"'
             + dialogHeight
             + '><p>' + _me._dialogConfig.confirmMsg +'</p></div>'); 
-        var handleYes = _me._internalOpenCelPageInOverlay.bind(_me, _me._dialogConfig);
         dialog.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
         dialog.cfg.queueProperty("buttons", [
-          { text: _me._dialogConfig.confirmBtn, handler: handleYes, isDefault:true }, 
+          { text: _me._dialogConfig.confirmBtn, handler: _me._confirmYesHandlerBind,
+            isDefault:true }, 
           { text: _me._dialogConfig.cancelBtn,  handler: _me._closeBind } ]);
         dialog.cfg.setProperty("close", false);
         dialog.render();
         _me.show();
         _me._addCSSclassesToMask();
+      },
+
+      _confirmYesHandler : function() {
+        var _me = this;
+        var confirmYesEvent = $(document.body).fire('cel_yuiOverlay:confirmYes', openConfig);
+        if (!confirmYesEvent.stopped) {
+          _me._internalOpenCelPageInOverlay();
+        } else {
+          console.log('_confirmYesHandler skipping _internalOpenCelPageInOverlay.');
+        }
       },
 
       showProgressDialog : function(headerText) {
