@@ -947,10 +947,10 @@
    */
   var cel_initAllMultiselect = function(event) {
     if($j().multiselect != undefined) {
-      $$('.celMultiselect:not([style*="display: none"])').each(function(element) {
+      $j('.celBootstrap:visible,.celMultiselect:visible').each(function(element) {
         /**
-         * Sample with additional Attribute celMultiselect:
-         * <input type="text" class="celMultiselect" data-multiselectAttr='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
+         * Sample with additional Attribute celBootstrap (single select):
+         * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
          */
         var params = {
             numberDisplayed : 3,
@@ -978,9 +978,10 @@
               });
             }
         };
-        var multiselectDataAttrObj = JSON.parse(element.getAttribute('data-multiselectAttr'));
-        if(multiselectDataAttrObj) {
-          params = $j.extend(params, multiselectDataAttrObj);
+        var bootstrapCfg = JSON.parse(element.getAttribute('data-bootstrapConfig')
+                                   || element.getAttribute('data-multiselectAttr'));
+        if (bootstrapCfg) {
+          params = $j.extend(params, bootstrapCfg);
         }
         var multiselect = $j(element).multiselect(params);
         $(document.body).fire('cel:multiselectInitialized', {
