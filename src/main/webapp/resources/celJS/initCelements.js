@@ -977,7 +977,7 @@
             }
         };
         var bootstrapCfg = JSON.parse(this.getAttribute('data-bootstrapConfig')
-                                   || this.getAttribute('data-multiselectAttr'));
+                                   || this.getAttribute('data-multiselectAttr')); // deprecated
         if (bootstrapCfg) {
           params = $j.extend(params, bootstrapCfg);
         }
