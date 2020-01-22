@@ -947,7 +947,7 @@
    */
   var cel_initAllMultiselect = function(event) {
     if($j().multiselect != undefined) {
-      $j('.celBootstrap:visible,.celMultiselect:visible').each(function(element) {
+      $j('.celBootstrap:visible,.celMultiselect:visible').each(function(index) {
         /**
          * Sample with additional Attribute celBootstrap (single select):
          * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
@@ -955,17 +955,15 @@
         var params = {
             numberDisplayed : 3,
             onDropdownHidden : function(event) {
-              var element = event.target;
               /*
                * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
                * this code is just a workaround, it set the box visible again
                */
-              var jElement = $j(event.target);
-              jElement.css('display', '');
-              element.fire("cel:multiselectOnDropdownHidden");
+              $j(event.target).css('display', '');
+              event.target.fire("cel:multiselectOnDropdownHidden");
               /*
                * Bsp Read selected values:
-                 element.previous().select('option:selected').each(function(ele) {
+                 event.target.previous().select('option:selected').each(function(ele) {
                    console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
                  });
                */
@@ -978,12 +976,12 @@
               });
             }
         };
-        var bootstrapCfg = JSON.parse(element.getAttribute('data-bootstrapConfig')
-                                   || element.getAttribute('data-multiselectAttr'));
+        var bootstrapCfg = JSON.parse(this.getAttribute('data-bootstrapConfig')
+                                   || this.getAttribute('data-multiselectAttr'));
         if (bootstrapCfg) {
           params = $j.extend(params, bootstrapCfg);
         }
-        var multiselect = $j(element).multiselect(params);
+        var multiselect = $j(this).multiselect(params);
         $(document.body).fire('cel:multiselectInitialized', {
           'multiselect' : multiselect
         });
