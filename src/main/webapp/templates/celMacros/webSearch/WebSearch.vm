@@ -43,7 +43,7 @@
       #set($doublePackages = [])
       <label for="searchSection"> &#124; $adminMsg.get('cel_search_page_searchSection'):</label>
       <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
-        data-multiselectAttr='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 2}'##
+        data-bootstrapConfig='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 2}'##
         multiple="multiple">
       #foreach($package in $availablePackages)
         #if($!searchOptionConnectionMap.containsKey($package))
