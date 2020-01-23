@@ -5,7 +5,7 @@
 #end
 
 #set($blacklisted = false)
-#foreach($illegal in ["xxx","porn","t.co","4serial","ac.id","cleantalkorg2.ru","amazonaws.com","tiny.cc","bit.do","u.to"-])
+#foreach($illegal in ["xxx","porn","t.co","4serial","ac.id","cleantalkorg2.ru","amazonaws.com","tiny.cc","bit.do","u.to"])
   #if($url.contains($illegal))
     #set($blacklisted = true)
   #end
