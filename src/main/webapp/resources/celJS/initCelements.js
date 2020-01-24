@@ -954,7 +954,7 @@
          */
         var params = {
             numberDisplayed : 3,
-            onDropdownHidden : cel_initAllMultiselect_onDropdownHidden,
+            onDropdownHidden : cel_initAllMultiselect_onDropdownHidden.bind(this),
             onChange: cel_initAllMultiselect_onChange.bind(this)
         };
         var bootstrapCfg = element.getAttribute('data-bootstrapConfig');
