@@ -954,27 +954,8 @@
          */
         var params = {
             numberDisplayed : 3,
-            onDropdownHidden : function(event) {
-              /*
-               * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
-               * this code is just a workaround, it set the box visible again
-               */
-              $j(event.target).css('display', '');
-              event.target.fire("cel:multiselectOnDropdownHidden");
-              /*
-               * Bsp Read selected values:
-                 event.target.previous().select('option:selected').each(function(ele) {
-                   console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
-                 });
-               */
-            },
-            onChange: function(option, checked, select) {
-              $(option)[0].fire("cel:multiselectOnChange", {
-                'multiselect' : this,
-                'checked' : checked,
-                'select' : select
-              });
-            }
+            onDropdownHidden : cel_initAllMultiselect_onDropdownHidden,
+            onChange: cel_initAllMultiselect_onChange
         };
         var bootstrapCfg = element.getAttribute('data-bootstrapConfig');
         // check deprecated data-multiselectAttr for backwards compatibility
@@ -991,6 +972,29 @@
         });
       });
     }
+  };
+
+  var cel_initAllMultiselect_onDropdownHidden = function(event) {
+    /*
+     * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
+     * this code is just a workaround, it set the box visible again
+     */
+    $j(event).target.css('display', '');
+    event.target.fire("cel:multiselectOnDropdownHidden");
+    /*
+     * Bsp Read selected values:
+       event.target.previous().select('option:selected').each(function(ele) {
+         console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
+       });
+     */
+  };
+
+  var cel_initAllMultiselect_onChange = function(option, checked, select) {
+    $(option)[0].fire("cel:multiselectOnChange", {
+      'multiselect' : this,
+      'checked' : checked,
+      'select' : select
+    });
   };
 
   var cel_addMaxDimToFluidImg = function(event) {
