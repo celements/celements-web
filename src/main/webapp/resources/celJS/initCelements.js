@@ -948,6 +948,7 @@
   var cel_initAllMultiselect = function(event) {
     if($j().multiselect != undefined) {
       $j('.celBootstrap:visible,.celMultiselect:visible').each(function(index) {
+        var element = this;
         /**
          * Sample with additional Attribute celBootstrap (single select):
          * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
@@ -976,12 +977,16 @@
               });
             }
         };
-        var bootstrapCfg = JSON.parse(this.getAttribute('data-bootstrapConfig')
-                                   || this.getAttribute('data-multiselectAttr')); // deprecated
-        if (bootstrapCfg) {
-          params = $j.extend(params, bootstrapCfg);
+        var bootstrapCfg = element.getAttribute('data-bootstrapConfig');
+        // check deprecated data-multiselectAttr for backwards compatibility
+        if (!bootstrapCfg && element.getAttribute('data-multiselectAttr')) {
+          bootstrapCfg = element.getAttribute('data-multiselectAttr');
+          console.warn('initAllMultiselect: deprecated data-multiselectAttr in use', element);
         }
-        var multiselect = $j(this).multiselect(params);
+        if (bootstrapCfg) {
+          params = $j.extend(params, JSON.parse(bootstrapCfg));
+        }
+        var multiselect = $j(element).multiselect(params);
         $(document.body).fire('cel:multiselectInitialized', {
           'multiselect' : multiselect
         });
