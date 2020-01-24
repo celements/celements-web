@@ -6,15 +6,13 @@
 
 #set($blacklisted = false)
 #foreach($illegal in ["xxx","porn","t.co","4serial","ac.id","cleantalkorg2.ru","amazonaws.com","tiny.cc","bit.do","u.to"])
-  #if($url.contains($illegal))
-    #set($blacklisted = true)
-  #end
+  #set($blacklisted = $blacklisted || $url.contains($illegal))
 #end
 
 ## set context finished to prevent any content written to the Body
 $context.setFinished(true)
 #if($blacklisted)
-  $response.setStatus(403)
+  $response.setStatus(501)
 #else
   $services.celementsweb.sendRedirect($url)
 #end
