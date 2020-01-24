@@ -979,7 +979,7 @@
      * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
      * this code is just a workaround, it set the box visible again
      */
-    var jEventTarget = $j(event).target;
+    var jEventTarget = $j(event.target);
     jEventTarget.css('display', '');
     $(jEventTarget).fire("cel:multiselectOnDropdownHidden");
     /*
