@@ -947,7 +947,7 @@
    */
   var cel_initAllMultiselect = function(event) {
     if($j().multiselect != undefined) {
-      $$('.celBootstrap:not([style*="display: none"]),.celMultiselect:not([style*="display: none"])').each(function(element) {
+      $j('.celBootstrap,.celMultiselect').filter(":visible").each(function(element) {
         /**
          * Sample with additional Attribute celBootstrap (single select):
          * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
