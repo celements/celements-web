@@ -1,6 +1,18 @@
 ## request url has to conform to HttpServletResponse.sendRedirect(String), see javadoc
-#set($url = $request.url)
+#set($url = "$!request.url")
 #if("$!url" == "")
-   #set($url = $doc.getURL())
+   #set($url = $doc.getExternalURL())
 #end
-$services.celementsweb.sendRedirect($url)
+
+#set($blacklisted = false)
+#foreach($illegal in ["xxx","porn","t.co","4serial","ac.id","cleantalkorg2.ru","amazonaws.com","tiny.cc","bit.do","u.to"])
+  #set($blacklisted = $blacklisted || $url.contains($illegal))
+#end
+
+## set context finished to prevent any content written to the Body
+$context.setFinished(true)
+#if($blacklisted)
+  $response.setStatus(501)
+#else
+  $services.celementsweb.sendRedirect($url)
+#end
