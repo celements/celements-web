@@ -947,40 +947,24 @@
    */
   var cel_initAllMultiselect = function(event) {
     if($j().multiselect != undefined) {
-      $$('.celMultiselect:not([style*="display: none"])').each(function(element) {
+      $j('.celBootstrap,.celMultiselect').filter(":visible").each(function(index, element) {
         /**
-         * Sample with additional Attribute celMultiselect:
-         * <input type="text" class="celMultiselect" data-multiselectAttr='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
+         * Sample with additional Attribute celBootstrap (single select):
+         * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
          */
         var params = {
             numberDisplayed : 3,
-            onDropdownHidden : function(event) {
-              var element = event.target;
-              /*
-               * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
-               * this code is just a workaround, it set the box visible again
-               */
-              var jElement = $j(event.target);
-              jElement.css('display', '');
-              element.fire("cel:multiselectOnDropdownHidden");
-              /*
-               * Bsp Read selected values:
-                 element.previous().select('option:selected').each(function(ele) {
-                   console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
-                 });
-               */
-            },
-            onChange: function(option, checked, select) {
-              $(option)[0].fire("cel:multiselectOnChange", {
-                'multiselect' : this,
-                'checked' : checked,
-                'select' : select
-              });
-            }
+            onDropdownHidden : cel_initAllMultiselect_onDropdownHidden.bind(this),
+            onChange: cel_initAllMultiselect_onChange.bind(this)
         };
-        var multiselectDataAttrObj = JSON.parse(element.getAttribute('data-multiselectAttr'));
-        if(multiselectDataAttrObj) {
-          params = $j.extend(params, multiselectDataAttrObj);
+        var bootstrapCfg = element.getAttribute('data-bootstrapConfig');
+        // check deprecated data-multiselectAttr for backwards compatibility
+        if (!bootstrapCfg && element.getAttribute('data-multiselectAttr')) {
+          bootstrapCfg = element.getAttribute('data-multiselectAttr');
+          console.warn('initAllMultiselect: deprecated data-multiselectAttr in use', element);
+        }
+        if (bootstrapCfg) {
+          params = $j.extend(params, JSON.parse(bootstrapCfg));
         }
         var multiselect = $j(element).multiselect(params);
         $(document.body).fire('cel:multiselectInitialized', {
@@ -988,6 +972,29 @@
         });
       });
     }
+  };
+
+  var cel_initAllMultiselect_onDropdownHidden = function(event) {
+    /*
+     * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
+     * this code is just a workaround, it set the box visible again
+     */
+    $j(event.target).css('display', '');
+    event.target.fire("cel:multiselectOnDropdownHidden");
+    /*
+     * E.g. to read selected values:
+       event.target.previous().select('option:selected').each(function(ele) {
+         console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
+       });
+     */
+  };
+
+  var cel_initAllMultiselect_onChange = function(option, checked, select) {
+    $(option[0]).fire("cel:multiselectOnChange", {
+      'multiselect' : this,
+      'checked' : checked,
+      'select' : select
+    });
   };
 
   var cel_addMaxDimToFluidImg = function(event) {
