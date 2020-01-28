@@ -982,7 +982,7 @@
     $j(event.target).css('display', '');
     event.target.fire("cel:multiselectOnDropdownHidden");
     /*
-     * Bsp Read selected values:
+     * E.g. to read selected values:
        event.target.previous().select('option:selected').each(function(ele) {
          console.log('initCelements > onDropdownHidden > selected value: ', ele.value);
        });
