@@ -1001,6 +1001,21 @@
     });
   };
 
+  /**
+   * Initialize Bootstrap Multiselect
+   */
+  celAddOnBeforeLoadListener(function() {
+    $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
+    $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
+    $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
+    $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
+    if ($('tabMenuPanel')) {
+      $('tabMenuPanel').stopObserving("tabedit:afterDisplayNow", cel_initAllMultiselect);
+      $('tabMenuPanel').observe("tabedit:afterDisplayNow", cel_initAllMultiselect);
+    }
+    $(document.body).fire('cel:initMultiselect');
+  });
+
   var cel_addMaxDimToFluidImg = function(event) {
     $$("img.cel_fluidresizeWidth").each(function(imgElem) {
       imgElem.setStyle({
@@ -1015,24 +1030,13 @@
   };
 
   /**
-   * Initialize all Multiselect-Boxes
+   * Initialize fluid image
    */
   celAddOnBeforeLoadListener(function() {
-    $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
     $(document.body).stopObserving("cel:initFluidImage", cel_addMaxDimToFluidImg);
-    $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).stopObserving("celements:contentChanged", cel_addMaxDimToFluidImg);
-    $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
     $(document.body).observe("cel:initFluidImage", cel_addMaxDimToFluidImg);
-    $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("celements:contentChanged", cel_addMaxDimToFluidImg);
-    if ($('tabMenuPanel')) {
-      $('tabMenuPanel').stopObserving("tabedit:afterDisplayNow", cel_initAllMultiselect);
-      $('tabMenuPanel').stopObserving("tabedit:afterDisplayNow", cel_addMaxDimToFluidImg);
-      $('tabMenuPanel').observe("tabedit:afterDisplayNow", cel_initAllMultiselect);
-      $('tabMenuPanel').observe("tabedit:afterDisplayNow", cel_addMaxDimToFluidImg);
-    }
-    $(document.body).fire('cel:initMultiselect');
   });
 
   /**
