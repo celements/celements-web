@@ -946,8 +946,10 @@
    * Register all Bootstrap-Multiselect
    */
   var cel_initAllMultiselect = function(event) {
+    console.debug('initAllMultiselect');
     if($j().multiselect != undefined) {
       $j('.celBootstrap,.celMultiselect').filter(":visible").each(function(index, element) {
+        console.debug('initAllMultiselect: ', element);
         /**
          * Sample with additional Attribute celBootstrap (single select):
          * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
@@ -971,6 +973,8 @@
           'multiselect' : multiselect
         });
       });
+    } else {
+      console.debug('initAllMultiselect: bootstrap multiselect undefined');
     }
   };
 
