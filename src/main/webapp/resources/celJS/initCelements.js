@@ -1022,6 +1022,14 @@
     $(document.body).observe("cel:initFluidImage", cel_addMaxDimToFluidImg);
     $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("celements:contentChanged", cel_addMaxDimToFluidImg);
+    if ($('tabMenuPanel')) {
+      $('tabMenuPanel').stopObserving("tabedit:tabLoadingFinished", cel_initAllMultiselect);
+      $('tabMenuPanel').stopObserving("tabedit:tabLoadingFinished", cel_addMaxDimToFluidImg);
+      $('tabMenuPanel').observe("tabedit:tabLoadingFinished", cel_initAllMultiselect);
+      $('tabMenuPanel').observe("tabedit:tabLoadingFinished", cel_addMaxDimToFluidImg);
+    } else {
+      console.debug('celAddOnBeforeLoadListener: tabMenuPanel available');
+    }
     $(document.body).fire('cel:initMultiselect');
   });
 
