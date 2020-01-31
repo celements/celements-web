@@ -948,7 +948,7 @@
   var cel_initAllMultiselect = function(event) {
     console.debug('initAllMultiselect');
     if($j().multiselect != undefined) {
-      $j('.celBootstrap,.celMultiselect').each(function(index, element) {
+      $j('.celBootstrap,.celMultiselect').filter(":visible").each(function(index, element) {
         console.debug('initAllMultiselect: ', element);
         /**
          * Sample with additional Attribute celBootstrap (single select):
@@ -1027,13 +1027,10 @@
     $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("celements:contentChanged", cel_addMaxDimToFluidImg);
     if ($('tabMenuPanel')) {
-      console.debug('celAddOnBeforeLoadListener: tabMenuPanel available');
-      $('tabMenuPanel').stopObserving("tabedit:tabLoadingFinished", cel_initAllMultiselect);
-      $('tabMenuPanel').stopObserving("tabedit:tabLoadingFinished", cel_addMaxDimToFluidImg);
-      $('tabMenuPanel').observe("tabedit:tabLoadingFinished", cel_initAllMultiselect);
-      $('tabMenuPanel').observe("tabedit:tabLoadingFinished", cel_addMaxDimToFluidImg);
-    } else {
-      console.debug('celAddOnBeforeLoadListener: tabMenuPanel NOT available');
+      $('tabMenuPanel').stopObserving("tabedit:afterDisplayNow", cel_initAllMultiselect);
+      $('tabMenuPanel').stopObserving("tabedit:afterDisplayNow", cel_addMaxDimToFluidImg);
+      $('tabMenuPanel').observe("tabedit:afterDisplayNow", cel_initAllMultiselect);
+      $('tabMenuPanel').observe("tabedit:afterDisplayNow", cel_addMaxDimToFluidImg);
     }
     $(document.body).fire('cel:initMultiselect');
   });
