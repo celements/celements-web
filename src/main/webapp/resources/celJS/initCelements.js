@@ -948,7 +948,7 @@
   var cel_initAllMultiselect = function(event) {
     console.debug('initAllMultiselect');
     if($j().multiselect != undefined) {
-      $j('.celBootstrap,.celMultiselect').filter(":visible").each(function(index, element) {
+      $j('.celBootstrap,.celMultiselect').each(function(index, element) {
         console.debug('initAllMultiselect: ', element);
         /**
          * Sample with additional Attribute celBootstrap (single select):
