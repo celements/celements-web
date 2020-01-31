@@ -948,34 +948,36 @@
   var cel_initAllMultiselect = function(event) {
     console.debug('initAllMultiselect');
     if($j().multiselect != undefined) {
-      $j('.celBootstrap,.celMultiselect').filter(":visible").each(function(index, element) {
-        console.debug('initAllMultiselect: ', element);
-        /**
-         * Sample with additional Attribute celBootstrap (single select):
-         * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
-         */
-        var params = {
-            numberDisplayed : 3,
-            onDropdownHidden : cel_initAllMultiselect_onDropdownHidden.bind(this),
-            onChange: cel_initAllMultiselect_onChange.bind(this)
-        };
-        var bootstrapCfg = element.getAttribute('data-bootstrapConfig');
-        // check deprecated data-multiselectAttr for backwards compatibility
-        if (!bootstrapCfg && element.getAttribute('data-multiselectAttr')) {
-          bootstrapCfg = element.getAttribute('data-multiselectAttr');
-          console.warn('initAllMultiselect: deprecated data-multiselectAttr in use', element);
-        }
-        if (bootstrapCfg) {
-          params = $j.extend(params, JSON.parse(bootstrapCfg));
-        }
-        var multiselect = $j(element).multiselect(params);
-        $(document.body).fire('cel:multiselectInitialized', {
-          'multiselect' : multiselect
-        });
-      });
+      $j('.celBootstrap,.celMultiselect').filter(":visible,.celForceMultiselect").each(cel_initAllMultiselect_element);
     } else {
       console.debug('initAllMultiselect: bootstrap multiselect undefined');
     }
+  };
+
+  /**
+   * Sample with additional Attribute celBootstrap (single select):
+   * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
+   */
+  var cel_initAllMultiselect_element = function(index, element) {
+    console.debug('initAllMultiselect: ', element);
+    var params = {
+        numberDisplayed : 3,
+        onDropdownHidden : cel_initAllMultiselect_onDropdownHidden.bind(this),
+        onChange: cel_initAllMultiselect_onChange.bind(this)
+    };
+    var bootstrapCfg = element.getAttribute('data-bootstrapConfig');
+    // check deprecated data-multiselectAttr for backwards compatibility
+    if (!bootstrapCfg && element.getAttribute('data-multiselectAttr')) {
+      bootstrapCfg = element.getAttribute('data-multiselectAttr');
+      console.warn('initAllMultiselect: deprecated data-multiselectAttr in use', element);
+    }
+    if (bootstrapCfg) {
+      params = $j.extend(params, JSON.parse(bootstrapCfg));
+    }
+    var multiselect = $j(element).multiselect(params);
+    $(document.body).fire('cel:multiselectInitialized', {
+      'multiselect' : multiselect
+    });
   };
 
   var cel_initAllMultiselect_onDropdownHidden = function(event) {
@@ -1000,6 +1002,15 @@
       'select' : select
     });
   };
+  
+  var cel_initAllMultiselect_tabMenuPanel = function(event) {
+    $('tabMenuPanel').select('.celBootstrap,.celMultiselect').each(function(element) {
+      if (element.visible()) {
+        element.addClassName('celForceMultiselect');
+      }
+    });
+    cel_initAllMultiselect(event);
+  };
 
   /**
    * Initialize Bootstrap Multiselect
@@ -1010,8 +1021,8 @@
     $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
     $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
     if ($('tabMenuPanel')) {
-      $('tabMenuPanel').stopObserving("tabedit:afterDisplayNow", cel_initAllMultiselect);
-      $('tabMenuPanel').observe("tabedit:afterDisplayNow", cel_initAllMultiselect);
+      $('tabMenuPanel').stopObserving("tabedit:tabLoadingFinished", cel_initAllMultiselect_tabMenuPanel);
+      $('tabMenuPanel').observe("tabedit:tabLoadingFinished", cel_initAllMultiselect_tabMenuPanel);
     }
     $(document.body).fire('cel:initMultiselect');
   });
