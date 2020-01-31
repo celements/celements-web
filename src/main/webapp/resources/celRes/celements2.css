@@ -847,3 +847,7 @@ div.presentationList > div.navigation-clear {
   opacity: 0.75;
   filter: alpha(opacity = 75);
 }
+
+.cel_template {
+	display: none;
+}

@@ -948,7 +948,12 @@
   var cel_initAllMultiselect = function(event) {
     console.debug('initAllMultiselect');
     if($j().multiselect != undefined) {
-      $j('.celBootstrap,.celMultiselect').filter(":visible,.celForceMultiselect").each(cel_initAllMultiselect_element);
+      $j('.celBootstrap,.celMultiselect').filter(":visible,.celForceMultiselect").each(function(index, element) {
+        if (!$(element).up('.cel_template')) {
+          console.debug('initAllMultiselect: ', element);
+          cel_initAllMultiselect_element(element);
+        }
+      });
     } else {
       console.debug('initAllMultiselect: bootstrap multiselect undefined');
     }
@@ -958,8 +963,7 @@
    * Sample with additional Attribute celBootstrap (single select):
    * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
    */
-  var cel_initAllMultiselect_element = function(index, element) {
-    console.debug('initAllMultiselect: ', element);
+  var cel_initAllMultiselect_element = function(element) {
     var params = {
         numberDisplayed : 3,
         onDropdownHidden : cel_initAllMultiselect_onDropdownHidden.bind(this),
