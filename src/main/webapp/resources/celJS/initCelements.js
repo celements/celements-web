@@ -677,7 +677,7 @@
         _me._className = className;
         _me._actionFunction = actionFunction;
         if (condition && !/\s|;/.test(condition)) {
-          _me._conditionFunction = new Function('origin', 'me', 'return ' + condition + ';');
+          _me._conditionFunction = new Function('me', 'return ' + condition + ';');
         }
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
         _me._registerActionHandler();
@@ -693,26 +693,16 @@
   
       _actionHandler : function(event) {
         var _me = this;
-        _me._getTargetElements().each(function(targetElement) {
-          if (!_me._conditionFunction || _me._conditionFunction(_me._htmlElement, targetElement)) {
-            _me._actionFunction(targetElement, _me._className);
+        $$(_me._cssSelector).each(function(htmlElement) {
+          if (!_me._conditionFunction || _me._conditionFunction(htmlElement)) {
+            _me._actionFunction(htmlElement, _me._className);
             console.debug('EventHandler - action [', _me._actionFunction.name, _me._className,
-              "] executed on ", targetElement);
+              "] executed on ", htmlElement);
           } else {
             console.debug('EventHandler - action skipped for failed condition [',
-              _me._conditionFunction, '] on ', targetElement);
+              _me._conditionFunction, '] on ', htmlElement);
           }
         });
-      },
-  
-      _getTargetElements : function() {
-        var _me = this;
-        if (_me._cssSelector.startsWith('^')) {
-          parent = _me._htmlElement.up(_me._cssSelector.substring(1));
-          return parent ? [parent] : [];
-        } else {
-          return $$(_me._cssSelector);
-        }
       },
 
       unregister : function() {
@@ -751,8 +741,7 @@
         var _me = this;
         var ret = new Array();
         if (dataValue) {
-          // split single '&', avoid splitting double '&&' within condition string
-          ret = dataValue.replace(/([^&])&([^&])/g, '$1#SPLIT#$2').split('#SPLIT#');
+          ret = dataValue.split('&');
         }
         return ret;
       },
