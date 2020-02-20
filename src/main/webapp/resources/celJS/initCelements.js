@@ -751,7 +751,8 @@
         var _me = this;
         var ret = new Array();
         if (dataValue) {
-          ret = dataValue.split('&');
+          // split single '&', avoid splitting double '&&' within condition string
+          ret = dataValue.replace(/([^&])&([^&])/g, '$1#SPLIT#$2').split('#SPLIT#');
         }
         return ret;
       },
