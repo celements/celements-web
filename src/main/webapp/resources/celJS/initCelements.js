@@ -694,15 +694,13 @@
       _actionHandler : function(event) {
         var _me = this;
         _me._getTargetElements().each(function(targetElement) {
-          if (targetElement) {
-            if (!_me._conditionFunction || _me._conditionFunction(_me._htmlElement, targetElement)) {
-              _me._actionFunction(targetElement, _me._className);
-              console.debug('EventHandler - action [', _me._actionFunction.name, _me._className,
-                "] executed on ", targetElement);
-            } else {
-              console.debug('EventHandler - action skipped for failed condition [',
-                _me._conditionFunction, '] on ', targetElement);
-            }
+          if (!_me._conditionFunction || _me._conditionFunction(_me._htmlElement, targetElement)) {
+            _me._actionFunction(targetElement, _me._className);
+            console.debug('EventHandler - action [', _me._actionFunction.name, _me._className,
+              "] executed on ", targetElement);
+          } else {
+            console.debug('EventHandler - action skipped for failed condition [',
+              _me._conditionFunction, '] on ', targetElement);
           }
         });
       },
@@ -710,7 +708,8 @@
       _getTargetElements : function() {
         var _me = this;
         if (_me._cssSelector.startsWith('^')) {
-          return [_me._htmlElement.up(_me._cssSelector.substring(1))];
+          parent = _me._htmlElement.up(_me._cssSelector.substring(1));
+          return parent ? [parent] : [];
         } else {
           return $$(_me._cssSelector);
         }
