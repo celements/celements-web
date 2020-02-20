@@ -677,7 +677,7 @@
         _me._className = className;
         _me._actionFunction = actionFunction;
         if (condition && !/\s|;/.test(condition)) {
-          _me._conditionFunction = new Function('origin', 'me', 'return ' + condition + ';');
+          _me._conditionFunction = new Function('me', 'origin', 'return ' + condition + ';');
         }
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
         _me._registerActionHandler();
@@ -694,7 +694,7 @@
       _actionHandler : function(event) {
         var _me = this;
         _me._getTargetElements().each(function(targetElement) {
-          if (!_me._conditionFunction || _me._conditionFunction(_me._htmlElement, targetElement)) {
+          if (!_me._conditionFunction || _me._conditionFunction(targetElement, _me._htmlElement)) {
             _me._actionFunction(targetElement, _me._className);
             console.debug('EventHandler - action [', _me._actionFunction.name, _me._className,
               "] executed on ", targetElement);
@@ -707,10 +707,10 @@
   
       _getTargetElements : function() {
         var _me = this;
-        if (_me._cssSelector.startsWith('^')) {
+        if (_me._cssSelector.startsWith('^')) { // match up the DOM from origin
           parent = _me._htmlElement.up(_me._cssSelector.substring(1));
           return parent ? [parent] : [];
-        } else {
+        } else { // match in the whole DOM
           return $$(_me._cssSelector);
         }
       },
