@@ -789,7 +789,11 @@
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         var logPref = 'EventManager - interpretData: ';
-        if (!htmlElem.hasClassName('celOnEventInit')) {
+        if (htmlElem.hasClassName('celOnEventInit')) {
+          console.debug(logPref, 'skip already initialized: ', htmlElem);
+        } else if (htmlElem.up('.cel_template')) {
+          console.debug(logPref, 'skip template element: ', htmlElem);
+        } else {
           var dataValue = htmlElem.readAttribute('data-cel-event');
           var newElem = {
               'htmlElem' : htmlElem,
@@ -811,8 +815,6 @@
           }
           htmlElem.addClassName('celOnEventInit');
           htmlElem.fire('celEM:init');
-        } else {
-          console.debug(logPref, 'skip already initialized: ', htmlElem);
         }
       },
 
