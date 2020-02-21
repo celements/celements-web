@@ -677,7 +677,7 @@
         _me._className = className;
         _me._actionFunction = actionFunction;
         if (condition && !/\s|;/.test(condition)) {
-          _me._conditionFunction = new Function('me', 'return ' + condition + ';');
+          _me._conditionFunction = new Function('me', 'origin', 'return ' + condition + ';');
         }
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
         _me._registerActionHandler();
@@ -693,16 +693,26 @@
   
       _actionHandler : function(event) {
         var _me = this;
-        $$(_me._cssSelector).each(function(htmlElement) {
-          if (!_me._conditionFunction || _me._conditionFunction(htmlElement)) {
-            _me._actionFunction(htmlElement, _me._className);
+        _me._getTargetElements().each(function(targetElement) {
+          if (!_me._conditionFunction || _me._conditionFunction(targetElement, _me._htmlElement)) {
+            _me._actionFunction(targetElement, _me._className);
             console.debug('EventHandler - action [', _me._actionFunction.name, _me._className,
-              "] executed on ", htmlElement);
+              "] executed on ", targetElement);
           } else {
             console.debug('EventHandler - action skipped for failed condition [',
-              _me._conditionFunction, '] on ', htmlElement);
+              _me._conditionFunction, '] on ', targetElement);
           }
         });
+      },
+  
+      _getTargetElements : function() {
+        var _me = this;
+        if (_me._cssSelector.startsWith('^')) { // match up the DOM from origin
+          parent = _me._htmlElement.up(_me._cssSelector.substring(1));
+          return parent ? [parent] : [];
+        } else { // match in the whole DOM
+          return $$(_me._cssSelector);
+        }
       },
 
       unregister : function() {
@@ -741,7 +751,8 @@
         var _me = this;
         var ret = new Array();
         if (dataValue) {
-          ret = dataValue.split('&');
+          // split single '&', avoid splitting double '&&' within condition string
+          ret = dataValue.replace(/([^&])&([^&])/g, '$1#SPLIT#$2').split('#SPLIT#');
         }
         return ret;
       },
@@ -778,7 +789,11 @@
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         var logPref = 'EventManager - interpretData: ';
-        if (!htmlElem.hasClassName('celOnEventInit')) {
+        if (htmlElem.hasClassName('celOnEventInit')) {
+          console.debug(logPref, 'skip already initialized: ', htmlElem);
+        } else if (htmlElem.up('.cel_template')) {
+          console.debug(logPref, 'skip template element: ', htmlElem);
+        } else {
           var dataValue = htmlElem.readAttribute('data-cel-event');
           var newElem = {
               'htmlElem' : htmlElem,
@@ -800,8 +815,6 @@
           }
           htmlElem.addClassName('celOnEventInit');
           htmlElem.fire('celEM:init');
-        } else {
-          console.debug(logPref, 'skip already initialized: ', htmlElem);
         }
       },
 
