@@ -9,10 +9,22 @@
   #set($blacklisted = $blacklisted || $url.contains($illegal))
 #end
 
+## Wird nicht auf jedes Dokument angewendet. Vor allem wegen des Tagesagenda Banners
+## Probleme die bei einem content contains url check bestehen wuerden:
+## 1. Banner im NL vom 20.3. soll auch am 30.3. noch funktionieren, auch wenn inzwischen der Link geaendert wurde
+## 2. je nach Browser(?) kommen teils unterschiedlich escapte URLs zum Server. Dies koennte dazu fuehren, dass nicht korrekt 
+##    gematched werden kann und ein Redirect nicht funktioniert.
+#set($docref = $doc.getDocumentReference())
+#if($docref.getLastSpaceReference().getName().equals("ProgonEvent"))
+  #set($blacklisted = $blacklisted || $doc.isNew()) ## document must exist catches e.g. 'ProgonEvent.ProgonEvent')
+  #set($blacklisted = $blacklisted || ($docref.getName().equals("ProgonEvent108951") && !$url.contains('kaaoskaamos.com')))
+  #set($blacklisted = $blacklisted || ($docref.getName().equals("ProgonEvent109175") && !$url.contains('ecas2017.ch')))
+#end
+
 ## set context finished to prevent any content written to the Body
-$context.setFinished(true)
 #if($blacklisted)
-  $response.setStatus(501)
+  $response.setStatus(403)
+  <p><b>Sorry, the requested action is forbidden.</b></p>
 #else
   $services.celementsweb.sendRedirect($url)
 #end
