@@ -979,8 +979,8 @@
   var cel_initAllMultiselect_element = function(element) {
     var params = {
         numberDisplayed : 3,
-        onDropdownHidden : cel_initAllMultiselect_onDropdownHidden.bind(this),
-        onChange: cel_initAllMultiselect_onChange.bind(this)
+        onDropdownHidden : cel_initAllMultiselect_onDropdownHidden,
+        onChange: cel_initAllMultiselect_onChange
     };
     var bootstrapCfg = element.getAttribute('data-bootstrapConfig');
     // check deprecated data-multiselectAttr for backwards compatibility
@@ -1013,8 +1013,10 @@
   };
 
   var cel_initAllMultiselect_onChange = function(option, checked, select) {
+    var multiselectElement = this;
+    console.debug('fire cel:multiselectOnChange on: ', multiselectElement);
     $(option[0]).fire("cel:multiselectOnChange", {
-      'multiselect' : this,
+      'multiselect' : multiselectElement,
       'checked' : checked,
       'select' : select
     });
