@@ -357,3 +357,10 @@ body #cel_overlay {
   line-height: 17px;
   font-weight: 400;
 }
+#editablecode_container {
+  position: relative;
+  padding-right: 20px;
+}
+#editablecode_container textarea {
+  width: 100%;
+}
