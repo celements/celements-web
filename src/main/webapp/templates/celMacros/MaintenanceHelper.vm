@@ -1,10 +1,11 @@
 #if($xwiki.hasAdminRights())
+  #set($url = $services.url.getURL($doc.documentReference, 'view', 'xpage=overlay&conf=MaintenanceHelper'))
   <div id="maintenanceHelper">
     <h1>Helper for maintenance tasks</h1>
     <p>click to execute</p>
     ##flushCache
     <p>
-    <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&flushCache=true")">
+    <a href="$url&flushCache=true">
         Flush MenuItem Cache
     </a>
     #if("$!request.flushCache" == 'true')
@@ -15,7 +16,7 @@
     ##end: flushCache
     ##checkClasses
     <p>
-    <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkClasses=true")">
+    <a href="$url&checkClasses=true">
         Check Celements Classes
     </a>
     #if("$!request.checkClasses" == 'true')
@@ -26,7 +27,7 @@
     ##end: checkClasses
     ##checkMandatoryDocuments
     <p>
-    <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkMandatoryDocuments=true")">
+    <a href="$url&checkMandatoryDocuments=true">
         Check Celements Mandatory Documents
     </a>
     #if("$!request.checkMandatoryDocuments" == 'true')
@@ -37,43 +38,43 @@
     ##end: checkMandatoryDocuments
     ##check lucene queue
     <p>
-    <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=true")">
-        Check Lucene Queue
-    </a>
-    #if("$!request.checkLuceneQueue" == 'true')
+    <a href="$url&lucene=true">Check Lucene Queue</a>
+    #if("$!request.lucene" == 'true')
       <br/>
       Queue Size: $xwiki.lucene.getQueueSize()<br/>
       Lucene Doc Count: $xwiki.lucene.getLuceneDocCount()<br/>
       <br/>
-      <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=optimizeNow")">
-        Optimize index now
-      </a><br/>
-      <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=rebuildNow")">
-        Rebuild local index now
-      </a><br/>
-      <a href="$doc.getURL('view', "xpage=overlay&conf=MaintenanceHelper&checkLuceneQueue=rebuildNow&wikiAll=true")">
-        Rebuild complete index now
-      </a><br/>
-    #elseif("$!request.checkLuceneQueue" == 'optimizeNow')
+      <a href="$url&lucene=optimize">Optimize index</a><br/>
+      <a href="$url&lucene=rebuild&mode=local">Local Rebuild - index for local spaces</a><br/>
+      <a href="$url&lucene=rebuild&mode=all">Complete rebuild - index for all spaces in every wiki</a><br/>
+      <a href="$url&lucene=rebuild&mode=pause">Pause rebuilder for 1hr</a><br/>
+      <a href="$url&lucene=rebuild&mode=unpause">Unpause rebuilder</a><br/>
+    #elseif("$!request.lucene" == 'optimize')
       <br/>
       #if($services.lucene.optimizeIndex())
         Optimizing started.
       #else
         You are missing Admin Rights!
       #end
-    #elseif("$!request.checkLuceneQueue" == 'rebuildNow')
+    #elseif("$!request.lucene" == 'rebuild')
       <br/>
-      #if("$!request.wikiAll" == 'true')
-        #set($result = $services.lucene.rebuildIndexForAllWikis())
-      #else
-        #set($result = $services.lucene.rebuildIndex())
+      #if("$!request.mode" == 'local')
+        #set($result = $services.lucene.rebuildIndexForWikiBySpace($null))
+      #elseif("$!request.mode" == 'all')
+        #set($result = $services.lucene.rebuildIndexForAllWikisBySpace())
+      #elseif("$!request.mode" == 'pause')
+        $services.lucene.pauseIndexRebuilder($services.date.getDuration(1, 'hour'))
+      #elseif("$!request.mode" == 'unpause')
+        $services.lucene.unpauseIndexRebuilder()
       #end
       #if($result == -1)
         You are missing Admin Rights!
       #elseif($result == -2)
         Rebuild already running!
-      #else
-        Rebuild started!
+      #elseif($result >= 0)
+        $!request.mode Rebuild  started!
+      #elseif($result >= 0)
+        Rebuild $!{request.mode}d
       #end
     #end
     <br/>
