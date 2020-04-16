@@ -35,7 +35,7 @@
       #set($rebuild = $services.lucene.runningIndexRebuild)
       #if("$!rebuild" != '')
         #set($rebuildPaused = $services.lucene.isIndexRebuilderPaused())
-        Running Index Rebuild: #if($rebuildPaused.present) <b>PAUSED</b> until $rebuildPaused.get() #end<br/>
+        Running Index Rebuild: #if($rebuildPaused.isPresent()) <b>PAUSED</b> until $rebuildPaused.get() #end<br/>
         $!rebuild
       #end
     </p>
@@ -44,7 +44,7 @@
       <li><a href="$url&lucene=optimize">Optimize index</a></li>
       <li><a href="$url&lucene=rebuild&mode=local">Local Rebuild</a> (index local spaces only)</li>
       <li><a href="$url&lucene=rebuild&mode=all">Complete rebuild</a> (index all spaces in every wiki)</li>
-      #elseif($rebuildPaused.present)
+      #elseif($rebuildPaused.isPresent())
       <li><a href="$url&lucene=rebuild&mode=unpause">Unpause</a> rebuilder</li>
       #else
       <li><a href="$url&lucene=rebuild&mode=pause&hours=1">Pause</a> rebuilder (for 1hr)</li>
