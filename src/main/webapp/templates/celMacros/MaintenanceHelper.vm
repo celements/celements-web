@@ -34,17 +34,19 @@
       Queue Size: $!services.lucene.queueSize<br/>
       #set($rebuild = $services.lucene.runningIndexRebuild)
       #if("$!rebuild" != '')
-      Running Index Rebuild: #if($services.lucene.indexRebuilderPaused)<b>PAUSED</b>#end $!rebuild
+      #set($rebuildPaused = $services.lucene.indexRebuilderPaused)
+      Running Index Rebuild: #if($rebuildPaused)<b>PAUSED</b>#end $!rebuild
       #end
     </p>
     <ul>
-      <li><a href="$url&lucene=optimize">Optimize index</a></li>
       #if("$!rebuild" == '')
+      <li><a href="$url&lucene=optimize">Optimize index</a></li>
       <li><a href="$url&lucene=rebuild&mode=local">Local Rebuild</a> (index local spaces only)</li>
       <li><a href="$url&lucene=rebuild&mode=all">Complete rebuild</a> (index all spaces in every wiki)</li>
+      #elseif($rebuildPaused)
+      <li><a href="$url&lucene=rebuild&mode=unpause">Unpause</a> rebuilder</li>
       #else
       <li><a href="$url&lucene=rebuild&mode=pause&hours=1">Pause</a> rebuilder (for 1hr)</li>
-      <li><a href="$url&lucene=rebuild&mode=unpause">Unpause</a> rebuilder</li>
       #end
     </ul>
     #end
