@@ -18,39 +18,51 @@
       $services.celementsweb.checkMandatoryDocuments() done.
     #end
     </p><p>
-    #if("$!request.lucene" == '')
-      <a href="$url&lucene=true">Check Lucene Queue</a>
-    #elseif("$!request.lucene" == 'true')
-      Queue Size: $xwiki.lucene.getQueueSize()<br/>
-      Lucene Doc Count: $xwiki.lucene.getLuceneDocCount()
-      <ul>
-      <li><a href="$url&lucene=optimize">Optimize index</a></li>
-      <li><a href="$url&lucene=rebuild&mode=local">Local Rebuild</a> (index for local spaces)</li>
-      <li><a href="$url&lucene=rebuild&mode=all">Complete rebuild</a> (index for all spaces in every wiki)</li>
-      <li><a href="$url&lucene=rebuild&mode=pause">Pause</a> rebuilder for 1hr</li>
-      <li><a href="$url&lucene=rebuild&mode=unpause">Unpause</a> rebuilder</li>
-      </ul>
-    #elseif("$!request.lucene" == 'optimize')
-      #if($services.lucene.optimizeIndex()) Optimizing started.
-      #else You are missing Admin Rights!
-      #end
-    #elseif("$!request.lucene" == 'rebuild')
-      #if("$!request.mode" == 'local')
-        #set($result = $services.lucene.rebuildIndexForWikiBySpace($null))
-      #elseif("$!request.mode" == 'all')
-        #set($result = $services.lucene.rebuildIndexForAllWikisBySpace())
+    <a href="$url&lucene=true">Lucene Status</a>
+    #if("$!request.lucene" == 'rebuild')
+      #if    ("$!request.mode" == 'local') #set($rebuildStart = $services.lucene.rebuildIndexForWikiBySpace($null))
+      #elseif("$!request.mode" == 'all')   #set($rebuildStart = $services.lucene.rebuildIndexForAllWikisBySpace())
+      #elseif("$!request.mode" == 'unpause') $!services.lucene.unpauseIndexRebuilder()
       #elseif("$!request.mode" == 'pause')
-        $services.lucene.pauseIndexRebuilder($services.date.getDuration(1, 'hour'))
-      #elseif("$!request.mode" == 'unpause')
-        $services.lucene.unpauseIndexRebuilder()
-      #end
-      #if($result == -1) You are missing Admin Rights!
-      #elseif($result == -2) Rebuild already running!
-      #elseif($result >= 0) $!request.mode Rebuild started!
-      #else Rebuild $!{request.mode}d
+        #set($duration = $services.date.getDuration($mathtool.toInteger("$!request.hours"), 'hours'))
+        $!services.lucene.pauseIndexRebuilder($duration)
       #end
     #end
+    #if("$!request.lucene" != '')
+      <br/>Doc Count: $!services.lucene.indexSize
+      <br/>Queue Size: $!services.lucene.queueSize
+      #set($rebuild = $services.lucene.runningIndexRebuild)
+      #if("$!rebuild" != '')
+      <br/>Running Index Rebuild: #if($services.lucene.isIndexRebuilderPaused)<b>PAUSED</b>#end $!rebuild
+      #end
+      </p>
+      <ul>
+      <li><a href="$url&lucene=optimize">Optimize index</a></li>
+      #if("$!rebuild" == '')
+      <li><a href="$url&lucene=rebuild&mode=local">Local Rebuild</a> (index local spaces only)</li>
+      <li><a href="$url&lucene=rebuild&mode=all">Complete rebuild</a> (index all spaces in every wiki)</li>
+      #else
+      <li><a href="$url&lucene=rebuild&mode=pause&hours=1">Pause</a> rebuilder (for 1hr)</li>
+      <li><a href="$url&lucene=rebuild&mode=unpause">Unpause</a> rebuilder</li>
+      #end
+      </ul>
+    #else </p>
+    #end
+    #if("$!request.lucene" == 'optimize')
+    <p>
+      #if($services.lucene.optimizeIndex()) Optimizing started.
+      #else No rights for this action.
+      #end
     </p>
+    #elseif("$!request.lucene" == 'rebuild')
+    <p>
+      #if($rebuildStart >= 0) $!request.mode Rebuild started.
+      #elseif($rebuildStart == -1) No rights for this action.
+      #elseif($rebuildStart == -2) Rebuild already running.
+      #else Rebuild $!{request.mode}d.
+      #end
+    </p>
+    #end
   </div>
 #else
 You need admin rights to view the maintenance helper.
