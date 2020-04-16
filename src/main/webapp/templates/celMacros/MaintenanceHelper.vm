@@ -17,8 +17,8 @@
     #if("$!request.checkMandatoryDocuments" == 'true')
       $services.celementsweb.checkMandatoryDocuments() done.
     #end
-    </p><p>
-    <a href="$url&lucene=true">Lucene Status</a>
+    </p>
+    <p><a href="$url&lucene=true">Check Lucene Status</a></p>
     #if("$!request.lucene" == 'rebuild')
       #if    ("$!request.mode" == 'local') #set($rebuildStart = $services.lucene.rebuildIndexForWikiBySpace($null))
       #elseif("$!request.mode" == 'all')   #set($rebuildStart = $services.lucene.rebuildIndexForAllWikisBySpace())
@@ -29,14 +29,15 @@
       #end
     #end
     #if("$!request.lucene" != '')
-      <br/>Doc Count: $!services.lucene.indexSize
-      <br/>Queue Size: $!services.lucene.queueSize
+    <p>
+      Doc Count: $!services.lucene.indexSize<br/>
+      Queue Size: $!services.lucene.queueSize<br/>
       #set($rebuild = $services.lucene.runningIndexRebuild)
       #if("$!rebuild" != '')
-      <br/>Running Index Rebuild: #if($services.lucene.isIndexRebuilderPaused)<b>PAUSED</b>#end $!rebuild
+      Running Index Rebuild: #if($services.lucene.indexRebuilderPaused)<b>PAUSED</b>#end $!rebuild
       #end
-      </p>
-      <ul>
+    </p>
+    <ul>
       <li><a href="$url&lucene=optimize">Optimize index</a></li>
       #if("$!rebuild" == '')
       <li><a href="$url&lucene=rebuild&mode=local">Local Rebuild</a> (index local spaces only)</li>
@@ -45,8 +46,7 @@
       <li><a href="$url&lucene=rebuild&mode=pause&hours=1">Pause</a> rebuilder (for 1hr)</li>
       <li><a href="$url&lucene=rebuild&mode=unpause">Unpause</a> rebuilder</li>
       #end
-      </ul>
-    #else </p>
+    </ul>
     #end
     #if("$!request.lucene" == 'optimize')
     <p>
