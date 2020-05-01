@@ -95,12 +95,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>4.3</version>
+      <version>4.4</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>4.5.1</version>
+      <version>4.6</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -214,7 +214,7 @@
     <dependency>
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
-      <version>0.9.11</version>      
+      <version>0.9.11</version>
       <exclusions>
         <!-- [CELDEV-808] exclude xml-apis compile dependency -->
         <exclusion>
