@@ -374,7 +374,7 @@
         var _me = this;
         var loaderType = 'ajax-loader-32px';
         if (typeof isSmallOrPxSize === 'boolean') {
-          if (isSmall) {
+          if (isSmallOrPxSize) {
             loaderType = 'ajax-loader-16px';
           }
         } else if (typeof isSmallOrPxSize === 'number') {
