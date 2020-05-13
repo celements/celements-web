@@ -370,15 +370,20 @@
         _me._loadingImg = new Hash();
       },
 
-      getLoadingIndicator : function(isSmall) {
+      getLoadingIndicator : function(isSmallOrPxSize) {
         var _me = this;
-        var loaderType = 'ajax-loader';
-        if (isSmall) {
-          loaderType = 'ajax-loader-small';
+        var loaderType = 'ajax-loader-32px';
+        if (typeof isSmallOrPxSize === 'boolean') {
+          if (isSmallOrPxSize) {
+            loaderType = 'ajax-loader-16px';
+          }
+        } else if (typeof isSmallOrPxSize === 'number') {
+          loaderType = 'ajax-loader-' + isSmallOrPxSize + 'px';
         }
         if (!_me._loadingImg.get(loaderType)) {
           _me._loadingImg.set(loaderType, new Element('img', {
-            'src' : CELEMENTS.getUtils().getPathPrefix() + '/file/resources/celRes/' + loaderType + '.gif',
+            'src' : CELEMENTS.getUtils().getPathPrefix() + '/file/resources/celRes/spinner/'
+                + loaderType + '.png',
             'class' : 'editorLoading',
             'alt' : 'loading...'
           }));
