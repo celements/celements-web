@@ -19,9 +19,12 @@
     #end
     </p>
     <p><a href="$url&lucene=true">Check Lucene Status</a></p>
+
     #if("$!request.lucene" == 'rebuild')
-      #if    ("$!request.mode" == 'local') #set($rebuildStart = $services.lucene.rebuildIndexForWikiBySpace($null))
-      #elseif("$!request.mode" == 'all')   #set($rebuildStart = $services.lucene.rebuildIndexForAllWikisBySpace())
+      #set($rebuildStart = -100)
+      #if("$!request.mode" == 'all')       #set($rebuildStart = $services.lucene.rebuildIndexForAllWikisBySpace())
+      #elseif("$!request.mode" == 'wiki')  #set($rebuildStart = $services.lucene.rebuildIndexForWikiBySpace($services.reference.create().wiki($!request.wiki).build()))
+      #elseif("$!request.mode" == 'space') #set($rebuildStart = $services.lucene.rebuildIndex($services.reference.create().space($!request.space).build()))
       #elseif("$!request.mode" == 'unpause') $!services.lucene.unpauseIndexRebuilder()
       #elseif("$!request.mode" == 'pause')
         #set($duration = $services.date.getDuration($mathtool.toInteger("$!request.hours"), 'hours'))
@@ -31,10 +34,10 @@
     #if("$!request.lucene" != '')
     <p>
       Doc Count: $!services.lucene.indexSize<br/>
-      Queue Size: $!services.lucene.queueSize<br/>
+      Queue Size: $!services.lucene.queueSize
       #set($rebuild = $services.lucene.runningIndexRebuild)
       #if("$!rebuild" != '')
-        Index Rebuild
+        <br/>Index Rebuild
         #set($rebuildPaused = $services.lucene.isIndexRebuilderPaused())
         #if($rebuildPaused.isPresent())
           <b>PAUSED</b> until $rebuildPaused.get().atZone($services.date.zone)
@@ -43,16 +46,34 @@
         <br/>$!rebuild
       #end
     </p>
+    Actions:
     <ul>
-      #if("$!rebuild" == '')
-      <li><a href="$url&lucene=optimize">Optimize index</a></li>
-      <li><a href="$url&lucene=rebuild&mode=local">Local Rebuild</a> (index local spaces only)</li>
-      <li><a href="$url&lucene=rebuild&mode=all">Complete rebuild</a> (index all spaces in every wiki)</li>
-      #elseif($rebuildPaused.isPresent())
+      #if("$!rebuild" != '')
+      #if($rebuildPaused.isPresent())
       <li><a href="$url&lucene=rebuild&mode=unpause">Unpause</a> rebuilder</li>
       #else
       <li><a href="$url&lucene=rebuild&mode=pause&hours=1">Pause</a> rebuilder (for 1hr)</li>
       #end
+      #end
+      <li><a href="$url&lucene=showRebuildQueue">Show</a> queued rebuilds</li>
+      <li><a href="$url&lucene=optimize">Optimize</a> index</li>
+      <li><a href="$url&lucene=rebuild&mode=all">Complete rebuild</a> (index all spaces in every wiki)</li>
+      <li><form action="$!services.url.getURL($doc.documentReference)">
+        <input type="hidden" name="xpage" value="overlay">
+        <input type="hidden" name="conf" value="MaintenanceHelper">
+        <input type="hidden" name="lucene" value="rebuild">
+        <input type="hidden" name="mode" value="wiki">
+        <input type="text" name="wiki" value="$!context.database">
+        <input type="submit" value="Rebuild Wiki">
+      </form></li>
+      <li><form action="$!services.url.getURL($doc.documentReference)">
+        <input type="hidden" name="xpage" value="overlay">
+        <input type="hidden" name="conf" value="MaintenanceHelper">
+        <input type="hidden" name="lucene" value="rebuild">
+        <input type="hidden" name="mode" value="space">
+        <input type="text" name="space" value="Content">
+        <input type="submit" value="Rebuild Space">
+      </form></li>
     </ul>
     #end
     #if("$!request.lucene" == 'optimize')
@@ -66,8 +87,16 @@
       #if($rebuildStart >= 0) $!request.mode Rebuild started.
       #elseif($rebuildStart == -1) No rights for this action.
       #elseif($rebuildStart == -2) Rebuild already running.
-      #else Rebuild $!{request.mode}d.
+      #elseif("$!request.mode" == 'pause') Rebuild paused for $duration.
+      #elseif("$!request.mode" == 'unpause') Rebuild unpaused.
       #end
+    </p>
+    #elseif("$!request.lucene" == 'showRebuildQueue')
+    <p>
+      Queued index rebuilds:
+      <ul>#foreach($queuedRebuild in $services.lucene.indexRebuilds)
+        <li>$!queuedRebuild</li>
+      #end</ul>
     </p>
     #end
   </div>
