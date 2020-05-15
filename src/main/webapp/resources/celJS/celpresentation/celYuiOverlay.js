@@ -344,10 +344,10 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         event.stop();
         var openConfig = {
           'link' : link,
-          'overlayURL' : link.getAttribute("data-celOverlayLink") || link.href,
-          'confirmMsg' : link.getAttribute("data-celOverlayConfirmMessage"),
-          'confirmBtn' : link.getAttribute("data-celOverlayConfirmButton") || "OK",
-          'cancelBtn' :  link.getAttribute("data-celOverlayCancelButton") || "Cancel"
+          'overlayURL' : link.getAttribute("data-cel-overlay-link") || link.href,
+          'confirmMsg' : link.getAttribute("data-cel-overlay-confirm-message"),
+          'confirmBtn' : link.getAttribute("data-cel-overlay-confirm-button") || "OK",
+          'cancelBtn' :  link.getAttribute("data-cel-overlay-cancel-button") || "Cancel"
         };
         // allow 'configProvider' listener to change the openConfig object
         $(document.body).fire('cel_yuiOverlay:configProvider', openConfig);
