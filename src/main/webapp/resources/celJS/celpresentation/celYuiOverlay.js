@@ -344,6 +344,8 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         event.stop();
         var openConfig = {
           'link' : link,
+          'width' : _me._getDatasetValue(link, 'celOverlayWidth')
+              || link.getAttribute("data-cel-overlay-width"),
           'overlayURL' : _me._getDatasetValue(link, 'celOverlayLink')
               || link.getAttribute("data-cel-overlay-link") || link.href,
           'confirmMsg' : _me._getDatasetValue(link, 'celOverlayConfirmMessage')
