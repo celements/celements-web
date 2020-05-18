@@ -344,7 +344,7 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
         event.stop();
         try {
           var attrOpenConfig = _me._getDatasetValue(link, 'celOverlayConfig')
-              || link.getAttribute("data-cel-overlayConfig");
+              || link.getAttribute("data-cel-overlay-config");
           if (attrOpenConfig && attrOpenConfig.isJSON()) {
             _me.updateOpenConfig(attrOpenConfig.evalJSON());
           }
