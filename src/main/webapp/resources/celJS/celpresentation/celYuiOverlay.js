@@ -342,10 +342,17 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _openHandler : function(link, event) {
         var _me = this;
         event.stop();
+        try {
+          var attrOpenConfig = _me._getDatasetValue(link, 'celOverlayConfig')
+              || link.getAttribute("data-cel-overlayConfig");
+          if (attrOpenConfig && attrOpenConfig.isJSON()) {
+            _me.updateOpenConfig(attrOpenConfig.evalJSON());
+          }
+        } catch (exp) {
+          console.error('failed to parse overlay config in data attribute.', exp);
+        }
         var openConfig = {
           'link' : link,
-          'width' : _me._getDatasetValue(link, 'celOverlayWidth')
-              || link.getAttribute("data-cel-overlay-width"),
           'overlayURL' : _me._getDatasetValue(link, 'celOverlayLink')
               || link.getAttribute("data-cel-overlay-link") || link.href,
           'confirmMsg' : _me._getDatasetValue(link, 'celOverlayConfirmMessage')
