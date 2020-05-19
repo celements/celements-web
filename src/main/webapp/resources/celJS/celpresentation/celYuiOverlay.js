@@ -342,17 +342,38 @@ CELEMENTS.presentation.getOverlayObj = function(configObj) {
       _openHandler : function(link, event) {
         var _me = this;
         event.stop();
+        try {
+          var attrOpenConfig = _me._getDatasetValue(link, 'celOverlayConfig')
+              || link.getAttribute("data-cel-overlay-config");
+          if (attrOpenConfig && attrOpenConfig.isJSON()) {
+            _me.updateOpenConfig(attrOpenConfig.evalJSON());
+          }
+        } catch (exp) {
+          console.error('failed to parse overlay config in data attribute.', exp);
+        }
         var openConfig = {
           'link' : link,
-          'overlayURL' : link.getAttribute("data-celOverlayLink") || link.href,
-          'confirmMsg' : link.getAttribute("data-celOverlayConfirmMessage"),
-          'confirmBtn' : link.getAttribute("data-celOverlayConfirmButton") || "OK",
-          'cancelBtn' :  link.getAttribute("data-celOverlayCancelButton") || "Cancel"
+          'overlayURL' : _me._getDatasetValue(link, 'celOverlayLink')
+              || link.getAttribute("data-cel-overlay-link") || link.href,
+          'confirmMsg' : _me._getDatasetValue(link, 'celOverlayConfirmMessage')
+              || link.getAttribute("data-cel-overlay-confirm-message"),
+          'confirmBtn' : _me._getDatasetValue(link, 'celOverlayConfirmButton')
+              || link.getAttribute("data-cel-overlay-confirm-button") || "OK",
+          'cancelBtn' : _me._getDatasetValue(link, 'celOverlayCancelButton')
+              || link.getAttribute("data-cel-overlay-cancel-button") || "Cancel"
         };
         // allow 'configProvider' listener to change the openConfig object
         $(document.body).fire('cel_yuiOverlay:configProvider', openConfig);
         _me.updateOpenConfig(openConfig);
         _me.intermediatOpenHandler();
+      },
+
+      _getDatasetValue : function(domElem, dataFieldName) {
+        var _me = this;
+        if (domElem.dataset && domElem.dataset[dataFieldName]) {
+          return domElem.dataset[dataFieldName];
+        }
+        return undefined;
       },
 
       intermediatOpenHandler : function(openConfig) {
