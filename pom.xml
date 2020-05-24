@@ -95,17 +95,17 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>4.5-SNAPSHOT</version>
+      <version>4.5</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>4.7-SNAPSHOT</version>
+      <version>4.7</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>4.5-SNAPSHOT</version>
+      <version>4.5</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
