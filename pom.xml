@@ -100,7 +100,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>4.7</version>
+      <version>4.8-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
