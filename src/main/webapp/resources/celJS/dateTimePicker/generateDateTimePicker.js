@@ -57,7 +57,8 @@
          */
         _me._htmlElement.find('input.cel_datePicker').each(function(key, element){
           var pickerAttrObj = {
-              'lang' : Validation.messages.get("language"),
+              // FIXME [CELDEV-904] DateTimePicker Language timing issue
+              'lang' : Validation.messages.get("admin-language") || 'de',
               'dayOfWeekStart' : 1,
               'format' : 'd.m.Y',
               'timepicker' : false,
@@ -78,7 +79,8 @@
          */
         _me._htmlElement.find('input.cel_timePicker').each(function(key, element){
           var pickerAttrObj = {
-              'lang' : Validation.messages.get("language"),
+              // FIXME [CELDEV-904] DateTimePicker Language timing issue
+              'lang' : Validation.messages.get("admin-language") || 'de',
               'datepicker' : false,
               'format' : 'H:i',
               'onChangeDateTime' : _me._onChangeDateTime
@@ -97,7 +99,8 @@
          */
         _me._htmlElement.find('input.cel_dateTimePicker').each(function(key, element){
           var pickerAttrObj = {
-              'lang' : Validation.messages.get("language"),
+              // FIXME [CELDEV-904] DateTimePicker Language timing issue
+              'lang' : Validation.messages.get("admin-language") || 'de',
               'dayOfWeekStart' : 1,
               'minDate' : 0,
               'format' : 'd.m.Y H:i',
