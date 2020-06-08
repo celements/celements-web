@@ -5,7 +5,7 @@
 #end
 
 #set($blacklisted = false)
-#foreach($illegal in ["xxx","porn","t.co","4serial","ac.id","cleantalkorg2.ru","amazonaws.com","tiny.cc","bit.do","u.to","inx.lv","clck.ru","ulvis.net","chirayuexports.com","todaynewsleaks.com","inx.lv","clck.ru","ulvis.net","inventati.info","geita.info","secondchanceshepherds.org","makovik.info","adelantepodemos.info","domskazok.info","philsthoughts.info","acidright.info","afpel.info","bilbokobranka.info","blogslubny.info","domskazok.info","stimio.info","technoob.info","kamrulhasanshuvo.info","giurista.info","kollounawatani.info","latinasport.info","picshunter.info","sunujob.info","russisch-deutsche-hochzeit.net"])
+#foreach($illegal in ["xxx","porn","t.co","4serial","ac.id","cleantalkorg2.ru","amazonaws.com","tiny.cc","bit.do","u.to","inx.lv","clck.ru","ulvis.net","chirayuexports.com","todaynewsleaks.com","inventati.info","geita.info","secondchanceshepherds.org","makovik.info","adelantepodemos.info","domskazok.info","philsthoughts.info","acidright.info","afpel.info","bilbokobranka.info","blogslubny.info","domskazok.info","stimio.info","technoob.info","kamrulhasanshuvo.info","giurista.info","kollounawatani.info","latinasport.info","picshunter.info","sunujob.info","russisch-deutsche-hochzeit.net"])
   #set($blacklisted = $blacklisted || $url.contains($illegal))
 #end
 
