@@ -34,7 +34,7 @@
     #if("$!request.lucene" != '')
     <p>
       Doc Count: $!services.lucene.indexSize<br/>
-      Queue Size: $!services.lucene.queueSize
+      Queue Size: $!services.lucene.queueSizes
       #set($rebuild = $services.lucene.runningIndexRebuild)
       #if("$!rebuild" != '')
         <br/>Index Rebuild
