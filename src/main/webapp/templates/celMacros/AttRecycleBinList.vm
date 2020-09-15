@@ -19,7 +19,7 @@
 #if($xwiki.hasAdminRights() && ("$request.deleteNow" == 'older30Days'))
 #set($deletedAttVersions = $services.celementsweb.permanentlyEmptyAttachmentTrash(30))
 </h1>
-<p>$adminMsg.get('cel_att_recyclebin_deleted', ["$deletedAttVersions"])</p>
+<p>$adminMsg.get("cel_att_recyclebin_deleted_${deletedAttVersions}")</p>
 <p><a href="?xpage=overlay&conf=FullAttRecycleBin">$adminMsg.get('cel_att_recyclebin_deleted_backlink')</a>
 #elseif($hasedit)
 #set($allDeletedAttachments = $services.celementsweb.getDeletedAttachments())
@@ -29,7 +29,7 @@
 ##
 #if($xwiki.hasAdminRights())
 <p>$adminMsg.get('cel_att_recyclebin_delete_hint')<br/>
-$adminMsg.get('cel_att_recyclebin_delete_warning')<br/> 
+$adminMsg.get('cel_att_recyclebin_delete_warning')<br/>
 <a href="?xpage=overlay&conf=FullAttRecycleBin&deleteNow=older30Days">
 $adminMsg.get('cel_att_recyclebin_delete_now_link')</a></p>
 #end
