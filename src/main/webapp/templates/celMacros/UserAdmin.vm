@@ -76,11 +76,11 @@
       #end
       $cur_doc.save()
       ## Allow user to edit his userdoc
-      #set($curdoc = $xwiki.getDocument($user))    
+      #set($curdoc = $xwiki.getDocument($user))
       #set($rightsobj = $curdoc.newObject('XWiki.XWikiRights'))
       $rightsobj.set('users',$user)
       $rightsobj.set('levels','view,edit,delete')
-      $rightsobj.set('allow',1)       
+      $rightsobj.set('allow',1)
       ## Allow contenteditors to edit the userdoc if the user is not a contenteditor or an admin
       #if(!$isContentEditor && !$isAdmin)
        #set($rightsobj = $curdoc.newObject('XWiki.XWikiRights'))
@@ -91,11 +91,11 @@
        #set($rightsobj = $curdoc.newObject('XWiki.XWikiRights'))
        $rightsobj.set('groups','XWiki.ContentEditorsGroup')
        $rightsobj.set('levels','view')
-       $rightsobj.set('allow',1)      
+       $rightsobj.set('allow',1)
       #end
       $curdoc.save()
     #end
-   
+
    ## save user data
    #if("$!request.get('extendedHasSave')" != '1')
      #redirect(false)
@@ -116,7 +116,7 @@
  #else
    #set($show_user = false)
  #end
-<div class="UserAdminSheet cel_overlay_scrollable">   
+<div class="UserAdminSheet cel_overlay_scrollable">
  ## Show user selection
 <div class="celements2_box">
  #if($isAdmin)
@@ -218,7 +218,7 @@ $('userselect').submit()">
    <input type="hidden" name="XWiki.XWikiUsers_nb" value="1" />
    <input type="hidden" name="update" value="$user" />
    <input type="hidden" name="xwikiname" value="$!xwiki.getDocument($user).getName()" />
-<div class="UserAdminInfos">   
+<div class="UserAdminInfos">
           #set($cel_embedded_editobj = true)
           #set($cel_editobj_classname = "XWiki.XWikiUsers")
           #set($cel_editobj_nb = $cel_editobj_doc.getObject('XWiki.XWikiUsers', false).getNumber())
@@ -226,7 +226,7 @@ $('userselect').submit()">
           #set($cel_editobj_externalForm = true)
           #set($cel_editobj_dict_prefix = 'cel_useradmin_edit_')
   <table class="block" cellspacing="5px" width="100%">
-  
+
   <tbody>
   <tr>
    <td colspan="1"><div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_userdata')</div></td>
@@ -270,11 +270,11 @@ $('userselect').submit()">
   #end ## nopassword change for LDAP users
   <tr>
     <td style="vertical-align:top;" colspan="1" class="celements2_input_mandatory">
-          #set($cel_editobj_properties = 'active,first_name,last_name,email,force_pwd_change,company,department,city,country')
+          #set($cel_editobj_properties = 'active,suspended,first_name,last_name,email,force_pwd_change,company,department,city,country')
     #if($has_edit && $isAdmin && !$isLDAPuser)
           #set($cel_editobj_readonly_properties = '')
     #else
-          #set($cel_editobj_readonly_properties = 'active')
+          #set($cel_editobj_readonly_properties = 'active,suspended')
     #end
     #if(!$has_edit || $isLDAPuser)
       #set($cel_editobj_readonly_properties = "${cel_editobj_readonly_properties},first_name,last_name,email,company,department,city,country")
@@ -315,7 +315,7 @@ $('userselect').submit()">
    $xwiki.includeForm('LocalMacros.extendUserAdmin', false)
    <div class="clear"><!--iE6.0--></div>
  #end
-</div><!--UserAdminInfos"-->  
+</div><!--UserAdminInfos"-->
 <div class="UserAdminGroupdata">
    <div class="celements2_box_subtitle">$adminMsg.get('cel_useradmin_groupdata')</div>
    <div class="UserAdminGroups">
