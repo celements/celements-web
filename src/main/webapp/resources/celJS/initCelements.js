@@ -767,15 +767,16 @@
         var direction = (current.y > previous.y) ? 'up' : 'down';
         var ratio = entry.intersectionRatio;
         if (type === 'enter') {
-          ratio = (ratio >= 1) ? ':100' : (ratio > 0.5) ? ':50' : '';
+          ratio = (ratio >= 1) ? ':full' : (ratio > 0.5) ? ':half' : '';
         } else {
-          ratio = (ratio > 0.5) ? ':100' : (ratio > 0) ? ':50' : '';
+          ratio = (ratio > 0.5) ? ':full' : (ratio > 0) ? ':half' : '';
         }
-        var eventName = 'cel:' + type;
-        console.debug('fire', eventName + ratio);
-        entry.target.fire(eventName + ratio);
-        console.debug('fire', eventName + ':' + direction + ratio);
-        entry.target.fire(eventName + ':' + direction + ratio);
+        var eventName = 'cel:' + type + ratio;
+        console.debug('fire', eventName);
+        entry.target.fire(eventName);
+        eventName += ':' + direction;
+        console.debug('fire', eventName);
+        entry.target.fire(eventName);
       },
       
       _splitDataCelEventList : function(dataValue) {
