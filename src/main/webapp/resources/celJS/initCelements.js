@@ -753,7 +753,7 @@
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
         _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
-        _me._intersectionObserver = new IntersectionObserver(entries => { 
+        _me._intersectionObserver = new IntersectionObserver(function(entries) { 
           entries.forEach(_me._handleIntersection.bind(_me));
         }, { threshold: [0, 0.5, 1] });
       },
@@ -807,7 +807,7 @@
         return {
           'htmlElem' : htmlElem,
           'dataValue' : dataValue,
-          'eventHandlers' : _me._splitDataCelEventList(dataValue).map(instruction => {
+          'eventHandlers' : _me._splitDataCelEventList(dataValue).map(function(instruction) {
             try {
               return _me._createEventHandler(htmlElem, instruction);
             } catch (exp) {
