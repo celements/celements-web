@@ -740,39 +740,42 @@
           '%' : Element.toggleClassName
       },
       _eventElements : undefined,
-      _intersectionObserver : undefined,
       _interpretDataCelEventBind : undefined,
       _contentChangedHandlerBind : undefined,
       updateCelEventHandlersBind : undefined,
 
+      _intersectionObserver : undefined,
+      _intersectionValues : [],
+
       initialize : function() {
         var _me = this;
         _me._eventElements = new Array();
-        _me._intersectionObserver = _me._newIntersectionObserver();
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
         _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
+        _me._intersectionObserver = new IntersectionObserver(entries => { 
+          entries.forEach(_me._handleIntersection.bind(_me));
+        }, { threshold: [0, 0.5, 1] });
       },
 
-      _newIntersectionObserver : function() {
+      _handleIntersection : function(entry, idx) {
         var _me = this;
-        // no info means root is the browser viewport / screen
-        return new IntersectionObserver(entries => { entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              if(entry.intersectionRatio >= 1) {
-                console.debug('fire ', 'celEM:intersect100');
-                entry.target.fire('celEM:intersect100');
-              } else if(entry.intersectionRatio > 0.5) {
-                console.debug('fire ', 'celEM:intersect50');
-                entry.target.fire('celEM:intersect50');
-              } else  {
-                console.debug('fire ', 'celEM:intersect');
-                entry.target.fire('celEM:intersect');
-              }
-            } else {
-              console.debug('Target is not visible in the screen');
-            }
-          })}, { threshold: [0, 0.5, 1] });
+        const previous = _me._intersectionValues[idx] || { y : 0, ratio : 0.0 };
+        const current = { y : entry.boundingClientRect.y, ratio : entry.intersectionRatio };
+        _me._intersectionValues[idx] = current;
+        var type = (entry.isIntersecting && current.ratio > previous.ratio) ? 'enter' : 'leave';
+        var direction = (current.y > previous.y) ? 'up' : 'down';
+        var ratio = entry.intersectionRatio;
+        if (type === 'enter') {
+          ratio = (ratio >= 1) ? ':100' : (ratio > 0.5) ? ':50' : '';
+        } else {
+          ratio = (ratio > 0.5) ? ':100' : (ratio > 0) ? ':50' : '';
+        }
+        var eventName = 'cel:' + type;
+        console.debug('fire', eventName + ratio);
+        entry.target.fire(eventName + ratio);
+        console.debug('fire', eventName + ':' + direction + ratio);
+        entry.target.fire(eventName + ':' + direction + ratio);
       },
       
       _splitDataCelEventList : function(dataValue) {
@@ -807,10 +810,9 @@
         var data = _me._parseEventInstruction(instruction);
         var actionFunction = _me._actionFunctionMap[data.action];
         if (actionFunction) {
-          if (data.eventName.startsWith('celEM:intersect')) {
-            // TODO can htmlElem be added multiple times?
+          if (data.eventName.startsWith('cel:enter') || data.eventName.startsWith('cel:leave')) {
             _me._intersectionObserver.observe(htmlElem);
-          console.debug('EventManager - interpretData: observing intersection: ', htmlElem);
+            console.debug('observing intersection: ', htmlElem);
           }
           return new window.CELEMENTS.CssClassEventHandler(htmlElem, data.eventName,
               data.cssSelector, data.className, actionFunction, data.condition);
