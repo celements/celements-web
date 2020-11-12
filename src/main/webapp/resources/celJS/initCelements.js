@@ -701,8 +701,8 @@
         _me._getTargetElements().each(function(targetElement) {
           if (!_me._conditionFunction || _me._conditionFunction(targetElement, _me._htmlElement)) {
             _me._actionFunction(targetElement, _me._className);
-            console.debug('EventHandler - action [', _me._actionFunction.name, _me._className,
-              "] executed on ", targetElement);
+            console.debug('EventHandler -  upon', _me._eventName, 'action [',
+              _me._actionFunction.name, _me._className, '] executed on', targetElement);
           } else {
             console.debug('EventHandler - action skipped for failed condition [',
               _me._conditionFunction, '] on ', targetElement);
@@ -756,27 +756,6 @@
         _me._intersectionObserver = new IntersectionObserver(entries => { 
           entries.forEach(_me._handleIntersection.bind(_me));
         }, { threshold: [0, 0.5, 1] });
-      },
-
-      _handleIntersection : function(entry, idx) {
-        var _me = this;
-        const previous = _me._intersectionValues[idx] || { y : 0, ratio : 0.0 };
-        const current = { y : entry.boundingClientRect.y, ratio : entry.intersectionRatio };
-        _me._intersectionValues[idx] = current;
-        var type = (entry.isIntersecting && current.ratio > previous.ratio) ? 'enter' : 'leave';
-        var direction = (current.y > previous.y) ? 'up' : 'down';
-        var ratio = entry.intersectionRatio;
-        if (type === 'enter') {
-          ratio = (ratio >= 1) ? ':full' : (ratio > 0.5) ? ':half' : '';
-        } else {
-          ratio = (ratio > 0.5) ? ':full' : (ratio > 0) ? ':half' : '';
-        }
-        var eventName = 'cel:' + type + ratio;
-        console.debug('fire', eventName);
-        entry.target.fire(eventName);
-        eventName += ':' + direction;
-        console.debug('fire', eventName);
-        entry.target.fire(eventName);
       },
       
       _splitDataCelEventList : function(dataValue) {
@@ -852,6 +831,27 @@
           htmlElem.addClassName('celOnEventInit');
           htmlElem.fire('celEM:init');
         }
+      },
+
+      _handleIntersection : function(entry, idx) {
+        var _me = this;
+        const previous = _me._intersectionValues[idx] || { y : 0, ratio : 0 };
+        const current = { y : entry.boundingClientRect.y, ratio : entry.intersectionRatio };
+        var type = (entry.isIntersecting && current.ratio > previous.ratio) ? 'enter' : 'leave';
+        var direction = (current.y > previous.y) ? 'up' : 'down';
+        var ratio = entry.intersectionRatio;
+        if (type === 'enter') {
+          ratio = (ratio >= 1) ? ':full' : (ratio > 0.5) ? ':half' : '';
+        } else {
+          ratio = (ratio > 0.5) ? ':full' : (ratio > 0) ? ':half' : '';
+        }
+        var eventName = 'cel:' + type + ratio;
+        console.debug('fire', eventName);
+        entry.target.fire(eventName);
+        eventName += ':' + direction;
+        console.debug('fire', eventName);
+        entry.target.fire(eventName);
+        _me._intersectionValues[idx] = current;
       },
 
       _contentChangedHandler : function(event) {
