@@ -734,12 +734,13 @@
     window.CELEMENTS.EventManager = Class.create({
       _instructionRegex : new RegExp('([\\w:]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
       _actionFunctionMap : {
-          // map may be extendend. also extend second regex group accordingly
+          // map may be extendend. also extend second group in instructionRegex accordingly
           '+' : Element.addClassName,
           '-' : Element.removeClassName,
           '%' : Element.toggleClassName
       },
       _eventElements : undefined,
+      _intersectionObserver : undefined,
       _interpretDataCelEventBind : undefined,
       _contentChangedHandlerBind : undefined,
       updateCelEventHandlersBind : undefined,
@@ -747,9 +748,31 @@
       initialize : function() {
         var _me = this;
         _me._eventElements = new Array();
+        _me._intersectionObserver = _me._newIntersectionObserver();
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
         _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
+      },
+
+      _newIntersectionObserver : function() {
+        var _me = this;
+        // no info means root is the browser viewport / screen
+        return new IntersectionObserver(entries => { entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              if(entry.intersectionRatio >= 1) {
+                console.debug('fire ', 'celEM:intersect100');
+                entry.target.fire('celEM:intersect100');
+              } else if(entry.intersectionRatio > 0.5) {
+                console.debug('fire ', 'celEM:intersect50');
+                entry.target.fire('celEM:intersect50');
+              } else  {
+                console.debug('fire ', 'celEM:intersect');
+                entry.target.fire('celEM:intersect');
+              }
+            } else {
+              console.debug('Target is not visible in the screen');
+            }
+          })}, { threshold: [0, 0.5, 1] });
       },
       
       _splitDataCelEventList : function(dataValue) {
@@ -784,6 +807,11 @@
         var data = _me._parseEventInstruction(instruction);
         var actionFunction = _me._actionFunctionMap[data.action];
         if (actionFunction) {
+          if (data.eventName.startsWith('celEM:intersect')) {
+            // TODO can htmlElem be added multiple times?
+            _me._intersectionObserver.observe(htmlElem);
+          console.debug('EventManager - interpretData: observing intersection: ', htmlElem);
+          }
           return new window.CELEMENTS.CssClassEventHandler(htmlElem, data.eventName,
               data.cssSelector, data.className, actionFunction, data.condition);
         } else {
