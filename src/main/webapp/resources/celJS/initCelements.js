@@ -801,6 +801,22 @@
         }
       },
 
+      _createEventElement : function(htmlElem) {
+        var _me = this;
+        var dataValue = htmlElem.readAttribute('data-cel-event');
+        return {
+          'htmlElem' : htmlElem,
+          'dataValue' : dataValue,
+          'eventHandlers' : _me._splitDataCelEventList(dataValue).map(instruction => {
+            try {
+              return _me._createEventHandler(htmlElem, instruction);
+            } catch (exp) {
+              console.error('EventManager - interpretData: invalid instruction ', exp, htmlElem);
+            }
+          }).filter(Boolean)
+        };
+      },
+
       _interpretDataCelEvent : function(htmlElem) {
         var _me = this;
         var logPref = 'EventManager - interpretData: ';
@@ -809,19 +825,7 @@
         } else if (htmlElem.up('.cel_template')) {
           console.debug(logPref, 'skip template element: ', htmlElem);
         } else {
-          var dataValue = htmlElem.readAttribute('data-cel-event');
-          var newElem = {
-              'htmlElem' : htmlElem,
-              'dataValue' : dataValue,
-              'eventHandlers' : new Array()
-          };
-          _me._splitDataCelEventList(dataValue).each(function(instruction) {
-            try {
-              newElem.eventHandlers.push(_me._createEventHandler(htmlElem, instruction));
-            } catch (exp) {
-              console.error(logPref, 'invalid instruction ', exp, htmlElem);
-            }
-          });
+          var newElem = _me._createEventElement(htmlElem);
           if (newElem.eventHandlers.length > 0) {
             _me._eventElements.push(newElem);
             console.debug(logPref, 'new element ', htmlElem);
