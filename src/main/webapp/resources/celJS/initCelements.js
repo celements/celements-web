@@ -701,8 +701,8 @@
         _me._getTargetElements().each(function(targetElement) {
           if (!_me._conditionFunction || _me._conditionFunction(targetElement, _me._htmlElement)) {
             _me._actionFunction(targetElement, _me._className);
-            console.debug('EventHandler - action [', _me._actionFunction.name, _me._className,
-              "] executed on ", targetElement);
+            console.debug('EventHandler -  upon', _me._eventName, 'action [',
+              _me._actionFunction.name, _me._className, '] executed on', targetElement);
           } else {
             console.debug('EventHandler - action skipped for failed condition [',
               _me._conditionFunction, '] on ', targetElement);
@@ -734,7 +734,7 @@
     window.CELEMENTS.EventManager = Class.create({
       _instructionRegex : new RegExp('([\\w:]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
       _actionFunctionMap : {
-          // map may be extendend. also extend second regex group accordingly
+          // map may be extendend. also extend second group in instructionRegex accordingly
           '+' : Element.addClassName,
           '-' : Element.removeClassName,
           '%' : Element.toggleClassName
@@ -744,12 +744,18 @@
       _contentChangedHandlerBind : undefined,
       updateCelEventHandlersBind : undefined,
 
+      _intersectionObserver : undefined,
+      _intersectionValues : [],
+
       initialize : function() {
         var _me = this;
         _me._eventElements = new Array();
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
         _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
+        _me._intersectionObserver = new IntersectionObserver(function(entries) { 
+          entries.forEach(_me._handleIntersection.bind(_me));
+        }, { threshold: [0, 0.5, 1] });
       },
       
       _splitDataCelEventList : function(dataValue) {
@@ -784,11 +790,31 @@
         var data = _me._parseEventInstruction(instruction);
         var actionFunction = _me._actionFunctionMap[data.action];
         if (actionFunction) {
+          if (data.eventName.startsWith('cel:enter') || data.eventName.startsWith('cel:leave')) {
+            _me._intersectionObserver.observe(htmlElem);
+            console.debug('observing intersection: ', htmlElem);
+          }
           return new window.CELEMENTS.CssClassEventHandler(htmlElem, data.eventName,
               data.cssSelector, data.className, actionFunction, data.condition);
         } else {
           throw "createEventHandler: unknown action '" + data.action + '"';
         }
+      },
+
+      _createEventElement : function(htmlElem) {
+        var _me = this;
+        var dataValue = htmlElem.readAttribute('data-cel-event');
+        return {
+          'htmlElem' : htmlElem,
+          'dataValue' : dataValue,
+          'eventHandlers' : _me._splitDataCelEventList(dataValue).map(function(instruction) {
+            try {
+              return _me._createEventHandler(htmlElem, instruction);
+            } catch (exp) {
+              console.error('EventManager - interpretData: invalid instruction ', exp, htmlElem);
+            }
+          }).filter(Boolean)
+        };
       },
 
       _interpretDataCelEvent : function(htmlElem) {
@@ -799,19 +825,7 @@
         } else if (htmlElem.up('.cel_template')) {
           console.debug(logPref, 'skip template element: ', htmlElem);
         } else {
-          var dataValue = htmlElem.readAttribute('data-cel-event');
-          var newElem = {
-              'htmlElem' : htmlElem,
-              'dataValue' : dataValue,
-              'eventHandlers' : new Array()
-          };
-          _me._splitDataCelEventList(dataValue).each(function(instruction) {
-            try {
-              newElem.eventHandlers.push(_me._createEventHandler(htmlElem, instruction));
-            } catch (exp) {
-              console.error(logPref, 'invalid instruction ', exp, htmlElem);
-            }
-          });
+          var newElem = _me._createEventElement(htmlElem);
           if (newElem.eventHandlers.length > 0) {
             _me._eventElements.push(newElem);
             console.debug(logPref, 'new element ', htmlElem);
@@ -821,6 +835,27 @@
           htmlElem.addClassName('celOnEventInit');
           htmlElem.fire('celEM:init');
         }
+      },
+
+      _handleIntersection : function(entry, idx) {
+        var _me = this;
+        const previous = _me._intersectionValues[idx] || { y : 0, ratio : 0 };
+        const current = { y : entry.boundingClientRect.y, ratio : entry.intersectionRatio };
+        var type = (entry.isIntersecting && current.ratio > previous.ratio) ? 'enter' : 'leave';
+        var direction = (current.y > previous.y) ? 'up' : 'down';
+        var ratio = entry.intersectionRatio;
+        if (type === 'enter') {
+          ratio = (ratio >= 1) ? ':full' : (ratio > 0.5) ? ':half' : '';
+        } else {
+          ratio = (ratio > 0.5) ? ':full' : (ratio > 0) ? ':half' : '';
+        }
+        var eventName = 'cel:' + type + ratio;
+        console.debug('fire', eventName);
+        entry.target.fire(eventName);
+        eventName += ':' + direction;
+        console.debug('fire', eventName);
+        entry.target.fire(eventName);
+        _me._intersectionValues[idx] = current;
       },
 
       _contentChangedHandler : function(event) {
