@@ -122,6 +122,10 @@
       <artifactId>dom4j</artifactId>
     </dependency>
     <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.sf.carte</groupId>
       <artifactId>css4j</artifactId>
     </dependency>
