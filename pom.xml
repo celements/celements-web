@@ -134,6 +134,10 @@
       <artifactId>css4j-dom4j</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+    </dependency>
+    <dependency>
       <groupId>info.informatica</groupId>
       <artifactId>jclf</artifactId>
     </dependency>
