@@ -391,6 +391,8 @@
     }
   };
 
+  var conf;
+
   var asyncLoadConf = function() {
     new Ajax.Request(window.getCelHost(), {
       method : "POST",
