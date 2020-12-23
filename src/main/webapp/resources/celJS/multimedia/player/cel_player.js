@@ -57,23 +57,8 @@
       initOneFlowPlayerLinksInsideParent(parentElemIn, 'a.celanim_oneflowplayerStart');
       initFlowPlayerAudioLinksInsideParent(parentElemIn, 'a.celanim_flowplayerAudioStart');
       initOverlayLinksInsideParent(parentElemIn, 'a.celanim_overlay');
-      initCelAnimSWFPlayerInsideParent(parentElemIn);
     } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
       console.log('register of celanim movieplayer stopped for ', parentElem);
-    }
-  };
-
-  var initCelAnimSWFPlayerInsideParent = function(parentElem) {
-    if (parentElem.select('a.celanim_swfplayer').size() > 0) {
-      parentElem.select('a.celanim_swfplayer').each(function(elem) {
-        var celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
-        if (celAnimLinkConfig && celAnimLinkConfig.replaceOnLoad) {
-          celanimLoadSWFplayer(elem);
-        }
-        elem.stopObserving('click', celanimSWFplayerHandler);
-        elem.observe('click', celanimSWFplayerHandler);
-      });
-      initEventTracking('a.celanim_swfplayer');
     }
   };
 
@@ -136,127 +121,6 @@
                         });
               }
             });
-  };
-
-  var celanimSWFplayerHandler = function(event) {
-    var playerLink = event.findElement('a');
-    if (playerLink) {
-      celanimLoadSWFplayer(playerLink);
-    }
-    event.stop();
-  };
-
-  var celanimFlowPlayerObjectCounter = 0;
-
-  var celanimLoadSWFplayer = function(playerLink) {
-    if (playerLink && !playerLink.hasClassName('celanim_loaded')) {
-      playerLink.addClassName('celanim_loaded');
-      var movieLink = getCelAnimSWFmovieLink(playerLink.href);
-      if (swfobject.hasFlashPlayerVersion("9.0.0")) {
-        // FP; 28.2.2013; replaced swf-object creation with
-        // http://code.google.com/p/swfobject/
-        // --> it solves issues at least with IE7!!!
-        // playerContainer.update(new Element('span', { 'id' :
-        // 'celanimFlowPlayer_object' }));
-        // swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%",
-        // "100%", "9.0.0", "expressInstall.swf");
-        var playerId = 'celanimFlowPlayer_object';
-        celanimFlowPlayerObjectCounter = celanimFlowPlayerObjectCounter + 1;
-        if (celanimFlowPlayerObjectCounter > 1) {
-          playerId += '_' + celanimFlowPlayerObjectCounter;
-        }
-        playerLink.update(new Element('span', {
-          'id' : playerId
-        }));
-        // var objectElem = new Element('object', {
-        // 'type' : 'application/x-shockwave-flash',
-        // 'data' : movieLink,
-        // 'style' : 'height: 100%; width: 100%;'
-        // });
-        // objectElem.insert(new Element('param', { 'name' : 'movie', 'value' :
-        // movieLink}));
-        // objectElem.insert(new Element('param', { 'name' :
-        // 'allowScriptAccess',
-        // 'value' : 'sameDomain'}));
-        // objectElem.insert(new Element('param', { 'name' : 'quality', 'value'
-        // : 'best'}));
-        // objectElem.insert(new Element('param', { 'name' : 'scale', 'value' :
-        // 'showall'}));
-        var params = {};
-        params['movie'] = movieLink;
-        params['allowScriptAccess'] = 'sameDomain';
-        params['quality'] = 'best';
-        params['scale'] = 'showall';
-        // wmode=opaque --> prevent flash appear before overlay elements
-        // Flash movies can appear on top of Overlay instances in IE and
-        // Gecko-based browsers.
-        // To fix this problem, set the "wmode" of the Flash movie to either
-        // "transparent" or "opaque".
-        // For more information see the Adobe TechNote
-        // http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_15523 on
-        // this issue.
-        // objectElem.insert(new Element('param', { 'name' : 'wmode', 'value' :
-        // 'opaque'}));
-        params['wmode'] = 'opaque';
-        flashvars = {};
-        flashvars['allowScriptAccess'] = 'sameDomain';
-        flashvars['quality'] = 'best';
-        flashvars['scale'] = 'showall';
-        flashvars['wmode'] = 'opaque';
-        // more details on embedSWF function on
-        // http://code.google.com/p/swfobject/wiki/api
-        swfobject.embedSWF(movieLink, playerId, "100%", "100%", "9.0.0", "expressInstall.swf",
-            flashvars, params);
-        // playerLink.update(objectElem);
-        playerLink.fire('celanim_player:flashplayerloaded', {
-          'movielink' : movieLink
-        });
-      } else {
-        var noFlashEv = playerLink.fire('celanim_player:noflashplayerfound', {
-          'movielink' : movieLink
-        });
-        if (!noFlashEv.stopped) {
-          // IMPORTANT: this solution only works on iPhones / iPads
-          var objectElem = new Element('object', {
-            'type' : 'application/x-shockwave-flash',
-            'data' : movieLink,
-            'style' : 'height: 100%; width: 100%;'
-          });
-          objectElem.insert(new Element('param', {
-            'name' : 'movie',
-            'value' : movieLink
-          }));
-          objectElem.insert(new Element('param', {
-            'name' : 'allowScriptAccess',
-            'value' : 'sameDomain'
-          }));
-          objectElem.insert(new Element('param', {
-            'name' : 'quality',
-            'value' : 'best'
-          }));
-          objectElem.insert(new Element('param', {
-            'name' : 'scale',
-            'value' : 'showall'
-          }));
-          // wmode=opaque --> prevent flash appear before overlay elements
-          // Flash movies can appear on top of Overlay instances in IE and
-          // Gecko-based browsers.
-          // To fix this problem, set the "wmode" of the Flash movie to either
-          // "transparent" or "opaque".
-          // For more information see the Adobe TechNote
-          // http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_15523
-          // on this issue.
-          objectElem.insert(new Element('param', {
-            'name' : 'wmode',
-            'value' : 'opaque'
-          }));
-          playerLink.update(objectElem);
-          playerLink.fire('celanim_player:replacementForFlashloaded', {
-            'movielink' : movieLink
-          });
-        }
-      }
-    }
   };
 
   var getCelAnimObject = function() {
@@ -324,7 +188,7 @@
   var initFlowPlayerLinksInsideParent = function(parentElem, flowclassname) {
     if ((parentElem.select(flowclassname).size() > 0) || $(flowclassname)) {
       flowplayer(flowclassname, {
-        src : '$xwiki.getSkinFile("celJS/flowplayer/flowplayer-3.2.6.swf", true)',
+        src : conf.flowplayerPath,
         wmode : 'opaque'
       }, {
         clip : conf.defaults,
