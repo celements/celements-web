@@ -1,7 +1,7 @@
 #set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
 $jsonBuilder.openDictionary()
 ## flowplayer path to the js resource
-$jsonBuilder.addStringProperty('flowplayerPath', '$xwiki.getSkinFile("celJS/flowplayer/flowplayer-3.2.6.swf", true)')
+$jsonBuilder.addStringProperty('flowplayerPath', "$!xwiki.getSkinFile('celJS/flowplayer/flowplayer-3.2.6.swf', true)")
 ## defaults
 $jsonBuilder.openProperty('defaults')
 $jsonBuilder.openDictionary()
