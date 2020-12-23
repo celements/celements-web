@@ -21,19 +21,151 @@
 (function(window, undefined) {
   "use strict";
 
-  window.CELEMENTS.multimedia.Player = Class.create({
-    memo : undefined,
-    stopped : undefined,
-    eventName : undefined,
+  if (typeof window.CELEMENTS === "undefined") {window.CELEMENTS = {};}
+  if (typeof window.CELEMENTS.multimedia === "undefined") {window.CELEMENTS.multimedia = {};}
 
-    initialize : function() {
-      var _me = this;
-    }
+  if (typeof window.CELEMENTS.multimedia.PlayerInitializer === 'undefined') {
+    window.CELEMENTS.multimedia.PlayerInitializer = Class.create({
+      _playerConf : undefined,
+      _initDocumentReadyBind : undefined,
 
-  });
+      initialize : function() {
+        var _me = this;
+        _me._initDocumentReadyBind = _me._initDocumentReady.bind(_me);
+        $j(document).ready(_me._initDocumentReadyBind);
+        _me._playerConf = new CELEMENTS.multimedia.PlayerConf();
+      },
 
+      _initDocumentReady : function() {
+        var _me = this;
+        _me._playerConf.celStopObserving("cel-media-player:confLoaded", _me._initDocumentReadyBind);
+        if (_me._playerConf.isConfDefined()) {
+          _me._player = new CELEMENTS.multimedia.Player(_me._playerConf);
+        } else {
+          _me._playerConf.celObserve("cel-media-player:confLoaded", _me._initDocumentReadyBind);
+        }
+      },
+
+    });
+    CELEMENTS.multimedia.PlayerInitializer.prototype = Object.extend(
+        CELEMENTS.multimedia.PlayerInitializer.prototype, CELEMENTS.mixins.Observable);
+
+    window.CELEMENTS.multimedia.generalPlayerInitializer =
+      new CELEMENTS.multimedia.PlayerInitializer();
+  }
+
+  if (typeof window.CELEMENTS.multimedia.PlayerConf === 'undefined') {
+    window.CELEMENTS.multimedia.PlayerConf = Class.create({
+      _conf : undefined,
+
+      initialize : function() {
+        var _me = this;
+        _me._asyncLoadConf();
+      },
+
+      _asyncLoadConf : function() {
+        var _me = this;
+        if (_me._isConfDefined())
+          return;
+        new Ajax.Request(window.getCelHost(), {
+          method : "POST",
+          parameters : {
+            'xpage' : 'celements_ajax',
+            'ajax_mode' : 'movieplayerDefaults'
+          },
+          onSuccess : function(transport) {
+            if (transport.responseText.isJSON()) {
+              var responseObject = transport.responseText.evalJSON();
+              if (responseObject.defaults) {
+                _me._conf = responseObject;
+                _me.celFire("cel-media-player:confLoaded", _me._conf);
+              }
+            }
+          }
+        });
+      },
+
+      isConfDefined : function() {
+        var _me = this;
+        return ((typeof _me._conf !== 'undefined') && _me._conf.defaults);
+      },
+
+      getConfObj : function() {
+        var _me = this;
+        return _me._conf;
+      }
+
+    });
+    CELEMENTS.multimedia.PlayerConf.prototype = Object.extend(
+        CELEMENTS.multimedia.PlayerConf.prototype, CELEMENTS.mixins.Observable);
+  }
+
+  if (typeof window.CELEMENTS.multimedia.Player === 'undefined') {
+    window.CELEMENTS.multimedia.Player = Class.create({
+      _conf : undefined,
+      _initDocumentReadyBind : undefined,
+
+      initialize : function(playerConf) {
+        var _me = this;
+        _me._conf = playerConf.getConfObj();
+        registerCelAnimMoviePlayer(); //TODO implement in Player
+      },
+
+      openInOverlay : function(e, fixWidth, fixHeight) {
+        var elem = e.findElement('a');
+        var flvLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
+            + '/');
+        var cssClassNames = $w($(elem).className).without('celanim_overlay');
+        var overlaySrc = window.getCelHost()
+            + '?xpage=celements_ajax&ajax_mode=FlowplayerInOverlay';
+        overlaySrc += '&cssclassname=' + cssClassNames.join(',');
+        overlaySrc += '&flvfilename=' + encodeURIComponent(flvLink);
+        hs.graphicsDir = window.CELEMENTS.getUtils().getPathPrefix()
+            + '/file/celJS/highslide/graphics/';
+        hs.outlineType = '';
+        hs.wrapperClassName = 'no-footer no-move draggable-header celanim_overlay_wrapper '
+            + cssClassNames.join(' ');
+        var params = {
+          src : overlaySrc,
+          objectType : 'iframe',
+          dimmingOpacity : 0.60,
+          dragByHeading : false,
+          align : 'center',
+          preserveContent : false,
+          objectHeight : '0' // important for IE!!!
+        };
+        if (fixWidth) {
+          params.width = fixWidth;
+        }
+        if (fixHeight) {
+          params.height = fixHeight;
+        }
+        hs.htmlExpand(null, params);
+        e.stop();
+      },
+
+      celanimOpenInOverlaySFAudio : function(e) {
+        var _me = this;
+        _me.openInOverlay(e, 580, 70);
+      },
+
+      celanimOpenInOverlayAudio : function(e) {
+        var _me = this;
+        _me.openInOverlay(e, 580, 90);
+      }
+
+    });
+    CELEMENTS.multimedia.Player.prototype = Object.extend(CELEMENTS.multimedia.Player.prototype,
+        CELEMENTS.mixins.Observable);
+
+    window.CELEMENTS.multimedia.generalPlayer = new CELEMENTS.multimedia.Player();
+  }
+
+  /*********************************
+   * old movieplayer.js code follows
+   *********************************/
+  
   var celAnimMoviePlayerRegisterBodyDone = false;
-  var celAnimMoviePlayerRegisterBodyReadyMissed = false;
 
   var registerCelAnimMoviePlayer = function() {
     if (!celAnimMoviePlayerRegisterBodyDone) {
@@ -163,14 +295,6 @@
       }
     });
     return configObject;
-  };
-
-  var getCelAnimSWFmovieLink = function(elemHref) {
-    var linkReplaceObj = getCelAnimSWFConfigForLink(elemHref);
-    if (linkReplaceObj) {
-      elemHref = elemHref.replace(new RegExp(linkReplaceObj.matchStr), linkReplaceObj.replaceStr);
-    }
-    return elemHref;
   };
 
   var celAnimGetHexColor = function(color) {
@@ -309,125 +433,5 @@
       initEventTracking(flowclassname);
     }
   };
-
-  var celanimOpenInOverlaySFAudio = function(e) {
-    celanimOpenInOverlay(e, 580, 70);
-  };
-
-  var celanimOpenInOverlayAudio = function(e) {
-    celanimOpenInOverlay(e, 580, 90);
-  };
-
-  var celanimOpenInOverlay = function(e, fixWidth, fixHeight) {
-    var elem = e.findElement('a');
-    var flvLink = elem.href
-        .replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix() + '/');
-    var cssClassNames = $w($(elem).className).without('celanim_overlay');
-    var overlaySrc = window.getCelHost() + '?xpage=celements_ajax&ajax_mode=FlowplayerInOverlay';
-    overlaySrc += '&cssclassname=' + cssClassNames.join(',');
-    overlaySrc += '&flvfilename=' + encodeURIComponent(flvLink);
-    hs.graphicsDir = window.CELEMENTS.getUtils().getPathPrefix()
-        + '/file/celJS/highslide/graphics/';
-    hs.outlineType = '';
-    hs.wrapperClassName = 'no-footer no-move draggable-header celanim_overlay_wrapper '
-        + cssClassNames.join(' ');
-    var params = {
-      src : overlaySrc,
-      objectType : 'iframe',
-      dimmingOpacity : 0.60,
-      dragByHeading : false,
-      align : 'center',
-      preserveContent : false,
-      objectHeight : '0' // important for IE!!!
-    };
-    if (fixWidth) {
-      params.width = fixWidth;
-    }
-    if (fixHeight) {
-      params.height = fixHeight;
-    }
-    hs.htmlExpand(null, params);
-    e.stop();
-  };
-
-  /**
-   * deprecated on 30/12/2013
-   */
-  var initEventTracking = function(flowclassname) {
-    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-      console.warn('deprecated usage of initEventTracking.'
-          + ' Instead use initEventTrackingInsideParent');
-    }
-    initEventTrackingInsideParent($$('body')[0], flowclassname);
-  };
-
-  var initEventTrackingInsideParent = function(parentElem, cssselector) {
-    if (typeof _gaq != 'undefined') {
-      parentElem.select(cssselector).each(function(elemToTrack) {
-        elemToTrack.observe('click', trackEvent);
-      });
-    }
-  };
-
-  var trackEvent = function(e) {
-    var label = this.title;
-    if (label.empty()) {
-      label = this.href;
-    }
-    var action = "Play";
-    var category = "Video";
-    if (this.hasClassName("celanim_audio")) {
-      category = "Audio";
-    }
-    if (typeof (ga) !== 'undefined') {
-      ga('send', {
-        'hitType' : 'event', // Required.
-        'eventCategory' : category, // Required.
-        'eventAction' : action, // Required.
-        'eventLabel' : label
-      });
-    } else if (typeof (_gaq) !== 'undefined') {
-      _gaq.push([ '_trackEvent', category, action, label ]);
-    }
-  };
-
-  var conf;
-
-  var asyncLoadConf = function() {
-    new Ajax.Request(window.getCelHost(), {
-      method : "POST",
-      parameters : {
-        'xpage' : 'celements_ajax',
-        'ajax_mode' : 'movieplayerDefaults'
-      },
-      onSuccess : function(transport) {
-        if (transport.responseText.isJSON()) {
-          var responseObject = transport.responseText.evalJSON();
-          if (responseObject.defaults) {
-            conf = responseObject;
-            if (celAnimMoviePlayerRegisterBodyReadyMissed) {
-              registerCelAnimMoviePlayer();
-            }
-          }
-        }
-      }
-    });
-  };
-
-  var isConfDefined = function() {
-    return ((typeof conf !== 'undefined') && conf.defaults);
-  };
-
-  if (!isConfDefined()) {
-    asyncLoadConf();
-  }
-
-  $j(document).ready(function() {
-    if (isConfDefined()) {
-      registerCelAnimMoviePlayer();
-    } else {
-      celAnimMoviePlayerRegisterBodyReadyMissed = true;
-    }
-  });
 
 })(window);
