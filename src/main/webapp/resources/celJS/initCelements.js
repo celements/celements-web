@@ -49,8 +49,8 @@
   /**
    * A generic javascript Object observer pattern
    */
-  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
-  if (typeof window.CELEMENTS.mixins=="undefined"){ window.CELEMENTS.mixins={};};
+  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};}
+  if (typeof window.CELEMENTS.mixins=="undefined"){ window.CELEMENTS.mixins={};}
   window.CELEMENTS.mixins.Event = Class.create({
     memo : undefined,
     stopped : undefined,
@@ -131,7 +131,7 @@
   /**
    * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
    **/
-  if (typeof window.CELEMENTS.Ajax=="undefined"){ window.CELEMENTS.Ajax={};};
+  if (typeof window.CELEMENTS.Ajax=="undefined"){ window.CELEMENTS.Ajax={};}
   if(window.Ajax && !window.CELEMENTS.Ajax_CORSfixInstalled) {
     window.Try = {
       logging : false,
