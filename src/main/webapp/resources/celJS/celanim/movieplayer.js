@@ -306,8 +306,8 @@ var initFlowPlayerLinks = function(flowclassname) {
 var initFlowPlayerLinksInsideParent = function(parentElem, flowclassname) {
   if ((parentElem.select(flowclassname).size() > 0) || $(flowclassname)) {
   flowplayer(flowclassname, {
-    src: '$xwiki.getSkinFile("celJS/flowplayer/flowplayer-3.2.6.swf", true)',
-    wmode: 'opaque'
+      src : conf.flowplayerPath,
+      wmode: 'opaque'
     }, {
     clip: conf.defaults, 
     plugins: {
