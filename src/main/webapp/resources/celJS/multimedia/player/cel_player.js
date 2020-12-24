@@ -320,7 +320,7 @@
           controls : conf.skins.dark
         }
       });
-      initEventTracking(flowclassname);
+      initEventTrackingInsideParent(parentElem, flowclassname);
     }
   };
 
@@ -415,7 +415,7 @@
           });
         }
       });
-      initEventTracking(flowclassname);
+      initEventTrackingInsideParent(parentElem, flowclassname);
     }
   };
 
@@ -430,7 +430,7 @@
           flowLink.observe('click', celanimOpenInOverlay);
         }
       });
-      initEventTracking(flowclassname);
+      initEventTrackingInsideParent(parentElem, flowclassname);
     }
   };
 

@@ -62,7 +62,7 @@
         elem.stopObserving('click', celanimSWFplayerHandler);
         elem.observe('click', celanimSWFplayerHandler);
       });
-      initEventTracking('a.celanim_swfplayer');
+      initEventTrackingInsideParent(parentElem, 'a.celanim_swfplayer');
     }
   };
 
@@ -321,7 +321,7 @@
           controls : conf.skins.dark
         }
       });
-      initEventTracking(flowclassname);
+      initEventTrackingInsideParent(parentElem, flowclassname);
     }
   };
 
@@ -416,7 +416,7 @@
           });
         }
       });
-      initEventTracking(flowclassname);
+      initEventTrackingInsideParent(parentElem, flowclassname);
     }
   };
 
@@ -431,7 +431,7 @@
           flowLink.observe('click', celanimOpenInOverlay);
         }
       });
-      initEventTracking(flowclassname);
+      initEventTrackingInsideParent(parentElem, flowclassname);
     }
   };
 
