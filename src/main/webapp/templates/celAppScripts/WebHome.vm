@@ -1,16 +1,21 @@
 #if($services.celementsweb.isMainWiki())
   #set($wikiManagerRef = $services.model.createDocumentReference('', 'WikiManager','WebHome'))
-  <a href="$!{services.url.getURL($wikiManagerRef, 'view')}">WikiManager</a><br/>
+  <ul>
+  <li><a href="$!{services.url.getURL($wikiManagerRef, 'view')}">WikiManager</a></li>
   #if("$context.user" != 'XWiki.XWikiGuest')
     #set($userAdminLink = "${xwiki.getURL('Content.WebHome', 'view', 'skin=cellskin&xpage=overlay&conf=UserAdmin')}")
     #if($userAdminLink.startsWith('?'))
       #set($userAdminLink = "/$userAdminLink")
     #end
-    <a href="${userAdminLink}">User Admin</a><br/>
+    <li><a href="${userAdminLink}">User Admin</a></li>
   #end
+  </ul>
 #elseif($services.webUtils.isCentralWiki())
-  #set($pageTypeRef = $services.model.createDocumentReference('', 'PageTypes','WebHome'))
-  <a href="$!{services.url.getURL($pageTypeRef, 'view', 'skin=cellskin&xpage=overlay&conf=PageTypesListing')}">PageTypes</a>
+  #set($contentWebHomeRef = $services.model.createDocumentReference('', 'Content','WebHome'))
+  <ul>
+    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=PageTypesListing')}">PageTypes</a></li>
+    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=PageLayoutsListing')}">PageTypes</a></li>
+  </ul>
 #elseif(("$context.action" == 'view') && ($doc.isNew()))
   #parse('celTemplates/RedirectToFirstChildView.vm')
 #else
