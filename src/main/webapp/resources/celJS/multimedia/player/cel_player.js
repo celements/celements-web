@@ -108,7 +108,8 @@
       initialize : function(playerConf) {
         var _me = this;
         _me._conf = playerConf.getConfObj();
-        registerCelAnimMoviePlayer(); //TODO implement in Player
+        console.warn('TODO implement in Player');
+        //registerCelAnimMoviePlayer(); //TODO implement in Player
       },
 
       openInOverlay : function(e, fixWidth, fixHeight) {
