@@ -24,36 +24,6 @@
   if (typeof window.CELEMENTS === "undefined") {window.CELEMENTS = {};}
   if (typeof window.CELEMENTS.multimedia === "undefined") {window.CELEMENTS.multimedia = {};}
 
-  if (typeof window.CELEMENTS.multimedia.PlayerInitializer === 'undefined') {
-    window.CELEMENTS.multimedia.PlayerInitializer = Class.create({
-      _playerConf : undefined,
-      _initDocumentReadyBind : undefined,
-
-      initialize : function() {
-        var _me = this;
-        _me._initDocumentReadyBind = _me._initDocumentReady.bind(_me);
-        $j(document).ready(_me._initDocumentReadyBind);
-        _me._playerConf = new CELEMENTS.multimedia.PlayerConf();
-      },
-
-      _initDocumentReady : function() {
-        var _me = this;
-        _me._playerConf.celStopObserving("cel-media-player:confLoaded", _me._initDocumentReadyBind);
-        if (_me._playerConf.isConfDefined()) {
-          _me._player = new CELEMENTS.multimedia.Player(_me._playerConf);
-        } else {
-          _me._playerConf.celObserve("cel-media-player:confLoaded", _me._initDocumentReadyBind);
-        }
-      },
-
-    });
-    CELEMENTS.multimedia.PlayerInitializer.prototype = Object.extend(
-        CELEMENTS.multimedia.PlayerInitializer.prototype, CELEMENTS.mixins.Observable);
-
-    window.CELEMENTS.multimedia.generalPlayerInitializer =
-      new CELEMENTS.multimedia.PlayerInitializer();
-  }
-
   if (typeof window.CELEMENTS.multimedia.PlayerConf === 'undefined') {
     window.CELEMENTS.multimedia.PlayerConf = Class.create({
       _conf : undefined,
@@ -158,8 +128,36 @@
     });
     CELEMENTS.multimedia.Player.prototype = Object.extend(CELEMENTS.multimedia.Player.prototype,
         CELEMENTS.mixins.Observable);
+  }
 
-    window.CELEMENTS.multimedia.generalPlayer = new CELEMENTS.multimedia.Player();
+  if (typeof window.CELEMENTS.multimedia.PlayerInitializer === 'undefined') {
+    window.CELEMENTS.multimedia.PlayerInitializer = Class.create({
+      _playerConf : undefined,
+      _initDocumentReadyBind : undefined,
+
+      initialize : function() {
+        var _me = this;
+        _me._initDocumentReadyBind = _me._initDocumentReady.bind(_me);
+        $j(document).ready(_me._initDocumentReadyBind);
+        _me._playerConf = new CELEMENTS.multimedia.PlayerConf();
+      },
+
+      _initDocumentReady : function() {
+        var _me = this;
+        _me._playerConf.celStopObserving("cel-media-player:confLoaded", _me._initDocumentReadyBind);
+        if (_me._playerConf.isConfDefined()) {
+          _me._player = new CELEMENTS.multimedia.Player(_me._playerConf);
+        } else {
+          _me._playerConf.celObserve("cel-media-player:confLoaded", _me._initDocumentReadyBind);
+        }
+      },
+
+    });
+    CELEMENTS.multimedia.PlayerInitializer.prototype = Object.extend(
+        CELEMENTS.multimedia.PlayerInitializer.prototype, CELEMENTS.mixins.Observable);
+
+    window.CELEMENTS.multimedia.generalPlayerInitializer =
+      new CELEMENTS.multimedia.PlayerInitializer();
   }
 
   /*********************************
