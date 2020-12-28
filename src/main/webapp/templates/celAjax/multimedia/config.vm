@@ -5,13 +5,13 @@ $jsonBuilder.openDictionary('flowplayerConf')
 ## flowplayer path to the js resource
 $jsonBuilder.addProperty('flowplayerPath', "$!services.celementsweb.getSkinFile(':celJS/flowplayer/flowplayer-3.2.6.swf', 'file')")
 #set($jsonInclude = true)
-#parse('multimedia/_flowplayerConfig.vm')
+#parse('celAjax/multimedia/_flowplayerConfig.vm')
 $jsonBuilder.addValue($!jsonBuilderIntern);
 $jsonBuilder.closeDictionary()
 ## externalVideoMapping
 $jsonBuilder.openDictionary('externalVideoMapping')
 #set($jsonInclude = true)
-#parse('multimedia/_externalVideoMapping.vm')
+#parse('celAjax/multimedia/_externalVideoMapping.vm')
 $jsonBuilder.addValue($!jsonBuilderIntern);
 $jsonBuilder.closeDictionary()
 ##
