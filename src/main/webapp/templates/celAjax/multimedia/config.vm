@@ -7,6 +7,7 @@ $jsonBuilder.addProperty('flowplayerPath', "$!services.celementsweb.getSkinFile(
 #set($jsonInclude = true)
 #parse('celAjax/multimedia/_flowplayerConfig.vm')
 $jsonBuilder.addProperty('flowplayerLookConf', $!jsonBuilderIntern);
+$jsonBuilder.closeDictionary()
 ## externalVideoMapping
 #set($jsonInclude = true)
 #parse('celAjax/multimedia/_externalVideoMapping.vm')
