@@ -35,7 +35,7 @@
 
       _asyncLoadConf : function() {
         var _me = this;
-        if (_me._isConfDefined())
+        if (_me.isConfDefined())
           return;
         new Ajax.Request(window.getCelHost(), {
           method : "POST",
