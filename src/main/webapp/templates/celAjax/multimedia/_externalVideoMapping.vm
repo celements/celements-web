@@ -1,0 +1,23 @@
+#set($jsonBuilderIntern = $services.json.newBuilder())
+$jsonBuilderIntern.openArray()
+## vimeo
+$jsonBuilderIntern.openDictionary()
+$jsonBuilderIntern.addProperty('name', 'vimeo')
+$jsonBuilderIntern.addProperty('matchStr', '^https?:\/\/vimeo.com\/.*?')
+$jsonBuilderIntern.addProperty('replaceStr', 'https://player.vimeo.com/video/')
+$jsonBuilderIntern.addProperty('cssClass', 'celmultimedia_vimeo')
+$jsonBuilderIntern.addProperty('replaceOnLoad', true)
+$jsonBuilderIntern.closeDictionary()
+## youtube
+$jsonBuilderIntern.openDictionary()
+$jsonBuilderIntern.addProperty('name', 'youtube')
+$jsonBuilderIntern.addProperty('matchStr', '^https?:\/\/(www.youtube.com\/.*?[\/=]|youtu.be\/)')
+$jsonBuilderIntern.addProperty('replaceStr', 'https://www.youtube.com/v/')
+$jsonBuilderIntern.addProperty('cssClass', 'celmultimedia_youtube')
+$jsonBuilderIntern.addProperty('replaceOnLoad', true)
+$jsonBuilderIntern.closeDictionary()
+##
+$jsonBuilderIntern.closeArray()
+#if(!$jsonInclude)
+$jsonBuilderIntern.getJSON()
+#end

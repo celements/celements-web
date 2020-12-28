@@ -27,6 +27,7 @@
   if (typeof window.CELEMENTS.multimedia.PlayerConf === 'undefined') {
     window.CELEMENTS.multimedia.PlayerConf = Class.create({
       _conf : undefined,
+      _confStr : undefined,
 
       initialize : function() {
         var _me = this;
@@ -41,16 +42,19 @@
           method : "POST",
           parameters : {
             'xpage' : 'celements_ajax',
-            'ajax_mode' : 'movieplayerDefaults'
+            'ajax_mode' : 'multimedia/config'
           },
           onSuccess : function(transport) {
-            if (transport.responseText.isJSON()) {
-              var responseObject = transport.responseText.evalJSON();
-              if (responseObject.defaults) {
-                _me._conf = responseObject;
-                _me.celFire("cel-media-player:confLoaded", _me._conf);
-              }
+            _me._confStr = transport.responseText;
+            if (_me._confStr.isJSON()) {
+              _me._conf = _me.getConfObjCopy();
+              _me.celFire("cel-media-player:confLoaded", _me._conf);
+            } else {
+              console.warn('Failed to load cel-multimedia config (no json):', _me._confStr);
             }
+          },
+          onFailure : function(transport) {
+            console.error('Failed to load cel-multimedia config:', transport);
           }
         });
       },
@@ -60,9 +64,77 @@
         return ((typeof _me._conf !== 'undefined') && _me._conf.defaults);
       },
 
-      getConfObj : function() {
+      getConfObjCopy : function() {
         var _me = this;
+        return _me._confStr.evalJSON();
+      },
+
+      getConfObj : function(subConfigName) {
+        var _me = this;
+        if (_me._conf && _me._conf[subConfigName]) {
+          return _me._conf[subConfigName];
+        }
         return _me._conf;
+      },
+
+
+      _transformCssClassName : function(elem, flowclassname) {
+        var _me = this;
+        console.warn('registerPlayer: TODO implement in Player', elem);
+        var flvLink = elem.href;
+        elem.removeClassName(flowclassname);
+        if (flowclassname.includes('overlay')) {
+          elem.addClassName('celanim_overlay');
+          elem.addClassName(flowclassname.replace(/_overlay_/g, '_'));
+        } else {
+          if (flvLink.endsWith('.mp3')) {
+            var isLinkEmpty = (elem.innerHTML.strip() == '');
+            if (!isLinkEmpty) {
+              if (flowclassname.includes('oneflowplayer')) {
+                elem.addClassName('celmultimedia_oneflowplayerAudioStart');
+              } else {
+                elem.addClassName('celmultimedia_flowplayerAudioStart');
+              }
+            } else {
+              if ((typeof console != 'undefined')
+                  && (typeof console.warn != 'undefined')) {
+                console
+                    .warn('Skipping empty flowplayer-Link which might cause automatic '
+                        + ' playing on page load.');
+              }
+            }
+          } else {
+            elem.addClassName('celmultimedia_swfplayer');
+          }
+        }
+        if (flowclassname.includes('_externalvideo')) {
+          var celAnimLinkConfig = _me._getExternalMappingConfigForLink(flvLink);
+          if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
+            elem.addClassName(celAnimLinkConfig.cssClass);
+          }
+        } else if (flowclassname.includes('_mp3_')) {
+          elem.addClassName('celmultimedia_audio');
+        } else {
+          if (flowclassname.endsWith('2')) {
+            elem.addClassName('celmultimedia_16to9');
+          } else {
+            elem.addClassName('celmultimedia_4to3');
+          }
+        }
+      },
+
+      _getExternalMappingConfigForLink : function(elemHref) {
+        var _me = this;
+        var celAnimLinkReplaceObject = _me.getConfObj('externalVideoMapping');
+        var isFound = false;
+        var configObject = null;
+        $A(celAnimLinkReplaceObject).each(function(linkReplaceObj) {
+          if (!isFound && elemHref.match(new RegExp(linkReplaceObj.matchStr))) {
+            isFound = true;
+            configObject = linkReplaceObj;
+          }
+        });
+        return configObject;
       }
 
     });
@@ -78,8 +150,41 @@
       initialize : function(playerConf) {
         var _me = this;
         _me._conf = playerConf.getConfObj();
-        console.warn('TODO implement in Player');
-        //registerCelAnimMoviePlayer(); //TODO implement in Player
+        _me.registerPlayer();
+      },
+
+      registerPlayer : function(parentElem) {
+        var _me = this;
+        var parentElemIn = $(parentElem || document.body);
+        var shouldRegisterBodyEvent = _me.celFire('cel-media-player:shouldRegisterInsideBody',
+            parentElemIn);
+        if (!shouldRegisterBodyEvent.stopped) {
+          _me.initMoviePlayerCssClassesInsideParent(parentElemIn, [ 'celanim_mp3_flowplayer',
+              'celanim_overlay_mp3_flowplayer', 'celanim_flowplayer', 'celanim_overlay_flowplayer',
+              'celanim_flowplayer2', 'celanim_overlay_flowplayer2', 'celanim_oneflowplayer',
+              'celanim_overlay_oneflowplayer', 'celanim_oneflowplayer2',
+              'celanim_overlay_oneflowplayer2', 'celanim_externalvideo',
+              'celanim_overlay_externalvideo' ]);
+//          initFlowPlayerLinksInsideParent(parentElemIn, 'a.celmultimedia_flowplayerStart');
+//          initOneFlowPlayerLinksInsideParent(parentElemIn, 'a.celmultimedia_oneflowplayerStart');
+//          initFlowPlayerAudioLinksInsideParent(parentElemIn, 'a.celmultimedia_flowplayerAudioStart');
+//          initOverlayLinksInsideParent(parentElemIn, 'a.celmultimedia_overlay');
+        } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+          console.log('register of cel-mediaplayer stopped for ', parentElemIn);
+        }
+      },
+
+      initMoviePlayerCssClassesInsideParent : function(parentElem, cssClassNames) {
+        $A(cssClassNames).each(
+                function(flowclassname) {
+                  if (parentElem.select('a.' + flowclassname).size() > 0) {
+                    parentElem
+                        .select('a.' + flowclassname)
+                        .each(function(elem) {
+                            _me._transformCssClassName(elem, flowclassname);
+                          });
+                  }
+                });
       },
 
       openInOverlay : function(e, fixWidth, fixHeight) {
@@ -163,15 +268,6 @@
   /*********************************
    * old movieplayer.js code follows
    *********************************/
-  
-  var celAnimMoviePlayerRegisterBodyDone = false;
-
-  var registerCelAnimMoviePlayer = function() {
-    if (!celAnimMoviePlayerRegisterBodyDone) {
-      celAnimMoviePlayerRegisterBodyDone = true;
-      registerCelAnimMoviePlayerInsideParent($$('body')[0]);
-    }
-  };
 
   var registerCelAnimMoviePlayerInsideParent = function(parentElem) {
     var shouldRegisterBodyEvent = $(document.body).fire('celanim_player:shouldRegisterInsideBody',
@@ -205,12 +301,12 @@
                           var flvLink = elem.href.replace(/^..\/..\//g, '/');
                           elem.href = flvLink;
                           elem.removeClassName(flowclassname);
-                          if (flowclassname.indexOf('overlay') > 0) {
+                          if (flowclassname.includes('overlay')) {
                             elem.addClassName('celanim_overlay');
                             elem.addClassName(flowclassname.replace(/_overlay_/g, '_'));
                           } else {
                             if (elem.href.endsWith('.flv')) {
-                              if (flowclassname.indexOf('oneflowplayer') > 0) {
+                              if (flowclassname.includes('oneflowplayer')) {
                                 elem.addClassName('celanim_oneflowplayerStart');
                               } else {
                                 elem.addClassName('celanim_flowplayerStart');
@@ -218,7 +314,7 @@
                             } else if (elem.href.endsWith('.mp3')) {
                               var isLinkEmpty = (elem.innerHTML.strip() == '');
                               if (!isLinkEmpty) {
-                                if (flowclassname.indexOf('oneflowplayer') > 0) {
+                                if (flowclassname.includes('oneflowplayer')) {
                                   elem.addClassName('celanim_oneflowplayerAudioStart');
                                 } else {
                                   elem.addClassName('celanim_flowplayerAudioStart');
@@ -235,12 +331,12 @@
                               elem.addClassName('celanim_swfplayer');
                             }
                           }
-                          if (flowclassname.indexOf('_externalvideo') > 0) {
+                          if (flowclassname.includes('_externalvideo')) {
                             var celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
                             if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
                               elem.addClassName(celAnimLinkConfig.cssClass);
                             }
-                          } else if (flowclassname.indexOf('_mp3_') > 0) {
+                          } else if (flowclassname.includes('_mp3_')) {
                             elem.addClassName('celanim_audio');
                           } else {
                             if (flowclassname.endsWith('2')) {
@@ -255,31 +351,7 @@
   };
 
   var getCelAnimObject = function() {
-    var celAnimObject = [ {
-      'name' : 'vimeo',
-      'matchStr' : '^https?:\/\/vimeo.com\/.*?',
-      'replaceStr' : 'https://vimeo.com/moogaloop.swf?clip_id=',
-      'cssClass' : 'celanim_vimeo',
-      'replaceOnLoad' : true
-    }, {
-      'name' : 'youtube',
-      'matchStr' : '^https?:\/\/(www.youtube.com\/.*?[\/=]|youtu.be\/)',
-      'replaceStr' : 'https://www.youtube.com/v/',
-      'cssClass' : 'celanim_youtube',
-      'replaceOnLoad' : true
-    }, {
-      'name' : 'sfaudioPortal',
-      'matchStr' : '^https?:\/\/(www.srf.ch)\/.*\/audio/.*[\/=]',
-      'replaceStr' : 'https://www.srf.ch/player/flash/srfplayer.swf?mode=embed&audio_id=',
-      'cssClass' : 'celanim_sfaudio',
-      'replaceOnLoad' : true
-    }, {
-      'name' : 'sfvideoPortal',
-      'matchStr' : '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv|www.srf.ch)\/.*[\/=]',
-      'replaceStr' : 'https://www.srf.ch/player/flash/srfplayer.swf?mode=embed&segment_id=',
-      'cssClass' : 'celanim_sfvideo',
-      'replaceOnLoad' : true
-    } ];
+    //TODO get from PlayerConfig
     return celAnimObject;
   };
 
