@@ -276,11 +276,7 @@
   }
 
   if (typeof window.CELEMENTS.multimedia.AudioPlayer === 'undefined') {
-    window.CELEMENTS.multimedia.AudioPlayer = Class.create({
-
-      initialize : function($super) {
-        $super.initialize();
-      },
+    window.CELEMENTS.multimedia.AudioPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
 
       _getPlayerCssClassNames : function() {
         return [ 'celanim_mp3_flowplayer', 'celanim_overlay_mp3_flowplayer'];
@@ -290,19 +286,12 @@
         console.warn('_initalizePlayer: ToDo AudioPlayer');
       }
 
-    });
-    CELEMENTS.multimedia.AudioPlayer.prototype = Object.extend(
-        CELEMENTS.multimedia.AudioPlayer.prototype, CELEMENTS.multimedia.AbstractPlayer);
-    
+    });    
     window.CELEMENTS.multimedia.audioPlayer = new CELEMENTS.multimedia.AudioPlayer();
   }
 
   if (typeof window.CELEMENTS.multimedia.ExternalPlayer === 'undefined') {
-    window.CELEMENTS.multimedia.ExternalPlayer = Class.create({
-
-      initialize : function($super) {
-        $super.initialize();
-      },
+    window.CELEMENTS.multimedia.ExternalPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
 
       _getPlayerCssClassNames : function() {
         return [ 'celanim_externalvideo', 'celanim_overlay_externalvideo' ];
@@ -313,9 +302,6 @@
       }
 
     });
-    CELEMENTS.multimedia.ExternalPlayer.prototype = Object.extend(
-        CELEMENTS.multimedia.ExternalPlayer.prototype, CELEMENTS.multimedia.AbstractPlayer);
-    
     window.CELEMENTS.multimedia.externalPlayer = new CELEMENTS.multimedia.ExternalPlayer();
   }
 
