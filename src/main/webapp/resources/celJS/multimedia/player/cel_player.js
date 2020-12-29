@@ -278,6 +278,10 @@
   if (typeof window.CELEMENTS.multimedia.AudioPlayer === 'undefined') {
     window.CELEMENTS.multimedia.AudioPlayer = Class.create({
 
+      initialize : function($super) {
+        $super();
+      },
+
       _getPlayerCssClassNames : function() {
         return [ 'celanim_mp3_flowplayer', 'celanim_overlay_mp3_flowplayer'];
       },
@@ -295,6 +299,10 @@
 
   if (typeof window.CELEMENTS.multimedia.ExternalPlayer === 'undefined') {
     window.CELEMENTS.multimedia.ExternalPlayer = Class.create({
+
+      initialize : function($super) {
+        $super();
+      },
 
       _getPlayerCssClassNames : function() {
         return [ 'celanim_externalvideo', 'celanim_overlay_externalvideo' ];
