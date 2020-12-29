@@ -13,8 +13,8 @@
 #elseif($services.webUtils.isCentralWiki())
   #set($contentWebHomeRef = $services.model.createDocumentReference('', 'Content','WebHome'))
   <ul>
-    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=PageTypesListing')}">PageTypes</a></li>
-    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=PageLayoutsListing')}">PageTypes</a></li>
+    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=PageTypesListing')}">Page Types</a></li>
+    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=PageLayoutsListing')}">Page Layouts</a></li>
   </ul>
 #elseif(("$context.action" == 'view') && ($doc.isNew()))
   #parse('celTemplates/RedirectToFirstChildView.vm')

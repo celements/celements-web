@@ -166,6 +166,9 @@
       new CELEMENTS.multimedia.PlayerInitializer();
   }
 
+  /*************************
+   * player definitions
+   **************************/
   if (typeof window.CELEMENTS.multimedia.AbstractPlayer === 'undefined') {
     window.CELEMENTS.multimedia.AbstractPlayer = Class.create({
       _playerConf : undefined,
@@ -291,7 +294,7 @@
       },
 
       _createAudioElement : function(linkElem) {
-        var audioElem = new Element('audio', { 'controls' : '', 'class' : linkElem.classNames });
+        var audioElem = new Element('audio', { 'controls' : '', 'class' : linkElem.classNames() });
         var audioSrcElem = new Element('source', {
           'src' : linkElem.href,
           'type' : 'audio/mpeg'
