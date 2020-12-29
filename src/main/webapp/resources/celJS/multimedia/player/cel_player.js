@@ -143,27 +143,31 @@
 
   if (typeof window.CELEMENTS.multimedia.Player === 'undefined') {
     window.CELEMENTS.multimedia.Player = Class.create({
-      _conf : undefined,
+      _playerConf : undefined,
       _initDocumentReadyBind : undefined,
 
       initialize : function(playerConf) {
         var _me = this;
-        _me._conf = playerConf;
+        _me._playerConf = playerConf;
+        console.log('initialize Player: ', _me._playerConf);
         _me.registerPlayer();
       },
 
       registerPlayer : function(parentElem) {
         var _me = this;
         var parentElemIn = $(parentElem || document.body);
+        console.log('registerPlayer: ', parentElem, parentElemIn);
         var shouldRegisterBodyEvent = _me.celFire('cel-media-player:shouldRegisterInsideBody',
             parentElemIn);
         if (!shouldRegisterBodyEvent.stopped) {
+          console.log('registerPlayer: before initMoviePlayerCssClasses');
           _me.initMoviePlayerCssClassesInsideParent(parentElemIn, [ 'celanim_mp3_flowplayer',
               'celanim_overlay_mp3_flowplayer', 'celanim_flowplayer', 'celanim_overlay_flowplayer',
               'celanim_flowplayer2', 'celanim_overlay_flowplayer2', 'celanim_oneflowplayer',
               'celanim_overlay_oneflowplayer', 'celanim_oneflowplayer2',
               'celanim_overlay_oneflowplayer2', 'celanim_externalvideo',
               'celanim_overlay_externalvideo' ]);
+          console.warn('registerPlayer: TODO');
 //          initFlowPlayerLinksInsideParent(parentElemIn, 'a.celmultimedia_flowplayerStart');
 //          initOneFlowPlayerLinksInsideParent(parentElemIn, 'a.celmultimedia_oneflowplayerStart');
 //          initFlowPlayerAudioLinksInsideParent(parentElemIn, 'a.celmultimedia_flowplayerAudioStart');
@@ -181,7 +185,7 @@
                     parentElem
                         .select('a.' + flowclassname)
                         .each(function(elem) {
-                            _me._conf._transformCssClassName(elem, flowclassname);
+                            _me._playerConf._transformCssClassName(elem, flowclassname);
                           });
                   }
                 });
