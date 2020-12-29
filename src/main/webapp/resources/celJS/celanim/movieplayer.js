@@ -353,13 +353,13 @@
         }
       }
       flowplayer(flowclassname, {
-        src : '$xwiki.getSkinFile("celJS/flowplayer/flowplayer-3.2.6.swf", true)',
+        src : conf.flowplayerPath,
         wmode : 'opaque'
       }, {
         clip : clipConfig,
         plugins : {
           content : {
-            url : '$xwiki.getSkinFile("celJS/flowplayer/flowplayer.content-3.2.0.swf", true)',
+            url : conf.flowplayerContentPath,
             left : 0,
             top : 0,
             width : '100%',

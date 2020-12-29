@@ -104,8 +104,6 @@
                         + ' playing on page load.');
               }
             }
-          } else {
-            elem.addClassName('celmultimedia_swfplayer');
           }
         }
         if (flowclassname.includes('_externalvideo')) {
@@ -271,105 +269,6 @@
    * old movieplayer.js code follows
    *********************************/
 
-  var registerCelAnimMoviePlayerInsideParent = function(parentElem) {
-    var shouldRegisterBodyEvent = $(document.body).fire('celanim_player:shouldRegisterInsideBody',
-        parentElem);
-    if (!shouldRegisterBodyEvent.stopped) {
-      var parentElemIn = parentElem || $$('body')[0];
-      initMoviePlayerCssClassesInsideParent(parentElemIn, [ 'celanim_mp3_flowplayer',
-          'celanim_overlay_mp3_flowplayer', 'celanim_flowplayer', 'celanim_overlay_flowplayer',
-          'celanim_flowplayer2', 'celanim_overlay_flowplayer2', 'celanim_oneflowplayer',
-          'celanim_overlay_oneflowplayer', 'celanim_oneflowplayer2',
-          'celanim_overlay_oneflowplayer2', 'celanim_externalvideo',
-          'celanim_overlay_externalvideo' ]);
-      initFlowPlayerLinksInsideParent(parentElemIn, 'a.celanim_flowplayerStart');
-      initOneFlowPlayerLinksInsideParent(parentElemIn, 'a.celanim_oneflowplayerStart');
-      initFlowPlayerAudioLinksInsideParent(parentElemIn, 'a.celanim_flowplayerAudioStart');
-      initOverlayLinksInsideParent(parentElemIn, 'a.celanim_overlay');
-    } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-      console.log('register of celanim movieplayer stopped for ', parentElem);
-    }
-  };
-
-  var initMoviePlayerCssClassesInsideParent = function(parentElem, cssClassNames) {
-    $A(cssClassNames)
-        .each(
-            function(flowclassname) {
-              if (parentElem.select('a.' + flowclassname).size() > 0) {
-                parentElem
-                    .select('a.' + flowclassname)
-                    .each(
-                        function(elem) {
-                          var flvLink = elem.href.replace(/^..\/..\//g, '/');
-                          elem.href = flvLink;
-                          elem.removeClassName(flowclassname);
-                          if (flowclassname.includes('overlay')) {
-                            elem.addClassName('celanim_overlay');
-                            elem.addClassName(flowclassname.replace(/_overlay_/g, '_'));
-                          } else {
-                            if (elem.href.endsWith('.flv')) {
-                              if (flowclassname.includes('oneflowplayer')) {
-                                elem.addClassName('celanim_oneflowplayerStart');
-                              } else {
-                                elem.addClassName('celanim_flowplayerStart');
-                              }
-                            } else if (elem.href.endsWith('.mp3')) {
-                              var isLinkEmpty = (elem.innerHTML.strip() == '');
-                              if (!isLinkEmpty) {
-                                if (flowclassname.includes('oneflowplayer')) {
-                                  elem.addClassName('celanim_oneflowplayerAudioStart');
-                                } else {
-                                  elem.addClassName('celanim_flowplayerAudioStart');
-                                }
-                              } else {
-                                if ((typeof console != 'undefined')
-                                    && (typeof console.warn != 'undefined')) {
-                                  console
-                                      .warn('Skipping empty flowplayer-Link which might cause automatic '
-                                          + ' playing on page load.');
-                                }
-                              }
-                            } else {
-                              elem.addClassName('celanim_swfplayer');
-                            }
-                          }
-                          if (flowclassname.includes('_externalvideo')) {
-                            var celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
-                            if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
-                              elem.addClassName(celAnimLinkConfig.cssClass);
-                            }
-                          } else if (flowclassname.includes('_mp3_')) {
-                            elem.addClassName('celanim_audio');
-                          } else {
-                            if (flowclassname.endsWith('2')) {
-                              elem.addClassName('celanim_16to9');
-                            } else {
-                              elem.addClassName('celanim_4to3');
-                            }
-                          }
-                        });
-              }
-            });
-  };
-
-  var getCelAnimObject = function() {
-    //TODO get from PlayerConfig
-    return celAnimObject;
-  };
-
-  var getCelAnimSWFConfigForLink = function(elemHref) {
-    var celAnimLinkReplaceObject = getCelAnimObject();
-    var isFound = false;
-    var configObject = null;
-    $A(celAnimLinkReplaceObject).each(function(linkReplaceObj) {
-      if (!isFound && elemHref.match(new RegExp(linkReplaceObj.matchStr))) {
-        isFound = true;
-        configObject = linkReplaceObj;
-      }
-    });
-    return configObject;
-  };
-
   var celAnimGetHexColor = function(color) {
     if (color.startsWith('rgb')) {
       var rgbValues = color.replace(/.*?(\d+)[,)]/g, '$1,').split(',');
@@ -385,7 +284,7 @@
   var initFlowPlayerLinksInsideParent = function(parentElem, flowclassname) {
     if ((parentElem.select(flowclassname).size() > 0) || $(flowclassname)) {
       flowplayer(flowclassname, {
-        src : conf.flowplayerPath,
+        src : conf.flowplayerConf.flowplayerPath,
         wmode : 'opaque'
       }, {
         clip : conf.defaults,
@@ -425,13 +324,13 @@
         }
       }
       flowplayer(flowclassname, {
-        src : '$xwiki.getSkinFile("celJS/flowplayer/flowplayer-3.2.6.swf", true)',
+        src : conf.flowplayerConf.flowplayerPath,
         wmode : 'opaque'
       }, {
         clip : clipConfig,
         plugins : {
           content : {
-            url : '$xwiki.getSkinFile("celJS/flowplayer/flowplayer.content-3.2.0.swf", true)',
+            url : conf.flowplayerConf.flowplayerContentPath,
             left : 0,
             top : 0,
             width : '100%',
