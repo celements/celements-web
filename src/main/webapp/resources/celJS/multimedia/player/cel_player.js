@@ -61,7 +61,7 @@
 
       isConfDefined : function() {
         var _me = this;
-        return ((typeof _me._conf !== 'undefined') && _me._conf.defaults);
+        return (typeof _me._conf === 'object');
       },
 
       getConfObjCopy : function() {
@@ -291,7 +291,7 @@
         src : conf.flowplayerConf.flowplayerPath,
         wmode : 'opaque'
       }, {
-        clip : conf.defaults,
+        clip : conf.flowplayerConf.flowplayerLookConf.defaults,
         plugins : {
           controls : conf.skins.dark
         }
@@ -312,7 +312,7 @@
 
   var initFlowPlayerAudioLinksInsideParent = function(parentElem, flowclassname) {
     if (parentElem.select(flowclassname).size() > 0) {
-      var clipConfig = conf.defaults;
+      var clipConfig = conf.flowplayerConf.flowplayerLookConf.defaults;
       if (clipConfig.autoBuffering && !clipConfig.autoPlay) {
         // there is a problem with the flash if the mp3 has not ID3 tags of
         // version 2.3 - 2.4
