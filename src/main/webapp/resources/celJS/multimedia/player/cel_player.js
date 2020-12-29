@@ -80,7 +80,7 @@
 
       _transformCssClassName : function(elem, flowclassname) {
         var _me = this;
-        console.warn('registerPlayer: TODO implement in Player', elem);
+        console.warn('_transformCssClassName: TODO implement in Player', elem, flowclassname);
         var flvLink = elem.href;
         elem.removeClassName(flowclassname);
         if (flowclassname.includes('overlay')) {
@@ -149,7 +149,7 @@
 
       initialize : function(playerConf) {
         var _me = this;
-        _me._conf = playerConf.getConfObj();
+        _me._conf = playerConf;
         _me.registerPlayer();
       },
 
@@ -175,13 +175,14 @@
       },
 
       initMoviePlayerCssClassesInsideParent : function(parentElem, cssClassNames) {
+        console.debug('initMoviePlayerCssClassesInsideParent: ', parentElem, cssClassNames);
         $A(cssClassNames).each(
                 function(flowclassname) {
                   if (parentElem.select('a.' + flowclassname).size() > 0) {
                     parentElem
                         .select('a.' + flowclassname)
                         .each(function(elem) {
-                            _me._transformCssClassName(elem, flowclassname);
+                            _me._conf._transformCssClassName(elem, flowclassname);
                           });
                   }
                 });
