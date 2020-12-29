@@ -279,7 +279,7 @@
     window.CELEMENTS.multimedia.AudioPlayer = Class.create({
 
       initialize : function($super) {
-        $super();
+        $super.initialize();
       },
 
       _getPlayerCssClassNames : function() {
@@ -301,7 +301,7 @@
     window.CELEMENTS.multimedia.ExternalPlayer = Class.create({
 
       initialize : function($super) {
-        $super();
+        $super.initialize();
       },
 
       _getPlayerCssClassNames : function() {
