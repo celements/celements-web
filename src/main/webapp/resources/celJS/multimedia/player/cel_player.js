@@ -178,6 +178,7 @@
       },
 
       initMoviePlayerCssClassesInsideParent : function(parentElem, cssClassNames) {
+        var _me = this;
         console.debug('initMoviePlayerCssClassesInsideParent: ', parentElem, cssClassNames);
         $A(cssClassNames).each(
                 function(flowclassname) {
