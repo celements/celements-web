@@ -92,7 +92,7 @@
 
     celObserve : function(eventKey, callbackFN) {
       var _me = this;
-      console.debut('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
+      console.debug('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
       if (!eventKey) {
         throw "undefined eventKey in observe call ";
       }
