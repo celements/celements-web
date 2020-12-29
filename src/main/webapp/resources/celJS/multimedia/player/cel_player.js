@@ -72,6 +72,7 @@
       getConfObj : function(subConfigName) {
         var _me = this;
         if (_me._conf && _me._conf[subConfigName]) {
+          console.debug('getConfObj: ', subConfigName, _me._conf[subConfigName]);
           return _me._conf[subConfigName];
         }
         return _me._conf;
