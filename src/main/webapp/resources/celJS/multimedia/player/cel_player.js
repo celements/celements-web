@@ -96,12 +96,8 @@
                 elem.addClassName('celmultimedia_flowplayerAudioStart');
               }
             } else {
-              if ((typeof console != 'undefined')
-                  && (typeof console.warn != 'undefined')) {
-                console
-                    .warn('Skipping empty flowplayer-Link which might cause automatic '
-                        + ' playing on page load.');
-              }
+                console.warn('Skipping empty flowplayer-Link which might cause automatic '
+                        + ' playing on page load.', elem);
             }
           }
         }
