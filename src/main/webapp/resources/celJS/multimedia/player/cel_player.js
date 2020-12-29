@@ -79,9 +79,9 @@
       },
 
 
-      _transformCssClassName : function(elem, flowclassname) {
+      transformCssClassName : function(elem, flowclassname) {
         var _me = this;
-        console.warn('_transformCssClassName: TODO implement in Player', elem, flowclassname);
+        console.warn('transformCssClassName: TODO implement in Player', elem, flowclassname);
         var flvLink = elem.href;
         elem.removeClassName(flowclassname);
         if (flowclassname.includes('overlay')) {
@@ -186,7 +186,7 @@
                     parentElem
                         .select('a.' + flowclassname)
                         .each(function(elem) {
-                            _me._playerConf._transformCssClassName(elem, flowclassname);
+                            _me._playerConf.transformCssClassName(elem, flowclassname);
                           });
                   }
                 });
