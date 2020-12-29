@@ -91,9 +91,9 @@
             var isLinkEmpty = (elem.innerHTML.strip() == '');
             if (!isLinkEmpty) {
               if (flowclassname.includes('oneflowplayer')) {
-                elem.addClassName('celmultimedia_oneflowplayerAudioStart');
+                elem.addClassName('celmultimedia_oneAudioStart');
               } else {
-                elem.addClassName('celmultimedia_flowplayerAudioStart');
+                elem.addClassName('celmultimedia_audioStart');
               }
             } else {
                 console.warn('Skipping empty flowplayer-Link which might cause automatic '
@@ -204,7 +204,7 @@
         return [];
       },
 
-      _initalizePlayer : function() {
+      _initalizePlayer : function(parentElem) {
         console.warn('_initalizePlayer: unimplemented method!');
       },
 
@@ -273,13 +273,32 @@
 
   if (typeof window.CELEMENTS.multimedia.AudioPlayer === 'undefined') {
     window.CELEMENTS.multimedia.AudioPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
+      _createAudioElementBind : undefined,
+
+      initialize : function($super) {
+        var _me = this;
+        $super();
+        _me._createAudioElementBind = _me._createAudioElement.bind(_me);
+      },
 
       _getPlayerCssClassNames : function() {
         return [ 'celanim_mp3_flowplayer', 'celanim_overlay_mp3_flowplayer'];
       },
 
-      _initalizePlayer : function() {
-        console.warn('_initalizePlayer: ToDo AudioPlayer');
+      _initalizePlayer : function(parentElem) {
+        var _me = this;
+        parentElem.select('a.celmultimedia_audioStart').each(_me._createAudioElementBind);
+      },
+
+      _createAudioElement : function(linkElem) {
+        var audioElem = new Element('audio', { 'controls' : '', 'class' : linkElem.classNames });
+        var audioSrcElem = new Element('source', {
+          'src' : linkElem.href,
+          'type' : 'audio/mpeg'
+        });
+        audioElem.update(audioSrcElem);
+        audioElem.insert({'bottom' : 'Your browser does not support the audio element.'});
+        linkElem.replace(audioElem);
       }
 
     });    
@@ -293,7 +312,7 @@
         return [ 'celanim_externalvideo', 'celanim_overlay_externalvideo' ];
       },
 
-      _initalizePlayer : function() {
+      _initalizePlayer : function(parentElem) {
         console.warn('_initalizePlayer: ToDo ExternalPlayer');
       }
 
