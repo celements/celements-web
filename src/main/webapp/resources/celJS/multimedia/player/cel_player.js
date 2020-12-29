@@ -81,7 +81,6 @@
 
       transformCssClassName : function(elem, flowclassname) {
         var _me = this;
-        console.warn('transformCssClassName: TODO implement in Player', elem, flowclassname);
         var flvLink = elem.href;
         elem.removeClassName(flowclassname);
         if (flowclassname.includes('overlay')) {
@@ -141,15 +140,52 @@
         CELEMENTS.multimedia.PlayerConf.prototype, CELEMENTS.mixins.Observable);
   }
 
-  if (typeof window.CELEMENTS.multimedia.Player === 'undefined') {
-    window.CELEMENTS.multimedia.Player = Class.create({
+  if (typeof window.CELEMENTS.multimedia.PlayerInitializer === 'undefined') {
+    window.CELEMENTS.multimedia.PlayerInitializer = Class.create({
       _playerConf : undefined,
       _initDocumentReadyBind : undefined,
 
-      initialize : function(playerConf) {
+      initialize : function() {
         var _me = this;
-        _me._playerConf = playerConf;
-        console.log('initialize Player: ', _me._playerConf);
+        _me._initDocumentReadyBind = _me._initDocumentReady.bind(_me);
+        $j(document).ready(_me._initDocumentReadyBind);
+        _me._playerConf = new CELEMENTS.multimedia.PlayerConf();
+      },
+
+      _initDocumentReady : function() {
+        var _me = this;
+        _me._playerConf.celStopObserving("cel-media-player:confLoaded", _me._initDocumentReadyBind);
+        if (_me._playerConf.isConfDefined()) {
+          _me.celFire('cel-media-player:initPlayers', _me._playerConf)
+        } else {
+          _me._playerConf.celObserve("cel-media-player:confLoaded", _me._initDocumentReadyBind);
+        }
+      },
+
+    });
+    CELEMENTS.multimedia.PlayerInitializer.prototype = Object.extend(
+        CELEMENTS.multimedia.PlayerInitializer.prototype, CELEMENTS.mixins.Observable);
+
+    window.CELEMENTS.multimedia.generalPlayerInitializer =
+      new CELEMENTS.multimedia.PlayerInitializer();
+  }
+
+  if (typeof window.CELEMENTS.multimedia.AbstractPlayer === 'undefined') {
+    window.CELEMENTS.multimedia.AbstractPlayer = Class.create({
+      _playerConf : undefined,
+      _initPlayerBind : undefined,
+
+      initialize : function() {
+        var _me = this;
+        _me._initPlayerBind = _me._initPlayer.bind(_me);
+        window.CELEMENTS.multimedia.generalPlayerInitializer.celObserve(
+            'cel-media-player:initPlayers', _me._initPlayerBind);
+      },
+
+      _initPlayer : function(event) {
+        var _me = this;
+        _me._playerConf = event.memo;
+        console.log('_initPlayer: ', _me._playerConf);
         _me.registerPlayer();
       },
 
@@ -160,26 +196,25 @@
         var shouldRegisterBodyEvent = _me.celFire('cel-media-player:shouldRegisterInsideBody',
             parentElemIn);
         if (!shouldRegisterBodyEvent.stopped) {
-          console.log('registerPlayer: before initMoviePlayerCssClasses');
-          _me.initMoviePlayerCssClassesInsideParent(parentElemIn, [ 'celanim_mp3_flowplayer',
-              'celanim_overlay_mp3_flowplayer', 'celanim_flowplayer', 'celanim_overlay_flowplayer',
-              'celanim_flowplayer2', 'celanim_overlay_flowplayer2', 'celanim_oneflowplayer',
-              'celanim_overlay_oneflowplayer', 'celanim_oneflowplayer2',
-              'celanim_overlay_oneflowplayer2', 'celanim_externalvideo',
-              'celanim_overlay_externalvideo' ]);
-          console.warn('registerPlayer: TODO');
-//          initFlowPlayerLinksInsideParent(parentElemIn, 'a.celmultimedia_flowplayerStart');
-//          initOneFlowPlayerLinksInsideParent(parentElemIn, 'a.celmultimedia_oneflowplayerStart');
-//          initFlowPlayerAudioLinksInsideParent(parentElemIn, 'a.celmultimedia_flowplayerAudioStart');
-//          initOverlayLinksInsideParent(parentElemIn, 'a.celmultimedia_overlay');
+          _me._initMultimedaPlayerInsideParent(parentElemIn, _me._getPlayerCssClassNames());
+          _me._initalizePlayer(parentElemIn);
         } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
           console.log('register of cel-mediaplayer stopped for ', parentElemIn);
         }
       },
 
-      initMoviePlayerCssClassesInsideParent : function(parentElem, cssClassNames) {
+      _getPlayerCssClassNames : function() {
+        console.warn('_getPlayerCssClassNames: unimplemented method!');
+        return [];
+      },
+
+      _initalizePlayer : function() {
+        console.warn('_initalizePlayer: unimplemented method!');
+      },
+
+      _initMultimedaPlayerInsideParent : function(parentElem, cssClassNames) {
         var _me = this;
-        console.debug('initMoviePlayerCssClassesInsideParent: ', parentElem, cssClassNames);
+        console.debug('_initMultimedaPlayerInsideParent: ', parentElem, cssClassNames);
         $A(cssClassNames).each(
                 function(flowclassname) {
                   if (parentElem.select('a.' + flowclassname).size() > 0) {
@@ -236,38 +271,44 @@
       }
 
     });
-    CELEMENTS.multimedia.Player.prototype = Object.extend(CELEMENTS.multimedia.Player.prototype,
-        CELEMENTS.mixins.Observable);
+    CELEMENTS.multimedia.AbstractPlayer.prototype = Object.extend(
+        CELEMENTS.multimedia.AbstractPlayer.prototype, CELEMENTS.mixins.Observable);
   }
 
-  if (typeof window.CELEMENTS.multimedia.PlayerInitializer === 'undefined') {
-    window.CELEMENTS.multimedia.PlayerInitializer = Class.create({
-      _playerConf : undefined,
-      _initDocumentReadyBind : undefined,
+  if (typeof window.CELEMENTS.multimedia.AudioPlayer === 'undefined') {
+    window.CELEMENTS.multimedia.AudioPlayer = Class.create({
 
-      initialize : function() {
-        var _me = this;
-        _me._initDocumentReadyBind = _me._initDocumentReady.bind(_me);
-        $j(document).ready(_me._initDocumentReadyBind);
-        _me._playerConf = new CELEMENTS.multimedia.PlayerConf();
+      _getPlayerCssClassNames : function() {
+        return [ 'celanim_mp3_flowplayer', 'celanim_overlay_mp3_flowplayer'];
       },
 
-      _initDocumentReady : function() {
-        var _me = this;
-        _me._playerConf.celStopObserving("cel-media-player:confLoaded", _me._initDocumentReadyBind);
-        if (_me._playerConf.isConfDefined()) {
-          _me._player = new CELEMENTS.multimedia.Player(_me._playerConf);
-        } else {
-          _me._playerConf.celObserve("cel-media-player:confLoaded", _me._initDocumentReadyBind);
-        }
-      },
+      _initalizePlayer : function() {
+        console.warn('_initalizePlayer: ToDo AudioPlayer');
+      }
 
     });
-    CELEMENTS.multimedia.PlayerInitializer.prototype = Object.extend(
-        CELEMENTS.multimedia.PlayerInitializer.prototype, CELEMENTS.mixins.Observable);
+    CELEMENTS.multimedia.AudioPlayer.prototype = Object.extend(
+        CELEMENTS.multimedia.AudioPlayer.prototype, CELEMENTS.multimedia.AbstractPlayer);
+    
+    window.CELEMENTS.multimedia.audioPlayer = new CELEMENTS.multimedia.AudioPlayer();
+  }
 
-    window.CELEMENTS.multimedia.generalPlayerInitializer =
-      new CELEMENTS.multimedia.PlayerInitializer();
+  if (typeof window.CELEMENTS.multimedia.ExternalPlayer === 'undefined') {
+    window.CELEMENTS.multimedia.ExternalPlayer = Class.create({
+
+      _getPlayerCssClassNames : function() {
+        return [ 'celanim_externalvideo', 'celanim_overlay_externalvideo' ];
+      },
+
+      _initalizePlayer : function() {
+        console.warn('_initalizePlayer: ToDo ExternalPlayer');
+      }
+
+    });
+    CELEMENTS.multimedia.ExternalPlayer.prototype = Object.extend(
+        CELEMENTS.multimedia.ExternalPlayer.prototype, CELEMENTS.multimedia.AbstractPlayer);
+    
+    window.CELEMENTS.multimedia.externalPlayer = new CELEMENTS.multimedia.ExternalPlayer();
   }
 
   /*********************************
