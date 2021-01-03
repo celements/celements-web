@@ -213,7 +213,7 @@
         console.warn('_initalizePlayer: unimplemented method!');
       },
 
-      _initalizeOverlayPlayer = function (parentElem, overlayClassName) {
+      _initalizeOverlayPlayer : function (parentElem, overlayClassName) {
         var _me = this;
         if (parentElem.select(overlayClassName).size() > 0) {
           parentElem.select(overlayClassName).each(function (overlayLink) {
