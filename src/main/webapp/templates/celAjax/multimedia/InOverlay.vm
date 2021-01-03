@@ -15,8 +15,8 @@
 </script>
 </head>
 <body style="background-color:black; background-image: none;" class="celmultimedia_inoverlay">
-<audio controls>
-  <source src="$!request.flvfilename" type='audio/mpeg'/>
+<audio controls $!request.additionalAttrs>
+  <source src="$!request.mediaLink" type='audio/mpeg'/>
 </audio> 
 <script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/initCelementsAfter.js', 'file')"></script>
 </body>

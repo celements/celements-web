@@ -81,13 +81,13 @@
 
       transformCssClassName : function(elem, flowclassname) {
         var _me = this;
-        var flvLink = elem.href;
+        var mediaLink = elem.href;
         elem.removeClassName(flowclassname);
         if (flowclassname.includes('overlay')) {
           elem.addClassName('celanim_overlay');
           elem.addClassName(flowclassname.replace(/_overlay_/g, '_'));
         } else {
-          if (flvLink.endsWith('.mp3')) {
+          if (mediaLink.endsWith('.mp3')) {
             var isLinkEmpty = (elem.innerHTML.strip() == '');
             if (!isLinkEmpty) {
               if (flowclassname.includes('oneflowplayer')) {
@@ -102,7 +102,7 @@
           }
         }
         if (flowclassname.includes('_externalvideo')) {
-          var celAnimLinkConfig = _me._getExternalMappingConfigForLink(flvLink);
+          var celAnimLinkConfig = _me._getExternalMappingConfigForLink(mediaLink);
           if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
             elem.addClassName(celAnimLinkConfig.cssClass);
           }
@@ -240,13 +240,14 @@
 
       _openInOverlay : function(e, fixWidth, fixHeight) {
         var elem = e.findElement('a');
-        var flvLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
+        var mediaLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
             + '/');
         var cssClassNames = $w($(elem).className).without('celanim_overlay');
         var overlaySrc = window.getCelHost()
             + '?xpage=celements_ajax&ajax_mode=multimedia/InOverlay';
         overlaySrc += '&cssclassname=' + cssClassNames.join(',');
-        overlaySrc += '&flvfilename=' + encodeURIComponent(flvLink);
+        overlaySrc += '&mediaLink=' + encodeURIComponent(mediaLink);
+        overlaySrc += '&additionalAttrs=autoplay';
         hs.graphicsDir = window.CELEMENTS.getUtils().getPathPrefix()
             + '/file/celJS/highslide/graphics/';
         hs.outlineType = '';
