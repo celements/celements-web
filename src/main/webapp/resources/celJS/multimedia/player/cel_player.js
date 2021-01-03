@@ -274,7 +274,7 @@
       openOverlayPlayer : function(e) {
         var _me = this;
         var elem = e.findElement('a');
-        var overlayConfig = {x: 500, y: 110};
+        var overlayConfig = {x: 450, y: 105};
         if (elem.dataset.celMultimediaOverlayConfig && elem.dataset.celMultimediaOverlayConfig.isJSON()) {
           try {
             overlayConfig = elem.dataset.celMultimediaOverlayConfig.evalJSON();
