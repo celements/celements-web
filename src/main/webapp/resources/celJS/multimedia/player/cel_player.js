@@ -247,7 +247,7 @@
             + '/');
         var cssClassNames = $w($(elem).className).without('celanim_overlay');
         var overlaySrc = window.getCelHost()
-            + '?xpage=celements_ajax&ajax_mode=FlowplayerInOverlay';
+            + '?xpage=celements_ajax&ajax_mode=multimedia/InOverlay';
         overlaySrc += '&cssclassname=' + cssClassNames.join(',');
         overlaySrc += '&flvfilename=' + encodeURIComponent(flvLink);
         hs.graphicsDir = window.CELEMENTS.getUtils().getPathPrefix()

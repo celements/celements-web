@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/prototype.js', 'file')"></script>
+<script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/jquery.js', 'file')"></script>
+<script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/jquery-noconflict.js', 'file')"></script>
+<script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/initCelements.js', 'file')"></script>
+<script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/multimedia/player/cel_player.js', 'file')"></script>
+<title></title>
+<script type="text/javascript">
+ Event.observe(window, 'load', function() {
+  setTimeout("$$('body a')[0].show();", 700);
+ });
+</script>
+</head>
+<body style="background-color:black; background-image: none;" class="celmultimedia_inoverlay">
+<audio controls>
+  <source src="$!request.flvfilename" type='audio/mpeg'/>
+</audio> 
+<script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/initCelementsAfter.js', 'file')"></script>
+</body>
+</html>
