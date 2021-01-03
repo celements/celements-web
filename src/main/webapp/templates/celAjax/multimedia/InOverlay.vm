@@ -14,7 +14,7 @@
  });
 </script>
 </head>
-<body style="background-color:black; background-image: none;" class="celmultimedia_inoverlay">
+<body style="background-color:black; background-image: none; display:flex;" class="celmultimedia_inoverlay">
 <audio controls $!request.additionalAttrs>
   <source src="$!request.mediaLink" type='audio/mpeg'/>
 </audio> 

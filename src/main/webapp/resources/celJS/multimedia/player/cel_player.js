@@ -272,10 +272,14 @@
         e.stop();
       },
 
+      _getDefaultOverlayConfig : function() {
+        return {x: 450, y: 105};
+      },
+
       openOverlayPlayer : function(e) {
         var _me = this;
         var elem = e.findElement('a');
-        var overlayConfig = {x: 450, y: 105};
+        var overlayConfig = _me._getDefaultOverlayConfig();
         if (elem.dataset.celMultimediaOverlayConfig && elem.dataset.celMultimediaOverlayConfig.isJSON()) {
           try {
             overlayConfig = elem.dataset.celMultimediaOverlayConfig.evalJSON();
@@ -309,6 +313,10 @@
         var _me = this;
         parentElem.select('a.celmultimedia_audioStart').each(_me._createAudioElementBind);
         _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celmultimedia_audio');
+      },
+
+      _getDefaultOverlayConfig : function() {
+        return {x: 350, y: 105};
       },
 
       _createAudioElement : function(linkElem) {
