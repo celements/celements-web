@@ -173,10 +173,12 @@
     window.CELEMENTS.multimedia.AbstractPlayer = Class.create({
       _playerConf : undefined,
       _initPlayerBind : undefined,
+      _openOverlayPlayer : undefined,
 
       initialize : function() {
         var _me = this;
         _me._initPlayerBind = _me._initPlayer.bind(_me);
+        _me._openOverlayPlayerBind = _me.openOverlayPlayer.bind(_me);
         window.CELEMENTS.multimedia.generalPlayerInitializer.celObserve(
             'cel-media-player:initPlayers', _me._initPlayerBind);
       },
@@ -211,6 +213,19 @@
         console.warn('_initalizePlayer: unimplemented method!');
       },
 
+      _initalizeOverlayPlayer = function (parentElem, overlayClassName) {
+        var _me = this;
+        if (parentElem.select(overlayClassName).size() > 0) {
+          parentElem.select(overlayClassName).each(function (overlayLink) {
+            if (!overlayLink.dataset.celMultimediaOverlayConfig) {
+              overlayLink.dataset.celMultimediaOverlayConfig = '{x: 580, y: 90}';
+            }
+            overlayLink.stopObserving('click', _me._openOverlayPlayerBind);
+            overlayLink.observe('click', _me._openOverlayPlayerBind);
+          });
+        }
+      },
+
       _initMultimedaPlayerInsideParent : function(parentElem, cssClassNames) {
         var _me = this;
         console.debug('_initMultimedaPlayerInsideParent: ', parentElem, cssClassNames);
@@ -226,7 +241,7 @@
                 });
       },
 
-      openInOverlay : function(e, fixWidth, fixHeight) {
+      _openInOverlay : function(e, fixWidth, fixHeight) {
         var elem = e.findElement('a');
         var flvLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
             + '/');
@@ -259,14 +274,18 @@
         e.stop();
       },
 
-      celanimOpenInOverlaySFAudio : function(e) {
+      openOverlayPlayer : function(e) {
         var _me = this;
-        _me.openInOverlay(e, 580, 70);
-      },
-
-      celanimOpenInOverlayAudio : function(e) {
-        var _me = this;
-        _me.openInOverlay(e, 580, 90);
+        var elem = e.findElement('a');
+        var overlayConfig = {x: 580, y: 90};
+        if (elem.dataset.celMultimediaOverlayConfig && elem.dataset.celMultimediaOverlayConfig.isJSON()) {
+          try {
+            overlayConfig = elem.dataset.celMultimediaOverlayConfig.evalJSON();
+          } catch(exp) {
+            console.warn('openOverlayPlayer: no JSON config, fallback to default');
+          }
+        }
+        _me._openInOverlay(e, overlayConfig.x, overlayConfig.y);
       }
 
     });
@@ -291,6 +310,7 @@
       _initalizePlayer : function(parentElem) {
         var _me = this;
         parentElem.select('a.celmultimedia_audioStart').each(_me._createAudioElementBind);
+        _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celmultimedia_audio');
       },
 
       _createAudioElement : function(linkElem) {
