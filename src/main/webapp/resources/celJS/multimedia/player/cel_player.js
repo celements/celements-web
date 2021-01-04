@@ -275,15 +275,12 @@
           'close' : true,
           'link' : mediaLink,
           'suppressDimFromId' : true,
-          'width' : _me._configReader.getOverlayWidth() + 'px',
-          'height' : _me._configReader.getOverlayHeight() + 'px',
-          'fixedcenter' : !_me._configReader.isAutoResize(),
-          'additionalCssClass' : 'cel-ImageGalleryOverlay'
+          'width' : fixWidth + 'px',
+          'height' : fixHeight + 'px',
+          'fixedcenter' : true,
+          'additionalCssClass' : 'cel-multimedia'
         });
         // var cssClassNames = $w($(elem).className).without('celanim_overlay');
-        openDialog._overlayDialog.cfg.setProperty('width', fixWidth + 'px');
-        openDialog._overlayDialog.cfg.setProperty('height', fixHeight + 'px');
-        openDialog._overlayDialog.center();
         openDialog.intermediatOpenHandler();
       },
 
