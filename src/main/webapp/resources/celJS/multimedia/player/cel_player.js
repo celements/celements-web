@@ -266,7 +266,28 @@
                 });
       },
 
-      _openInOverlay : function(e, fixWidth, fixHeight) {
+      _openInYuiOverlay: function (e, fixWidth, fixHeight) {
+        var _me = this;
+        var elem = e.findElement('a');
+        var mediaLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
+            + '/');
+        var openDialog = CELEMENTS.presentation.getOverlayObj({
+          'close' : true,
+          'link' : mediaLink,
+          'suppressDimFromId' : true,
+          'width' : _me._configReader.getOverlayWidth() + 'px',
+          'height' : _me._configReader.getOverlayHeight() + 'px',
+          'fixedcenter' : !_me._configReader.isAutoResize(),
+          'additionalCssClass' : 'cel-ImageGalleryOverlay'
+        });
+        // var cssClassNames = $w($(elem).className).without('celanim_overlay');
+        openDialog._overlayDialog.cfg.setProperty('width', fixWidth + 'px');
+        openDialog._overlayDialog.cfg.setProperty('height', fixHeight + 'px');
+        openDialog._overlayDialog.center();
+        openDialog.intermediatOpenHandler();
+      },
+
+      _openInOverlay: function (e, fixWidth, fixHeight) {
         var elem = e.findElement('a');
         var mediaLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
             + '/');
@@ -315,7 +336,7 @@
             console.warn('openOverlayPlayer: no JSON config, fallback to default');
           }
         }
-        _me._openInOverlay(e, overlayConfig.x, overlayConfig.y);
+        _me._openInYuiOverlay(e, overlayConfig.x, overlayConfig.y);
       }
 
     });
