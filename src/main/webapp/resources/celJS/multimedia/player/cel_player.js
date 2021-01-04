@@ -202,13 +202,42 @@
       _playerConf : undefined,
       _initPlayerBind : undefined,
       _openOverlayPlayer : undefined,
+      _yuiOverlayObj : undefined,
+      _afterRenderOverlayBind : undefined,
 
       initialize : function() {
         var _me = this;
         _me._initPlayerBind = _me._initPlayer.bind(_me);
         _me._openOverlayPlayerBind = _me.openOverlayPlayer.bind(_me);
+        _me._afterRenderOverlayBind = _me._afterRenderOverlay.bind(_me);
         window.CELEMENTS.multimedia.generalPlayerInitializer.celObserve(
             'cel-media-player:initPlayers', _me._initPlayerBind);
+        _me._yuiOverlayObj = new CELEMENTS.presentation.Overlay({
+          'dialogId' : 'celMultimediaOverlay',
+          'containerId' : 'celMultimediaOverlayContainer',
+          'close' : true,
+          'link' : null,
+          'suppressDimFromId' : true,
+          'fixedcenter' : true,
+          'additionalCssClass' : 'cel-multimedia'
+        });
+      _me._yuiOverlayObj.celObserve('cel-yuiOverlay:afterRenderDialog',
+          _me._afterRenderOverlayBind);
+      },
+
+      _afterRenderOverlay : function(event) {
+        var _me = this;
+        _me._afterRenderOverlay(event);
+      },
+
+      _internalAfterRenderOverlay : function(event) {
+        console.warn('_internalAfterRenderOverlay: not implemented');
+      },
+
+      _getOverlayDialog : function(configObj) {
+        var _me = this;
+        _me._yuiOverlayObj.updateOpenConfig(configObj);
+        return _me._yuiOverlayObj;
       },
 
       _initPlayer : function(event) {
@@ -272,17 +301,12 @@
         var elem = e.findElement('a');
         var mediaLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
             + '/');
-        var openDialog = CELEMENTS.presentation.getOverlayObj({
-          'close' : true,
-          'link' : mediaLink,
-          'suppressDimFromId' : true,
+        var openDialog = _me._getOverlayDialog({
           'width' : fixWidth + 'px',
           'height' : fixHeight + 'px',
-          'fixedcenter' : true,
-          'additionalCssClass' : 'cel-multimedia'
         });
         // var cssClassNames = $w($(elem).className).without('celanim_overlay');
-        openDialog.intermediatOpenHandler();
+        openDialog.open();
       },
 
       _openInOverlay: function (e, fixWidth, fixHeight) {
@@ -404,6 +428,11 @@
 
       _getDefaultOverlayConfig : function() {
         return {x: 560, y: 350};
+      },
+
+      _internalAfterRenderOverlay : function(event) {
+        var _me = this;
+        console.warn('_internalAfterRenderOverlay: TODO implement');
       },
 
       _createExternalVideoElement : function(linkElem) {
