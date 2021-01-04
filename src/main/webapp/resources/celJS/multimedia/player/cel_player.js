@@ -129,6 +129,16 @@
           }
         });
         return configObject;
+      },
+
+      getExternalMovieLink = function (mediaLink) {
+        var _me = this;
+        var linkReplaceObj = _me._getExternalMappingConfigForLink(mediaLink);
+        if (linkReplaceObj) {
+          mediaLink = mediaLink.replace(new RegExp(linkReplaceObj.matchStr),
+            linkReplaceObj.replaceStr);
+        }
+        return mediaLink;
       }
 
     });
@@ -336,24 +346,42 @@
 
   if (typeof window.CELEMENTS.multimedia.ExternalPlayer === 'undefined') {
     window.CELEMENTS.multimedia.ExternalPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
-/** youtube
-<iframe width="560" height="315" src="https://www.youtube.com/embed/33-AJqEA-7k" frameborder="0"
- allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
- allowfullscreen></iframe>
- */
+      _createExternalVideoElementBind : undefined,
+
+      initialize : function($super) {
+        var _me = this;
+        $super();
+        _me._createExternalVideoElementBind = _me._createExternalVideoElement.bind(_me);
+      },
+
       _getPlayerCssClassNames : function() {
         return [ 'celanim_externalvideo', 'celanim_overlay_externalvideo' ];
       },
 
       _initalizePlayer : function(parentElem) {
         var _me = this;
-        // parentElem.select('a.celmultimedia_audioStart').each(_me._createAudioElementBind);
-        console.warn('_initalizePlayer: ToDo ExternalPlayer embedded');
+        parentElem.select('a.celmultimedia_externalvideo').each(
+          _me._createExternalVideoElementBind);
         _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celanim_externalvideo');
       },
 
       _getDefaultOverlayConfig : function() {
         return {x: 560, y: 350};
+      },
+
+      _createExternalVideoElement : function(linkElem) {
+      /** youtube
+<iframe width="560" height="315" src="https://www.youtube.com/embed/33-AJqEA-7k" frameborder="0"
+ allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+ allowfullscreen></iframe>
+ */
+        var _me = this;
+        var linkSrcTransformed = _me._playerConf.getExternalMovieLink(linkElem.href);
+        var extVideoFrame = new Element('iframe', { 'allowfullscreen' : '',
+          'class' : linkElem.classNames(), 'width' : '100%', 'height' : '100%', 
+          'style' : 'height: 100%; width: 100%;', 'src' : linkSrcTransformed });
+        console.warn('_initalizePlayer: ToDo ExternalPlayer embedded');
+        linkElem.replace(extVideoFrame);
       }
 
     });
