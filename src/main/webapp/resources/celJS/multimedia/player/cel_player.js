@@ -342,7 +342,14 @@
       },
 
       _initalizePlayer : function(parentElem) {
-        console.warn('_initalizePlayer: ToDo ExternalPlayer');
+        var _me = this;
+        // parentElem.select('a.celmultimedia_audioStart').each(_me._createAudioElementBind);
+        console.warn('_initalizePlayer: ToDo ExternalPlayer embedded');
+        _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celanim_externalvideo');
+      },
+
+      _getDefaultOverlayConfig : function() {
+        return {x: 350, y: 105};
       }
 
     });
