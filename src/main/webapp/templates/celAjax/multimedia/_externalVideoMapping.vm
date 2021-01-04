@@ -12,7 +12,7 @@ $jsonBuilderIntern.closeDictionary()##
 $jsonBuilderIntern.openDictionary()##
 $jsonBuilderIntern.addProperty('name', 'youtube')##
 $jsonBuilderIntern.addProperty('matchStr', '^https?:\/\/(www.youtube.com\/.*?[\/=]|youtu.be\/)')##
-$jsonBuilderIntern.addProperty('replaceStr', 'https://www.youtube.com/v/')##
+$jsonBuilderIntern.addProperty('replaceStr', 'https://www.youtube.com/embed/')##
 $jsonBuilderIntern.addProperty('cssClass', 'celmultimedia_youtube')##
 $jsonBuilderIntern.addProperty('replaceOnLoad', true)##
 $jsonBuilderIntern.closeDictionary()##

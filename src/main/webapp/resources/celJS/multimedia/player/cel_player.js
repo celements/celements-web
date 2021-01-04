@@ -126,11 +126,14 @@
         var isFound = false;
         var configObject = null;
         $A(celAnimLinkReplaceObject).each(function(linkReplaceObj) {
+          console.debug('_getExternalMappingConfigForLink: matching ', linkReplaceObj.matchStr,
+          elemHref, elemHref.match(new RegExp(linkReplaceObj.matchStr)));
           if (!isFound && elemHref.match(new RegExp(linkReplaceObj.matchStr))) {
             isFound = true;
             configObject = linkReplaceObj;
           }
         });
+        console.debug('_getExternalMappingConfigForLink: returning ', configObject);
         return configObject;
       },
 
@@ -142,7 +145,7 @@
           linkReplaceObj.replaceStr);
           console.debug('getExternalMovieLink: after replace', mediaLink);
         } else {
-          console.warn('getExternalMoveLink: no maching replace rule found.');
+          console.warn('getExternalMovieLink: no maching replace rule found.');
         }
         return mediaLink;
       }
@@ -168,11 +171,22 @@
         var _me = this;
         _me._playerConf.celStopObserving("cel-media-player:confLoaded", _me._initDocumentReadyBind);
         if (_me._playerConf.isConfDefined()) {
+          _me._addDefaultCss(_me._playerConf.getConfObj('defaults').defaultCss);
           _me.celFire('cel-media-player:initPlayers', _me._playerConf)
         } else {
           _me._playerConf.celObserve("cel-media-player:confLoaded", _me._initDocumentReadyBind);
         }
       },
+
+      _addDefaultCss : function(cssLink) {
+        var newEle = new Element('link', {
+            'rel': 'stylesheet',
+            'href': cssLink,
+            'type': 'text/css',
+            'media': 'screen'
+        });
+        $(document.head).insert({bottom : newEle });
+      }
 
     });
     CELEMENTS.multimedia.PlayerInitializer.prototype = Object.extend(
@@ -383,12 +397,17 @@
  */
         var _me = this;
         var linkSrcTransformed = _me._playerConf.getExternalMovieLink(linkElem.href);
-        console.log('externalVideo create:', linkElem, linkSrcTransformed);
+        console.log('externalVideo create:', linkElem.href, linkSrcTransformed);
         var extVideoFrame = new Element('iframe', { 'allowfullscreen' : '',
-          'class' : linkElem.classNames(), 'width' : '100%', 'height' : '100%', 
+          'width' : '100%', 'height' : '100%', 
+          'allow' : 'encrypted-media; gyroscope;',
+          'frameborder' : '0',
           'style' : 'height: 100%; width: 100%;', 'src' : linkSrcTransformed });
         console.warn('_initalizePlayer: ToDo ExternalPlayer embedded');
-        linkElem.replace(extVideoFrame);
+        var extVideoDiv = new Element('div', {
+           'class' : linkElem.classNames()
+          }).update(extVideoFrame);
+        linkElem.replace(extVideoDiv);
       }
 
     });

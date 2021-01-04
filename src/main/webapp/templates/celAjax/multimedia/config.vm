@@ -1,5 +1,9 @@
 #set($jsonBuilder = $services.json.newBuilder())##
 $jsonBuilder.openDictionary()##
+## defaults
+$jsonBuilder.openDictionary('defaults')##
+$jsonBuilder.addProperty('defaultCss', "$!services.celementsweb.getSkinFile(':celRes/multimedia/playerDefaults.css', 'file')")##
+$jsonBuilder.closeDictionary()##
 ## flowplayerConf
 $jsonBuilder.openDictionary('flowplayerConf')##
 ## flowplayer path to the js resource
