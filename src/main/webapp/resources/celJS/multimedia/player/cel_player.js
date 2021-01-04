@@ -432,7 +432,10 @@
 
       _internalAfterRenderOverlay : function(event) {
         var _me = this;
-        console.warn('_internalAfterRenderOverlay: TODO implement');
+        var overlayDialog = event.memo;
+        console.warn('_internalAfterRenderOverlay: TODO implement ',
+           overlayDialog.getContainerId());
+        console.log('>>>> TODO: ', $(overlayDialog.getContainerId()));
       },
 
       _createExternalVideoElement : function(linkElem) {
