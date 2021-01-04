@@ -227,7 +227,7 @@
 
       _afterRenderOverlay : function(event) {
         var _me = this;
-        _me._afterRenderOverlay(event);
+        _me._internalAfterRenderOverlay(event);
       },
 
       _internalAfterRenderOverlay : function(event) {
