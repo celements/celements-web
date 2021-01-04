@@ -126,8 +126,6 @@
         var isFound = false;
         var configObject = null;
         $A(celAnimLinkReplaceObject).each(function(linkReplaceObj) {
-          console.debug('_getExternalMappingConfigForLink: matching ', linkReplaceObj.matchStr,
-          elemHref, elemHref.match(new RegExp(linkReplaceObj.matchStr)));
           if (!isFound && elemHref.match(new RegExp(linkReplaceObj.matchStr))) {
             isFound = true;
             configObject = linkReplaceObj;
