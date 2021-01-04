@@ -336,7 +336,11 @@
 
   if (typeof window.CELEMENTS.multimedia.ExternalPlayer === 'undefined') {
     window.CELEMENTS.multimedia.ExternalPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
-
+/** youtube
+<iframe width="560" height="315" src="https://www.youtube.com/embed/33-AJqEA-7k" frameborder="0"
+ allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+ allowfullscreen></iframe>
+ */
       _getPlayerCssClassNames : function() {
         return [ 'celanim_externalvideo', 'celanim_overlay_externalvideo' ];
       },
@@ -349,7 +353,7 @@
       },
 
       _getDefaultOverlayConfig : function() {
-        return {x: 350, y: 105};
+        return {x: 560, y: 350};
       }
 
     });

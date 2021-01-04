@@ -8,16 +8,17 @@
 <script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/initCelements.js', 'file')"></script>
 <script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/multimedia/player/cel_player.js', 'file')"></script>
 <title></title>
-<script type="text/javascript">
- Event.observe(window, 'load', function() {
-  setTimeout("$$('body a')[0].show();", 700);
- });
-</script>
 </head>
 <body style="background-color:black; background-image: none; display:flex;" class="celmultimedia_inoverlay">
-<audio controls $!request.additionalAttrs>
+#set($cssClasses = "$!{request.cssclassname.replaceAll(',',' ')}")
+#if($cssClasses.indexOf('celmultimedia_audio') >= 0)
+<audio class="$!cssClasses" controls $!request.additionalAttrs>
   <source src="$!request.mediaLink" type='audio/mpeg'/>
-</audio> 
+</audio>
+#else
+<iframe width="560" height="315" src="$!request.mediaLink"
+ frameborder="0" allowfullscreen></iframe>
+#end
 <script type="text/javascript" src="$!services.celementsweb.getSkinFile(':celJS/initCelementsAfter.js', 'file')"></script>
 </body>
 </html>
