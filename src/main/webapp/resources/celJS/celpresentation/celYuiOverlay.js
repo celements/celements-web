@@ -42,7 +42,7 @@ external js-files
   "use strict";
 
   if (typeof window.CELEMENTS == "undefined") { window.CELEMENTS = {}; }
-  if (typeof window.CELEMENTS.presentation == "undefined") { window.CELEMENTS.presentation = {}; }
+  if (typeof window.CELEMENTS.presentation === "undefined") { window.CELEMENTS.presentation = {}; }
 
   //////////////////////////////////////////////////////////////////////////////
   // Celements presentation overlay class
@@ -445,5 +445,5 @@ external js-files
   CELEMENTS.presentation.Overlay.prototype = Object.extend(CELEMENTS.presentation.Overlay.prototype,
     CELEMENTS.mixins.Observable);
 
-}) ();
+}) (window);
 
