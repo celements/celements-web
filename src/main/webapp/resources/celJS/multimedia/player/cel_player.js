@@ -268,6 +268,7 @@
 
       _openInYuiOverlay: function (e, fixWidth, fixHeight) {
         var _me = this;
+        e.stop();
         var elem = e.findElement('a');
         var mediaLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
             + '/');
