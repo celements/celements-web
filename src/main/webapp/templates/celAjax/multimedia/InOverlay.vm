@@ -16,7 +16,7 @@
   <source src="$!request.mediaLink" type='audio/mpeg'/>
 </audio>
 #else
-<a href="$!request.flvfilename" class="$!{request.cssclassname.replaceAll(',',' ')}" ##
+<a href="$!request.flvfilename" class="$!{cssClasses}" ##
 style="display:none; background-color:black !important; margin-left:auto; margin-right:auto; ##
  padding:0px;">
 </a>

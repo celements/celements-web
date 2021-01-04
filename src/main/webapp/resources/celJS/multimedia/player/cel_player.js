@@ -106,6 +106,9 @@
           if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
             elem.addClassName(celAnimLinkConfig.cssClass);
           }
+          if (!elem.hasClassName('celanim_overlay')) {
+            elem.addClassName('celmultimedia_externalvideo');
+          }
         } else if (flowclassname.includes('_mp3_')) {
           elem.addClassName('celmultimedia_audio');
         } else {
@@ -131,12 +134,15 @@
         return configObject;
       },
 
-      getExternalMovieLink = function (mediaLink) {
+      getExternalMovieLink : function (mediaLink) {
         var _me = this;
         var linkReplaceObj = _me._getExternalMappingConfigForLink(mediaLink);
         if (linkReplaceObj) {
           mediaLink = mediaLink.replace(new RegExp(linkReplaceObj.matchStr),
-            linkReplaceObj.replaceStr);
+          linkReplaceObj.replaceStr);
+          console.debug('getExternalMovieLink: after replace', mediaLink);
+        } else {
+          console.warn('getExternalMoveLink: no maching replace rule found.');
         }
         return mediaLink;
       }
@@ -377,6 +383,7 @@
  */
         var _me = this;
         var linkSrcTransformed = _me._playerConf.getExternalMovieLink(linkElem.href);
+        console.log('externalVideo create:', linkElem, linkSrcTransformed);
         var extVideoFrame = new Element('iframe', { 'allowfullscreen' : '',
           'class' : linkElem.classNames(), 'width' : '100%', 'height' : '100%', 
           'style' : 'height: 100%; width: 100%;', 'src' : linkSrcTransformed });
