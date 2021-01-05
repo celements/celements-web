@@ -227,10 +227,12 @@
 
       _afterRenderOverlay : function(event) {
         var _me = this;
-        _me._internalAfterRenderOverlay(event);
+        var overlayDialog = event.memo;
+        var linkElem = overlayDialog._dialogConfig.multimediaElem;
+        _me._internalAfterRenderOverlay(overlayDialog, linkElem);
       },
 
-      _internalAfterRenderOverlay : function(event) {
+      _internalAfterRenderOverlay : function(overlayDialog, linkElem) {
         console.warn('_internalAfterRenderOverlay: not implemented');
       },
 
@@ -299,13 +301,11 @@
         var _me = this;
         e.stop();
         var elem = e.findElement('a');
-        var mediaLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
-            + '/');
         var openDialog = _me._getOverlayDialog({
           'width' : fixWidth + 'px',
           'height' : fixHeight + 'px',
+          'multimediaElem' : elem
         });
-        // var cssClassNames = $w($(elem).className).without('celanim_overlay');
         openDialog.open();
       },
 
@@ -407,12 +407,12 @@
 
   if (typeof window.CELEMENTS.multimedia.ExternalPlayer === 'undefined') {
     window.CELEMENTS.multimedia.ExternalPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
-      _createExternalVideoElementBind : undefined,
+      _replaceWithExternalVideoElementBind : undefined,
 
       initialize : function($super) {
         var _me = this;
         $super();
-        _me._createExternalVideoElementBind = _me._createExternalVideoElement.bind(_me);
+        _me._replaceWithExternalVideoElementBind = _me._replaceWithExternalVideoElement.bind(_me);
       },
 
       _getPlayerCssClassNames : function() {
@@ -422,7 +422,7 @@
       _initalizePlayer : function(parentElem) {
         var _me = this;
         parentElem.select('a.celmultimedia_externalvideo').each(
-          _me._createExternalVideoElementBind);
+          _me._replaceWithExternalVideoElementBind);
         _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celanim_externalvideo');
       },
 
@@ -430,12 +430,14 @@
         return {x: 560, y: 350};
       },
 
-      _internalAfterRenderOverlay : function(event) {
+      _internalAfterRenderOverlay : function(overlayDialog, linkElem) {
         var _me = this;
-        var overlayDialog = event.memo;
-        console.warn('_internalAfterRenderOverlay: TODO implement ',
-           overlayDialog.getContainerId());
-        console.log('>>>> TODO: ', $(overlayDialog.getContainerId()));
+        $(overlayDialog.getContainerId()).update(_me._createExternalVideoElement(linkElem));
+      },
+
+      _replaceWithExternalVideoElement : function(linkElem) {
+        var _me = this;
+        linkElem.replace(_me._createExternalVideoElement(linkElem));
       },
 
       _createExternalVideoElement : function(linkElem) {
@@ -456,7 +458,7 @@
         var extVideoDiv = new Element('div', {
            'class' : linkElem.classNames()
           }).update(extVideoFrame);
-        linkElem.replace(extVideoDiv);
+          return extVideoDiv;
       }
 
     });
