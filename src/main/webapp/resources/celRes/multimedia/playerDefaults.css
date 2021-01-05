@@ -28,15 +28,18 @@ a.celmultimedia_16to9 {
     height: 433px !important;
     width: 770px !important;
 }
-.celmultimedia_youtube {
+.celmultimedia_youtube,
+.celmultimedia_vimeo {
     display: block;
     height: 331px;
     width: 550px;
 }
+.celmultimedia_vimeo .highslide-html-content,
 .celmultimedia_youtube .highslide-html-content {
     height: 511px;
     width: 790px;
 }
+.celmultimedia_inoverlay .celmultimedia_vimeo,
 .celmultimedia_inoverlay .celmultimedia_youtube {
     height: 463px !important;
     width: 770px !important;
