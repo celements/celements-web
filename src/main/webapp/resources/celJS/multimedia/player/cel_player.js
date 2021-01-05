@@ -219,7 +219,7 @@
           'link' : null,
           'suppressDimFromId' : true,
           'fixedcenter' : true,
-          'additionalCssClass' : 'cel-multimedia'
+          'additionalCssClass' : 'celmultimedia_inoverlay'
         });
       _me._yuiOverlayObj.celObserve('cel-yuiOverlay:afterRenderDialog',
           _me._afterRenderOverlayBind);
@@ -229,11 +229,11 @@
         var _me = this;
         var overlayDialog = event.memo;
         var linkElem = overlayDialog._dialogConfig.multimediaElem;
-        _me._internalAfterRenderOverlay(overlayDialog, linkElem);
+        $(overlayDialog.getContainerId()).update(_me._createPlayerElement(linkElem));
       },
 
-      _internalAfterRenderOverlay : function(overlayDialog, linkElem) {
-        console.warn('_internalAfterRenderOverlay: not implemented');
+      _createPlayerElement : function(linkElem) {
+        console.warn('_createPlayerElement: not implemented');
       },
 
       _getOverlayDialog : function(configObj) {
@@ -309,39 +309,39 @@
         openDialog.open();
       },
 
-      _openInOverlay: function (e, fixWidth, fixHeight) {
-        var elem = e.findElement('a');
-        var mediaLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
-            + '/');
-        var cssClassNames = $w($(elem).className).without('celanim_overlay');
-        var overlaySrc = window.getCelHost()
-            + '?xpage=celements_ajax&ajax_mode=multimedia/InOverlay';
-        overlaySrc += '&cssclassname=' + cssClassNames.join(',');
-        overlaySrc += '&mediaLink=' + encodeURIComponent(mediaLink);
-        overlaySrc += '&additionalAttrs=autoplay';
-        hs.graphicsDir = window.CELEMENTS.getUtils().getPathPrefix()
-            + '/file/celJS/highslide/graphics/';
-        hs.outlineType = '';
-        hs.wrapperClassName = 'no-footer no-move draggable-header celanim_overlay_wrapper '
-            + cssClassNames.join(' ');
-        var params = {
-          src : overlaySrc,
-          objectType : 'iframe',
-          dimmingOpacity : 0.60,
-          dragByHeading : false,
-          align : 'center',
-          preserveContent : false,
-          objectHeight : '0' // important for IE!!!
-        };
-        if (fixWidth) {
-          params.width = fixWidth;
-        }
-        if (fixHeight) {
-          params.height = fixHeight;
-        }
-        hs.htmlExpand(null, params);
-        e.stop();
-      },
+      // _openInOverlay: function (e, fixWidth, fixHeight) {
+      //   var elem = e.findElement('a');
+      //   var mediaLink = elem.href.replace(/^..\/..\//g, window.CELEMENTS.getUtils().getPathPrefix()
+      //       + '/');
+      //   var cssClassNames = $w($(elem).className).without('celanim_overlay');
+      //   var overlaySrc = window.getCelHost()
+      //       + '?xpage=celements_ajax&ajax_mode=multimedia/InOverlay';
+      //   overlaySrc += '&cssclassname=' + cssClassNames.join(',');
+      //   overlaySrc += '&mediaLink=' + encodeURIComponent(mediaLink);
+      //   overlaySrc += '&additionalAttrs=autoplay';
+      //   hs.graphicsDir = window.CELEMENTS.getUtils().getPathPrefix()
+      //       + '/file/celJS/highslide/graphics/';
+      //   hs.outlineType = '';
+      //   hs.wrapperClassName = 'no-footer no-move draggable-header celanim_overlay_wrapper '
+      //       + cssClassNames.join(' ');
+      //   var params = {
+      //     src : overlaySrc,
+      //     objectType : 'iframe',
+      //     dimmingOpacity : 0.60,
+      //     dragByHeading : false,
+      //     align : 'center',
+      //     preserveContent : false,
+      //     objectHeight : '0' // important for IE!!!
+      //   };
+      //   if (fixWidth) {
+      //     params.width = fixWidth;
+      //   }
+      //   if (fixHeight) {
+      //     params.height = fixHeight;
+      //   }
+      //   hs.htmlExpand(null, params);
+      //   e.stop();
+      // },
 
       _getDefaultOverlayConfig : function() {
         return {x: 450, y: 105};
@@ -368,12 +368,12 @@
 
   if (typeof window.CELEMENTS.multimedia.AudioPlayer === 'undefined') {
     window.CELEMENTS.multimedia.AudioPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
-      _createAudioElementBind : undefined,
+      _replaceWithPlayerElementBind : undefined,
 
       initialize : function($super) {
         var _me = this;
         $super();
-        _me._createAudioElementBind = _me._createAudioElement.bind(_me);
+        _me._replaceWithPlayerElementBind = _me._replaceWithPlayerElement.bind(_me);
       },
 
       _getPlayerCssClassNames : function() {
@@ -382,7 +382,7 @@
 
       _initalizePlayer : function(parentElem) {
         var _me = this;
-        parentElem.select('a.celmultimedia_audioStart').each(_me._createAudioElementBind);
+        parentElem.select('a.celmultimedia_audioStart').each(_me._replaceWithPlayerElementBind);
         _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celmultimedia_audio');
       },
 
@@ -390,7 +390,12 @@
         return {x: 350, y: 105};
       },
 
-      _createAudioElement : function(linkElem) {
+      _replaceWithPlayerElement : function(linkElem) {
+        var _me = this;
+        linkElem.replace(_me._createPlayerElement(linkElem));
+      },
+
+      _createPlayerElement : function(linkElem) {
         var audioElem = new Element('audio', { 'controls' : '', 'class' : linkElem.classNames() });
         var audioSrcElem = new Element('source', {
           'src' : linkElem.href,
@@ -398,7 +403,7 @@
         });
         audioElem.update(audioSrcElem);
         audioElem.insert({'bottom' : 'Your browser does not support the audio element.'});
-        linkElem.replace(audioElem);
+        return audioElem;
       }
 
     });    
@@ -407,12 +412,12 @@
 
   if (typeof window.CELEMENTS.multimedia.ExternalPlayer === 'undefined') {
     window.CELEMENTS.multimedia.ExternalPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
-      _replaceWithExternalVideoElementBind : undefined,
+      _replaceWithPlayerElementBind : undefined,
 
       initialize : function($super) {
         var _me = this;
         $super();
-        _me._replaceWithExternalVideoElementBind = _me._replaceWithExternalVideoElement.bind(_me);
+        _me._replaceWithPlayerElementBind = _me._replaceWithPlayerElement.bind(_me);
       },
 
       _getPlayerCssClassNames : function() {
@@ -422,7 +427,7 @@
       _initalizePlayer : function(parentElem) {
         var _me = this;
         parentElem.select('a.celmultimedia_externalvideo').each(
-          _me._replaceWithExternalVideoElementBind);
+          _me._replaceWithPlayerElementBind);
         _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celanim_externalvideo');
       },
 
@@ -430,17 +435,12 @@
         return {x: 560, y: 350};
       },
 
-      _internalAfterRenderOverlay : function(overlayDialog, linkElem) {
+      _replaceWithPlayerElement : function(linkElem) {
         var _me = this;
-        $(overlayDialog.getContainerId()).update(_me._createExternalVideoElement(linkElem));
+        linkElem.replace(_me._createPlayerElement(linkElem));
       },
 
-      _replaceWithExternalVideoElement : function(linkElem) {
-        var _me = this;
-        linkElem.replace(_me._createExternalVideoElement(linkElem));
-      },
-
-      _createExternalVideoElement : function(linkElem) {
+      _createPlayerElement : function(linkElem) {
       /** youtube
 <iframe width="560" height="315" src="https://www.youtube.com/embed/33-AJqEA-7k" frameborder="0"
  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -454,7 +454,6 @@
           'allow' : 'encrypted-media; gyroscope;',
           'frameborder' : '0',
           'style' : 'height: 100%; width: 100%;', 'src' : linkSrcTransformed });
-        console.warn('_initalizePlayer: ToDo ExternalPlayer embedded');
         var extVideoDiv = new Element('div', {
            'class' : linkElem.classNames()
           }).update(extVideoFrame);
