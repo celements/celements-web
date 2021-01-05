@@ -233,8 +233,11 @@
         var linkElem = overlayDialog._dialogConfig.multimediaElem;
         var playerElem = _me._createPlayerElement(linkElem);
         $(overlayDialog.getContainerId()).update(playerElem);
+        //resize
+        var dialogElem = $(overlayDialog.getDialogId());
+        var headHeight = dialogElem.down('hd').getHeight();
         var newWidth = playerElem.getWidth();
-        var newHeight = playerElem.getHeight();
+        var newHeight = playerElem.getHeight() + headHeight;
         console.log('_afterRenderOverlay: resize to ', newWidth, newHeight);
         overlayDialog._overlayDialog.cfg.setProperty('width', newWidth + 'px');
         overlayDialog._overlayDialog.cfg.setProperty('height', newHeight + 'px');

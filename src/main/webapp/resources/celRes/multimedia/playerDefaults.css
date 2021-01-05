@@ -65,7 +65,7 @@ body div.mask.celmultimedia_inoverlay {
 }
 
 .celmultimedia_inoverlay .yui-panel .hd {
-  height: 0px;
+  height: 30px;
 }
 .celmultimedia_inoverlay .yui-panel,
 .celmultimedia_inoverlay .yui-panel .hd, 
@@ -82,13 +82,13 @@ body div.mask.celmultimedia_inoverlay {
   right: -15px;
   width: 30px;
   height: 30px;
-  background-image:url('close.png');
+  background-image:url('../close.png');
   background-repeat: no-repeat;
   background-position: top right;
   cursor: pointer;
 }
 .celmultimedia_inoverlay .container-close:hover {
-  background-image:url('close-hover.png');
+  background-image:url('../close-hover.png');
 }
 .celmultimedia_inoverlay .container-close:focus {
   border: 0px solid black;
@@ -100,7 +100,6 @@ body div.mask.celmultimedia_inoverlay {
   margin: 0;
   padding: 0;
 }
-.celmultimedia_inoverlay .yui-panel .hd,
 .celmultimedia_inoverlay .yui-panel .ft {
   display:none;
 }
@@ -134,14 +133,6 @@ body div.mask.celmultimedia_inoverlay {
 .celmultimedia_inoverlay .celPresSlideShow_prev:hover {
   opacity: 1;
   cursor: pointer;
-}
-.celmultimedia_inoverlay .celPresSlideShow_next {
-  right: 0px;
-  background-image: url('layouts/gallery/newimg/galleryOverlayRightArrowWhite.png');
-}
-.celmultimedia_inoverlay .celPresSlideShow_prev {
-  left: 0px;
-  background-image: url('layouts/gallery/newimg/galleryOverlayLeftArrowWhite.png');
 }
 .celmultimedia_inoverlay .celimage_overlay {
   cursor: pointer;
