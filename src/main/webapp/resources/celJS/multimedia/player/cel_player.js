@@ -235,6 +235,7 @@
         overlayBody.update(_me._createPlayerElement(linkElem));
         var newWidth = overlayBody.getWidth();
         var newHeight = overlayBody.getHeight();
+        console.log('_afterRenderOverlay: resize to ', newWidth, newHeight);
         overlayDialog._overlayDialog.cfg.setProperty('width', newWidth + 'px');
         overlayDialog._overlayDialog.cfg.setProperty('height', newHeight + 'px');
       },
@@ -279,7 +280,7 @@
         console.warn('_initalizePlayer: unimplemented method!');
       },
 
-      _replaceAllElementsWithPlayers : function(cssSelector) {
+      _replaceAllElementsWithPlayers : function(parentElem, cssSelector) {
         var _me = this;
         parentElem.select(cssSelector).each(_me._replaceWithPlayerElementBind);
       },
@@ -338,7 +339,7 @@
 
       _initalizePlayer : function(parentElem) {
         var _me = this;
-        _me._replaceAllElementsWithPlayers('a.celmultimedia_audioStart');
+        _me._replaceAllElementsWithPlayers(parentElem, 'a.celmultimedia_audioStart');
         _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celmultimedia_audio');
       },
 
@@ -370,7 +371,7 @@
 
       _initalizePlayer : function(parentElem) {
         var _me = this;
-        _me._replaceAllElementsWithPlayers('a.celmultimedia_externalvideo');
+        _me._replaceAllElementsWithPlayers(parentElem, 'a.celmultimedia_externalvideo');
         _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celanim_externalvideo');
       },
 
