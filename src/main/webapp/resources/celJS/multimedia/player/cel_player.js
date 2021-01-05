@@ -236,8 +236,8 @@
         //resize
         var dialogElem = $(overlayDialog.getDialogId());
         var headHeight = dialogElem.down('.hd').getHeight();
-        var newWidth = playerElem.getWidth();
-        var newHeight = playerElem.getHeight() + headHeight;
+        var newWidth = playerElem.getWidth() + 20;
+        var newHeight = playerElem.getHeight() + 20 + headHeight;
         console.log('_afterRenderOverlay: resize to ', newWidth, newHeight);
         overlayDialog._overlayDialog.cfg.setProperty('width', newWidth + 'px');
         overlayDialog._overlayDialog.cfg.setProperty('height', newHeight + 'px');

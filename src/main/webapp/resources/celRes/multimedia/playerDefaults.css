@@ -65,7 +65,7 @@ body div.mask.celmultimedia_inoverlay {
 }
 
 .celmultimedia_inoverlay .yui-panel .hd {
-  height: 15px;
+  height: 0px;
 }
 .celmultimedia_inoverlay .yui-panel,
 .celmultimedia_inoverlay .yui-panel .hd, 
@@ -99,6 +99,9 @@ body div.mask.celmultimedia_inoverlay {
 .celmultimedia_inoverlay .yui-panel .ft {
   margin: 0;
   padding: 0;
+}
+.celmultimedia_inoverlay .yui-panel .bd {
+  padding: 10px;
 }
 .celmultimedia_inoverlay .yui-panel .ft {
   display:none;
