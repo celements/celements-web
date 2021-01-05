@@ -231,10 +231,10 @@
         var _me = this;
         var overlayDialog = event.memo;
         var linkElem = overlayDialog._dialogConfig.multimediaElem;
-        var overlayBody = $(overlayDialog.getContainerId());
-        overlayBody.update(_me._createPlayerElement(linkElem));
-        var newWidth = overlayBody.getWidth();
-        var newHeight = overlayBody.getHeight();
+        var playerElem = _me._createPlayerElement(linkElem);
+        $(overlayDialog.getContainerId()).update(playerElem);
+        var newWidth = playerElem.getWidth();
+        var newHeight = playerElem.getHeight();
         console.log('_afterRenderOverlay: resize to ', newWidth, newHeight);
         overlayDialog._overlayDialog.cfg.setProperty('width', newWidth + 'px');
         overlayDialog._overlayDialog.cfg.setProperty('height', newHeight + 'px');

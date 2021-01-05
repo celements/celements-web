@@ -49,3 +49,100 @@ a.celmultimedia_16to9 {
     height: 40px !important;
     width: 536px !important;
 }
+/** yui overlay **/
+body div.mask.celmultimedia_inoverlay {
+  background-color: black;
+  /** please do not change to absolute. It must be fixed to prevent scroll away. **/
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  opacity: 0.85;
+  filter: alpha(opacity = 85);
+  display: none;
+  top: 0px;
+  left: 0px;
+  z-index: 99;
+}
+
+.celmultimedia_inoverlay .yui-panel .hd {
+  height: 0px;
+}
+.celmultimedia_inoverlay .yui-panel,
+.celmultimedia_inoverlay .yui-panel .hd, 
+.celmultimedia_inoverlay .yui-panel .bd, 
+.celmultimedia_inoverlay .yui-panel .ft {
+  background: black;
+  color: #EDEDED;
+  border: 0px solid black;
+}
+.celmultimedia_inoverlay .container-close {
+  position: absolute;
+  z-index: 10;
+  top: -15px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  background-image:url('close.png');
+  background-repeat: no-repeat;
+  background-position: top right;
+  cursor: pointer;
+}
+.celmultimedia_inoverlay .container-close:hover {
+  background-image:url('close-hover.png');
+}
+.celmultimedia_inoverlay .container-close:focus {
+  border: 0px solid black;
+  outline: none;
+}
+.celmultimedia_inoverlay .yui-panel .hd,
+.celmultimedia_inoverlay .yui-panel .bd,
+.celmultimedia_inoverlay .yui-panel .ft {
+  margin: 0;
+  padding: 0;
+}
+.celmultimedia_inoverlay .yui-panel .hd,
+.celmultimedia_inoverlay .yui-panel .ft {
+  display:none;
+}
+.celmultimedia_inoverlay .yui-panel-container {
+  padding: 0px;
+}
+.celmultimedia_inoverlay .yui-panel-container.shadow .underlay {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: none;
+}
+
+.celmultimedia_inoverlay .yui-panel .bd .cel_slideShow_slideRoot {
+  overflow: hidden;
+}
+
+/** navigation default configuration **/
+.celmultimedia_inoverlay .celPresSlideShow_next,
+.celmultimedia_inoverlay .celPresSlideShow_prev {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 40px;
+  z-index: 9;
+  background-repeat: no-repeat; /** do not duplicate no-repeat IE8 does NOT like it **/
+  background-position: center center; /** DO duplicate center (x/y) FF needs it **/
+}
+.celmultimedia_inoverlay .celPresSlideShow_next:hover,
+.celmultimedia_inoverlay .celPresSlideShow_prev:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+.celmultimedia_inoverlay .celPresSlideShow_next {
+  right: 0px;
+  background-image: url('layouts/gallery/newimg/galleryOverlayRightArrowWhite.png');
+}
+.celmultimedia_inoverlay .celPresSlideShow_prev {
+  left: 0px;
+  background-image: url('layouts/gallery/newimg/galleryOverlayLeftArrowWhite.png');
+}
+.celmultimedia_inoverlay .celimage_overlay {
+  cursor: pointer;
+}
