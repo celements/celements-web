@@ -28,6 +28,6 @@ $jsonBuilderIntern.closeDictionary()##
 $jsonBuilderIntern.closeDictionary()##
 ##
 $jsonBuilderIntern.closeDictionary()##
-#if(!$jsonInclude)
+#if(!$jsonInclude)##
 $jsonBuilderIntern.getJSON()
-#end
+#end##

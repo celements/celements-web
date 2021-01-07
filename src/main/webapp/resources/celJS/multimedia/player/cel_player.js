@@ -47,6 +47,7 @@
           onSuccess : function(transport) {
             _me._confStr = transport.responseText;
             if (_me._confStr.isJSON()) {
+              //TODO CELDEV-933 change _conf to deepFreeze imutable object
               _me._conf = _me.getConfObjCopy();
               _me.celFire("cel-media-player:confLoaded", _me._conf);
             } else {
@@ -309,19 +310,17 @@
         $A(cssClassNames).each(
                 function(flowclassname) {
                   if (parentElem.select('a.' + flowclassname).size() > 0) {
-                    parentElem
-                        .select('a.' + flowclassname)
-                        .each(function(elem) {
+                    parentElem.select('a.' + flowclassname).each(function(elem) {
                             _me._playerConf.transformCssClassName(elem, flowclassname);
                           });
                   }
                 });
       },
 
-      openOverlayPlayer : function(e) {
+      openOverlayPlayer : function(event) {
         var _me = this;
-        e.stop();
-        var elem = e.findElement('a');
+        event.stop();
+        var elem = event.findElement('a');
         var openDialog = _me._getOverlayDialog({
           'multimediaElem' : elem
         });
@@ -379,11 +378,6 @@
       },
 
       _createPlayerElement : function(linkElem) {
-      /** youtube
-<iframe width="560" height="315" src="https://www.youtube.com/embed/33-AJqEA-7k" frameborder="0"
- allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
- allowfullscreen></iframe>
- */
         var _me = this;
         var linkSrcTransformed = _me._playerConf.getExternalMovieLink(linkElem.href);
         console.log('externalVideo create:', linkElem.href, linkSrcTransformed);
