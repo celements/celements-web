@@ -274,7 +274,7 @@
         if (!shouldRegisterBodyEvent.stopped) {
           _me._initMultimedaPlayerInsideParent(parentElemIn, _me._getPlayerCssClassNames());
           _me._initalizePlayer(parentElemIn);
-        } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+        } else {
           console.log('register of cel-mediaplayer stopped for ', parentElemIn);
         }
       },
