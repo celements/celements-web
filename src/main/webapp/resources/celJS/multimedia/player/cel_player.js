@@ -317,10 +317,10 @@
                 });
       },
 
-      openOverlayPlayer : function(e) {
+      openOverlayPlayer : function(event) {
         var _me = this;
-        e.stop();
-        var elem = e.findElement('a');
+        event.stop();
+        var elem = event.findElement('a');
         var openDialog = _me._getOverlayDialog({
           'multimediaElem' : elem
         });
