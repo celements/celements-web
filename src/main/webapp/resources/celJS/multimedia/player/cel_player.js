@@ -378,11 +378,6 @@
       },
 
       _createPlayerElement : function(linkElem) {
-      /** youtube
-<iframe width="560" height="315" src="https://www.youtube.com/embed/33-AJqEA-7k" frameborder="0"
- allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
- allowfullscreen></iframe>
- */
         var _me = this;
         var linkSrcTransformed = _me._playerConf.getExternalMovieLink(linkElem.href);
         console.log('externalVideo create:', linkElem.href, linkSrcTransformed);
