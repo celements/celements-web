@@ -2,18 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/prototype.js', 'file')"></script>
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/jquery.js', 'file')"></script>
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/jquery-noconflict.js', 'file')"></script>
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/initCelements.js', 'file')"></script>
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/scriptaculous/effects.js', 'file')"></script>
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/validation.js', 'file')"></script>
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/SWFObject-2.2/swfobject.js', 'file')"></script>
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/flowplayer/flowplayer-3.2.6.min.js', 'file')"></script>
-<link rel="stylesheet" media="all" type="text/css" href="$celementsweb.getSkinFile(':celRes/celanim/movieplayerDefaults.css', 'skin')" /> 
-##TODO refactor movieplayer.js that it can be used with file-action
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/celanim/movieplayer.js', 'skin')"></script>
 <title></title>
+$!services.javascript.addExtJSfileOnce(':celJS/prototype.js', 'file')
+$!services.javascript.addExtJSfileOnce(':celJS/jquery.js', 'file')
+$!services.javascript.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
+$!services.javascript.addExtJSfileOnce(':celJS/initCelements.js', 'file')
+$!services.javascript.addExtJSfileOnce(':celJS/scriptaculous/effects.js', 'file')
+$!services.javascript.addExtJSfileOnce(':celJS/validation.js', 'file')
+$!services.javascript.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')
+$!services.javascript.addExtJSfileOnce(':celJS/flowplayer/flowplayer-3.2.6.min.js', 'file')
+<link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':celRes/celanim/movieplayerDefaults.css', 'file')" /> 
+$!services.javascript.addExtJSfileOnce(':celJS/celanim/movieplayer.js', 'file')
+## write out javascripts
+$!celementsweb.getAllExternalJavaScriptFiles()
 <script type="text/javascript">
  Event.observe(window, 'load', function() {
   setTimeout("$$('body a')[0].show();", 700);
@@ -25,10 +26,10 @@
 background-color:black !important; margin-left:auto; margin-right:auto; padding:0px;">
 #set($cssClasses = "$!{request.cssclassname}")
 #if($cssClasses.indexOf('celanim_audio') >= 0)
-<img src="$celementsweb.getSkinFile(':celRes/speakerwhite.png', 'file')" class="flowplayer_start_audio_speaker flowplayer_start_audio" />##
-<img src="$celementsweb.getSkinFile(':celRes/startplaywhite.png', 'file')" class="flowplayer_start_audio_play flowplayer_start_audio" />
+<img src="$!services.celementsweb.getSkinFile(':celRes/speakerwhite.png', 'file')" class="flowplayer_start_audio_speaker flowplayer_start_audio" />##
+<img src="$!services.celementsweb.getSkinFile(':celRes/startplaywhite.png', 'file')" class="flowplayer_start_audio_play flowplayer_start_audio" />
 #end
 </a>
-<script type="text/javascript" src="$celementsweb.getSkinFile(':celJS/initCelementsAfter.js', 'file')"></script>
+$!services.javascript.addExtJSfileOnce(':celJS/initCelementsAfter.js', 'file')
 </body>
 </html>

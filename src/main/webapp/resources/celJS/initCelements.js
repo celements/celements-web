@@ -49,8 +49,8 @@
   /**
    * A generic javascript Object observer pattern
    */
-  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
-  if (typeof window.CELEMENTS.mixins=="undefined"){ window.CELEMENTS.mixins={};};
+  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};}
+  if (typeof window.CELEMENTS.mixins=="undefined"){ window.CELEMENTS.mixins={};}
   window.CELEMENTS.mixins.Event = Class.create({
     memo : undefined,
     stopped : undefined,
@@ -92,7 +92,7 @@
 
     celObserve : function(eventKey, callbackFN) {
       var _me = this;
-      console.log('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
+      console.debug('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
       if (!eventKey) {
         throw "undefined eventKey in observe call ";
       }
@@ -101,7 +101,7 @@
 
     celStopObserving : function(eventKey, callbackFN) {
       var _me = this;
-      console.log('cel celStopObserving: ', _me._celEventHash, eventKey, callbackFN);
+      console.debug('cel celStopObserving: ', _me._celEventHash, eventKey, callbackFN);
       if (!eventKey) {
         throw "undefined eventKey in celStopObserving call ";
       }
@@ -111,7 +111,7 @@
 
     celFire : function(eventKey, memo) {
       var _me = this;
-      console.log('cel celFire: ', _me._celEventHash, eventKey, memo);
+      console.debug('cel celFire: ', _me._celEventHash, eventKey, memo);
       if (!eventKey) {
         throw "undefined eventKey in celObserve call ";
       }
@@ -131,7 +131,7 @@
   /**
    * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
    **/
-  if (typeof window.CELEMENTS.Ajax=="undefined"){ window.CELEMENTS.Ajax={};};
+  if (typeof window.CELEMENTS.Ajax=="undefined"){ window.CELEMENTS.Ajax={};}
   if(window.Ajax && !window.CELEMENTS.Ajax_CORSfixInstalled) {
     window.Try = {
       logging : false,

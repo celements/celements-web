@@ -1,12 +1,35 @@
 #if($services.celementsweb.isMainWiki())
-<a href="${xwiki.getURL('WikiManager.WebHome', 'view')}">WikiManager</a><br/>
-#if("$context.user" != 'XWiki.XWikiGuest')
-#set($userAdminLink = "${xwiki.getURL('Content.WebHome', 'view', 'skin=cellskin&xpage=overlay&conf=UserAdmin')}")
-#if($userAdminLink.startsWith('?'))
-#set($userAdminLink = "/$userAdminLink")
-#end
-<a href="${userAdminLink}">User Admin</a><br/>
-#end
+  #set($wikiManagerRef = $services.model.createDocumentReference('', 'WikiManager','WebHome'))
+  <ul>
+    <li><a href="$!{services.url.getURL($wikiManagerRef, 'view')}">WikiManager</a></li>
+    #if("$context.user" != 'XWiki.XWikiGuest')
+      <li><a href="$!{services.url.getURL($xwikiImportRef, 'import', 'skin=cellskin&xpage=overlay&conf=XarImport')}">Import Manager</a></li>
+      #set($userAdminLink = "${xwiki.getURL('Content.WebHome', 'view', 'skin=cellskin&xpage=overlay&conf=UserAdmin')}")
+      #if($userAdminLink.startsWith('?'))
+        #set($userAdminLink = "/$userAdminLink")
+      #end
+      <li><a href="${userAdminLink}">User Admin</a></li>
+      <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=MaintenanceHelper')}">Maintenance Helper</a></li>
+    #else
+      #set($contentLoginRef = $services.model.createDocumentReference('', 'Content','login'))
+      <li><a href="$!{services.url.getURL($contentLoginRef, 'view')}">Login</a></li>
+    #end
+  </ul>
+#elseif($services.webUtils.isCentralWiki())
+  #set($contentWebHomeRef = $services.model.createDocumentReference('', 'Content','WebHome'))
+  #set($xwikiImportRef = $services.model.createDocumentReference('', 'XWiki','Import'))
+  <ul>
+    #if("$context.user" != 'XWiki.XWikiGuest')
+    <li><a href="$!{services.url.getURL($xwikiImportRef, 'import', 'skin=cellskin&xpage=overlay&conf=XarImport')}">Import Manager</a></li>
+    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=PageTypesListing')}">Page Types</a></li>
+    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=PageLayoutsListing')}">Page Layouts</a></li>
+    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=WhatsNew')}">What&quot;s New</a></li>
+    <li><a href="$!{services.url.getURL($contentWebHomeRef, 'view', 'skin=cellskin&xpage=overlay&conf=MaintenanceHelper')}">Maintenance Helper</a></li>
+    #else
+      #set($contentLoginRef = $services.model.createDocumentReference('', 'Content','login'))
+      <li><a href="$!{services.url.getURL($contentLoginRef, 'view')}">Login</a></li>
+    #end
+  </ul>
 #elseif(("$context.action" == 'view') && ($doc.isNew()))
   #parse('celTemplates/RedirectToFirstChildView.vm')
 #else
