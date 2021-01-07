@@ -67,60 +67,57 @@
   };
 
   var initMoviePlayerCssClassesInsideParent = function (parentElem, cssClassNames) {
-    $A(cssClassNames)
-      .each(
-        function (flowclassname) {
-          if (parentElem.select('a.' + flowclassname).size() > 0) {
-            parentElem
-              .select('a.' + flowclassname)
-              .each(
-                function (elem) {
-                  var flvLink = elem.href.replace(/^..\/..\//g, '/');
-                  elem.href = flvLink;
-                  elem.removeClassName(flowclassname);
-                  if (flowclassname.indexOf('overlay') > 0) {
-                    elem.addClassName('celanim_overlay');
-                    elem.addClassName(flowclassname.replace(/_overlay_/g, '_'));
+    $A(cssClassNames).each(
+      function (flowclassname) {
+        if (parentElem.select('a.' + flowclassname).size() > 0) {
+          parentElem.select('a.' + flowclassname).each(
+            function (elem) {
+              var flvLink = elem.href.replace(/^..\/..\//g, '/');
+              elem.href = flvLink;
+              elem.removeClassName(flowclassname);
+              if (flowclassname.indexOf('overlay') > 0) {
+                elem.addClassName('celanim_overlay');
+                elem.addClassName(flowclassname.replace(/_overlay_/g, '_'));
+              } else {
+                if (elem.href.endsWith('.flv')) {
+                  if (flowclassname.indexOf('oneflowplayer') > 0) {
+                    elem.addClassName('celanim_oneflowplayerStart');
                   } else {
-                    if (elem.href.endsWith('.flv')) {
-                      if (flowclassname.indexOf('oneflowplayer') > 0) {
-                        elem.addClassName('celanim_oneflowplayerStart');
-                      } else {
-                        elem.addClassName('celanim_flowplayerStart');
-                      }
-                    } else if (elem.href.endsWith('.mp3')) {
-                      var isLinkEmpty = (elem.innerHTML.strip() == '');
-                      if (!isLinkEmpty) {
-                        if (flowclassname.indexOf('oneflowplayer') > 0) {
-                          elem.addClassName('celanim_oneflowplayerAudioStart');
-                        } else {
-                          elem.addClassName('celanim_flowplayerAudioStart');
-                        }
-                      } else {
-                        console.warn('Skipping empty flowplayer-Link which might cause automatic '
-                            + ' playing on page load.');
-                      }
-                    } else {
-                      elem.addClassName('celanim_swfplayer');
-                    }
+                    elem.addClassName('celanim_flowplayerStart');
                   }
-                  if (flowclassname.indexOf('_externalvideo') > 0) {
-                    var celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
-                    if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
-                      elem.addClassName(celAnimLinkConfig.cssClass);
+                } else if (elem.href.endsWith('.mp3')) {
+                  var isLinkEmpty = (elem.innerHTML.strip() == '');
+                  if (!isLinkEmpty) {
+                    if (flowclassname.indexOf('oneflowplayer') > 0) {
+                      elem.addClassName('celanim_oneflowplayerAudioStart');
+                    } else {
+                      elem.addClassName('celanim_flowplayerAudioStart');
                     }
-                  } else if (flowclassname.indexOf('_mp3_') > 0) {
-                    elem.addClassName('celanim_audio');
                   } else {
-                    if (flowclassname.endsWith('2')) {
-                      elem.addClassName('celanim_16to9');
-                    } else {
-                      elem.addClassName('celanim_4to3');
-                    }
+                    console.warn('Skipping empty flowplayer-Link which might cause automatic '
+                      + ' playing on page load.');
                   }
-                });
-          }
-        });
+                } else {
+                  elem.addClassName('celanim_swfplayer');
+                }
+              }
+              if (flowclassname.indexOf('_externalvideo') > 0) {
+                var celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
+                if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
+                  elem.addClassName(celAnimLinkConfig.cssClass);
+                }
+              } else if (flowclassname.indexOf('_mp3_') > 0) {
+                elem.addClassName('celanim_audio');
+              } else {
+                if (flowclassname.endsWith('2')) {
+                  elem.addClassName('celanim_16to9');
+                } else {
+                  elem.addClassName('celanim_4to3');
+                }
+              }
+            });
+        }
+      });
   };
 
   var celanimSWFplayerHandler = function (event) {
@@ -377,12 +374,12 @@
           playerConf.plugins.content.style = {
             '.celanim_audiocontent': celanimStyle
           };
-          playerConf.plugins.content.backgroundColor = celAnimGetHexColor(this.getParent()
-            .getStyle('background-color'));
+          playerConf.plugins.content.backgroundColor = celAnimGetHexColor(this.getParent().getStyle(
+            'background-color'));
         },
         onLoad: function () {
-          this.getPlugin("content").setHtml(
-            '<span class="celanim_audiocontent">' + this.celStoreHtml + '</span>');
+          this.getPlugin("content").setHtml('<span class="celanim_audiocontent">'
+            + this.celStoreHtml + '</span>');
           this.getPlugin("content").height = this.getParent().getHeight()
             - this.getPlugin("controls").height;
         },
