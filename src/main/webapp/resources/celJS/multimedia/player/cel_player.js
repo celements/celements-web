@@ -47,6 +47,7 @@
           onSuccess : function(transport) {
             _me._confStr = transport.responseText;
             if (_me._confStr.isJSON()) {
+              //TODO CELDEV-933 change _conf to deepFreeze imutable object
               _me._conf = _me.getConfObjCopy();
               _me.celFire("cel-media-player:confLoaded", _me._conf);
             } else {
