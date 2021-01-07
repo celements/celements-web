@@ -18,6 +18,6 @@ $jsonBuilderIntern.addProperty('replaceOnLoad', true)##
 $jsonBuilderIntern.closeDictionary()##
 ##
 $jsonBuilderIntern.closeArray()##
-#if(!$jsonInclude)
+#if(!$jsonInclude)##
 $jsonBuilderIntern.getJSON()
-#end
+#end##
