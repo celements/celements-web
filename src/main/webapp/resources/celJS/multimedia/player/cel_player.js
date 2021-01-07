@@ -310,9 +310,7 @@
         $A(cssClassNames).each(
                 function(flowclassname) {
                   if (parentElem.select('a.' + flowclassname).size() > 0) {
-                    parentElem
-                        .select('a.' + flowclassname)
-                        .each(function(elem) {
+                    parentElem.select('a.' + flowclassname).each(function(elem) {
                             _me._playerConf.transformCssClassName(elem, flowclassname);
                           });
                   }
