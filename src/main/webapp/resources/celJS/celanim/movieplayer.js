@@ -157,20 +157,6 @@
         playerLink.update(new Element('span', {
           'id' : playerId
         }));
-        // var objectElem = new Element('object', {
-        // 'type' : 'application/x-shockwave-flash',
-        // 'data' : movieLink,
-        // 'style' : 'height: 100%; width: 100%;'
-        // });
-        // objectElem.insert(new Element('param', { 'name' : 'movie', 'value' :
-        // movieLink}));
-        // objectElem.insert(new Element('param', { 'name' :
-        // 'allowScriptAccess',
-        // 'value' : 'sameDomain'}));
-        // objectElem.insert(new Element('param', { 'name' : 'quality', 'value'
-        // : 'best'}));
-        // objectElem.insert(new Element('param', { 'name' : 'scale', 'value' :
-        // 'showall'}));
         var params = {};
         params['movie'] = movieLink;
         params['allowScriptAccess'] = 'sameDomain';
@@ -196,7 +182,6 @@
         // http://code.google.com/p/swfobject/wiki/api
         swfobject.embedSWF(movieLink, playerId, "100%", "100%", "9.0.0", "expressInstall.swf",
             flashvars, params);
-        // playerLink.update(objectElem);
         playerLink.fire('celanim_player:flashplayerloaded', {
           'movielink' : movieLink
         });
