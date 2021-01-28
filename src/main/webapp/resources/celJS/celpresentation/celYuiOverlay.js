@@ -221,7 +221,9 @@ external js-files
       _me.show();
       _me._addCSSclassesToMask();
       var bodyElem = $$('body')[0];
-      bodyElem.setStyle({ 'overflow': 'hidden' });
+      if (_me._dialogConfig.modal) {
+        bodyElem.setStyle({ 'overflow': 'hidden' });
+      }
       bodyElem.fire('cel_yuiOverlay:afterShowDialog_General', _me);
       $(_me._dialogConfig.containerId).fire('cel_yuiOverlay:afterShowDialog', _me);
       _me.celFire('cel-yuiOverlay:afterShowDialog', _me);
@@ -435,9 +437,7 @@ external js-files
     _defaultOpenDialog: function (openConfig) {
       var _me = this;
       _me.updateOpenConfig(openConfig);
-      var dialog = _me.open();
-      var bodyElem = $$('body')[0];
-      bodyElem.setStyle({ 'overflow': 'hidden' });
+      _me.open();
       _me._loadFirstContent();
     }
 
