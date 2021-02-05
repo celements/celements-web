@@ -331,6 +331,7 @@ external js-files
           'overlayURL': openConfig
         };
       }
+      openConfig = openConfig || _me._dialogConfig;
       if (openConfig.overlayURL != '') {
         if (openConfig.confirmMsg && openConfig.confirmMsg != '') {
           _me.showConfirmDialog(openConfig);
