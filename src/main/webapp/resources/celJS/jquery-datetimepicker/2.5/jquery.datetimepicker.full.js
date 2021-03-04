@@ -2179,7 +2179,7 @@
 							if (ancestorNode === null) {
 								return false;
 							}
-console.log('---- before getComputedStyle: ', options.contentWindow, ancestorNode);
+console.log('---- before getComputedStyle: ', options.contentWindow, ancestorNode, ancestorNode.nodeName, typeof ancestorNode);
 							if (options.contentWindow.getComputedStyle(ancestorNode).getPropertyValue('position') === 'fixed') {
 								dateInputHasFixedAncestor = true;
 								return false;
