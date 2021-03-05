@@ -2123,6 +2123,10 @@
 						if (!node || callback(node) === false) {
 							break;
 						}
+console.log('---- forEachAncestorOf: ', node, node.parentNode, node instanceof ShadowRoot);
+if (node instanceof ShadowRoot) {
+	console.log("ShadowRoot : ", node.host, node.isConnected);
+}
 					} while (node.nodeName !== 'HTML');
 				};
 
