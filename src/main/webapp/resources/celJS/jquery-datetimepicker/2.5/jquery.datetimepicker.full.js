@@ -2116,14 +2116,17 @@
 				 * @param {Function} callback
 				 * @returns {undefined}
 				 */
-				forEachAncestorOf = function (node, callback) {
+				forEachAncestorOf = function (node, callback, followShadowParent = false) {
 					do {
 						node = node.parentNode;
 
-console.log('---- forEachAncestorOf: ', node, node.parentNode, node instanceof ShadowRoot);
-if (node instanceof ShadowRoot) {
-	console.log("ShadowRoot: ", node.host, node.isConnected);
-}
+						if (node instanceof ShadowRoot) {
+							if (followShadowParent && node.isConnected) {
+								node = node.host;
+							} else {
+								node = null;
+							}
+						}
 						if (!node || callback(node) === false) {
 							break;
 						}
@@ -2188,7 +2191,7 @@ console.log('---- before getComputedStyle: ', options.contentWindow, ancestorNod
 								dateInputHasFixedAncestor = true;
 								return false;
 							}
-						});
+						}, true);
 
 						if (dateInputHasFixedAncestor) {
 							position = 'fixed';
