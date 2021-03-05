@@ -2229,11 +2229,11 @@ console.log('---- before getComputedStyle: ', options.contentWindow, ancestorNod
 
 						if (ancestorNodePosition === 'relative' && windowWidth >= ancestorNode.offsetWidth) {
 							left = left - ((windowWidth - ancestorNode.offsetWidth) / 2);
+							console.log('setPos ancestorNodePosition: ', ancestorNodePosition, left);
 							return false;
 						}
 					});
 
-					console.log('setPos ancestorNodePosition: ', ancestorNodePosition);
 
 					datetimepickerCss = {
 						position: position,
