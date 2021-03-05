@@ -2232,7 +2232,7 @@ console.log('---- before getComputedStyle: ', options.contentWindow, ancestorNod
 							console.log('setPos ancestorNodePosition: ', ancestorNodePosition, left);
 							return false;
 						}
-					});
+					}, true);
 
 
 					datetimepickerCss = {
