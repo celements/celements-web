@@ -2157,6 +2157,8 @@
 					dateInputOffset = $dateInput.offset();
 					dateInputElem = $dateInput[0];
 
+					console.log('setPos: ', $dateInput, dateInputOffset, $dateInput.parent());
+
 					verticalAnchorEdge = 'top';
 					verticalPosition = (dateInputOffset.top + dateInputElem.offsetHeight) - 1;
 					left = dateInputOffset.left;
@@ -2231,6 +2233,8 @@ console.log('---- before getComputedStyle: ', options.contentWindow, ancestorNod
 						}
 					});
 
+					console.log('setPos ancestorNodePosition: ', ancestorNodePosition);
+
 					datetimepickerCss = {
 						position: position,
 						left: left,
@@ -2240,6 +2244,7 @@ console.log('---- before getComputedStyle: ', options.contentWindow, ancestorNod
 
 					datetimepickerCss[verticalAnchorEdge] = verticalPosition;
 
+					console.log('setPos css: ', datetimepickerCss);
 					datetimepicker.css(datetimepickerCss);
 				};
 
