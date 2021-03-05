@@ -2188,7 +2188,7 @@
 							if (ancestorNode === null) {
 								return false;
 							}
-console.log('---- before getComputedStyle: ', options.contentWindow, ancestorNode, ancestorNode.nodeName, typeof ancestorNode);
+
 							if (options.contentWindow.getComputedStyle(ancestorNode).getPropertyValue('position') === 'fixed') {
 								dateInputHasFixedAncestor = true;
 								return false;
@@ -2226,10 +2226,11 @@ console.log('---- before getComputedStyle: ', options.contentWindow, ancestorNod
 						var ancestorNodePosition;
 
 						ancestorNodePosition = options.contentWindow.getComputedStyle(ancestorNode).getPropertyValue('position');
+						console.log('setPos ancestorNodePosition: ', ancestorNodePosition, left);
 
 						if (ancestorNodePosition === 'relative' && windowWidth >= ancestorNode.offsetWidth) {
 							left = left - ((windowWidth - ancestorNode.offsetWidth) / 2);
-							console.log('setPos ancestorNodePosition: ', ancestorNodePosition, left);
+							console.log('setPos ancestorNodePosition relative: ', ancestorNodePosition, left);
 							return false;
 						}
 					}, true);
