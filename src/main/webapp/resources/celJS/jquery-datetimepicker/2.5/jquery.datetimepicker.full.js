@@ -2226,7 +2226,7 @@
 						var ancestorNodePosition;
 
 						ancestorNodePosition = options.contentWindow.getComputedStyle(ancestorNode).getPropertyValue('position');
-						console.log('setPos ancestorNodePosition: ', ancestorNodePosition, left);
+						console.log('setPos ancestorNodePosition: ', ancestorNode, ancestorNodePosition, left);
 
 						if (ancestorNodePosition === 'relative' && windowWidth >= ancestorNode.offsetWidth) {
 							left = left - ((windowWidth - ancestorNode.offsetWidth) / 2);
