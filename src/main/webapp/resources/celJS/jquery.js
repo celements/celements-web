@@ -10754,6 +10754,8 @@ jQuery.fn.extend( {
 			elem = this[ 0 ],
 			doc = elem && elem.ownerDocument;
 
+		console.log(">>> jquery.offset: before doc ", doc, elem);
+
 		if ( !doc ) {
 			return;
 		}
