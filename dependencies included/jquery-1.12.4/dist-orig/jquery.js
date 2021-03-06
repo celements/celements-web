@@ -10771,6 +10771,11 @@ jQuery.fn.extend( {
 			box = elem.getBoundingClientRect();
 		}
 		win = getWindow( doc );
+
+		console.log('>>> jquery.offset:', box, win, docElem);
+		console.log('>>> jquery.offset: left', box.left, win.pageXOffset, docElem.scrollLeft,
+		 docElem.clientLeft);
+		
 		return {
 			top: box.top  + ( win.pageYOffset || docElem.scrollTop )  - ( docElem.clientTop  || 0 ),
 			left: box.left + ( win.pageXOffset || docElem.scrollLeft ) - ( docElem.clientLeft || 0 )
