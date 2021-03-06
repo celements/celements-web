@@ -2148,10 +2148,10 @@
 						windowScrollTop;
 
 					$dateInput = datetimepicker.data('input');
+					console.log('>>>> setPos before: ', dateInputOffset, $dateInput.parent());
 					dateInputOffset = $dateInput.offset();
+					console.log('>>>> setPos after: ', dateInputOffset, $dateInput.parent());
 					dateInputElem = $dateInput[0];
-
-					console.log('>>>>setPos: ', $dateInput, dateInputOffset, $dateInput.parent());
 
 					verticalAnchorEdge = 'top';
 					verticalPosition = (dateInputOffset.top + dateInputElem.offsetHeight) - 1;
