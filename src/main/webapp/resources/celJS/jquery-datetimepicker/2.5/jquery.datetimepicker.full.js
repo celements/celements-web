@@ -2150,7 +2150,7 @@
 					dateInputOffset = $dateInput.offset();
 					dateInputElem = $dateInput[0];
 
-					console.log('setPos: ', $dateInput, dateInputOffset, $dateInput.parent());
+					console.log('>>>>setPos: ', $dateInput, dateInputOffset, $dateInput.parent());
 
 					verticalAnchorEdge = 'top';
 					verticalPosition = (dateInputOffset.top + dateInputElem.offsetHeight) - 1;
