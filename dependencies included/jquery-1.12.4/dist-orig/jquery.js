@@ -10694,6 +10694,7 @@ jQuery.offset = {
 			curElem = jQuery( elem ),
 			props = {};
 
+		console.log(">>>> jQuery.offset: start ", elem);
 		// set position first, in-case top/left are set even on static elem
 		if ( position === "static" ) {
 			elem.style.position = "relative";
@@ -10729,6 +10730,7 @@ jQuery.offset = {
 			props.left = ( options.left - curOffset.left ) + curLeft;
 		}
 
+		console.log(">>>> jQuery.offset: props ", elem, props);
 		if ( "using" in options ) {
 			options.using.call( elem, props );
 		} else {
