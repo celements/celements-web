@@ -2116,17 +2116,10 @@
 				 * @param {Function} callback
 				 * @returns {undefined}
 				 */
-				forEachAncestorOf = function (node, callback, followShadowParent = false) {
+				forEachAncestorOf = function (node, callback) {
 					do {
-						node = node.parentNode;
+						node = node.host || node.parentNode;
 
-						if (node instanceof ShadowRoot) {
-							if (followShadowParent && node.isConnected) {
-								node = node.host;
-							} else {
-								node = null;
-							}
-						}
 						if (!node || callback(node) === false) {
 							break;
 						}
@@ -2193,7 +2186,7 @@
 								dateInputHasFixedAncestor = true;
 								return false;
 							}
-						}, true);
+						});
 
 						if (dateInputHasFixedAncestor) {
 							position = 'fixed';
@@ -2233,7 +2226,7 @@
 							console.log('setPos ancestorNodePosition relative: ', ancestorNodePosition, left);
 							return false;
 						}
-					}, true);
+					});
 
 
 					datetimepickerCss = {
