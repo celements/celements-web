@@ -10754,13 +10754,13 @@ jQuery.fn.extend( {
 			elem = this[ 0 ],
 			doc = elem && elem.ownerDocument;
 
-		console.log(">>> jquery.offset: before doc ", doc, elem);
-
 		if ( !doc ) {
 			return;
 		}
 
 		docElem = doc.documentElement;
+
+		console.log(">>> jquery.offset: before contains ", docElem, elem);
 
 		// Make sure it's not a disconnected DOM node
 		if ( !jQuery.contains( docElem, elem ) ) {
