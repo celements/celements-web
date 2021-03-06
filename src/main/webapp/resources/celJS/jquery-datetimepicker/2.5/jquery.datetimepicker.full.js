@@ -2118,7 +2118,8 @@
 				 */
 				forEachAncestorOf = function (node, callback) {
 					do {
-						node = node.host || node.parentNode;
+						node = node.parentNode;
+						node = node.host || node;
 
 						if (!node || callback(node) === false) {
 							break;
