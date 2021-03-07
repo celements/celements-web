@@ -72,6 +72,9 @@
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
+          if($j.datetimepicker.setLocale) {
+            $j.datetimepicker.setLocale(pickerAttrObj.lang);
+          }
           $j(element).datetimepicker(pickerAttrObj);
           $(element).observe('change', _me._onChangeEventBind);
         });
@@ -91,6 +94,9 @@
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
+          }
+          if($j.datetimepicker.setLocale) {
+            $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
           $j(element).datetimepicker(pickerAttrObj);
           $(element).observe('change', _me._onChangeEventBind);
@@ -112,6 +118,9 @@
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
+          }
+          if($j.datetimepicker.setLocale) {
+            $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
           $j(element).datetimepicker(pickerAttrObj);
           $(element).observe('change', _me._onChangeEventBind);
