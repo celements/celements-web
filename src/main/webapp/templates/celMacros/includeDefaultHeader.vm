@@ -58,7 +58,7 @@ $services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')
 $services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap.min.js', 'file')
 $services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js', 'file')
 
-$services.css.includeCSSPage(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.min.css', 'file')
+$services.css.includeCSSPage(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.min.css')
 $services.javascript.addExtJSfileOnce(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.full.min.js', 'file')
 $services.javascript.addExtJSfileOnce(':celJS/dateTimePicker/generateDateTimePicker.js', 'file')
 
