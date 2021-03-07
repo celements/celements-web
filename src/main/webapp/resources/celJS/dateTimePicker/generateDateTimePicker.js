@@ -73,6 +73,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           if($j.datetimepicker.setLocale) {
+            console.log('>>> generateDateTimePicker: ', pickerAttrObj.lang);
             $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
           $j(element).datetimepicker(pickerAttrObj);
@@ -96,6 +97,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           if($j.datetimepicker.setLocale) {
+            console.log('>>> generateDateTimePicker: ', pickerAttrObj.lang);
             $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
           $j(element).datetimepicker(pickerAttrObj);
@@ -120,6 +122,7 @@
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
           if($j.datetimepicker.setLocale) {
+            console.log('>>> generateDateTimePicker: ', pickerAttrObj.lang);
             $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
           $j(element).datetimepicker(pickerAttrObj);
