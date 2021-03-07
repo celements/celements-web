@@ -10694,7 +10694,6 @@ jQuery.offset = {
 			curElem = jQuery( elem ),
 			props = {};
 
-		console.log(">>>> jQuery.offset: start ", elem);
 		// set position first, in-case top/left are set even on static elem
 		if ( position === "static" ) {
 			elem.style.position = "relative";
@@ -10730,7 +10729,6 @@ jQuery.offset = {
 			props.left = ( options.left - curOffset.left ) + curLeft;
 		}
 
-		console.log(">>>> jQuery.offset: props ", elem, props);
 		if ( "using" in options ) {
 			options.using.call( elem, props );
 		} else {
@@ -10764,17 +10762,10 @@ jQuery.fn.extend( {
 		}
 		rect = elem.getBoundingClientRect();
 
-		console.log(">>> jquery.offset: before contains ", rect.width, rect.height,
-			elem.getClientRects().length);
-
 		// Make sure element is not hidden (display: none) or disconnected
 		if ( rect.width || rect.height || elem.getClientRects().length ) {
 			win = getWindow( doc );
 			docElem = doc.documentElement;
-
-			console.log('>>> jquery.offset:', rect, win, docElem);
-			console.log('>>> jquery.offset: left', rect.left, win.pageXOffset, docElem.scrollLeft,
-			docElem.clientLeft);
 			
 			return {
 				top: rect.top  + ( win.pageYOffset || docElem.scrollTop )  - ( docElem.clientTop  || 0 ),
