@@ -10700,7 +10700,7 @@ jQuery.offset = {
 			elem.style.position = "relative";
 		}
 
-		curOffset = curElem.offset();
+		curOffset = curElem.offset() || { top: 0, left: 0 };
 		curCSSTop = jQuery.css( elem, "top" );
 		curCSSLeft = jQuery.css( elem, "left" );
 		calculatePosition = ( position === "absolute" || position === "fixed" ) &&
@@ -10749,8 +10749,7 @@ jQuery.fn.extend( {
 				} );
 		}
 
-		var docElem, win,
-			box = { top: 0, left: 0 },
+		var docElem, win, rect,
 			elem = this[ 0 ],
 			doc = elem && elem.ownerDocument;
 
@@ -10758,30 +10757,29 @@ jQuery.fn.extend( {
 			return;
 		}
 
-		docElem = doc.documentElement;
-
-		console.log(">>> jquery.offset: before contains ", docElem, elem);
-
-		// Make sure it's not a disconnected DOM node
-		if ( !jQuery.contains( docElem, elem ) ) {
-			return box;
-		}
-
 		// If we don't have gBCR, just use 0,0 rather than error
 		// BlackBerry 5, iOS 3 (original iPhone)
 		if ( typeof elem.getBoundingClientRect !== "undefined" ) {
-			box = elem.getBoundingClientRect();
+			rect = elem.getBoundingClientRect();
 		}
-		win = getWindow( doc );
 
-		console.log('>>> jquery.offset:', box, win, docElem);
-		console.log('>>> jquery.offset: left', box.left, win.pageXOffset, docElem.scrollLeft,
-		 docElem.clientLeft);
-		
-		return {
-			top: box.top  + ( win.pageYOffset || docElem.scrollTop )  - ( docElem.clientTop  || 0 ),
-			left: box.left + ( win.pageXOffset || docElem.scrollLeft ) - ( docElem.clientLeft || 0 )
-		};
+		console.log(">>> jquery.offset: before contains ", rect.width, rect.height,
+			elem.getClientRects().length);
+
+		// Make sure element is not hidden (display: none) or disconnected
+		if ( rect.width || rect.height || elem.getClientRects().length ) {
+			win = getWindow( doc );
+			docElem = doc.documentElement;
+
+			console.log('>>> jquery.offset:', rect, win, docElem);
+			console.log('>>> jquery.offset: left', rect.left, win.pageXOffset, docElem.scrollLeft,
+			docElem.clientLeft);
+			
+			return {
+				top: rect.top  + ( win.pageYOffset || docElem.scrollTop )  - ( docElem.clientTop  || 0 ),
+				left: rect.left + ( win.pageXOffset || docElem.scrollLeft ) - ( docElem.clientLeft || 0 )
+			};
+		}
 	},
 
 	position: function() {
