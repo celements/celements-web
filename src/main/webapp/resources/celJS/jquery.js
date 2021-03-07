@@ -10759,9 +10759,10 @@ jQuery.fn.extend( {
 
 		// If we don't have gBCR, just use 0,0 rather than error
 		// BlackBerry 5, iOS 3 (original iPhone)
-		if ( typeof elem.getBoundingClientRect !== "undefined" ) {
-			rect = elem.getBoundingClientRect();
+		if ( typeof elem.getBoundingClientRect === "undefined" ) {
+			return;
 		}
+		rect = elem.getBoundingClientRect();
 
 		console.log(">>> jquery.offset: before contains ", rect.width, rect.height,
 			elem.getClientRects().length);
