@@ -60,19 +60,20 @@
          */
         _me._htmlElement.find('input.cel_datePicker').each(function(key, element){
           var pickerAttrObj = {
-              // FIXME [CELDEV-904] DateTimePicker Language timing issue
-              'lang' : Validation.messages.get("admin-language") || 'de',
-              'dayOfWeekStart' : 1,
-              'format' : 'd.m.Y',
-              'timepicker' : false,
-              'closeOnDateSelect' : true,
-              'onChangeDateTime' : _me._onChangeDateTime
+            // FIXME [CELDEV-904] DateTimePicker Language timing issue
+            'lang' : Validation.messages.get("admin-language") || 'de',
+            'dayOfWeekStart' : 1,
+            'format' : 'd.m.Y',
+            'timepicker' : false,
+            'closeOnDateSelect' : true,
+            'onChangeDateTime' : _me._onChangeDateTime
           };
+          console.log('>>> generateDateTimePicker: cel_datePicker ', key, pickerAttrObj.lang);
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
-          if($j.datetimepicker.setLocale) {
+          if(typeof $j.datetimepicker.setLocale !== "undefined") {
             console.log('>>> generateDateTimePicker: ', pickerAttrObj.lang);
             $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
@@ -92,11 +93,12 @@
               'format' : 'H:i',
               'onChangeDateTime' : _me._onChangeDateTime
           };
+          console.log('>>> generateDateTimePicker: cel_timePicker ', key, pickerAttrObj.lang);
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
-          if($j.datetimepicker.setLocale) {
+          if(typeof $j.datetimepicker.setLocale !== "undefined") {
             console.log('>>> generateDateTimePicker: ', pickerAttrObj.lang);
             $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
@@ -117,11 +119,12 @@
               'format' : 'd.m.Y H:i',
               'onChangeDateTime' : _me._onChangeDateTime
           };
+          console.log('>>> generateDateTimePicker: cel_dateTimePicker ', key, pickerAttrObj.lang);
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
           }
-          if($j.datetimepicker.setLocale) {
+          if(typeof $j.datetimepicker.setLocale !== "undefined") {
             console.log('>>> generateDateTimePicker: ', pickerAttrObj.lang);
             $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
