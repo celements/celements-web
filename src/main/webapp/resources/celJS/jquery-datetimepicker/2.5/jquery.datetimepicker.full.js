@@ -2148,9 +2148,7 @@
 						windowScrollTop;
 
 					$dateInput = datetimepicker.data('input');
-					console.log('>>>> setPos before: ', dateInputOffset, $dateInput.parent());
 					dateInputOffset = $dateInput.offset();
-					console.log('>>>> setPos after: ', dateInputOffset, $dateInput.parent());
 					dateInputElem = $dateInput[0];
 
 					verticalAnchorEdge = 'top';
@@ -2220,11 +2218,9 @@
 						var ancestorNodePosition;
 
 						ancestorNodePosition = options.contentWindow.getComputedStyle(ancestorNode).getPropertyValue('position');
-						console.log('setPos ancestorNodePosition: ', ancestorNode, ancestorNodePosition, left);
 
 						if (ancestorNodePosition === 'relative' && windowWidth >= ancestorNode.offsetWidth) {
 							left = left - ((windowWidth - ancestorNode.offsetWidth) / 2);
-							console.log('setPos ancestorNodePosition relative: ', ancestorNodePosition, left);
 							return false;
 						}
 					});
@@ -2239,7 +2235,6 @@
 
 					datetimepickerCss[verticalAnchorEdge] = verticalPosition;
 
-					console.log('setPos css: ', datetimepickerCss);
 					datetimepicker.css(datetimepickerCss);
 				};
 
