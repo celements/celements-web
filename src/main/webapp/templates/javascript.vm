@@ -44,7 +44,7 @@ $xwiki.jsfx.use('uicomponents/suggest/suggest.js', true)
   #end
 #end
 <script type="text/javascript" src="$services.celementsweb.getSkinFile(':js/prototype/prototype.js')"></script>
-<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/jquery.js', 'file')"></script>
+<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/jquery.min.js', 'file')"></script>
 <script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/jquery-noconflict.js', 'file')"></script>
 <script type="text/javascript" src="$services.celementsweb.getSkinFile(':js/xwiki/xwiki.js')"></script>
 <script type="text/javascript">
