@@ -2,9 +2,11 @@
  * jQuery JavaScript Library v1.12.4
  * http://jquery.com/
  *
+ * Indludes Shadow-DOM Patch for function offset by synventis
+ * 
  * Includes Sizzle.js
  * http://sizzlejs.com/
- *
+ * 
  * Copyright jQuery Foundation and other contributors
  * Released under the MIT license
  * http://jquery.org/license
