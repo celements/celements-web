@@ -990,8 +990,9 @@
 						});
 				};
 
-				console.log('>>> dateTimepicker init: options ', options);
-            // $j.datetimepicker.setLocale(pickerAttrObj.lang);
+			if (options.lang) {
+				$j.datetimepicker.setLocale(options.lang);
+			}
 
 			createDateTimePicker = function (input) {
 				var datetimepicker = $('<div class="xdsoft_datetimepicker xdsoft_noselect"></div>'),
