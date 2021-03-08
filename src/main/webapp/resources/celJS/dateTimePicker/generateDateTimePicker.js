@@ -68,14 +68,9 @@
             'closeOnDateSelect' : true,
             'onChangeDateTime' : _me._onChangeDateTime
           };
-          console.log('>>> generateDateTimePicker: cel_datePicker ', key, pickerAttrObj.lang);
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
-          }
-          if(typeof $j.datetimepicker.setLocale !== "undefined") {
-            console.log('>>> generateDateTimePicker: ', pickerAttrObj.lang);
-            $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
           $j(element).datetimepicker(pickerAttrObj);
           $(element).observe('change', _me._onChangeEventBind);
@@ -93,14 +88,9 @@
               'format' : 'H:i',
               'onChangeDateTime' : _me._onChangeDateTime
           };
-          console.log('>>> generateDateTimePicker: cel_timePicker ', key, pickerAttrObj.lang);
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
-          }
-          if(typeof $j.datetimepicker.setLocale !== "undefined") {
-            console.log('>>> generateDateTimePicker: ', pickerAttrObj.lang);
-            $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
           $j(element).datetimepicker(pickerAttrObj);
           $(element).observe('change', _me._onChangeEventBind);
@@ -119,14 +109,9 @@
               'format' : 'd.m.Y H:i',
               'onChangeDateTime' : _me._onChangeDateTime
           };
-          console.log('>>> generateDateTimePicker: cel_dateTimePicker ', key, pickerAttrObj.lang);
           var pickerDataAttrObj = JSON.parse(element.getAttribute('data-pickerAttr'));
           if(pickerDataAttrObj) {
             pickerAttrObj = $j.extend(pickerAttrObj, pickerDataAttrObj);
-          }
-          if(typeof $j.datetimepicker.setLocale !== "undefined") {
-            console.log('>>> generateDateTimePicker: ', pickerAttrObj.lang);
-            $j.datetimepicker.setLocale(pickerAttrObj.lang);
           }
           $j(element).datetimepicker(pickerAttrObj);
           $(element).observe('change', _me._onChangeEventBind);
