@@ -408,7 +408,7 @@
           var srcOriginHost = null;
           var scripts = document.getElementsByTagName('script');
           var len = scripts.length;
-          var re = new RegExp('(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements\\.js(\\?.*)?$');
+          var re = new RegExp('(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements(.min)?\\.js(\\?.*)?$');
           var src;
           while (len--) {
             src = scripts[len].src;
