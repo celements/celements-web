@@ -18,7 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-(function(window, undefined) {
+(function (window, undefined) {
   "use strict";
 
   /**
@@ -49,103 +49,106 @@
   /**
    * A generic javascript Object observer pattern
    */
-  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};}
-  if (typeof window.CELEMENTS.mixins=="undefined"){ window.CELEMENTS.mixins={};}
-  window.CELEMENTS.mixins.Event = Class.create({
-    memo : undefined,
-    stopped : undefined,
-    eventName : undefined,
+  if (typeof window.CELEMENTS === "undefined") { window.CELEMENTS = {}; }
+  if (typeof window.CELEMENTS.mixins === "undefined") { window.CELEMENTS.mixins = {}; }
+  if (typeof window.CELEMENTS.mixins.Event === 'undefined') {
+    window.CELEMENTS.mixins.Event = Class.create({
+      memo: undefined,
+      stopped: undefined,
+      eventName: undefined,
 
-    initialize : function(eventName, memo) {
-      var _me = this;
-      _me.memo = memo;
-      _me.eventName = eventName;
-      _me.stopped = false;
-    },
+      initialize: function (eventName, memo) {
+        const _me = this;
+        _me.memo = memo;
+        _me.eventName = eventName;
+        _me.stopped = false;
+      },
 
-    stop : function() {
-      var _me = this;
-      _me.stopped = true;
-    },
+      stop: function () {
+        const _me = this;
+        _me.stopped = true;
+      },
 
-    findElement : function() {
-      return undefined;
-    }
-
-  });
-  window.CELEMENTS.mixins.Observable = {
-    _celEventHash : null,
-
-    _getCelEventHash : function(eventKey) {
-      var _me = this;
-      if (!_me._celEventHash) {
-        _me._celEventHash = new Hash();
+      findElement: function () {
+        return undefined;
       }
-      if (eventKey) {
-        if (!_me._celEventHash.get(eventKey)) {
-          _me._celEventHash.set(eventKey, new Array());
+
+    });
+  }
+  if (typeof window.CELEMENTS.mixins.Observable === 'undefined') {
+    window.CELEMENTS.mixins.Observable = {
+      _celEventHash: null,
+
+      _getCelEventHash: function (eventKey) {
+        const _me = this;
+        if (!_me._celEventHash) {
+          _me._celEventHash = new Hash();
         }
-        return _me._celEventHash.get(eventKey);
-      }
-      return _me._celEventHash;
-    },
+        if (eventKey) {
+          if (!_me._celEventHash.get(eventKey)) {
+            _me._celEventHash.set(eventKey, new Array());
+          }
+          return _me._celEventHash.get(eventKey);
+        }
+        return _me._celEventHash;
+      },
 
-    celObserve : function(eventKey, callbackFN) {
-      var _me = this;
-      console.debug('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
-      if (!eventKey) {
-        throw "undefined eventKey in observe call ";
-      }
-      this._getCelEventHash(eventKey).push(callbackFN);
-    },
+      celObserve: function (eventKey, callbackFN) {
+        const _me = this;
+        console.debug('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
+        if (!eventKey) {
+          throw "undefined eventKey in observe call ";
+        }
+        this._getCelEventHash(eventKey).push(callbackFN);
+      },
 
-    celStopObserving : function(eventKey, callbackFN) {
-      var _me = this;
-      console.debug('cel celStopObserving: ', _me._celEventHash, eventKey, callbackFN);
-      if (!eventKey) {
-        throw "undefined eventKey in celStopObserving call ";
-      }
-      this._getCelEventHash().set(eventKey, this._getCelEventHash(eventKey
-          ).without(callbackFN));
-    },
+      celStopObserving: function (eventKey, callbackFN) {
+        const _me = this;
+        console.debug('cel celStopObserving: ', _me._celEventHash, eventKey, callbackFN);
+        if (!eventKey) {
+          throw "undefined eventKey in celStopObserving call ";
+        }
+        this._getCelEventHash().set(eventKey, this._getCelEventHash(eventKey
+        ).without(callbackFN));
+      },
 
-    celFire : function(eventKey, memo) {
-      var _me = this;
-      console.debug('cel celFire: ', _me._celEventHash, eventKey, memo);
-      if (!eventKey) {
-        throw "undefined eventKey in celObserve call ";
-      }
-      var event = new CELEMENTS.mixins.Event(eventKey, memo);
-      this._getCelEventHash(eventKey).each(function(listenerFN) {
-        try {
-          listenerFN(event);
-        } catch (exp) {
-          console.error('listener in celFire failed for event ', eventKey, listenerFN,
+      celFire: function (eventKey, memo) {
+        const _me = this;
+        console.debug('cel celFire: ', _me._celEventHash, eventKey, memo);
+        if (!eventKey) {
+          throw "undefined eventKey in celObserve call ";
+        }
+        const event = new CELEMENTS.mixins.Event(eventKey, memo);
+        this._getCelEventHash(eventKey).each(function (listenerFN) {
+          try {
+            listenerFN(event);
+          } catch (exp) {
+            console.error('listener in celFire failed for event ', eventKey, listenerFN,
               exp);
-        }
-      });
-      return event;
-    }
-  };
-
+          }
+        });
+        return event;
+      }
+    };
+  }
   /**
    * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
    **/
-  if (typeof window.CELEMENTS.Ajax=="undefined"){ window.CELEMENTS.Ajax={};}
-  if(window.Ajax && !window.CELEMENTS.Ajax_CORSfixInstalled) {
+  if (typeof window.CELEMENTS.Ajax == "undefined") { window.CELEMENTS.Ajax = {}; }
+  if (window.Ajax && !window.CELEMENTS.Ajax_CORSfixInstalled) {
     window.Try = {
-      logging : false,
-      these : function() {
-        var returnValue = undefined;
+      logging: false,
+      these: function () {
+        let returnValue = undefined;
 
-        for (var i = 0, length = arguments.length; i < length; i++) {
-          var lambda = arguments[i];
+        for (let i = 0, length = arguments.length; i < length; i++) {
+          const lambda = arguments[i];
           try {
             returnValue = lambda();
             break;
           } catch (e) {
             if (Try.logging && (typeof console != 'undefined')
-                && (typeof console.log != 'undefined')) {
+              && (typeof console.log != 'undefined')) {
               console.log('Try.these skip lambda ', lambda, e);
             }
           }
@@ -155,21 +158,21 @@
       }
     };
 
-    window.Ajax.getCORS_Transport = function() {
+    window.Ajax.getCORS_Transport = function () {
       return Try.these(
-        function() {return new XDomainRequest();},
-        function() {return new XMLHttpRequest();},
-        function() {return new ActiveXObject('Msxml2.XMLHTTP');},
-        function() {return new ActiveXObject('Microsoft.XMLHTTP');}
+        function () { return new XDomainRequest(); },
+        function () { return new XMLHttpRequest(); },
+        function () { return new ActiveXObject('Msxml2.XMLHTTP'); },
+        function () { return new ActiveXObject('Microsoft.XMLHTTP'); }
       ) || false;
     };
 
     window.Ajax.Request.logging = false;
     window.Ajax.Request.addMethods({
-      _status : undefined,
-      _readyState : undefined,
+      _status: undefined,
+      _readyState: undefined,
 
-      initialize : function($super, url, options) {
+      initialize: function ($super, url, options) {
         $super(options);
         this.url = url;
         if (!this.isSameOrigin() || this.options.crossSite) {
@@ -180,16 +183,16 @@
         this.request(url);
       },
 
-      request: function(url) {
+      request: function (url) {
         this.url = url;
         this.method = this.options.method;
         this._status = 0;
         if (!this.transport.setRequestHeader) {
           this.method = 'get';
         }
-        var params = Object.isString(this.options.parameters) ?
-              this.options.parameters :
-              Object.toQueryString(this.options.parameters);
+        let params = Object.isString(this.options.parameters) ?
+          this.options.parameters :
+          Object.toQueryString(this.options.parameters);
 
         if (!['get', 'post'].include(this.method)) {
           params += (params ? '&' : '') + "_method=" + this.method;
@@ -203,7 +206,7 @@
         this.parameters = params.toQueryParams();
 
         try {
-          var response = new Ajax.Response(this);
+          const response = new Ajax.Response(this);
           if (this.options.onCreate) this.options.onCreate(response);
           Ajax.Responders.dispatch('onCreate ', this, response);
 
@@ -221,7 +224,7 @@
             this.setRequestHeaders();
           } catch (exp) {
             if (Ajax.Request.logging && (typeof console != 'undefined')
-                && (typeof console.warn != 'undefined')) {
+              && (typeof console.warn != 'undefined')) {
               console.warn('setRequestHeaders failed ', this.url, exp);
             }
           }
@@ -239,8 +242,8 @@
         }
       },
 
-      onStateChange: function() {
-        var readyState = this.transport.readyState;
+      onStateChange: function () {
+        const readyState = this.transport.readyState;
         if (readyState > 1 && !((readyState == 4) && this._complete)) {
           try {
             if ((readyState == 4)) {
@@ -256,7 +259,7 @@
         }
       },
 
-      onLoad : function() {
+      onLoad: function () {
         this._status = this.transport.status || 200;
         this._readyState = this.transport.readyState || 4;
         if (!this._complete) {
@@ -264,7 +267,7 @@
         }
       },
 
-      onError : function() {
+      onError: function () {
         this._status = this.transport.status || 400;
         this._readyState = this.transport.readyState || 4;
         if (!this._complete) {
@@ -272,7 +275,7 @@
         }
       },
 
-      getStatus: function() {
+      getStatus: function () {
         if (!this._status) {
           this._status = this.transport.status;
         }
@@ -281,7 +284,7 @@
           return this._status || 0;
         } catch (exp) {
           if (Ajax.Request.logging && (typeof console != 'undefined')
-              && (typeof console.warn != 'undefined')) {
+            && (typeof console.warn != 'undefined')) {
             console.warn('failed to getStauts ', exp);
           }
           return 0;
@@ -291,28 +294,28 @@
     }).bind(window.Ajax.Request);
 
     window.Ajax.Response.addMethods({
-      _status : undefined,
+      _status: undefined,
 
-      initialize: function(request){
+      initialize: function (request) {
         this.request = request;
-        var transport  = this.transport  = request.transport;
-        var readyState = this.readyState = transport.readyState || request._readyState;
+        const transport = this.transport = request.transport;
+        const readyState = this.readyState = transport.readyState || request._readyState;
         this._status = request._status;
 
         if ((readyState > 2 && !Prototype.Browser.IE) || readyState == 4) {
-          this.status       = this.getStatus();
-          this.statusText   = this.getStatusText();
+          this.status = this.getStatus();
+          this.statusText = this.getStatusText();
           if (request._isAbortedBug) {
             this.responseText = '';
           } else {
             this.responseText = String.interpret(transport.responseText);
-            this.headerJSON   = this._getHeaderJSON();
+            this.headerJSON = this._getHeaderJSON();
           }
         }
 
         if ((readyState == 4) && !(request._isAbortedBug)) {
-          var xml = transport.responseXML;
-          this.responseXML  = Object.isUndefined(xml) ? null : xml;
+          const xml = transport.responseXML;
+          this.responseXML = Object.isUndefined(xml) ? null : xml;
           this.responseJSON = this._getResponseJSON();
         }
       },
@@ -330,18 +333,18 @@
 
   window.celOnBeforeLoadListenerArray = [];
 
-  window.celAddOnBeforeLoadListener = function(listenerFunc) {
+  window.celAddOnBeforeLoadListener = function (listenerFunc) {
     celOnBeforeLoadListenerArray.push(listenerFunc);
   };
 
   window.celOnFinishHeaderListenerArray = [];
 
-  window.celAddOnFinishHeaderListener = function(listenerFunc) {
+  window.celAddOnFinishHeaderListener = function (listenerFunc) {
     window.celOnFinishHeaderListenerArray.push(listenerFunc);
   };
 
-  window.celFinishHeaderHandler = function() {
-    $A(window.celOnFinishHeaderListenerArray).each(function(listener) {
+  window.celFinishHeaderHandler = function () {
+    $A(window.celOnFinishHeaderListenerArray).each(function (listener) {
       try {
         listener();
       } catch (exp) {
@@ -354,25 +357,24 @@
    * getCelDomain function
    **/
   if (typeof window.getCelDomain === 'undefined') {
-    window.getCelDomain = function() {
-      var hostName = window.location.host;
-      var domainName = hostName.replace(/^www\./, '');
-      return domainName;
+    window.getCelDomain = function () {
+      const hostName = window.location.host;
+      return hostName.replace(/^www\./, '');
     };
   }
 
-  if(typeof window.CELEMENTS.LoadingIndicator === 'undefined') {
+  if (typeof window.CELEMENTS.LoadingIndicator === 'undefined') {
     window.CELEMENTS.LoadingIndicator = Class.create({
-      _loadingImg : undefined,
+      _loadingImg: undefined,
 
-      initialize : function() {
-        var _me = this;
+      initialize: function () {
+        const _me = this;
         _me._loadingImg = new Hash();
       },
 
-      getLoadingIndicator : function(isSmallOrPxSize) {
-        var _me = this;
-        var loaderType = 'ajax-loader-32px';
+      getLoadingIndicator: function (isSmallOrPxSize) {
+        const _me = this;
+        let loaderType = 'ajax-loader-32px';
         if (typeof isSmallOrPxSize === 'boolean') {
           if (isSmallOrPxSize) {
             loaderType = 'ajax-loader-16px';
@@ -382,10 +384,10 @@
         }
         if (!_me._loadingImg.get(loaderType)) {
           _me._loadingImg.set(loaderType, new Element('img', {
-            'src' : CELEMENTS.getUtils().getPathPrefix() + '/file/resources/celRes/spinner/'
-                + loaderType + '.png',
-            'class' : 'editorLoading',
-            'alt' : 'loading...'
+            'src': CELEMENTS.getUtils().getPathPrefix() + '/file/resources/celRes/spinner/'
+              + loaderType + '.png',
+            'class': 'editorLoading',
+            'alt': 'loading...'
           }));
         }
         return _me._loadingImg.get(loaderType).clone();
@@ -394,31 +396,27 @@
     });
   }
 
-  if(typeof window.CELEMENTS.Utils === 'undefined') {
+  if (typeof window.CELEMENTS.Utils === 'undefined') {
     window.CELEMENTS.Utils = Class.create({
-      _srcOriginHost : undefined,
+      _srcOriginHost: undefined,
 
-      initialize : function() {
-        var _me = this;
-      },
-
-      getPathPrefix : function() {
-        var _me = this;
+      getPathPrefix: function () {
+        const _me = this;
         if (!_me._srcOriginHost) {
-          var srcOriginHost = null;
-          var scripts = document.getElementsByTagName('script');
-          var len = scripts.length;
-          var re = new RegExp('(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements(.min)?\\.js(\\?.*)?$');
-          var src;
+          let srcOriginHost = null;
+          const scripts = document.getElementsByTagName('script');
+          let len = scripts.length;
+          const re = new RegExp('(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements(.min)?\\.js(\\?.*)?$');
+          let src;
           while (len--) {
             src = scripts[len].src;
-            var srcMatches = src.match(re);
+            const srcMatches = src.match(re);
             if (src && srcMatches) {
               srcOriginHost = srcMatches[1];
-              var prefixPath = srcMatches[2];
-              var prefixPathSplit = prefixPath.split('/');
-              var prefixStr = prefixPathSplit.splice(0, prefixPathSplit.length - 2).join('/');
-              if(prefixStr != '') {
+              const prefixPath = srcMatches[2];
+              const prefixPathSplit = prefixPath.split('/');
+              const prefixStr = prefixPathSplit.splice(0, prefixPathSplit.length - 2).join('/');
+              if (prefixStr != '') {
                 srcOriginHost += '/' + prefixStr;
               }
               break;
@@ -430,17 +428,17 @@
         return _me._srcOriginHost;
       },
 
-      convertFullNameToViewURL : function(fullName) {
-        var _me = this;
+      convertFullNameToViewURL: function (fullName) {
+        const _me = this;
         return _me.getPathPrefix()
           + ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/');
       }
 
     });
 
-    var globalUtilsInstance = new window.CELEMENTS.Utils();
+    const globalUtilsInstance = new window.CELEMENTS.Utils();
 
-    window.CELEMENTS.getUtils = function() {
+    window.CELEMENTS.getUtils = function () {
       return globalUtilsInstance;
     };
   }
@@ -450,30 +448,30 @@
    * @deprecated Instead use window.CELEMENTS.getUtils().getPathPrefix()
    */
   if (typeof window.CELEMENTS.getPathPrefix === 'undefined') {
-    window.CELEMENTS.getPathPrefix = function() {
+    window.CELEMENTS.getPathPrefix = function () {
       console.warn('deprecated call of window.CELEMENTS.getPathPrefix.'
-          + ' Instead use window.CELEMENTS.getUtils().getPathPrefix()');
+        + ' Instead use window.CELEMENTS.getUtils().getPathPrefix()');
       return window.CELEMENTS.getUtils().getPathPrefix();
     };
   }
 
-  if (typeof window.CELEMENTS=="undefined"){ window.CELEMENTS={};};
+  if (typeof window.CELEMENTS == "undefined") { window.CELEMENTS = {}; };
   if (typeof window.CELEMENTS.Ajax.Reconnector === 'undefined') {
     window.CELEMENTS.Ajax.Reconnector = Class.create({
-      _htmlElem : undefined,
-      _callbackOnSuccess : undefined,
-      _reconnectWait : undefined,
-      _reconnectorHandlerBind : undefined,
-      _cancelAjaxOnTimeoutBind : undefined,
-      _reconnectorExecuter : undefined,
-      _reconnectWaitStart : undefined,
-      _minReconnectWait : undefined,
-      _maxReconnectWait : undefined,
-      _url : undefined,
-      _configObj : undefined,
+      _htmlElem: undefined,
+      _callbackOnSuccess: undefined,
+      _reconnectWait: undefined,
+      _reconnectorHandlerBind: undefined,
+      _cancelAjaxOnTimeoutBind: undefined,
+      _reconnectorExecuter: undefined,
+      _reconnectWaitStart: undefined,
+      _minReconnectWait: undefined,
+      _maxReconnectWait: undefined,
+      _url: undefined,
+      _configObj: undefined,
 
-      initialize : function(htmlElemId, callbackOnSuccess, configObj) {
-        var _me = this;
+      initialize: function (htmlElemId, callbackOnSuccess, configObj) {
+        const _me = this;
         _me._htmlElem = $(htmlElemId);
         _me._configObj = configObj || {};
         _me._url = _me._configObj.url || getCelHost();
@@ -485,29 +483,29 @@
         _me._reset();
       },
 
-      _reset : function() {
-        var _me = this;
+      _reset: function () {
+        const _me = this;
         _me._reconnectWaitStart = _me._minReconnectWait;
       },
 
-      setMinRecconectWait : function(minReconnectWait) {
-        var _me = this;
+      setMinRecconectWait: function (minReconnectWait) {
+        const _me = this;
         _me._minReconnectWait = minReconnectWait;
       },
 
-      setMaxRecconectWait : function(maxReconnectWait) {
-        var _me = this;
+      setMaxRecconectWait: function (maxReconnectWait) {
+        const _me = this;
         _me._maxReconnectWait = maxReconnectWait;
       },
 
-      _reconnectorHandler : function() {
-        var _me = this;
+      _reconnectorHandler: function () {
+        const _me = this;
         _me._reconnectWait--;
         if (_me._reconnectWait == 0) {
           _me._reconnectorExecuter.stop();
-          var tryEv = _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
-          if (!tryEv.stopped && !_me._configObj.skipRetryMsg) {
-            var mesg = "Trying...";
+          const tryEv1 = _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
+          if (!tryEv1.stopped && !_me._configObj.skipRetryMsg) {
+            let mesg = "Trying...";
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryNotice;
             }
@@ -515,9 +513,9 @@
           }
           _me._connectionTester();
         } else {
-          var tryEv = _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
-          if (!tryEv.stopped && !_me._configObj.skipRetryMsg) {
-            var mesg = "Retrying in {} seconds.";
+          const tryEv2 = _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
+          if (!tryEv2.stopped && !_me._configObj.skipRetryMsg) {
+            let mesg = "Retrying in {} seconds.";
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryDelayNotice;
             }
@@ -528,36 +526,36 @@
         }
       },
 
-      start : function() {
-        var _me = this;
+      start: function () {
+        const _me = this;
         _me._reconnectWait = _me._reconnectWaitStart;
         _me._reconnectorExecuter = new PeriodicalExecuter(_me._reconnectorHandlerBind, 1);
       },
 
-      _cancelAjaxOnTimeout : function(ajaxCall) {
+      _cancelAjaxOnTimeout: function (ajaxCall) {
         if (!ajaxCall._complete) {
           ajaxCall.transport.abort();
         }
       },
 
-      _connectionTester : function() {
-        var _me = this;
-        var connectionTestAjax = new Ajax.Request(_me._url, {
-          'parameters' : {
-            'ajax' : 1,
-            'xpage' : 'celements_ajax',
-            'ajax_mode' : 'pageTypeWithLayout',
-            'overwriteLayout' : 'SimpleLayout'
+      _connectionTester: function () {
+        const _me = this;
+        const connectionTestAjax = new Ajax.Request(_me._url, {
+          'parameters': {
+            'ajax': 1,
+            'xpage': 'celements_ajax',
+            'ajax_mode': 'pageTypeWithLayout',
+            'overwriteLayout': 'SimpleLayout'
           },
-          'onSuccess' : function() {
+          'onSuccess': function () {
             _me._reset();
             _me._reconnectorExecuter = null;
             _me._callbackOnSuccess();
             _me._htmlElem.fire('celements:AjaxReconnectSuccess');
           },
-          'onFailure' : function() {
+          'onFailure': function () {
             _me._reconnectWaitStart = Math.min(_me._reconnectWaitStart * 2,
-                  _me._maxReconnectWait);
+              _me._maxReconnectWait);
             _me.start();
           }
         });
@@ -568,29 +566,29 @@
   }
 
   window.CELEMENTS.UrlUtils = Class.create({
-    getParams : function(search) {
-      var _me = this;
+    getParams: function (search) {
+      const _me = this;
       search = search || window.location.search;
-      var paramSplit = search.split(new RegExp('[?&]'))
+      let paramSplit = search.split(new RegExp('[?&]'))
       paramSplit.unshift(new Hash()); // add initial param as first array element
       return paramSplit.reduce(_me._splitUriSearch.bind(_me)) || new Hash();
     },
 
-    joinParams : function(hash) {
-      var paramsArray = [];
-      $H(hash).each(function(pair) {
-        var pairMapped = pair.value.map(function(elem) { return pair.key + '=' + encodeURI(elem) });
+    joinParams: function (hash) {
+      let paramsArray = [];
+      $H(hash).each(function (pair) {
+        const pairMapped = pair.value.map(function (elem) { return pair.key + '=' + encodeURI(elem) });
         paramsArray = paramsArray.concat(pairMapped);
       });
       return paramsArray.join('&');
     },
 
-    _splitUriSearch : function(paramHash, elem){
-      var key = elem.split('=', 1);
-      if((key.length > 0) && (key[0].length > 0)) {
+    _splitUriSearch: function (paramHash, elem) {
+      let key = elem.split('=', 1);
+      if ((key.length > 0) && (key[0].length > 0)) {
         key = key[0];
-        var val = decodeURI(elem.substring(key.length + 1));
-        if(!paramHash.get(key)) {
+        const val = decodeURI(elem.substring(key.length + 1));
+        if (!paramHash.get(key)) {
           paramHash.set(key, [val]);
         } else {
           paramHash.get(key).push(val);
@@ -604,8 +602,8 @@
    * getCelHost function
    **/
   if (typeof window.getCelHost === 'undefined') {
-    window.getCelHost = function() {
-      var celHost = document.location + '?';
+    window.getCelHost = function () {
+      let celHost = document.location + '?';
       if (document.location.pathname.indexOf('/skin/resources/') > -1) {
         celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
       } else if (document.location.pathname.indexOf('/file/resources/') > -1) {
@@ -624,16 +622,15 @@
   window.celMessages.isLoaded = false;
 
   try {
-    var topFrame = top || window;
     new Ajax.Request(window.getCelHost(), {
-      method : 'post',
-      parameters : {
-        xpage : 'celements_ajax',
-        ajax_mode : 'Messages'
+      method: 'post',
+      parameters: {
+        xpage: 'celements_ajax',
+        ajax_mode: 'Messages'
       },
-      onSuccess : function(transport) {
+      onSuccess: function (transport) {
         if (transport.responseText.isJSON()) {
-          var newMessages = transport.responseText.evalJSON();
+          let newMessages = transport.responseText.evalJSON();
           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
             console.log('initCelements.js: finished getting dictionary messages.');
           }
@@ -649,7 +646,7 @@
     console.error('Failed to get Cel-Messages async!', exp);
   }
 
-  window.celExecOnceAfterMessagesLoaded = function(callbackFn) {
+  window.celExecOnceAfterMessagesLoaded = function (callbackFn) {
     if (!window.celMessages.isLoaded) {
       $(document.body).stopObserving('cel:messagesLoaded', callbackFn);
       $(document.body).observe('cel:messagesLoaded', callbackFn);
@@ -657,25 +654,25 @@
       callbackFn(window.celMessages);
     }
   };
- /**
-  * END of celMessages
-  */
+  /**
+   * END of celMessages
+   */
 
   /**
    *  celEventManager
    */
-  if(typeof window.CELEMENTS.CssClassEventHandler === 'undefined') {
+  if (typeof window.CELEMENTS.CssClassEventHandler === 'undefined') {
     window.CELEMENTS.CssClassEventHandler = Class.create({
-      _htmlElement : undefined,
-      _eventName : undefined,
-      _cssSelector : undefined,
-      _className : undefined,
-      _actionFunction : undefined,
-      _conditionFunction : undefined,
-      _actionHandlerBind : undefined,
-  
-      initialize : function(htmlElement, eventName, cssSelector, className, actionFunction, condition) {
-        var _me = this;
+      _htmlElement: undefined,
+      _eventName: undefined,
+      _cssSelector: undefined,
+      _className: undefined,
+      _actionFunction: undefined,
+      _conditionFunction: undefined,
+      _actionHandlerBind: undefined,
+
+      initialize: function (htmlElement, eventName, cssSelector, className, actionFunction, condition) {
+        const _me = this;
         _me._htmlElement = $(htmlElement);
         _me._eventName = eventName;
         _me._cssSelector = cssSelector;
@@ -687,18 +684,18 @@
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
         _me._registerActionHandler();
       },
-      
-      _registerActionHandler : function() {
-        var _me = this;
+
+      _registerActionHandler: function () {
+        const _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug('EventHandler - register: ', _me._eventName, _me._cssSelector,
           _me._className, _me._actionFunction.name, _me._htmlElement);
       },
-  
-      _actionHandler : function(event) {
-        var _me = this;
-        _me._getTargetElements().each(function(targetElement) {
+
+      _actionHandler: function (event) {
+        const _me = this;
+        _me._getTargetElements().each(function (targetElement) {
           if (!_me._conditionFunction || _me._conditionFunction(targetElement, _me._htmlElement)) {
             _me._actionFunction(targetElement, _me._className);
             console.debug('EventHandler -  upon', _me._eventName, 'action [',
@@ -709,9 +706,9 @@
           }
         });
       },
-  
-      _getTargetElements : function() {
-        var _me = this;
+
+      _getTargetElements: function () {
+        const _me = this;
         if (_me._cssSelector.startsWith('^')) { // match up the DOM from origin
           parent = _me._htmlElement.up(_me._cssSelector.substring(1));
           return parent ? [parent] : [];
@@ -720,47 +717,46 @@
         }
       },
 
-      unregister : function() {
-        var _me = this;
+      unregister: function () {
+        const _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug('EventHandler - unregister: ', _me._eventName, _me._cssSelector,
           _me._className, _me._actionFunction.name, _me._htmlElement);
       }
-  
+
     });
   }
 
-  if(typeof window.CELEMENTS.EventManager === 'undefined') {
+  if (typeof window.CELEMENTS.EventManager === 'undefined') {
     window.CELEMENTS.EventManager = Class.create({
-      _instructionRegex : new RegExp('([\\w:]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
-      _actionFunctionMap : {
-          // map may be extendend. also extend second group in instructionRegex accordingly
-          '+' : Element.addClassName,
-          '-' : Element.removeClassName,
-          '%' : Element.toggleClassName
+      _instructionRegex: new RegExp('([\\w:]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
+      _actionFunctionMap: {
+        // map may be extendend. also extend second group in instructionRegex accordingly
+        '+': Element.addClassName,
+        '-': Element.removeClassName,
+        '%': Element.toggleClassName
       },
-      _eventElements : undefined,
-      _interpretDataCelEventBind : undefined,
-      _contentChangedHandlerBind : undefined,
-      updateCelEventHandlersBind : undefined,
+      _eventElements: undefined,
+      _interpretDataCelEventBind: undefined,
+      _contentChangedHandlerBind: undefined,
+      updateCelEventHandlersBind: undefined,
 
-      _intersectionObserver : undefined,
-      _intersectionValues : [],
+      _intersectionObserver: undefined,
+      _intersectionValues: [],
 
-      initialize : function() {
-        var _me = this;
+      initialize: function () {
+        const _me = this;
         _me._eventElements = new Array();
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
         _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
-        _me._intersectionObserver = new IntersectionObserver(function(entries) { 
+        _me._intersectionObserver = new IntersectionObserver(function (entries) {
           entries.forEach(_me._handleIntersection.bind(_me));
         }, { threshold: [0, 0.5, 1] });
       },
-      
-      _splitDataCelEventList : function(dataValue) {
-        var _me = this;
-        var ret = new Array();
+
+      _splitDataCelEventList: function (dataValue) {
+        let ret = new Array();
         if (dataValue) {
           // split single '&', avoid splitting double '&&' within condition string
           ret = dataValue.replace(/([^&])&([^&])/g, '$1#SPLIT#$2').split('#SPLIT#');
@@ -768,46 +764,46 @@
         return ret;
       },
 
-      _parseEventInstruction : function(instruction) {
-        var _me = this;
-        var parts = instruction.match(_me._instructionRegex) || [];
-        var data = {
-          eventName : parts[1],
-          action : parts[2],
-          className : parts[3],
-          cssSelector : parts[4],
-          condition : parts[5]
+      _parseEventInstruction: function (instruction) {
+        const _me = this;
+        const parts = instruction.match(_me._instructionRegex) || [];
+        const data = {
+          eventName: parts[1],
+          action: parts[2],
+          className: parts[3],
+          cssSelector: parts[4],
+          condition: parts[5]
         };
         if (data.eventName && data.action && data.className && data.cssSelector) {
           return data;
         } else {
-          throw "parseEventInstruction: unable to parse event instruction '" + instruction + "'"; 
+          throw "parseEventInstruction: unable to parse event instruction '" + instruction + "'";
         }
       },
 
-      _createEventHandler : function(htmlElem, instruction) {
-        var _me = this;
-        var data = _me._parseEventInstruction(instruction);
-        var actionFunction = _me._actionFunctionMap[data.action];
+      _createEventHandler: function (htmlElem, instruction) {
+        const _me = this;
+        const data = _me._parseEventInstruction(instruction);
+        const actionFunction = _me._actionFunctionMap[data.action];
         if (actionFunction) {
           if (data.eventName.startsWith('cel:enter') || data.eventName.startsWith('cel:leave')) {
             _me._intersectionObserver.observe(htmlElem);
             console.debug('observing intersection: ', htmlElem);
           }
           return new window.CELEMENTS.CssClassEventHandler(htmlElem, data.eventName,
-              data.cssSelector, data.className, actionFunction, data.condition);
+            data.cssSelector, data.className, actionFunction, data.condition);
         } else {
           throw "createEventHandler: unknown action '" + data.action + '"';
         }
       },
 
-      _createEventElement : function(htmlElem) {
-        var _me = this;
-        var dataValue = htmlElem.readAttribute('data-cel-event');
+      _createEventElement: function (htmlElem) {
+        const _me = this;
+        const dataValue = htmlElem.readAttribute('data-cel-event');
         return {
-          'htmlElem' : htmlElem,
-          'dataValue' : dataValue,
-          'eventHandlers' : _me._splitDataCelEventList(dataValue).map(function(instruction) {
+          'htmlElem': htmlElem,
+          'dataValue': dataValue,
+          'eventHandlers': _me._splitDataCelEventList(dataValue).map(function (instruction) {
             try {
               return _me._createEventHandler(htmlElem, instruction);
             } catch (exp) {
@@ -817,15 +813,15 @@
         };
       },
 
-      _interpretDataCelEvent : function(htmlElem) {
-        var _me = this;
-        var logPref = 'EventManager - interpretData: ';
+      _interpretDataCelEvent: function (htmlElem) {
+        const _me = this;
+        const logPref = 'EventManager - interpretData: ';
         if (htmlElem.hasClassName('celOnEventInit')) {
           console.debug(logPref, 'skip already initialized: ', htmlElem);
         } else if (htmlElem.up('.cel_template')) {
           console.debug(logPref, 'skip template element: ', htmlElem);
         } else {
-          var newElem = _me._createEventElement(htmlElem);
+          const newElem = _me._createEventElement(htmlElem);
           if (newElem.eventHandlers.length > 0) {
             _me._eventElements.push(newElem);
             console.debug(logPref, 'new element ', htmlElem);
@@ -837,19 +833,19 @@
         }
       },
 
-      _handleIntersection : function(entry, idx) {
-        var _me = this;
-        const previous = _me._intersectionValues[idx] || { y : 0, ratio : 0 };
-        const current = { y : entry.boundingClientRect.y, ratio : entry.intersectionRatio };
-        var type = (entry.isIntersecting && current.ratio > previous.ratio) ? 'enter' : 'leave';
-        var direction = (current.y > previous.y) ? 'up' : 'down';
-        var ratio = entry.intersectionRatio;
+      _handleIntersection: function (entry, idx) {
+        const _me = this;
+        const previous = _me._intersectionValues[idx] || { y: 0, ratio: 0 };
+        const current = { y: entry.boundingClientRect.y, ratio: entry.intersectionRatio };
+        const type = (entry.isIntersecting && current.ratio > previous.ratio) ? 'enter' : 'leave';
+        const direction = (current.y > previous.y) ? 'up' : 'down';
+        let ratio = entry.intersectionRatio;
         if (type === 'enter') {
           ratio = (ratio >= 1) ? ':full' : (ratio > 0.5) ? ':half' : '';
         } else {
           ratio = (ratio > 0.5) ? ':full' : (ratio > 0) ? ':half' : '';
         }
-        var eventName = 'cel:' + type + ratio;
+        let eventName = 'cel:' + type + ratio;
         console.debug('fire', eventName);
         entry.target.fire(eventName);
         eventName += ':' + direction;
@@ -858,30 +854,30 @@
         _me._intersectionValues[idx] = current;
       },
 
-      _contentChangedHandler : function(event) {
-        var _me = this;
+      _contentChangedHandler: function (event) {
+        const _me = this;
         console.debug('EventManager - contentChanged ', event);
         _me.updateCelEventHandlers(event.memo.htmlElem);
       },
 
-      updateCelEventHandlers : function(htmlContainer) {
-        var _me = this;
+      updateCelEventHandlers: function (htmlContainer) {
+        const _me = this;
         htmlContainer = htmlContainer || $(document.body);
         Event.stopObserving($(document.body), "celements:contentChanged",
-            _me._contentChangedHandlerBind);
+          _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
         $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
       },
 
-      _removeDisappearedElems : function() {
-        var _me = this;
-        for (var i = _me._eventElements.length - 1; i >= 0; i--) {
-          var elem = _me._eventElements[i];
-          var isInBody = $(document.body).contains(elem.htmlElem);
-          var changedDataValue = (elem.htmlElem.readAttribute('data-cel-event') !== elem.dataValue);
+      _removeDisappearedElems: function () {
+        const _me = this;
+        for (let i = _me._eventElements.length - 1; i >= 0; i--) {
+          const elem = _me._eventElements[i];
+          const isInBody = $(document.body).contains(elem.htmlElem);
+          const changedDataValue = (elem.htmlElem.readAttribute('data-cel-event') !== elem.dataValue);
           if (!isInBody || changedDataValue || !elem.htmlElem.hasClassName('celOnEventInit')) {
-            elem.eventHandlers.each(function(handler) { handler.unregister(); });
+            elem.eventHandlers.each(function (handler) { handler.unregister(); });
             _me._eventElements.splice(i, 1);
             elem.htmlElem.removeClassName('celOnEventInit');
             console.debug('EventManager - removeDisappearedElem: ', elem);
@@ -901,14 +897,14 @@
   /**
    *  celements form validations
    */
-  var formValidations = new Hash();
+  let formValidations = new Hash();
 
-  var registerValidation = function(formElem) {
+  const registerValidation = function (formElem) {
     if (formElem && formElem.id) {
-      var valid = new Validation(formElem, {
-        immediate : true,
-        useTitles : true,
-        stopOnFirst : false
+      const valid = new Validation(formElem, {
+        immediate: true,
+        useTitles: true,
+        stopOnFirst: false
       });
       formValidations.set(formElem.id, valid);
     } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
@@ -916,10 +912,10 @@
     }
   };
 
-  celAddOnBeforeLoadListener(function() {
+  celAddOnBeforeLoadListener(function () {
     $$('form.cel_form_validation').each(registerValidation);
-    $(document.body).observe('cel_yuiOverlay:contentChanged', function(event) {
-      var containerElem = event.findElement();
+    $(document.body).observe('cel_yuiOverlay:contentChanged', function (event) {
+      const containerElem = event.findElement();
       if (containerElem) {
         containerElem.select('form.cel_form_validation').each(registerValidation);
       }
@@ -932,16 +928,18 @@
   /**
    * Google Analytics integration
    **/
-  window.celAddOnFinishHeaderListener(function() {
+  window.celAddOnFinishHeaderListener(function () {
     //get google Account Number from Meta-Tags
-    var metas = $$('meta[name="cel-GAA-Num"]');
+    const metas = $$('meta[name="cel-GAA-Num"]');
     if ((metas.size() > 0) && (metas[0].content != '')) {
-      var gaaNum = metas[0].content;
+      const gaaNum = metas[0].content;
 
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+          (i[r].q = i[r].q || []).push(arguments);
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
       ga('create', gaaNum, window.getCelDomain());
       ga('set', 'anonymizeIp', true);
@@ -953,7 +951,7 @@
   /**
    * Fluid Design image map support
    */
-  celAddOnBeforeLoadListener(function() {
+  celAddOnBeforeLoadListener(function () {
     if (typeof $j('img[usemap]').rwdImageMaps !== 'undefined') {
       $j('img[usemap]').rwdImageMaps();
     }
@@ -962,11 +960,11 @@
   /**
    * Register default overlay opener for .cel_yuiOverlay cssSelector
    */
-  celAddOnBeforeLoadListener(function() {
+  celAddOnBeforeLoadListener(function () {
     if (CELEMENTS && CELEMENTS.presentation && CELEMENTS.presentation.getOverlayObj
-        && CELEMENTS.presentation.getOverlayObj()) {
+      && CELEMENTS.presentation.getOverlayObj()) {
       CELEMENTS.presentation.getOverlayObj({
-        'overlayLayout' : 'SimpleLayout'
+        'overlayLayout': 'SimpleLayout'
       }).registerOpenHandler();
     }
   });
@@ -974,10 +972,10 @@
   /**
    * Register default orientation css classes setter
    */
-  var mobileDim = null;
-  var cel_updateOrientationCSSclasses = function() {
-    var innerWidth = mobileDim.getInnerWidth();
-    var innerHeight = mobileDim.getInnerHeight();
+  let mobileDim = null;
+  const cel_updateOrientationCSSclasses = function () {
+    const innerWidth = mobileDim.getInnerWidth();
+    const innerHeight = mobileDim.getInnerHeight();
     if (innerWidth > innerHeight) {
       $(document.body).removeClassName('cel_orientation_portrait');
       $(document.body).addClassName('cel_orientation_landscape');
@@ -987,7 +985,7 @@
     }
   };
 
-  celAddOnBeforeLoadListener(function() {
+  celAddOnBeforeLoadListener(function () {
     if (CELEMENTS && CELEMENTS.mobile && CELEMENTS.mobile.Dimensions) {
       mobileDim = new CELEMENTS.mobile.Dimensions();
       Event.stopObserving(window, "orientationchange", cel_updateOrientationCSSclasses);
@@ -998,10 +996,10 @@
   /**
    * Register all Bootstrap-Multiselect
    */
-  var cel_initAllMultiselect = function(event) {
+  const cel_initAllMultiselect = function (event) {
     console.debug('initAllMultiselect');
-    if($j().multiselect != undefined) {
-      $j('.celBootstrap,.celMultiselect').filter(":visible,.celForceMultiselect").each(function(index, element) {
+    if ($j().multiselect != undefined) {
+      $j('.celBootstrap,.celMultiselect').filter(":visible,.celForceMultiselect").each(function (index, element) {
         if (!$(element).up('.cel_template')) {
           console.debug('initAllMultiselect: ', element);
           cel_initAllMultiselect_element(element);
@@ -1016,13 +1014,13 @@
    * Sample with additional Attribute celBootstrap (single select):
    * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
    */
-  var cel_initAllMultiselect_element = function(element) {
-    var params = {
-        numberDisplayed : 3,
-        onDropdownHidden : cel_initAllMultiselect_onDropdownHidden,
-        onChange: cel_initAllMultiselect_onChange
+  const cel_initAllMultiselect_element = function (element) {
+    let params = {
+      numberDisplayed: 3,
+      onDropdownHidden: cel_initAllMultiselect_onDropdownHidden,
+      onChange: cel_initAllMultiselect_onChange
     };
-    var bootstrapCfg = element.getAttribute('data-bootstrapConfig');
+    let bootstrapCfg = element.getAttribute('data-bootstrapConfig');
     // check deprecated data-multiselectAttr for backwards compatibility
     if (!bootstrapCfg && element.getAttribute('data-multiselectAttr')) {
       bootstrapCfg = element.getAttribute('data-multiselectAttr');
@@ -1031,13 +1029,13 @@
     if (bootstrapCfg) {
       params = $j.extend(params, JSON.parse(bootstrapCfg));
     }
-    var multiselect = $j(element).multiselect(params);
+    const multiselect = $j(element).multiselect(params);
     $(document.body).fire('cel:multiselectInitialized', {
-      'multiselect' : multiselect
+      'multiselect': multiselect
     });
   };
 
-  var cel_initAllMultiselect_onDropdownHidden = function(event) {
+  const cel_initAllMultiselect_onDropdownHidden = function (event) {
     /*
      * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
      * this code is just a workaround, it set the box visible again
@@ -1052,18 +1050,18 @@
      */
   };
 
-  var cel_initAllMultiselect_onChange = function(option, checked, select) {
-    var multiselectElement = this;
+  const cel_initAllMultiselect_onChange = function (option, checked, select) {
+    const multiselectElement = this;
     console.debug('fire cel:multiselectOnChange on: ', multiselectElement);
     $(option[0]).fire("cel:multiselectOnChange", {
-      'multiselect' : multiselectElement,
-      'checked' : checked,
-      'select' : select
+      'multiselect': multiselectElement,
+      'checked': checked,
+      'select': select
     });
   };
-  
-  var cel_initAllMultiselect_tabMenuPanel = function(event) {
-    $('tabMenuPanel').select('.celBootstrap,.celMultiselect').each(function(element) {
+
+  const cel_initAllMultiselect_tabMenuPanel = function (event) {
+    $('tabMenuPanel').select('.celBootstrap,.celMultiselect').each(function (element) {
       if (element.visible()) {
         element.addClassName('celForceMultiselect');
       }
@@ -1074,7 +1072,7 @@
   /**
    * Initialize Bootstrap Multiselect
    */
-  celAddOnBeforeLoadListener(function() {
+  celAddOnBeforeLoadListener(function () {
     $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
     $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
@@ -1086,15 +1084,15 @@
     $(document.body).fire('cel:initMultiselect');
   });
 
-  var cel_addMaxDimToFluidImg = function(event) {
-    $$("img.cel_fluidresizeWidth").each(function(imgElem) {
+  const cel_addMaxDimToFluidImg = function (event) {
+    $$("img.cel_fluidresizeWidth").each(function (imgElem) {
       imgElem.setStyle({
-        'maxWidth' : imgElem.readAttribute('width') + 'px'
+        'maxWidth': imgElem.readAttribute('width') + 'px'
       });
     });
-    $$("img.cel_fluidresizeHeight").each(function(imgElem) {
+    $$("img.cel_fluidresizeHeight").each(function (imgElem) {
       imgElem.setStyle({
-        'maxHeight' : imgElem.readAttribute('height') + 'px'
+        'maxHeight': imgElem.readAttribute('height') + 'px'
       });
     });
   };
@@ -1102,7 +1100,7 @@
   /**
    * Initialize fluid image
    */
-  celAddOnBeforeLoadListener(function() {
+  celAddOnBeforeLoadListener(function () {
     $(document.body).stopObserving("cel:initFluidImage", cel_addMaxDimToFluidImg);
     $(document.body).stopObserving("celements:contentChanged", cel_addMaxDimToFluidImg);
     $(document.body).observe("cel:initFluidImage", cel_addMaxDimToFluidImg);
@@ -1112,14 +1110,14 @@
   /**
    * Initialize close Window on Overlay CloseButton
    */
-  celAddOnBeforeLoadListener(function() {
-    $$(".generalOverlayWrapper .generalOverlay .exitOnClose").each(function(elem) {
+  celAddOnBeforeLoadListener(function () {
+    $$(".generalOverlayWrapper .generalOverlay .exitOnClose").each(function (elem) {
       elem.stopObserving("click", cel_closeOverlayWindow)
       elem.observe("click", cel_closeOverlayWindow)
     });
   });
 
-  var cel_closeOverlayWindow = function(event) {
+  const cel_closeOverlayWindow = function (event) {
     event.stop();
     window.close();
   }
