@@ -41,17 +41,18 @@
         _me._modalDialog = null;
         console.debug('>>> Reorder initialize register onLoad');
         Event.observe(window, 'load', function () {
-        console.debug('>>> Reorder initialize inside onLoad');
           $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:start',
             _me._startReorderModeBind);
           $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
             _me._endReorderModeBind);
-          if ((typeof getCelementsTabEditor !== 'undefined') && getCelementsTabEditor()) {
-            getCelementsTabEditor().addAfterInitListener(function () {
-              _me._reorder();
-            });
-          }
         });
+        if ((typeof getCelementsTabEditor !== 'undefined') && getCelementsTabEditor()) {
+          console.debug('>>> Reorder register for getCelementsTabEditor');
+          getCelementsTabEditor().addAfterInitListener(function () {
+            console.debug('>>> Reorder inside afterInitListener');
+            _me._reorder();
+          });
+        }
       },
 
       _startReorderMode: function (event) {
@@ -126,7 +127,7 @@
         });
       },
 
-      _getCelModalDialog : function () {
+      _getCelModalDialog: function () {
         const _me = this;
         if (!_me._modalDialog) {
           _me._modalDialog = new YAHOO.widget.SimpleDialog("modal dialog", {
