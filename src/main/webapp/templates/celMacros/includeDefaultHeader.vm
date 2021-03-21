@@ -3,11 +3,11 @@
 ## INPUT (optional): $charEncoding
 ## OUTPUT:
 ##
-#if("$!charEncoding" == '')
-  #set($charEncoding = "$xwiki.encoding")
+#if("$!charEncoding" == '')##
+  #set($charEncoding = "$xwiki.encoding")##
 #end
-#set($layoutApi = $services.layout.getPageLayoutApiForDocRef($doc.getDocumentReference()))
-#if(("$!layoutApi" != '') && ("$!layoutApi.getHTMLType().name()" == 'HTML5'))
+#set($layoutApi = $services.layout.getPageLayoutApiForDocRef($doc.getDocumentReference()))##
+#if(("$!layoutApi" != '') && ("$!layoutApi.getHTMLType().name()" == 'HTML5'))##
 $!services.metatag.getCharsetMetaTag("$!charEncoding").display()
 #else
 $services.metatag.addMetaTagToCollector('http-equiv', 'Content-Type', "text/html; charset=$!charEncoding")
@@ -20,75 +20,75 @@ $!services.metatag.displayCollectedMetaTags()## cel-GAA-Num is needed in initCel
 <title>##
 $services.celementsweb.getDocHeaderTitle($doc.documentReference)##
 </title>
-#set($layoutName = $services.layout.getPageLayoutForDoc($doc.documentReference))
-#set($layoutWebHomeDoc = '')
-#if("$!layoutName" != '')
-#set($layoutWebHomeRef = $services.model.createDocumentReference('', $layoutName, 'WebHome'))
-#set($layoutWebHomeDoc = $services.modelAccess.getDocument($layoutWebHomeRef))
+#set($layoutName = $services.layout.getPageLayoutForDoc($doc.documentReference))##
+#set($layoutWebHomeDoc = '')##
+#if("$!layoutName" != '')##
+#set($layoutWebHomeRef = $services.model.createDocumentReference('', $layoutName, 'WebHome'))##
+#set($layoutWebHomeDoc = $services.modelAccess.getDocument($layoutWebHomeRef))##
 #end
-#set($webprefDocRef = $services.model.createDocumentReference('', "${doc.space}", "WebPreferences"))
-#set($webprefDoc = $services.modelAccess.getDocument($webprefDocRef))
-#set($xwikiprefDocRef = $services.model.createDocumentReference('', "XWiki", "XWikiPreferences"))
-#set($wikiprefDoc = $services.modelAccess.getDocument($xwikiprefDocRef))
-#if(("$!layoutWebHomeDoc" != '') && ("$!layoutWebHomeDoc.getAttachment('favicon.ico')" != ''))
+#set($webprefDocRef = $services.model.createDocumentReference('', "${doc.space}", "WebPreferences"))##
+#set($webprefDoc = $services.modelAccess.getDocument($webprefDocRef))##
+#set($xwikiprefDocRef = $services.model.createDocumentReference('', "XWiki", "XWikiPreferences"))##
+#set($wikiprefDoc = $services.modelAccess.getDocument($xwikiprefDocRef))##
+#if(("$!layoutWebHomeDoc" != '') && ("$!layoutWebHomeDoc.getAttachment('favicon.ico')" != ''))##
 <link rel="shortcut icon" href="$layoutWebHomeDoc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
-#elseif("$!webprefDoc.getAttachment('favicon.ico')" != '')
+#elseif("$!webprefDoc.getAttachment('favicon.ico')" != '')##
 <link rel="shortcut icon" href="$webprefDoc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
-#elseif("$!wikiprefDoc.getAttachment('favicon.ico')" != '')
+#elseif("$!wikiprefDoc.getAttachment('favicon.ico')" != '')##
 <link rel="shortcut icon" href="$wikiprefDoc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
-#elseif("$!skin_doc.getAttachment('favicon.ico')" != '')
+#elseif("$!skin_doc.getAttachment('favicon.ico')" != '')##
 <link rel="shortcut icon" href="$skin_doc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
-#elseif($xwiki.getSkinFile('skinRes/favicon.ico', true).contains('/resources/'))
+#elseif($xwiki.getSkinFile('skinRes/favicon.ico', true).contains('/resources/'))##
 <link rel="shortcut icon" href="$xwiki.getSkinFile('skinRes/favicon.ico', true)" type="image/x-icon"/>
 #end
 ##TODO add reset CSS
 ## always load celements.css to prevent unequal behaviour if logged in or not
-$services.css.includeCSSPage(':celRes/celements2.css')
-$services.css.includeCSSPage(':celRes/login.css')
-$services.javascript.addExtJSfileOnce(':celJS/prototype.js')
-$services.javascript.addExtJSfileOnce(':celJS/jquery.min.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/initCelements.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
-$services.javascript.addExtJSfileOnce(':celJS/validation.js')
-#if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 0) == 0)
-  $services.javascript.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')
+$services.css.includeCSSPage(':celRes/celements2.css')##
+$services.css.includeCSSPage(':celRes/login.css')##
+$services.javascript.addExtJSfileOnce(':celJS/prototype.js')##
+$services.javascript.addExtJSfileOnce(':celJS/jquery.min.js', 'file')##
+$services.javascript.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')##
+$services.javascript.addExtJSfileOnce(':celJS/initCelements.js', 'file')##
+$services.javascript.addExtJSfileOnce(':celJS/scriptaculous/effects.js')##
+$services.javascript.addExtJSfileOnce(':celJS/validation.js')##
+#if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 0) == 0)##
+  $services.javascript.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')##
 #end
-$services.javascript.addExtJSfileOnce(':celJS/mobile/MobileSupport.js', 'file')
-
-$services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')
-$services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap.min.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js', 'file')
-
-$services.css.includeCSSPage(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.min.css')
-$services.javascript.addExtJSfileOnce(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.full.min.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/dateTimePicker/generateDateTimePicker.js', 'file')
-
-#if($services.celementsphoto.useImageAnimations())
-  $services.javascript.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js')
-  $services.javascript.addExtJSfileOnce(':celJS/highslide/highslide-full.min.js')
-  $services.javascript.addExtJSfileOnce(':celJS/celanim/overlaySlide.js')
-  $services.javascript.addExtJSfileOnce(':celJS/celanim/slideshow.js')
-  $services.css.includeCSSAfterSkin(':celJS/highslide/highslide.css')
-  $services.css.includeCSSAfterSkin(':celRes/images/slideshow.css')
-  $services.css.includeCSSAfterSkin(':celRes/celanim/overlay.css')
-  #if($xwiki.getSpacePreferenceAsInt('celNewImageGallery', 0) == 1)
+$services.javascript.addExtJSfileOnce(':celJS/mobile/MobileSupport.js', 'file')##
+##
+$services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')##
+$services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap.min.js', 'file')##
+$services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js', 'file')##
+##
+$services.css.includeCSSPage(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.min.css')##
+$services.javascript.addExtJSfileOnce(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.full.min.js', 'file')##
+$services.javascript.addExtJSfileOnce(':celJS/dateTimePicker/generateDateTimePicker.js', 'file')##
+##
+#if($services.celementsphoto.useImageAnimations())##
+  $services.javascript.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js')##
+  $services.javascript.addExtJSfileOnce(':celJS/highslide/highslide-full.min.js')##
+  $services.javascript.addExtJSfileOnce(':celJS/celanim/overlaySlide.js')##
+  $services.javascript.addExtJSfileOnce(':celJS/celanim/slideshow.js')##
+  $services.css.includeCSSAfterSkin(':celJS/highslide/highslide.css')##
+  $services.css.includeCSSAfterSkin(':celRes/images/slideshow.css')##
+  $services.css.includeCSSAfterSkin(':celRes/celanim/overlay.css')##
+  #if($xwiki.getSpacePreferenceAsInt('celNewImageGallery', 0) == 1)##
     ##new image gallery slideshow
-    $!services.javascript.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
-    $!services.javascript.addExtJSfileOnce(':celJS/yui/button/button-min.js', 'file')
-    $!services.javascript.addExtJSfileOnce(':celJS/yui/container/container-min.js', 'file')
-    $services.javascript.addExtJSfileOnce(':celJS/celpresentation/celYuiOverlay.js', 'file')
-    $services.javascript.addExtJSfileOnce(':celJS/celpresentation/CelementsSlideShow.js', 'file')
-    $services.javascript.addExtJSfileOnce(':celJS/images/galleryClass.js', 'file')
-    $services.javascript.addExtJSfileOnce(':celJS/images/SlideShowAnimation.js', 'file')
-    $services.javascript.addExtJSfileOnce(':celJS/images/imageSlideShow.js', 'file')
-    $services.css.includeCSSAfterSkin(':celJS/yui/container/assets/skins/sam/container.css')
-    $services.css.includeCSSAfterSkin(':celJS/yui/button/assets/skins/sam/button.css')
-    $services.css.includeCSSAfterSkin(':celRes/galleryYuiOverlay.css')
+    $!services.javascript.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')##
+    $!services.javascript.addExtJSfileOnce(':celJS/yui/button/button-min.js', 'file')##
+    $!services.javascript.addExtJSfileOnce(':celJS/yui/container/container-min.js', 'file')##
+    $services.javascript.addExtJSfileOnce(':celJS/celpresentation/celYuiOverlay.js', 'file')##
+    $services.javascript.addExtJSfileOnce(':celJS/celpresentation/CelementsSlideShow.js', 'file')##
+    $services.javascript.addExtJSfileOnce(':celJS/images/galleryClass.js', 'file')##
+    $services.javascript.addExtJSfileOnce(':celJS/images/SlideShowAnimation.js', 'file')##
+    $services.javascript.addExtJSfileOnce(':celJS/images/imageSlideShow.js', 'file')##
+    $services.css.includeCSSAfterSkin(':celJS/yui/container/assets/skins/sam/container.css')##
+    $services.css.includeCSSAfterSkin(':celJS/yui/button/assets/skins/sam/button.css')##
+    $services.css.includeCSSAfterSkin(':celRes/galleryYuiOverlay.css')##
   #end
 #end
-#if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)
-  $services.javascript.addExtJSfileOnce(':celJS/adminUi/overlayResize.js')
+#if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)##
+  $services.javascript.addExtJSfileOnce(':celJS/adminUi/overlayResize.js')##
 #end
 $!services.javascript.getAllExternalJavaScriptFiles()
 ##
