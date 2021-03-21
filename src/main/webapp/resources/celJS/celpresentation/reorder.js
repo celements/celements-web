@@ -39,7 +39,9 @@
         _me._endReorderModeBind = _me._endReorderMode.bind(_me);
         _me._reorderObj = null;
         _me._modalDialog = null;
+        console.debug('>>> Reorder initialize register onLoad');
         Event.observe(window, 'load', function () {
+        console.debug('>>> Reorder initialize inside onLoad');
           $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:start',
             _me._startReorderModeBind);
           $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
