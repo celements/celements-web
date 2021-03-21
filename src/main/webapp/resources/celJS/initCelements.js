@@ -131,6 +131,7 @@
       }
     };
   }
+
   /**
    * START: prototype AJAX CORS-fix für IE8 und IE9 (XDomainRequest object needed)
    **/
@@ -455,7 +456,7 @@
     };
   }
 
-  if (typeof window.CELEMENTS == "undefined") { window.CELEMENTS = {}; };
+  if (typeof window.CELEMENTS == "undefined") { window.CELEMENTS = {}; }
   if (typeof window.CELEMENTS.Ajax.Reconnector === 'undefined') {
     window.CELEMENTS.Ajax.Reconnector = Class.create({
       _htmlElem: undefined,
@@ -1120,6 +1121,6 @@
   const cel_closeOverlayWindow = function (event) {
     event.stop();
     window.close();
-  }
+  };
 
 })(window);
