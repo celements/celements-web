@@ -124,7 +124,7 @@
         });
       },
 
-      _getCelModalDialog = function () {
+      _getCelModalDialog : function () {
         const _me = this;
         if (!_me._modalDialog) {
           _me._modalDialog = new YAHOO.widget.SimpleDialog("modal dialog", {
