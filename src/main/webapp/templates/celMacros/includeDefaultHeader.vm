@@ -48,7 +48,7 @@ $services.css.includeCSSPage(':celRes/login.css')
 $services.javascript.addExtJSfileOnce(':celJS/prototype.js')
 $services.javascript.addExtJSfileOnce(':celJS/jquery.min.js', 'file')
 $services.javascript.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/initCelements.min.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/initCelements.js', 'file')
 $services.javascript.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
 $services.javascript.addExtJSfileOnce(':celJS/validation.js')
 #if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 0) == 0)
@@ -87,10 +87,10 @@ $services.javascript.addExtJSfileOnce(':celJS/dateTimePicker/generateDateTimePic
     $services.css.includeCSSAfterSkin(':celRes/galleryYuiOverlay.css')
   #end
 #end
-$!services.css.getAllExternalJavaScriptFiles()
 #if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)
   $services.javascript.addExtJSfileOnce(':celJS/adminUi/overlayResize.js')
 #end
+$!services.javascript.getAllExternalJavaScriptFiles()
 ##
 ## Hooks for inserting JavaScript skin extensions
 ##
