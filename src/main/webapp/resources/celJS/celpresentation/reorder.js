@@ -28,6 +28,7 @@
       _cancelNavReorderHandlerBind: undefined,
       _saveNavReorderHandlerBind: undefined,
       _endReorderModeBind: undefined,
+      _registerAndStartReorderBind: undefined,
       _reorderObj: undefined,
       _modalDialog: undefined,
 
@@ -37,15 +38,25 @@
         _me._cancelNavReorderHandlerBind = _me._cancelNavReorderHandler.bind(_me);
         _me._saveNavReorderHandlerBind = _me._saveNavReorderHandler.bind(_me);
         _me._endReorderModeBind = _me._endReorderMode.bind(_me);
+        _me._registerAndStartReorderBind = _me._registerAndStartReorder.bind(_me);
         _me._reorderObj = null;
         _me._modalDialog = null;
-        console.debug('>>> Reorder initialize register onLoad');
-        Event.observe(window, 'load', function () {
-          $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:start',
-            _me._startReorderModeBind);
-          $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
-            _me._endReorderModeBind);
-        });
+        console.debug('>>> Reorder initialize register onLoad', $('tabMenuPanel'));
+        if ($('tabMenuPanel')) {
+          $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._registerAndStartReorderBind);
+        } else {
+          Event.observe(window, 'load', _me._registerAndStartReorderBind);
+        }
+      },
+
+      _registerAndStartReorder: function (event) {
+        const _me = this;
+        $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._registerAndStartReorderBind);
+        Event.stopObserving(window, 'load', _me._registerAndStartReorderBind);
+        $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:start',
+          _me._startReorderModeBind);
+        $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
+          _me._endReorderModeBind);
         if ((typeof getCelementsTabEditor !== 'undefined') && getCelementsTabEditor()) {
           console.debug('>>> Reorder register for getCelementsTabEditor');
           getCelementsTabEditor().addAfterInitListener(function () {
