@@ -41,7 +41,6 @@
         _me._registerAndStartReorderBind = _me._registerAndStartReorder.bind(_me);
         _me._reorderObj = null;
         _me._modalDialog = null;
-        console.debug('>>> Reorder initialize register onLoad', $('tabMenuPanel'));
         if ($('tabMenuPanel')) {
           $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._registerAndStartReorderBind);
         } else {
@@ -58,9 +57,7 @@
         $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
           _me._endReorderModeBind);
         if ((typeof getCelementsTabEditor !== 'undefined') && getCelementsTabEditor()) {
-          console.debug('>>> Reorder register for getCelementsTabEditor');
           getCelementsTabEditor().addAfterInitListener(function () {
-            console.debug('>>> Reorder inside afterInitListener');
             _me._reorder();
           });
         }
