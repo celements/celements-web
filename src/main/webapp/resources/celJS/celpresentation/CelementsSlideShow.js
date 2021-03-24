@@ -656,9 +656,13 @@
         //use jquery to get dimensions, because it works correctly inside iframes.
         const slideOuterHeight = $j(slideRoot).height();
         const slideOuterWidth = $j(slideRoot).width();
+        console.log('>> _centerCurrentSlide slideRoot dim: ', slideOuterWidth, slideOuterHeight,
+          slideRoot.getBoundingClientRect());
         const parentDiv = _me._htmlContainer;
         const parentHeight = parentDiv.getHeight();
         const parentWidth = parentDiv.getWidth();
+        console.log('>> _centerCurrentSlide parentDiv dim: ', parentWidth, parentHeight,
+          parentDiv.getBoundingClientRect());
         //        console.log('_centerCurrentSlide for dim ', slideOuterWidth, slideOuterHeight,
         //            parentWidth, parentHeight);
         //FIXED: why slideOuterHeight? !!! FP; 2/1/2014
