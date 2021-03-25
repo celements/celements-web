@@ -724,6 +724,7 @@
           });
         });
         _me._htmlContainer.fire('cel_slideShow:beforeResizeAndCenterSlide', _me);
+        return;
         if (_me._resizeSlide) {
           const resizeSlideEvent = _me._htmlContainer.fire('cel_slideShow:resizeSlide',
             _me);
