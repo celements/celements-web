@@ -70,7 +70,7 @@
       _resizeSlide: undefined,
       _autoresize: undefined,
       _mobileDim: undefined,
-      _debug: undefined,
+      _debug: true,
 
       initialize: function (containerId) {
         const _me = this;
