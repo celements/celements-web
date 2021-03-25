@@ -657,7 +657,7 @@
         const slideOuterHeight = slideRoot.scrollHeight;
         const slideOuterWidth = slideRoot.scrollWidth;
         console.log('>> _centerCurrentSlide slideRoot dim: ', _me._htmlContainerId, slideOuterWidth,
-          slideOuterHeight);
+          slideOuterHeight, slideRoot.getStyle('position'), slideRoot);
         const parentDiv = _me._htmlContainer;
         const parentHeight = parentDiv.getHeight();
         const parentWidth = parentDiv.getWidth();
