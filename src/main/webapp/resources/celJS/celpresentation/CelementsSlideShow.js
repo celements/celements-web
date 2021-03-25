@@ -959,8 +959,7 @@
           'width': newWidth + 'px'
         });
         _me._getAllSlideWrappers().each(function (slideWrapper) {
-          console.log('>> changeContainerSize: before _resizeAndCenterSlide ', slideWrapper);
-          console.trace();
+          console.trace('>> changeContainerSize: before _resizeAndCenterSlide ', slideWrapper);
           _me._resizeAndCenterSlide(slideWrapper);
         });
       },
