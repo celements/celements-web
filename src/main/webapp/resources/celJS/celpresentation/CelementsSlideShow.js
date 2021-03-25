@@ -657,12 +657,12 @@
         const slideOuterHeight = $j(slideRoot).height();
         const slideOuterWidth = $j(slideRoot).width();
         console.log('>> _centerCurrentSlide slideRoot dim: ', _me._htmlContainerId, slideOuterWidth,
-          slideOuterHeight, slideRoot.getBoundingClientRect());
+          slideOuterHeight, slideRoot.scrollWidth, slideRoot.scrollHeight);
         const parentDiv = _me._htmlContainer;
         const parentHeight = parentDiv.getHeight();
         const parentWidth = parentDiv.getWidth();
         console.log('>> _centerCurrentSlide parentDiv dim: ', _me._htmlContainerId, parentWidth,
-          parentHeight, parentDiv.getBoundingClientRect());
+          parentHeight, parentDiv.scrollWidth, parentDiv.scrollHeight);
         //        console.log('_centerCurrentSlide for dim ', slideOuterWidth, slideOuterHeight,
         //            parentWidth, parentHeight);
         //FIXED: why slideOuterHeight? !!! FP; 2/1/2014
@@ -724,7 +724,6 @@
           });
         });
         _me._htmlContainer.fire('cel_slideShow:beforeResizeAndCenterSlide', _me);
-        return;
         if (_me._resizeSlide) {
           const resizeSlideEvent = _me._htmlContainer.fire('cel_slideShow:resizeSlide',
             _me);
