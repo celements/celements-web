@@ -779,6 +779,10 @@
           }
           const parentDiv = _me._getSlideRootElem(slideWrapper);
           if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
+            if (_me._debug) {
+              console.log('_resizeCurrentSlide: setting rootElem new size ', _me._htmlContainerId,
+                zoomFactorObj.newWidth, zoomFactorObj.newHeight);
+            }
             parentDiv.setStyle({
               'width': zoomFactorObj.newWidth + 'px',
               'height': zoomFactorObj.newHeight + 'px'
@@ -805,7 +809,7 @@
           const parentDiv = _me._getSlideRootElem(slideWrapper);
           if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
             if (_me._debug) {
-              console.log('_resizeCurrentSlide: setting rootElem size ',
+              console.log('_resizeCurrentSlide: setting rootElem old size ', _me._htmlContainerId,
                 zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
             }
             parentDiv.setStyle({
@@ -959,7 +963,8 @@
           'width': newWidth + 'px'
         });
         _me._getAllSlideWrappers().each(function (slideWrapper) {
-          console.trace('>> changeContainerSize: before _resizeAndCenterSlide ', slideWrapper);
+          console.trace('>> changeContainerSize: before _resizeAndCenterSlide ',
+            _me._htmlContainerId);
           _me._resizeAndCenterSlide(slideWrapper);
         });
       },
