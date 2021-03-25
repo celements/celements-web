@@ -653,11 +653,11 @@
             parentElem.show();
           }
         });
-        //use jquery to get dimensions, because it works correctly inside iframes.
-        const slideOuterHeight = $j(slideRoot).height();
-        const slideOuterWidth = $j(slideRoot).width();
+        //use scrollWidth and scrollHeight, because it works correctly inside iframes.
+        const slideOuterHeight = slideRoot.scrollHeight;
+        const slideOuterWidth = slideRoot.scrollWidth;
         console.log('>> _centerCurrentSlide slideRoot dim: ', _me._htmlContainerId, slideOuterWidth,
-          slideOuterHeight, slideRoot.scrollWidth, slideRoot.scrollHeight);
+          slideOuterHeight);
         const parentDiv = _me._htmlContainer;
         const parentHeight = parentDiv.getHeight();
         const parentWidth = parentDiv.getWidth();
