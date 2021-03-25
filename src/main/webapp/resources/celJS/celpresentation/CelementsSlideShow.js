@@ -934,6 +934,8 @@
                 imgElem.complete);
             });
           }
+          console.log('>>_preloadImagesAndResizeCenterSlide: before _resizeAndCenterSlide ',
+              _me._htmlContainerId);
           _me._resizeAndCenterSlide(slideWrapperElem);
           if (callbackFN) {
             callbackFN();
@@ -955,6 +957,8 @@
           'width': newWidth + 'px'
         });
         _me._getAllSlideWrappers().each(function (slideWrapper) {
+          console.log('>> changeContainerSize: before _resizeAndCenterSlide ',
+              _me._htmlContainerId);
           _me._resizeAndCenterSlide(slideWrapper);
         });
       },
