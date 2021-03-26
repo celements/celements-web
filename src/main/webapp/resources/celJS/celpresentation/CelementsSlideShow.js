@@ -653,6 +653,10 @@
             parentElem.show();
           }
         });
+        //ensure that the width is not influenced by the parents by setting position to absolute
+        slideRoot.setStyle({
+          'position': 'absolute'
+        });
         //use scrollWidth and scrollHeight, because it works correctly inside iframes.
         const slideOuterHeight = slideRoot.scrollHeight;
         const slideOuterWidth = slideRoot.scrollWidth;
