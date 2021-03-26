@@ -70,7 +70,7 @@
       _resizeSlide: undefined,
       _autoresize: undefined,
       _mobileDim: undefined,
-      _debug: true,
+      _debug: undefined,
 
       initialize: function (containerId) {
         const _me = this;
@@ -633,18 +633,6 @@
         const _me = this;
         const slideWrapper = slideWrapperIn || _me._getSlideWrapper();
         const slideRoot = _me._getSlideRootElem(slideWrapper);
-        //        console.log('_centerCurrentSlide for ', slideWrapper, slideRoot);
-        //        slideWrapper.setStyle({
-        //          'position' : 'absolute',
-        //          'width' : 'auto',
-        //          'height' : 'auto',
-        //          'marginLeft' : 0,
-        //          'marginRight' : 0
-        //        });
-        //        slideRoot.setStyle({
-        //          'position' : 'relative',
-        //          'top' : 0
-        //        });
         //we cannot read element dimension if any parent is hidden (display:none)
         const hiddenParentElems = [];
         slideWrapper.ancestors().each(function (parentElem) {
@@ -660,15 +648,17 @@
         //use scrollWidth and scrollHeight, because it works correctly inside iframes.
         const slideOuterHeight = slideRoot.scrollHeight;
         const slideOuterWidth = slideRoot.scrollWidth;
-        console.log('>> _centerCurrentSlide slideRoot dim: ', _me._htmlContainerId, slideOuterWidth,
-          slideOuterHeight, slideRoot.getStyle('position'), slideRoot);
+        if (_me._debug) {
+          console.log('_centerCurrentSlide slideRoot dim: ', _me._htmlContainerId, slideOuterWidth,
+            slideOuterHeight, slideRoot.getStyle('position'), slideRoot);
+        }
         const parentDiv = _me._htmlContainer;
         const parentHeight = parentDiv.getHeight();
         const parentWidth = parentDiv.getWidth();
-        console.log('>> _centerCurrentSlide parentDiv dim: ', _me._htmlContainerId, parentWidth,
-          parentHeight, parentDiv.scrollWidth, parentDiv.scrollHeight);
-        //        console.log('_centerCurrentSlide for dim ', slideOuterWidth, slideOuterHeight,
-        //            parentWidth, parentHeight);
+        if (_me._debug) {
+          console.log('_centerCurrentSlide parentDiv dim: ', _me._htmlContainerId, parentWidth,
+            parentHeight, parentDiv.scrollWidth, parentDiv.scrollHeight);
+        }
         //FIXED: why slideOuterHeight? !!! FP; 2/1/2014
         //--> it must be slideOuterHeight to get correct size of scaled down slides.
         //--> see method comment
@@ -942,8 +932,6 @@
                 imgElem.complete);
             });
           }
-          console.log('>>_preloadImagesAndResizeCenterSlide: before _resizeAndCenterSlide ',
-            _me._htmlContainerId);
           _me._resizeAndCenterSlide(slideWrapperElem);
           if (callbackFN) {
             callbackFN();
@@ -960,15 +948,11 @@
         const currentHeight = $j(_me.getHtmlContainer()).height();
         const newWidth = newMaxWidth || currentWidth;
         const newHeight = newMaxHeight || currentHeight;
-        console.log('>> changeContainerSize: container dim ', _me._htmlContainerId, currentWidth,
-          currentHeight, newWidth, newHeight, _me.getHtmlContainer().clientWidth);
         _me.getHtmlContainer().setStyle({
           'height': newHeight + 'px',
           'width': newWidth + 'px'
         });
         _me._getAllSlideWrappers().each(function (slideWrapper) {
-          console.trace('>> changeContainerSize: before _resizeAndCenterSlide ',
-            _me._htmlContainerId);
           _me._resizeAndCenterSlide(slideWrapper);
         });
       },
