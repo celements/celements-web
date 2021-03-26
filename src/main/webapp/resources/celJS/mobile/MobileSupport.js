@@ -24,8 +24,8 @@
  */
 (function (window, undefined) {
 
-  if (typeof window.CELEMENTS === "undefined") { window.CELEMENTS = {}; };
-  if (typeof window.CELEMENTS.mobile === "undefined") { window.CELEMENTS.mobile = {}; };
+  if (typeof window.CELEMENTS === "undefined") { window.CELEMENTS = {}; }
+  if (typeof window.CELEMENTS.mobile === "undefined") { window.CELEMENTS.mobile = {}; }
 
   //////////////////////////////////////////////////////////////////////////////
   //Celements mobile dimensions
