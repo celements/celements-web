@@ -400,7 +400,7 @@
         const _me = this;
         const numSlides = _me._navObj.getNumSlides();
         if (_me._debug) {
-          console.log('_updateSlideCounter: ', numSlides, _me._htmlContainer.select(
+          console.debug('_updateSlideCounter: ', numSlides, _me._htmlContainer.select(
             '.celPresSlideShow_countSlideNum'));
         }
         _me._htmlContainer.select('.celPresSlideShow_countSlideNum').each(
@@ -649,14 +649,14 @@
         const slideOuterHeight = slideRoot.scrollHeight;
         const slideOuterWidth = slideRoot.scrollWidth;
         if (_me._debug) {
-          console.log('_centerCurrentSlide slideRoot dim: ', _me._htmlContainerId, slideOuterWidth,
+          console.debug('_centerCurrentSlide slideRoot dim: ', _me._htmlContainerId, slideOuterWidth,
             slideOuterHeight, slideRoot.getStyle('position'), slideRoot);
         }
         const parentDiv = _me._htmlContainer;
         const parentHeight = parentDiv.getHeight();
         const parentWidth = parentDiv.getWidth();
         if (_me._debug) {
-          console.log('_centerCurrentSlide parentDiv dim: ', _me._htmlContainerId, parentWidth,
+          console.debug('_centerCurrentSlide parentDiv dim: ', _me._htmlContainerId, parentWidth,
             parentHeight, parentDiv.scrollWidth, parentDiv.scrollHeight);
         }
         //FIXED: why slideOuterHeight? !!! FP; 2/1/2014
@@ -685,7 +685,7 @@
         imgElem.stopObserving('error', _me._imgLoadedResizeAndCenterSlideBind);
         imgElem.stopObserving('abort', _me._imgLoadedResizeAndCenterSlideBind);
         if (_me._debug) {
-          console.log('_imgLoadedResizeAndCenterSlide: preloading finished for ',
+          console.debug('_imgLoadedResizeAndCenterSlide: preloading finished for ',
             imgElem.inspect());
         }
         _me._preloadingImageQueue = _me._preloadingImageQueue.without(imgElem);
@@ -694,7 +694,7 @@
             console.log('_imgLoadedResizeAndCenterSlide before _resizeAndCenterSlidefor ',
               slideWrapper);
             slideWrapper.select('img').each(function (imgElem) {
-              console.log('_imgLoadedResizeAndCenterSlide: img loaded ', imgElem.inspect(),
+              console.debug('_imgLoadedResizeAndCenterSlide: img loaded ', imgElem.inspect(),
                 imgElem.complete);
             });
           }
@@ -708,7 +708,7 @@
       _resizeAndCenterSlide: function (slideWrapper) {
         const _me = this;
         if (_me._debug) {
-          console.log('_resizeAndCenterSlide: ', slideWrapper, _me._resizeSlide,
+          console.debug('_resizeAndCenterSlide: ', slideWrapper, _me._resizeSlide,
             _me._centerSlide);
         }
         slideWrapper.select('img').each(function (imgElem) {
@@ -774,7 +774,7 @@
           const parentDiv = _me._getSlideRootElem(slideWrapper);
           if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
             if (_me._debug) {
-              console.log('_resizeCurrentSlide: setting rootElem new size ', _me._htmlContainerId,
+              console.debug('_resizeCurrentSlide: setting rootElem new size ', _me._htmlContainerId,
                 zoomFactorObj.newWidth, zoomFactorObj.newHeight);
             }
             parentDiv.setStyle({
@@ -793,7 +793,7 @@
           }
           //set sizes without zoom too. Important for centering
           if (_me._debug) {
-            console.log('_resizeCurrentSlide: setting wrapper size ',
+            console.debug('_resizeCurrentSlide: setting wrapper size ',
               zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
           }
           slideWrapper.setStyle({
@@ -803,7 +803,7 @@
           const parentDiv = _me._getSlideRootElem(slideWrapper);
           if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
             if (_me._debug) {
-              console.log('_resizeCurrentSlide: setting rootElem old size ', _me._htmlContainerId,
+              console.debug('_resizeCurrentSlide: setting rootElem old size ', _me._htmlContainerId,
                 zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
             }
             parentDiv.setStyle({
@@ -875,7 +875,7 @@
         const slideRootElem = _me._addWrapperElements(slideContent).hide();
         const slideWrapperElem = slideRootElem.down('.cel_slideShow_slideWrapper');
         if (_me._debug) {
-          console.log('_showSlide: before cel_yuiOverlay:beforeSlideInsert ',
+          console.debug('_showSlide: before cel_yuiOverlay:beforeSlideInsert ',
             _me._htmlContainer);
         }
         _me._htmlContainer.fire('cel_yuiOverlay:beforeSlideInsert', {
@@ -885,7 +885,7 @@
         });
         _me.getHtmlContainer().insert({ bottom: slideRootElem });
         if (_me._debug) {
-          console.log('_showSlide: before cel_yuiOverlay:afterSlideInsert event ',
+          console.debug('_showSlide: before cel_yuiOverlay:afterSlideInsert event ',
             _me.getHtmlContainer());
         }
         _me._htmlContainer.fire('cel_yuiOverlay:afterSlideInsert', {
@@ -915,7 +915,7 @@
             imgElem.observe('abort', finishFnc);
             _me._preloadingImageQueue.push(imgElem);
             if (_me._debug) {
-              console.log('_preloadImagesAndResizeCenterSlide: preloading started for ',
+              console.debug('_preloadImagesAndResizeCenterSlide: preloading started for ',
                 imgElem.inspect());
             }
           } else if (_me._debug) {
@@ -928,7 +928,7 @@
             console.log('_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide'
               + 'for ', slideWrapperElem);
             slideWrapperElem.select('img').each(function (imgElem) {
-              console.log('_preloadImagesAndResizeCenterSlide: img loaded ', imgElem.inspect(),
+              console.debug('_preloadImagesAndResizeCenterSlide: img loaded ', imgElem.inspect(),
                 imgElem.complete);
             });
           }
