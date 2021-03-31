@@ -120,7 +120,7 @@
 
     getZoomStyles: function (zoomFactor, fullWidth, fullHeight) {
       const _me = this;
-      let zoomStyles = {};
+      const zoomStyles = {};
       if (_me.isMobile.IE() && (_me.version() < 10)) {
         zoomStyles['msTransformOrigin'] = '0 0'; //IE9 only supports 2D values
         zoomStyles['msTransform'] = 'scale(' + zoomFactor + ')';
