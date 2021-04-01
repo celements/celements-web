@@ -273,6 +273,7 @@
     };
   }
 
+  if (typeof window.CELEMENTS.Ajax === "undefined") { window.CELEMENTS.Ajax = {}; }
   if (typeof window.CELEMENTS.Ajax.Reconnector === 'undefined') {
     window.CELEMENTS.Ajax.Reconnector = Class.create({
       _htmlElem: undefined,
