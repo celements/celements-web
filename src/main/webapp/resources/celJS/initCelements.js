@@ -18,7 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-(function (window, undefined) {
+(function () {
   "use strict";
 
   /**
@@ -1117,4 +1117,4 @@
     window.close();
   };
 
-})(window);
+})();
