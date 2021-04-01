@@ -456,7 +456,6 @@
     };
   }
 
-  if (typeof window.CELEMENTS == "undefined") { window.CELEMENTS = {}; }
   if (typeof window.CELEMENTS.Ajax.Reconnector === 'undefined') {
     window.CELEMENTS.Ajax.Reconnector = Class.create({
       _htmlElem: undefined,
