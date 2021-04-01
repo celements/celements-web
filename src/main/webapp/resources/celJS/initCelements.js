@@ -148,8 +148,7 @@
             returnValue = lambda();
             break;
           } catch (e) {
-            if (Try.logging && (typeof console != 'undefined')
-              && (typeof console.log != 'undefined')) {
+            if (Try.logging) {
               console.log('Try.these skip lambda ', lambda, e);
             }
           }
@@ -224,8 +223,7 @@
           try {
             this.setRequestHeaders();
           } catch (exp) {
-            if (Ajax.Request.logging && (typeof console != 'undefined')
-              && (typeof console.warn != 'undefined')) {
+            if (Ajax.Request.logging) {
               console.warn('setRequestHeaders failed ', this.url, exp);
             }
           }
@@ -284,8 +282,7 @@
           if (this._status === 1223) return 204;
           return this._status || 0;
         } catch (exp) {
-          if (Ajax.Request.logging && (typeof console != 'undefined')
-            && (typeof console.warn != 'undefined')) {
+          if (Ajax.Request.logging) {
             console.warn('failed to getStauts ', exp);
           }
           return 0;
@@ -474,7 +471,7 @@
         const _me = this;
         _me._htmlElem = $(htmlElemId);
         _me._configObj = configObj || {};
-        _me._url = _me._configObj.url || getCelHost();
+        _me._url = _me._configObj.url || window.getCelHost();
         _me._callbackOnSuccess = callbackOnSuccess;
         _me._reconnectorHandlerBind = _me._reconnectorHandler.bind(_me);
         _me._cancelAjaxOnTimeoutBind = _me._cancelAjaxOnTimeout.bind(_me);
@@ -631,13 +628,11 @@
       onSuccess: function (transport) {
         if (transport.responseText.isJSON()) {
           let newMessages = transport.responseText.evalJSON();
-          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-            console.log('initCelements.js: finished getting dictionary messages.');
-          }
+          console.log('initCelements.js: finished getting dictionary messages.');
           newMessages.isLoaded = true;
           window.celMessages = newMessages;
           $(document.body).fire('cel:messagesLoaded', newMessages);
-        } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+        } else {
           console.error('noJSON!!! ', transport.responseText);
         }
       }
@@ -907,7 +902,7 @@
         stopOnFirst: false
       });
       formValidations.set(formElem.id, valid);
-    } else if ((typeof console != 'undefined') && (typeof console.error != 'undefined')) {
+    } else {
       console.error('failed to register validation on form with no id. ', formElem);
     }
   };
