@@ -1,0 +1,25 @@
+https://xem.github.io/terser-online/
+
+
+// options
+{
+  compress: {
+    defaults : false,
+    passes: 5,
+    unsafe: false,
+    pure_getters: false,
+    toplevel : false,
+    typeofs : false,
+    dead_code : false,
+    side_effects : false
+  },
+  ecma: 5, // specify one of: 5, 2015, 2016, etc.
+  keep_classnames: false,
+  keep_fnames: false,
+  ie8: false,
+  module: false,
+  nameCache: null, // or specify a name cache object
+  safari10: false,
+  toplevel: false
+// options
+}
