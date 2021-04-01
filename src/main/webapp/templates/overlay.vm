@@ -35,6 +35,7 @@ $overlayResult
     #set($celementsLoadInOverlay = "$!overlayConfig.getProperty('documentToLoadInOverlay').getValue()")
     $celementsweb.includeCSSPage($overlayConfig.getProperty('overlayCSS').getValue())
   #else
+    $response.setStatus(404)
     $msg.get('cel_overlay_not_available', ["$!overlayConfName"])
   #end
 #end
