@@ -27,7 +27,7 @@
 ##TODO replace with default overlay
 #parse('celMacros/DarkBox.vm')
 $services.javascript.addExtJSfileOnce(':celJS/prototype.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/initCelements.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/initCelements.min.js', 'file')
 $services.javascript.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
 $services.javascript.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
 $services.javascript.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
