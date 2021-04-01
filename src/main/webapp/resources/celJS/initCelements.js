@@ -316,13 +316,17 @@
         _me._maxReconnectWait = maxReconnectWait;
       },
 
+      _fireAjaxRecconectTrying: function () {
+        const _me = this;
+        return _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
+      },
+
       _reconnectorHandler: function () {
         const _me = this;
         _me._reconnectWait--;
         if (_me._reconnectWait == 0) {
           _me._reconnectorExecuter.stop();
-          const tryEv1 = _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
-          if (!tryEv1.stopped && !_me._configObj.skipRetryMsg) {
+          if (!_me._fireAjaxRecconectTrying().stopped && !_me._configObj.skipRetryMsg) {
             let mesg = "Trying...";
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryNotice;
@@ -331,8 +335,7 @@
           }
           _me._connectionTester();
         } else {
-          const tryEv2 = _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
-          if (!tryEv2.stopped && !_me._configObj.skipRetryMsg) {
+          if (!_me._fireAjaxRecconectTrying().stopped && !_me._configObj.skipRetryMsg) {
             let mesg = "Retrying in {} seconds.";
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryDelayNotice;
@@ -387,7 +390,7 @@
     getParams: function (search) {
       const _me = this;
       search = search || window.location.search;
-      let paramSplit = search.split(new RegExp('[?&]'))
+      const paramSplit = search.split(new RegExp('[?&]'))
       paramSplit.unshift(new Hash()); // add initial param as first array element
       return paramSplit.reduce(_me._splitUriSearch.bind(_me)) || new Hash();
     },
@@ -431,7 +434,7 @@
       },
       onSuccess: function (transport) {
         if (transport.responseText.isJSON()) {
-          let newMessages = transport.responseText.evalJSON();
+          const newMessages = transport.responseText.evalJSON();
           console.log('initCelements.js: finished getting dictionary messages.');
           newMessages.isLoaded = true;
           window.celMessages = newMessages;
@@ -696,7 +699,7 @@
   /**
    *  celements form validations
    */
-  let formValidations = new Hash();
+  const formValidations = new Hash();
 
   const registerValidation = function (formElem) {
     if (formElem && formElem.id) {
