@@ -6,7 +6,7 @@
 $!services.javascript.addExtJSfileOnce(':celJS/prototype.js', 'file')
 $!services.javascript.addExtJSfileOnce(':celJS/jquery.min.js', 'file')
 $!services.javascript.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
-$!services.javascript.addExtJSfileOnce(':celJS/initCelements.js', 'file')
+$!services.javascript.addExtJSfileOnce(':celJS/initCelements.min.js', 'file')
 $!services.javascript.addExtJSfileOnce(':celJS/scriptaculous/effects.js', 'file')
 $!services.javascript.addExtJSfileOnce(':celJS/validation.js', 'file')
 $!services.javascript.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')

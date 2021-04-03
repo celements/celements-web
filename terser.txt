@@ -1,0 +1,12 @@
+https://xem.github.io/terser-online/
+
+
+// options
+{
+  toplevel: true,
+  compress: {
+    passes: 5,
+    unsafe: true,
+    pure_getters: true
+  },
+}
