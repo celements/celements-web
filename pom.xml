@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>5.0.1</version>
+    <version>5.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -60,14 +60,30 @@
     <hibernate.cfg.xml.connection.host>localhost</hibernate.cfg.xml.connection.host>
   </properties>
   <dependencies>
-    <!-- xwiki platform dependency -->
+    <!-- xwiki platform dependencies -->
     <dependency>
       <groupId>org.xwiki.enterprise</groupId>
       <artifactId>xwiki-enterprise-web</artifactId>
       <version>2.7.2</version>
       <type>war</type>
     </dependency>
-    <!-- Add here all your module-web dependencies -->
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-application-manager</artifactId>
+      <version>1.19</version>
+    </dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-scheduler</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-wiki-manager</artifactId>
+      <version>1.26</version>
+    </dependency>
+
+    <!-- celements module-web dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
@@ -86,11 +102,29 @@
       <version>5.0.1</version>
       <type>war</type>
     </dependency>
-    <!-- Add here all your dependencies -->
+    <dependency>
+       <groupId>com.celements</groupId>
+      <artifactId>tinymce-langs</artifactId>
+      <version>3.4.3.2-celRTE-b1</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>tinymce-langs-v4</artifactId>
+      <version>4.7.12-CEL2</version>
+      <type>war</type>
+    </dependency>
+
+    <!-- celements dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>5.0.1</version>
+      <version>5.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-component</artifactId>
+      <version>5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -105,13 +139,20 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>5.0.1</version>
+      <version>5.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-captcha</artifactId>
       <version>5.0.1</version>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-subsystem-migration-manager</artifactId>
+      <version>5.1-SNAPSHOT</version>
+    </dependency>
+
+    <!-- other dependencies -->
     <dependency>
       <groupId>xalan</groupId>
       <artifactId>xalan</artifactId>
@@ -140,38 +181,6 @@
     <dependency>
       <groupId>info.informatica</groupId>
       <artifactId>jclf</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-application-manager</artifactId>
-      <version>1.19</version>
-    </dependency>
-    <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-scheduler</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-wiki-manager</artifactId>
-      <version>1.26</version>
-    </dependency>
-    <dependency>
-       <groupId>com.celements</groupId>
-      <artifactId>tinymce-langs</artifactId>
-      <version>3.4.3.2-celRTE-b1</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>com.celements</groupId>
-      <artifactId>tinymce-langs-v4</artifactId>
-      <version>4.7.12-CEL2</version>
-      <type>war</type>
-    </dependency>
-    <dependency>
-      <groupId>com.celements</groupId>
-      <artifactId>celements-subsystem-migration-manager</artifactId>
-      <version>5.0.1</version>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
@@ -310,7 +319,8 @@
                 <exclude>WEB-INF/lib/css4j-*.jar</exclude>
                 <exclude>WEB-INF/lib/reflections-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-extension-*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-2.7.2.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-core-2.*.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-core-component-*.jar</exclude>
                 <!-- exclude JAX-RS 1.x and restlet in favor of jersey 2.x -->
                 <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
                 <exclude>WEB-INF/lib/org.restlet.ext.jaxrs-*</exclude>
