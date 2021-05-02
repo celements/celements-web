@@ -1,5 +1,5 @@
 #if("$!elemId" != '')
-#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
+#set($menuItemDoc = $services.modelAccess.getDocument($services.model.resolveDocument($elemId)))
 #set($overwriteWeb = $menuItemDoc.getSpace())
 #set($menuItemObj = $menuItemDoc.getObject('Celements2.MenuItem'))
 #set($menuItem_parentDoc =  $menuItemDoc.getParent())

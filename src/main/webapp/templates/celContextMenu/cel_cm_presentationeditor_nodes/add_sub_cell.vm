@@ -1,4 +1,4 @@
-#if(("$!elemId" != '') && ($celementsweb.getMaxConfiguredNavigationLevel() > $celementsweb.getDocumentParentsList($elemId, true).size()))
+#if(("$!elemId" != '') && ($services.treeNode.getMaxConfiguredNavigationLevel() > $celementsweb.getDocumentParentsList($elemId, true).size()))
 #set($overwriteWeb = '')
 #set($menuItemDocRef = $services.model.resolveDocument($elemId))
 #if($elemParams.size() > 1)

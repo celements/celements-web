@@ -1,5 +1,5 @@
 #if("$!elemId" != '')
-#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
+#set($menuItemDoc = $services.modelAccess.getDocument($services.model.resolveDocument($elemId)))
 #if(${elemId} == ${doc.fullName})
   #set($red = "${doc.web}.WebHome")
 #else
