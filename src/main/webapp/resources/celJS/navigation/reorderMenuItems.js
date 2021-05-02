@@ -36,12 +36,12 @@
   // -> call CELEMENTS.reorder.DDReorder.init() to start reordering
   // -> set minLevel and maxLevel BEFORE calling init().
   //////////////////////////////////////////////////////////////////////////////
-  CELEMENTS.reorder.DDReorder = function(id, ulSelector, minLevel, maxLevel) {
+  window.CELEMENTS.reorder.DDReorder = function(id, ulSelector, minLevel, maxLevel) {
     // constructor
     this._init(id, ulSelector, minLevel, maxLevel);
   };
 
-  CELEMENTS.reorder.DDReorder.prototype = {
+  window.CELEMENTS.reorder.DDReorder.prototype = {
     parentElem: undefined,
     _ulSelector: undefined,
     minLevel: undefined,
@@ -130,20 +130,22 @@
 
     saveOrder: function(callbackFn) {
       const _me = this;
-      new Ajax.Request(getCelHost(), {
-        method: 'post',
-        parameters: {
-          xpage: 'celements_ajax',
-          ajax_mode: 'CelNavReorderSave',
-          new_nav_order: Object.toJSON(_me.getOrder())
-        },
-        onSuccess: function(transport) {
-          _me.parentElem.fire('celreorder_reorderMode:end');
-          if (callbackFn) {
-            callbackFn(transport);
-          }
-        }
-      });
+      const orderJSON = Object.toJSON(_me.getOrder());
+      console.log('DDReorder saveOrder before save: ', orderJSON);
+      // new Ajax.Request(getCelHost(), {
+      //   method: 'post',
+      //   parameters: {
+      //     xpage: 'celements_ajax',
+      //     ajax_mode: 'CelNavReorderSave',
+      //     new_nav_order: orderJSON
+      //   },
+      //   onSuccess: function(transport) {
+      //     _me.parentElem.fire('celreorder_reorderMode:end');
+      //     if (callbackFn) {
+      //       callbackFn(transport);
+      //     }
+      //   }
+      // });
     }
 
   };
@@ -152,9 +154,9 @@
   // custom drag and drop implementation
   //////////////////////////////////////////////////////////////////////////////
 
-  CELEMENTS.reorder.DDList = function(id, sGroup, config, ddReorder) {
+  window.CELEMENTS.reorder.DDList = function(id, sGroup, config, ddReorder) {
 
-    CELEMENTS.reorder.DDList.superclass.constructor.call(this, id, sGroup, config);
+    window.CELEMENTS.reorder.DDList.superclass.constructor.call(this, id, sGroup, config);
 
     this.ddReorder = ddReorder;
     // this.logger = this.logger || YAHOO;

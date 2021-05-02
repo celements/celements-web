@@ -131,9 +131,7 @@
           if (transport.responseText == 'OK') {
             $('cel_presentation_editor_reorder_tree').fire('celreorder_reorderMode:end');
           } else {
-            if ((typeof console != "undefined") && (typeof console.debug != "undefined")) {
-              console.debug('failed saving reorder: ' + transport.responseText);
-            }
+            console.debug('failed saving reorder: ' + transport.responseText);
             alert('Failed saving!');
           }
           if (!$('reorderingTitle') || !$('reorderingTitle').hasClassName('celReorderToggle')) {
