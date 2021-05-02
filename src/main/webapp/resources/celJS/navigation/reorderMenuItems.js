@@ -140,10 +140,11 @@
           new_nav_order: orderJSON
         },
         onSuccess: function(transport) {
+          console.log("saveOrder success: ", transport);
           _me.parentElem.fire('celreorder_reorderMode:end');
-          if (callbackFn) {
-            callbackFn(transport);
-          }
+          // if (callbackFn) {
+          //   callbackFn(transport);
+          // }
         }
       });
     }
