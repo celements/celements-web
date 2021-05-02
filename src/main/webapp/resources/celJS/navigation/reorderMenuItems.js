@@ -131,21 +131,21 @@
     saveOrder: function(callbackFn) {
       const _me = this;
       const orderJSON = Object.toJSON(_me.getOrder());
-      console.log('DDReorder saveOrder before save: ', orderJSON);
-      // new Ajax.Request(getCelHost(), {
-      //   method: 'post',
-      //   parameters: {
-      //     xpage: 'celements_ajax',
-      //     ajax_mode: 'CelNavReorderSave',
-      //     new_nav_order: orderJSON
-      //   },
-      //   onSuccess: function(transport) {
-      //     _me.parentElem.fire('celreorder_reorderMode:end');
-      //     if (callbackFn) {
-      //       callbackFn(transport);
-      //     }
-      //   }
-      // });
+      console.debug('DDReorder saveOrder before save: ', orderJSON);
+      new Ajax.Request(getCelHost(), {
+        method: 'post',
+        parameters: {
+          xpage: 'celements_ajax',
+          ajax_mode: 'CelNavReorderSave',
+          new_nav_order: orderJSON
+        },
+        onSuccess: function(transport) {
+          _me.parentElem.fire('celreorder_reorderMode:end');
+          if (callbackFn) {
+            callbackFn(transport);
+          }
+        }
+      });
     }
 
   };
