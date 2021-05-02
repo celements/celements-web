@@ -19,6 +19,7 @@
  */
 
 (function(window, undefined) {
+  "use strict";
 
   /**
    * Navigation Reordering

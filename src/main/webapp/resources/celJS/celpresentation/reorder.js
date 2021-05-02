@@ -19,6 +19,7 @@
  */
 
 (function(window, undefined) {
+  "use strict";
 
   if (typeof window.CELEMENTS === "undefined") { window.CELEMENTS = {}; }
   if (typeof window.CELEMENTS.presentation === "undefined") { window.CELEMENTS.presentation = {}; }
