@@ -116,7 +116,7 @@
         return listItems;
       };
 
-      const serialList = [];
+      const serialList = new Array();
       $$('ul' + _me._ulSelector).each(function(listElem) {
         const childElems = listElem.childElements('li');
         if (childElems.size() > 0) {
