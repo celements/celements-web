@@ -66,7 +66,8 @@
             _me._initReorder();
           });
         } else {
-          $('cel_presentation_editor_reorder_tree').observe('celreorder:init', _me._initReorderBind);
+          $('cel_presentation_editor_reorder_tree').observe('celreorder:init',
+            _me._initReorderBind);
         }
       },
 
