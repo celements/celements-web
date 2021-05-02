@@ -29,7 +29,8 @@
       _cancelNavReorderHandlerBind: undefined,
       _saveNavReorderHandlerBind: undefined,
       _endReorderModeBind: undefined,
-      _registerAndStartReorderBind: undefined,
+      _registerReorderBind: undefined,
+      _initReorderBind: undefined,
       _reorderObj: undefined,
       _modalDialog: undefined,
 
@@ -39,30 +40,33 @@
         _me._cancelNavReorderHandlerBind = _me._cancelNavReorderHandler.bind(_me);
         _me._saveNavReorderHandlerBind = _me._saveNavReorderHandler.bind(_me);
         _me._endReorderModeBind = _me._endReorderMode.bind(_me);
-        _me._registerAndStartReorderBind = _me._registerAndStartReorder.bind(_me);
+        _me._registerReorderBind = _me._registerReorder.bind(_me);
+        _me._initReorderBind = _me._initReorder.bind(_me);
         _me._reorderObj = null;
         _me._modalDialog = null;
         if ($('tabMenuPanel')) {
-          $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._registerAndStartReorderBind);
+          $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._registerReorderBind);
         } else {
-          Event.observe(window, 'load', _me._registerAndStartReorderBind);
+          Event.observe(window, 'load', _me._registerReorderBind);
         }
       },
 
-      _registerAndStartReorder: function(event) {
+      _registerReorder: function(event) {
         const _me = this;
         if ($('tabMenuPanel')) {
-          $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._registerAndStartReorderBind);
+          $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._registerReorderBind);
         }
-        Event.stopObserving(window, 'load', _me._registerAndStartReorderBind);
+        Event.stopObserving(window, 'load', _me._registerReorderBind);
         $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:start',
           _me._startReorderModeBind);
         $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
           _me._endReorderModeBind);
         if ((typeof getCelementsTabEditor !== 'undefined') && getCelementsTabEditor()) {
           getCelementsTabEditor().addAfterInitListener(function() {
-            _me._reorder();
+            _me._initReorder();
           });
+        } else {
+          $('cel_presentation_editor_reorder_tree').observe('celreorder:init', _me._initReorderBind);
         }
       },
 
@@ -95,10 +99,10 @@
         $('cel_presentation_editor_reorder_tree').removeClassName('reorderMode');
       },
 
-      _reorder: function() {
+      _initReorder: function() {
         const _me = this;
-        _me._reorderObj = new CELEMENTS.reorder.DDReorder(
-          'cel_presentation_editor_reorder_tree', '.cel_presentation_reorder');
+        _me._reorderObj = new CELEMENTS.reorder.DDReorder('cel_presentation_editor_reorder_tree',
+          '.cel_presentation_reorder');
         myContextMenu.internal_hide();
       },
 
