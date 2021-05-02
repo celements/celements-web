@@ -141,10 +141,16 @@
         },
         onSuccess: function(transport) {
           console.log("saveOrder success: ", transport);
-          _me.parentElem.fire('celreorder_reorderMode:end');
-          // if (callbackFn) {
-          //   callbackFn(transport);
-          // }
+          if (typeof callbackFn === "function") {
+            callbackFn(transport);
+          } else {
+            if (transport.responseText == 'OK') {
+              _me.parentElem.fire('celreorder_reorderMode:saveSuccess');
+            } else {
+              console.error('failed saving reorder: ' + transport.responseText);
+              _me.parentElem.fire('celreorder_reorderMode:saveError');
+            }
+          }
         }
       });
     }
@@ -160,7 +166,6 @@
     window.CELEMENTS.reorder.DDList.superclass.constructor.call(this, id, sGroup, config);
 
     this.ddReorder = ddReorder;
-    // this.logger = this.logger || YAHOO;
     const el = this.getDragEl();
     Dom.setStyle(el, "opacity", 0.55); // The proxy is slightly transparent
     Dom.addClass(el, "cel_reorderNodes_proxy");
@@ -176,8 +181,6 @@
 
     startDrag: function(x, y) {
       const _me = this;
-      // _me.logger.log(_me.id + " startDrag");
-
       // make the proxy look like the source element
       const dragEl = _me.getDragEl();
       const clickEl = _me.getEl();

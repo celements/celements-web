@@ -19,19 +19,20 @@
  */
 
 (function(window, undefined) {
+  "use strict";
 
   var checkReorderModeBrowseAway = function(theLink) {
     var parentDiv = theLink.up('ul').up();
     var isInReorderMode = parentDiv.hasClassName('reorderMode');
     return (!isInReorderMode || confirm('Sie sind am neu ordnen der Knoten.'
-        + ' Nicht gespeicherte Änderungen gehen verloren.'));
+      + ' Nicht gespeicherte Änderungen gehen verloren.'));
   };
 
   var checkIsCreateTrans = function(theLink) {
     var langName = theLink.innerHTML;
     return (!theLink.hasClassName('transNotExists')
-        || confirm('Möchten Sie wirklich eine Übersetzung für \'' + langName
-            + '\' erstellen?'));
+      || confirm('Möchten Sie wirklich eine Übersetzung für \'' + langName
+        + '\' erstellen?'));
   };
 
   var pageLinkClickHandler = function(event) {
@@ -42,7 +43,7 @@
       window.open(linkUrl);
     } else if (checkIsCreateTrans(theLink) && checkReorderModeBrowseAway(theLink)) {
       var xredirect = 'xredirect=' + encodeURIComponent(
-          window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
+        window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
       if (!linkUrl.match(/\?/)) {
         linkUrl += '?' + xredirect;
       } else {
