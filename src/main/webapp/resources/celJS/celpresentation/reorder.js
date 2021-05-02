@@ -28,7 +28,6 @@
       _startReorderModeBind: undefined,
       _cancelNavReorderHandlerBind: undefined,
       _saveNavReorderHandlerBind: undefined,
-      _endReorderModeBind: undefined,
       _registerReorderBind: undefined,
       _initReorderBind: undefined,
       _reorderObj: undefined,
@@ -39,7 +38,6 @@
         _me._startReorderModeBind = _me._startReorderMode.bind(_me);
         _me._cancelNavReorderHandlerBind = _me._cancelNavReorderHandler.bind(_me);
         _me._saveNavReorderHandlerBind = _me._saveNavReorderHandler.bind(_me);
-        _me._endReorderModeBind = _me._endReorderMode.bind(_me);
         _me._registerReorderBind = _me._registerReorder.bind(_me);
         _me._initReorderBind = _me._initReorder.bind(_me);
         _me._reorderObj = null;
@@ -57,10 +55,8 @@
           $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._registerReorderBind);
         }
         Event.stopObserving(window, 'load', _me._registerReorderBind);
-        $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:start',
-          _me._startReorderModeBind);
-        $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
-          _me._endReorderModeBind);
+        _me._reorderObj.celStopObserving('cel_DDReorder:reorderModeStart', _me._startReorderModeBind);
+        _me._reorderObj.celObserve('cel_DDReorder:reorderModeStart', _me._startReorderModeBind);
         if ((typeof getCelementsTabEditor !== 'undefined') && getCelementsTabEditor()) {
           getCelementsTabEditor().addAfterInitListener(function() {
             _me._initReorder();
@@ -74,9 +70,11 @@
       _startReorderMode: function(event) {
         const _me = this;
         $$('.cel_naveditor_button_cancel').each(function(button) {
+          button.stopObserving('click', _me._cancelNavReorderHandlerBind);
           button.observe('click', _me._cancelNavReorderHandlerBind);
         });
         $$('.cel_naveditor_button_saveAndContinue').each(function(button) {
+          button.stopObserving('click', _me._saveNavReorderHandlerBind);
           button.observe('click', _me._saveNavReorderHandlerBind);
         });
         if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
@@ -85,7 +83,7 @@
         $('cel_presentation_editor_reorder_tree').addClassName('reorderMode');
       },
 
-      _endReorderMode: function(event) {
+      _endReorderMode: function() {
         const _me = this;
         $$('.cel_naveditor_button_cancel').each(function(button) {
           button.stopObserving('click', _me._cancelNavReorderHandlerBind);
@@ -129,13 +127,14 @@
         savingDialog.show();
         _me._reorderObj.saveOrder(function(transport) {
           if (transport.responseText == 'OK') {
-            $('cel_presentation_editor_reorder_tree').fire('celreorder_reorderMode:end');
+            _me._endReorderMode();
           } else {
             console.error('failed saving reorder: ' + transport.responseText);
             alert('Failed saving!');
           }
           if (!$('reorderingTitle') || !$('reorderingTitle').hasClassName('celReorderToggle')) {
             $('cel_presentation_editor_reorder_tree').fire('celreorder_reorderMode:start');
+            _me._startReorderMode();
           }
           savingDialog.hide();
         });
