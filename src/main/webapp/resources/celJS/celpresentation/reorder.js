@@ -18,7 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-(function (window, undefined) {
+(function(window, undefined) {
 
   if (typeof window.CELEMENTS === "undefined") { window.CELEMENTS = {}; }
   if (typeof window.CELEMENTS.presentation === "undefined") { window.CELEMENTS.presentation = {}; }
@@ -32,7 +32,7 @@
       _reorderObj: undefined,
       _modalDialog: undefined,
 
-      initialize: function () {
+      initialize: function() {
         const _me = this;
         _me._startReorderModeBind = _me._startReorderMode.bind(_me);
         _me._cancelNavReorderHandlerBind = _me._cancelNavReorderHandler.bind(_me);
@@ -48,27 +48,29 @@
         }
       },
 
-      _registerAndStartReorder: function (event) {
+      _registerAndStartReorder: function(event) {
         const _me = this;
-        $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._registerAndStartReorderBind);
+        if ($('tabMenuPanel')) {
+          $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._registerAndStartReorderBind);
+        }
         Event.stopObserving(window, 'load', _me._registerAndStartReorderBind);
         $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:start',
           _me._startReorderModeBind);
         $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:end',
           _me._endReorderModeBind);
         if ((typeof getCelementsTabEditor !== 'undefined') && getCelementsTabEditor()) {
-          getCelementsTabEditor().addAfterInitListener(function () {
+          getCelementsTabEditor().addAfterInitListener(function() {
             _me._reorder();
           });
         }
       },
 
-      _startReorderMode: function (event) {
+      _startReorderMode: function(event) {
         const _me = this;
-        $$('.cel_naveditor_button_cancel').each(function (button) {
+        $$('.cel_naveditor_button_cancel').each(function(button) {
           button.observe('click', _me._cancelNavReorderHandlerBind);
         });
-        $$('.cel_naveditor_button_saveAndContinue').each(function (button) {
+        $$('.cel_naveditor_button_saveAndContinue').each(function(button) {
           button.observe('click', _me._saveNavReorderHandlerBind);
         });
         if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
@@ -77,12 +79,12 @@
         $('cel_presentation_editor_reorder_tree').addClassName('reorderMode');
       },
 
-      _endReorderMode: function (event) {
+      _endReorderMode: function(event) {
         const _me = this;
-        $$('.cel_naveditor_button_cancel').each(function (button) {
+        $$('.cel_naveditor_button_cancel').each(function(button) {
           button.stopObserving('click', _me._cancelNavReorderHandlerBind);
         });
-        $$('.cel_naveditor_button_saveAndContinue').each(function (button) {
+        $$('.cel_naveditor_button_saveAndContinue').each(function(button) {
           button.stopObserving('click', _me._saveNavReorderHandlerBind);
         });
         if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
@@ -92,21 +94,21 @@
         $('cel_presentation_editor_reorder_tree').removeClassName('reorderMode');
       },
 
-      _reorder: function () {
+      _reorder: function() {
         const _me = this;
         _me._reorderObj = new CELEMENTS.reorder.DDReorder(
           'cel_presentation_editor_reorder_tree', '.cel_presentation_reorder');
         myContextMenu.internal_hide();
       },
 
-      _cancelNavReorderHandler: function (event) {
+      _cancelNavReorderHandler: function(event) {
         event.stop();
         if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
           window.location.reload();
         }
       },
 
-      _saveNavReorderHandler: function (event) {
+      _saveNavReorderHandler: function(event) {
         const _me = this;
         event.stop();
         const button = event.findElement();
@@ -119,7 +121,7 @@
         savingDialog.cfg.queueProperty("buttons", null);
         savingDialog.render();
         savingDialog.show();
-        _me._reorderObj.saveOrder(function (transport) {
+        _me._reorderObj.saveOrder(function(transport) {
           if (transport.responseText == 'OK') {
             $('cel_presentation_editor_reorder_tree').fire('celreorder_reorderMode:end');
           } else {
@@ -135,7 +137,7 @@
         });
       },
 
-      _getCelModalDialog: function () {
+      _getCelModalDialog: function() {
         const _me = this;
         if (!_me._modalDialog) {
           _me._modalDialog = new YAHOO.widget.SimpleDialog("modal dialog", {
