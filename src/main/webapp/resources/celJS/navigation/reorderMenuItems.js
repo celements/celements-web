@@ -36,126 +36,123 @@
   // -> call CELEMENTS.reorder.DDReorder.init() to start reordering
   // -> set minLevel and maxLevel BEFORE calling init().
   //////////////////////////////////////////////////////////////////////////////
-  window.CELEMENTS.reorder.DDReorder = function(id, ulSelector, minLevel, maxLevel) {
-    // constructor
-    this._init(id, ulSelector, minLevel, maxLevel);
-  };
+  if (typeof window.CELEMENTS.reorder.DDReorder === "undefined") {
+    window.CELEMENTS.reorder.DDReorder = Class.create({
+      parentElem: undefined,
+      _ulSelector: undefined,
+      minLevel: undefined,
+      maxLevel: undefined,
 
-  window.CELEMENTS.reorder.DDReorder.prototype = {
-    parentElem: undefined,
-    _ulSelector: undefined,
-    minLevel: undefined,
-    maxLevel: undefined,
+      initialize: function(theElem, ulSelector, minLevel, maxLevel) {
+        const _me = this;
+        _me.parentElem = $(theElem);
+        _me._ulSelector = ulSelector || '.cel_skin_editor_reorder';
+        _me.minLevel = minLevel || 1;
+        _me.maxLevel = maxLevel || 99;
 
-    _init: function(theElem, ulSelector, minLevel, maxLevel) {
-      const _me = this;
-      _me.parentElem = $(theElem);
-      _me._ulSelector = ulSelector || '.cel_skin_editor_reorder';
-      _me.minLevel = minLevel || 1;
-      _me.maxLevel = maxLevel || 99;
-
-      $$('ul' + _me._ulSelector + ' li').each(function(listItem) {
-        if (!listItem.hasClassName('cel_nodrag')) {
-          if (!listItem.id) {
-            const menuItemId = (listItem.down('span,a')).id;
-            listItem.id = 'LI' + menuItemId;
+        $$('ul' + _me._ulSelector + ' li').each(function(listItem) {
+          if (!listItem.hasClassName('cel_nodrag')) {
+            if (!listItem.id) {
+              const menuItemId = (listItem.down('span,a')).id;
+              listItem.id = 'LI' + menuItemId;
+            }
+            _me._addEmptySublists(listItem.id);
+            const ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
+            _me._addHandleIfPresent(ddElem, listItem);
           }
-          _me._addEmptySublists(listItem.id);
-          const ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
-          _me._addHandleIfPresent(ddElem, listItem);
-        }
-      });
-      $$('ul' + _me._ulSelector).each(function(listElem) {
-        new YAHOO.util.DDTarget(listElem.id);
-      });
-      _me.parentElem.fire('celreorder_reorderMode:start');
-      //      new YAHOO.util.DDTarget('cel_layout_editor_scrollup');
-      //      new YAHOO.util.DDTarget('cel_layout_editor_scrolldown');
-    },
-
-    _addHandleIfPresent: function(ddElem, listItem) {
-      const ddHandle = listItem.down('.cel_dd_handle');
-      if (ddHandle) {
-        if (!ddHandle.id) {
-          ddHandle.id = listItem.id + '_ddhandle';
-        }
-        ddElem.setHandleElId(ddHandle.id);
-      }
-    },
-
-    _getLevelOfMenuItem: function(listItemId) {
-      let count = 0;
-      $(listItemId).ancestors().each(function(parentNode) {
-        if (parentNode.tagName.toLowerCase() == 'ul') {
-          count++;
-        }
-      });
-      return count;
-    },
-
-    _addEmptySublists: function(listItemId) {
-      const _me = this;
-      const currentLevel = _me._getLevelOfMenuItem(listItemId);
-      const subULid = listItemId.replace(/^LI/, 'C');
-      if (!$(subULid) && (currentLevel >= _me.minLevel) && (currentLevel < _me.maxLevel)) {
-        const emptyList = new Element('ul', {
-          'id': subULid,
-          'class': 'cel_skin_editor_reorder'
         });
-        $(listItemId).insert({ bottom: emptyList });
-      }
-    },
-
-    getOrder: function() {
-      const _me = this;
-      const parseList = function(childElems) {
-        const listItems = [];
-        childElems.each(function(item) {
-          listItems.push(item.id);
+        $$('ul' + _me._ulSelector).each(function(listElem) {
+          new YAHOO.util.DDTarget(listElem.id);
         });
-        return listItems;
-      };
+        _me.celFire('Cel_DDReorder:reorderModeStart');
+        _me.parentElem.fire('celreorder_reorderMode:start');
+      },
 
-      const serialList = new Array();
-      $$('ul' + _me._ulSelector).each(function(listElem) {
-        const childElems = listElem.childElements('li');
-        if (childElems.size() > 0) {
-          const parentChild = new Hash();
-          parentChild.set(listElem.id, parseList(childElems));
-          serialList.push(parentChild);
+      _addHandleIfPresent: function(ddElem, listItem) {
+        const ddHandle = listItem.down('.cel_dd_handle');
+        if (ddHandle) {
+          if (!ddHandle.id) {
+            ddHandle.id = listItem.id + '_ddhandle';
+          }
+          ddElem.setHandleElId(ddHandle.id);
         }
-      });
-      return serialList;
-    },
+      },
 
-    saveOrder: function(callbackFn) {
-      const _me = this;
-      const orderJSON = Object.toJSON(_me.getOrder());
-      console.debug('DDReorder saveOrder before save: ', orderJSON);
-      new Ajax.Request(getCelHost(), {
-        method: 'post',
-        parameters: {
-          xpage: 'celements_ajax',
-          ajax_mode: 'CelNavReorderSave',
-          new_nav_order: orderJSON
-        },
-        onSuccess: function(transport) {
-          console.log("saveOrder success: ", transport);
-          if (typeof callbackFn === "function") {
-            callbackFn(transport);
-          } else {
-            if (transport.responseText == 'OK') {
-              _me.parentElem.fire('celreorder_reorderMode:saveSuccess');
+      _getLevelOfMenuItem: function(listItemId) {
+        let count = 0;
+        $(listItemId).ancestors().each(function(parentNode) {
+          if (parentNode.tagName.toLowerCase() == 'ul') {
+            count++;
+          }
+        });
+        return count;
+      },
+
+      _addEmptySublists: function(listItemId) {
+        const _me = this;
+        const currentLevel = _me._getLevelOfMenuItem(listItemId);
+        const subULid = listItemId.replace(/^LI/, 'C');
+        if (!$(subULid) && (currentLevel >= _me.minLevel) && (currentLevel < _me.maxLevel)) {
+          const emptyList = new Element('ul', {
+            'id': subULid,
+            'class': 'cel_skin_editor_reorder'
+          });
+          $(listItemId).insert({ bottom: emptyList });
+        }
+      },
+
+      getOrder: function() {
+        const _me = this;
+        const parseList = function(childElems) {
+          const listItems = [];
+          childElems.each(function(item) {
+            listItems.push(item.id);
+          });
+          return listItems;
+        };
+
+        const serialList = new Array();
+        $$('ul' + _me._ulSelector).each(function(listElem) {
+          const childElems = listElem.childElements('li');
+          if (childElems.size() > 0) {
+            const parentChild = new Hash();
+            parentChild.set(listElem.id, parseList(childElems));
+            serialList.push(parentChild);
+          }
+        });
+        return serialList;
+      },
+
+      saveOrder: function(callbackFn) {
+        const _me = this;
+        const orderJSON = Object.toJSON(_me.getOrder());
+        console.debug('DDReorder saveOrder before save: ', orderJSON);
+        new Ajax.Request(getCelHost(), {
+          method: 'post',
+          parameters: {
+            xpage: 'celements_ajax',
+            ajax_mode: 'CelNavReorderSave',
+            new_nav_order: orderJSON
+          },
+          onSuccess: function(transport) {
+            console.log("saveOrder success: ", transport);
+            if (typeof callbackFn === "function") {
+              callbackFn(transport);
             } else {
-              console.error('failed saving reorder: ' + transport.responseText);
-              _me.parentElem.fire('celreorder_reorderMode:saveError');
+              if (transport.responseText == 'OK') {
+                _me.celFire('Cel_DDReorder:saveSuccess');
+              } else {
+                console.error('failed saving reorder: ' + transport.responseText);
+                _me.celFire('Cel_DDReorder:saveError');
+              }
             }
           }
-        }
-      });
-    }
-
-  };
+        });
+      }
+    });
+    CELEMENTS.reorder.DDReorder.prototype = Object.extend(CELEMENTS.reorder.DDReorder.prototype,
+      CELEMENTS.mixins.Observable);
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // custom drag and drop implementation
@@ -234,6 +231,7 @@
         });
       });
       a.animate();
+      _me.ddReorder.celFire('celreorder_dragDrop:endDrag', thisid);
       _me.ddReorder.parentElem.fire('celreorder_dragDrop:endDrag', thisid);
     },
 
