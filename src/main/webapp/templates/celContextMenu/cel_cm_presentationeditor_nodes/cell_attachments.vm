@@ -1,0 +1,12 @@
+#if("$!elemId" != '')
+#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
+#set($docFullName = $menuItemDoc.fullName)
+#if("$celementsweb.getVersionMode()" == "celements3")
+#set($cmenu_pageLink = $xwiki.getURL("$docFullName", 'edit', 'tab=3'))
+#else
+#set($cmenu_pageLink = $xwiki.getURL("$docFullName", 'attach'))
+#end
+#set($attachmentDocSpace = $docFullName.substring(0, $docFullName.indexOf('.')))
+#if(!(("$celementsweb.getVersionMode()" == "celements3") && ("$!context.getXWiki().getWebPreference('cel_centralfilebase', '$attachmentDocSpace', '', $context.getContext())" != '')))
+window.location.href=&quot;${cmenu_pageLink}&quot;##
+#end#end

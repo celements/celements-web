@@ -1,0 +1,14 @@
+#if("$!elemId" != '')
+#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
+#if(${elemId} == ${doc.fullName})
+  #set($red = "${doc.web}.WebHome")
+#else
+  #set($red = ${elemId})
+#end
+#set($l = "confirmURL(&quot;$adminMsg.get('cel_cell_node_confirm_delete')&quot;,")
+#set($params = "xpage=celements_ajax&ajax_mode=delMenuItem&space=${doc.space}&red=${red}")
+#set($l = "${l}&quot;$xwiki.getURL($elemId,'view', $params)")
+#set($l = "${l}&quot;)")
+#set($cmenu_pageLink = "${l}")
+$cmenu_pageLink##
+#end

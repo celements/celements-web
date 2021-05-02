@@ -1,0 +1,7 @@
+#if("$!elemId" != '')
+#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
+#set($menuItemObj = $menuItemDoc.getObject('Celements2.MenuItem'))
+#if("$!menuItemObj" != '')
+$('cel_presentation_editor_reorder_tree').fire('celreorder_reorderMode:start');##
+#end
+#end
