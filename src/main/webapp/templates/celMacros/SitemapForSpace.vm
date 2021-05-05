@@ -53,8 +53,8 @@
 	<label for="spaceSelect">Bereich wechseln zu:</label>
 	<select id="spaceSelector" name="spaceSelect">
 #foreach($spaceNameSelect in $spaceList)
-	#getDefaultParams($spaceNameSelect)
-		<option label="$spaceNameSelect" value="$doc.getURL('view', $defaultParams)"##
+  #getDefaultParams($spaceNameSelect)
+    <option label="$spaceNameSelect" value="$services.url.getURL($doc.documentReference, 'view', $defaultParams)"##
 #if("$!spaceName" == "$!spaceNameSelect") selected #end>$spaceName</option>
 #end
 	</select>
