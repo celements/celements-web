@@ -10,7 +10,7 @@
 #end
 #set($menuPart = $elemParams.get(1))
 #end
-#set($l = $doc.getURL('view', 'xpage=overlay&conf=AddPage'))
+#set($l = $services.url.getURL($doc.documentReference, 'view', 'xpage=overlay&conf=AddPage'))
 #set($l = "${l}&space=${overwriteWeb}&doc_parent=$!{menuItem_parentDoc}")
 #set($l = "${l}&menuPart=$!{menuPart}&pageTypeCat=celltype")
 #set($cmenu_pageLink = "${l}&menu_position=&language=${default_language}&redirmode=editMenu")
