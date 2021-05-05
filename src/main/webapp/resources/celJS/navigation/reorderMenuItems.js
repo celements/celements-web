@@ -24,8 +24,8 @@
   /**
    * Navigation Reordering
    */
-  if (typeof window.CELEMENTS == "undefined") { window.CELEMENTS = {}; }
-  if (typeof window.CELEMENTS.reorder == "undefined") { window.CELEMENTS.reorder = {}; }
+  if (typeof window.CELEMENTS === "undefined") { window.CELEMENTS = {}; }
+  if (typeof window.CELEMENTS.reorder === "undefined") { window.CELEMENTS.reorder = {}; }
 
   const Dom = YAHOO.util.Dom;
   const YEvent = YAHOO.util.Event;
