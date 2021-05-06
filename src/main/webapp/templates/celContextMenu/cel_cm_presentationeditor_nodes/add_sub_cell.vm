@@ -13,7 +13,7 @@
 #set($l = 'xpage=overlay&conf=AddPage')
 #set($l = "${l}&space=${overwriteWeb}&doc_parent=${elemId}")
 #set($l = "${l}&language=${default_language}&redirmode=newpageedit")
-#set($l = "${l}&xredirect=$escapetool.url($doc.getURL('view'))")
+#set($l = "${l}&xredirect=$escapetool.url($services.url.getURL($doc.documentReference, 'view'))")
 #set($cmenu_pageLink = $services.url.getURL($doc.documentReference, 'view', "${l}"))
 window.location.href=&quot;${cmenu_pageLink}&quot;##
 #end#end
