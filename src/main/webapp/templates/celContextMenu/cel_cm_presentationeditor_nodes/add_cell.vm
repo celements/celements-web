@@ -14,5 +14,5 @@
 #set($l = "${l}&space=${overwriteWeb}&doc_parent=$!{menuItem_parentDoc}")
 #set($l = "${l}&menuPart=$!{menuPart}&pageTypeCat=celltype")
 #set($l = "${l}&menu_position=&language=${default_language}&redirmode=editMenu")
-#set($cmenu_pageLink = $services.url.getURL($doc.documentReference, 'view', "{l}"))
+#set($cmenu_pageLink = $services.url.getURL($doc.documentReference, 'view', "${l}"))
 window.location.href=&quot;${cmenu_pageLink}&quot;
