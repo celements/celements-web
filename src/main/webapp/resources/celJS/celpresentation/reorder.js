@@ -55,8 +55,10 @@
           $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._registerReorderBind);
         }
         Event.stopObserving(window, 'load', _me._registerReorderBind);
-        _me._reorderObj.celStopObserving('cel_DDReorder:reorderModeStart', _me._startReorderModeBind);
-        _me._reorderObj.celObserve('cel_DDReorder:reorderModeStart', _me._startReorderModeBind);
+        $('cel_presentation_editor_reorder_tree').stopObserving('celreorder_reorderMode:start',
+          _me._startReorderModeBind);
+        $('cel_presentation_editor_reorder_tree').observe('celreorder_reorderMode:start',
+          _me._startReorderModeBind);
         if ((typeof getCelementsTabEditor !== 'undefined') && getCelementsTabEditor()) {
           getCelementsTabEditor().addAfterInitListener(function() {
             _me._initReorder();
