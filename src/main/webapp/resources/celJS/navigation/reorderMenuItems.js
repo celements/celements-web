@@ -64,7 +64,6 @@
         $$('ul' + _me._ulSelector).each(function(listElem) {
           new YAHOO.util.DDTarget(listElem.id);
         });
-        _me.celFire('cel_DDReorder:reorderModeStart');
         _me.parentElem.fire('celreorder_reorderMode:start');
       },
 
