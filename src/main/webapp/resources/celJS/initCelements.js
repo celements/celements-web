@@ -539,6 +539,7 @@
         '%': Element.toggleClassName
       },
       _eventElements: undefined,
+      _eventElemCounter: 0,
       _interpretDataCelEventBind: undefined,
       _contentChangedHandlerBind: undefined,
       updateCelEventHandlersBind: undefined,
@@ -590,7 +591,7 @@
         if (actionFunction) {
           if (data.eventName.startsWith('cel:enter') || data.eventName.startsWith('cel:leave')) {
             _me._intersectionObserver.observe(htmlElem);
-            console.debug('observing intersection: ', htmlElem);
+            console.debug('EventManager - observing intersection', htmlElem.dataset.celEventNb, data);
           }
           return new window.CELEMENTS.CssClassEventHandler(htmlElem, data.eventName,
             data.cssSelector, data.className, actionFunction, data.condition);
@@ -601,7 +602,7 @@
 
       _createEventElement: function (htmlElem) {
         const _me = this;
-        const dataValue = htmlElem.readAttribute('data-cel-event');
+        const dataValue = htmlElem.dataset.celEvent;
         return {
           'htmlElem': htmlElem,
           'dataValue': dataValue,
@@ -618,42 +619,51 @@
       _interpretDataCelEvent: function (htmlElem) {
         const _me = this;
         const logPref = 'EventManager - interpretData: ';
-        if (htmlElem.hasClassName('celOnEventInit')) {
+        if (htmlElem.classList.contains('celOnEventInit')) {
           console.debug(logPref, 'skip already initialized: ', htmlElem);
         } else if (htmlElem.up('.cel_template')) {
           console.debug(logPref, 'skip template element: ', htmlElem);
         } else {
+          htmlElem.dataset.celEventNb = ++_me._eventElemCounter;
           const newElem = _me._createEventElement(htmlElem);
           if (newElem.eventHandlers.length > 0) {
             _me._eventElements.push(newElem);
-            console.debug(logPref, 'new element ', htmlElem);
           } else {
-            console.debug(logPref, 'no valid instructions found on ', htmlElem);
+            console.warn(logPref, 'no valid instructions found on ', htmlElem);
           }
-          htmlElem.addClassName('celOnEventInit');
+          htmlElem.classList.add('celOnEventInit');
           htmlElem.fire('celEM:init');
         }
       },
 
-      _handleIntersection: function (entry, idx) {
+      _handleIntersection: function (entry) {
         const _me = this;
-        const previous = _me._intersectionValues[idx] || { y: 0, ratio: 0 };
-        const current = { y: entry.boundingClientRect.y, ratio: entry.intersectionRatio };
-        const type = (entry.isIntersecting && current.ratio > previous.ratio) ? 'enter' : 'leave';
+        const htmlElem = entry.target;
+        const eventNb = htmlElem.dataset.celEventNb;
+        const previous = _me._intersectionValues[eventNb] || Object.freeze({ y: 0, ratio: 0 });
+        const current = Object.freeze({
+          y: entry.boundingClientRect.y,
+          ratio: entry.intersectionRatio
+        });
         const direction = (current.y > previous.y) ? 'up' : 'down';
-        let ratio = entry.intersectionRatio;
-        if (type === 'enter') {
-          ratio = (ratio >= 1) ? ':full' : (ratio > 0.5) ? ':half' : '';
-        } else {
-          ratio = (ratio > 0.5) ? ':full' : (ratio > 0) ? ':half' : '';
-        }
-        let eventName = 'cel:' + type + ratio;
-        console.debug('fire', eventName);
-        entry.target.fire(eventName);
-        eventName += ':' + direction;
-        console.debug('fire', eventName);
-        entry.target.fire(eventName);
-        _me._intersectionValues[idx] = current;
+        const type = (entry.isIntersecting && current.ratio >= previous.ratio) ? 'enter' : 'leave';
+        const ratioA = (type === 'enter') ? current.ratio : previous.ratio;
+        const ratioB = (type === 'leave') ? current.ratio : previous.ratio;
+        const steps = [];
+        if (ratioA >= 1 && ratioB < 1) steps.push(':full');
+        if (ratioA >= 0.5 && ratioB < 0.5) steps.push(':half');
+        if (ratioA > 0 && ratioB <= 0) steps.push('');
+        steps.forEach(step => {
+          [
+            'cel:' + type + step,
+            'cel:' + type + step + ':' + direction
+          ].forEach(eventName => {
+            console.debug('EventManager - intersect', eventName, 'on', eventNb,
+                previous, '->', current);
+            htmlElem.fire(eventName);
+          })
+        });
+        _me._intersectionValues[eventNb] = current;
       },
 
       _contentChangedHandler: function (event) {
@@ -677,11 +687,11 @@
         for (let i = _me._eventElements.length - 1; i >= 0; i--) {
           const elem = _me._eventElements[i];
           const isInBody = $(document.body).contains(elem.htmlElem);
-          const changedDataValue = (elem.htmlElem.readAttribute('data-cel-event') !== elem.dataValue);
-          if (!isInBody || changedDataValue || !elem.htmlElem.hasClassName('celOnEventInit')) {
-            elem.eventHandlers.each(function (handler) { handler.unregister(); });
+          const changedDataValue = (elem.htmlElem.dataset.celEvent !== elem.dataValue);
+          if (!isInBody || changedDataValue || !elem.htmlElem.classList.contains('celOnEventInit')) {
+            elem.eventHandlers.forEach(handler => handler.unregister());
             _me._eventElements.splice(i, 1);
-            elem.htmlElem.removeClassName('celOnEventInit');
+            elem.htmlElem.classList.remove('celOnEventInit');
             console.debug('EventManager - removeDisappearedElem: ', elem);
           }
         }
