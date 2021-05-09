@@ -18,7 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-(function (window, undefined) {
+(function(window, undefined) {
   "use strict";
 
   /**
@@ -57,19 +57,19 @@
       stopped: undefined,
       eventName: undefined,
 
-      initialize: function (eventName, memo) {
+      initialize: function(eventName, memo) {
         const _me = this;
         _me.memo = memo;
         _me.eventName = eventName;
         _me.stopped = false;
       },
 
-      stop: function () {
+      stop: function() {
         const _me = this;
         _me.stopped = true;
       },
 
-      findElement: function () {
+      findElement: function() {
         return undefined;
       }
 
@@ -79,7 +79,7 @@
     window.CELEMENTS.mixins.Observable = {
       _celEventHash: null,
 
-      _getCelEventHash: function (eventKey) {
+      _getCelEventHash: function(eventKey) {
         const _me = this;
         if (!_me._celEventHash) {
           _me._celEventHash = new Hash();
@@ -93,7 +93,7 @@
         return _me._celEventHash;
       },
 
-      celObserve: function (eventKey, callbackFN) {
+      celObserve: function(eventKey, callbackFN) {
         const _me = this;
         console.debug('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
         if (!eventKey) {
@@ -102,7 +102,7 @@
         this._getCelEventHash(eventKey).push(callbackFN);
       },
 
-      celStopObserving: function (eventKey, callbackFN) {
+      celStopObserving: function(eventKey, callbackFN) {
         const _me = this;
         console.debug('cel celStopObserving: ', _me._celEventHash, eventKey, callbackFN);
         if (!eventKey) {
@@ -112,14 +112,14 @@
         ).without(callbackFN));
       },
 
-      celFire: function (eventKey, memo) {
+      celFire: function(eventKey, memo) {
         const _me = this;
         console.debug('cel celFire: ', _me._celEventHash, eventKey, memo);
         if (!eventKey) {
           throw "undefined eventKey in celObserve call ";
         }
         const event = new CELEMENTS.mixins.Event(eventKey, memo);
-        this._getCelEventHash(eventKey).each(function (listenerFN) {
+        this._getCelEventHash(eventKey).each(function(listenerFN) {
           try {
             listenerFN(event);
           } catch (exp) {
@@ -134,18 +134,18 @@
 
   window.celOnBeforeLoadListenerArray = [];
 
-  window.celAddOnBeforeLoadListener = function (listenerFunc) {
+  window.celAddOnBeforeLoadListener = function(listenerFunc) {
     celOnBeforeLoadListenerArray.push(listenerFunc);
   };
 
   window.celOnFinishHeaderListenerArray = [];
 
-  window.celAddOnFinishHeaderListener = function (listenerFunc) {
+  window.celAddOnFinishHeaderListener = function(listenerFunc) {
     window.celOnFinishHeaderListenerArray.push(listenerFunc);
   };
 
-  window.celFinishHeaderHandler = function () {
-    $A(window.celOnFinishHeaderListenerArray).each(function (listener) {
+  window.celFinishHeaderHandler = function() {
+    $A(window.celOnFinishHeaderListenerArray).each(function(listener) {
       try {
         listener();
       } catch (exp) {
@@ -158,7 +158,7 @@
    * getCelDomain function
    **/
   if (typeof window.getCelDomain === 'undefined') {
-    window.getCelDomain = function () {
+    window.getCelDomain = function() {
       const hostName = window.location.host;
       return hostName.replace(/^www\./, '');
     };
@@ -168,12 +168,12 @@
     window.CELEMENTS.LoadingIndicator = Class.create({
       _loadingImg: undefined,
 
-      initialize: function () {
+      initialize: function() {
         const _me = this;
         _me._loadingImg = new Hash();
       },
 
-      getLoadingIndicator: function (isSmallOrPxSize) {
+      getLoadingIndicator: function(isSmallOrPxSize) {
         const _me = this;
         let loaderType = 'ajax-loader-32px';
         if (typeof isSmallOrPxSize === 'boolean') {
@@ -201,7 +201,7 @@
     window.CELEMENTS.Utils = Class.create({
       _srcOriginHost: undefined,
 
-      getPathPrefix: function () {
+      getPathPrefix: function() {
         const _me = this;
         if (!_me._srcOriginHost) {
           let srcOriginHost = null;
@@ -229,7 +229,7 @@
         return _me._srcOriginHost;
       },
 
-      convertFullNameToViewURL: function (fullName) {
+      convertFullNameToViewURL: function(fullName) {
         const _me = this;
         return _me.getPathPrefix()
           + ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/');
@@ -239,7 +239,7 @@
 
     const globalUtilsInstance = new window.CELEMENTS.Utils();
 
-    window.CELEMENTS.getUtils = function () {
+    window.CELEMENTS.getUtils = function() {
       return globalUtilsInstance;
     };
   }
@@ -249,7 +249,7 @@
    * @deprecated Instead use window.CELEMENTS.getUtils().getPathPrefix()
    */
   if (typeof window.CELEMENTS.getPathPrefix === 'undefined') {
-    window.CELEMENTS.getPathPrefix = function () {
+    window.CELEMENTS.getPathPrefix = function() {
       console.warn('deprecated call of window.CELEMENTS.getPathPrefix.'
         + ' Instead use window.CELEMENTS.getUtils().getPathPrefix()');
       return window.CELEMENTS.getUtils().getPathPrefix();
@@ -260,7 +260,7 @@
    * getCelHost function
    **/
   if (typeof window.getCelHost === 'undefined') {
-    window.getCelHost = function () {
+    window.getCelHost = function() {
       let celHost = document.location + '?';
       if (document.location.pathname.indexOf('/skin/resources/') > -1) {
         celHost = celHost.substring(0, celHost.indexOf('/skin/resources/'));
@@ -288,7 +288,7 @@
       _url: undefined,
       _configObj: undefined,
 
-      initialize: function (htmlElemId, callbackOnSuccess, configObj) {
+      initialize: function(htmlElemId, callbackOnSuccess, configObj) {
         const _me = this;
         _me._htmlElem = $(htmlElemId);
         _me._configObj = configObj || {};
@@ -301,27 +301,27 @@
         _me._reset();
       },
 
-      _reset: function () {
+      _reset: function() {
         const _me = this;
         _me._reconnectWaitStart = _me._minReconnectWait;
       },
 
-      setMinRecconectWait: function (minReconnectWait) {
+      setMinRecconectWait: function(minReconnectWait) {
         const _me = this;
         _me._minReconnectWait = minReconnectWait;
       },
 
-      setMaxRecconectWait: function (maxReconnectWait) {
+      setMaxRecconectWait: function(maxReconnectWait) {
         const _me = this;
         _me._maxReconnectWait = maxReconnectWait;
       },
 
-      _fireAjaxRecconectTrying: function () {
+      _fireAjaxRecconectTrying: function() {
         const _me = this;
         return _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
       },
 
-      _reconnectorHandler: function () {
+      _reconnectorHandler: function() {
         const _me = this;
         _me._reconnectWait--;
         if (_me._reconnectWait == 0) {
@@ -347,19 +347,19 @@
         }
       },
 
-      start: function () {
+      start: function() {
         const _me = this;
         _me._reconnectWait = _me._reconnectWaitStart;
         _me._reconnectorExecuter = new PeriodicalExecuter(_me._reconnectorHandlerBind, 1);
       },
 
-      _cancelAjaxOnTimeout: function (ajaxCall) {
+      _cancelAjaxOnTimeout: function(ajaxCall) {
         if (!ajaxCall._complete) {
           ajaxCall.transport.abort();
         }
       },
 
-      _connectionTester: function () {
+      _connectionTester: function() {
         const _me = this;
         const connectionTestAjax = new Ajax.Request(_me._url, {
           'parameters': {
@@ -368,13 +368,13 @@
             'ajax_mode': 'pageTypeWithLayout',
             'overwriteLayout': 'SimpleLayout'
           },
-          'onSuccess': function () {
+          'onSuccess': function() {
             _me._reset();
             _me._reconnectorExecuter = null;
             _me._callbackOnSuccess();
             _me._htmlElem.fire('celements:AjaxReconnectSuccess');
           },
-          'onFailure': function () {
+          'onFailure': function() {
             _me._reconnectWaitStart = Math.min(_me._reconnectWaitStart * 2,
               _me._maxReconnectWait);
             _me.start();
@@ -387,7 +387,7 @@
   }
 
   window.CELEMENTS.UrlUtils = Class.create({
-    getParams: function (search) {
+    getParams: function(search) {
       const _me = this;
       search = search || window.location.search;
       const paramSplit = search.split(new RegExp('[?&]'))
@@ -395,16 +395,16 @@
       return paramSplit.reduce(_me._splitUriSearch.bind(_me)) || new Hash();
     },
 
-    joinParams: function (hash) {
+    joinParams: function(hash) {
       let paramsArray = [];
-      $H(hash).each(function (pair) {
-        const pairMapped = pair.value.map(function (elem) { return pair.key + '=' + encodeURI(elem) });
+      $H(hash).each(function(pair) {
+        const pairMapped = pair.value.map(function(elem) { return pair.key + '=' + encodeURI(elem) });
         paramsArray = paramsArray.concat(pairMapped);
       });
       return paramsArray.join('&');
     },
 
-    _splitUriSearch: function (paramHash, elem) {
+    _splitUriSearch: function(paramHash, elem) {
       let key = elem.split('=', 1);
       if ((key.length > 0) && (key[0].length > 0)) {
         key = key[0];
@@ -432,7 +432,7 @@
         xpage: 'celements_ajax',
         ajax_mode: 'Messages'
       },
-      onSuccess: function (transport) {
+      onSuccess: function(transport) {
         if (transport.responseText.isJSON()) {
           const newMessages = transport.responseText.evalJSON();
           console.log('initCelements.js: finished getting dictionary messages.');
@@ -448,7 +448,7 @@
     console.error('Failed to get Cel-Messages async!', exp);
   }
 
-  window.celExecOnceAfterMessagesLoaded = function (callbackFn) {
+  window.celExecOnceAfterMessagesLoaded = function(callbackFn) {
     if (!window.celMessages.isLoaded) {
       $(document.body).stopObserving('cel:messagesLoaded', callbackFn);
       $(document.body).observe('cel:messagesLoaded', callbackFn);
@@ -473,7 +473,7 @@
       _conditionFunction: undefined,
       _actionHandlerBind: undefined,
 
-      initialize: function (htmlElement, eventName, cssSelector, className, actionFunction, condition) {
+      initialize: function(htmlElement, eventName, cssSelector, className, actionFunction, condition) {
         const _me = this;
         _me._htmlElement = $(htmlElement);
         _me._eventName = eventName;
@@ -487,7 +487,7 @@
         _me._registerActionHandler();
       },
 
-      _registerActionHandler: function () {
+      _registerActionHandler: function() {
         const _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
@@ -495,9 +495,9 @@
           _me._className, _me._actionFunction.name, _me._htmlElement);
       },
 
-      _actionHandler: function (event) {
+      _actionHandler: function(event) {
         const _me = this;
-        _me._getTargetElements().each(function (targetElement) {
+        _me._getTargetElements().each(function(targetElement) {
           if (!_me._conditionFunction || _me._conditionFunction(targetElement, _me._htmlElement)) {
             _me._actionFunction(targetElement, _me._className);
             console.debug('EventHandler -  upon', _me._eventName, 'action [',
@@ -509,7 +509,7 @@
         });
       },
 
-      _getTargetElements: function () {
+      _getTargetElements: function() {
         const _me = this;
         if (_me._cssSelector.startsWith('^')) { // match up the DOM from origin
           parent = _me._htmlElement.up(_me._cssSelector.substring(1));
@@ -519,7 +519,7 @@
         }
       },
 
-      unregister: function () {
+      unregister: function() {
         const _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug('EventHandler - unregister: ', _me._eventName, _me._cssSelector,
@@ -547,18 +547,18 @@
       _intersectionObserver: undefined,
       _intersectionValues: [],
 
-      initialize: function () {
+      initialize: function() {
         const _me = this;
         _me._eventElements = new Array();
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
         _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
-        _me._intersectionObserver = new IntersectionObserver(function (entries) {
+        _me._intersectionObserver = new IntersectionObserver(function(entries) {
           entries.forEach(_me._handleIntersection.bind(_me));
         }, { threshold: [0, 0.5, 1] });
       },
 
-      _splitDataCelEventList: function (dataValue) {
+      _splitDataCelEventList: function(dataValue) {
         let ret = new Array();
         if (dataValue) {
           // split single '&', avoid splitting double '&&' within condition string
@@ -567,7 +567,7 @@
         return ret;
       },
 
-      _parseEventInstruction: function (instruction) {
+      _parseEventInstruction: function(instruction) {
         const _me = this;
         const parts = instruction.match(_me._instructionRegex) || [];
         const data = {
@@ -584,7 +584,7 @@
         }
       },
 
-      _createEventHandler: function (htmlElem, instruction) {
+      _createEventHandler: function(htmlElem, instruction) {
         const _me = this;
         const data = _me._parseEventInstruction(instruction);
         const actionFunction = _me._actionFunctionMap[data.action];
@@ -600,13 +600,13 @@
         }
       },
 
-      _createEventElement: function (htmlElem) {
+      _createEventElement: function(htmlElem) {
         const _me = this;
         const dataValue = htmlElem.dataset.celEvent;
         return {
           'htmlElem': htmlElem,
           'dataValue': dataValue,
-          'eventHandlers': _me._splitDataCelEventList(dataValue).map(function (instruction) {
+          'eventHandlers': _me._splitDataCelEventList(dataValue).map(function(instruction) {
             try {
               return _me._createEventHandler(htmlElem, instruction);
             } catch (exp) {
@@ -616,7 +616,7 @@
         };
       },
 
-      _interpretDataCelEvent: function (htmlElem) {
+      _interpretDataCelEvent: function(htmlElem) {
         const _me = this;
         const logPref = 'EventManager - interpretData: ';
         if (htmlElem.classList.contains('celOnEventInit')) {
@@ -636,7 +636,7 @@
         }
       },
 
-      _handleIntersection: function (entry) {
+      _handleIntersection: function(entry) {
         const _me = this;
         const htmlElem = entry.target;
         const eventNb = htmlElem.dataset.celEventNb;
@@ -659,20 +659,20 @@
             'cel:' + type + step + ':' + direction
           ].forEach(eventName => {
             console.debug('EventManager - intersect', eventName, 'on', eventNb,
-                previous, '->', current);
+              previous, '->', current);
             htmlElem.fire(eventName);
           })
         });
         _me._intersectionValues[eventNb] = current;
       },
 
-      _contentChangedHandler: function (event) {
+      _contentChangedHandler: function(event) {
         const _me = this;
         console.debug('EventManager - contentChanged ', event);
         _me.updateCelEventHandlers(event.memo.htmlElem);
       },
 
-      updateCelEventHandlers: function (htmlContainer) {
+      updateCelEventHandlers: function(htmlContainer) {
         const _me = this;
         htmlContainer = htmlContainer || $(document.body);
         Event.stopObserving($(document.body), "celements:contentChanged",
@@ -682,7 +682,7 @@
         $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
       },
 
-      _removeDisappearedElems: function () {
+      _removeDisappearedElems: function() {
         const _me = this;
         for (let i = _me._eventElements.length - 1; i >= 0; i--) {
           const elem = _me._eventElements[i];
@@ -711,7 +711,7 @@
    */
   const formValidations = new Hash();
 
-  const registerValidation = function (formElem) {
+  const registerValidation = function(formElem) {
     if (formElem && formElem.id) {
       const valid = new Validation(formElem, {
         immediate: true,
@@ -724,9 +724,9 @@
     }
   };
 
-  celAddOnBeforeLoadListener(function () {
+  celAddOnBeforeLoadListener(function() {
     $$('form.cel_form_validation').each(registerValidation);
-    $(document.body).observe('cel_yuiOverlay:contentChanged', function (event) {
+    $(document.body).observe('cel_yuiOverlay:contentChanged', function(event) {
       const containerElem = event.findElement();
       if (containerElem) {
         containerElem.select('form.cel_form_validation').each(registerValidation);
@@ -740,14 +740,14 @@
   /**
    * Google Analytics integration
    **/
-  window.celAddOnFinishHeaderListener(function () {
+  window.celAddOnFinishHeaderListener(function() {
     //get google Account Number from Meta-Tags
     const metas = $$('meta[name="cel-GAA-Num"]');
     if ((metas.size() > 0) && (metas[0].content != '')) {
       const gaaNum = metas[0].content;
 
-      (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() {
           (i[r].q = i[r].q || []).push(arguments);
         }, i[r].l = 1 * new Date(); a = s.createElement(o),
           m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
@@ -763,7 +763,7 @@
   /**
    * Fluid Design image map support
    */
-  celAddOnBeforeLoadListener(function () {
+  celAddOnBeforeLoadListener(function() {
     if (typeof $j('img[usemap]').rwdImageMaps !== 'undefined') {
       $j('img[usemap]').rwdImageMaps();
     }
@@ -772,7 +772,7 @@
   /**
    * Register default overlay opener for .cel_yuiOverlay cssSelector
    */
-  celAddOnBeforeLoadListener(function () {
+  celAddOnBeforeLoadListener(function() {
     if (CELEMENTS && CELEMENTS.presentation && CELEMENTS.presentation.getOverlayObj
       && CELEMENTS.presentation.getOverlayObj()) {
       CELEMENTS.presentation.getOverlayObj({
@@ -785,7 +785,7 @@
    * Register default orientation css classes setter
    */
   let mobileDim = null;
-  const cel_updateOrientationCSSclasses = function () {
+  const cel_updateOrientationCSSclasses = function() {
     const innerWidth = mobileDim.getInnerWidth();
     const innerHeight = mobileDim.getInnerHeight();
     if (innerWidth > innerHeight) {
@@ -797,7 +797,7 @@
     }
   };
 
-  celAddOnBeforeLoadListener(function () {
+  celAddOnBeforeLoadListener(function() {
     if (CELEMENTS && CELEMENTS.mobile && CELEMENTS.mobile.Dimensions) {
       mobileDim = new CELEMENTS.mobile.Dimensions();
       Event.stopObserving(window, "orientationchange", cel_updateOrientationCSSclasses);
@@ -808,10 +808,10 @@
   /**
    * Register all Bootstrap-Multiselect
    */
-  const cel_initAllMultiselect = function (event) {
+  const cel_initAllMultiselect = function(event) {
     console.debug('initAllMultiselect');
     if ($j().multiselect != undefined) {
-      $j('.celBootstrap,.celMultiselect').filter(":visible,.celForceMultiselect").each(function (index, element) {
+      $j('.celBootstrap,.celMultiselect').filter(":visible,.celForceMultiselect").each(function(index, element) {
         if (!$(element).up('.cel_template')) {
           console.debug('initAllMultiselect: ', element);
           cel_initAllMultiselect_element(element);
@@ -826,7 +826,7 @@
    * Sample with additional Attribute celBootstrap (single select):
    * <input type="text" class="celBootstrap" data-bootstrapConfig='{"enableCaseInsensitiveFiltering" : true, numberDisplayed" : 6}'>
    */
-  const cel_initAllMultiselect_element = function (element) {
+  const cel_initAllMultiselect_element = function(element) {
     let params = {
       numberDisplayed: 3,
       onDropdownHidden: cel_initAllMultiselect_onDropdownHidden,
@@ -847,7 +847,7 @@
     });
   };
 
-  const cel_initAllMultiselect_onDropdownHidden = function (event) {
+  const cel_initAllMultiselect_onDropdownHidden = function(event) {
     /*
      * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
      * this code is just a workaround, it set the box visible again
@@ -862,7 +862,7 @@
      */
   };
 
-  const cel_initAllMultiselect_onChange = function (option, checked, select) {
+  const cel_initAllMultiselect_onChange = function(option, checked, select) {
     const multiselectElement = this;
     console.debug('fire cel:multiselectOnChange on: ', multiselectElement);
     $(option[0]).fire("cel:multiselectOnChange", {
@@ -872,8 +872,8 @@
     });
   };
 
-  const cel_initAllMultiselect_tabMenuPanel = function (event) {
-    $('tabMenuPanel').select('.celBootstrap,.celMultiselect').each(function (element) {
+  const cel_initAllMultiselect_tabMenuPanel = function(event) {
+    $('tabMenuPanel').select('.celBootstrap,.celMultiselect').each(function(element) {
       if (element.visible()) {
         element.addClassName('celForceMultiselect');
       }
@@ -884,7 +884,7 @@
   /**
    * Initialize Bootstrap Multiselect
    */
-  celAddOnBeforeLoadListener(function () {
+  celAddOnBeforeLoadListener(function() {
     $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
     $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
@@ -896,13 +896,13 @@
     $(document.body).fire('cel:initMultiselect');
   });
 
-  const cel_addMaxDimToFluidImg = function (event) {
-    $$("img.cel_fluidresizeWidth").each(function (imgElem) {
+  const cel_addMaxDimToFluidImg = function(event) {
+    $$("img.cel_fluidresizeWidth").each(function(imgElem) {
       imgElem.setStyle({
         'maxWidth': imgElem.readAttribute('width') + 'px'
       });
     });
-    $$("img.cel_fluidresizeHeight").each(function (imgElem) {
+    $$("img.cel_fluidresizeHeight").each(function(imgElem) {
       imgElem.setStyle({
         'maxHeight': imgElem.readAttribute('height') + 'px'
       });
@@ -912,7 +912,7 @@
   /**
    * Initialize fluid image
    */
-  celAddOnBeforeLoadListener(function () {
+  celAddOnBeforeLoadListener(function() {
     $(document.body).stopObserving("cel:initFluidImage", cel_addMaxDimToFluidImg);
     $(document.body).stopObserving("celements:contentChanged", cel_addMaxDimToFluidImg);
     $(document.body).observe("cel:initFluidImage", cel_addMaxDimToFluidImg);
@@ -922,14 +922,14 @@
   /**
    * Initialize close Window on Overlay CloseButton
    */
-  celAddOnBeforeLoadListener(function () {
-    $$(".generalOverlayWrapper .generalOverlay .exitOnClose").each(function (elem) {
+  celAddOnBeforeLoadListener(function() {
+    $$(".generalOverlayWrapper .generalOverlay .exitOnClose").each(function(elem) {
       elem.stopObserving("click", cel_closeOverlayWindow)
       elem.observe("click", cel_closeOverlayWindow)
     });
   });
 
-  const cel_closeOverlayWindow = function (event) {
+  const cel_closeOverlayWindow = function(event) {
     event.stop();
     window.close();
   };
