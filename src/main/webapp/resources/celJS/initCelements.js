@@ -558,7 +558,7 @@
             entries.forEach(_me._handleIntersection.bind(_me));
           }, { threshold: [0, 0.5, 1] });
         } catch (exp) {
-          console.error('EventManager - initialize: IntersectionObserver not available', exp);
+          console.warn('EventManager - initialize: IntersectionObserver not available', exp);
         }
       },
 
