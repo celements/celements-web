@@ -553,9 +553,13 @@
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
         _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
-        _me._intersectionObserver = new IntersectionObserver(function(entries) {
-          entries.forEach(_me._handleIntersection.bind(_me));
-        }, { threshold: [0, 0.5, 1] });
+        try {
+          _me._intersectionObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(_me._handleIntersection.bind(_me));
+          }, { threshold: [0, 0.5, 1] });
+        } catch (exp) {
+          console.error('EventManager - initialize: IntersectionObserver not available', exp);
+        }
       },
 
       _splitDataCelEventList: function(dataValue) {
@@ -589,7 +593,8 @@
         const data = _me._parseEventInstruction(instruction);
         const actionFunction = _me._actionFunctionMap[data.action];
         if (actionFunction) {
-          if (data.eventName.startsWith('cel:enter') || data.eventName.startsWith('cel:leave')) {
+          if (_me._intersectionObserver && (data.eventName.startsWith('cel:enter')
+              || data.eventName.startsWith('cel:leave'))) {
             _me._intersectionObserver.observe(htmlElem);
             console.debug('EventManager - observing intersection', htmlElem.dataset.celEventNb, data);
           }
