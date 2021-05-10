@@ -539,7 +539,7 @@
         '%': Element.toggleClassName
       },
       _eventElements: undefined,
-      _eventElemCounter: 0,
+      _eventElemCounter: undefined,
       _interpretDataCelEventBind: undefined,
       _contentChangedHandlerBind: undefined,
       updateCelEventHandlersBind: undefined,
@@ -550,6 +550,7 @@
       initialize: function() {
         const _me = this;
         _me._eventElements = new Array();
+        _me._eventElemCounter = 0;
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
         _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
@@ -658,11 +659,11 @@
         if (ratioA >= 1 && ratioB < 1) steps.push(':full');
         if (ratioA >= 0.5 && ratioB < 0.5) steps.push(':half');
         if (ratioA > 0 && ratioB <= 0) steps.push('');
-        steps.forEach(step => {
+        steps.forEach(function(step) {
           [
             'cel:' + type + step,
             'cel:' + type + step + ':' + direction
-          ].forEach(eventName => {
+          ].forEach(function(eventName) {
             console.debug('EventManager - intersect', eventName, 'on', eventNb,
               previous, '->', current);
             htmlElem.fire(eventName);
@@ -694,7 +695,7 @@
           const isInBody = $(document.body).contains(elem.htmlElem);
           const changedDataValue = (elem.htmlElem.dataset.celEvent !== elem.dataValue);
           if (!isInBody || changedDataValue || !elem.htmlElem.classList.contains('celOnEventInit')) {
-            elem.eventHandlers.forEach(handler => handler.unregister());
+            elem.eventHandlers.forEach(function(handler) { handler.unregister(); });
             _me._eventElements.splice(i, 1);
             elem.htmlElem.classList.remove('celOnEventInit');
             console.debug('EventManager - removeDisappearedElem: ', elem);
