@@ -646,7 +646,8 @@
         const _me = this;
         const htmlElem = entry.target;
         const eventNb = htmlElem.dataset.celEventNb;
-        const previous = _me._intersectionValues[eventNb] || Object.freeze({ y: 0, ratio: 0 });
+        const previous = _me._intersectionValues[eventNb]
+            || Object.freeze({ y: Number.MAX_SAFE_INTEGER, ratio: 0 });
         const current = Object.freeze({
           y: entry.boundingClientRect.y,
           ratio: entry.intersectionRatio
