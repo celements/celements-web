@@ -55,6 +55,7 @@
           let pickerAttrObj = {
             // FIXME [CELDEV-904] DateTimePicker Language timing issue
             'lang': Validation.messages.get("admin-language") || 'de',
+            'scrollInput': false,
             'dayOfWeekStart': 1,
             'format': 'd.m.Y',
             'timepicker': false,
@@ -77,6 +78,7 @@
           let pickerAttrObj = {
             // FIXME [CELDEV-904] DateTimePicker Language timing issue
             'lang': Validation.messages.get("admin-language") || 'de',
+            'scrollInput': false,
             'datepicker': false,
             'format': 'H:i',
             'onChangeDateTime': _me._onChangeDateTime
@@ -97,6 +99,7 @@
           let pickerAttrObj = {
             // FIXME [CELDEV-904] DateTimePicker Language timing issue
             'lang': Validation.messages.get("admin-language") || 'de',
+            'scrollInput': false,
             'dayOfWeekStart': 1,
             'minDate': 0,
             'format': 'd.m.Y H:i',
