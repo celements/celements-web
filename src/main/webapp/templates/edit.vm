@@ -57,7 +57,9 @@ $xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
 ##
 #set($force = $!request.get('force'))
 #set($editLevel = $services.rightsAccess.getEAccessLevel($xcontext.action))
-#if(!$services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel))
+#set($hasEditRights = $services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel))
+<!-- editRights:  $xcontext.action , $context.user , $hasEditRights , $editLevel -->
+#if(!$hasEditRights)
   $response.setStatus(403)
   #set($editorBlockerMessage = "$msg.get('notallowed')")
   #if($isAdmin)
