@@ -56,17 +56,7 @@ $xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
 ## If yes, warn about it and show a forcing link:
 ##
 #set($force = $!request.get('force'))
-#set($editLevel = $services.rightsAccess.getEAccessLevel($xcontext.action))
-#set($hasEditRights = $services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel))
-<!-- editRights:  $xcontext.action , $context.user , $hasEditRights , $editLevel -->
-#if(!$hasEditRights)
-  $response.setStatus(403)
-  #set($editorBlockerMessage = "$msg.get('notallowed')")
-  #if($isAdmin)
-    #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
-    #set($additionalButtons = "")
-  #end    
-#elseif (($tdoc.getLocked()==true)&&(!$force))
+#if (($tdoc.getLocked()==true)&&(!$force))
   $response.setStatus(423)
   #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
   #set($editorBlockerMessage = "$msg.get('doclockedby') $xwiki.getUserName($doc.getLockingUser())")
