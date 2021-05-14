@@ -6,7 +6,6 @@
   $response.setStatus(403)
   #set($editorBlockerMessage = "$msg.get('notallowed')")
   #if($isAdmin)
-    #set($forceEditURL = $doc.getURL($xcontext.action, ${newquerystring}))
     #set($additionalButtons = "")
   #end    
 #elseif ($isEditorBlocked)
