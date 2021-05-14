@@ -1,3 +1,4 @@
+#set($additionalButtons = '')
 #set($force = $!request.get('force'))
 #set($isEditorBlocked = (($tdoc.getLocked()==true)&&(!$force)))
 #set($editLevel = $services.rightsAccess.getEAccessLevel($xcontext.action))
@@ -5,9 +6,6 @@
 #if(!$hasEditRights)
   $response.setStatus(403)
   #set($editorBlockerMessage = "$msg.get('notallowed')")
-  #if($isAdmin)
-    #set($additionalButtons = "")
-  #end    
 #elseif ($isEditorBlocked)
   $response.setStatus(423)
   #set($newquerystring = "$!{request.getQueryString().replaceAll('&', '&amp;').replaceAll('&amp;amp;', '&amp;')}&amp;force=1")
