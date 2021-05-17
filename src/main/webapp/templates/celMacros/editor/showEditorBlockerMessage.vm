@@ -2,7 +2,7 @@
 #set($force = $!request.get('force'))
 #set($isEditorBlocked = (($tdoc.getLocked()==true)&&(!$force)))
 #set($editLevel = $services.rightsAccess.getEAccessLevel($xcontext.action))
-#set($hasEditRights = $services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel))
+#set($hasEditRights = $services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel) || $isSuperAdmin)
 #if(!$hasEditRights)
   $response.setStatus(403)
   #set($editorBlockerMessage = "$msg.get('notallowed')")
