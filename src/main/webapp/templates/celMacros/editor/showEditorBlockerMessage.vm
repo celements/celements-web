@@ -1,9 +1,9 @@
+#if(($xcontext.action == 'edit') || ($xcontext.action == 'inline'))
 #set($additionalButtons = '')
 #set($force = $!request.get('force'))
 #set($isEditorBlocked = (($tdoc.getLocked()==true)&&(!$force)))
-#set($editLevel = $services.rightsAccess.getEAccessLevel($xcontext.action))
-#set($hasEditRights = $services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel))
-#if(!$hasEditRights)
+#set($editLevel = $services.rightsAccess.getEAccessLevel('edit'))
+#if(!$services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel))
   $response.setStatus(403)
   #set($editorBlockerMessage = "$msg.get('notallowed')")
 #elseif ($isEditorBlocked)
@@ -34,4 +34,5 @@ $!additionalButtons
   #xwikimessageboxend()
   </div>
 </div>
-#end
+#end## isShowEditorBlocker
+#end## xcontext.action
