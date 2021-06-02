@@ -119,12 +119,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>5.1</version>
+      <version>5.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-component</artifactId>
-      <version>5.0</version>
+      <version>5.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -134,7 +134,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>5.0.1</version>
+      <version>5.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
