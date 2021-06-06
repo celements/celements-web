@@ -82,7 +82,6 @@
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
       <version>1.26</version>
     </dependency>
-
     <!-- celements module-web dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
@@ -151,7 +150,6 @@
       <artifactId>celements-subsystem-migration-manager</artifactId>
       <version>5.2-SNAPSHOT</version>
     </dependency>
-
     <!-- other dependencies -->
     <dependency>
       <groupId>xalan</groupId>
@@ -273,9 +271,6 @@
               <groupId>com.celements</groupId>
               <artifactId>image-web</artifactId>
               <excludes>
-                <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
-                <exclude>WEB-INF/lib/slf4j-log4j12-*.jar</exclude>
-                <exclude>WEB-INF/lib/log4j-*.jar</exclude>
                 <exclude>WEB-INF/lib/xml-apis-*.jar</exclude>
               </excludes>
             </overlay>
