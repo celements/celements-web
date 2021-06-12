@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>5.1</version>
+    <version>5.2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -82,7 +82,6 @@
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
       <version>1.26</version>
     </dependency>
-
     <!-- celements module-web dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
@@ -93,25 +92,25 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>5.1</version>
+      <version>5.2-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>5.0.1</version>
+      <version>5.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
        <groupId>com.celements</groupId>
       <artifactId>tinymce-langs</artifactId>
-      <version>3.4.3.2-celRTE-b1</version>
+      <version>3.4.3.2-celRTE-b2-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tinymce-langs-v4</artifactId>
-      <version>4.7.12-CEL2</version>
+      <version>4.7.12-CEL3-SNAPSHOT</version>
       <type>war</type>
     </dependency>
 
@@ -119,39 +118,38 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>5.1</version>
+      <version>5.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-component</artifactId>
-      <version>5.0</version>
+      <version>5.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>5.0.1</version>
+      <version>5.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>5.0.1</version>
+      <version>5.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>5.1</version>
+      <version>5.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-captcha</artifactId>
-      <version>5.0.1</version>
+      <version>5.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-subsystem-migration-manager</artifactId>
-      <version>5.1</version>
+      <version>5.2-SNAPSHOT</version>
     </dependency>
-
     <!-- other dependencies -->
     <dependency>
       <groupId>xalan</groupId>
@@ -273,9 +271,6 @@
               <groupId>com.celements</groupId>
               <artifactId>image-web</artifactId>
               <excludes>
-                <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
-                <exclude>WEB-INF/lib/slf4j-log4j12-*.jar</exclude>
-                <exclude>WEB-INF/lib/log4j-*.jar</exclude>
                 <exclude>WEB-INF/lib/xml-apis-*.jar</exclude>
               </excludes>
             </overlay>
@@ -287,8 +282,6 @@
                 <exclude>WEB-INF/lib/xalan-2.5.1.jar</exclude>
                 <exclude>WEB-INF/lib/commons-io-*.jar</exclude>
                 <exclude>WEB-INF/lib/commons-codec-*.jar</exclude>
-                <exclude>WEB-INF/lib/commons-logging-*.jar</exclude>
-                <exclude>WEB-INF/lib/commons-logging-api-*.jar</exclude>
                 <exclude>WEB-INF/lib/commons-net-*.jar</exclude>
                 <exclude>WEB-INF/lib/commons-compress-*.jar</exclude>
                 <exclude>WEB-INF/lib/batik-rasterizer-1.6.jar</exclude>
@@ -324,6 +317,7 @@
                 <!-- exclude JAX-RS 1.x and restlet in favor of jersey 2.x -->
                 <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
                 <exclude>WEB-INF/lib/org.restlet.ext.jaxrs-*</exclude>
+                <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3-dev.jar</exclude>
               </excludes>
             </overlay>
           </overlays>
