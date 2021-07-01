@@ -202,17 +202,6 @@
     <dependency>
        <groupId>org.hibernate</groupId>
        <artifactId>hibernate-annotations</artifactId>
-       <version>3.3.1.GA</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-collections</groupId>
-          <artifactId>commons-collections</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>dom4j</groupId>
-          <artifactId>dom4j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>batik</groupId>
@@ -236,6 +225,10 @@
           <groupId>xml-apis</groupId>
           <artifactId>xml-apis</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -243,11 +236,17 @@
       <artifactId>xmlgraphics-commons</artifactId>
       <version>1.5</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
-      <version>0.9.11</version>
+      <version>0.9.12</version>
       <exclusions>
         <!-- [CELDEV-808] exclude xml-apis compile dependency -->
         <exclusion>
@@ -289,6 +288,7 @@
                 <exclude>WEB-INF/lib/commons-codec-*.jar</exclude>
                 <exclude>WEB-INF/lib/commons-net-*.jar</exclude>
                 <exclude>WEB-INF/lib/commons-compress-*.jar</exclude>
+                <exclude>WEB-INF/lib/commons-logging-*.jar</exclude>
                 <exclude>WEB-INF/lib/batik-rasterizer-1.6.jar</exclude>
                 <exclude>WEB-INF/lib/joda-time-1.4.jar</exclude>
                 <exclude>WEB-INF/lib/easymock-2.5.2.jar</exclude>
