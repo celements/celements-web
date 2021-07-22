@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>5.2-SNAPSHOT</version>
+    <version>5.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -86,31 +86,31 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>5.2-SNAPSHOT</version>
+      <version>5.2</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>5.2-SNAPSHOT</version>
+      <version>5.2</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>5.1-SNAPSHOT</version>
+      <version>5.1</version>
       <type>war</type>
     </dependency>
     <dependency>
        <groupId>com.celements</groupId>
       <artifactId>tinymce-langs</artifactId>
-      <version>3.4.3.2-celRTE-b2-SNAPSHOT</version>
+      <version>3.4.3.2-celRTE</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tinymce-langs-v4</artifactId>
-      <version>4.7.12-CEL3-SNAPSHOT</version>
+      <version>4.7.12-CEL3</version>
       <type>war</type>
     </dependency>
 
@@ -118,42 +118,42 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>5.2-SNAPSHOT</version>
+      <version>5.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-component</artifactId>
-      <version>5.1-SNAPSHOT</version>
+      <version>5.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-commons</artifactId>
-      <version>5.0-SNAPSHOT</version>
+      <version>5.0</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>5.1-SNAPSHOT</version>
+      <version>5.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>5.1-SNAPSHOT</version>
+      <version>5.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>5.2-SNAPSHOT</version>
+      <version>5.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-captcha</artifactId>
-      <version>5.1-SNAPSHOT</version>
+      <version>5.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-subsystem-migration-manager</artifactId>
-      <version>5.2-SNAPSHOT</version>
+      <version>5.2</version>
     </dependency>
     <!-- other dependencies -->
     <dependency>
