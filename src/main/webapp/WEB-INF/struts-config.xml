@@ -112,8 +112,10 @@
         </action>
         <action path="/ajax/"
                 type="com.celements.ajax.AjaxAction"
-                name="view"
+                name="ajax"
                 scope="request">
+          <forward name="ajax" path="/templates/ajax.vm"/>
+          <forward name="notexist" path="/templates/notexist.vm"/>
         </action>
 
         <action path="/pdf/"
