@@ -240,8 +240,13 @@ $('userselect').submit()">
                 <div class="editblock">
 <dl>
 <dt class="label"><label for="xwikiname">Login Name</label></dt>
-<dd>
-     $!xwiki.getDocument($user).getName()
+  <dd>
+  #set($userDocRef = $services.model.resolveDocument($user))
+  #if($isSuperAdmin)
+    <a href="$!services.url.getURL($userDocRef)" target="_blank">$!userDocRef.name</a>
+  #else
+    $!userDocRef.name
+  #end
   </dd>
 </dl>
 </div>
