@@ -22,7 +22,7 @@
  * Celements mobile support library
  * This is the Celements mobile support library.
  */
-(function (window, undefined) {
+(function(window, undefined) {
 
   if (typeof window.CELEMENTS === "undefined") { window.CELEMENTS = {}; }
   if (typeof window.CELEMENTS.mobile === "undefined") { window.CELEMENTS.mobile = {}; }
@@ -30,7 +30,7 @@
   //////////////////////////////////////////////////////////////////////////////
   //Celements mobile dimensions
   //////////////////////////////////////////////////////////////////////////////
-  CELEMENTS.mobile.Dimensions = function () {
+  CELEMENTS.mobile.Dimensions = function() {
     // constructor
     this._init();
   };
@@ -40,63 +40,66 @@
     _dimLogging: false,
 
     isMobile: {
-      Safari: function () {
+      Safari: function() {
         const _me = this;
         return window.navigator.userAgent.match(/Safari/i) && !_me.Chrome()
           && !_me.Windows();
       },
-      Chrome: function () {
+      Chrome: function() {
         return window.navigator.userAgent.match(/Chrome|CriOS/i);
       },
-      Android: function () {
+      Android: function() {
         return window.navigator.userAgent.match(/Android/i);
       },
-      BlackBerry: function () {
+      BlackBerry: function() {
         return window.navigator.userAgent.match(/BlackBerry/i);
       },
-      iOS: function () {
+      iOS: function() {
         return window.navigator.userAgent.match(/iPhone|iPad|iPod/i);
       },
-      iPhone: function () {
+      iPhone: function() {
         return window.navigator.userAgent.match(/iPhone/i);
       },
-      iPod: function () {
+      iPod: function() {
         return window.navigator.userAgent.match(/iPod/i);
       },
-      iPad: function () {
+      iPad: function() {
         return window.navigator.userAgent.match(/iPad/i);
       },
-      Opera: function () {
+      Opera: function() {
         return window.navigator.userAgent.match(/Opera Mini/i);
       },
-      Windows: function () {
+      Windows: function() {
         return window.navigator.userAgent.match(/IEMobile/i);
       },
-      IE: function () {
+      IE: function() {
         const ua = window.navigator.userAgent;
         const msie = ua.indexOf("MSIE ");
         const trident = ua.match(/Trident.*rv\:(\d{2})\./) || false;
         const edge = ua.match(/Edge\/(\d{2})\./) || false;
         return (msie > 0 || trident || edge);
       },
-      Simulator: function () {
+      Simulator: function() {
         // http://iphone4simulator.com/ maybe
         return (window.top != window);
       },
-      ChromeOn_iOS: function () {
+      ChromeOn_iOS: function() {
         return window.navigator.userAgent.match(/CriOS/i);
       },
-      any: function () {
+      MobileBot: function() {
+        return window.navigator.userAgent.match(/mobile/i);
+      },
+      any: function() {
         const _me = this;
-        return (_me.Android() || _me.BlackBerry() || _me.iOS() || _me.Opera()
+        return (_me.Android() || _me.MobileBot() || _me.BlackBerry() || _me.iOS() || _me.Opera()
           || _me.Windows());
       }
     },
 
-    _init: function () {
+    _init: function() {
     },
 
-    version: function () {
+    version: function() {
       const _me = this;
       const ua = window.navigator.userAgent;
       if (_me.isMobile.Safari()) {
@@ -118,7 +121,7 @@
       return $j.browser.version;
     },
 
-    getZoomStyles: function (zoomFactor, fullWidth, fullHeight) {
+    getZoomStyles: function(zoomFactor, fullWidth, fullHeight) {
       const _me = this;
       const zoomStyles = {};
       if (_me.isMobile.IE() && (_me.version() < 10)) {
@@ -149,7 +152,7 @@
       return zoomStyles;
     },
 
-    isOrientationLandscape: function () {
+    isOrientationLandscape: function() {
       const innerWidth = window.innerWidth || document.documentElement.clientWidth;
       const innerHeight = window.innerHeight || document.documentElement.clientHeight;
       //window.orientation works only correct on load, but has whimsical behavior when 
@@ -157,7 +160,7 @@
       return innerWidth > innerHeight;
     },
 
-    getInnerWidth: function () {
+    getInnerWidth: function() {
       const _me = this;
       let width = window.innerWidth || document.documentElement.clientWidth;
       if (_me.isMobile.any()) {
@@ -173,7 +176,7 @@
       return width;
     },
 
-    getInnerHeight: function () {
+    getInnerHeight: function() {
       const _me = this;
       let height = window.innerHeight || document.documentElement.clientHeight;
       if (_me.isMobile.any()) {
@@ -189,7 +192,7 @@
       return height;
     },
 
-    getDimensions: function () {
+    getDimensions: function() {
       const mobileDim = {
         'screen': {
           'width': screen.width,
@@ -223,7 +226,7 @@
       return mobileDim;
     },
 
-    alertDim: function () {
+    alertDim: function() {
       const _me = this;
       const mobileDim = _me.getDimensions();
       let outStr = "dimensions: \n";
@@ -244,7 +247,7 @@
       alert(outStr);
     },
 
-    logDimAndAgent: function (message) {
+    logDimAndAgent: function(message) {
       const _me = this;
       const logMessage = message || '';
       new Ajax.Request(getCelHost(), {
@@ -257,7 +260,7 @@
           'isOrientationLandscape': _me.isOrientationLandscape(),
           'message': logMessage
         },
-        onSuccess: function (transport) {
+        onSuccess: function(transport) {
           if (transport.responseText.isJSON()) {
             const responseObject = transport.responseText.evalJSON();
             console.log('MobileLogDimAndAgent finished successfully. ', responseObject);
