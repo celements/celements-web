@@ -20,41 +20,42 @@
  (function(window, undefined) {
   "use strict";
 
-  if (typeof CelementsLacyLoader === 'undefined') {
-    function checkLoadingElements(documentPart) {
-      if (!documentPart.querySelectorAll) return;
-      for (let cellLoad of documentPart.querySelectorAll('.celLoadLacy')) {
-        if (!cellLoad.classList.contains('celLoadLacyLoading')) {
-          new CelementsLacyLoader(cellLoad).loadCell();
-        }
+  function checkLoadingElements(documentPart) {
+    if (!documentPart.querySelectorAll) return;
+    for (let cellLoad of documentPart.querySelectorAll('.celLoadLacy')) {
+      if (!cellLoad.classList.contains('celLoadLacyLoading')) {
+        new CelementsLacyLoader(cellLoad).loadCell();
       }
-    };
-
-    class CelementsLacyLoader {
-      
-      constructor (cellToLoad) {
-        this.cellToLoad = cellToLoad;
-        this.cellToLoad.classList.add('celLoadLacyLoading');
-      }
-
-      async loadCell() {
-        const _me = this;
-        await fetch(_me.cellToLoad.dataset.cellUrl)
-        .then(resp => resp.text())
-        .then(function(txt){
-          let elem = document.createElement('div');
-          elem.innerHTML = txt;
-          for (let item of elem.childNodes) {
-            _me.cellToLoad.parentNode.insertBefore(item, _me.cellToLoad);
-            checkLoadingElements(item);
-          }
-          _me.cellToLoad.remove();
-        });
-      }
-
     }
-    checkLoadingElements(document);
+  };
+
+  class CelementsLacyLoader {
+    
+    constructor (cellToLoad) {
+      this.cellToLoad = cellToLoad;
+      this.cellToLoad.classList.add('celLoadLacyLoading');
+    }
+
+    async loadCell() {
+      const _me = this;
+      await fetch(_me.cellToLoad.dataset.cellUrl)
+      .then(resp => resp.text())
+      .then(function(txt){
+        let elem = document.createElement('div');
+        elem.innerHTML = txt;
+        for (let item of elem.childNodes) {
+          _me.cellToLoad.parentNode.insertBefore(item, _me.cellToLoad);
+          checkLoadingElements(item);
+        }
+        _me.cellToLoad.remove();
+      });
+    }
+
   }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    checkLoadingElements(document);
+  });
 
 
 })(window);
