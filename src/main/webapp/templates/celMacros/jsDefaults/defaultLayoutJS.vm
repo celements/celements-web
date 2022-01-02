@@ -4,7 +4,7 @@ $services.javascript.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')##
 $services.javascript.addExtJSfileOnce(':celJS/initCelements.min.js', 'file')##
 $services.javascript.addExtJSfileOnce(':celJS/scriptaculous/effects.js')##
 $services.javascript.addExtJSfileOnce(':celJS/validation.js')##
-#if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 0) == 0)##
+#if($xwiki.getXWikiPreferenceAsInt("cel_legacy_swfobject", 0) == 1)##
   $services.javascript.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')##
 #end
 $services.javascript.addExtJSfileOnce(':celJS/mobile/MobileSupport.js', 'file')##
