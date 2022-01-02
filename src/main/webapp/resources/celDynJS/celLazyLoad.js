@@ -22,18 +22,18 @@
 
   function checkLoadingElements(documentPart) {
     if (!documentPart.querySelectorAll) return;
-    for (let cellLoad of documentPart.querySelectorAll('.celLoadLacy')) {
-      if (!cellLoad.classList.contains('celLoadLacyLoading')) {
-        new CelementsLacyLoader(cellLoad).loadCell();
+    for (let cellLoad of documentPart.querySelectorAll('.celLoadLazy')) {
+      if (!cellLoad.classList.contains('celLoadLazyLoading')) {
+        new CelementsLazyLoader(cellLoad).loadCell();
       }
     }
   };
 
-  class CelementsLacyLoader {
+  class CelementsLazyLoader {
     
     constructor (cellToLoad) {
       this.cellToLoad = cellToLoad;
-      this.cellToLoad.classList.add('celLoadLacyLoading');
+      this.cellToLoad.classList.add('celLoadLazyLoading');
     }
 
     async loadCell() {

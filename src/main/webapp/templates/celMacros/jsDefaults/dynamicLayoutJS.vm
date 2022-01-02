@@ -1,1 +1,1 @@
-<script defer src="$!services.celementsweb.getSkinFile(':celDynJS/celLacyLoad.js', 'file')">
+<script defer src="$!services.celementsweb.getSkinFile(':celDynJS/celLazyLoad.js', 'file')">
