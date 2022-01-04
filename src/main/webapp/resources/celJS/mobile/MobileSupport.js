@@ -142,7 +142,7 @@
       } else {
         zoomStyles['height'] = fullHeight;
       }
-      if (!Number.isNaN(fullHeight)) {
+      if (!Number.isNaN(fullWidth)) {
         // transform-scale only scales the content of the box, the box must be resized itself
         const scaledWidth = (zoomFactor * fullWidth);
         zoomStyles['width'] = scaledWidth + 'px';
