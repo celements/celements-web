@@ -45,50 +45,54 @@ $services.celementsweb.getDocHeaderTitle($doc.documentReference)##
 ## always load celements.css to prevent unequal behaviour if logged in or not
 $services.css.includeCSSPage(':celRes/celements2.css')##
 $services.css.includeCSSPage(':celRes/login.css')##
-$services.javascript.addExtJSfileOnce(':celJS/prototype.js')##
-$services.javascript.addExtJSfileOnce(':celJS/jquery.min.js', 'file')##
-$services.javascript.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')##
-$services.javascript.addExtJSfileOnce(':celJS/initCelements.min.js', 'file')##
-$services.javascript.addExtJSfileOnce(':celJS/scriptaculous/effects.js')##
-$services.javascript.addExtJSfileOnce(':celJS/validation.js')##
+#set($jsService = $services.javascript)
+#set($extJsParamSync = $jsService.createExtJSParam().setAction('file'))
+$jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/prototype.js'))##
+$jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
+$jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
+$jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
+$jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/initCelements.min.js'))##
+#set($extJsParamDefer = $jsService.createExtJSParam().setAction('file').setLoadMode('defer'))
+$jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/scriptaculous/effects.js'))##
+$jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/validation.js'))##
 #if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 0) == 0)##
-  $services.javascript.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')##
+  $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/SWFObject-2.2/swfobject.js'))##
 #end
-$services.javascript.addExtJSfileOnce(':celJS/mobile/MobileSupport.js', 'file')##
+$jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/mobile/MobileSupport.js'))##
 ##
 $services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')##
-$services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap.min.js', 'file')##
-$services.javascript.addExtJSfileOnce(':celJS/bootstrap/bootstrap-multiselect.js', 'file')##
+$jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/bootstrap/bootstrap.min.js'))##
+$jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/bootstrap/bootstrap-multiselect.js'))##
 ##
-$services.css.includeCSSPage(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.min.css')##
-$services.javascript.addExtJSfileOnce(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.full.min.js', 'file')##
-$services.javascript.addExtJSfileOnce(':celJS/dateTimePicker/generateDateTimePicker.js', 'file')##
+$services.css.includeCSSPage(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.min.css'))##
+$jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.full.min.js'))##
+$jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/dateTimePicker/generateDateTimePicker.js'))##
 ##
 #if($services.celementsphoto.useImageAnimations())##
-  $services.javascript.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js')##
-  $services.javascript.addExtJSfileOnce(':celJS/highslide/highslide-full.min.js')##
-  $services.javascript.addExtJSfileOnce(':celJS/celanim/overlaySlide.js')##
-  $services.javascript.addExtJSfileOnce(':celJS/celanim/slideshow.js')##
+  $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js'))##
+  $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/highslide/highslide-full.min.js'))##
+  $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/celanim/overlaySlide.js'))##
+  $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/celanim/slideshow.js'))##
   $services.css.includeCSSAfterSkin(':celJS/highslide/highslide.css')##
   $services.css.includeCSSAfterSkin(':celRes/images/slideshow.css')##
   $services.css.includeCSSAfterSkin(':celRes/celanim/overlay.css')##
   #if($xwiki.getSpacePreferenceAsInt('celNewImageGallery', 0) == 1)##
     ##new image gallery slideshow
-    $!services.javascript.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')##
-    $!services.javascript.addExtJSfileOnce(':celJS/yui/button/button-min.js', 'file')##
-    $!services.javascript.addExtJSfileOnce(':celJS/yui/container/container-min.js', 'file')##
-    $services.javascript.addExtJSfileOnce(':celJS/celpresentation/celYuiOverlay.js', 'file')##
-    $services.javascript.addExtJSfileOnce(':celJS/celpresentation/CelementsSlideShow.js', 'file')##
-    $services.javascript.addExtJSfileOnce(':celJS/images/galleryClass.js', 'file')##
-    $services.javascript.addExtJSfileOnce(':celJS/images/SlideShowAnimation.js', 'file')##
-    $services.javascript.addExtJSfileOnce(':celJS/images/imageSlideShow.js', 'file')##
+    $!services.javascript.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/yui/element/element-min.js'))##
+    $!services.javascript.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/yui/button/button-min.js'))##
+    $!services.javascript.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/yui/container/container-min.js'))##
+    $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/celpresentation/celYuiOverlay.js'))##
+    $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/celpresentation/CelementsSlideShow.js'))##
+    $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/images/galleryClass.js'))##
+    $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/images/SlideShowAnimation.js'))##
+    $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/images/imageSlideShow.js'))##
     $services.css.includeCSSAfterSkin(':celJS/yui/container/assets/skins/sam/container.css')##
     $services.css.includeCSSAfterSkin(':celJS/yui/button/assets/skins/sam/button.css')##
     $services.css.includeCSSAfterSkin(':celRes/galleryYuiOverlay.css')##
   #end
 #end
 #if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)##
-  $services.javascript.addExtJSfileOnce(':celJS/adminUi/overlayResize.js')##
+  $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/adminUi/overlayResize.js'))##
 #end
 $!services.javascript.getAllExternalJavaScriptFiles()
 ##
