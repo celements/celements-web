@@ -21,23 +21,27 @@
 (function(window, undefined) {
   "use strict";
 
-  var updateCelMessages = function() {
+  const updateCelMessages = function() {
     if (typeof $j.format !== 'undefined') {
       $j.format.locale({ 'date' : celMessages.jqueryFormater });
     }
   };
 
-  $(document.body).observe('cel:messagesLoaded', updateCelMessages);
-  if (typeof celMessages.jqueryFormater === 'object') {
+  if (window.celMessages.isLoaded && typeof celMessages.jqueryFormater === 'object') {
     updateCelMessages();
+  } else {
+    $(document.body).observe('cel:messagesLoaded', updateCelMessages);
   }
 
-})(window);
 
-if(celOnBeforeLoadListenerArray
-    && (typeof celOnBeforeLoadListenerArray !== 'undefined')) {
-  $A(celOnBeforeLoadListenerArray).each(function(listener) {
-    listener();
-  });
-}
-$$('body')[0].fire('celements:beforeOnLoad');
+document.addEventListener('DOMContentLoaded', function() {
+  if(celOnBeforeLoadListenerArray
+      && (typeof celOnBeforeLoadListenerArray !== 'undefined')) {
+    $A(celOnBeforeLoadListenerArray).each(function(listener) {
+      listener();
+    });
+  }
+  $(document.body).fire('celements:beforeOnLoad');
+});
+
+})(window);
