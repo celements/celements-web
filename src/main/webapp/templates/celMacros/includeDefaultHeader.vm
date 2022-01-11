@@ -52,19 +52,19 @@ $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
 $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
 $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
 $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/initCelements.min.js'))##
+$jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/mobile/MobileSupport.js'))##
 #set($extJsParamDefer = $jsService.createExtJSParam().setAction('file').setLoadMode('defer'))
 $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/scriptaculous/effects.js'))##
 $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/validation.js'))##
 #if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 0) == 0)##
   $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/SWFObject-2.2/swfobject.js'))##
 #end
-$jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/mobile/MobileSupport.js'))##
 ##
 $services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')##
 $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/bootstrap/bootstrap.min.js'))##
 $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/bootstrap/bootstrap-multiselect.js'))##
 ##
-$services.css.includeCSSPage(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.min.css'))##
+$services.css.includeCSSPage(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.min.css')##
 $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.full.min.js'))##
 $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/dateTimePicker/generateDateTimePicker.js'))##
 ##
