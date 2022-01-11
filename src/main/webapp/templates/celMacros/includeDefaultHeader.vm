@@ -47,7 +47,7 @@ $services.css.includeCSSPage(':celRes/celements2.css')##
 $services.css.includeCSSPage(':celRes/login.css')##
 #set($jsService = $services.javascript)
 #set($extJsParamSync = $jsService.createExtJSParam().setAction('file'))
-$jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/prototype.min.js'))##
+$jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/prototype.js'))##
 $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
 $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
 $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
