@@ -27,14 +27,14 @@
     }
   };
 
+
+document.addEventListener('DOMContentLoaded', function() {
   if (window.celMessages.isLoaded && typeof celMessages.jqueryFormater === 'object') {
     updateCelMessages();
   } else {
     $(document.body).observe('cel:messagesLoaded', updateCelMessages);
   }
 
-
-document.addEventListener('DOMContentLoaded', function() {
   if(celOnBeforeLoadListenerArray
       && (typeof celOnBeforeLoadListenerArray !== 'undefined')) {
     $A(celOnBeforeLoadListenerArray).each(function(listener) {
