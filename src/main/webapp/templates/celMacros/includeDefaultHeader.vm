@@ -52,7 +52,11 @@ $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
 $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
 $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
 $jsService.addExtJSfileOnce($extJsParamSync.setJsFile(':celJS/initCelements.min.js'))##
-#set($extJsParamDefer = $jsService.createExtJSParam().setAction('file').setLoadMode('defer'))
+#if($xwiki.getXWikiPreferenceAsInt("cel_activate_jsdefer", 0) == 1)##
+  #set($extJsParamDefer = $jsService.createExtJSParam().setAction('file').setLoadMode('defer'))
+#else
+  #set($extJsParamDefer = $extJsParamSync)
+#end
 $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/mobile/MobileSupport.js'))##
 $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/scriptaculous/effects.js'))##
 $jsService.addExtJSfileOnce($extJsParamDefer.setJsFile(':celJS/validation.js'))##
