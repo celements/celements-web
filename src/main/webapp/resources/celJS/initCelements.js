@@ -132,6 +132,9 @@
     };
   }
 
+  /**
+   * celOnBeforeLoadListener
+   */
   window.celOnBeforeLoadListenerArray = [];
 
 /**
@@ -144,7 +147,20 @@
     celOnBeforeLoadListenerArray.push(listenerFunc);
   };
 
-  window.celOnFinishHeaderListenerArray = [];
+document.addEventListener('DOMContentLoaded', function() {
+  if(celOnBeforeLoadListenerArray
+      && (typeof celOnBeforeLoadListenerArray !== 'undefined')) {
+    $A(celOnBeforeLoadListenerArray).each(function(listener) {
+      listener();
+    });
+  }
+  $(document.body).fire('celements:beforeOnLoad');
+});
+
+  /**
+   * celOnFinishHeaderListener
+   */
+   window.celOnFinishHeaderListenerArray = [];
 
   window.celAddOnFinishHeaderListener = function(listenerFunc) {
     window.celOnFinishHeaderListenerArray.push(listenerFunc);
@@ -713,7 +729,8 @@
     });
 
     window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
-    celAddOnBeforeLoadListener(window.CELEMENTS.globalEventManager.updateCelEventHandlersBind);
+    document.addEventListener('DOMContentLoaded',
+      window.CELEMENTS.globalEventManager.updateCelEventHandlersBind);
   }
   /**
    *  END: celEventManager
@@ -737,7 +754,7 @@
     }
   };
 
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     $$('form.cel_form_validation').each(registerValidation);
     $(document.body).observe('cel_yuiOverlay:contentChanged', function(event) {
       const containerElem = event.findElement();
@@ -776,7 +793,7 @@
   /**
    * Fluid Design image map support
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     if (typeof $j('img[usemap]').rwdImageMaps !== 'undefined') {
       $j('img[usemap]').rwdImageMaps();
     }
@@ -785,7 +802,7 @@
   /**
    * Register default overlay opener for .cel_yuiOverlay cssSelector
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     if (CELEMENTS && CELEMENTS.presentation && CELEMENTS.presentation.getOverlayObj
       && CELEMENTS.presentation.getOverlayObj()) {
       CELEMENTS.presentation.getOverlayObj({
@@ -810,7 +827,7 @@
     }
   };
 
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     if (CELEMENTS && CELEMENTS.mobile && CELEMENTS.mobile.Dimensions) {
       mobileDim = new CELEMENTS.mobile.Dimensions();
       Event.stopObserving(window, "orientationchange", cel_updateOrientationCSSclasses);
@@ -897,7 +914,7 @@
   /**
    * Initialize Bootstrap Multiselect
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
     $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
@@ -925,7 +942,7 @@
   /**
    * Initialize fluid image
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     $(document.body).stopObserving("cel:initFluidImage", cel_addMaxDimToFluidImg);
     $(document.body).stopObserving("celements:contentChanged", cel_addMaxDimToFluidImg);
     $(document.body).observe("cel:initFluidImage", cel_addMaxDimToFluidImg);
@@ -935,7 +952,7 @@
   /**
    * Initialize close Window on Overlay CloseButton
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     $$(".generalOverlayWrapper .generalOverlay .exitOnClose").each(function(elem) {
       elem.stopObserving("click", cel_closeOverlayWindow)
       elem.observe("click", cel_closeOverlayWindow)
@@ -946,5 +963,23 @@
     event.stop();
     window.close();
   };
+
+/**
+ * AfterCelementsInit.js
+ */
+
+  const updateCelMessages = function() {
+    if (typeof $j.format !== 'undefined') {
+      $j.format.locale({ 'date' : celMessages.jqueryFormater });
+    }
+  };
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.celMessages.isLoaded && typeof celMessages.jqueryFormater === 'object') {
+    updateCelMessages();
+  } else {
+    $(document.body).observe('cel:messagesLoaded', updateCelMessages);
+  }
+});
 
 })(window);
