@@ -134,7 +134,13 @@
 
   window.celOnBeforeLoadListenerArray = [];
 
+/**
+ * @deprecated celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022.
+ * Instead register a listener on "DOMContentLoaded"
+ */
   window.celAddOnBeforeLoadListener = function(listenerFunc) {
+    console.warn('celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022.'
+    + ' Instead register a listener on "DOMContentLoaded"', listenerFunc);
     celOnBeforeLoadListenerArray.push(listenerFunc);
   };
 
