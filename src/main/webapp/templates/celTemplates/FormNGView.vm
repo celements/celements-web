@@ -130,15 +130,6 @@ complete: $complete<br/>
  #else
    $!renderedFormContent
  #end
- #if("$!celementsFormValidationName" != '')
-  <!--
-  deprecated usage of celementsFormValidationName variable instead add the css tricker
-  class celAddValidationToForm to the form and do NOT set celementsFormValidationName
-   -->
-  <script type="text/javascript">
-   var valid = Validation.addValidationToForm(${q}${celementsFormValidationName}${q});
-  </script>  
- #end
 #end
 #else ## config check
 ## if an editor logged in give error details else tell only something is wrong.
