@@ -135,7 +135,7 @@
   /**
    * celOnBeforeLoadListener
    */
-  window.celOnBeforeLoadListenerArray = [];
+  let celOnBeforeLoadListenerArray = [];
 
 /**
  * @deprecated celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022.
@@ -143,31 +143,32 @@
  */
   window.celAddOnBeforeLoadListener = function(listenerFunc) {
     console.warn('celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022.'
-    + ' Instead register a listener on "DOMContentLoaded"', listenerFunc);
+      + ' Instead register a listener on "DOMContentLoaded"', listenerFunc);
     celOnBeforeLoadListenerArray.push(listenerFunc);
   };
 
 document.addEventListener('DOMContentLoaded', function() {
-  if(celOnBeforeLoadListenerArray
-      && (typeof celOnBeforeLoadListenerArray !== 'undefined')) {
-    $A(celOnBeforeLoadListenerArray).each(function(listener) {
+  celOnBeforeLoadListenerArray.forEach(function(listener) {
+    try {
       listener();
-    });
-  }
+    } catch (e) {
+      console.error('Listener for celOnBeforeLoad failed: ', e);
+    }
+  });
   $(document.body).fire('celements:beforeOnLoad');
 });
 
   /**
    * celOnFinishHeaderListener
    */
-   window.celOnFinishHeaderListenerArray = [];
+   let celOnFinishHeaderListenerArray = [];
 
   window.celAddOnFinishHeaderListener = function(listenerFunc) {
-    window.celOnFinishHeaderListenerArray.push(listenerFunc);
+    celOnFinishHeaderListenerArray.push(listenerFunc);
   };
 
   window.celFinishHeaderHandler = function() {
-    $A(window.celOnFinishHeaderListenerArray).each(function(listener) {
+    celOnFinishHeaderListenerArray.forEach(function(listener) {
       try {
         listener();
       } catch (exp) {
