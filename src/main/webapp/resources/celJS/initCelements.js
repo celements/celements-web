@@ -702,9 +702,10 @@ document.addEventListener('DOMContentLoaded', function() {
         _me.updateCelEventHandlers(event.memo.htmlElem);
       },
 
-      updateCelEventHandlers: function(htmlContainer) {
+      updateCelEventHandlers: function(htmlContainerParam) {
         const _me = this;
-        htmlContainer = htmlContainer || $(document.body);
+        const htmlContainer = htmlContainerParam || $(document.body);
+        console.log('updateCelEventHandlers: ', htmlContainerParam, htmlContainer, document.body);
         Event.stopObserving($(document.body), "celements:contentChanged",
           _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
