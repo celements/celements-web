@@ -704,13 +704,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
       updateCelEventHandlers: function(htmlContainer) {
         const _me = this;
-        htmlContainer = htmlContainer || $(document.body);
+        const rootElem = htmlContainer || document.body;
         Event.stopObserving($(document.body), "celements:contentChanged",
           _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
-        console.log('updateCelEventHandlers: ', htmlContainer, htmlContainer.querySelectorAll('.celOnEvent'));
-        htmlContainer.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
+        console.log('updateCelEventHandlers: ', rootElem, rootElem.querySelectorAll('.celOnEvent'));
+        rootElem.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
       },
 
       _removeDisappearedElems: function() {
