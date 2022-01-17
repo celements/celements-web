@@ -554,7 +554,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (typeof window.CELEMENTS.EventManager === 'undefined') {
     window.CELEMENTS.EventManager = Class.create({
-      _instructionRegex: new RegExp('([\\w:]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
+      _instructionRegex: new RegExp(/([\w:]+)([%+-])([\w-]+):([^?]+)\??(.+)?/),
       _actionFunctionMap: {
         // map may be extendend. also extend second group in instructionRegex accordingly
         '+': Element.addClassName,
@@ -565,8 +565,6 @@ document.addEventListener('DOMContentLoaded', function() {
       _eventElemCounter: undefined,
       _interpretDataCelEventBind: undefined,
       _contentChangedHandlerBind: undefined,
-      updateCelEventHandlersBind: undefined,
-
       _intersectionObserver: undefined,
       _intersectionValues: [],
 
@@ -576,7 +574,6 @@ document.addEventListener('DOMContentLoaded', function() {
         _me._eventElemCounter = 0;
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
-        _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
         try {
           _me._intersectionObserver = new IntersectionObserver(function(entries) {
             entries.forEach(_me._handleIntersection.bind(_me));
@@ -661,7 +658,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.warn(logPref, 'no valid instructions found on ', htmlElem);
           }
           htmlElem.classList.add('celOnEventInit');
-          htmlElem.fire('celEM:init');
+          $(htmlElem).fire('celEM:init');
         }
       },
 
@@ -699,17 +696,21 @@ document.addEventListener('DOMContentLoaded', function() {
       _contentChangedHandler: function(event) {
         const _me = this;
         console.debug('EventManager - contentChanged ', event);
-        _me.updateCelEventHandlers(event.memo.htmlElem);
+        if (event.memo && event.memo.htmlElem) {
+          _me.updateCelEventHandlers(event.memo.htmlElem);
+        } else {
+          _me.updateCelEventHandlers();
+        }
       },
 
       updateCelEventHandlers: function(htmlContainer) {
         const _me = this;
-        htmlContainer = htmlContainer || $(document.body);
+        const rootElem = htmlContainer || document.body;
         Event.stopObserving($(document.body), "celements:contentChanged",
           _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
-        $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
+        rootElem.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
       },
 
       _removeDisappearedElems: function() {
@@ -731,7 +732,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
     document.addEventListener('DOMContentLoaded',
-      window.CELEMENTS.globalEventManager.updateCelEventHandlersBind);
+      window.CELEMENTS.globalEventManager._contentChangedHandlerBind);
   }
   /**
    *  END: celEventManager
