@@ -565,8 +565,6 @@ document.addEventListener('DOMContentLoaded', function() {
       _eventElemCounter: undefined,
       _interpretDataCelEventBind: undefined,
       _contentChangedHandlerBind: undefined,
-      updateCelEventHandlersBind: undefined,
-
       _intersectionObserver: undefined,
       _intersectionValues: [],
 
@@ -576,7 +574,6 @@ document.addEventListener('DOMContentLoaded', function() {
         _me._eventElemCounter = 0;
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
-        _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
         try {
           _me._intersectionObserver = new IntersectionObserver(function(entries) {
             entries.forEach(_me._handleIntersection.bind(_me));
@@ -709,6 +706,7 @@ document.addEventListener('DOMContentLoaded', function() {
           _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
+        console.log('updateCelEventHandlers: ', rootElem);
         console.log('updateCelEventHandlers: ', rootElem, rootElem.querySelectorAll('.celOnEvent'));
         rootElem.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
       },
@@ -732,7 +730,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
     document.addEventListener('DOMContentLoaded',
-      window.CELEMENTS.globalEventManager.updateCelEventHandlersBind);
+      window.CELEMENTS.globalEventManager._contentChangedHandlerBind);
   }
   /**
    *  END: celEventManager
