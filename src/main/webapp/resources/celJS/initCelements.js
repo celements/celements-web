@@ -705,6 +705,7 @@ document.addEventListener('DOMContentLoaded', function() {
       updateCelEventHandlers: function(htmlContainer) {
         const _me = this;
         htmlContainer = htmlContainer || $(document.body);
+        console.log('updateCelEventHandlers: ', document, document.body, htmlContainer);
         Event.stopObserving($(document.body), "celements:contentChanged",
           _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
