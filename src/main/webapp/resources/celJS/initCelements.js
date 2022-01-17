@@ -696,7 +696,11 @@ document.addEventListener('DOMContentLoaded', function() {
       _contentChangedHandler: function(event) {
         const _me = this;
         console.debug('EventManager - contentChanged ', event);
-        _me.updateCelEventHandlers(event.memo.htmlElem);
+        if (event.memo && event.memo.htmlElem) {
+          _me.updateCelEventHandlers(event.memo.htmlElem);
+        } else {
+          _me.updateCelEventHandlers();
+        }
       },
 
       updateCelEventHandlers: function(htmlContainer) {
@@ -706,8 +710,6 @@ document.addEventListener('DOMContentLoaded', function() {
           _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
-        console.log('updateCelEventHandlers: ', rootElem);
-        console.log('updateCelEventHandlers: ', rootElem, rootElem.querySelectorAll('.celOnEvent'));
         rootElem.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
       },
 

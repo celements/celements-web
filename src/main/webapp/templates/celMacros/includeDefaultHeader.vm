@@ -51,7 +51,7 @@ $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/prototype.js'))##
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
-$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/initCelements.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/initCelements.min.js'))##
 #if($xwiki.getXWikiPreferenceAsInt("cel_activate_jsdefer", 0) == 1)##
   #set($jsLoadModeDefer = $!jsService.getJsLoadMode("DEFER"))
   #set($extJsParamDefer = $!jsService.createExtJSParam().setAction('file').setLoadMode($jsLoadModeDefer))
