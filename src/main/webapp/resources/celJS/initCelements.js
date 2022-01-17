@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.warn(logPref, 'no valid instructions found on ', htmlElem);
           }
           htmlElem.classList.add('celOnEventInit');
-          htmlElem.fire('celEM:init');
+          $(htmlElem).fire('celEM:init');
         }
       },
 
@@ -705,12 +705,12 @@ document.addEventListener('DOMContentLoaded', function() {
       updateCelEventHandlers: function(htmlContainer) {
         const _me = this;
         htmlContainer = htmlContainer || $(document.body);
-        console.log('updateCelEventHandlers: ', document, document.body, htmlContainer);
         Event.stopObserving($(document.body), "celements:contentChanged",
           _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
-        $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
+        console.log('updateCelEventHandlers: ', htmlContainer, htmlContainer.querySelectorAll('.celOnEvent'));
+        htmlContainer.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
       },
 
       _removeDisappearedElems: function() {
