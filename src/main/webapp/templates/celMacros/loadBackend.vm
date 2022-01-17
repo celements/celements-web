@@ -3,7 +3,8 @@
 ##
 #if($hasedit || $isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0))
   #set($jsService = $services.javascript)
-  #set($extJsParamDefer = $!jsService.createExtJSParam().setAction('file').setLoadMode('defer'))
+  #set($jsLoadModeDefer = $!jsService.getJsLoadMode("DEFER"))
+  #set($extJsParamDefer = $!jsService.createExtJSParam().setAction('file').setLoadMode($jsLoadModeDefer))
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/moofx/moo.fx.js'))
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/moofx/moo.fx.utils.js'))
 ##  $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/adminUi/div.js'))

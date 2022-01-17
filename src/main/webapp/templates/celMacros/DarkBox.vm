@@ -12,7 +12,8 @@
   <span class='cel_lazyloadJS'>celJS/yui/container/container-min.js</span>
 </div>
 #else
-  #set($extJsParamDefer = $!jsService.createExtJSParam().setAction('file').setLoadMode('defer'))
+  #set($jsLoadModeDefer = $!jsService.getJsLoadMode("DEFER"))
+  #set($extJsParamDefer = $!jsService.createExtJSParam().setAction('file').setLoadMode($jsLoadModeDefer))
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/yui/utilities/utilities.js'))
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/yui/dom/dom-min.js'))
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js'))
