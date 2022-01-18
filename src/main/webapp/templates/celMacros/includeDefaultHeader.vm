@@ -99,7 +99,6 @@ $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/dateTimePicker/g
 #if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)##
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/adminUi/overlayResize.js'))##
 #end
-$!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/initCelementsAfter.js'))##
 $!services.javascript.getAllExternalJavaScriptFiles()
 ##
 ## Hooks for inserting JavaScript skin extensions
