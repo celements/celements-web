@@ -132,20 +132,43 @@
     };
   }
 
-  window.celOnBeforeLoadListenerArray = [];
+  /**
+   * celOnBeforeLoadListener
+   */
+  let celOnBeforeLoadListenerArray = [];
 
+/**
+ * @deprecated celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022.
+ * Instead register a listener on "DOMContentLoaded"
+ */
   window.celAddOnBeforeLoadListener = function(listenerFunc) {
+    console.warn('celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022.'
+      + ' Instead register a listener on "DOMContentLoaded"', listenerFunc);
     celOnBeforeLoadListenerArray.push(listenerFunc);
   };
 
-  window.celOnFinishHeaderListenerArray = [];
+document.addEventListener('DOMContentLoaded', function() {
+  celOnBeforeLoadListenerArray.forEach(function(listener) {
+    try {
+      listener();
+    } catch (e) {
+      console.error('Listener for celOnBeforeLoad failed: ', e);
+    }
+  });
+  $(document.body).fire('celements:beforeOnLoad');
+});
+
+  /**
+   * celOnFinishHeaderListener
+   */
+   let celOnFinishHeaderListenerArray = [];
 
   window.celAddOnFinishHeaderListener = function(listenerFunc) {
-    window.celOnFinishHeaderListenerArray.push(listenerFunc);
+    celOnFinishHeaderListenerArray.push(listenerFunc);
   };
 
   window.celFinishHeaderHandler = function() {
-    $A(window.celOnFinishHeaderListenerArray).each(function(listener) {
+    celOnFinishHeaderListenerArray.forEach(function(listener) {
       try {
         listener();
       } catch (exp) {
@@ -531,7 +554,7 @@
 
   if (typeof window.CELEMENTS.EventManager === 'undefined') {
     window.CELEMENTS.EventManager = Class.create({
-      _instructionRegex: new RegExp('([\\w:]+)([%+-])([\\w-]+):([^?]+)\\??(.+)?'),
+      _instructionRegex: new RegExp(/([\w:]+)([%+-])([\w-]+):([^?]+)\??(.+)?/),
       _actionFunctionMap: {
         // map may be extendend. also extend second group in instructionRegex accordingly
         '+': Element.addClassName,
@@ -542,8 +565,6 @@
       _eventElemCounter: undefined,
       _interpretDataCelEventBind: undefined,
       _contentChangedHandlerBind: undefined,
-      updateCelEventHandlersBind: undefined,
-
       _intersectionObserver: undefined,
       _intersectionValues: [],
 
@@ -553,7 +574,6 @@
         _me._eventElemCounter = 0;
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
-        _me.updateCelEventHandlersBind = _me.updateCelEventHandlers.bind(_me);
         try {
           _me._intersectionObserver = new IntersectionObserver(function(entries) {
             entries.forEach(_me._handleIntersection.bind(_me));
@@ -638,7 +658,7 @@
             console.warn(logPref, 'no valid instructions found on ', htmlElem);
           }
           htmlElem.classList.add('celOnEventInit');
-          htmlElem.fire('celEM:init');
+          $(htmlElem).fire('celEM:init');
         }
       },
 
@@ -676,17 +696,21 @@
       _contentChangedHandler: function(event) {
         const _me = this;
         console.debug('EventManager - contentChanged ', event);
-        _me.updateCelEventHandlers(event.memo.htmlElem);
+        if (event.memo && event.memo.htmlElem) {
+          _me.updateCelEventHandlers(event.memo.htmlElem);
+        } else {
+          _me.updateCelEventHandlers();
+        }
       },
 
       updateCelEventHandlers: function(htmlContainer) {
         const _me = this;
-        htmlContainer = htmlContainer || $(document.body);
+        const rootElem = htmlContainer || document.body;
         Event.stopObserving($(document.body), "celements:contentChanged",
           _me._contentChangedHandlerBind);
         Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
-        $(htmlContainer).select('.celOnEvent').each(_me._interpretDataCelEventBind);
+        rootElem.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
       },
 
       _removeDisappearedElems: function() {
@@ -707,7 +731,8 @@
     });
 
     window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
-    celAddOnBeforeLoadListener(window.CELEMENTS.globalEventManager.updateCelEventHandlersBind);
+    document.addEventListener('DOMContentLoaded',
+      window.CELEMENTS.globalEventManager._contentChangedHandlerBind);
   }
   /**
    *  END: celEventManager
@@ -731,7 +756,7 @@
     }
   };
 
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     $$('form.cel_form_validation').each(registerValidation);
     $(document.body).observe('cel_yuiOverlay:contentChanged', function(event) {
       const containerElem = event.findElement();
@@ -770,7 +795,7 @@
   /**
    * Fluid Design image map support
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     if (typeof $j('img[usemap]').rwdImageMaps !== 'undefined') {
       $j('img[usemap]').rwdImageMaps();
     }
@@ -779,7 +804,7 @@
   /**
    * Register default overlay opener for .cel_yuiOverlay cssSelector
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     if (CELEMENTS && CELEMENTS.presentation && CELEMENTS.presentation.getOverlayObj
       && CELEMENTS.presentation.getOverlayObj()) {
       CELEMENTS.presentation.getOverlayObj({
@@ -804,7 +829,7 @@
     }
   };
 
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     if (CELEMENTS && CELEMENTS.mobile && CELEMENTS.mobile.Dimensions) {
       mobileDim = new CELEMENTS.mobile.Dimensions();
       Event.stopObserving(window, "orientationchange", cel_updateOrientationCSSclasses);
@@ -891,7 +916,7 @@
   /**
    * Initialize Bootstrap Multiselect
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
     $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
     $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
@@ -919,7 +944,7 @@
   /**
    * Initialize fluid image
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     $(document.body).stopObserving("cel:initFluidImage", cel_addMaxDimToFluidImg);
     $(document.body).stopObserving("celements:contentChanged", cel_addMaxDimToFluidImg);
     $(document.body).observe("cel:initFluidImage", cel_addMaxDimToFluidImg);
@@ -929,7 +954,7 @@
   /**
    * Initialize close Window on Overlay CloseButton
    */
-  celAddOnBeforeLoadListener(function() {
+  document.addEventListener('DOMContentLoaded', function() {
     $$(".generalOverlayWrapper .generalOverlay .exitOnClose").each(function(elem) {
       elem.stopObserving("click", cel_closeOverlayWindow)
       elem.observe("click", cel_closeOverlayWindow)
@@ -940,5 +965,23 @@
     event.stop();
     window.close();
   };
+
+/**
+ * AfterCelementsInit.js
+ */
+
+  const updateCelMessages = function() {
+    if (typeof $j.format !== 'undefined') {
+      $j.format.locale({ 'date' : celMessages.jqueryFormater });
+    }
+  };
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.celMessages.isLoaded && typeof celMessages.jqueryFormater === 'object') {
+    updateCelMessages();
+  } else {
+    $(document.body).observe('cel:messagesLoaded', updateCelMessages);
+  }
+});
 
 })(window);
