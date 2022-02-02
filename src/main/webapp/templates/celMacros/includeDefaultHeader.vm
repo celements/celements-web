@@ -49,7 +49,6 @@ $services.css.includeCSSPage(':celRes/login.css')##
 #set($extJsParamSync = $!jsService.createExtJSParam().setAction('file'))
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/prototype.js'))##
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
-$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/initCelements.min.js'))##
 #if($xwiki.getXWikiPreferenceAsInt("cel_activate_jsdefer", 0) == 1)##
