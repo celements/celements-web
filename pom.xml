@@ -137,12 +137,12 @@
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
-      <artifactId>celements-configuration-api</artifactId>
+      <artifactId>celements-config-source-api</artifactId>
       <version>5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
-      <artifactId>celements-configuration</artifactId>
+      <artifactId>celements-config-source</artifactId>
       <version>5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
