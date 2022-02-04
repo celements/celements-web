@@ -376,43 +376,6 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack-dependencies</id>
-            <!-- Right phase is prepare-package, but it is only in maven-2.1
-            <phase>prepare-package</phase>-->
-            <phase>test</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>org.xwiki.platform.skins</groupId>
-                  <artifactId>xwiki-skin-albatross</artifactId>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}/skin</outputDirectory>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.xwiki.platform.skins</groupId>
-                  <artifactId>xwiki-skin-toucan</artifactId>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}/skin</outputDirectory>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.xwiki.platform</groupId>
-                  <artifactId>xwiki-platform-colibri</artifactId>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}/skin</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
           <overlays>
@@ -473,14 +436,6 @@
               </excludes>
             </overlay> -->
           </overlays>
-          <webResources>
-            <!-- Add the skins -->
-            <resource>
-              <directory>${project.build.directory}/skin</directory>
-              <targetPath>skins</targetPath>
-              <filtering>false</filtering>
-            </resource>
-          </webResources>
         </configuration>
       </plugin>
     </plugins>
