@@ -66,6 +66,7 @@
     <!-- START xwiki-web-standard war -->
     <!-- Add the GWT JAR so that XWiki Core is GWT-ready and so that the XWiki GWT Servlet can
          be activated by default in web.xml -->
+<!-- 
     <dependency>
       <groupId>com.xpn.xwiki.platform</groupId>
       <artifactId>xwiki-web-gwt</artifactId>
@@ -75,6 +76,7 @@
       <artifactId>xwiki-web-gwt-wysiwyg-server</artifactId>
       <type>war</type>
     </dependency>
+-->
     <!-- The WebDAV module -->
 <!--     <dependency>
       <groupId>com.xpn.xwiki.platform</groupId>
