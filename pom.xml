@@ -473,6 +473,14 @@
               </excludes>
             </overlay> -->
           </overlays>
+          <webResources>
+            <!-- Add the skins -->
+            <resource>
+              <directory>${project.build.directory}/skin</directory>
+              <targetPath>skins</targetPath>
+              <filtering>false</filtering>
+            </resource>
+          </webResources>
         </configuration>
       </plugin>
     </plugins>
