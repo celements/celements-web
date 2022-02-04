@@ -408,7 +408,7 @@
                 <exclude>WEB-INF/lib/xml-apis-*.jar</exclude>
               </excludes>
             </overlay>
-            <overlay>
+<!--             <overlay>
               <groupId>org.xwiki.platform</groupId>
               <artifactId>xwiki-web-standard</artifactId>
               <excludes>
@@ -443,13 +443,13 @@
                 <exclude>WEB-INF/lib/reflections-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-extension-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-2.*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-component-*.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-core-component-*.jar</exclude> -->
                 <!-- exclude JAX-RS 1.x and restlet in favor of jersey 2.x -->
-                <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
+<!--                <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
                 <exclude>WEB-INF/lib/org.restlet.ext.jaxrs-*</exclude>
                 <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3-dev.jar</exclude>
               </excludes>
-            </overlay>
+            </overlay> -->
           </overlays>
         </configuration>
       </plugin>
