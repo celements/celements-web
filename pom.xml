@@ -69,12 +69,10 @@
     <dependency>
       <groupId>com.xpn.xwiki.platform</groupId>
       <artifactId>xwiki-web-gwt</artifactId>
-      <version>2.7.2</version>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform</groupId>
       <artifactId>xwiki-web-gwt-wysiwyg-server</artifactId>
-      <version>2.7.2</version>
       <type>war</type>
     </dependency>
     <!-- The WebDAV module -->
@@ -87,7 +85,6 @@
     <dependency>
       <groupId>com.xpn.xwiki.platform</groupId>
       <artifactId>xwiki-rest-server</artifactId>
-      <version>2.7.2</version>
     </dependency>
     <!-- The annotations modules -->
 <!--     <dependency>
@@ -148,18 +145,6 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
-      <version>4.0.2.GA</version>
-      <scope>runtime</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <!-- Captcha component -->
     <dependency>
@@ -170,7 +155,6 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-core-crypto</artifactId>
-      <version>2.7.2</version>
     </dependency>
     <!-- CSRF protection -->
     <dependency>
@@ -181,7 +165,6 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-core-legacy</artifactId>
-      <version>2.7.2</version>
     </dependency>
     <!-- END xwiki-web-standard war -->
     <dependency>
@@ -199,18 +182,15 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-tag-api</artifactId>
-      <version>2.7.2</version>
     </dependency>
     <!-- END xwiki-enterprise-web war -->
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-application-manager</artifactId>
-      <version>1.19</version>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
-      <version>1.26</version>
     </dependency>
     <!-- celements module-web dependencies -->
     <dependency>
