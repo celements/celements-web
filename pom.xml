@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>5.5</version>
+    <version>5.6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -64,11 +64,124 @@
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
     <!-- START xwiki-web-standard war -->
+    <!-- Add the GWT JAR so that XWiki Core is GWT-ready and so that the XWiki GWT Servlet can
+         be activated by default in web.xml -->
     <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-web-standard</artifactId>
+      <groupId>com.xpn.xwiki.platform</groupId>
+      <artifactId>xwiki-web-gwt</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform</groupId>
+      <artifactId>xwiki-web-gwt-wysiwyg-server</artifactId>
       <version>2.7.2</version>
       <type>war</type>
+    </dependency>
+    <!-- The WebDAV module -->
+<!--     <dependency>
+      <groupId>com.xpn.xwiki.platform</groupId>
+      <artifactId>xwiki-webdav</artifactId>
+      <version>2.7.2</version>
+    </dependency> -->
+    <!-- The REST module -->
+    <dependency>
+      <groupId>com.xpn.xwiki.platform</groupId>
+      <artifactId>xwiki-rest-server</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <!-- The annotations modules -->
+<!--     <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-annotations-core</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-annotations-reference</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-annotations-io</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-annotations-maintainer</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-annotations-rest</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-annotations-velocity</artifactId>
+      <version>2.7.2</version>
+    </dependency> -->
+    <!-- Skin modules
+         Note: even though the dependency plugin below doesn't need explicit dependencies set
+         to work it's a best practice to put them here since they are real dependencies -->
+    <dependency>
+      <groupId>org.xwiki.platform.skins</groupId>
+      <artifactId>xwiki-skin-albatross</artifactId>
+      <version>1.30</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform.skins</groupId>
+      <artifactId>xwiki-skin-toucan</artifactId>
+      <version>1.39</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-colibri</artifactId>
+      <version>2.7.2</version>
+      <type>zip</type>
+    </dependency>
+    <!-- needed for JSR 303 (Bean Validation) clients such as xwiki-core properties. 
+         It is just one JSR 303 implements among others so it's distribution decision to choose this one.
+         Note that hibernate-validator depends on Java 6 since 4.1 branch.
+    -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>4.0.2.GA</version>
+      <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- Captcha component -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-captcha</artifactId>
+    </dependency>
+    <!-- Crypto Module -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-crypto</artifactId>
+      <version>2.7.2</version>
+    </dependency>
+    <!-- CSRF protection -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-csrf</artifactId>
+    </dependency>
+    <!-- Legacy / Backward compatibility -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-legacy</artifactId>
+      <version>2.7.2</version>
     </dependency>
     <!-- END xwiki-web-standard war -->
     <dependency>
@@ -295,7 +408,7 @@
                 <exclude>WEB-INF/lib/xml-apis-*.jar</exclude>
               </excludes>
             </overlay>
-            <overlay>
+<!--             <overlay>
               <groupId>org.xwiki.platform</groupId>
               <artifactId>xwiki-web-standard</artifactId>
               <excludes>
@@ -330,13 +443,13 @@
                 <exclude>WEB-INF/lib/reflections-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-extension-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-2.*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-component-*.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-core-component-*.jar</exclude> -->
                 <!-- exclude JAX-RS 1.x and restlet in favor of jersey 2.x -->
-                <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
+<!--                <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
                 <exclude>WEB-INF/lib/org.restlet.ext.jaxrs-*</exclude>
                 <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3-dev.jar</exclude>
               </excludes>
-            </overlay>
+            </overlay> -->
           </overlays>
         </configuration>
       </plugin>
