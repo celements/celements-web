@@ -426,6 +426,8 @@
                 <exclude>WEB-INF/lib/google-collections-*.jar</exclude>
                 <exclude>WEB-INF/lib/poi-*.jar</exclude>
                 <exclude>WEB-INF/lib/metadata-extractor-*.jar</exclude>
+                <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
+                <exclude>WEB-INF/lib/slf4j-log4j12-*.jar</exclude>
                 <exclude>WEB-INF/lib/tagsoup-1.2.jar</exclude>
                 <exclude>WEB-INF/lib/pdfbox-1.3.1.jar</exclude>
                 <exclude>WEB-INF/lib/fontbox-1.3.1.jar</exclude>
