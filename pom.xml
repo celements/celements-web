@@ -122,27 +122,6 @@
       <artifactId>xwiki-core-annotations-velocity</artifactId>
       <version>2.7.2</version>
     </dependency> -->
-    <!-- Skin modules
-         Note: even though the dependency plugin below doesn't need explicit dependencies set
-         to work it's a best practice to put them here since they are real dependencies -->
-    <dependency>
-      <groupId>org.xwiki.platform.skins</groupId>
-      <artifactId>xwiki-skin-albatross</artifactId>
-      <version>1.30</version>
-      <type>zip</type>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform.skins</groupId>
-      <artifactId>xwiki-skin-toucan</artifactId>
-      <version>1.39</version>
-      <type>zip</type>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-colibri</artifactId>
-      <version>2.7.2</version>
-      <type>zip</type>
-    </dependency>
     <!-- needed for JSR 303 (Bean Validation) clients such as xwiki-core properties. 
          It is just one JSR 303 implements among others so it's distribution decision to choose this one.
          Note that hibernate-validator depends on Java 6 since 4.1 branch.
