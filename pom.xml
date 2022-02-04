@@ -63,12 +63,14 @@
   <dependencies>
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
+    <!-- START xwiki-web-standard war -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-web-standard</artifactId>
       <version>2.7.2</version>
       <type>war</type>
     </dependency>
+    <!-- END xwiki-web-standard war -->
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-scheduler</artifactId>
@@ -86,16 +88,11 @@
       <artifactId>xwiki-platform-tag-api</artifactId>
       <version>2.7.2</version>
     </dependency>
-    <!-- ENDE xwiki-enterprise-web war -->
+    <!-- END xwiki-enterprise-web war -->
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-application-manager</artifactId>
       <version>1.19</version>
-    </dependency>
-    <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-scheduler</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
