@@ -78,16 +78,19 @@
     </dependency>
 -->
     <!-- The WebDAV module -->
-<!--     <dependency>
+<!--    
+ <dependency>
       <groupId>com.xpn.xwiki.platform</groupId>
       <artifactId>xwiki-webdav</artifactId>
       <version>2.7.2</version>
     </dependency> -->
     <!-- The REST module -->
+<!--    
     <dependency>
       <groupId>com.xpn.xwiki.platform</groupId>
       <artifactId>xwiki-rest-server</artifactId>
     </dependency>
+-->
     <!-- The annotations modules -->
 <!--     <dependency>
       <groupId>org.xwiki.platform</groupId>
