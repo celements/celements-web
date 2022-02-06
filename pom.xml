@@ -152,7 +152,7 @@
     </dependency>
     <!-- END xwiki-web-standard war -->
     <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <groupId>com.celements</groupId>
       <artifactId>xwiki-plugin-scheduler</artifactId>
     </dependency>
     <dependency>
