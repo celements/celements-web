@@ -1,5 +1,5 @@
-<link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile('celJS/yui/assets/skins/sam/container.css', 'file')" />
-<link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile('celJS/yui/assets/skins/sam/button.css', 'file')" />
+<link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile(':celJS/yui/assets/skins/sam/container.css', 'file')" />
+<link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile(':celJS/yui/assets/skins/sam/button.css', 'file')" />
 #if($lazyloadJS)
 <div style='display: none;'>
   <span class='cel_lazyloadJS'>celJS/yui/utilities/utilities.js</span>
