@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>5.5</version>
+    <version>5.6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -50,14 +50,15 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <catalina.port>10081</catalina.port>
-    <catalina.home.celementsweb-platform>${env.CATALINA_HOME}</catalina.home.celementsweb-platform>
-    <catalina.home.celementsweb>${catalina.home.celementsweb-platform}</catalina.home.celementsweb>
+    <catalina.home>${env.CATALINA_HOME}</catalina.home>
     <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
     <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
     <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
     <hibernate.cfg.xml.connection.port />
     <hibernate.cfg.xml.connection.host>localhost</hibernate.cfg.xml.connection.host>
+    <log4j.properties.monitorInterval>60</log4j.properties.monitorInterval>
+    <log4j.properties.logdir>${catalina.home}/logs</log4j.properties.logdir>
   </properties>
   <dependencies>
     <!-- xwiki platform dependencies -->
@@ -117,6 +118,11 @@
     <!-- celements dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
+      <artifactId>celements-commons</artifactId>
+      <version>5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
       <version>5.3</version>
     </dependency>
@@ -127,8 +133,18 @@
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
-      <artifactId>celements-commons</artifactId>
-      <version>5.0</version>
+      <artifactId>celements-reference</artifactId>
+      <version>5.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-config-source-api</artifactId>
+      <version>5.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-config-source</artifactId>
+      <version>5.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -319,6 +335,8 @@
                 <exclude>WEB-INF/lib/xwiki-core-extension-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-2.*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-component-*.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-core-model-*.jar</exclude>
+                <exclude>WEB-INF/lib/xwiki-core-configuration-*.jar</exclude>
                 <!-- exclude JAX-RS 1.x and restlet in favor of jersey 2.x -->
                 <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
                 <exclude>WEB-INF/lib/org.restlet.ext.jaxrs-*</exclude>
