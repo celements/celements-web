@@ -424,7 +424,6 @@
                 <exclude>WEB-INF/lib/xwiki-core-extension-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-2.*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-component-*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-component-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-model-*.jar</exclude>
                 <exclude>WEB-INF/lib/xwiki-core-configuration-*.jar</exclude>
 -->
