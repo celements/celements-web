@@ -258,10 +258,6 @@
        <groupId>org.hibernate</groupId>
        <artifactId>hibernate-annotations</artifactId>
     </dependency>
-    <dependency>
-      <groupId>xml-apis</groupId>
-      <artifactId>xml-apis-ext</artifactId>
-    </dependency>
 <!--
     <dependency>
       <groupId>batik</groupId>
