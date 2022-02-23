@@ -62,38 +62,77 @@
   </properties>
   <dependencies>
     <!-- xwiki platform dependencies -->
+    <!-- START xwiki-enterprise-web war -->
+    <!-- START xwiki-web-standard war -->
+    <!-- needed for JSR 303 (Bean Validation) clients such as xwiki-core properties. 
+         It is just one JSR 303 implements among others so it's distribution decision to choose this one.
+         Note that hibernate-validator depends on Java 6 since 4.1 branch.
+    -->
     <dependency>
-      <groupId>org.xwiki.enterprise</groupId>
-      <artifactId>xwiki-enterprise-web</artifactId>
-      <version>2.7.2</version>
-      <type>war</type>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-application-manager</artifactId>
-      <version>1.19</version>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
     </dependency>
+    <!-- Captcha component -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-captcha</artifactId>
+    </dependency>
+    <!-- Crypto Module -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-crypto</artifactId>
+    </dependency>
+    <!-- CSRF protection -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-csrf</artifactId>
+    </dependency>
+    <!-- Legacy / Backward compatibility -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-core-legacy</artifactId>
+    </dependency>
+    <!-- END xwiki-web-standard war -->
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-scheduler</artifactId>
-      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-mailsender</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-skinx</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-tag-api</artifactId>
+    </dependency>
+    <!-- END xwiki-enterprise-web war -->
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-application-manager</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
-      <version>1.26</version>
     </dependency>
     <!-- celements module-web dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>5.5</version>
+      <version>5.6-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>5.4</version>
+      <version>5.5-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -220,46 +259,6 @@
        <artifactId>hibernate-annotations</artifactId>
     </dependency>
     <dependency>
-      <groupId>batik</groupId>
-      <artifactId>batik-rasterizer</artifactId>
-      <version>1.6-1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>batik</groupId>
-          <artifactId>batik-transcoder</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.xmlgraphics</groupId>
-      <artifactId>fop</artifactId>
-      <version>1.0</version>
-      <scope>provided</scope>
-      <exclusions>
-        <!-- [CELDEV-808] exclude xml-apis compile dependency -->
-        <exclusion>
-          <groupId>xml-apis</groupId>
-          <artifactId>xml-apis</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.xmlgraphics</groupId>
-      <artifactId>xmlgraphics-commons</artifactId>
-      <version>1.5</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
       <version>0.9.12</version>
@@ -292,55 +291,6 @@
               <artifactId>image-web</artifactId>
               <excludes>
                 <exclude>WEB-INF/lib/xml-apis-*.jar</exclude>
-              </excludes>
-            </overlay>
-            <overlay>
-              <groupId>org.xwiki.enterprise</groupId>
-              <artifactId>xwiki-enterprise-web</artifactId>
-              <excludes>
-                <exclude>WEB-INF/lib/jclf-2.3.0.jar</exclude>
-                <exclude>WEB-INF/lib/xalan-2.5.1.jar</exclude>
-                <exclude>WEB-INF/lib/commons-io-*.jar</exclude>
-                <exclude>WEB-INF/lib/commons-codec-*.jar</exclude>
-                <exclude>WEB-INF/lib/commons-net-*.jar</exclude>
-                <exclude>WEB-INF/lib/commons-compress-*.jar</exclude>
-                <exclude>WEB-INF/lib/commons-logging-*.jar</exclude>
-                <exclude>WEB-INF/lib/batik-rasterizer-1.6.jar</exclude>
-                <exclude>WEB-INF/lib/joda-time-1.4.jar</exclude>
-                <exclude>WEB-INF/lib/easymock-2.5.2.jar</exclude>
-                <exclude>WEB-INF/lib/log4j-*.jar</exclude>
-                <exclude>WEB-INF/lib/junit-3.8.1.jar</exclude>
-                <exclude>WEB-INF/lib/lucene-core-2.*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-plugin-lucene-*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-plugin-watchlist-*.jar</exclude>
-                <exclude>WEB-INF/lib/google-collections-*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-plugin-activitystream-*.jar</exclude>
-                <exclude>WEB-INF/lib/poi-*.jar</exclude>
-                <exclude>WEB-INF/lib/metadata-extractor-*.jar</exclude>
-                <exclude>WEB-INF/lib/slf4j-api-*.jar</exclude>
-                <exclude>WEB-INF/lib/slf4j-log4j12-*.jar</exclude>
-                <exclude>WEB-INF/lib/tagsoup-1.2.jar</exclude>
-                <exclude>WEB-INF/lib/pdfbox-1.3.1.jar</exclude>
-                <exclude>WEB-INF/lib/fontbox-1.3.1.jar</exclude>
-                <exclude>WEB-INF/lib/jempbox-1.3.1.jar</exclude>
-                <exclude>WEB-INF/lib/jdom-1.0.jar</exclude>
-                <exclude>WEB-INF/lib/tika-core-0.8.jar</exclude>
-                <exclude>WEB-INF/lib/tika-parsers-0.8.jar</exclude>
-                <exclude>WEB-INF/lib/rome-0.9.jar</exclude>
-                <exclude>WEB-INF/lib/xml-apis-1.3.03.jar</exclude>
-                <exclude>WEB-INF/lib/xmlbeans-*.jar</exclude>
-                <exclude>WEB-INF/lib/dom4j-*.jar</exclude>
-                <exclude>WEB-INF/lib/css4j-*.jar</exclude>
-                <exclude>WEB-INF/lib/reflections-*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-extension-*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-2.*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-component-*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-model-*.jar</exclude>
-                <exclude>WEB-INF/lib/xwiki-core-configuration-*.jar</exclude>
-                <!-- exclude JAX-RS 1.x and restlet in favor of jersey 2.x -->
-                <exclude>WEB-INF/lib/javax.ws.rs-*</exclude>
-                <exclude>WEB-INF/lib/org.restlet.ext.jaxrs-*</exclude>
-                <exclude>WEB-INF/lib/jtidy-8.0-20060801.131059-3-dev.jar</exclude>
               </excludes>
             </overlay>
           </overlays>
