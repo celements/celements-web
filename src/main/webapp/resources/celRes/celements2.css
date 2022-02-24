@@ -298,6 +298,9 @@ body > div#celements2_menu_bar {
 	background-color:red;
 	padding:2px;
 }
+#cel_overlaybody {
+  overflow : auto;
+}
 /** force show validation advices in celements overlays */
 #cel_overlaybody .celements2box form {
 	display: block;
