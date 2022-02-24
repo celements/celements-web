@@ -225,6 +225,7 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay .layoutsubsection #cel_overlaybody {
   position: relative;
   width: 100%;
+  overflow : auto;
 }
 .generalOverlay .layoutsubsection,
 .generalOverlay .layoutsubsection p,
