@@ -6,6 +6,7 @@ $jsonBuilder.openProperty('isAdmin')
 $jsonBuilder.addBoolean($isAdmin)
 $jsonBuilder.openProperty('isSuperAdmin')
 $jsonBuilder.addBoolean($isSuperAdmin)
+$jsonBuilder.addStringProperty('startupTimeStamp', "${services.celementsweb.getLastStartupTimeStamp()}")
 $jsonBuilder.closeDictionary()
 ## Reconnector
 $jsonBuilder.openProperty('Reconnector')
