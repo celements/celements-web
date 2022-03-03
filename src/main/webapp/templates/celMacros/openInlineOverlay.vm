@@ -54,9 +54,4 @@
 #end
 <a id="closebutton" class="$closeButtonClass" href="$closeOverlayRedirect"></a>
 #end
-<style type="text/css">
-#cel_overlaybody {
-  overflow : auto;
-}
-</style>
 <div id="cel_overlaybody">
