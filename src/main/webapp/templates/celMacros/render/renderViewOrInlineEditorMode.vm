@@ -5,11 +5,14 @@
 #set($isRenderViewMode = ("$!context.action" == 'view'))
 #set($isRenderViewMode = $isRenderViewMode || (!$pageTypeConfig || !$pageTypeConfig.useInlineEditorMode()))
 #set($isRenderViewMode = $isRenderViewMode || ($doc.documentReference != $pageDocRef))
+#if(("$!request.ajax" != '1') && ("$!request.ajax" != 'true'))
+## this comment is breaking json responses in ajax-mode
 <!--
   page_type : $page_type
   useInlineEditorMode : $pageTypeConfig.useInlineEditorMode()
   isRenderViewMode : $isRenderViewMode
 -->
+#end
 #if($isRenderViewMode)
   $services.celementsweb.renderCelementsDocument($pageDocRef, true)
 #else
