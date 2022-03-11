@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>5.6-SNAPSHOT</version>
+    <version>5.6</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -163,37 +163,37 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>5.4-SNAPSHOT</version>
+      <version>5.5</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-component</artifactId>
-      <version>5.1</version>
+      <version>5.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-reference</artifactId>
-      <version>5.0-SNAPSHOT</version>
+      <version>5.0</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>5.0-SNAPSHOT</version>
+      <version>5.0</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>5.0-SNAPSHOT</version>
+      <version>5.0</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>5.4-SNAPSHOT</version>
+      <version>5.4</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>5.4-SNAPSHOT</version>
+      <version>5.4</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -239,14 +239,6 @@
     <dependency>
       <groupId>info.informatica</groupId>
       <artifactId>jclf</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-net</groupId>
-      <artifactId>commons-net</artifactId>
     </dependency>
     <!-- JAX-RS implementation -->
     <dependency>
