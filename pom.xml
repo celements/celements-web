@@ -126,19 +126,19 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>5.6-SNAPSHOT</version>
+      <version>5.6</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>5.5-SNAPSHOT</version>
+      <version>5.5</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>5.4-SNAPSHOT</version>
+      <version>5.4</version>
       <type>war</type>
     </dependency>
     <dependency>
