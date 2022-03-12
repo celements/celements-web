@@ -122,6 +122,12 @@
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
     </dependency>
+    <dependency>
+      <!-- required by xwiki-plugin-wiki-manager -->
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>2.0.7</version>
+    </dependency>
     <!-- celements module-web dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
