@@ -98,8 +98,8 @@
     </dependency>
     <!-- END xwiki-web-standard war -->
     <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-scheduler</artifactId>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-scheduler</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
