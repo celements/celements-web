@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const celMessagesCbFnArray = [];
   window.celExecOnceAfterMessagesLoaded = function(callbackFn) {
-    if (!celMessagesCbFnArray.contains(callbackFn)) {
+    if (!celMessagesCbFnArray.includes(callbackFn)) {
       celMessagesCbFnArray.push(callbackFn);
       if (!window.celMessages.isLoaded) {
         $(document.body).observe('cel:messagesLoaded', event => callbackFn(event.memo));
