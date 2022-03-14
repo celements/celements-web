@@ -471,12 +471,15 @@ document.addEventListener('DOMContentLoaded', function() {
     console.error('Failed to get Cel-Messages async!', exp);
   }
 
+  const celMessagesCbFnArray = [];
   window.celExecOnceAfterMessagesLoaded = function(callbackFn) {
-    if (!window.celMessages.isLoaded) {
-      $(document.body).stopObserving('cel:messagesLoaded', callbackFn);
-      $(document.body).observe('cel:messagesLoaded', callbackFn);
-    } else {
-      callbackFn(window.celMessages);
+    if (!celMessagesCbFnArray.includes(callbackFn)) {
+      celMessagesCbFnArray.push(callbackFn);
+      if (!window.celMessages.isLoaded) {
+        $(document.body).observe('cel:messagesLoaded', event => callbackFn(event.memo));
+      } else {
+        callbackFn(window.celMessages);
+      }
     }
   };
   /**
