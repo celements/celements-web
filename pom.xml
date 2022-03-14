@@ -123,7 +123,7 @@
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
     </dependency>
     <dependency>
-      <!-- required by xwiki-plugin-wiki-manager -->
+      <!-- [CELDEV-1013] required by xwiki-plugin-wiki-manager -->
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
       <version>2.0.7</version>
