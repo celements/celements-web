@@ -141,9 +141,9 @@
         const iFrameElem = document.createElement('iframe');
         iFrameElem.src = movieLink;
         iFrameElem.title = 'Video Player';
-        iFrameElem.width='100%';
-        iFrameElem.height='100%';
-        iFrameElem.style.borderWidth=0;
+        iFrameElem.width = '100%';
+        iFrameElem.height = '100%';
+        iFrameElem.style.borderWidth = 0;
         playerLink.update(iFrameElem);
         playerLink.fire('celanim_player:replacementLoaded', {
           'movielink': movieLink
