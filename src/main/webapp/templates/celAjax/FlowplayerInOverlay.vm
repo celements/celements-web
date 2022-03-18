@@ -3,18 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
-$!services.javascript.addExtJSfileOnce(':celJS/prototype.js', 'file')
-$!services.javascript.addExtJSfileOnce(':celJS/jquery.min.js', 'file')
-$!services.javascript.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
-$!services.javascript.addExtJSfileOnce(':celJS/initCelements.min.js', 'file')
-$!services.javascript.addExtJSfileOnce(':celJS/scriptaculous/effects.js', 'file')
-$!services.javascript.addExtJSfileOnce(':celJS/validation.js', 'file')
-#if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 0) == 0)##
-  $services.javascript.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')##
-#end
-$!services.javascript.addExtJSfileOnce(':celJS/flowplayer/flowplayer-3.2.6.min.js', 'file')
+#set($jsService = $services.javascript)
+#set($extJsParamSync = $!jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/prototype.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/initCelements.min.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/celanim/movieplayer.js'))
 <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':celRes/celanim/movieplayerDefaults.css', 'file')" /> 
-$!services.javascript.addExtJSfileOnce(':celJS/celanim/movieplayer.js', 'file')
 ## write out javascripts
 $!celementsweb.getAllExternalJavaScriptFiles()
 <script type="text/javascript">
