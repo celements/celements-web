@@ -74,7 +74,8 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/filebase/filebase.js'
 ## get source document
 #set($srcDoc = $initSrcDoc)
 #if("$!request.get('src_doc')" != '')
-  #set($srcDoc = $services.modelAccess.getDocument("$!request.get('src_doc')"))
+  #set($srcDocRef = $services.model.resolveDocument("$!request.get('src_doc')"))
+  #set($srcDoc = $services.modelAccess.getDocument($srcDocRef))
 #end
 
 ## parse single doc information
@@ -97,7 +98,8 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/filebase/filebase.js'
 ## get upload doc
 #set($uploadDoc = $srcDoc)
 #if("$!{single_doc_space}$!{single_doc_doc}" != '')
-  #set($uploadDoc = $services.modelAccess.getDocument("$!{single_doc_space}.$!single_doc_doc"))
+  #set($singleDocRef = $services.model.createDocumentReference("", "$!{single_doc_space}", "$!single_doc_doc"))
+  #set($uploadDoc = $services.modelAccess.getDocument($singleDocRef))
 #end
 
 ## set has upload
@@ -556,7 +558,8 @@ function change() {
                                     #if(($velocityCount > $root_size) && $item.startsWith('s'))
                                       #set($documents = $xwiki.getSpaceDocsName($item))
                                       #foreach($doc_name in $documents)
-                                        #set($spaceDoc = $services.modelAccess.getDocument($item, $doc_name))
+                                        #set($spaceDocRef = $services.model.createDocumentReference("", $item, $doc_name))
+                                        #set($spaceDoc = $services.modelAccess.getDocument($spaceDocRef))
                                         #if(("$!spaceDoc.getAttachmentList()" != '[]') && ($spaceDoc.hasAccessLevel('view')))
                                           #set($has_attachments = true)
                                         #end
