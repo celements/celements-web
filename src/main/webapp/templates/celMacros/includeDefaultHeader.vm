@@ -73,7 +73,7 @@ $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/jquery-datetimep
 $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/dateTimePicker/generateDateTimePicker.js'))##
 ##
 #if($services.celementsphoto.useImageAnimations())##
-  $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js'))##
+  $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js'))##
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/highslide/highslide-full.min.js'))##
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/celanim/overlaySlide.js'))##
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/celanim/slideshow.js'))##
