@@ -55,7 +55,16 @@
         return window.navigator.userAgent.match(/BlackBerry/i);
       },
       iOS: function() {
-        return window.navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        return [
+          'iPad Simulator',
+          'iPhone Simulator',
+          'iPod Simulator',
+          'iPad',
+          'iPhone',
+          'iPod'
+        ].includes(navigator.platform)
+        // iPad on iOS 13 detection
+        || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
       },
       iPhone: function() {
         return window.navigator.userAgent.match(/iPhone/i);
