@@ -199,7 +199,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>5.4</version>
+      <version>5.5-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
