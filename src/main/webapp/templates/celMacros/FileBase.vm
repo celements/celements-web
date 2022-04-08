@@ -26,16 +26,19 @@
 <link rel="stylesheet" type="text/css" href="$services.celementsweb.getSkinFile(':celRes/mediaLib/celements2medialib.css')" />
 ##TODO replace with default overlay
 #parse('celMacros/DarkBox.vm')
-$services.javascript.addExtJSfileOnce(':celJS/prototype.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/initCelements.min.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
-$services.javascript.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
-$services.javascript.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
-$services.javascript.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
-$services.javascript.addExtJSfileOnce(':celJS/uploadAttachment.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js', 'file')
+#set($jsService = $services.javascript)
+#set($extJsParam = $!jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/prototype.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/initCelements.min.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/yui/utilities/utilities.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/yui/datasource/datasource-min.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/yui/datatable/datatable-min.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/yui/dragdrop/dragdrop-min.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/uploadAttachment.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/filebase/filebase.js'))##
 #if(("$!isInline" != '1') && ("$!request.get('inline')" == ''))
-  $services.javascript.addExtJSfileOnce(':celJS/mediaLib/resize.js', 'file')
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/mediaLib/resize.js'))##
 #end
 ## colmn
 #if(("$!initColumns" == '') || ("$!request.get('columns')" != ''))
@@ -71,7 +74,8 @@ $services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js', 'file')
 ## get source document
 #set($srcDoc = $initSrcDoc)
 #if("$!request.get('src_doc')" != '')
-  #set($srcDoc = $xwiki.getDocument("$!request.get('src_doc')"))
+  #set($srcDocRef = $services.model.resolveDocument("$!request.get('src_doc')"))
+  #set($srcDoc = $services.modelAccess.getDocument($srcDocRef))
 #end
 
 ## parse single doc information
@@ -94,7 +98,8 @@ $services.javascript.addExtJSfileOnce(':celJS/filebase/filebase.js', 'file')
 ## get upload doc
 #set($uploadDoc = $srcDoc)
 #if("$!{single_doc_space}$!{single_doc_doc}" != '')
-  #set($uploadDoc = $xwiki.getDocument("$!{single_doc_space}.$!single_doc_doc"))
+  #set($singleDocRef = $services.model.createDocumentReference("", "$!{single_doc_space}", "$!single_doc_doc"))
+  #set($uploadDoc = $services.modelAccess.getDocument($singleDocRef))
 #end
 
 ## set has upload
@@ -553,7 +558,8 @@ function change() {
                                     #if(($velocityCount > $root_size) && $item.startsWith('s'))
                                       #set($documents = $xwiki.getSpaceDocsName($item))
                                       #foreach($doc_name in $documents)
-                                        #set($spaceDoc = $xwiki.getDocument($item, $doc_name))
+                                        #set($spaceDocRef = $services.model.createDocumentReference("", $item, $doc_name))
+                                        #set($spaceDoc = $services.modelAccess.getDocument($spaceDocRef))
                                         #if(("$!spaceDoc.getAttachmentList()" != '[]') && ($spaceDoc.hasAccessLevel('view')))
                                           #set($has_attachments = true)
                                         #end

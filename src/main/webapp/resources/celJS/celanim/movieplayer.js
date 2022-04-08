@@ -52,10 +52,10 @@
     }
   };
 
-  var initCelAnimSWFPlayerInsideParent = function (parentElem) {
+  const initCelAnimSWFPlayerInsideParent = function (parentElem) {
     if (parentElem.select('a.celanim_swfplayer').size() > 0) {
       parentElem.select('a.celanim_swfplayer').each(function (elem) {
-        var celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
+        const celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
         if (celAnimLinkConfig && celAnimLinkConfig.replaceOnLoad) {
           celanimLoadSWFplayer(elem);
         }
@@ -66,7 +66,7 @@
     }
   };
 
-  var initMoviePlayerCssClassesInsideParent = function (parentElem, cssClassNames) {
+  const initMoviePlayerCssClassesInsideParent = function (parentElem, cssClassNames) {
     $A(cssClassNames).each(
       function (flowclassname) {
         if (parentElem.select('a.' + flowclassname).size() > 0) {
@@ -102,7 +102,7 @@
                 }
               }
               if (flowclassname.indexOf('_externalvideo') > 0) {
-                var celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
+                const celAnimLinkConfig = getCelAnimSWFConfigForLink(elem.href);
                 if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
                   elem.addClassName(celAnimLinkConfig.cssClass);
                 }
@@ -128,63 +128,30 @@
     event.stop();
   };
 
-  var celanimFlowPlayerObjectCounter = 0;
-
-  var celanimLoadSWFplayer = function (playerLink) {
+  const celanimLoadSWFplayer = function (playerLink) {
     if (playerLink && !playerLink.hasClassName('celanim_loaded')) {
       playerLink.addClassName('celanim_loaded');
-      var movieLink = getCelAnimSWFmovieLink(playerLink.href);
-      if (swfobject.hasFlashPlayerVersion("9.0.0")) {
-        // FP; 28.2.2013; replaced swf-object creation with
-        // http://code.google.com/p/swfobject/
-        // --> it solves issues at least with IE7!!!
-        // playerContainer.update(new Element('span', { 'id' :
-        // 'celanimFlowPlayer_object' }));
-        // swfobject.embedSWF(movieLink, "celanimFlowPlayer_object", "100%",
-        // "100%", "9.0.0", "expressInstall.swf");
-        var playerId = 'celanimFlowPlayer_object';
-        celanimFlowPlayerObjectCounter = celanimFlowPlayerObjectCounter + 1;
-        if (celanimFlowPlayerObjectCounter > 1) {
-          playerId += '_' + celanimFlowPlayerObjectCounter;
-        }
-        playerLink.update(new Element('span', {
-          'id': playerId
-        }));
-        var params = {};
-        params['movie'] = movieLink;
-        params['allowScriptAccess'] = 'sameDomain';
-        params['quality'] = 'best';
-        params['scale'] = 'showall';
-        // wmode=opaque --> prevent flash appear before overlay elements
-        // Flash movies can appear on top of Overlay instances in IE and
-        // Gecko-based browsers.
-        // To fix this problem, set the "wmode" of the Flash movie to either
-        // "transparent" or "opaque".
-        // For more information see the Adobe TechNote
-        // http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_15523 on
-        // this issue.
-        // objectElem.insert(new Element('param', { 'name' : 'wmode', 'value' :
-        // 'opaque'}));
-        params['wmode'] = 'opaque';
-        flashvars = {};
-        flashvars['allowScriptAccess'] = 'sameDomain';
-        flashvars['quality'] = 'best';
-        flashvars['scale'] = 'showall';
-        flashvars['wmode'] = 'opaque';
-        // more details on embedSWF function on
-        // http://code.google.com/p/swfobject/wiki/api
-        swfobject.embedSWF(movieLink, playerId, "100%", "100%", "9.0.0", "expressInstall.swf",
-          flashvars, params);
-        playerLink.fire('celanim_player:flashplayerloaded', {
+      const movieLink = getCelAnimSWFmovieLink(playerLink.href);
+      const noFlashEv = playerLink.fire('celanim_player:noflashplayerfound', {
+        'movielink': movieLink
+      });
+      const linkReplaceObj = getCelAnimSWFConfigForLink(playerLink.href);
+      console.log('celanimLoadSWFplayer: not stopped ', movieLink, linkReplaceObj.loadType);
+      if (linkReplaceObj.loadType && (linkReplaceObj.loadType === 'iframe')) {
+        const iFrameElem = document.createElement('iframe');
+        iFrameElem.src = movieLink;
+        iFrameElem.title = 'Video Player';
+        iFrameElem.width = '100%';
+        iFrameElem.height = '100%';
+        iFrameElem.style.borderWidth = 0;
+        playerLink.update(iFrameElem);
+        playerLink.fire('celanim_player:replacementLoaded', {
           'movielink': movieLink
         });
       } else {
-        var noFlashEv = playerLink.fire('celanim_player:noflashplayerfound', {
-          'movielink': movieLink
-        });
         if (!noFlashEv.stopped) {
           // IMPORTANT: this solution only works on iPhones / iPads
-          var objectElem = new Element('object', {
+          const objectElem = new Element('object', {
             'type': 'application/x-shockwave-flash',
             'data': movieLink,
             'style': 'height: 100%; width: 100%;'
@@ -223,11 +190,13 @@
           });
         }
       }
+    } else {
+      console.debug('celanimLoadSWFplayer: skip loading, already started', playerLink);
     }
   };
 
-  var getCelAnimObject = function () {
-    var celAnimObject = [{
+  const getCelAnimObject = function () {
+    return [{
       'name': 'vimeo',
       'matchStr': '^https?:\/\/vimeo.com\/.*?',
       'replaceStr': 'https://vimeo.com/moogaloop.swf?clip_id=',
@@ -235,8 +204,9 @@
       'replaceOnLoad': true
     }, {
       'name': 'youtube',
+      'loadType' : 'iframe',
       'matchStr': '^https?:\/\/(www.youtube.com\/.*?[\/=]|youtu.be\/)',
-      'replaceStr': 'https://www.youtube.com/v/',
+      'replaceStr': 'https://www.youtube.com/embed/',
       'cssClass': 'celanim_youtube',
       'replaceOnLoad': true
     }, {
@@ -252,13 +222,12 @@
       'cssClass': 'celanim_sfvideo',
       'replaceOnLoad': true
     }];
-    return celAnimObject;
   };
 
-  var getCelAnimSWFConfigForLink = function (elemHref) {
-    var celAnimLinkReplaceObject = getCelAnimObject();
-    var isFound = false;
-    var configObject = null;
+  const getCelAnimSWFConfigForLink = function (elemHref) {
+    const celAnimLinkReplaceObject = getCelAnimObject();
+    let isFound = false;
+    let configObject = null;
     $A(celAnimLinkReplaceObject).each(function (linkReplaceObj) {
       if (!isFound && elemHref.match(new RegExp(linkReplaceObj.matchStr))) {
         isFound = true;
@@ -268,8 +237,8 @@
     return configObject;
   };
 
-  var getCelAnimSWFmovieLink = function (elemHref) {
-    var linkReplaceObj = getCelAnimSWFConfigForLink(elemHref);
+  const getCelAnimSWFmovieLink = function (elemHref) {
+    const linkReplaceObj = getCelAnimSWFConfigForLink(elemHref);
     if (linkReplaceObj) {
       elemHref = elemHref.replace(new RegExp(linkReplaceObj.matchStr), linkReplaceObj.replaceStr);
     }
