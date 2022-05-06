@@ -103,9 +103,10 @@ function resizeTab(){
       var lastElemBottom = $j(scrollbox).offset().top + scrollbox.getHeight();
       while(ele && (!ele.hasClassName('c3_import_tabbox'))){
         ele.siblings().each(function(sibl){
-          if((typeof($j(sibl)) !== 'undefined') && (sibl.getStyle('position') != 'absolute')) {
+          const siblOffset = $j(sibl).offset();
+          if((typeof(siblOffset) !== 'undefined') && (sibl.getStyle('position') != 'absolute')) {
         	// use offsetHeight instead of getHeight() which is wrong for script and link elements}
-            lastElemBottom = Math.max(lastElemBottom, $j(sibl).offset().top + sibl.offsetHeight);
+            lastElemBottom = Math.max(lastElemBottom, siblOffset.top + sibl.offsetHeight);
           }
         });
         ele = ele.up();
