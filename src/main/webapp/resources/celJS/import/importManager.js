@@ -98,7 +98,9 @@ function resizeTab(){
     if(scrollbox){
       //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
       //counting margin-auto offsets. Thus we need to use jquery.offset
-      var offsetBefore = ($j(scrollbox).offset().top - $j(box).offset().top);
+      var offsetBefore = ((typeof($j(scrollbox).offset()) !== 'undefined') 
+              && (typeof($j(box).offset()) !== 'undefined')) 
+          ? ($j(scrollbox).offset().top - $j(box).offset().top) : 0;
       var ele = scrollbox;
       var lastElemBottom = $j(scrollbox).offset().top + scrollbox.getHeight();
       while(ele && (!ele.hasClassName('c3_import_tabbox'))){
