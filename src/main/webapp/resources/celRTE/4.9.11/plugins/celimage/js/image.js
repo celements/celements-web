@@ -17,7 +17,6 @@ var CelImageDialog = {
     var f = document.forms[0], nl = f.elements, ed = tinyMCEPopup.editor, dom = ed.dom, n = ed.selection.getNode();
 
     tinyMCEPopup.resizeToInnerSize();
-    _me.fillClassList('class_list');
     _me.fillGalleryList('gallery_list');
     if (ed.getParam("celanim_slideshow", false)) {
       _me.fillGalleryList('galleryPicker_list');
@@ -854,31 +853,6 @@ var CelImageDialog = {
       return v;
 
     return '';
-  },
-
-  fillClassList : function(id) {
-    var dom = tinyMCEPopup.dom, lst = dom.get(id), v, cl;
-
-    if (v = tinyMCEPopup.getParam('theme_advanced_styles')) {
-      cl = [];
-
-      tinymce.each(v.split(';'), function(v) {
-        var p = v.split('=');
-
-        cl.push({'title' : p[0], 'class' : p[1]});
-      });
-    } else
-      cl = tinyMCEPopup.editor.dom.getClasses();
-
-    if (cl.length > 0) {
-      lst.options.length = 0;
-      lst.options[lst.options.length] = new Option(tinyMCEPopup.getLang('not_set'), '');
-
-      tinymce.each(cl, function(o) {
-        lst.options[lst.options.length] = new Option(o.title || o['class'], o['class']);
-      });
-    } else
-      dom.remove(dom.getParent(id, 'tr'));
   },
 
   fillGalleryList : function(id) {
