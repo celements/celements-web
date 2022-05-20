@@ -132,7 +132,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>5.7-SNAPSHOT</version>
+      <version>5.7</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -144,7 +144,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>5.5-SNAPSHOT</version>
+      <version>5.5</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -156,7 +156,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tinymce-langs-v4</artifactId>
-      <version>4.9.11-CEL5-SNAPSHOT</version>
+      <version>4.9.11-CEL5</version>
       <type>war</type>
     </dependency>
 
