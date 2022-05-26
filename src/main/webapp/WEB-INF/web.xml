@@ -161,11 +161,16 @@
     <url-pattern>/redirect</url-pattern>
   </servlet-mapping>
  
-  <!-- We override the mime type definition for javascript and css files, as some containers don't
-       provide it, causing problems for javascript files containg velocity code, like
-       fullscreenEdit.js -->
+  <!-- We override the mime type definition for javascript, javascript module and css files,
+       as some containers don't provide it, causing problems for javascript files containg
+       velocity code, like fullscreenEdit.js -->
   <mime-mapping>
     <extension>js</extension>
+    <mime-type>text/javascript</mime-type>
+  </mime-mapping>
+
+  <mime-mapping>
+    <extension>mjs</extension>
     <mime-type>text/javascript</mime-type>
   </mime-mapping>
 
