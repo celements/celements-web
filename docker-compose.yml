@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+
+  # the webserver container that runs Celements on Tomcat
+  webserver: 
+    container_name: celements-dev-web
+    image: celements-dev:latest
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080" # tomcat
+      - "8000:8000" # remote debugging
+    env_file: docker/.env
+    restart: unless-stopped
+    depends_on:
+      - database
+
+  # The database container that runs MariaDB
+  database:
+    container_name: celements-dev-db
+    image: mariadb:10
+    ports:
+      - "3307:3306" # for direct client access 
+    env_file: docker/.env
+    volumes:
+      - celements-dev-db-data:/var/lib/mysql
+      - ./docker/database/celements.cnf:/etc/mysql/conf.d/celements.cnf:ro
+      - ./docker/database/init:/docker-entrypoint-initdb.d:ro
+    restart: unless-stopped
+
+volumes:
+  celements-dev-db-data:
