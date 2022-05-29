@@ -30,33 +30,31 @@ ENV CELEMENTS_DATA=/usr/local/celements
 ENV JPDA_ADDRESS="8000"
 ENV JPDA_TRANSPORT="dt_socket"
 
-# install tools and JDBC connector
-RUN apt-get update \
- && apt-get --no-install-recommends -y install \
-      gettext-base \
-      libmariadb-java \
- && rm -rf /var/lib/apt/lists/*
-
 # copy configurations / scripts
+COPY docker/webserver /usr/local/config
 # TODO ENV CATALINA_OPTS="-Dkey=value" working?
-COPY docker/tomcat/setenv.sh ${CATALINA_HOME}/bin/
-COPY docker/config/hibernate.cfg.xml hibernate_template.cfg.xml
 # TODO COPY docker/config/xwiki.cfg xwiki_template.cfg
-COPY docker/entrypoint.sh /entrypoint.sh
-
-# Create required dirs and copy the JDBC driver in the Tomcat lib
-RUN mkdir -p ${CELEMENTS_DATA} \
- && mkdir -p ${CATALINA_HOME}/temp \
- && rm -rf ${CATALINA_HOME}/webapps/* \ 
- && cp /usr/share/java/mariadb-java-client.jar ${CATALINA_HOME}/lib/ \
- && chmod +x /entrypoint.sh
 
 ## TODO already set?
 # USER tomcat:tomcat
 
 # define custom entrypoint and command (with remote debugging)
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/usr/local/config/entrypoint.sh"]
 CMD ["catalina.sh", "jpda", "run"]
+
+# installs and setup
+RUN apt-get update \
+ && apt-get --no-install-recommends -y install \
+      gettext-base \
+      libmariadb-java \
+ && rm -rf \
+      /var/lib/apt/lists/* \
+      ${CATALINA_HOME}/webapps/* \
+ && mkdir -p \
+      ${CELEMENTS_DATA} \
+      ${CATALINA_HOME}/temp \
+ && cp /usr/local/config/setenv.sh ${CATALINA_HOME}/bin/ \
+ && cp /usr/share/java/mariadb-java-client.jar ${CATALINA_HOME}/lib/
 
 # add sources from build stage
 COPY --from=build /usr/local/src/target/celements-web ${CATALINA_HOME}/webapps/ROOT

@@ -2,9 +2,18 @@
 default-character-set = utf8
 
 [mysqld]
-character-set-server = utf8
-collation-server = utf8_bin
+character-set-server = utf8mb3
+collation-server = utf8mb3_general_ci
 explicit_defaults_for_timestamp = 1
+
+default-storage-engine  = Innodb
+innodb_file_per_table	  = ON
+innodb_page_size        = 16K
+innodb_buffer_pool_size = 512M
+innodb_log_buffer_size  = 100M
+
+open-files-limit        = 2048
+table_cache             = 512
 
 [mysql]
 default-character-set = utf8

@@ -20,13 +20,13 @@ services:
   # The database container that runs MariaDB
   database:
     container_name: celements-dev-db
-    image: mariadb:10.2
+    image: mariadb:10.1
     ports:
       - "3307:3306" # for direct client access 
     env_file: docker/.env
     volumes:
       - celements-dev-db-data:/var/lib/mysql
-    # TODO  - ./docker/database/celements.cnf:/etc/mysql/conf.d/celements.cnf:ro
+      - ./docker/database/celements.cnf:/etc/mysql/conf.d/celements.cnf:ro
       - ./docker/database/init:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped
 
