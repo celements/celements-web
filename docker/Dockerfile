@@ -21,7 +21,7 @@ RUN mvn clean compile war:exploded | grep -v 'Downloading'
 # —————————————————————————————————————————————— #
 # Stage: execute                                 #
 # —————————————————————————————————————————————— #
-FROM tomcat:9-jdk11-openjdk AS execute
+FROM tomcat:8-jdk11-openjdk AS execute
 
 # when using docker-compose, these ENV values may be overridden from the .env file
 ENV CELEMENTS_DATA=/usr/local/celements
@@ -35,28 +35,28 @@ RUN apt-get update \
  && apt-get --no-install-recommends -y install \
       gettext-base \
       libmariadb-java \
- && rm -rf /var/lib/apt/lists/* ${CATALINA_HOME}/webapps/*
+ && rm -rf /var/lib/apt/lists/*
 
-# add sources from build stage
-COPY --from=build /usr/local/src/target/celements-web ${CATALINA_HOME}/webapps/ROOT
-# setup tomcat configuration
+# copy configurations / scripts
 # TODO ENV CATALINA_OPTS="-Dkey=value" working?
 COPY docker/tomcat/setenv.sh ${CATALINA_HOME}/bin/
-# setup hibernate configuration
 COPY docker/config/hibernate.cfg.xml hibernate_template.cfg.xml
-# TODO setup xwiki.cfg
-# setup entrypoint
+# TODO COPY docker/config/xwiki.cfg xwiki_template.cfg
 COPY docker/entrypoint.sh /entrypoint.sh
 
 # Create required dirs and copy the JDBC driver in the Tomcat lib
 RUN mkdir -p ${CELEMENTS_DATA} \
  && mkdir -p ${CATALINA_HOME}/temp \
+ && rm -rf ${CATALINA_HOME}/webapps/* \ 
  && cp /usr/share/java/mariadb-java-client.jar ${CATALINA_HOME}/lib/ \
  && chmod +x /entrypoint.sh
 
 ## TODO already set?
 # USER tomcat:tomcat
 
-# start tomcat (with remote debugging)
+# define custom entrypoint and command (with remote debugging)
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["catalina.sh", "jpda", "run"]
+
+# add sources from build stage
+COPY --from=build /usr/local/src/target/celements-web ${CATALINA_HOME}/webapps/ROOT
