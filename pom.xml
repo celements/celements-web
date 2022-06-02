@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>5.7</version>
+    <version>5.8-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -269,7 +269,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-   </dependencies>
+  </dependencies>
   <build>
     <finalName>celements-web</finalName>
     <plugins>
