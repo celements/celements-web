@@ -17,174 +17,227 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
- (function(window, undefined) {
-  "use strict";
 
-  class CelLazyLoaderUtils {
-    /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
-     don't use it yet. '
-    #startupTimeStamp;
-    #loadTimeStamp;
-    */
-    
-    constructor() {
-      const _me = this;
-      _me._loadTimeStamp = new Date().getTime();
-      _me._startupTimeStamp = _me._loadTimeStamp;
+class CelLazyLoaderUtils {
+  /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
+   don't use it yet. '
+  #startupTimeStamp;
+  #loadTimeStamp;
+  */
+  
+  constructor() {
+    const _me = this;
+    _me._loadTimeStamp = new Date().getTime();
+    _me._startupTimeStamp = _me._loadTimeStamp;
+    if (window.celExecOnceAfterMessagesLoaded) {
       window.celExecOnceAfterMessagesLoaded(_me._setStartupTimeStamp.bind(_me));
     }
-
-    _setStartupTimeStamp(celMessages) {
-      this._startupTimeStamp = celMessages.celmeta.startupTimeStamp;
-    }
-
-    getScriptPath(pathName) {
-      let scriptPath = pathName;
-      if (scriptPath.indexOf('?') > 0) {
-        scriptPath += '&';
-      } else {
-        scriptPath += '?';
-      }
-      if ((scriptPath.split('/').length > 4) && scriptPath.match('/resources/')) {
-        scriptPath += "version=" + this._startupTimeStamp;
-      } else {
-        scriptPath += "version=" + this._loadTimeStamp;
-      }
-      return scriptPath;
-    }
-
-    scriptIsLoaded(scriptURL) {
-      let isLoaded = false;
-      document.getElementsByTagName('script').forEach(function(loadedScript) {
-        //as long as new URL() is not available in IE use a-Element
-        const scriptNewURLLink = new URL(scriptURL);
-        console.log('scriptIsLoaded: ', loadedScript.src, scriptNewURLLink);
-        if (loadedScript.src === scriptNewURLLink.href) {
-          isLoaded = true;
-        }
-      });
-      console.log('scriptIsLoaded: return ', isLoaded, scriptURL);
-      return isLoaded;
-    }
   }
 
-  class CelLazyLoaderJs {
-    /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
-     don't use it yet. '
-    #lazyLoadUtils = new CelLazyLoaderUtils();
-    #scriptLoading;
-    #scriptQueue;
-    */
-    
-    constructor() {
-      const _me = this;
-      Object.assign(_me, window.CELEMENTS.mixins.Observable);
-      _me._lazyLoadUtils = new CelLazyLoaderUtils();
-      _me._scriptQueue = [];
-      _me._scriptLoading = false;
-    }
-
-    loadScripts(jsFiles) {
-      const _me = this;
-      const scriptLoaded = function() {
-        _me._scriptLoading = false;
-        _me.loadScripts();
-      };
-      if (!_me._scriptLoading && (_me._scriptQueue.size() > 0)) {
-        const loadScript = _me._scriptQueue.first();
-        _me._scriptQueue = _me._scriptQueue.slice(1); // remove first element
-        if (loadScript.isUrl) {
-          const newEle = document.createElement('script');
-          Object.assign(newEle, {
-             'type' : (loadScript.type || 'text/javascript'),
-             'src' : _me._lazyLoadUtils.getScriptPath(loadScript.src || loadScript.value)
-           });
-           new Date().getTime()
-          newEle.addEventListener('load', scriptLoaded);
-          newEle.addEventListener('error', scriptLoaded);
-          _me._scriptLoading = true;
-          console.log('loadScripts insert ', newEle);
-          document.head.appendChild(newEle);
-        } else {
-          console.warn('loadScripts: skiping ', loadScript);
-        }
-      } else if (jsFiles && (jsFiles.size() > 0)) {
-        _me._scriptQueue.push(...jsFiles);
-        _me.loadScripts();
-      }
-      _me._loadScriptsCheckFinished();
-    }
-
-    _loadScriptsCheckFinished() {
-      const _me = this;
-      if (!_me._scriptLoading && _me._scriptQueue.size() <= 0) {
-        console.log('_loadScriptsCheckFinished: _loadScriptsCheckFinished firing lazyLoad:scriptsLoaded');
-        _me.celFire('lazyLoader:scriptsLoaded');
-      }
-      console.log('_loadScriptsCheckFinished: finish');
-    }
+  _setStartupTimeStamp(celMessages) {
+    this._startupTimeStamp = celMessages.celmeta.startupTimeStamp;
   }
 
-  class CelLazyLoaderCss {
-    /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
-     don't use it yet. '
-    #lazyLoadUtils = new CelLazyLoaderUtils();
-    #cssLoading;
-    #cssQueue;
-    */
-    
-    constructor() {
-      const _me = this;
-      Object.assign(_me, window.CELEMENTS.mixins.Observable);
-      _me._lazyLoadUtils = new CelLazyLoaderUtils();
-      _me._cssQueue = [];
-      _me._cssLoading = false;
+  getScriptPath(pathName) {
+    let scriptPath = pathName;
+    if (scriptPath.indexOf('?') > 0) {
+      scriptPath += '&';
+    } else {
+      scriptPath += '?';
     }
+    if ((scriptPath.split('/').length > 4) && scriptPath.match('/resources/')) {
+      scriptPath += "version=" + this._startupTimeStamp;
+    } else {
+      scriptPath += "version=" + this._loadTimeStamp;
+    }
+    return scriptPath;
+  }
 
-    cssIsLoaded(script) {
-      var _me = this;
-      var isLoaded = false;
-      document.querySelectorAll('link[rel="stylesheet"]').forEach(function(loadedScript) {
-        if (loadedScript.href === _me.getTMCelDomain() + script) {
-          isLoaded = true;
-        }
-      });
-      return isLoaded;
-    }
+  scriptIsLoaded(scriptURL) {
+    let isLoaded = false;
+    document.getElementsByTagName('script').forEach(function(loadedScript) {
+      //as long as new URL() is not available in IE use a-Element
+      const scriptNewURLLink = new URL(scriptURL);
+      console.log('scriptIsLoaded: ', loadedScript.src, scriptNewURLLink);
+      if (loadedScript.src === scriptNewURLLink.href) {
+        isLoaded = true;
+      }
+    });
+    console.log('scriptIsLoaded: return ', isLoaded, scriptURL);
+    return isLoaded;
+  }
+}
+
+export class CelLazyLoaderJs {
+  /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
+   don't use it yet. '
+  #lazyLoadUtils = new CelLazyLoaderUtils();
+  #scriptLoading;
+  #scriptQueue;
+  */
   
-    loadCssScripts(cssFiles) {
-      const _me = this;
-      const cssLoaded = function() {
-        _me._cssLoading = false;
-        _me.loadCssScripts();
-      };
-      if (!_me._cssLoading && (_me._cssQueue.size() > 0)) {
-        const loadCss = _me._cssQueue.first();
-        _me._cssQueue = _me._cssQueue.slice(1); // remove first element
-        if (loadCss.isUrl) {
-          const newEle = document.createElement('link');
-          Object.assign(newEle, {
-            'rel': 'stylesheet',
-            'href': _me._lazyLoadUtils.getScriptPath(loadCss.href || loadCss.value),
-            'type': (loadCss.type || 'text/css'),
-            'media': (loadCss.media || 'screen')
-          });
-          newEle.addEventListener('load', cssLoaded);
-          newEle.addEventListener('error', cssLoaded);
-          _me._cssLoading = true;
-          document.head.appendChild(newEle);
-        } else {
-          console.warn('loadCssScripts: skiping ', loadScript);
-        }
-      } else if (cssFiles && (cssFiles.size() > 0)) {
-        _me._cssQueue.push(...cssFiles);
-        _me.loadCssScripts();
+  constructor() {
+    const _me = this;
+    if (window.CELEMENTS.mixins.Observable) {
+      Object.assign(_me, window.CELEMENTS.mixins.Observable);
+    }
+    _me._lazyLoadUtils = new CelLazyLoaderUtils();
+    _me._scriptQueue = [];
+    _me._scriptLoading = false;
+  }
+
+  loadScripts(jsFiles) {
+    const _me = this;
+    const scriptLoaded = function() {
+      _me._scriptLoading = false;
+      _me.loadScripts();
+    };
+    if (!_me._scriptLoading && (_me._scriptQueue.size() > 0)) {
+      const loadScript = _me._scriptQueue.first();
+      _me._scriptQueue = _me._scriptQueue.slice(1); // remove first element
+      if (loadScript.isUrl) {
+        const newEle = document.createElement('script');
+        Object.assign(newEle, {
+           'type' : (loadScript.type || 'text/javascript'),
+           'src' : _me._lazyLoadUtils.getScriptPath(loadScript.src || loadScript.value)
+         });
+         new Date().getTime()
+        newEle.addEventListener('load', scriptLoaded);
+        newEle.addEventListener('error', scriptLoaded);
+        _me._scriptLoading = true;
+        console.log('loadScripts insert ', newEle);
+        document.head.appendChild(newEle);
+      } else {
+        console.warn('loadScripts: skiping ', loadScript);
+      }
+    } else if (jsFiles && (jsFiles.size() > 0)) {
+      _me._scriptQueue.push(...jsFiles);
+      _me.loadScripts();
+    }
+    _me._loadScriptsCheckFinished();
+  }
+
+  _loadScriptsCheckFinished() {
+    const _me = this;
+    if (!_me._scriptLoading && _me._scriptQueue.size() <= 0) {
+      console.log('_loadScriptsCheckFinished: _loadScriptsCheckFinished firing lazyLoad:scriptsLoaded');
+      _me.celFire('lazyLoader:scriptsLoaded');
+    }
+    console.log('_loadScriptsCheckFinished: finish');
+  }
+}
+
+export class CelLazyLoaderCss {
+  /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
+   don't use it yet. '
+  #lazyLoadUtils = new CelLazyLoaderUtils();
+  #cssLoading;
+  #cssQueue;
+  */
+  
+  constructor() {
+    const _me = this;
+    if (window.CELEMENTS.mixins.Observable) {
+      Object.assign(_me, window.CELEMENTS.mixins.Observable);
+    }
+    _me._lazyLoadUtils = new CelLazyLoaderUtils();
+    _me._cssQueue = [];
+    _me._cssLoading = false;
+  }
+
+  cssIsLoaded(script) {
+    var _me = this;
+    var isLoaded = false;
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(function(loadedScript) {
+      if (loadedScript.href === _me.getTMCelDomain() + script) {
+        isLoaded = true;
+      }
+    });
+    return isLoaded;
+  }
+
+  loadCssScripts(cssFiles) {
+    const _me = this;
+    const cssLoaded = function() {
+      _me._cssLoading = false;
+      _me.loadCssScripts();
+    };
+    if (!_me._cssLoading && (_me._cssQueue.size() > 0)) {
+      const loadCss = _me._cssQueue.first();
+      _me._cssQueue = _me._cssQueue.slice(1); // remove first element
+      if (loadCss.isUrl) {
+        const newEle = document.createElement('link');
+        Object.assign(newEle, {
+          'rel': 'stylesheet',
+          'href': _me._lazyLoadUtils.getScriptPath(loadCss.href || loadCss.value),
+          'type': (loadCss.type || 'text/css'),
+          'media': (loadCss.media || 'screen')
+        });
+        newEle.addEventListener('load', cssLoaded);
+        newEle.addEventListener('error', cssLoaded);
+        _me._cssLoading = true;
+        document.head.appendChild(newEle);
+      } else {
+        console.warn('loadCssScripts: skiping ', loadScript);
+      }
+    } else if (cssFiles && (cssFiles.size() > 0)) {
+      _me._cssQueue.push(...cssFiles);
+      _me.loadCssScripts();
+    }
+  }
+
+/************************************************************************
+ * CelLacyLoader loads the html-response of URL into the given cellToLoad
+ ************************************************************************/
+
+export class CelLacyLoadElementAnalyser {
+
+  constructor () {
+    this.checkLoadingElementsHandlerBind = this._checkLoadingElementsHandler.bind(this);
+    //TODO customEvent for 'celements:contentChanged' possible?
+    this.addEventListener('celements:contentChanged', this.checkLoadingElementsHandlerBind);
+  }
+  
+  checkLoadingElementsHandler(event) {
+    //TODO customEvent for 'celements:contentChanged' possible?
+    this.checkLoadingElements(event.memo.rootToAnalyse);
+  }
+
+  checkLoadingElements(documentPart) {
+    if (!documentPart.querySelectorAll) return;
+    for (let cellLoad of documentPart.querySelectorAll('.celLoadLazy')) {
+      if (!cellLoad.classList.contains('celLoadLazyLoading')) {
+        new CelLacyLoader(cellLoad).loadCell();
       }
     }
   }
-  if (typeof window.CELEMENTS === "undefined") { window.CELEMENTS = {}; }
-  if (typeof window.CELEMENTS.lazyloader === "undefined") { window.CELEMENTS.lazyloader = {}; }
-  window.CELEMENTS.lazyloader.CssLoader = new CelLazyLoaderCss();
-  window.CELEMENTS.lazyloader.JsLoader = new CelLazyLoaderJs();
+  
+}
 
-}) (window);
+export class CelLacyLoader {
+    
+  constructor (cellToLoad) {
+    this.cellToLoad = cellToLoad;
+    this.cellToLoad.classList.add('celLoadLazyLoading');
+  }
+
+  async loadCell() {
+    const _me = this;
+    await fetch(_me.cellToLoad.dataset.cellUrl)
+    .then(resp => resp.text())
+    .then(function(txt){
+      let elem = document.createElement('div');
+      //FIXME replace innerHTML with updateContent from celOverlay.js
+      elem.innerHTML = txt;
+      for (let item of elem.childNodes) {
+        _me.cellToLoad.parentNode.insertBefore(item, _me.cellToLoad);
+        checkLoadingElements(item);
+      }
+      _me.cellToLoad.remove();
+    });
+  }
+
+}
+
+
+}
