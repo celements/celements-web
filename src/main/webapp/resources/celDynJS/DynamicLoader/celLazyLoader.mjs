@@ -202,7 +202,7 @@ class CelLazyLoader extends HTMLElement{
     await fetch(this.dataset.cellUrl)
     .then(resp => resp.text())
     .then(function(txt){
-      this.updateContent(this._parseHTML(txt));
+      this._updateContent(this._parseHTML(txt));
     });
   }
 
@@ -212,8 +212,8 @@ class CelLazyLoader extends HTMLElement{
     return Array.from(elem.childNodes);
   }
 
-  updateContent(newChildNodes) {
-    console.debug('updateContent: ', newChildNodes);
+  _updateContent(newChildNodes) {
+    console.debug('_updateContent: ', newChildNodes);
     for (let item of newChildNodes) {
       this.parentNode.insertBefore(item, this);
       const event = new CustomEvent('celements:contentChanged', { 
