@@ -196,14 +196,11 @@ class CelLazyLoader extends HTMLElement{
   constructor () {
     super();
     this.classList.add('celLoadLazyLoading');
+    this._fetchResponse = loadCell();
   }
 
-  async loadCell() {
-    await fetch(this.dataset.cellUrl)
-    .then(resp => resp.text())
-    .then(function(txt){
-      this._updateContent(this._parseHTML(txt));
-    });
+  loadCell() {
+    return fetch(this.dataset.cellUrl);
   }
 
   _parseHTML(html) {
@@ -224,6 +221,17 @@ class CelLazyLoader extends HTMLElement{
       item.dispatchEvent(event);
     }
     this.remove();
+  }
+
+  connectedCallback() {
+    console.debug('connectedCallback: ', this._fetchResponse);
+    this._fetchResponse
+      .then(resp => resp.text())
+      .then(function(txt){
+        console.debug('connectedCallback fetchResponse then: ', txt);
+        this._updateContent(this._parseHTML(txt));
+      });
+
   }
 }
 
