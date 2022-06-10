@@ -146,8 +146,8 @@ export class CelLazyLoaderCss {
   }
 
   cssIsLoaded(script) {
-    var _me = this;
-    var isLoaded = false;
+    const _me = this;
+    let isLoaded = false;
     document.querySelectorAll('link[rel="stylesheet"]').forEach(function(loadedScript) {
       if (loadedScript.href === _me.getTMCelDomain() + script) {
         isLoaded = true;
@@ -188,54 +188,45 @@ export class CelLazyLoaderCss {
 }
 
 /************************************************************************
- * CelLacyLoader loads the html-response of URL into the given cellToLoad
+ * CelLazyLoader loads the html-response of URL into the given cellToLoad
  ************************************************************************/
 
-export class CelLacyLoadElementAnalyser {
-
-  constructor () {
-    this.checkLoadingElementsHandlerBind = this._checkLoadingElementsHandler.bind(this);
-    //TODO customEvent for 'celements:contentChanged' possible?
-    this.addEventListener('celements:contentChanged', this.checkLoadingElementsHandlerBind);
-  }
-  
-  checkLoadingElementsHandler(event) {
-    //TODO customEvent for 'celements:contentChanged' possible?
-    this.checkLoadingElements(event.memo.rootToAnalyse);
-  }
-
-  checkLoadingElements(documentPart) {
-    if (!documentPart.querySelectorAll) return;
-    for (let cellLoad of documentPart.querySelectorAll('.celLoadLazy')) {
-      if (!cellLoad.classList.contains('celLoadLazyLoading')) {
-        new CelLacyLoader(cellLoad).loadCell();
-      }
-    }
-  }
-  
-}
-
-export class CelLacyLoader {
+class CelLazyLoader extends HTMLElement{
     
-  constructor (cellToLoad) {
-    this.cellToLoad = cellToLoad;
-    this.cellToLoad.classList.add('celLoadLazyLoading');
+  constructor () {
+    super();
+    this.classList.add('celLoadLazyLoading');
   }
 
   async loadCell() {
-    const _me = this;
-    await fetch(_me.cellToLoad.dataset.cellUrl)
+    await fetch(this.dataset.cellUrl)
     .then(resp => resp.text())
     .then(function(txt){
-      let elem = document.createElement('div');
-      //FIXME replace innerHTML with updateContent from celOverlay.js
-      elem.innerHTML = txt;
-      for (let item of elem.childNodes) {
-        _me.cellToLoad.parentNode.insertBefore(item, _me.cellToLoad);
-        checkLoadingElements(item);
-      }
-      _me.cellToLoad.remove();
+      this.updateContent(this._parseHTML(txt));
     });
   }
 
+  _parseHTML(html) {
+    const elem = document.createElement('div');
+    elem.insertAdjacentHTML('afterbegin', html);
+    return Array.from(elem.childNodes);
+  }
+
+  updateContent(newChildNodes) {
+    console.debug('updateContent: ', newChildNodes);
+    for (let item of newChildNodes) {
+      this.parentNode.insertBefore(item, this);
+      const event = new CustomEvent('celements:contentChanged', { 
+        bubles: true,
+        memo: {
+         'htmlElem' : item
+      }});
+      item.dispatchEvent(event);
+    }
+    this.remove();
+  }
+}
+
+if (!customElements.get('celLazyLoad')) {
+  customElements.define('celLazyLoad', CelLazyLoader);
 }
