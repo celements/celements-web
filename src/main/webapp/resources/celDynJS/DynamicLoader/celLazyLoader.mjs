@@ -196,10 +196,10 @@ class CelLazyLoader extends HTMLElement{
   constructor () {
     super();
     this.classList.add('celLoadLazyLoading');
-    this._fetchResponse = loadCell();
+    this._fetchResponse = this._loadCell();
   }
 
-  loadCell() {
+  _loadCell() {
     return fetch(this.getAttribute('src'));
   }
 
