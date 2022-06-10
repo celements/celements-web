@@ -200,7 +200,7 @@ class CelLazyLoader extends HTMLElement{
   }
 
   loadCell() {
-    return fetch(this.dataset.cellUrl);
+    return fetch(this.getAttribute('src'));
   }
 
   _parseHTML(html) {
