@@ -185,6 +185,7 @@ export class CelLazyLoaderCss {
       _me.loadCssScripts();
     }
   }
+}
 
 /************************************************************************
  * CelLacyLoader loads the html-response of URL into the given cellToLoad
@@ -236,8 +237,5 @@ export class CelLacyLoader {
       _me.cellToLoad.remove();
     });
   }
-
-}
-
 
 }
