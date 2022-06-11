@@ -224,12 +224,15 @@ class CelLazyLoader extends HTMLElement{
   }
 
   connectedCallback() {
+    const _me = this;
     console.debug('connectedCallback: ', this._fetchResponse);
-    this._fetchResponse
+    _me._fetchResponse
       .then(resp => resp.text())
       .then(function(txt){
         console.debug('connectedCallback fetchResponse then: ', txt);
-        this._updateContent(this._parseHTML(txt));
+        const newNodes = _me._parseHTML(txt);
+        console.debug('connectedCallback fetchResponse then: ', newNodes);
+        _me._updateContent(newNodes);
       });
 
   }
