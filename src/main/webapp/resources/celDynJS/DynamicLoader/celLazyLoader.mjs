@@ -197,6 +197,9 @@ class CelLazyLoader extends HTMLElement{
     super();
     this.classList.add('celLoadLazyLoading');
     this._fetchResponse = this._loadCell();
+    this.attachShadow({mode: 'open'});
+    this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
+    _me._showLoadingIndicator();
   }
 
   _loadCell() {
@@ -221,6 +224,17 @@ class CelLazyLoader extends HTMLElement{
       item.dispatchEvent(event);
     }
     this.remove();
+  }
+
+  _showLoadingIndicator() {
+    const loaderSize = parseInt(this.getAttribute('size')) || 64;
+    const loaderimg = this._loadingIndicator.getLoadingIndicator(loaderSize);
+    Object.assign(loaderimg.style, {
+      display : 'block',
+      marginLeft : 'auto',
+      marginRight : 'auto'
+    });
+    this.shadowRoot.appendChild(loaderimg);
   }
 
   connectedCallback() {
