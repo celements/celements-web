@@ -245,7 +245,6 @@ class CelLazyLoader extends HTMLElement{
       .then(function(txt){
         me._updateContent(me._parseHTML(txt));
       });
-
   }
 }
 
