@@ -248,6 +248,6 @@ class CelLazyLoader extends HTMLElement{
   }
 }
 
-if (!customElements.get('celLazyLoad')) {
+if (!customElements.get('cel-lazy-load')) {
   customElements.define('cel-lazy-load', CelLazyLoader);
 }
