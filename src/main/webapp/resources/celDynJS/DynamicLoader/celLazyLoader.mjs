@@ -26,11 +26,11 @@ class CelLazyLoaderUtils {
   */
   
   constructor() {
-    const _me = this;
-    _me._loadTimeStamp = new Date().getTime();
-    _me._startupTimeStamp = _me._loadTimeStamp;
+    const me = this;
+    me._loadTimeStamp = new Date().getTime();
+    me._startupTimeStamp = me._loadTimeStamp;
     if (window.celExecOnceAfterMessagesLoaded) {
-      window.celExecOnceAfterMessagesLoaded(_me._setStartupTimeStamp.bind(_me));
+      window.celExecOnceAfterMessagesLoaded(me._setStartupTimeStamp.bind(me));
     }
   }
 
@@ -77,51 +77,51 @@ export class CelLazyLoaderJs {
   */
   
   constructor() {
-    const _me = this;
+    const me = this;
     if (window.CELEMENTS.mixins.Observable) {
-      Object.assign(_me, window.CELEMENTS.mixins.Observable);
+      Object.assign(me, window.CELEMENTS.mixins.Observable);
     }
-    _me._lazyLoadUtils = new CelLazyLoaderUtils();
-    _me._scriptQueue = [];
-    _me._scriptLoading = false;
+    me._lazyLoadUtils = new CelLazyLoaderUtils();
+    me._scriptQueue = [];
+    me._scriptLoading = false;
   }
 
   loadScripts(jsFiles) {
-    const _me = this;
+    const me = this;
     const scriptLoaded = function() {
-      _me._scriptLoading = false;
-      _me.loadScripts();
+      me._scriptLoading = false;
+      me.loadScripts();
     };
-    if (!_me._scriptLoading && (_me._scriptQueue.size() > 0)) {
-      const loadScript = _me._scriptQueue.first();
-      _me._scriptQueue = _me._scriptQueue.slice(1); // remove first element
+    if (!me._scriptLoading && (me._scriptQueue.size() > 0)) {
+      const loadScript = me._scriptQueue.first();
+      me._scriptQueue = me._scriptQueue.slice(1); // remove first element
       if (loadScript.isUrl) {
         const newEle = document.createElement('script');
         Object.assign(newEle, {
            'type' : (loadScript.type || 'text/javascript'),
-           'src' : _me._lazyLoadUtils.getScriptPath(loadScript.src || loadScript.value)
+           'src' : me._lazyLoadUtils.getScriptPath(loadScript.src || loadScript.value)
          });
          new Date().getTime()
         newEle.addEventListener('load', scriptLoaded);
         newEle.addEventListener('error', scriptLoaded);
-        _me._scriptLoading = true;
+        me._scriptLoading = true;
         console.log('loadScripts insert ', newEle);
         document.head.appendChild(newEle);
       } else {
         console.warn('loadScripts: skiping ', loadScript);
       }
     } else if (jsFiles && (jsFiles.size() > 0)) {
-      _me._scriptQueue.push(...jsFiles);
-      _me.loadScripts();
+      me._scriptQueue.push(...jsFiles);
+      me.loadScripts();
     }
-    _me._loadScriptsCheckFinished();
+    me._loadScriptsCheckFinished();
   }
 
   _loadScriptsCheckFinished() {
-    const _me = this;
-    if (!_me._scriptLoading && _me._scriptQueue.size() <= 0) {
+    const me = this;
+    if (!me._scriptLoading && me._scriptQueue.size() <= 0) {
       console.log('_loadScriptsCheckFinished: _loadScriptsCheckFinished firing lazyLoad:scriptsLoaded');
-      _me.celFire('lazyLoader:scriptsLoaded');
+      me.celFire('lazyLoader:scriptsLoaded');
     }
     console.log('_loadScriptsCheckFinished: finish');
   }
@@ -136,20 +136,20 @@ export class CelLazyLoaderCss {
   */
   
   constructor() {
-    const _me = this;
+    const me = this;
     if (window.CELEMENTS.mixins.Observable) {
-      Object.assign(_me, window.CELEMENTS.mixins.Observable);
+      Object.assign(me, window.CELEMENTS.mixins.Observable);
     }
-    _me._lazyLoadUtils = new CelLazyLoaderUtils();
-    _me._cssQueue = [];
-    _me._cssLoading = false;
+    me._lazyLoadUtils = new CelLazyLoaderUtils();
+    me._cssQueue = [];
+    me._cssLoading = false;
   }
 
   cssIsLoaded(script) {
-    const _me = this;
+    const me = this;
     let isLoaded = false;
     document.querySelectorAll('link[rel="stylesheet"]').forEach(function(loadedScript) {
-      if (loadedScript.href === _me.getTMCelDomain() + script) {
+      if (loadedScript.href === me.getTMCelDomain() + script) {
         isLoaded = true;
       }
     });
@@ -157,32 +157,32 @@ export class CelLazyLoaderCss {
   }
 
   loadCssScripts(cssFiles) {
-    const _me = this;
+    const me = this;
     const cssLoaded = function() {
-      _me._cssLoading = false;
-      _me.loadCssScripts();
+      me._cssLoading = false;
+      me.loadCssScripts();
     };
-    if (!_me._cssLoading && (_me._cssQueue.size() > 0)) {
-      const loadCss = _me._cssQueue.first();
-      _me._cssQueue = _me._cssQueue.slice(1); // remove first element
+    if (!me._cssLoading && (me._cssQueue.size() > 0)) {
+      const loadCss = me._cssQueue.first();
+      me._cssQueue = me._cssQueue.slice(1); // remove first element
       if (loadCss.isUrl) {
         const newEle = document.createElement('link');
         Object.assign(newEle, {
           'rel': 'stylesheet',
-          'href': _me._lazyLoadUtils.getScriptPath(loadCss.href || loadCss.value),
+          'href': me._lazyLoadUtils.getScriptPath(loadCss.href || loadCss.value),
           'type': (loadCss.type || 'text/css'),
           'media': (loadCss.media || 'screen')
         });
         newEle.addEventListener('load', cssLoaded);
         newEle.addEventListener('error', cssLoaded);
-        _me._cssLoading = true;
+        me._cssLoading = true;
         document.head.appendChild(newEle);
       } else {
         console.warn('loadCssScripts: skiping ', loadScript);
       }
     } else if (cssFiles && (cssFiles.size() > 0)) {
-      _me._cssQueue.push(...cssFiles);
-      _me.loadCssScripts();
+      me._cssQueue.push(...cssFiles);
+      me.loadCssScripts();
     }
   }
 }
@@ -199,7 +199,7 @@ class CelLazyLoader extends HTMLElement{
     this._fetchResponse = this._loadCell();
     this.attachShadow({mode: 'open'});
     this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
-    _me._showLoadingIndicator();
+    this._showLoadingIndicator();
   }
 
   _loadCell() {
@@ -238,12 +238,12 @@ class CelLazyLoader extends HTMLElement{
   }
 
   connectedCallback() {
-    const _me = this;
+    const me = this;
     console.debug('connectedCallback: ', this._fetchResponse);
-    _me._fetchResponse
+    me._fetchResponse
       .then(resp => resp.text())
       .then(function(txt){
-        _me._updateContent(_me._parseHTML(txt));
+        me._updateContent(me._parseHTML(txt));
       });
 
   }
