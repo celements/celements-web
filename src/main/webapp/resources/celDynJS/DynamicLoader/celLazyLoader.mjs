@@ -99,7 +99,6 @@ class CelLazyLoaderJs extends HTMLElement {
     this._lazyLoadUtils = new CelLazyLoaderUtils();
     this._jsLoadedBind = this._jsLoaded.bind(this);
     this._jsLoadedErrBind = this._jsLoadedErr.bind(this);
-    this._loadJsScript();
   }
 
   _jsLoadedErr = function(message, source, lineno, colno, error) {
@@ -156,6 +155,10 @@ class CelLazyLoaderJs extends HTMLElement {
       console.debug('skip js file already loaded', jsFileSrc);
     }
   }
+
+  connectedCallback() {
+    this._loadJsScript();
+  }
 }
 
 if (!customElements.get('cel-lazy-load-js')) {
@@ -175,13 +178,9 @@ class CelLazyLoaderCss extends HTMLElement {
   
   constructor() {
     super();
-    if (window.CELEMENTS.mixins.Observable) {
-      Object.assign(this, window.CELEMENTS.mixins.Observable);
-    }
     this._lazyLoadUtils = new CelLazyLoaderUtils();
     this._cssLoadedBind = this._cssLoaded.bind(this);
     this._cssLoadedErrBind = this._cssLoadedErr.bind(this);
-    this._loadCssScript();
   }
 
   _cssLoadedErr = function(message, source, lineno, colno, error) {
@@ -224,6 +223,10 @@ class CelLazyLoaderCss extends HTMLElement {
     } else {
       console.debug('skip css file already loaded', cssFileSrc);
     }
+  }
+
+  connectedCallback() {
+    this._loadCssScript();
   }
 }
 
