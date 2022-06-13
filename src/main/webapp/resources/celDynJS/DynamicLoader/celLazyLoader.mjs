@@ -26,11 +26,10 @@ class CelLazyLoaderUtils {
   */
   
   constructor() {
-    const me = this;
-    me._loadTimeStamp = new Date().getTime();
-    me._startupTimeStamp = me._loadTimeStamp;
+    this._loadTimeStamp = new Date().getTime();
+    this._startupTimeStamp = this._loadTimeStamp;
     if (window.celExecOnceAfterMessagesLoaded) {
-      window.celExecOnceAfterMessagesLoaded(me._setStartupTimeStamp.bind(me));
+      window.celExecOnceAfterMessagesLoaded(this._setStartupTimeStamp.bind(this));
     }
   }
 
@@ -45,20 +44,21 @@ class CelLazyLoaderUtils {
     } else {
       scriptPath += '?';
     }
-    if ((scriptPath.split('/').length > 4) && scriptPath.match('/resources/')) {
-      scriptPath += "version=" + this._startupTimeStamp;
-    } else {
-      scriptPath += "version=" + this._loadTimeStamp;
+    if (!pathName.includes('version=')) {
+      if ((scriptPath.split('/').length > 4) && scriptPath.match('/resources/')) {
+        scriptPath += "version=" + this._startupTimeStamp;
+      } else {
+        scriptPath += "version=" + this._loadTimeStamp;
+      }
     }
     return scriptPath;
   }
 
-  scriptIsLoaded(scriptURL) {
+  jsIsLoaded(scriptURL) {
     let isLoaded = false;
     document.getElementsByTagName('script').forEach(function(loadedScript) {
-      //as long as new URL() is not available in IE use a-Element
       const scriptNewURLLink = new URL(scriptURL);
-      console.log('scriptIsLoaded: ', loadedScript.src, scriptNewURLLink);
+      console.debug('scriptIsLoaded: ', loadedScript.src, scriptNewURLLink);
       if (loadedScript.src === scriptNewURLLink.href) {
         isLoaded = true;
       }
@@ -66,132 +66,171 @@ class CelLazyLoaderUtils {
     console.log('scriptIsLoaded: return ', isLoaded, scriptURL);
     return isLoaded;
   }
-}
 
-export class CelLazyLoaderJs {
-  /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
-   don't use it yet. '
-  #lazyLoadUtils = new CelLazyLoaderUtils();
-  #scriptLoading;
-  #scriptQueue;
-  */
-  
-  constructor() {
-    const me = this;
-    if (window.CELEMENTS.mixins.Observable) {
-      Object.assign(me, window.CELEMENTS.mixins.Observable);
-    }
-    me._lazyLoadUtils = new CelLazyLoaderUtils();
-    me._scriptQueue = [];
-    me._scriptLoading = false;
-  }
-
-  loadScripts(jsFiles) {
-    const me = this;
-    const scriptLoaded = function() {
-      me._scriptLoading = false;
-      me.loadScripts();
-    };
-    if (!me._scriptLoading && (me._scriptQueue.size() > 0)) {
-      const loadScript = me._scriptQueue.first();
-      me._scriptQueue = me._scriptQueue.slice(1); // remove first element
-      if (loadScript.isUrl) {
-        const newEle = document.createElement('script');
-        Object.assign(newEle, {
-           'type' : (loadScript.type || 'text/javascript'),
-           'src' : me._lazyLoadUtils.getScriptPath(loadScript.src || loadScript.value)
-         });
-         new Date().getTime()
-        newEle.addEventListener('load', scriptLoaded);
-        newEle.addEventListener('error', scriptLoaded);
-        me._scriptLoading = true;
-        console.log('loadScripts insert ', newEle);
-        document.head.appendChild(newEle);
-      } else {
-        console.warn('loadScripts: skiping ', loadScript);
-      }
-    } else if (jsFiles && (jsFiles.size() > 0)) {
-      me._scriptQueue.push(...jsFiles);
-      me.loadScripts();
-    }
-    me._loadScriptsCheckFinished();
-  }
-
-  _loadScriptsCheckFinished() {
-    const me = this;
-    if (!me._scriptLoading && me._scriptQueue.size() <= 0) {
-      console.log('_loadScriptsCheckFinished: _loadScriptsCheckFinished firing lazyLoad:scriptsLoaded');
-      me.celFire('lazyLoader:scriptsLoaded');
-    }
-    console.log('_loadScriptsCheckFinished: finish');
-  }
-}
-
-export class CelLazyLoaderCss {
-  /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
-   don't use it yet. '
-  #lazyLoadUtils = new CelLazyLoaderUtils();
-  #cssLoading;
-  #cssQueue;
-  */
-  
-  constructor() {
-    const me = this;
-    if (window.CELEMENTS.mixins.Observable) {
-      Object.assign(me, window.CELEMENTS.mixins.Observable);
-    }
-    me._lazyLoadUtils = new CelLazyLoaderUtils();
-    me._cssQueue = [];
-    me._cssLoading = false;
-  }
-
-  cssIsLoaded(script) {
-    const me = this;
+  cssIsLoaded(scriptURL) {
     let isLoaded = false;
-    document.querySelectorAll('link[rel="stylesheet"]').forEach(function(loadedScript) {
-      if (loadedScript.href === me.getTMCelDomain() + script) {
+    document.querySelectorAll('link[rel=stylesheet]').forEach(function(loadedCss) {
+      const cssNewUrlLink = new URL(scriptURL);
+      console.debug('cssIsLoaded: ', loadedCss.href, cssNewUrlLink);
+      if (loadedCss.href === cssNewUrlLink.href) {
         isLoaded = true;
       }
     });
+    console.log('cssIsLoaded: return ', isLoaded, scriptURL);
     return isLoaded;
   }
+}
 
-  loadCssScripts(cssFiles) {
+/************************************************************
+ * CelLazyLoaderJs loads the html-response of src attribute
+ ************************************************************/
+class CelLazyLoaderJs extends HTMLElement {
+  /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
+   don't use it yet. '
+  #lazyLoadUtils = new CelLazyLoaderUtils();
+  #jsLoadedBind;
+  #jsLoadedErrBind;
+  */
+  
+  constructor() {
+    super();
+    this._lazyLoadUtils = new CelLazyLoaderUtils();
+    this._jsLoadedBind = this._jsLoaded.bind(this);
+    this._jsLoadedErrBind = this._jsLoadedErr.bind(this);
+    this._loadJsScript();
+  }
+
+  _jsLoadedErr = function(message, source, lineno, colno, error) {
+    const event = new CustomEvent('celements:jsFileLoaded', { 
+      bubles: true,
+      memo: {
+       'jsFileSrc' : source,
+       'successful' : false,
+       'message' : message,
+       'lineno' : lineno,
+       'colno' : colno,
+       'error' : error
+    }});
+    this.dispatchEvent(event);
+  }
+
+  _jsLoaded = function() {
+    const event = new CustomEvent('celements:jsFileLoaded', { 
+      bubles: true,
+      memo: {
+       'jsFileSrc' : this.getAttribute('src'),
+       'successful' : true
+    }});
+    this.dispatchEvent(event);
+  }
+
+  _getType(jsFileSrc) {
+    const jsFileUrl = new URL(jsFileSrc);
+    if (jsFileUrl.pathname.endsWith('.mjs')) return 'module';
+    return (this.getAttribute('type') || 'text/javascript');
+  }
+
+  _loadJsScript() {
     const me = this;
-    const cssLoaded = function() {
-      me._cssLoading = false;
-      me.loadCssScripts();
-    };
-    if (!me._cssLoading && (me._cssQueue.size() > 0)) {
-      const loadCss = me._cssQueue.first();
-      me._cssQueue = me._cssQueue.slice(1); // remove first element
-      if (loadCss.isUrl) {
-        const newEle = document.createElement('link');
+    const jsFileSrc = me._lazyLoadUtils.getScriptPath(this.getAttribute('src'))
+    if (!this._lazyLoadUtils.jsIsLoaded(jsFileSrc)) {
+        const newEle = document.createElement('script');
         Object.assign(newEle, {
-          'rel': 'stylesheet',
-          'href': me._lazyLoadUtils.getScriptPath(loadCss.href || loadCss.value),
-          'type': (loadCss.type || 'text/css'),
-          'media': (loadCss.media || 'screen')
+           'type' : me._getType(jsFileSrc),
+           'src' : me._lazyLoadUtils.getScriptPath(jsFileSrc)
         });
-        newEle.addEventListener('load', cssLoaded);
-        newEle.addEventListener('error', cssLoaded);
-        me._cssLoading = true;
+        const loadMode = this.getAttribute('loadMode');
+        if (loadMode && (loadMode != 'sync')) {
+          newEle.setAttribute(loadMode, '');
+        }
+        newEle.addEventListener('load', this._jsLoadedBind);
+        newEle.addEventListener('error', this._jsLoadedErrBind);
+        console.log('loadScripts insert ', newEle);
         document.head.appendChild(newEle);
-      } else {
-        console.warn('loadCssScripts: skiping ', loadScript);
-      }
-    } else if (cssFiles && (cssFiles.size() > 0)) {
-      me._cssQueue.push(...cssFiles);
-      me.loadCssScripts();
+    } else {
+      console.debug('skip js file already loaded', jsFileSrc);
     }
   }
 }
 
-/************************************************************************
- * CelLazyLoader loads the html-response of URL into the given cellToLoad
- ************************************************************************/
+if (!customElements.get('cel-lazy-load-js')) {
+  customElements.define('cel-lazy-load-js', CelLazyLoaderJs);
+}
 
-class CelLazyLoader extends HTMLElement{
+/************************************************************
+ * CelLazyLoaderCss loads the html-response of src attribute
+ ************************************************************/
+class CelLazyLoaderCss extends HTMLElement {
+  /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
+   don't use it yet. '
+  #lazyLoadUtils = new CelLazyLoaderUtils();
+  #cssLoadedBind;
+  #cssLoadedErrBind;
+  */
+  
+  constructor() {
+    super();
+    if (window.CELEMENTS.mixins.Observable) {
+      Object.assign(this, window.CELEMENTS.mixins.Observable);
+    }
+    this._lazyLoadUtils = new CelLazyLoaderUtils();
+    this._cssLoadedBind = this._cssLoaded.bind(this);
+    this._cssLoadedErrBind = this._cssLoadedErr.bind(this);
+    this._loadCssScript();
+  }
+
+  _cssLoadedErr = function(message, source, lineno, colno, error) {
+    const event = new CustomEvent('celements:cssFileLoaded', { 
+      bubles: true,
+      memo: {
+       'cssFileSrc' : source,
+       'successful' : false,
+       'message' : message,
+       'lineno' : lineno,
+       'colno' : colno,
+       'error' : error
+    }});
+    this.dispatchEvent(event);
+  }
+
+  _cssLoaded = function() {
+    const event = new CustomEvent('celements:cssFileLoaded', { 
+      bubles: true,
+      memo: {
+       'cssFileSrc' : this.getAttribute('src'),
+       'successful' : true
+    }});
+    this.dispatchEvent(event);
+  }
+
+  _loadCssScript() {
+    const me = this;
+    const cssFileSrc = this.getAttribute('src');
+    if (!this._lazyLoadUtils.cssIsLoaded(cssFileSrc)) {
+      const newEle = document.createElement('link');
+      Object.assign(newEle, {
+        'rel': 'stylesheet',
+        'href': me._lazyLoadUtils.getScriptPath(cssFileSrc),
+        'type': (this.getAttribute('type') || 'text/css'),
+        'media': (this.getAttribute('media') || 'screen')
+      });
+      newEle.addEventListener('load', this._cssLoadedBind);
+      newEle.addEventListener('error', this._cssLoadedErrBind);
+      document.head.appendChild(newEle);
+    } else {
+      console.debug('skip css file already loaded', cssFileSrc);
+    }
+  }
+}
+
+if (!customElements.get('cel-lazy-load-css')) {
+  customElements.define('cel-lazy-load-css', CelLazyLoaderCss);
+}
+
+/*********************************************************
+ * CelLazyLoader loads the html-response of src attribute
+ *********************************************************/
+class CelLazyLoader extends HTMLElement {
     
   constructor () {
     super();
