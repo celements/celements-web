@@ -132,18 +132,22 @@ class CelLazyLoaderJs extends HTMLElement {
     return (this.getAttribute('type') || 'text/javascript');
   }
 
+  _addLoadMode(newEle) {
+    const loadMode = this.getAttribute('loadMode');
+    if (loadMode && (loadMode != 'sync')) {
+      newEle.setAttribute(loadMode, '');
+    }
+    return newEle;
+  }
+
   _loadJsScript() {
     const jsFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'))
     if (!this._lazyLoadUtils.jsIsLoaded(jsFileSrc)) {
         const newEle = document.createElement('script');
-        Object.assign(newEle, {
+        Object.assign(this._addLoadMode(newEle), {
            'type' : this._getType(jsFileSrc),
            'src' : this._lazyLoadUtils.getScriptPath(jsFileSrc)
         });
-        const loadMode = this.getAttribute('loadMode');
-        if (loadMode && (loadMode != 'sync')) {
-          newEle.setAttribute(loadMode, '');
-        }
         newEle.addEventListener('load', this._jsLoadedBind);
         newEle.addEventListener('error', this._jsLoadedErrBind);
         console.log('loadScripts insert ', newEle);
