@@ -56,26 +56,26 @@ class CelLazyLoaderUtils {
 
   jsIsLoaded(scriptURL) {
     let isLoaded = false;
-    document.getElementsByTagName('script').forEach(function(loadedScript) {
+    for (let loadedScript of document.getElementsByTagName('script')) {
       const scriptNewURLLink = new URL(scriptURL);
       console.debug('scriptIsLoaded: ', loadedScript.src, scriptNewURLLink);
       if (loadedScript.src === scriptNewURLLink.href) {
         isLoaded = true;
       }
-    });
+    }
     console.log('scriptIsLoaded: return ', isLoaded, scriptURL);
     return isLoaded;
   }
 
   cssIsLoaded(scriptURL) {
     let isLoaded = false;
-    document.querySelectorAll('link[rel=stylesheet]').forEach(function(loadedCss) {
+    for (let loadedCss of document.querySelectorAll('link[rel=stylesheet]')) {
       const cssNewUrlLink = new URL(scriptURL);
       console.debug('cssIsLoaded: ', loadedCss.href, cssNewUrlLink);
       if (loadedCss.href === cssNewUrlLink.href) {
         isLoaded = true;
       }
-    });
+    }
     console.log('cssIsLoaded: return ', isLoaded, scriptURL);
     return isLoaded;
   }
@@ -131,13 +131,12 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   _loadJsScript() {
-    const me = this;
-    const jsFileSrc = me._lazyLoadUtils.getScriptPath(this.getAttribute('src'))
+    const jsFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'))
     if (!this._lazyLoadUtils.jsIsLoaded(jsFileSrc)) {
         const newEle = document.createElement('script');
         Object.assign(newEle, {
-           'type' : me._getType(jsFileSrc),
-           'src' : me._lazyLoadUtils.getScriptPath(jsFileSrc)
+           'type' : this._getType(jsFileSrc),
+           'src' : this._lazyLoadUtils.getScriptPath(jsFileSrc)
         });
         const loadMode = this.getAttribute('loadMode');
         if (loadMode && (loadMode != 'sync')) {
@@ -204,13 +203,12 @@ class CelLazyLoaderCss extends HTMLElement {
   }
 
   _loadCssScript() {
-    const me = this;
-    const cssFileSrc = this.getAttribute('src');
+    const cssFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'));
     if (!this._lazyLoadUtils.cssIsLoaded(cssFileSrc)) {
       const newEle = document.createElement('link');
       Object.assign(newEle, {
         'rel': 'stylesheet',
-        'href': me._lazyLoadUtils.getScriptPath(cssFileSrc),
+        'href': cssFileSrc,
         'type': (this.getAttribute('type') || 'text/css'),
         'media': (this.getAttribute('media') || 'screen')
       });
