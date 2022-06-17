@@ -17,6 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+import celDomFire from 'celEvent.mjs';
 
 class CelLazyLoaderUtils {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
@@ -213,12 +214,9 @@ class CelLazyLoader extends HTMLElement{
     console.debug('_updateContent: ', newChildNodes);
     for (let item of newChildNodes) {
       this.parentNode.insertBefore(item, this);
-      const event = new CustomEvent('celements:contentChanged', { 
-        bubles: true,
-        memo: {
+      celDomFire(item, 'celements:contentChanged', {
          'htmlElem' : item
-      }});
-      item.dispatchEvent(event);
+      });
     }
     this.remove();
   }
