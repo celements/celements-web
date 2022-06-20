@@ -270,13 +270,10 @@ class CelLazyLoader extends HTMLElement {
   }
 
   connectedCallback() {
-    const me = this;
     console.debug('connectedCallback: ', this._fetchResponse);
-    me._fetchResponse
+    this._fetchResponse
       .then(resp => resp.text())
-      .then(function(txt){
-        me._updateContent(me._parseHTML(txt));
-      });
+      .then(txt => this._updateContent(this._parseHTML(txt)));
   }
 }
 
