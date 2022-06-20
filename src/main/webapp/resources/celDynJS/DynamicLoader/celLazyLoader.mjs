@@ -103,27 +103,21 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   _jsLoadedErr = function(message, source, lineno, colno, error) {
-    const event = new CustomEvent('celements:jsFileLoaded', { 
-      bubles: true,
-      memo: {
+    celDomFire(this, 'celements:jsFileLoaded', {
        'jsFileSrc' : source,
        'successful' : false,
        'message' : message,
        'lineno' : lineno,
        'colno' : colno,
        'error' : error
-    }});
-    this.dispatchEvent(event);
+    });
   }
 
   _jsLoaded = function() {
-    const event = new CustomEvent('celements:jsFileLoaded', { 
-      bubles: true,
-      memo: {
-       'jsFileSrc' : this.getAttribute('src'),
-       'successful' : true
-    }});
-    this.dispatchEvent(event);
+    celDomFire(this, 'celements:jsFileLoaded', {
+     'jsFileSrc' : this.getAttribute('src'),
+     'successful' : true
+    });
   }
 
   _getType(jsFileSrc) {
@@ -185,27 +179,21 @@ class CelLazyLoaderCss extends HTMLElement {
   }
 
   _cssLoadedErr = function(message, source, lineno, colno, error) {
-    const event = new CustomEvent('celements:cssFileLoaded', { 
-      bubles: true,
-      memo: {
+    celDomFire(this, 'celements:cssFileLoaded', {
        'cssFileSrc' : source,
        'successful' : false,
        'message' : message,
        'lineno' : lineno,
        'colno' : colno,
        'error' : error
-    }});
-    this.dispatchEvent(event);
+    });
   }
 
   _cssLoaded = function() {
-    const event = new CustomEvent('celements:cssFileLoaded', { 
-      bubles: true,
-      memo: {
-       'cssFileSrc' : this.getAttribute('src'),
-       'successful' : true
-    }});
-    this.dispatchEvent(event);
+    celDomFire(this, 'celements:cssFileLoaded', {
+     'cssFileSrc' : this.getAttribute('src'),
+     'successful' : true
+    });
   }
 
   _loadCssScript() {
