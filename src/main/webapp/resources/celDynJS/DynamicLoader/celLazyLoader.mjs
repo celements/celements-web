@@ -65,12 +65,8 @@ class CelLazyLoaderUtils {
     let isLoaded = false;
     console.debug('cssIsLoaded ', scriptURL);
     const cssNewUrlLink = new URL(scriptURL, window.location.href);
-    for (let loadedCss of document.querySelectorAll('link[rel=stylesheet]')) {
-      console.debug('cssIsLoaded: ', loadedCss.href, cssNewUrlLink);
-      if (loadedCss.href === cssNewUrlLink.href) {
-        isLoaded = true;
-      }
-    }
+    const isLoaded = [...document.querySelectorAll('link[rel=stylesheet]')]
+      .some(loadedCss => loadedCss.href === cssNewUrlLink.href);
     console.log('cssIsLoaded: return ', isLoaded, scriptURL);
     return isLoaded;
   }
