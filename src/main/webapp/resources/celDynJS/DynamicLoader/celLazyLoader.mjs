@@ -70,6 +70,25 @@ class CelLazyLoaderUtils {
     console.log('cssIsLoaded: return ', isLoaded, scriptURL);
     return isLoaded;
   }
+
+  fireLoaded = function(item, eventName) {
+    item.fire(eventName, {
+     'fileSrc' : this.getAttribute('src'),
+     'successful' : true
+    });
+  }
+
+  fireLoadedErr = function(item, eventName, message, source, lineno, colno, error) {
+    item.fire(eventName, {
+       'fileSrc' : source,
+       'successful' : false,
+       'message' : message,
+       'lineno' : lineno,
+       'colno' : colno,
+       'error' : error
+    });
+  }
+
 }
 
 /************************************************************
@@ -86,26 +105,6 @@ class CelLazyLoaderJs extends HTMLElement {
   constructor() {
     super();
     this._lazyLoadUtils = new CelLazyLoaderUtils();
-    this._jsLoadedBind = this._jsLoaded.bind(this);
-    this._jsLoadedErrBind = this._jsLoadedErr.bind(this);
-  }
-
-  _jsLoadedErr = function(message, source, lineno, colno, error) {
-    this.fire('celements:jsFileLoaded', {
-       'jsFileSrc' : source,
-       'successful' : false,
-       'message' : message,
-       'lineno' : lineno,
-       'colno' : colno,
-       'error' : error
-    });
-  }
-
-  _jsLoaded = function() {
-    this.fire('celements:jsFileLoaded', {
-     'jsFileSrc' : this.getAttribute('src'),
-     'successful' : true
-    });
   }
 
   _getType(jsFileSrc) {
@@ -130,8 +129,11 @@ class CelLazyLoaderJs extends HTMLElement {
            'type' : this._getType(jsFileSrc),
            'src' : this._lazyLoadUtils.getScriptPath(jsFileSrc)
         });
-        newEle.addEventListener('load', this._jsLoadedBind);
-        newEle.addEventListener('error', this._jsLoadedErrBind);
+        newEle.addEventListener('load', () => this._lazyLoadUtils.fireLoaded(this,
+          'celements:jsFileLoaded'));
+        newEle.addEventListener('error', (message, source, lineno, colno, error)
+          => this._lazyLoadUtils.fireLoadedErr(this, 'celements:jsFileLoaded',
+          message, source, lineno, colno, error));
         console.log('loadScripts insert ', newEle);
         document.head.appendChild(newEle);
     } else {
@@ -162,26 +164,6 @@ class CelLazyLoaderCss extends HTMLElement {
   constructor() {
     super();
     this._lazyLoadUtils = new CelLazyLoaderUtils();
-    this._cssLoadedBind = this._cssLoaded.bind(this);
-    this._cssLoadedErrBind = this._cssLoadedErr.bind(this);
-  }
-
-  _cssLoadedErr = function(message, source, lineno, colno, error) {
-    this.fire('celements:cssFileLoaded', {
-       'cssFileSrc' : source,
-       'successful' : false,
-       'message' : message,
-       'lineno' : lineno,
-       'colno' : colno,
-       'error' : error
-    });
-  }
-
-  _cssLoaded = function() {
-    this.fire('celements:cssFileLoaded', {
-     'cssFileSrc' : this.getAttribute('src'),
-     'successful' : true
-    });
   }
 
   _loadCssScript() {
@@ -194,8 +176,11 @@ class CelLazyLoaderCss extends HTMLElement {
         'type': (this.getAttribute('type') || 'text/css'),
         'media': (this.getAttribute('media') || 'screen')
       });
-      newEle.addEventListener('load', this._cssLoadedBind);
-      newEle.addEventListener('error', this._cssLoadedErrBind);
+      newEle.addEventListener('load', () => this._lazyLoadUtils.fireLoaded(this,
+        'celements:cssFileLoaded'));
+      newEle.addEventListener('error', (message, source, lineno, colno, error)
+        => this._lazyLoadUtils.fireLoadedErr(this, 'celements:cssFileLoaded',
+        message, source, lineno, colno, error));
       document.head.appendChild(newEle);
     } else {
       console.debug('skip css file already loaded', cssFileSrc);
