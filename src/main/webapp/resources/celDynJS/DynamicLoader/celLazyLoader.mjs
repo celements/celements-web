@@ -89,6 +89,13 @@ class CelLazyLoaderUtils {
     });
   }
 
+  addLoadListener(elem, eventName) {
+    elem.addEventListener('load', () => this.fireLoaded(this, eventName));
+    elem.addEventListener('error', (message, source, lineno, colno, error)
+      => this.fireLoadedErr(this, eventName, message, source, lineno, colno,
+        error));
+  }
+
 }
 
 /************************************************************
@@ -121,21 +128,20 @@ class CelLazyLoaderJs extends HTMLElement {
     return newEle;
   }
 
+  _createJsElement() {
+    const newEle = document.createElement('link');
+    newEle.type = this._getType(jsFileSrc);
+    newEle.src = this._lazyLoadUtils.getScriptPath(jsFileSrc);
+    return newEle;
+  }
+
   _loadJsScript() {
     const jsFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'))
     if (!this._lazyLoadUtils.jsIsLoaded(jsFileSrc)) {
-        const newEle = document.createElement('script');
-        Object.assign(this._addLoadMode(newEle), {
-           'type' : this._getType(jsFileSrc),
-           'src' : this._lazyLoadUtils.getScriptPath(jsFileSrc)
-        });
-        newEle.addEventListener('load', () => this._lazyLoadUtils.fireLoaded(this,
-          'celements:jsFileLoaded'));
-        newEle.addEventListener('error', (message, source, lineno, colno, error)
-          => this._lazyLoadUtils.fireLoadedErr(this, 'celements:jsFileLoaded',
-          message, source, lineno, colno, error));
-        console.log('loadScripts insert ', newEle);
-        document.head.appendChild(newEle);
+      const newEle = this._createJsElement();
+      this._lazyLoadUtils.addLoadListener(newEle, 'celements:jsFileLoaded');
+      console.debug('_loadJsScript insert ', newEle);
+      document.head.appendChild(newEle);
     } else {
       console.debug('skip js file already loaded', jsFileSrc);
     }
@@ -166,21 +172,21 @@ class CelLazyLoaderCss extends HTMLElement {
     this._lazyLoadUtils = new CelLazyLoaderUtils();
   }
 
+  _createCssElement() {
+    const newEle = document.createElement('link');
+    newEle.rel = 'stylesheet';
+    newEle.href = cssFileSrc;
+    newEle.type = (this.getAttribute('type') || 'text/css');
+    newEle.media = (this.getAttribute('media') || 'screen');
+    return newEle;
+  }
+
   _loadCssScript() {
     const cssFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'));
     if (!this._lazyLoadUtils.cssIsLoaded(cssFileSrc)) {
-      const newEle = document.createElement('link');
-      Object.assign(newEle, {
-        'rel': 'stylesheet',
-        'href': cssFileSrc,
-        'type': (this.getAttribute('type') || 'text/css'),
-        'media': (this.getAttribute('media') || 'screen')
-      });
-      newEle.addEventListener('load', () => this._lazyLoadUtils.fireLoaded(this,
-        'celements:cssFileLoaded'));
-      newEle.addEventListener('error', (message, source, lineno, colno, error)
-        => this._lazyLoadUtils.fireLoadedErr(this, 'celements:cssFileLoaded',
-        message, source, lineno, colno, error));
+      const newEle = this._createCssElement();
+      this._lazyLoadUtils.addLoadListener(newEle, 'celements:cssFileLoaded');
+      console.debug('_loadCssScript insert ', newEle);
       document.head.appendChild(newEle);
     } else {
       console.debug('skip css file already loaded', cssFileSrc);
@@ -234,11 +240,9 @@ class CelLazyLoader extends HTMLElement {
   _showLoadingIndicator() {
     const loaderSize = parseInt(this.getAttribute('size')) || 64;
     const loaderimg = this._loadingIndicator.getLoadingIndicator(loaderSize);
-    Object.assign(loaderimg.style, {
-      display : 'block',
-      marginLeft : 'auto',
-      marginRight : 'auto'
-    });
+    loaderimg.style.display = 'block';
+    loaderimg.style.marginLeft = 'auto';
+    loaderimg.style.marginRight = 'auto';
     this.shadowRoot.appendChild(loaderimg);
   }
 
