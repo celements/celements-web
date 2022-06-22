@@ -43,7 +43,7 @@ class CelLazyLoaderUtils {
       scriptPath += '?';
     }
     if (!pathName.includes('version=')) {
-      if ((scriptPath.split('/').length > 4) && scriptPath.match('/resources/')) {
+      if ((scriptPath.split('/').length > 4) && scriptPath.includes('/resources/')) {
         scriptPath += "version=" + this._startupTimeStamp;
       } else {
         scriptPath += "version=" + this._loadTimeStamp;
@@ -54,15 +54,10 @@ class CelLazyLoaderUtils {
 
   jsIsLoaded(scriptURL) {
     let isLoaded = false;
-    console.debug('jsIsLoaded ', scriptURL);
     const scriptNewURLLink = new URL(scriptURL, window.location.href);
-    for (let loadedScript of document.getElementsByTagName('script')) {
-      console.debug('scriptIsLoaded: ', loadedScript.src, scriptNewURLLink);
-      if (loadedScript.src === scriptNewURLLink.href) {
-        isLoaded = true;
-      }
-    }
-    console.log('scriptIsLoaded: return ', isLoaded, scriptURL);
+    const isLoaded = [...document.getElementsByTagName('script')]
+      .some(script => script.src === scriptNewURLLink.href);
+    console.debug('scriptIsLoaded: return ', isLoaded, scriptURL);
     return isLoaded;
   }
 
