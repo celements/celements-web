@@ -57,7 +57,7 @@ class CelLazyLoaderUtils {
     const scriptNewURLLink = new URL(scriptURL, window.location.href);
     const isLoaded = [...document.getElementsByTagName('script')]
       .some(script => script.src === scriptNewURLLink.href);
-    console.debug('scriptIsLoaded: return ', isLoaded, scriptURL);
+    console.debug('jsIsLoaded: return ', isLoaded, scriptURL);
     return isLoaded;
   }
 
