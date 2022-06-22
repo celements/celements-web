@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-import { celDomFire } from './celEvent.mjs';
+//TODO replace prototype event handling as soon as CELDEV-1052 is done.
 
 class CelLazyLoaderUtils {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
@@ -103,7 +103,7 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   _jsLoadedErr = function(message, source, lineno, colno, error) {
-    celDomFire(this, 'celements:jsFileLoaded', {
+    this.fire('celements:jsFileLoaded', {
        'jsFileSrc' : source,
        'successful' : false,
        'message' : message,
@@ -114,7 +114,7 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   _jsLoaded = function() {
-    celDomFire(this, 'celements:jsFileLoaded', {
+    this.fire('celements:jsFileLoaded', {
      'jsFileSrc' : this.getAttribute('src'),
      'successful' : true
     });
@@ -179,7 +179,7 @@ class CelLazyLoaderCss extends HTMLElement {
   }
 
   _cssLoadedErr = function(message, source, lineno, colno, error) {
-    celDomFire(this, 'celements:cssFileLoaded', {
+    this.fire('celements:cssFileLoaded', {
        'cssFileSrc' : source,
        'successful' : false,
        'message' : message,
@@ -190,7 +190,7 @@ class CelLazyLoaderCss extends HTMLElement {
   }
 
   _cssLoaded = function() {
-    celDomFire(this, 'celements:cssFileLoaded', {
+    this.fire('celements:cssFileLoaded', {
      'cssFileSrc' : this.getAttribute('src'),
      'successful' : true
     });
@@ -251,7 +251,7 @@ class CelLazyLoader extends HTMLElement {
     console.debug('_updateContent: ', newChildNodes);
     for (let item of newChildNodes) {
       this.parentNode.insertBefore(item, this);
-      celDomFire(item, 'celements:contentChanged', {
+      item.fire('celements:contentChanged', {
          'htmlElem' : item
       });
     }
