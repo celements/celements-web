@@ -30,12 +30,9 @@ class CelLazyLoaderUtils {
     this._loadTimeStamp = new Date().getTime();
     this._startupTimeStamp = this._loadTimeStamp;
     if (window.celExecOnceAfterMessagesLoaded) {
-      window.celExecOnceAfterMessagesLoaded(this._setStartupTimeStamp.bind(this));
+      window.celExecOnceAfterMessagesLoaded(
+         celMessages => this._startupTimeStamp = celMessages.celmeta.startupTimeStamp);
     }
-  }
-
-  _setStartupTimeStamp(celMessages) {
-    this._startupTimeStamp = celMessages.celmeta.startupTimeStamp;
   }
 
   getScriptPath(pathName) {
