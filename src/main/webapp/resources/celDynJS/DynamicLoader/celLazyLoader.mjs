@@ -211,7 +211,7 @@ class CelLazyLoader extends HTMLElement {
     super();
     this.classList.add('celLoadLazyLoading');
     this._fetchResponse = this._loadCell();
-    this.attachShadow({mode: 'open'});
+    this.attachShadow({ mode : 'open' });
     this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
     this._showLoadingIndicator();
   }
