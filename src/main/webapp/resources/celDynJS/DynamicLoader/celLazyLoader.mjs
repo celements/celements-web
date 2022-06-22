@@ -53,7 +53,6 @@ class CelLazyLoaderUtils {
   }
 
   jsIsLoaded(scriptURL) {
-    let isLoaded = false;
     const scriptNewURLLink = new URL(scriptURL, window.location.href);
     const isLoaded = [...document.getElementsByTagName('script')]
       .some(script => script.src === scriptNewURLLink.href);
@@ -62,7 +61,6 @@ class CelLazyLoaderUtils {
   }
 
   cssIsLoaded(scriptURL) {
-    let isLoaded = false;
     console.debug('cssIsLoaded ', scriptURL);
     const cssNewUrlLink = new URL(scriptURL, window.location.href);
     const isLoaded = [...document.querySelectorAll('link[rel=stylesheet]')]
