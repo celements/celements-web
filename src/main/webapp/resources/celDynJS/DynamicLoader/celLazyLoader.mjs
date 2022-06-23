@@ -113,7 +113,9 @@ class CelLazyLoaderJs extends HTMLElement {
 
   _getType(jsFileSrc) {
     const jsFileUrl = new URL(jsFileSrc, window.location.href);
-    if (jsFileUrl.pathname.endsWith('.mjs')) return 'module';
+    if (jsFileUrl.pathname.endsWith('.mjs')) {
+      return 'module';
+    }
     return (this.getAttribute('type') || 'text/javascript');
   }
 
