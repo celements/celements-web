@@ -125,7 +125,7 @@ class CelLazyLoaderJs extends HTMLElement {
     return newEle;
   }
 
-  _createJsElement() {
+  _createJsElement(jsFileSrc) {
     const newEle = document.createElement('link');
     newEle.type = this._getType(jsFileSrc);
     newEle.src = this._lazyLoadUtils.getScriptPath(jsFileSrc);
@@ -135,7 +135,7 @@ class CelLazyLoaderJs extends HTMLElement {
   _loadJsScript() {
     const jsFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'))
     if (!this._lazyLoadUtils.jsIsLoaded(jsFileSrc)) {
-      const newEle = this._createJsElement();
+      const newEle = this._createJsElement(jsFileSrc);
       this._lazyLoadUtils.addLoadListener(newEle, 'celements:jsFileLoaded');
       console.debug('_loadJsScript insert ', newEle);
       document.head.appendChild(newEle);
@@ -169,7 +169,7 @@ class CelLazyLoaderCss extends HTMLElement {
     this._lazyLoadUtils = new CelLazyLoaderUtils();
   }
 
-  _createCssElement() {
+  _createCssElement(cssFileSrc) {
     const newEle = document.createElement('link');
     newEle.rel = 'stylesheet';
     newEle.href = cssFileSrc;
@@ -181,7 +181,7 @@ class CelLazyLoaderCss extends HTMLElement {
   _loadCssScript() {
     const cssFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'));
     if (!this._lazyLoadUtils.cssIsLoaded(cssFileSrc)) {
-      const newEle = this._createCssElement();
+      const newEle = this._createCssElement(cssFileSrc);
       this._lazyLoadUtils.addLoadListener(newEle, 'celements:cssFileLoaded');
       console.debug('_loadCssScript insert ', newEle);
       document.head.appendChild(newEle);
