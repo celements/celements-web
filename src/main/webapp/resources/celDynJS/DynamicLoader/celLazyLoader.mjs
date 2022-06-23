@@ -89,9 +89,8 @@ class CelLazyLoaderUtils {
 
   addLoadListener(elem, eventName) {
     elem.addEventListener('load', () => this.fireLoaded(this, eventName));
-    elem.addEventListener('error', (message, source, lineno, colno, error)
-      => this.fireLoadedErr(this, eventName, message, source, lineno, colno,
-        error));
+    elem.addEventListener('error', (message, source, lineno, colno, error) => this.fireLoadedErr(
+      this, eventName, message, source, lineno, colno, error));
   }
 
 }
