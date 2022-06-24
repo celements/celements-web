@@ -787,17 +787,15 @@ document.addEventListener('DOMContentLoaded', function() {
           }, i[r].l = 1 * new Date(); a = s.createElement(o),
             m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-  
         ga('create', gaaNum, window.getCelDomain());
         ga('set', 'anonymizeIp', true);
         ga('send', 'pageview');
         console.log('finish initalizing google universal analytics.', gaaNum);
       } else {
         (function(d, o, g, s, m) {
-          s = d.createElement(0); m = d.getElementsByTagName(o)[0];
+          s = d.createElement(o); m = d.getElementsByTagName(o)[0];
           s.async = 1; s.src = g; m.parentNode.insertBefore(s, m);
         })(document, 'script', 'https://www.googletagmanager.com/gtag/js?id='+gaaNum);
-  
         window.dataLayer = window.dataLayer || [];
         function gtag(){ dataLayer.push(arguments); }
         gtag('js', new Date());
