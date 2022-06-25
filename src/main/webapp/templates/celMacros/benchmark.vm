@@ -16,9 +16,9 @@ $services.celementsweb.setGlobalContextValue('bench_lastTime', $bench_startTime)
   #set($bench_outStrings = $services.celementsweb.getGlobalContextValue('bench_outString'))
   #set($totalTime = ($currTime - $bench_startTime) / 1000.0)
   #set($time = ($currTime - $bench_lastTime) / 1000.0)
-  #if(!$visible) <!-- #end
+  #if(!$visible) <!-- #end##
   #if($bench_outStrings && !$bench_outStrings.isEmpty()) $bench_outStrings #end
-  bench $!label &mdash; in ${time}s &mdash; total ${totalTime}s
+  bench $!label &mdash; in ${time}s &mdash; total ${totalTime}s##
   #if(!$visible) --> #end
   $services.celementsweb.setGlobalContextValue('bench_outString', [])
   $services.celementsweb.setGlobalContextValue('bench_lastTime', $currTime)
