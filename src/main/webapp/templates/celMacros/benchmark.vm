@@ -4,17 +4,20 @@
 ## INPUT label to distinguish time printouts
 
 #set($bench_startTime = $datetool.date.time)
-#set($bench_lastTime = $bench_startTime)
+$services.celementsweb.setGlobalContextValue('bench_startTime', $bench_startTime)
+$services.celementsweb.setGlobalContextValue('bench_lastTime', $bench_startTime)
 
 #macro(bench $label $visible)
 #if($isSuperAdmin)
   #set($visible = $visible || ("$!request.showBenchmark" == 'true'))
   #set($currTime = $datetool.date.time)
+  #set($bench_startTime = $services.celementsweb.getGlobalContextValue('bench_startTime'))
+  #set($bench_lastTime = $services.celementsweb.getGlobalContextValue('bench_lastTime'))
   #set($totalTime = ($currTime - $bench_startTime) / 1000.0)
   #set($time = ($currTime - $bench_lastTime) / 1000.0)
   #if(!$visible) <!-- #end
   bench $!label &mdash; in ${time}s &mdash; total ${totalTime}s
   #if(!$visible) --> #end
-  #set($bench_lastTime = $currTime)
+  $services.celementsweb.setGlobalContextValue('bench_lastTime', $currTime)
 #end
 #end
