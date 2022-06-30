@@ -41,9 +41,9 @@
   
   <p><b>${query.language}-query</b> &mdash; <i>$query.statement</i></p>
   <p>limit: $limit &mdash; printLimit: $printLimit </p>
-  #parse('celMacros/benchmark.vm') ## start benchmark
+  $services.bench.startBench()
   #set($result = $query.execute())
-  <p>#bench('query execution time' true)</p>
+  <p>$services.bench.benchAndPrint('query execution time', true)</p>
   <p>result count: $result.size() #if($limit > 0 && $result.size() >= $limit) (limited) #end</p>
   <hr>
   #if(!$noResultList)
@@ -65,7 +65,7 @@
       </div>
     #end
     <hr>
-    <p>#bench('printing result list' true)</p>
+    <p>$services.bench.benchAndPrint('printing result list', true)</p>
   #end ## noResultList
 
 #end ## ("$!query" == '')
