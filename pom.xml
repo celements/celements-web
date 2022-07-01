@@ -127,7 +127,7 @@
       <!-- [CELDEV-1013] required by xwiki-plugin-wiki-manager -->
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>2.0.7</version>
+      <version>3.0.16</version>
     </dependency>
     <!-- celements module-web dependencies -->
     <dependency>
