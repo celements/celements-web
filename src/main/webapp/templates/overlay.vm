@@ -33,11 +33,11 @@ $overlayResult
     #set($showOverlayLanguageBar = ("$!overlayConfig.getProperty('showOverlayLanguageBar').getValue()" == "1"))
     #set($showCloseOverlayButton = ("$!overlayConfig.getProperty('showCloseOverlayButton').getValue()" == "1"))
     #set($celementsLoadInOverlay = "$!overlayConfig.getProperty('documentToLoadInOverlay').getValue()")
-    $celementsweb.includeCSSPage($overlayConfig.getProperty('overlayCSS').getValue())
+    $services.css.includeCSSPage($overlayConfig.getProperty('overlayCSS').getValue())
   #else
     $response.setStatus(404)
     $msg.get('cel_overlay_not_available', ["$!overlayConfName"])
   #end
 #end
 #end
-$xwiki.parseTemplate("view.vm")
+#parse("view.vm")
