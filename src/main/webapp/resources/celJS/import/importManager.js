@@ -18,7 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-var startObserversNewUniqueName = function(){
+const startObserversNewUniqueName = function(){
   updateObservers();
   Event.observe(window, 'resize', resizeTab);
   $$('.c3_import_box')[0].observe('filepicker:changed', updateObservers);
@@ -47,7 +47,7 @@ function updateObservers() {
   resizeTab();
 }
 
-var clickObserve = function(event) {
+const clickObserve = function(event) {
   if (typeof preimport !== 'undefined') {
     if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
       console.warn('deprecated usage of direct "preimport" global function call.');
@@ -58,7 +58,7 @@ var clickObserve = function(event) {
   showTab($$('.c3_import_middle')[0]);
 };
 
-var sortObserve = function(event) {
+const sortObserve = function(event) {
   if((typeof($("c2_ml_content")) != undefined) && ($("c2_ml_content") != null)) {
     $("c2_ml_content").fire("filepicker:changed");
   } else {
@@ -73,17 +73,17 @@ var sortObserve = function(event) {
  * @return
  */
 function resizeTab(){
-  var tabtitlesheight = 0;
+  let tabtitlesheight = 0;
   $$('.c3_import_title').each(function(titleElem){
     tabtitlesheight += titleElem.getHeight();
     tabtitlesheight += parseInt(titleElem.getStyle('margin-top'));
     tabtitlesheight += parseInt(titleElem.getStyle('margin-bottom'));
   });   
-  var mainpadding = parseInt($$('.main')[0].getStyle('padding-top'));
-  var mainmargin = parseInt($$('.main')[0].getStyle('margin-top'));
-  var mainborders = 2 * (mainpadding + mainmargin);
+  const mainpadding = parseInt($$('.main')[0].getStyle('padding-top'));
+  const mainmargin = parseInt($$('.main')[0].getStyle('margin-top'));
+  const mainborders = 2 * (mainpadding + mainmargin);
   
-  var winHeight = 0;
+  let winHeight = 0;
   if(typeof(window.innerWidth) == 'number') {
     winHeight = window.innerHeight;
   } else if(document.documentElement && document.documentElement.clientHeight) {
@@ -94,15 +94,16 @@ function resizeTab(){
   
   var tabboxsize = winHeight - tabtitlesheight - mainborders;
   $$('.c3_import_tabbox').each(function(box){
-    var scrollbox = box.down('.c3_import_scrollable');
+    const scrollbox = box.down('.c3_import_scrollable');
     if(scrollbox){
+      const scrollboxtop = $j(scrollbox).offset() ? $j(scrollbox).offset().top : 0;
       //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
       //counting margin-auto offsets. Thus we need to use jquery.offset
-      var offsetBefore = ((typeof($j(scrollbox).offset()) !== 'undefined') 
+      const offsetBefore = ((typeof($j(scrollbox).offset()) !== 'undefined') 
               && (typeof($j(box).offset()) !== 'undefined')) 
           ? ($j(scrollbox).offset().top - $j(box).offset().top) : 0;
-      var ele = scrollbox;
-      var lastElemBottom = $j(scrollbox).offset().top + scrollbox.getHeight();
+      let ele = scrollbox;
+      let lastElemBottom = scrollboxtop + scrollbox.getHeight();
       while(ele && (!ele.hasClassName('c3_import_tabbox'))){
         ele.siblings().each(function(sibl){
           const siblOffset = $j(sibl).offset();
@@ -113,8 +114,8 @@ function resizeTab(){
         });
         ele = ele.up();
       }
-      var offsetAfter = lastElemBottom - ($j(scrollbox).offset().top + scrollbox.getHeight());
-      var newScrollableHeight = tabboxsize - offsetAfter - offsetBefore;
+      const offsetAfter = lastElemBottom - (scrollboxtop + scrollbox.getHeight());
+      const newScrollableHeight = tabboxsize - offsetAfter - offsetBefore;
       scrollbox.setStyle({ height: Math.max(50, newScrollableHeight) + "px" });
     }
     box.setStyle({ height: Math.max(50, tabboxsize) + "px" });
@@ -146,10 +147,10 @@ function hideDisplay(tab){
 }
 
 function getProgressBar(title){
-  var titlediv = $('c3_import_box').down('.c3_import_title');
+  const titlediv = $('c3_import_box').down('.c3_import_title');
   titlediv.innerHTML = title;
   $('c3_import_box').down('.c3_import_tabbox').setStyle({display: 'none'});
-  var bardiv = "<div class='c3_import_tabbox'><img src='/skin/skins/albatross/icons/ajax%2Dloader.gif'></div>";
+  const bardiv = "<div class='c3_import_tabbox'><img src='/skin/skins/albatross/icons/ajax%2Dloader.gif'></div>";
   titlediv.insert( {'after': bardiv} );
   resizeTab();
 }
