@@ -96,14 +96,15 @@ function resizeTab(){
   $$('.c3_import_tabbox').each(function(box){
     const scrollbox = box.down('.c3_import_scrollable');
     if(scrollbox){
-      const scrollboxtop = $j(scrollbox).offset() ? $j(scrollbox).offset().top : 0;
+      const scrollboxOffset = $j(scrollbox).offset();
+      const scrollboxTop = scrollboxOffset ? scrollboxOffset.top : 0;
       //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
       //counting margin-auto offsets. Thus we need to use jquery.offset
-      const offsetBefore = ((typeof($j(scrollbox).offset()) !== 'undefined') 
+      const offsetBefore = ((typeof(scrollboxOffset) !== 'undefined') 
               && (typeof($j(box).offset()) !== 'undefined')) 
-          ? ($j(scrollbox).offset().top - $j(box).offset().top) : 0;
+          ? (scrollboxTop - $j(box).offset().top) : 0;
       let ele = scrollbox;
-      let lastElemBottom = scrollboxtop + scrollbox.getHeight();
+      let lastElemBottom = scrollboxTop + scrollbox.getHeight();
       while(ele && (!ele.hasClassName('c3_import_tabbox'))){
         ele.siblings().each(function(sibl){
           const siblOffset = $j(sibl).offset();
@@ -114,7 +115,7 @@ function resizeTab(){
         });
         ele = ele.up();
       }
-      const offsetAfter = lastElemBottom - (scrollboxtop + scrollbox.getHeight());
+      const offsetAfter = lastElemBottom - (scrollboxTop + scrollbox.getHeight());
       const newScrollableHeight = tabboxsize - offsetAfter - offsetBefore;
       scrollbox.setStyle({ height: Math.max(50, newScrollableHeight) + "px" });
     }
