@@ -58,7 +58,9 @@ export default class CelDataLoader {
     spinner.src = this.htmlElem.dataset.spinnerSrc;
     spinner.alt = 'loading';
     spinner.classList.add('spinner');
-    this.htmlElem.appendChild(spinner);
+    if (spinner.src) {
+      this.htmlElem.appendChild(spinner);
+    }
   }
 
   #handleLoadSuccess(data) {
