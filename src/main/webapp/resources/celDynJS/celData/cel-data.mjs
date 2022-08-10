@@ -17,8 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
-export class CelData extends HTMLElement {
+export default class CelData extends HTMLElement {
 
   #rootElem;
   #updateHandler;
@@ -58,67 +57,4 @@ export class CelData extends HTMLElement {
 
 if (!customElements.get('cel-data')) {
   customElements.define('cel-data', CelData);
-}
-
-export class CelDataLoader {
-
-  #htmlElem;
-  #template;
-  #dataProvider;
-
-  constructor(htmlElem, dataProvider) {
-    if (htmlElem === undefined)
-      throw new Error("missing htmlElem");
-    this.#htmlElem = htmlElem;
-    this.#template = document.getElementById(htmlElem.dataset.template);
-    if (this.template === undefined)
-      throw new Error("missing template");
-    this.#dataProvider = dataProvider ?? 
-      (() => Promise.reject('no data provider given'));
-  }
-
-  get htmlElem() {
-    return this.#htmlElem;
-  }
-
-  get template() {
-    return this.#template;
-  }
-
-  loadData() {
-    // TODO replace content with spinner
-    // TODO paging params
-    console.debug('loading data', this);
-    this.#dataProvider()
-      .then(data => this.#handleLoadSuccess(data))
-      .catch(error => this.#handleLoadError(error));
-  }
-
-  #handleLoadSuccess(loadedData) {
-    console.debug('data loaded', this, loadedData);
-    loadedData.forEach(data => this.#insert(data));
-    // TODO remove spinner
-    this.htmlElem.querySelectorAll('.progon-replace')
-    .forEach(elem => elem.style.display = "none");
-  }
-
-  #insert(data) {
-    console.debug('insert', data);
-    const newElem = this.template.content.cloneNode(true);
-    const dataRoot = newElem?.querySelector('.cel-data-root');
-    if (dataRoot) {
-      this.htmlElem.appendChild(newElem);
-      dataRoot.dispatchEvent(new CustomEvent('celData:update', {
-        bubbles: false,
-        detail: data
-      }));
-    } else {
-      console.error('no template with cel-data-root defined');
-    }
-  }
-
-  #handleLoadError(error) {
-    console.error('data loading failed', this, error);
-  }
-
 }
