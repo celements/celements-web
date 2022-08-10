@@ -53,31 +53,30 @@ export default class CelDataLoader {
       .catch(error => this.#handleLoadError(error));
   }
 
-  #handleLoadSuccess(loadedData) {
-    console.debug('data loaded', this, loadedData);
-    loadedData.forEach(data => this.#insert(data));
+  #handleLoadSuccess(data) {
+    console.debug('loaded', this, data);
+    data.forEach(entryData => this.#insertEntry(entryData));
     // TODO remove spinner
     this.htmlElem.querySelectorAll('.cel-replace')
     .forEach(elem => elem.style.display = "none");
   }
 
-  #insert(data) {
-    console.debug('insert', data);
+  #insertEntry(data) {
     const newElem = this.template.content.cloneNode(true);
-    const dataRoot = newElem?.querySelector('.cel-data-root');
+    const dataRoot = newElem.querySelector('.cel-data-root');
+    this.htmlElem.appendChild(newElem);
     if (dataRoot) {
-      this.htmlElem.appendChild(newElem);
       dataRoot.dispatchEvent(new CustomEvent('celData:update', {
         bubbles: false,
         detail: data
       }));
     } else {
-      console.error('no template with cel-data-root defined');
+      console.warn('no cel-data-root in template', newElem);
     }
   }
 
   #handleLoadError(error) {
-    console.error('data loading failed', this, error);
+    console.error('loading failed', this, error);
   }
 
 }
