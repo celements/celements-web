@@ -22,7 +22,7 @@ export default class CelSpinnerBuilder {
   create(isSmallOrPxSize) {
     const img = document.createElement('img');
     const pathPrefix = ''; /* TODO CELEMENTS.getUtils().getPathPrefix()*/
-    const size = this.asSize(isSmallOrPxSize);
+    const size = this.#asSize(isSmallOrPxSize);
     img.src = `${pathPrefix}/file/resources/celRes/spinner/ajax-loader-${size}px.png`;
     img.alt = 'loading...';
     img.classList.add('cel-spinner');
