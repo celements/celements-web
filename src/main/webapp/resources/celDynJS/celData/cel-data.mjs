@@ -50,7 +50,7 @@ export class CelData extends HTMLElement {
 
   updateData(data) {
     console.debug('updateData', this, data);
-    this.innerText = data?.[this.field] ??
+    this.textContent = data?.[this.field] ??
       (this.#isDebug ? `{${this.field} is undefined}` : '');
   }
 
@@ -62,15 +62,27 @@ if (!customElements.get('cel-data')) {
 
 export class CelDataLoader {
 
-  #loaderRoot;
+  #htmlElem;
   #template;
   #dataProvider;
 
-  constructor(loaderRoot, dataProvider) {
-    this.#loaderRoot = loaderRoot;
-    this.#template = document.getElementById(this.#loaderRoot.dataset.template);
+  constructor(htmlElem, dataProvider) {
+    if (htmlElem === undefined)
+      throw new Error("missing htmlElem");
+    this.#htmlElem = htmlElem;
+    this.#template = document.getElementById(htmlElem.dataset.template);
+    if (this.template === undefined)
+      throw new Error("missing template");
     this.#dataProvider = dataProvider ?? 
       (() => Promise.reject('no data provider given'));
+  }
+
+  get htmlElem() {
+    return this.#htmlElem;
+  }
+
+  get template() {
+    return this.#template;
   }
 
   loadData() {
@@ -86,16 +98,16 @@ export class CelDataLoader {
     console.debug('data loaded', this, loadedData);
     loadedData.forEach(data => this.#insert(data));
     // TODO remove spinner
-    this.#loaderRoot.querySelectorAll('.progon-replace')
+    this.htmlElem.querySelectorAll('.progon-replace')
     .forEach(elem => elem.style.display = "none");
   }
 
   #insert(data) {
     console.debug('insert', data);
-    const newElem = this.#template?.content.cloneNode(true);
+    const newElem = this.template.content.cloneNode(true);
     const dataRoot = newElem?.querySelector('.cel-data-root');
     if (dataRoot) {
-      this.#loaderRoot.appendChild(newElem);
+      this.htmlElem.appendChild(newElem);
       dataRoot.dispatchEvent(new CustomEvent('celData:update', {
         bubbles: false,
         detail: data
