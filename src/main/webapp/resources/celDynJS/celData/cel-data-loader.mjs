@@ -45,20 +45,26 @@ export default class CelDataLoader {
   }
 
   loadData() {
-    // TODO replace content with spinner
-    // TODO paging params
+    this.#addSpinner();
     console.debug('loading data', this);
     this.#dataProvider()
       .then(data => this.#handleLoadSuccess(data))
       .catch(error => this.#handleLoadError(error));
   }
 
+  #addSpinner() {
+    this.htmlElem.textContent = '';
+    const spinner = document.createElement('img');
+    spinner.src = this.htmlElem.dataset.spinnerSrc;
+    spinner.alt = 'loading';
+    spinner.classList.add('spinner');
+    this.htmlElem.appendChild(spinner);
+  }
+
   #handleLoadSuccess(data) {
     console.debug('loaded', this, data);
     data.forEach(entryData => this.#insertEntry(entryData));
-    // TODO remove spinner
-    this.htmlElem.querySelectorAll('.cel-replace')
-    .forEach(elem => elem.style.display = "none");
+    this.htmlElem.querySelector('img.spinner')?.remove();
   }
 
   #insertEntry(data) {
