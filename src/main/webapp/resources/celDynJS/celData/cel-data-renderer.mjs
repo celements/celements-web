@@ -37,7 +37,7 @@ export default class CelDataRenderer {
     if (template === undefined) {
       throw new Error("missing template");
     }
-    this.#template = this.template;
+    this.#template = template;
   }
 
   get htmlElem() {
