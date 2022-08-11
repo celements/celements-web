@@ -22,18 +22,22 @@ import './cel-data.mjs';
 export default class CelDataLoader {
 
   #htmlElem;
-  #template;
   #dataProvider;
+  #template;
 
   constructor(htmlElem, dataProvider) {
-    if (htmlElem === undefined)
+    if (htmlElem === undefined) {
       throw new Error("missing htmlElem");
+    }
     this.#htmlElem = htmlElem;
+    if (dataProvider === undefined) {
+      throw new Error("missing dataProvider");
+    }
+    this.#dataProvider = dataProvider;
     this.#template = document.getElementById(htmlElem.dataset.template);
-    if (this.template === undefined)
+    if (this.#template === undefined) {
       throw new Error("missing template");
-    this.#dataProvider = dataProvider ?? 
-      (() => Promise.reject('no data provider given'));
+    }
   }
 
   get htmlElem() {
@@ -45,8 +49,8 @@ export default class CelDataLoader {
   }
 
   loadData() {
-    this.#addSpinner();
     console.debug('loading data', this);
+    this.#addSpinner();
     this.#dataProvider()
       .then(data => this.#handleLoadSuccess(data))
       .catch(error => this.#handleLoadError(error));
@@ -65,7 +69,7 @@ export default class CelDataLoader {
 
   #handleLoadSuccess(data) {
     console.debug('loaded', this, data);
-    data.forEach(entryData => this.#insertEntry(entryData));
+    data?.forEach(entryData => this.#insertEntry(entryData));
     this.htmlElem.querySelector('img.spinner')?.remove();
   }
 
