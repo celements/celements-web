@@ -28,7 +28,7 @@ export default class CelData extends HTMLElement {
   }
 
   get #isDebug() {
-    return !!this.getAttribute('debug');
+    return this.hasAttribute('debug');
   }
 
   get field() {
