@@ -73,14 +73,14 @@ export default class CelDataLoader {
     this.htmlElem.querySelector('img.spinner')?.remove();
   }
 
-  #insertEntry(data) {
+  #insertEntry(entryData) {
     const newElem = this.template.content.cloneNode(true);
     const dataRoot = newElem.querySelector('.cel-data-root');
     this.htmlElem.appendChild(newElem);
     if (dataRoot) {
       dataRoot.dispatchEvent(new CustomEvent('celData:update', {
         bubbles: false,
-        detail: data
+        detail: entryData
       }));
     } else {
       console.warn('no cel-data-root in template', newElem);
