@@ -25,7 +25,7 @@ export default class CelDataRenderer {
   #dataProvider;
   #template;
 
-  constructor(htmlElem, dataProvider) {
+  constructor(htmlElem, dataProvider, template) {
     if (htmlElem === undefined) {
       throw new Error("missing htmlElem");
     }
@@ -34,10 +34,10 @@ export default class CelDataRenderer {
       throw new Error("missing dataProvider");
     }
     this.#dataProvider = dataProvider;
-    this.#template = document.getElementById(htmlElem.dataset.template);
-    if (this.#template === undefined) {
+    if (template === undefined) {
       throw new Error("missing template");
     }
+    this.#template = this.template;
   }
 
   get htmlElem() {
