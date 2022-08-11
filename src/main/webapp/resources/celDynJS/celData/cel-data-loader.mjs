@@ -19,7 +19,7 @@
  */
 import './cel-data.mjs';
 
-export default class CelDataLoader {
+export default class CelDataRenderer {
 
   #htmlElem;
   #dataProvider;
@@ -48,29 +48,19 @@ export default class CelDataLoader {
     return this.#template;
   }
 
-  loadData() {
-    console.debug('loading data', this);
-    this.#addSpinner();
+  render() {
+    console.debug('rendering data', this);
+    this.htmlElem.replaceChildren();
+    this.htmlElem.classList.add('cel-data-rendering');
     this.#dataProvider()
-      .then(data => this.#handleLoadSuccess(data))
-      .catch(error => this.#handleLoadError(error));
+      .then(data => this.#renderData(data))
+      .catch(error => console.error(this, error));
   }
 
-  #addSpinner() {
-    this.htmlElem.textContent = '';
-    const spinner = document.createElement('img');
-    spinner.src = this.htmlElem.dataset.spinnerSrc;
-    spinner.alt = 'loading';
-    spinner.classList.add('spinner');
-    if (spinner.src) {
-      this.htmlElem.appendChild(spinner);
-    }
-  }
-
-  #handleLoadSuccess(data) {
-    console.debug('loaded', this, data);
+  #renderData(data) {
+    console.debug('rendering', this, data);
     data?.forEach(entryData => this.#insertEntry(entryData));
-    this.htmlElem.querySelector('img.spinner')?.remove();
+    this.htmlElem.classList.replace('cel-data-rendering', 'cel-data-rendered');
   }
 
   #insertEntry(entryData) {
@@ -85,10 +75,6 @@ export default class CelDataLoader {
     } else {
       console.warn('no cel-data-root in template', newElem);
     }
-  }
-
-  #handleLoadError(error) {
-    console.error('loading failed', this, error);
   }
 
 }
