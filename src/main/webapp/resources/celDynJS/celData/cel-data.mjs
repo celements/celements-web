@@ -32,7 +32,19 @@ export class CelData extends HTMLElement {
   }
 
   get field() {
-    return this.getAttribute('field') || null;
+    return this.getAttribute('field') || undefined;
+  }
+
+  get hrefField() {
+    return this.getAttribute('href-field') || undefined;
+  }
+
+  get href() {
+    return this.getAttribute('href') || undefined;
+  }
+
+  get target() {
+    return this.getAttribute('target') || undefined;
   }
 
   connectedCallback() {
@@ -50,7 +62,15 @@ export class CelData extends HTMLElement {
   updateData(data) {
     console.debug('updateData', this, data);
     this.replaceChildren();
-    this.insertAdjacentHTML('beforeend', data?.[this.field] ??
+    let elem = this;
+    if (this.href || this.hrefField) {
+      const link = document.createElement('a');
+      link.classList.add('cel-data-link');
+      link.href = data?.[this.hrefField] ?? this.href;
+      link.target = this.target;
+      elem = this.appendChild(link);
+    }
+    elem.insertAdjacentHTML('beforeend', data?.[this.field] ??
       (this.isDebug ? `{${this.field} is undefined}` : ''));
   }
 
