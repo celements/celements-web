@@ -35,18 +35,6 @@ export class CelData extends HTMLElement {
     return this.getAttribute('field') || undefined;
   }
 
-  get hrefField() {
-    return this.getAttribute('href-field') || undefined;
-  }
-
-  get href() {
-    return this.getAttribute('href') || undefined;
-  }
-
-  get target() {
-    return this.getAttribute('target') || undefined;
-  }
-
   connectedCallback() {
     this.#rootElem = this.closest('.cel-data-root') ?? this;
     this.#rootElem?.addEventListener('celData:update', this.#updateHandler);
@@ -62,15 +50,7 @@ export class CelData extends HTMLElement {
   updateData(data) {
     console.debug('updateData', this, data);
     this.replaceChildren();
-    let elem = this;
-    if (this.href || this.hrefField) {
-      const link = document.createElement('a');
-      link.classList.add('cel-data-link');
-      link.href = data?.[this.hrefField] ?? this.href;
-      link.target = this.target;
-      elem = this.appendChild(link);
-    }
-    elem.insertAdjacentHTML('beforeend', data?.[this.field] ??
+    this.insertAdjacentHTML('beforeend', data?.[this.field] ??
       (this.isDebug ? `{${this.field} is undefined}` : ''));
   }
 
@@ -90,7 +70,6 @@ export class CelDataImage extends CelData {
     console.debug('updateData', this, data);
     this.replaceChildren();
     const img = document.createElement('img');
-    img.classList.add('cel-data-image');
     img.src = data?.[this.field] ?? '';
     img.alt = this.alt;
     this.appendChild(img);
