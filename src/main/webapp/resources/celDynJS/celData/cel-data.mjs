@@ -56,6 +56,27 @@ export class CelData extends HTMLElement {
 
 }
 
+export class CelDataLink extends CelData {
+
+  constructor() {
+    super();
+  }
+
+  get target() {
+    return this.getAttribute('target') || undefined;
+  }
+
+  updateData(data) {
+    console.debug('updateData', this, data);
+    const link = document.createElement('a');
+    link.href = data?.[this.field] ?? '#';
+    link.target = this.target;
+    link.replaceChildren(...this.childNodes);
+    this.replaceChildren(link);
+  }
+
+}
+
 export class CelDataImage extends CelData {
 
   constructor() {
@@ -80,7 +101,9 @@ export class CelDataImage extends CelData {
 if (!customElements.get('cel-data')) {
   customElements.define('cel-data', CelData);
 }
-
+if (!customElements.get('cel-data-a')) {
+  customElements.define('cel-data-a', CelDataLink);
+}
 if (!customElements.get('cel-data-img')) {
   customElements.define('cel-data-img', CelDataImage);
 }
