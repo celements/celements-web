@@ -83,5 +83,5 @@ if (!customElements.get('cel-data')) {
 }
 
 if (!customElements.get('cel-data-img')) {
-  customElements.define('cel-data-img', CelData);
+  customElements.define('cel-data-img', CelDataImage);
 }
