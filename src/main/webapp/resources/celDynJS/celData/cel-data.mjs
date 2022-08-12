@@ -63,7 +63,7 @@ export class CelDataImage extends CelData {
   }
 
   get alt() {
-    return this.getAttribute('alt') || null;
+    return this.getAttribute('alt') || undefined;
   }
 
   updateData(data) {
