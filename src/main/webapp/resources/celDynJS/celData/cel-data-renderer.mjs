@@ -60,6 +60,9 @@ export default class CelDataRenderer {
   #renderData(data) {
     console.debug('rendering', this, data);
     data?.forEach(entryData => this.#insertEntry(entryData));
+    if (data?.length ?? 0 === 0) {
+      this.htmlElem.classList.add('cel-data-empty');
+    }
     this.htmlElem.classList.replace('cel-data-rendering', 'cel-data-rendered');
   }
 

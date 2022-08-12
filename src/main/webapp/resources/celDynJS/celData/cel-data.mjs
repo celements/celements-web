@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-export default class CelData extends HTMLElement {
+export class CelData extends HTMLElement {
 
   #rootElem;
   #updateHandler;
@@ -27,7 +27,7 @@ export default class CelData extends HTMLElement {
     this.#updateHandler = event => this.updateData(event.detail);
   }
 
-  get #isDebug() {
+  get isDebug() {
     return this.hasAttribute('debug');
   }
 
@@ -49,12 +49,39 @@ export default class CelData extends HTMLElement {
 
   updateData(data) {
     console.debug('updateData', this, data);
-    this.textContent = data?.[this.field] ??
-      (this.#isDebug ? `{${this.field} is undefined}` : '');
+    this.replaceChildren();
+    this.insertAdjacentHTML('beforeend', data?.[this.field] ??
+      (this.isDebug ? `{${this.field} is undefined}` : ''));
+  }
+
+}
+
+export class CelDataImage extends CelData {
+
+  constructor() {
+    super();
+  }
+
+  get alt() {
+    return this.getAttribute('alt') || null;
+  }
+
+  updateData(data) {
+    console.debug('updateData', this, data);
+    this.replaceChildren();
+    const img = document.createElement('img');
+    img.classList.add('cel-data-image');
+    img.src = data?.[this.field] ?? '';
+    img.alt = this.alt;
+    this.appendChild(img);
   }
 
 }
 
 if (!customElements.get('cel-data')) {
   customElements.define('cel-data', CelData);
+}
+
+if (!customElements.get('cel-data-img')) {
+  customElements.define('cel-data-img', CelData);
 }
