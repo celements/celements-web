@@ -56,6 +56,45 @@ export class CelData extends HTMLElement {
 
 }
 
+export class CelDataDateTime extends CelData {
+
+  constructor() {
+    super();
+  }
+
+  get locale() {
+    return this.getAttribute('locale') || undefined;
+  }
+
+  get dateStyle() {
+    return this.getAttribute('date-style') || undefined;
+  }
+
+  get timeStyle() {
+    return this.getAttribute('time-style') || undefined;
+  }
+
+  get formatter() {
+    return new Intl.DateTimeFormat(this.locale, {
+      dateStyle: this.dateStyle,
+      timeStyle: this.timeStyle
+    });
+  }
+
+  updateData(data) {
+    console.debug('updateData', this, data);
+    let value;
+    const timestamp = Date.parse(data?.[this.field]);
+    if (!isNaN(timestamp)) {
+      value = this.formatter.format(new Date(timestamp));
+    }
+    this.replaceChildren();
+    this.insertAdjacentHTML('beforeend', value ??
+      (this.isDebug ? `{${this.field} is undefined}` : ''));
+  }
+
+}
+
 export class CelDataLink extends CelData {
 
   constructor() {
@@ -100,6 +139,9 @@ export class CelDataImage extends CelData {
 
 if (!customElements.get('cel-data')) {
   customElements.define('cel-data', CelData);
+}
+if (!customElements.get('cel-data-datetime')) {
+  customElements.define('cel-data-datetime', CelDataDateTime);
 }
 if (!customElements.get('cel-data-a')) {
   customElements.define('cel-data-a', CelDataLink);
