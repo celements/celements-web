@@ -33,6 +33,7 @@ export default class CelDataRenderer {
       throw new Error("missing template");
     }
     this.#template = template;
+    console.debug('CelDataRenderer init', this.htmlElem, this.template);
   }
 
   get htmlElem() {
@@ -44,7 +45,7 @@ export default class CelDataRenderer {
   }
 
   async render(dataPromise) {
-    console.debug('rendering', this);
+    console.debug('render', this);
     this.htmlElem.replaceChildren();
     this.htmlElem.classList.add('cel-data-rendering');
     const data = await dataPromise || [];

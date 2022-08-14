@@ -51,7 +51,7 @@ export class CelData extends HTMLElement {
     console.debug('updateData', this, data);
     this.replaceChildren();
     this.insertAdjacentHTML('beforeend', data?.[this.field] ??
-      (this.isDebug ? `{${this.field} is undefined}` : ''));
+      (this.isDebug ? `{'${this.field}' is undefined}` : ''));
   }
 
 }
@@ -83,14 +83,14 @@ export class CelDataDateTime extends CelData {
 
   updateData(data) {
     console.debug('updateData', this, data);
-    let value;
-    const timestamp = Date.parse(data?.[this.field]);
-    if (!isNaN(timestamp)) {
-      value = this.formatter.format(new Date(timestamp));
+    const value = data?.[this.field];
+    let formatted;
+    try {
+      formatted = this.formatter.format(new Date(value));
+    } catch (error) {
+      console.warn('error formatting date', error, value);
     }
-    this.replaceChildren();
-    this.insertAdjacentHTML('beforeend', value ??
-      (this.isDebug ? `{${this.field} is undefined}` : ''));
+    super.updateData({ [this.field]: formatted });
   }
 
 }
@@ -105,13 +105,21 @@ export class CelDataLink extends CelData {
     return this.getAttribute('target') || undefined;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this.querySelector('a')) {
+      const link = document.createElement('a');
+      link.replaceChildren(...this.childNodes);
+      this.replaceChildren(link);
+    }
+  }
+
   updateData(data) {
     console.debug('updateData', this, data);
-    const link = document.createElement('a');
-    link.href = data?.[this.field] ?? '#';
-    link.target = this.target;
-    link.replaceChildren(...this.childNodes);
-    this.replaceChildren(link);
+    const value = data?.[this.field];
+    Object.assign(this.querySelector('a'), value 
+      ? { href: value, target: this.target } 
+      : { href: 'javascript:void(0)', target: '_self' });
   }
 
 }
@@ -126,13 +134,18 @@ export class CelDataImage extends CelData {
     return this.getAttribute('alt') || undefined;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this.querySelector('img')) {
+      this.replaceChildren(document.createElement('img'));
+    }
+  }
+
   updateData(data) {
     console.debug('updateData', this, data);
-    this.replaceChildren();
-    const img = document.createElement('img');
+    const img = this.querySelector('img');
     img.src = data?.[this.field] ?? '';
     img.alt = this.alt;
-    this.appendChild(img);
   }
 
 }
