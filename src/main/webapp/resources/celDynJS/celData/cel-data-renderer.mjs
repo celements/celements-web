@@ -22,18 +22,13 @@ import './cel-data.mjs';
 export default class CelDataRenderer {
 
   #htmlElem;
-  #dataProvider;
   #template;
 
-  constructor(htmlElem, dataProvider, template) {
+  constructor(htmlElem, template) {
     if (htmlElem === undefined) {
       throw new Error("missing htmlElem");
     }
     this.#htmlElem = htmlElem;
-    if (dataProvider === undefined) {
-      throw new Error("missing dataProvider");
-    }
-    this.#dataProvider = dataProvider;
     if (template === undefined) {
       throw new Error("missing template");
     }
@@ -48,19 +43,13 @@ export default class CelDataRenderer {
     return this.#template;
   }
 
-  render() {
-    console.debug('rendering data', this);
+  async render(dataPromise) {
+    console.debug('rendering', this);
     this.htmlElem.replaceChildren();
     this.htmlElem.classList.add('cel-data-rendering');
-    this.#dataProvider()
-      .then(data => this.#renderData(data))
-      .catch(error => console.error(this, error));
-  }
-
-  #renderData(data) {
-    console.debug('rendering', this, data);
-    data?.forEach(entryData => this.#insertEntry(entryData));
-    if (data?.length ?? 0 === 0) {
+    const data = await dataPromise || [];
+    data.forEach(entryData => this.#insertEntry(entryData));
+    if (data.length === 0) {
       this.htmlElem.classList.add('cel-data-empty');
     }
     this.htmlElem.classList.replace('cel-data-rendering', 'cel-data-rendered');

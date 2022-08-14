@@ -63,7 +63,7 @@ export class CelDataDateTime extends CelData {
   }
 
   get locale() {
-    return this.getAttribute('locale') || undefined;
+    return this.getAttribute('locale') || navigator.language;
   }
 
   get dateStyle() {
