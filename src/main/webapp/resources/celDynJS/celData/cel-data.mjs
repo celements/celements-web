@@ -66,27 +66,17 @@ export class CelDataDateTime extends CelData {
     return this.getAttribute('locale') || navigator.language;
   }
 
-  get dateStyle() {
-    return this.getAttribute('date-style') || undefined;
-  }
-
-  get timeStyle() {
-    return this.getAttribute('time-style') || undefined;
-  }
-
   get options() {
     try {    
       return JSON.parse(this.getAttribute('options'));
     } catch (error) {
+      console.warn("failed parsing options", this.getAttribute('options'), error);
       return {};
     }
   }
 
   get formatter() {
-    return new Intl.DateTimeFormat(this.locale, Object.assign({
-      dateStyle: this.dateStyle,
-      timeStyle: this.timeStyle
-    }, this.options));
+    return new Intl.DateTimeFormat(this.locale, this.options);
   }
 
   updateData(data) {
