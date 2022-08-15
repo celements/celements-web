@@ -74,11 +74,19 @@ export class CelDataDateTime extends CelData {
     return this.getAttribute('time-style') || undefined;
   }
 
+  get options() {
+    try {    
+      return JSON.parse(this.getAttribute('options'));
+    } catch (error) {
+      return {};
+    }
+  }
+
   get formatter() {
-    return new Intl.DateTimeFormat(this.locale, {
+    return new Intl.DateTimeFormat(this.locale, Object.assign({
       dateStyle: this.dateStyle,
       timeStyle: this.timeStyle
-    });
+    }, this.options));
   }
 
   updateData(data) {
