@@ -6,8 +6,7 @@
     "@babel/cli": "^7.18.10",
     "@babel/core": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
-    "babel-minify": "^0.5.2",
-    "terser": "^5.14.2"
+    "babel-minify": "^0.5.2"
   },
   "browserslist": [
     "supports es6-module"
@@ -18,7 +17,6 @@
   },
   "scripts": {
     "babel": "babel $npm_package_config_dist -d $npm_package_config_dist --keep-file-extension --presets minify",
-    "terser": "find $npm_package_config_dist -type f | xargs -i sh -c 'terser --output {} --compress -- {}'",
     "prebuild": "npm run clean && cp -r $npm_package_config_src $npm_package_config_dist",
     "build": "npm run babel",
     "clean": "rm -rf $npm_package_config_dist"
