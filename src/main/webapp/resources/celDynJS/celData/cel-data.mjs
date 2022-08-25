@@ -100,7 +100,7 @@ export class CelDataLink extends CelData {
   }
 
   get target() {
-    return this.getAttribute('target') || undefined;
+    return this.getAttribute('target') || '';
   }
 
   connectedCallback() {
@@ -114,10 +114,14 @@ export class CelDataLink extends CelData {
 
   updateData(data) {
     console.debug('updateData', this, data);
+    const link = this.querySelector('a');
     const value = data?.[this.field];
-    Object.assign(this.querySelector('a'), value 
-      ? { href: value, target: this.target } 
-      : { href: 'javascript:void(0)', target: '_self' });
+    if (value) {
+      link.href = value;
+      link.target = this.target;
+    } else {
+      link.removeAttribute('href');
+    }
   }
 
 }
@@ -129,7 +133,11 @@ export class CelDataImage extends CelData {
   }
 
   get alt() {
-    return this.getAttribute('alt') || undefined;
+    return this.getAttribute('alt') || '';
+  }
+
+  get defaultSrc() {
+    return this.getAttribute('default-src') || '';
   }
 
   connectedCallback() {
@@ -142,7 +150,7 @@ export class CelDataImage extends CelData {
   updateData(data) {
     console.debug('updateData', this, data);
     const img = this.querySelector('img');
-    img.src = data?.[this.field] ?? '';
+    img.src = data?.[this.field] ?? this.defaultSrc;
     img.alt = this.alt;
   }
 
