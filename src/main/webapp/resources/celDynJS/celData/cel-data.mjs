@@ -100,7 +100,7 @@ export class CelDataLink extends CelData {
   }
 
   get target() {
-    return this.getAttribute('target') || '';
+    return this.getAttribute('target') ?? '';
   }
 
   connectedCallback() {
@@ -134,15 +134,15 @@ export class CelDataImage extends CelData {
   }
 
   get srcFallback() {
-    return this.getAttribute('src-fallback') || '';
+    return this.getAttribute('src-fallback') ?? '';
   }
 
   get alt() {
-    return this.getAttribute('alt') || '';
+    return this.getAttribute('alt') ?? '';
   }
 
   get loading() {
-    return this.getAttribute('loading') || '';
+    return this.getAttribute('loading') ?? '';
   }
 
   connectedCallback() {
