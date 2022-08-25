@@ -109,6 +109,7 @@ export class CelDataLink extends CelData {
       const link = document.createElement('a');
       link.replaceChildren(...this.childNodes);
       this.replaceChildren(link);
+      this.updateData({});
     }
   }
 
@@ -132,26 +133,32 @@ export class CelDataImage extends CelData {
     super();
   }
 
+  get srcFallback() {
+    return this.getAttribute('src-fallback') || '';
+  }
+
   get alt() {
     return this.getAttribute('alt') || '';
   }
 
-  get defaultSrc() {
-    return this.getAttribute('default-src') || '';
+  get loading() {
+    return this.getAttribute('loading') || '';
   }
 
   connectedCallback() {
     super.connectedCallback();
     if (!this.querySelector('img')) {
       this.replaceChildren(document.createElement('img'));
+      this.updateData({});
     }
   }
 
   updateData(data) {
     console.debug('updateData', this, data);
     const img = this.querySelector('img');
-    img.src = data?.[this.field] ?? this.defaultSrc;
+    img.src = data?.[this.field] ?? this.srcFallback;
     img.alt = this.alt;
+    img.loading = this.loading;
   }
 
 }
