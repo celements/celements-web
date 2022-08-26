@@ -100,7 +100,7 @@ export class CelDataLink extends CelData {
   }
 
   get target() {
-    return this.getAttribute('target') || undefined;
+    return this.getAttribute('target') ?? '';
   }
 
   connectedCallback() {
@@ -109,15 +109,20 @@ export class CelDataLink extends CelData {
       const link = document.createElement('a');
       link.replaceChildren(...this.childNodes);
       this.replaceChildren(link);
+      this.updateData({});
     }
   }
 
   updateData(data) {
     console.debug('updateData', this, data);
+    const link = this.querySelector('a');
     const value = data?.[this.field];
-    Object.assign(this.querySelector('a'), value 
-      ? { href: value, target: this.target } 
-      : { href: 'javascript:void(0)', target: '_self' });
+    if (value) {
+      link.href = value;
+      link.target = this.target;
+    } else {
+      link.removeAttribute('href');
+    }
   }
 
 }
@@ -128,22 +133,32 @@ export class CelDataImage extends CelData {
     super();
   }
 
+  get srcFallback() {
+    return this.getAttribute('src-fallback') ?? '';
+  }
+
   get alt() {
-    return this.getAttribute('alt') || undefined;
+    return this.getAttribute('alt') ?? '';
+  }
+
+  get loading() {
+    return this.getAttribute('loading') ?? '';
   }
 
   connectedCallback() {
     super.connectedCallback();
     if (!this.querySelector('img')) {
       this.replaceChildren(document.createElement('img'));
+      this.updateData({});
     }
   }
 
   updateData(data) {
     console.debug('updateData', this, data);
     const img = this.querySelector('img');
-    img.src = data?.[this.field] ?? '';
+    img.src = data?.[this.field] || this.srcFallback;
     img.alt = this.alt;
+    img.loading = this.loading;
   }
 
 }
