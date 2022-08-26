@@ -156,7 +156,7 @@ export class CelDataImage extends CelData {
   updateData(data) {
     console.debug('updateData', this, data);
     const img = this.querySelector('img');
-    img.src = data?.[this.field] ?? this.srcFallback;
+    img.src = data?.[this.field] || this.srcFallback;
     img.alt = this.alt;
     img.loading = this.loading;
   }
