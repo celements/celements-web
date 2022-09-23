@@ -230,7 +230,7 @@ class CelLazyLoader extends HTMLElement {
     console.debug('_updateContent: ', newChildNodes);
     for (let item of newChildNodes) {
       this.parentNode.insertBefore(item, this);
-      if ($(item)) {
+      if ($(item) && $(item).fire) {
         $(item).fire('celements:contentChanged', {
            'htmlElem' : item
         });
