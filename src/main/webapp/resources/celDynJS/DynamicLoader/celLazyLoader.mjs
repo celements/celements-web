@@ -235,7 +235,7 @@ class CelLazyLoader extends HTMLElement {
            'htmlElem' : item
         });
       } else {
-        console.error('_updateContent: failed to add child ', item);
+        console.info('_updateContent: failed to add child ', item);
       }
     }
     this.remove();
