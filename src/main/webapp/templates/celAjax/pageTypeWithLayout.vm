@@ -25,8 +25,10 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #if("$!doclang" == '')
   #set($doclang = $tdoc.getDefaultLanguage())
 #end
+#if("$!request.skipWrapper" != "")
 <div class="lang_${language} doclang_$doclang">
 <!-- start celements cells -->
+#end
 #if(("$!overwriteLayoutRef" != '') && $celementsweb.canRenderLayout($overwriteLayoutRef))
 #set($pageContent = $celementsweb.renderPageLayout($overwriteLayoutRef))
 #else
@@ -38,6 +40,8 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #set($pageContent = $services.celementsphoto.fixMaxImageSizes($pageContent, $maxWidth, $maxHeight))
 #end
 $!pageContent
+#if("$!request.skipWrapper" != "")
 <!-- end celements cells -->
 </div><!-- main wrapper -->
+#end
 #parse('celMacros/finaliseCelementsDocument.vm')
