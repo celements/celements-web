@@ -131,7 +131,7 @@ class CelLazyLoaderJs extends HTMLElement {
     const newEle = document.createElement('script');
     this._addLoadMode(newEle);
     newEle.type = this._getType(jsFileSrc);
-    newEle.src = this._lazyLoadUtils.getScriptPath(jsFileSrc);
+    newEle.src = jsFileSrc;
     return newEle;
   }
 
