@@ -87,7 +87,7 @@ class CelLazyLoaderUtils {
     });
   }
 
-  addLoadListener(customElem, elem, eventName) {
+  addRefireOnLoadedOrError(customElem, elem, eventName) {
     elem.addEventListener('load', () => this.fireLoaded(customElem, eventName));
     elem.addEventListener('error', (message, source, lineno, colno, error) => this.fireLoadedErr(
       customElem, eventName, message, source, lineno, colno, error));
@@ -139,7 +139,7 @@ class CelLazyLoaderJs extends HTMLElement {
     const jsFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'))
     if (!this._lazyLoadUtils.jsIsLoaded(jsFileSrc)) {
       const newEle = this._createJsElement(jsFileSrc);
-      this._lazyLoadUtils.addLoadListener(this, newEle, 'celements:jsFileLoaded');
+      this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, 'celements:jsFileLoaded');
       console.debug('_loadJsScript insert ', newEle);
       document.head.appendChild(newEle);
     } else {
@@ -185,7 +185,7 @@ class CelLazyLoaderCss extends HTMLElement {
     const cssFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'));
     if (!this._lazyLoadUtils.cssIsLoaded(cssFileSrc)) {
       const newEle = this._createCssElement(cssFileSrc);
-      this._lazyLoadUtils.addLoadListener(this, newEle, 'celements:cssFileLoaded');
+      this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, 'celements:cssFileLoaded');
       console.debug('_loadCssScript insert ', newEle);
       document.head.appendChild(newEle);
     } else {
