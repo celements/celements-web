@@ -72,7 +72,7 @@ class CelLazyLoaderUtils {
   fireLoaded = function(item, eventName) {
     item._reayState = 2;
     item._isSuccessfullLoaded = true;
-    item.fire(eventName, {
+    $(item).fire(eventName, {
      'fileSrc' : item.getAttribute('src'),
      'successful' : true
     });
@@ -81,7 +81,7 @@ class CelLazyLoaderUtils {
   fireLoadedErr = function(item, eventName, message, source, lineno, colno, error) {
     item._reayState = 2;
     item._isSuccessfullLoaded = false;
-    item.fire(eventName, {
+   $(item).fire(eventName, {
        'fileSrc' : source,
        'successful' : false,
        'message' : message,
