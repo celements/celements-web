@@ -70,6 +70,8 @@ class CelLazyLoaderUtils {
   }
 
   fireLoaded = function(item, eventName) {
+    item._reayState = 2;
+    item._isSuccessfullLoaded = true;
     item.fire(eventName, {
      'fileSrc' : item.getAttribute('src'),
      'successful' : true
@@ -77,6 +79,8 @@ class CelLazyLoaderUtils {
   }
 
   fireLoadedErr = function(item, eventName, message, source, lineno, colno, error) {
+    item._reayState = 2;
+    item._isSuccessfullLoaded = false;
     item.fire(eventName, {
        'fileSrc' : source,
        'successful' : false,
@@ -102,13 +106,15 @@ class CelLazyLoaderJs extends HTMLElement {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
    don't use it yet. '
   #lazyLoadUtils = new CelLazyLoaderUtils();
-  #jsLoadedBind;
-  #jsLoadedErrBind;
+  #readyState  // 0 = initalized , 1 = loading , 2 = loaded
+  #isSuccessfullLoaded
   */
   
   constructor() {
     super();
     this._lazyLoadUtils = new CelLazyLoaderUtils();
+    this._reayState = 0;
+    this._isSuccessfullLoaded = null;
   }
 
   _getType(jsFileSrc) {
@@ -141,8 +147,10 @@ class CelLazyLoaderJs extends HTMLElement {
       const newEle = this._createJsElement(jsFileSrc);
       this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, 'celements:jsFileLoaded');
       console.debug('_loadJsScript insert ', newEle);
+      this._reayState = 1;
       document.head.appendChild(newEle);
     } else {
+      this._reayState = 2;
       console.debug('skip js file already loaded', jsFileSrc);
     }
   }
@@ -165,11 +173,15 @@ class CelLazyLoaderCss extends HTMLElement {
   #lazyLoadUtils = new CelLazyLoaderUtils();
   #cssLoadedBind;
   #cssLoadedErrBind;
+  #readyState  // 0 = initalized , 1 = loading , 2 = loaded
+  #isSuccessfullLoaded
   */
   
   constructor() {
     super();
     this._lazyLoadUtils = new CelLazyLoaderUtils();
+    this._reayState = 0;
+    this._isSuccessfullLoaded = null;
   }
 
   _createCssElement(cssFileSrc) {
@@ -187,8 +199,10 @@ class CelLazyLoaderCss extends HTMLElement {
       const newEle = this._createCssElement(cssFileSrc);
       this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, 'celements:cssFileLoaded');
       console.debug('_loadCssScript insert ', newEle);
+      this._reayState = 1;
       document.head.appendChild(newEle);
     } else {
+      this._reayState = 2;
       console.debug('skip css file already loaded', cssFileSrc);
     }
   }
