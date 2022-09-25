@@ -1,7 +1,6 @@
 #set($overwriteLayoutRef = '')
 #if("$!request.overwriteLayout" != '')
-#set($pageLayoutMainDocRef = $services.model.createDocumentReference('', "$!request.overwriteLayout", ''))
-#set($overwriteLayoutRef = $pageLayoutMainDocRef.getLastSpaceReference())
+#set($overwriteLayoutRef = $services.reference.create().space("$!request.overwriteLayout").build())
 #end
 #set($oldInitCelmentsDocRef = $services.reference.create().wiki("celements2web").space("Macros").doc("initCelements").build())
 ##only include if legacy celements2web.xar is installed
@@ -30,10 +29,10 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 <div class="lang_${language} doclang_$doclang">
 <!-- start celements cells -->
 #end
-#if(("$!overwriteLayoutRef" != '') && $celementsweb.canRenderLayout($overwriteLayoutRef))
-#set($pageContent = $celementsweb.renderPageLayout($overwriteLayoutRef))
+#if(("$!overwriteLayoutRef" != '') && $services.layout.canRenderLayout($overwriteLayoutRef))
+#set($pageContent = $services.layout.renderPageLayout($overwriteLayoutRef))
 #else
-#set($pageContent = $celementsweb.renderPageLayout())
+#set($pageContent = $services.layout.renderPageLayout())
 #end
 #set($maxHeight = $util.parseInt("$!request.maxHeight"))
 #set($maxWidth = $util.parseInt("$!request.maxWidth"))
