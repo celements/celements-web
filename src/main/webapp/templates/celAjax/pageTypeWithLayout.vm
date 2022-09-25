@@ -25,7 +25,7 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #if("$!doclang" == '')
   #set($doclang = $tdoc.getDefaultLanguage())
 #end
-#if("$!request.skipWrapper" != "")
+#if("$!request.skipWrapper" == "")
 <div class="lang_${language} doclang_$doclang">
 <!-- start celements cells -->
 #end
@@ -40,7 +40,7 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #set($pageContent = $services.celementsphoto.fixMaxImageSizes($pageContent, $maxWidth, $maxHeight))
 #end
 $!pageContent
-#if("$!request.skipWrapper" != "")
+#if("$!request.skipWrapper" == "")
 <!-- end celements cells -->
 </div><!-- main wrapper -->
 #end
