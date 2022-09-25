@@ -3,8 +3,9 @@
 #set($pageLayoutMainDocRef = $services.model.createDocumentReference('', "$!request.overwriteLayout", ''))
 #set($overwriteLayoutRef = $pageLayoutMainDocRef.getLastSpaceReference())
 #end
+#set($oldInitCelmentsDocRef = $services.reference.create().wiki("celements2web").space("Macros").doc("initCelements").build())
 ##only include if legacy celements2web.xar is installed
-#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
+#if($services.modelAccess.exists($oldInitCelmentsDocRef))
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #end
 #set($isAjaxCall = ("$!request.ajax" == '1'))
