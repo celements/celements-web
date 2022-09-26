@@ -37,7 +37,7 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #set($pageContent = $services.layout.renderPageLayout())
 #end
 #else  ## skip layout and only render document with pagetype
-#set($pageContent = $services.celementsweb.renderCelementsDocument($!contentDoc.documentReference, $context.language, "view"))
+#set($pageContent = $services.celementsweb.renderCelementsDocument($!tdoc.documentReference, $doclang, "view"))
 #end
 #set($maxHeight = $util.parseInt("$!request.maxHeight"))
 #set($maxWidth = $util.parseInt("$!request.maxWidth"))
