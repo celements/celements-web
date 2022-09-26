@@ -1,6 +1,5 @@
-#set($skipLayout = ("$!request.skipLayout" == "1"))
 #set($overwriteLayoutRef = '')
-#if(!$skipLayout && ("$!request.overwriteLayout" != ''))
+#if("$!request.overwriteLayout" != '')
 #set($overwriteLayoutRef = $services.reference.create().space("$!request.overwriteLayout").build())
 #end
 #set($oldInitCelmentsDocRef = $services.reference.create().wiki("celements2web").space("Macros").doc("initCelements").build())
@@ -26,18 +25,12 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #if("$!doclang" == '')
   #set($doclang = $tdoc.getDefaultLanguage())
 #end
-#if("$!request.skipWrapper" == "")
 <div class="lang_${language} doclang_$doclang">
 <!-- start celements cells -->
-#end
-#if(!$skipLayout)
 #if(("$!overwriteLayoutRef" != '') && $services.layout.canRenderLayout($overwriteLayoutRef))
 #set($pageContent = $services.layout.renderPageLayout($overwriteLayoutRef))
 #else
 #set($pageContent = $services.layout.renderPageLayout())
-#end
-#else  ## skip layout and only render document with pagetype
-#set($pageContent = $services.celementsweb.renderCelementsDocument($!tdoc.documentReference, $doclang, "view"))
 #end
 #set($maxHeight = $util.parseInt("$!request.maxHeight"))
 #set($maxWidth = $util.parseInt("$!request.maxWidth"))
@@ -45,10 +38,8 @@ $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #set($pageContent = $services.celementsphoto.fixMaxImageSizes($pageContent, $maxWidth, $maxHeight))
 #end
 $!pageContent
-#if("$!request.skipWrapper" == "")
 <!-- end celements cells -->
 </div><!-- main wrapper -->
-#end
 #if(!$isAjaxCall)
 #parse('celMacros/finaliseCelementsDocument.vm')
 #end
