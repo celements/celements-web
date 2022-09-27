@@ -25,11 +25,11 @@ export default class CelDataRenderer {
   #template;
 
   constructor(htmlElem, template) {
-    if (htmlElem === undefined) {
+    if (htmlElem == null) {
       throw new Error("missing htmlElem");
     }
     this.#htmlElem = htmlElem;
-    if (template === undefined) {
+    if (template == null) {
       throw new Error("missing template");
     }
     this.#template = template;
@@ -64,9 +64,9 @@ export default class CelDataRenderer {
   }
 
   #insertEntry(entryData) {
-    const newElem = this.#template.content.cloneNode(true);
+    const newElem = this.template.content.cloneNode(true);
     const dataRoot = newElem.querySelector('.cel-data-root');
-    this.#htmlElem.appendChild(newElem);
+    this.htmlElem.appendChild(newElem);
     if (dataRoot) {
       dataRoot.dispatchEvent(new CustomEvent('celData:update', {
         bubbles: false,
