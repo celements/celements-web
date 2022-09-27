@@ -244,8 +244,7 @@ class CelLazyLoader extends HTMLElement {
     console.debug('_updateContent: ', newChildNodes);
     const fragment = new DocumentFragment();
     newChildNodes.forEach(item => fragment.append(item));
-    this.parentNode.insertBefore(fragment, this);
-    this.remove();
+    this.parentNode.replaceChild(fragment, this);
     newChildNodes.map(item => $(item))
       .filter(item => item && item.fire)
       .forEach(item => item.fire('celements:contentChanged', { 'htmlElem': item }));
