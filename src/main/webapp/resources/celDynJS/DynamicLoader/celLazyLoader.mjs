@@ -70,14 +70,18 @@ class CelLazyLoaderUtils {
   }
 
   fireLoaded = function(item, eventName) {
-    item.fire(eventName, {
+    item._reayState = 2;
+    item._isSuccessfullLoaded = true;
+    $(item).fire(eventName, {
      'fileSrc' : item.getAttribute('src'),
      'successful' : true
     });
   }
 
   fireLoadedErr = function(item, eventName, message, source, lineno, colno, error) {
-    item.fire(eventName, {
+    item._reayState = 2;
+    item._isSuccessfullLoaded = false;
+   $(item).fire(eventName, {
        'fileSrc' : source,
        'successful' : false,
        'message' : message,
@@ -87,7 +91,7 @@ class CelLazyLoaderUtils {
     });
   }
 
-  addLoadListener(customElem, elem, eventName) {
+  addRefireOnLoadedOrError(customElem, elem, eventName) {
     elem.addEventListener('load', () => this.fireLoaded(customElem, eventName));
     elem.addEventListener('error', (message, source, lineno, colno, error) => this.fireLoadedErr(
       customElem, eventName, message, source, lineno, colno, error));
@@ -102,13 +106,15 @@ class CelLazyLoaderJs extends HTMLElement {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
    don't use it yet. '
   #lazyLoadUtils = new CelLazyLoaderUtils();
-  #jsLoadedBind;
-  #jsLoadedErrBind;
+  #readyState  // 0 = initalized , 1 = loading , 2 = loaded
+  #isSuccessfullLoaded
   */
   
   constructor() {
     super();
     this._lazyLoadUtils = new CelLazyLoaderUtils();
+    this._reayState = 0;
+    this._isSuccessfullLoaded = null;
   }
 
   _getType(jsFileSrc) {
@@ -128,10 +134,10 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   _createJsElement(jsFileSrc) {
-    const newEle = document.createElement('link');
+    const newEle = document.createElement('script');
     this._addLoadMode(newEle);
     newEle.type = this._getType(jsFileSrc);
-    newEle.src = this._lazyLoadUtils.getScriptPath(jsFileSrc);
+    newEle.src = jsFileSrc;
     return newEle;
   }
 
@@ -139,10 +145,12 @@ class CelLazyLoaderJs extends HTMLElement {
     const jsFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'))
     if (!this._lazyLoadUtils.jsIsLoaded(jsFileSrc)) {
       const newEle = this._createJsElement(jsFileSrc);
-      this._lazyLoadUtils.addLoadListener(this, newEle, 'celements:jsFileLoaded');
+      this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, 'celements:jsFileLoaded');
       console.debug('_loadJsScript insert ', newEle);
+      this._reayState = 1;
       document.head.appendChild(newEle);
     } else {
+      this._reayState = 2;
       console.debug('skip js file already loaded', jsFileSrc);
     }
   }
@@ -165,11 +173,15 @@ class CelLazyLoaderCss extends HTMLElement {
   #lazyLoadUtils = new CelLazyLoaderUtils();
   #cssLoadedBind;
   #cssLoadedErrBind;
+  #readyState  // 0 = initalized , 1 = loading , 2 = loaded
+  #isSuccessfullLoaded
   */
   
   constructor() {
     super();
     this._lazyLoadUtils = new CelLazyLoaderUtils();
+    this._reayState = 0;
+    this._isSuccessfullLoaded = null;
   }
 
   _createCssElement(cssFileSrc) {
@@ -185,10 +197,12 @@ class CelLazyLoaderCss extends HTMLElement {
     const cssFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'));
     if (!this._lazyLoadUtils.cssIsLoaded(cssFileSrc)) {
       const newEle = this._createCssElement(cssFileSrc);
-      this._lazyLoadUtils.addLoadListener(this, newEle, 'celements:cssFileLoaded');
+      this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, 'celements:cssFileLoaded');
       console.debug('_loadCssScript insert ', newEle);
+      this._reayState = 1;
       document.head.appendChild(newEle);
     } else {
+      this._reayState = 2;
       console.debug('skip css file already loaded', cssFileSrc);
     }
   }
@@ -230,9 +244,13 @@ class CelLazyLoader extends HTMLElement {
     console.debug('_updateContent: ', newChildNodes);
     for (let item of newChildNodes) {
       this.parentNode.insertBefore(item, this);
-      item.fire('celements:contentChanged', {
-         'htmlElem' : item
-      });
+      if ($(item) && $(item).fire) {
+        $(item).fire('celements:contentChanged', {
+           'htmlElem' : item
+        });
+      } else {
+        console.info('_updateContent: failed to add child ', item);
+      }
     }
     this.remove();
   }

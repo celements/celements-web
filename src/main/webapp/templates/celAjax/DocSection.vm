@@ -2,4 +2,4 @@
 #if("$!fullname" == '')
   #set($fullname = "$doc.getFullName()")
 #end
-$celementsweb.getDocSectionAsJSON("$!request.get('regex')", "$!fullname", $util.parseInt("$!request.get('secNr')"))
+$services.webUtils.getDocSectionAsJSON("$!request.get('regex')", "$!fullname", $util.parseInt("$!request.get('secNr')"))
