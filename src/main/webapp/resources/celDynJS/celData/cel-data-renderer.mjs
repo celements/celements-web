@@ -64,9 +64,9 @@ export default class CelDataRenderer {
   }
 
   #insertEntry(entryData) {
-    const newElem = this.template.content.cloneNode(true);
+    const newElem = this.#template.content.cloneNode(true);
     const dataRoot = newElem.querySelector('.cel-data-root');
-    this.htmlElem.appendChild(newElem);
+    this.#htmlElem.appendChild(newElem);
     if (dataRoot) {
       dataRoot.dispatchEvent(new CustomEvent('celData:update', {
         bubbles: false,
