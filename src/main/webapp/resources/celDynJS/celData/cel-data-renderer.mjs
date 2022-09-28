@@ -25,11 +25,11 @@ export default class CelDataRenderer {
   #template;
 
   constructor(htmlElem, template) {
-    if (htmlElem === undefined) {
+    if (htmlElem == null) {
       throw new Error("missing htmlElem");
     }
     this.#htmlElem = htmlElem;
-    if (template === undefined) {
+    if (template == null) {
       throw new Error("missing template");
     }
     this.#template = template;

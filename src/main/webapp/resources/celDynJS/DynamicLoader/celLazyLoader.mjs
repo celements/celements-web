@@ -242,17 +242,17 @@ class CelLazyLoader extends HTMLElement {
 
   _updateContent(newChildNodes) {
     console.debug('_updateContent: ', newChildNodes);
-    for (let item of newChildNodes) {
-      this.parentNode.insertBefore(item, this);
-      if ($(item) && $(item).fire) {
-        $(item).fire('celements:contentChanged', {
-           'htmlElem' : item
-        });
-      } else {
-        console.info('_updateContent: failed to add child ', item);
-      }
+    const parent = this.parentNode;
+    const fragment = new DocumentFragment();
+    fragment.replaceChildren(...newChildNodes);
+    parent.replaceChild(fragment, this);
+    try {
+      $(parent).fire('celements:contentChanged', {
+        'htmlElem': parent
+      });
+    } catch (exp) {
+      console.error('contentChanged failed on ', parent, exp);
     }
-    this.remove();
   }
 
   _showLoadingIndicator() {
