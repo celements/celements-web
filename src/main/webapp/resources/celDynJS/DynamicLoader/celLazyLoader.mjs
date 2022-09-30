@@ -37,12 +37,12 @@ class CelLazyLoaderUtils {
 
   getScriptPath(pathName) {
     let scriptPath = pathName;
-    if (scriptPath.indexOf('?') > 0) {
-      scriptPath += '&';
-    } else {
-      scriptPath += '?';
-    }
     if (!pathName.includes('version=')) {
+      if (scriptPath.indexOf('?') > 0) {
+        scriptPath += '&';
+      } else {
+        scriptPath += '?';
+      }
       if ((scriptPath.split('/').length > 4) && scriptPath.includes('/resources/')) {
         scriptPath += "version=" + this._startupTimeStamp;
       } else {
@@ -127,7 +127,7 @@ class CelLazyLoaderJs extends HTMLElement {
 
   _addLoadMode(newEle) {
     const loadMode = this.getAttribute('loadMode');
-    if (loadMode && (loadMode != 'sync')) {
+    if (loadMode && (loadMode !== 'sync')) {
       newEle.setAttribute(loadMode, '');
     }
     return newEle;
