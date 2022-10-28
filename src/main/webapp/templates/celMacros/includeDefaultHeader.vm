@@ -61,7 +61,7 @@ $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/validation.js'))#
 #end
 $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/mobile/MobileSupport.js'))##
 $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/scriptaculous/effects.js'))##
-#if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 0) == 0)##
+#if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 1) == 0)##
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/SWFObject-2.2/swfobject.js'))##
 #end
 ##
