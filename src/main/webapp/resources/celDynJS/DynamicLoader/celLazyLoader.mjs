@@ -224,20 +224,20 @@ class CelLazyLoader extends HTMLElement {
   constructor () {
     super();
     this.classList.add('celLoadLazyLoading');
-    this._fetchResponse = this._loadCell();
+    this._fetchResponse = this.src ? fetch(this.src) : null;
     this.attachShadow({ 'mode' : 'open' });
     this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
     this._showLoadingIndicator();
   }
 
-  _loadCell() {
-    return fetch(this.getAttribute('src'));
+  get src() {
+    return this.getAttribute('src');
   }
 
   _parseHTML(html) {
-    const elem = document.createElement('div');
-    elem.insertAdjacentHTML('afterbegin', html);
-    return Array.from(elem.childNodes);
+    const template = document.createElement('template');
+    template.insertAdjacentHTML('afterbegin', html);
+    return [...template.childNodes];
   }
 
   _updateContent(newChildNodes) {
@@ -264,11 +264,18 @@ class CelLazyLoader extends HTMLElement {
     this.shadowRoot.appendChild(loaderimg);
   }
 
-  connectedCallback() {
-    console.debug('connectedCallback: ', this._fetchResponse);
-    this._fetchResponse
-      .then(resp => resp.text())
-      .then(txt => this._updateContent(this._parseHTML(txt)));
+  async connectedCallback() {
+    console.debug('connectedCallback', this, this._fetchResponse);
+    let nodes = [];
+    if (this._fetchResponse) {
+      const response = await this._fetchResponse;
+      if (response.ok) {
+        nodes = this._parseHTML(await response.text());
+      } else {
+        console.error('fetch failed', response);
+      }
+    }
+    this._updateContent(nodes);
   }
 }
 

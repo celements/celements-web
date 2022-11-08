@@ -2,7 +2,7 @@
 $jsonBuilder.openDictionary()
 #set($map = $util.getHashMap())
 #set($devnull = $map.putAll($request.getParameterMap()))
-#set($validationResult = $celementsweb.validateRequest())
+#set($validationResult = $services.editorsupport.validateRequest())
 ## Handle Validation Results
 #set($validationPassed = ($validationResult.size() == 0))
 #set($successful = $validationPassed)
