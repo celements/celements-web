@@ -14,26 +14,26 @@
 <div id="websearch">
 
 <div class="websearch_form" #if("$!hideForm" == 'true') style="display: none" #end >
-#if("$adminMsg.get('cel_search_page_title')" != 'cel_search_page_title')
-  <h1>$adminMsg.get('cel_search_page_title')</h1>
+#if("$msg.get('cel_search_page_title')" != 'cel_search_page_title')
+  <h1>$msg.get('cel_search_page_title')</h1>
 #end
 <form action="$doc.getURL()">
   #if("$!maxInputFieldSize" == '')
     #set($maxInputFieldSize = 20)
   #end
   <input type="text" name="text" value="$xwiki.getFormEncoded($!text)" size="$!maxInputFieldSize" class="search_input">
-  <button type="submit" name="submitSearch">$adminMsg.get('cel_search_page_search')</button>
+  <button type="submit" name="submitSearch">$msg.get('cel_search_page_search')</button>
   #set($availablePackages = $services.websearch.getAvailablePackages($configDocRef))
   #if($advancedSearch == 1)
     <div class="advancedSearch">
       <input type="radio" class="searchElement searchRelevance searchRadioBtn" name="sort" value="score"##
         #if(("$!request.sort" == "") || ("$!request.sort" == "score"))checked#end
       >
-      <label for="relevance">$adminMsg.get('cel_search_page_relevance')</label>
+      <label for="relevance">$msg.get('cel_search_page_relevance')</label>
       <input type="radio" class="searchElement searchLastChange searchRadioBtn" name="sort" value="-date"##
         #if("$!request.sort" == "date") checked #end
       >
-      <label for="lastChange">$adminMsg.get('cel_search_page_lastChanged')</label>
+      <label for="lastChange">$msg.get('cel_search_page_lastChanged')</label>
       #set($reqContentType = $request.getParameterValues("contentType"))
       
       
@@ -41,7 +41,7 @@
       #set($devNull = $searchOptionConnectionMap.put("content", "content_menu"))
       #set($devNull = $searchOptionConnectionMap.put("menu", "content_menu"))
       #set($doublePackages = [])
-      <label for="searchSection"> &#124; $adminMsg.get('cel_search_page_searchSection'):</label>
+      <label for="searchSection"> &#124; $msg.get('cel_search_page_searchSection'):</label>
       <select name="contentType" id="contentType" class="searchElement searchSelect searchContentType celMultiselect"##
         data-bootstrapConfig='{"enableClickableOptGroups" : true, "includeSelectAllOption" : true, "numberDisplayed" : 2}'##
         multiple="multiple">
@@ -50,7 +50,7 @@
           #set($package = $!searchOptionConnectionMap.get($package))
         #end
         #if(!$doublePackages.contains($package))
-          <option value="$package" #if(("$!reqContentType" == "") || $reqContentType.contains($package))selected="selected"#end>$adminMsg.get("cel_search_page_${package}")</option>
+          <option value="$package" #if(("$!reqContentType" == "") || $reqContentType.contains($package))selected="selected"#end>$msg.get("cel_search_page_${package}")</option>
           #set($devNull = $doublePackages.add($package))
         #end
       #end
