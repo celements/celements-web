@@ -1469,6 +1469,7 @@
         tooltip: 'Insert/edit image',
         onAction: Dialog(editor).open,
         onSetup: buttonApi => {
+          console.log('celImage on Setup of button');
           buttonApi.setActive(isNonNullable(getSelectedImage(editor)));
           return editor.selection.selectorChangedWithUnbind('img:not([data-mce-object]):not([data-mce-placeholder]),figure.image', buttonApi.setActive).unbind;
         }
