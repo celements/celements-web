@@ -810,7 +810,7 @@
     };
     const deepMerge = baseMerge(deep);
 
-    var global$1 = tinymce.util.Tools.resolve('tinymce.util.ImageUploader');
+    var imgUploder = tinymce.util.Tools.resolve('tinymce.util.ImageUploader');
 
     var global = tinymce.util.Tools.resolve('tinymce.util.Tools');
 
@@ -1381,7 +1381,7 @@
     const normalizeCss = editor => cssText => normalizeCss$1(editor, cssText);
     const parseStyle = editor => cssText => editor.dom.parseStyle(cssText);
     const serializeStyle = editor => (stylesArg, name) => editor.dom.serializeStyle(stylesArg, name);
-    const uploadImage = editor => blobInfo => global$1(editor).upload([blobInfo], false).then(results => {
+    const uploadImage = editor => blobInfo => imgUploder(editor).upload([blobInfo], false).then(results => {
       let _a;
       if (results.length === 0) {
         return Promise.reject('Failed to upload image');
@@ -1464,7 +1464,7 @@
     };
 
     const register = editor => {
-      editor.ui.registry.addToggleButton('celImage', {
+      editor.ui.registry.addToggleButton('image', {
         icon: 'image',
         tooltip: 'Insert/edit image',
         onAction: Dialog(editor).open,
@@ -1474,12 +1474,12 @@
           return editor.selection.selectorChangedWithUnbind('img:not([data-mce-object]):not([data-mce-placeholder]),figure.image', buttonApi.setActive).unbind;
         }
       });
-      editor.ui.registry.addMenuItem('celImage', {
+      editor.ui.registry.addMenuItem('image', {
         icon: 'image',
         text: 'Image...',
         onAction: Dialog(editor).open
       });
-      editor.ui.registry.addContextMenu('celImage', { update: element => isFigure(element) || isImage(element) && !isPlaceholderImage(element) ? ['image'] : [] });
+      editor.ui.registry.addContextMenu('image', { update: element => isFigure(element) || isImage(element) && !isPlaceholderImage(element) ? ['image'] : [] });
     };
 
     const Plugin = () => {
@@ -1488,6 +1488,7 @@
         setup(editor);
         register(editor);
         register$1(editor);
+        console.log('celImage add plugin finished');
       });
     };
 
