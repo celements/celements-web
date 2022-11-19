@@ -1466,7 +1466,7 @@
     };
 
     const register = editor => {
-      editor.ui.registry.addToggleButton('image', {
+      editor.ui.registry.addToggleButton('celImage', {
         icon: 'image',
         tooltip: 'Insert/edit image',
         onAction: Dialog(editor).open,
@@ -1476,16 +1476,16 @@
           return editor.selection.selectorChangedWithUnbind('img:not([data-mce-object]):not([data-mce-placeholder]),figure.image', buttonApi.setActive).unbind;
         }
       });
-      editor.ui.registry.addMenuItem('image', {
+      editor.ui.registry.addMenuItem('celImage', {
         icon: 'image',
         text: 'Image...',
         onAction: Dialog(editor).open
       });
-      editor.ui.registry.addContextMenu('image', { update: element => isFigure(element) || isImage(element) && !isPlaceholderImage(element) ? ['image'] : [] });
+      editor.ui.registry.addContextMenu('celImage', { update: element => isFigure(element) || isImage(element) && !isPlaceholderImage(element) ? ['image'] : [] });
     };
 
     const Plugin = () => {
-      console.log('celImage plugin start');
+      console.log('celImage plugin start', pluginManager);
       pluginManager.add('celImage', editor => {
         try {
           console.log('celImage add plugin before register$2');
