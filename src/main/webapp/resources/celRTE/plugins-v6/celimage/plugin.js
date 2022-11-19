@@ -317,7 +317,6 @@
     const isAutomaticUploadsEnabled = option('automatic_uploads');
     const hasUploadUrl = editor => isNotEmpty(editor.options.get('images_upload_url'));
     const hasUploadHandler = editor => isNonNullable(editor.options.get('images_upload_handler'));
-/*
     console.log('celimage hasDimension ', hasDimensions, ' hasAdvTab ', hasAdvTab,
       ' hasUploadTab ', hasUploadTab, ' getPrependUrl ', getPrependUrl,
       ' getClassList', getClassList, ' hasDescription ', hasDescription,
@@ -325,7 +324,6 @@
       ' getImageList ', getImageList, ' showAccessibilityOptions ', showAccessibilityOptions,
       ' isAutomaticUploadsEnabled ', isAutomaticUploadsEnabled, ' hasUploadUrl ', hasUploadUrl,
       ' hasUploadHandler', hasUploadHandler);
-*/
 
     const parseIntAndGetMax = (val1, val2) => Math.max(parseInt(val1, 10), parseInt(val2, 10));
     const getImageSize = url => new Promise(callback => {
@@ -1488,13 +1486,9 @@
       console.log('celImage plugin start', pluginManager);
       pluginManager.add('celImage', editor => {
         try {
-          console.log('celImage add plugin before register$2');
           register$2(editor);
-          console.log('celImage add plugin before setup');
           setup(editor);
-          console.log('celImage add plugin before register');
           register(editor);
-          console.log('celImage add plugin before register$1');
           register$1(editor);
           console.log('celImage add plugin finished');
         } catch (error) {
