@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    var pluginManager = tinymce.util.Tools.resolve('tinymce.PluginManager');
+    const pluginManager = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
     const getPrototypeOf = Object.getPrototypeOf;
     const hasProto = (v, constructor, predicate) => {
@@ -252,9 +252,9 @@
       fromPoint
     };
 
-    var global$3 = tinymce.util.Tools.resolve('tinymce.dom.DOMUtils');
+    const domUtils = tinymce.util.Tools.resolve('tinymce.dom.DOMUtils');
 
-    var global$2 = tinymce.util.Tools.resolve('tinymce.util.URI');
+    const utilURI = tinymce.util.Tools.resolve('tinymce.util.URI');
 
     const isNotEmpty = s => s.length > 0;
 
@@ -440,7 +440,7 @@
         resolve(reader.result);
       };
       reader.onerror = () => {
-        var _a;
+        let _a;
         reject((_a = reader.error) === null || _a === void 0 ? void 0 : _a.message);
       };
       reader.readAsDataURL(blob);
@@ -448,14 +448,14 @@
     const isPlaceholderImage = imgElm => imgElm.nodeName === 'IMG' && (imgElm.hasAttribute('data-mce-object') || imgElm.hasAttribute('data-mce-placeholder'));
     const isSafeImageUrl = (editor, src) => {
       const getOption = editor.options.get;
-      return global$2.isDomSafe(src, 'img', {
+      return utilURI.isDomSafe(src, 'img', {
         allow_html_data_urls: getOption('allow_html_data_urls'),
         allow_script_urls: getOption('allow_script_urls'),
         allow_svg_data_urls: getOption('allow_svg_data_urls')
       });
     };
 
-    const DOM = global$3.DOM;
+    const DOM = domUtils.DOM;
     const getHspace = image => {
       if (image.style.marginLeft && image.style.marginRight && image.style.marginLeft === image.style.marginRight) {
         return removePixelSuffix(image.style.marginLeft);
@@ -478,7 +478,7 @@
       }
     };
     const getAttrib = (image, name) => {
-      var _a;
+      let _a;
       if (image.hasAttribute(name)) {
         return (_a = image.getAttribute(name)) !== null && _a !== void 0 ? _a : '';
       } else {
@@ -558,7 +558,7 @@
       image.style.borderStyle = value;
     };
     const getBorderStyle = image => {
-      var _a;
+      let _a;
       return (_a = image.style.borderStyle) !== null && _a !== void 0 ? _a : '';
     };
     const isFigure = elm => isNonNullable(elm) && elm.nodeName === 'FIGURE';
@@ -702,7 +702,7 @@
       return imgElm;
     };
     const splitTextBlock = (editor, figure) => {
-      var _a;
+      let _a;
       const dom = editor.dom;
       const textBlockElements = filter(editor.schema.getTextBlockElements(), (_, parentElm) => !editor.schema.isValidChild(parentElm, 'figure'));
       const textBlock = dom.getParent(figure.parentNode, node => hasNonNullableKey(textBlockElements, node.nodeName), editor.getBody());
@@ -812,9 +812,9 @@
     };
     const deepMerge = baseMerge(deep);
 
-    var imgUploder = tinymce.util.Tools.resolve('tinymce.util.ImageUploader');
+    const imgUploder = tinymce.util.Tools.resolve('tinymce.util.ImageUploader');
 
-    var global = tinymce.util.Tools.resolve('tinymce.util.Tools');
+    const utilTools = tinymce.util.Tools.resolve('tinymce.util.Tools');
 
     const getValue = item => isString(item.value) ? item.value : '';
     const getText = item => {
@@ -828,7 +828,7 @@
     };
     const sanitizeList = (list, extractValue) => {
       const out = [];
-      global.each(list, item => {
+      utilTools.each(list, item => {
         const text = getText(item);
         if (item.menu !== undefined) {
           const items = sanitizeList(item.menu, extractValue);
@@ -1454,7 +1454,7 @@
         const node = nodes[i];
         if (hasImageClass(node)) {
           node.attr('contenteditable', state ? 'false' : null);
-          global.each(node.getAll('figcaption'), toggleContentEditable);
+          utilTools.each(node.getAll('figcaption'), toggleContentEditable);
         }
       }
     };
@@ -1485,6 +1485,7 @@
     };
 
     const Plugin = () => {
+      console.log('celImage plugin start');
       pluginManager.add('celImage', editor => {
         try {
           console.log('celImage add plugin before register$2');
@@ -1504,4 +1505,5 @@
 
     Plugin();
 
+    console.log('celImage finished');
 })();
