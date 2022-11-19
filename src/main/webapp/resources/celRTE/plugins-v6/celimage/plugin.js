@@ -1497,7 +1497,7 @@
           register$1(editor);
           console.log('celImage add plugin finished');
         } catch (error) {
-          console.error('Failed to initalize celimage plugin');
+          console.error('Failed to initalize celimage plugin', error);
         }
       });
     };
