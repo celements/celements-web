@@ -249,4 +249,4 @@ export class CelOverlay {
 
 }
 
-window.CELEMENTS_Overlay = CelOverlay;
+var CELEMENTS_Overlay = CelOverlay;
