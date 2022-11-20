@@ -18,7 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-import { CelOverlayResize } from "overlayResize.mjs";
+import { CelOverlayResize } from "./overlayResize.mjs?version=202211202144";
 
 export class CelOverlay {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
@@ -249,4 +249,4 @@ export class CelOverlay {
 
 }
 
-window.CELEMENTSOverlay = CelOverlay;
+window.CELEMENTS_Overlay = CelOverlay;
