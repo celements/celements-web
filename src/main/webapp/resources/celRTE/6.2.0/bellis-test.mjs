@@ -114,5 +114,6 @@ tinymce.init({"selector" : "textarea.tinyMCE,textarea.mceEditor", "language" : "
   "wiki_filebase_single_doc" : "1", "entity_encoding" : "raw", "autoresize_bottom_margin" : 1,
   "autoresize_min_height" : 0, "style_formats" : [], "image_advtab": true,
   "image_uploadtab" : true,   "images_upload_handler": celRteAdaptor.uploadHandler,
+  "file_picker_callback" :  celRte_file_picker_handler,
   "automatic_uploads": true
 });
