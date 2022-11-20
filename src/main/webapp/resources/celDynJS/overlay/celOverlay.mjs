@@ -17,6 +17,9 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+
+import { CelOverlayResize } from "overlayResize.mjs";
+
 export class CelOverlay {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
    don't use it yet. '
@@ -39,6 +42,7 @@ export class CelOverlay {
     _me.idPrefix = idPrefix || "celOverlay_";
     _me._closeBind = _me.close.bind(_me);
     _me._id = _me._generateNextId(_me.idPrefix);
+    /** TODO add cel-lazy-load-js and cel-lazy-load-css tags to overlay and import celLazyLoader.mjs
     const lazyLoaderJs = window.CELEMENTS.lazyloader.JsLoader;
     const lazyLoaderCss = window.CELEMENTS.lazyloader.CssLoader;
     let cssScripts = [{
@@ -54,6 +58,7 @@ export class CelOverlay {
         'src' : '/file/OnePageLayout/WebHome/overlayResize.js'
       }];
     lazyLoaderJs.loadScripts(jsScripts);
+   */
   }
 
   isMaxContentHeight() {
@@ -72,7 +77,7 @@ export class CelOverlay {
   _getOverlayResizer() {
     const _me = this;
     if (!_me._overlayResizer) {
-      _me._overlayResizer= new window.CELEMENTS.window.OverlayResize(_me);
+      _me._overlayResizer= new CelOverlayResize(_me);
     }
     return _me._overlayResizer;
   }
