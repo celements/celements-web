@@ -41,7 +41,7 @@ export class CelOverlay {
     this.idPrefix = idPrefix || "celOverlay_";
     this._id = this._generateNextId(this.idPrefix);
     const cssFiles = [{
-        'src' : '/file/OnePageLayout/WebHome/celementsOverlayV2.css'
+        'src' : '/file/resources/celRes/overlay/celementsOverlayV2.css'
       }];
     if (customCssFiles) {
       cssFiles.push(...customCssFiles);
