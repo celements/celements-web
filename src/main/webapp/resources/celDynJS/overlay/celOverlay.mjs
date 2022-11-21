@@ -96,6 +96,11 @@ export class CelOverlay {
     _me._getOverlayBgElem().style.display = 'none';
   }
 
+  setZIndex(newZindex) {
+    this.getOverlayElem().style.zIndex = newZindex;
+    this._getOverlayBgElem().style.zIndex = newZindex - 1;
+  }
+
   _getOverlayBgElem() {
     const _me = this;
     if (!_me._overlayBgElem) {
