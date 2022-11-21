@@ -54,7 +54,8 @@ export class CelOverlay {
       const cssSrc = theCssFile.src ?? theCssFile.href;
       if (cssSrc !== '') {
         const cssLazyLoadElem = document.createElement('cel-lazy-load-css');
-        cssLazyLoadElem.src = cssSrc;
+        cssLazyLoadElem.setAttribute('src', cssSrc);
+        console.log('_addOverlayCssFiles src', cssLazyLoadElem.getAttribute('src'), cssSrc);
         document.body.appendChild(cssLazyLoadElem);
       } else {
         console.warn('CelOverlay skipping css file without source', theCssFile);
