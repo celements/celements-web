@@ -1,0 +1,15 @@
+.filebasePicker #attachments {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.filebasePicker .imagePickerWrapper {
+    margin: 5px;
+    width: 107px;
+    height: 107px;
+    background-color: #E3E3E3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
