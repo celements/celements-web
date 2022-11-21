@@ -171,13 +171,13 @@ export class CelOverlay {
     const _me = this;
     _me.resetContent();
     _me.show();
+    _me._getOverlayResizer.bind(_me).delay(0.5);
   }
   
   async openCelementsPage(url) {
     const _me = this;
     _me.open();
     if (url) {
-      _me._getOverlayResizer.bind(_me).delay(0.5);
       await _me._loadContentAsync({
        'url' : url,
         'responseField' : 'celrenderedcontent',
