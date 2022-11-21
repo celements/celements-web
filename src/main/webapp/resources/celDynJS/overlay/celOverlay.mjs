@@ -19,6 +19,7 @@
  */
 
 import { CelOverlayResize } from "./overlayResize.mjs?version=202211202144";
+import default from "../DynamicLoader/celLazyLoader.mjs?version=202211202144";
 
 export class CelOverlay {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
@@ -27,7 +28,6 @@ export class CelOverlay {
   #overlayElem;
   #overlayBodyElem;
   #overlayBgElem;
-  #closeBind;
   #loadingIndicator;
   #overlayResizer;
   idPrefix;
@@ -36,15 +36,10 @@ export class CelOverlay {
   */
 
   constructor(customCssFiles, idPrefix) {
-    const _me = this;
-    Object.assign(_me, window.CELEMENTS.mixins.Observable);
-    _me._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
-    _me.idPrefix = idPrefix || "celOverlay_";
-    _me._closeBind = _me.close.bind(_me);
-    _me._id = _me._generateNextId(_me.idPrefix);
-    /** TODO add cel-lazy-load-js and cel-lazy-load-css tags to overlay and import celLazyLoader.mjs
-    const lazyLoaderJs = window.CELEMENTS.lazyloader.JsLoader;
-    const lazyLoaderCss = window.CELEMENTS.lazyloader.CssLoader;
+    Object.assign(this, window.CELEMENTS.mixins.Observable);
+    this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
+    this.idPrefix = idPrefix || "celOverlay_";
+    this._id = this._generateNextId(this.idPrefix);
     let cssScripts = [{
         'isUrl' : true,
         'href' : '/file/OnePageLayout/WebHome/celementsOverlayV2.css'
@@ -52,13 +47,15 @@ export class CelOverlay {
     if (customCssFiles) {
       cssScripts.push(...customCssFiles);
     }
-    lazyLoaderCss.loadCssScripts(cssScripts);
-    const jsScripts = [{
-        'isUrl' : true,
-        'src' : '/file/OnePageLayout/WebHome/overlayResize.js'
-      }];
-    lazyLoaderJs.loadScripts(jsScripts);
-   */
+    this._addOverlayCssFiles(cssScripts);
+  }
+
+  _addOverlayCssFiles(customCssFiles) {
+    for (const theCssFile in customCssFiles) {
+      const cssLazyLoadElem = document.createElement('cel-lazy-load-css');
+      cssLazyLoadElem.src = theCssFile.src ?? theCssFile.href;
+      document.body.appendChild(cssLazyLoadElem);
+    }
   }
 
   isMaxContentHeight() {
@@ -128,7 +125,7 @@ export class CelOverlay {
       layoutSec.classList.add('main', 'layoutsubsection');
       const closeButton = document.createElement('a');
       closeButton.classList.add('cel_closebutton');
-      closeButton.addEventListener('click', _me._closeBind);
+      closeButton.addEventListener('click', () => _me.close);
       layoutSec.appendChild(closeButton);
       layoutSec.appendChild(_me.getOverlayBody());
       overlayElem.appendChild(layoutSec);
