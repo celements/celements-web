@@ -51,7 +51,7 @@ export class CelOverlay {
   }
 
   _addOverlayCssFiles(customCssFiles) {
-    for (let theCssFile in customCssFiles) {
+    for (let theCssFile of customCssFiles) {
       const cssSrc = theCssFile.src ?? theCssFile.href;
       if (cssSrc) {
         const cssLazyLoadElem = document.createElement('cel-lazy-load-css');
