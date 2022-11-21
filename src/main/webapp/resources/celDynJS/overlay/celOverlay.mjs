@@ -40,20 +40,19 @@ export class CelOverlay {
     this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
     this.idPrefix = idPrefix || "celOverlay_";
     this._id = this._generateNextId(this.idPrefix);
-    let cssScripts = [{
-        'isUrl' : true,
-        'href' : '/file/OnePageLayout/WebHome/celementsOverlayV2.css'
+    let cssFiles = [{
+        'src' : '/file/OnePageLayout/WebHome/celementsOverlayV2.css'
       }];
     if (customCssFiles) {
-      cssScripts.push(...customCssFiles);
+      cssFiles.push(...customCssFiles);
     }
-    this._addOverlayCssFiles(cssScripts);
+    this._addOverlayCssFiles(cssFiles);
   }
 
-  _addOverlayCssFiles(customCssFiles) {
-    for (let theCssFile of customCssFiles) {
+  _addOverlayCssFiles(cssFiles) {
+    for (let theCssFile of cssFiles) {
       const cssSrc = theCssFile.src ?? theCssFile.href;
-      if (cssSrc) {
+      if (cssSrc !== '') {
         const cssLazyLoadElem = document.createElement('cel-lazy-load-css');
         cssLazyLoadElem.src = cssSrc;
         document.body.appendChild(cssLazyLoadElem);
