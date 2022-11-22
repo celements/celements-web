@@ -40,6 +40,7 @@ export class CelOverlay {
     this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
     this.idPrefix = idPrefix || "celOverlay_";
     this._id = this._generateNextId(this.idPrefix);
+    this._closeBind = this.close.bind(this);
     const cssFiles = [{
         'src' : '/file/resources/celRes/overlay/celementsOverlayV2.css'
       }];
@@ -134,7 +135,7 @@ export class CelOverlay {
       layoutSec.classList.add('main', 'layoutsubsection');
       const closeButton = document.createElement('a');
       closeButton.classList.add('cel_closebutton');
-      closeButton.addEventListener('click', () => _me.close);
+      closeButton.addEventListener('click', _me._closeBind);
       layoutSec.appendChild(closeButton);
       layoutSec.appendChild(_me.getOverlayBody());
       overlayElem.appendChild(layoutSec);
