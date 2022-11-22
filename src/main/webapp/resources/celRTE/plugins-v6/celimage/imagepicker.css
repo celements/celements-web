@@ -28,4 +28,5 @@
 }
 .filebasePicker div.imagePickerWrapper div.imagePickerSource img:hover {
   border-style: solid;
+  cursor: pointer;
 }
