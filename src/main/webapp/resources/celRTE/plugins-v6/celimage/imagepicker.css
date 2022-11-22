@@ -3,13 +3,29 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
-
-.filebasePicker .imagePickerWrapper {
-    margin: 5px;
-    width: 107px;
-    height: 107px;
-    background-color: #E3E3E3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.filebasePicker div.imagePickerWrapper {
+  position: relative;
+  margin: 0;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  width: 107px;
+  height: 107px;
+  border: 1px solid #D2D2D2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0px;
+  font-size: 0px;
+}
+.filebasePicker div.imagePickerWrapper div.imagePickerSource {
+  border: 4px dashed transparent;
+}
+.filebasePicker div.imagePickerWrapper div.imagePickerSource img {
+  background: url(../../../../celRes/transpBGsmall.gif);
+}
+.filebasePicker div.imagePickerWrapper div.imagePickerSource.selected {
+  border: 4px dashed #ff9900;
+}
+.filebasePicker div.imagePickerWrapper div.imagePickerSource img:hover {
+  border-style: solid;
 }
