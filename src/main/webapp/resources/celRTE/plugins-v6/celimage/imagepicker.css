@@ -26,7 +26,7 @@
 .filebasePicker div.imagePickerWrapper div.imagePickerSource.selected {
   border: 4px dashed #ff9900;
 }
-.filebasePicker div.imagePickerWrapper div.imagePickerSource img:hover {
+.filebasePicker div.imagePickerWrapper:hover div.imagePickerSource img {
   border-style: solid;
   cursor: pointer;
 }
