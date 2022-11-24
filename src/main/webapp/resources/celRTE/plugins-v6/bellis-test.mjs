@@ -6,7 +6,7 @@ class CelRteAdaptor {
   }
 
   uploadImagesHandler(blobInfo, progress) {
-    return uploadHandler({
+    return this.uploadHandler({
       'name' : blobInfo.filname(),
       'blob' : blobInfo.blob()
     }, progress);
@@ -151,7 +151,7 @@ class CelRteAdaptor {
         if (item.kind === 'file') {
           const file = item.getAsFile();
           console.log(`… file[${i}].name = ${file.name}`);
-          return uploadHandler({
+          return this.uploadHandler({
             'name' : file.name,
             'blob' : file
           }, (standPercent) => console.log('upload1 progress ', standPercent));
@@ -161,7 +161,7 @@ class CelRteAdaptor {
       // Use DataTransfer interface to access the file(s)
       [...ev.dataTransfer.files].forEach((file, i) => {
         console.log(`… file[${i}].name = ${file.name}`);
-          return uploadHandler({
+          return this.uploadHandler({
             'name' : file.name,
             'blob' : file
           }, (standPercent) => console.log('upload2 progress ', standPercent));
