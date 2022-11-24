@@ -5,7 +5,14 @@ class CelRteAdaptor {
     this.imagePickerMaxDimension = 100;
   }
 
-  uploadHandler(blobInfo, progress) {
+  uploadImagesHandler(blobInfo, progress) {
+    return uploadHandler({
+      'name' : blobInfo.filname(),
+      'blob' : blobInfo.blob()
+    }, progress);
+  }
+
+  uploadHandler(fileInfo, progress) {
     return  new Promise((resolve, reject) => {
       const theEditor = tinymce.activeEditor;
       const option = name => editor => editor.options.get(name);
@@ -35,7 +42,7 @@ class CelRteAdaptor {
           xhr.open('POST', getBaseUrl(theEditor) + '?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=upload');
         
           xhr.upload.onprogress = (e) => {
-            progress(e.loaded / e.total * 100);
+            progress(Math.round(e.loaded / e.total * 100));
           };
         
           xhr.onload = () => {
@@ -75,12 +82,12 @@ class CelRteAdaptor {
           };
         
           console.log('celRTE_image_upload_handler token[', respJson.token, '] filename [',
-            blobInfo.filename(), '] typeof blobInfo ', typeof blobInfo);
+            fileInfo.name, ']');
           const formData = new FormData();
           formData.append('uploadToken', respJson.token);
           formData.append('celTokenUploadCreateIfNotExists', true);
-          formData.append('filename', blobInfo.filename());
-          formData.append('filepath', blobInfo.blob(), blobInfo.filename());
+          formData.append('filename', fileInfo.name);
+          formData.append('filepath', fileInfo.blob, blobInfo.filename());
         
           xhr.send(formData);
       });
@@ -120,14 +127,6 @@ class CelRteAdaptor {
       attachEl.appendChild(imgDiv);
       imgDiv.addEventListener('click', options.clickHandler);
     }
-    /**
-    <div
-  id="drop_zone"
-  ondrop="dropHandler(event);"
-  ondragover="dragOverHandler(event);">
-  <p>Drag one or more files to this <i>drop zone</i>.</p>
-</div>
-     */
     const dropZoneElem = document.createElement('div');
     dropZoneElem.id = 'drop_zone';
     dropZoneElem.insertAdjacentHTML('afterbegin','<p>Drag one or more files to this <i>drop zone</i>.</p>');
@@ -152,12 +151,20 @@ class CelRteAdaptor {
         if (item.kind === 'file') {
           const file = item.getAsFile();
           console.log(`… file[${i}].name = ${file.name}`);
+          return uploadHandler({
+            'name' : file.name,
+            'blob' : file
+          }, (standPercent) => console.log('upload1 progress ', standPercent));
         }
       });
     } else {
       // Use DataTransfer interface to access the file(s)
       [...ev.dataTransfer.files].forEach((file, i) => {
         console.log(`… file[${i}].name = ${file.name}`);
+          return uploadHandler({
+            'name' : file.name,
+            'blob' : file
+          }, (standPercent) => console.log('upload2 progress ', standPercent));
       });
     }
   }
@@ -262,7 +269,7 @@ tinymce.init({"selector" : "textarea.tinyMCE,textarea.mceEditor", "language" : "
   "wiki_filebase_link" : "/untitled1?xpage=celements_ajax&ajax_mode=FileBase&picker=1&single_doc=Content_attachments.FileBaseDoc&fieldname=href&src_doc=Content.untitled1&columns=10&root=Content&hasUpload=1",
   "wiki_filebase_single_doc" : "1", "entity_encoding" : "raw", "autoresize_bottom_margin" : 1,
   "autoresize_min_height" : 0, "style_formats" : [], "image_advtab": true,
-  "image_uploadtab" : true,   "images_upload_handler": celRteAdaptor.uploadHandler,
+  "image_uploadtab" : true,   "images_upload_handler": celRteAdaptor.uploadImagesHandler,
   "file_picker_callback" :  celRteAdaptor.celRte_file_picker_handler.bind(celRteAdaptor),
   "automatic_uploads": true, "filebaseFN" : "Content_attachments.FileBaseDoc"
 });
