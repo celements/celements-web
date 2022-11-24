@@ -75,7 +75,7 @@ class CelRteAdaptor {
           };
         
           console.log('celRTE_image_upload_handler token[', respJson.token, '] filename [',
-            blobInfo.filename(), ']');
+            blobInfo.filename(), '] typeof blobInfo ', typeof blobInfo);
           const formData = new FormData();
           formData.append('uploadToken', respJson.token);
           formData.append('celTokenUploadCreateIfNotExists', true);
@@ -120,8 +120,47 @@ class CelRteAdaptor {
       attachEl.appendChild(imgDiv);
       imgDiv.addEventListener('click', options.clickHandler);
     }
+    /**
+    <div
+  id="drop_zone"
+  ondrop="dropHandler(event);"
+  ondragover="dragOverHandler(event);">
+  <p>Drag one or more files to this <i>drop zone</i>.</p>
+</div>
+     */
+    const dropZoneElem = document.createElement('div');
+    dropZoneElem.id = 'drop_zone';
+    dropZoneElem.insertAdjacentHTML('afterbegin','<p>Drag one or more files to this <i>drop zone</i>.</p>');
+    dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
+    dropZoneElem.addEventListener('dragover', (event) => this.dragOverHandler(event));
   }
-  
+
+  dragOverHandler(ev) {
+    console.log('File(s) in drop zone');
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+  }
+
+  dropHandler(ev) {
+    console.log('File(s) dropped');
+    ev.preventDefault();
+    if (ev.dataTransfer.items) {
+      // Use DataTransferItemList interface to access the file(s)
+      [...ev.dataTransfer.items].forEach((item, i) => {
+        // If dropped items aren't files, reject them
+        if (item.kind === 'file') {
+          const file = item.getAsFile();
+          console.log(`… file[${i}].name = ${file.name}`);
+        }
+      });
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      [...ev.dataTransfer.files].forEach((file, i) => {
+        console.log(`… file[${i}].name = ${file.name}`);
+      });
+    }
+  }
+
   celRTE_filePicker(theOverlay, filebaseFN, onlyImages, callback, value) {
     let startPos = 0;
     let stepNumber = 25;
