@@ -1,5 +1,9 @@
 
 class CelRteAdaptor {
+  
+  constructor() {
+    this.imagePickerMaxDimension = 100;
+  }
 
   uploadHandler(blobInfo, progress) {
     return  new Promise((resolve, reject) => {
@@ -82,7 +86,112 @@ class CelRteAdaptor {
       });
     });
   }
+
+  renderAttachmentList(attachEl, attList, options) {
+    for (const attElem of attList) {
+      const cssClasses = ['imagePickerSource'];
+      const attSrc = decodeURI(attElem.src);
+      const attElemUrl = new URL(attSrc, window.location.href);
+      if (attElemUrl.href == options.currentImgUrl.href) {
+        cssClasses.push('selected');
+      }
+      let thmbImgSrc = '/file/resources/celRes/glyphicons/glyphicons-37-file.png';
+      if (attElem.mimeType.startsWith('image/')) {
+        thmbImgSrc = (attSrc + '?celheight=' + this.imagePickerMaxDimension
+          + '&celwidth=' + this.imagePickerMaxDimension);
+      }
+      const imgThmb = document.createElement('img');
+      imgThmb.src = thmbImgSrc;
+      const imgContainerDiv = document.createElement('div');
+      imgContainerDiv.classList.add(...cssClasses);
+      imgContainerDiv.appendChild(imgThmb);
+      const imgDiv = document.createElement('div');
+      imgDiv.classList.add('imagePickerWrapper');
+      imgDiv.setAttribute('data-att-src', attSrc);
+      imgDiv.setAttribute('data-filename', attElem.filename);
+      imgDiv.appendChild(imgContainerDiv);
+      if(options.duplicateCheck) {
+        attachEl.querySelectorAll('.imagePickerWrapper').forEach(function(imgWrapper) {
+          if(imgWrapper.querySelector('img').src.href == attElemUrl.href) {
+            imgWrapper.remove();
+          }
+        });
+      }
+      attachEl.appendChild(imgDiv);
+      imgDiv.addEventListener('click', options.clickHandler);
+    }
+  }
   
+  celRTE_filePicker(theOverlay, filebaseFN, onlyImages, callback, value) {
+    let startPos = 0;
+    let stepNumber = 25;
+    let tag = '';
+    theOverlay.open();
+    const formData = new FormData();
+    formData.append('xpage', 'celements_ajax');
+    formData.append('ajax_mode', 'imagePickerList');
+    formData.append('images', '1');
+    formData.append('start', startPos);
+    formData.append('nb', stepNumber);
+    formData.append('tagList', tag);
+    formData.append('onlyImages', onlyImages)
+    formData.append('filebaseDocFN', filebaseFN)
+    fetch('/ajax/picker/filePickerList', {
+      method : 'POST',
+      body : formData
+    }).then(resp => resp.json()
+    ).then(data => {
+      console.debug('imagePicker data: ', data);
+      const attachEl = document.createElement('div');
+      attachEl.id = 'attachments';
+      this.renderAttachmentList(attachEl, data, {
+        'currentImgUrl' : new URL(value, window.location.href),
+        'duplicateCheck' : false,
+        'clickHandler' : (event) => {
+          const imageDiv = event.currentTarget;
+          callback(imageDiv.dataset.attSrc, { alt : imageDiv.dataset.filename });
+          theOverlay.close();
+        }
+      });
+      theOverlay.updateContent([attachEl]);
+    });
+  }
+  
+  celRte_file_picker_handler(callback, value, meta) {
+    // Provide file and text for the link dialog
+    console.log('celRte_file_picker_handler ', value, meta, callback);
+    const theEditor = tinymce.activeEditor;
+    const option = name => editor => editor.options.get(name);
+    console.log('celRTE_image_upload_handler start ', theEditor);
+    const registerOption = theEditor.options.register;
+    registerOption('filebaseFN', {
+      processor: 'string',
+      default: ''
+    });
+  
+    const getFilebaseFN = option('filebaseFN');
+    const theOverlay = new window.CELEMENTS_Overlay([{
+      'src' : '/file/resources/celRTE/plugins-v6/celimage/imagepicker.css'
+    }]);
+    theOverlay.customCssClass = 'filebasePicker';
+    theOverlay.setZIndex(2000);
+    theOverlay.close();
+  
+    if (meta.filetype == 'file') {
+      this.celRTE_filePicker(theOverlay, getFilebaseFN(theEditor), false, callback, value);
+    }
+  
+    // Provide image and alt text for the image dialog
+    if (meta.filetype == 'image') {
+      this.celRTE_filePicker(theOverlay, getFilebaseFN(theEditor), true, callback, value);
+    }
+  
+    // Provide alternative source and posted for the media dialog
+    if (meta.filetype == 'media') {
+      callback('movie.mp4', { source2: 'alt.ogg', poster: 'image.jpg' });
+    }
+  };
+ 
 }
 
 export const celRteAdaptor = new CelRteAdaptor();
@@ -114,6 +223,6 @@ tinymce.init({"selector" : "textarea.tinyMCE,textarea.mceEditor", "language" : "
   "wiki_filebase_single_doc" : "1", "entity_encoding" : "raw", "autoresize_bottom_margin" : 1,
   "autoresize_min_height" : 0, "style_formats" : [], "image_advtab": true,
   "image_uploadtab" : true,   "images_upload_handler": celRteAdaptor.uploadHandler,
-  "file_picker_callback" :  celRte_file_picker_handler,
+  "file_picker_callback" :  celRteAdaptor.celRte_file_picker_handler.bind(celRteAdaptor),
   "automatic_uploads": true, "filebaseFN" : "Content_attachments.FileBaseDoc"
 });
