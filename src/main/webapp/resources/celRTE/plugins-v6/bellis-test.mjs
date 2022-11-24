@@ -132,7 +132,7 @@ class CelRteAdaptor {
     dropZoneElem.insertAdjacentHTML('afterbegin','<p>Drag one or more files to this <i>drop zone</i>.</p>');
     dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
     dropZoneElem.addEventListener('dragover', (event) => this.dragOverHandler(event));
-    attachEl.appendChild(dropZoneElem);
+    attachEl.after(dropZoneElem);
   }
 
   dragOverHandler(ev) {

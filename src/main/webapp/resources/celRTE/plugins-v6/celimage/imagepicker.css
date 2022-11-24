@@ -30,3 +30,7 @@
   border-style: solid;
   cursor: pointer;
 }
+#drop_zone {
+  border: 3px solid #3E3E3E;
+  height: 50px;
+}
