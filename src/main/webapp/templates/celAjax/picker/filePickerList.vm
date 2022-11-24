@@ -31,7 +31,7 @@ $jsonBuilder.openArray()
   #set($attFileName = $attach.filename)
   #set($attachRef = $services.reference.create().with($attach.document.documentReference).att($attFileName).build())
   $jsonBuilder.openDictionary()
-  $jsonBuilder.addProperty("src", $services.url.getURL($attachRef, 'file'))
+  $jsonBuilder.addProperty("src", $services.url.getURL($attachRef, 'download')) ## 'download' because of image resize
   $jsonBuilder.addProperty("filename", $attFileName)
   $jsonBuilder.addProperty("version", $attach.version)
   $jsonBuilder.addProperty("lastChangedBy", $attach.author)
