@@ -115,5 +115,5 @@ tinymce.init({"selector" : "textarea.tinyMCE,textarea.mceEditor", "language" : "
   "autoresize_min_height" : 0, "style_formats" : [], "image_advtab": true,
   "image_uploadtab" : true,   "images_upload_handler": celRteAdaptor.uploadHandler,
   "file_picker_callback" :  celRte_file_picker_handler,
-  "automatic_uploads": true
+  "automatic_uploads": true, "filebaseFN" : "Content_attachments.FileBaseDoc"
 });
