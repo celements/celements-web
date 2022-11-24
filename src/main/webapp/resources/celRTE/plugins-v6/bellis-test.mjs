@@ -87,8 +87,7 @@ class CelRteAdaptor {
           formData.append('uploadToken', respJson.token);
           formData.append('celTokenUploadCreateIfNotExists', true);
           formData.append('filename', fileInfo.name);
-          formData.append('filepath', fileInfo.blob, blobInfo.filename());
-        
+          formData.append('filepath', fileInfo.blob, fileInfo.name);
           xhr.send(formData);
       });
     });
