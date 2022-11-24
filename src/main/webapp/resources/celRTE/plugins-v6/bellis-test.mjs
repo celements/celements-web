@@ -93,7 +93,9 @@ class CelRteAdaptor {
     });
   }
 
-  renderAttachmentList(attachEl, attList, options) {
+  renderAttachmentList(attList, options) {
+    const attachEl = document.createElement('div');
+    attachEl.id = 'attachments';
     for (const attElem of attList) {
       const cssClasses = ['imagePickerSource'];
       const attSrc = decodeURI(attElem.src);
@@ -131,7 +133,7 @@ class CelRteAdaptor {
     dropZoneElem.insertAdjacentHTML('afterbegin','<p>Drag one or more files to this <i>drop zone</i>.</p>');
     dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
     dropZoneElem.addEventListener('dragover', (event) => this.dragOverHandler(event));
-    attachEl.after(dropZoneElem);
+    return [attachEl, dropZoneElem];
   }
 
   dragOverHandler(ev) {
@@ -188,9 +190,7 @@ class CelRteAdaptor {
     }).then(resp => resp.json()
     ).then(data => {
       console.debug('imagePicker data: ', data);
-      const attachEl = document.createElement('div');
-      attachEl.id = 'attachments';
-      this.renderAttachmentList(attachEl, data, {
+      const childrenElemArray = this.renderAttachmentList(data, {
         'currentImgUrl' : new URL(value, window.location.href),
         'duplicateCheck' : false,
         'clickHandler' : (event) => {
@@ -199,7 +199,7 @@ class CelRteAdaptor {
           theOverlay.close();
         }
       });
-      theOverlay.updateContent([attachEl]);
+      theOverlay.updateContent(childrenElemArray);
     });
   }
   
