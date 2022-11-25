@@ -1,37 +1,15 @@
 
-class CelRteAdaptor {
+class CelUploadHandler {
   
-  constructor() {
-    this.imagePickerMaxDimension = 100;
+  constructor(baseUrl, imgUrl) {
+    this.baseUrl = baseUrl;
+    this.imgUrl = imgUrl;
   }
-
-  uploadImagesHandler(blobInfo, progress) {
-    return this.uploadHandler({
-      'name' : blobInfo.filename(),
-      'blob' : blobInfo.blob()
-    }, progress);
-  }
-
-  uploadHandler(fileInfo, progress) {
-    return  new Promise((resolve, reject) => {
-      const theEditor = tinymce.activeEditor;
-      const option = name => editor => editor.options.get(name);
-      console.log('celRTE_image_upload_handler start ', theEditor);
-      const registerOption = theEditor.options.register;
-      registerOption('wiki_attach_path', {
-        processor: 'string',
-        default: '/'
-      });
-      registerOption('wiki_imagedownload_path', {
-        processor: 'string',
-        default: '/'
-      });
-    
-      const getBaseUrl = option('wiki_attach_path');
-      const getImgUrl = option('wiki_imagedownload_path');
-    
-      console.log('celRTE_image_upload_handler baseUrl, imgUrl ', getBaseUrl(theEditor),
-       getImgUrl(theEditor));
+  
+  upload(fileInfo, progress) {
+    return  new Promise((resolve, reject) => {    
+      console.log('celRTE_image_upload_handler baseUrl, imgUrl ', this.baseUrl,
+       this.imgUrl);
     
       fetch('?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=getTokenForCurrentUser')
         .then((response) => response.json())
@@ -39,7 +17,7 @@ class CelRteAdaptor {
           console.log('celRTE_image_upload_handler respJson', respJson, respJson.token);
           const xhr = new XMLHttpRequest();
           xhr.withCredentials = false;
-          xhr.open('POST', getBaseUrl(theEditor) + '?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=upload');
+          xhr.open('POST', this.baseUrl + '?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=upload');
         
           xhr.upload.onprogress = (e) => {
             progress(Math.round(e.loaded / e.total * 100));
@@ -74,7 +52,7 @@ class CelRteAdaptor {
          "attfilename" : "Spalenhof_Innenhof_1.jpg",
          "username" : "fpichler"}
         */
-            resolve(getImgUrl(theEditor) + '/'+ json.attfilename);
+            resolve(this.imgUrl + '/'+ json.attfilename);
           };
         
           xhr.onerror = () => {
@@ -92,10 +70,69 @@ class CelRteAdaptor {
       });
     });
   }
+}
 
-  renderAttachmentList(attList, options) {
-    const attachEl = document.createElement('div');
-    attachEl.id = 'attachments';
+class CelFilePicker {
+
+  constructor(options) {
+    this.imagePickerMaxDimension = 100;
+    this.filebaseFN = options.filebaseFN;
+    this.pickerOverlay = new window.CELEMENTS_Overlay([{
+      'src' : '/file/resources/celRTE/plugins-v6/celimage/imagepicker.css'
+    }]);
+    this.pickerOverlay.customCssClass = 'filebasePicker';
+    this.pickerOverlay.setZIndex(2000);
+    this.pickerOverlay.close();
+    this.uploadHandler = new CelUploadHandler(options.wiki_attach_path,
+      options.wiki_imagedownload_path);
+  }
+
+  getDropZoneElem() {
+    const dropZoneElem = document.createElement('div');
+    dropZoneElem.id = 'drop_zone';
+    dropZoneElem.insertAdjacentHTML('afterbegin','<p>Drag one or more files to this <i>drop zone</i>.</p>');
+    dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
+    dropZoneElem.addEventListener('dragover', (event) => this.dragOverHandler(event));
+    return dropZoneElem;
+  }
+
+  dragOverHandler(ev) {
+    console.log('File(s) in drop zone');
+    // Prevent default behavior (Prevent file from being opened)
+    ev.preventDefault();
+  }
+
+  dropHandler(ev) {
+    console.log('File(s) dropped');
+    ev.preventDefault();
+    if (ev.dataTransfer.items) {
+      // Use DataTransferItemList interface to access the file(s)
+      [...ev.dataTransfer.items].forEach((item, i) => {
+        // If dropped items aren't files, reject them
+        if (item.kind === 'file') {
+          const file = item.getAsFile();
+          console.log(`… file[${i}].name = ${file.name}`);
+          this.uploadHandler.upload({
+            'name' : file.name,
+            'blob' : file
+          }, (standPercent) => console.log('upload1 progress ', standPercent));
+        }
+      }).then(() => {
+        this.filePicker.updateAttachmentList();
+      });
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      [...ev.dataTransfer.files].forEach((file, i) => {
+        console.log(`… file[${i}].name = ${file.name}`);
+          return this.uploadHandler.upload({
+            'name' : file.name,
+            'blob' : file
+          }, (standPercent) => console.log('upload2 progress ', standPercent));
+      });
+    }
+  }
+  
+  renderAttachmentList(attachEl, attList, options) {
     for (const attElem of attList) {
       const cssClasses = ['imagePickerSource'];
       const attSrc = decodeURI(attElem.src);
@@ -128,119 +165,94 @@ class CelRteAdaptor {
       attachEl.appendChild(imgDiv);
       imgDiv.addEventListener('click', options.clickHandler);
     }
-    const dropZoneElem = document.createElement('div');
-    dropZoneElem.id = 'drop_zone';
-    dropZoneElem.insertAdjacentHTML('afterbegin','<p>Drag one or more files to this <i>drop zone</i>.</p>');
-    dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
-    dropZoneElem.addEventListener('dragover', (event) => this.dragOverHandler(event));
-    return [attachEl, dropZoneElem];
   }
 
-  dragOverHandler(ev) {
-    console.log('File(s) in drop zone');
-    // Prevent default behavior (Prevent file from being opened)
-    ev.preventDefault();
-  }
-
-  dropHandler(ev) {
-    console.log('File(s) dropped');
-    ev.preventDefault();
-    if (ev.dataTransfer.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      [...ev.dataTransfer.items].forEach((item, i) => {
-        // If dropped items aren't files, reject them
-        if (item.kind === 'file') {
-          const file = item.getAsFile();
-          console.log(`… file[${i}].name = ${file.name}`);
-          return this.uploadHandler({
-            'name' : file.name,
-            'blob' : file
-          }, (standPercent) => console.log('upload1 progress ', standPercent));
-        }
-      });
-    } else {
-      // Use DataTransfer interface to access the file(s)
-      [...ev.dataTransfer.files].forEach((file, i) => {
-        console.log(`… file[${i}].name = ${file.name}`);
-          return this.uploadHandler({
-            'name' : file.name,
-            'blob' : file
-          }, (standPercent) => console.log('upload2 progress ', standPercent));
-      });
-    }
-  }
-
-  celRTE_filePicker(theOverlay, filebaseFN, onlyImages, callback, value) {
-    let startPos = 0;
-    let stepNumber = 25;
-    let tag = '';
-    theOverlay.open();
+  updateAttachmentList() {
+    this.pickerOverlay.open();
     const formData = new FormData();
     formData.append('xpage', 'celements_ajax');
     formData.append('ajax_mode', 'imagePickerList');
     formData.append('images', '1');
-    formData.append('start', startPos);
-    formData.append('nb', stepNumber);
-    formData.append('tagList', tag);
-    formData.append('onlyImages', onlyImages)
-    formData.append('filebaseDocFN', filebaseFN)
+    formData.append('start', this.startPos);
+    formData.append('nb', this.stepNumber);
+    formData.append('tagList', this.tag);
+    formData.append('onlyImages', this.onlyImages)
+    formData.append('filebaseDocFN', this.filebaseFN)
     fetch('/ajax/picker/filePickerList', {
       method : 'POST',
       body : formData
     }).then(resp => resp.json()
     ).then(data => {
       console.debug('imagePicker data: ', data);
-      const childrenElemArray = this.renderAttachmentList(data, {
-        'currentImgUrl' : new URL(value, window.location.href),
+      const attachEl = document.createElement('div');
+      attachEl.id = 'attachments';
+      this.renderAttachmentList(data, {
+        'currentImgUrl' : new URL(this.selectedValue, window.location.href),
         'duplicateCheck' : false,
         'clickHandler' : (event) => {
           const imageDiv = event.currentTarget;
-          callback(imageDiv.dataset.attSrc, { alt : imageDiv.dataset.filename });
-          theOverlay.close();
+          this.callback(imageDiv.dataset.attSrc, { alt : imageDiv.dataset.filename });
+          this.pickerOverlay.close();
         }
       });
-      theOverlay.updateContent(childrenElemArray);
+      this.pickerOverlay.updateContent([attachEl, this.getDropZoneElem()]);
     });
   }
+
+  renderFilePickerInOverlay(onlyImages, callback, value) {
+    this.startPos = 0;
+    this.stepNumber = 25;
+    this.tag = '';
+    this.onlyImages = onlyImages;
+    this.callback = callback;
+    this.selectedValue = value;
+    this.updateAttachmentList();
+  }
+
+}
+
+class CelRteAdaptor {
   
+  constructor(options) {
+    this.options = options
+    this.filePicker = new CelFilePicker(options);
+    this.uploadHandler = new CelUploadHandler(options.wiki_attach_path,
+      options.wiki_imagedownload_path);
+  }
+
+  uploadImagesHandler(blobInfo, progress) {
+    return this.uploadHandler.upload({
+      'name' : blobInfo.filename(),
+      'blob' : blobInfo.blob()
+    }, progress);
+  }
+
   celRte_file_picker_handler(callback, value, meta) {
     // Provide file and text for the link dialog
     console.log('celRte_file_picker_handler ', value, meta, callback);
-    const theEditor = tinymce.activeEditor;
-    const option = name => editor => editor.options.get(name);
-    console.log('celRTE_image_upload_handler start ', theEditor);
-    const registerOption = theEditor.options.register;
-    registerOption('filebaseFN', {
-      processor: 'string',
-      default: ''
-    });
-  
-    const getFilebaseFN = option('filebaseFN');
-    const theOverlay = new window.CELEMENTS_Overlay([{
-      'src' : '/file/resources/celRTE/plugins-v6/celimage/imagepicker.css'
-    }]);
-    theOverlay.customCssClass = 'filebasePicker';
-    theOverlay.setZIndex(2000);
-    theOverlay.close();
   
     if (meta.filetype == 'file') {
-      this.celRTE_filePicker(theOverlay, getFilebaseFN(theEditor), false, callback, value);
+      this.filePicker.renderFilePickerInOverlay(false, callback, value);
     }
   
     // Provide image and alt text for the image dialog
     if (meta.filetype == 'image') {
-      this.celRTE_filePicker(theOverlay, getFilebaseFN(theEditor), true, callback, value);
+      this.filePicker.renderFilePickerInOverlay(true, callback, value);
     }
   
     // Provide alternative source and posted for the media dialog
     if (meta.filetype == 'media') {
       callback('movie.mp4', { source2: 'alt.ogg', poster: 'image.jpg' });
     }
-  };
+  }
  
 }
 
-export const celRteAdaptor = new CelRteAdaptor();
+export const celRteAdaptor = new CelRteAdaptor({
+  "wiki_attach_path" : "/Content_attachments/FileBaseDoc",
+  "wiki_imagedownload_path" : "/download/Content_attachments/FileBaseDoc",
+  "filebaseFN" : "Content_attachments.FileBaseDoc"
+});
 
 tinymce.init({"selector" : "textarea.tinyMCE,textarea.mceEditor", "language" : "de",
   "valid_elements" : "b/strong,caption,hr[class|width|size|noshade],+a[href|class|target|onclick|name|id|title|rel|hreflang],br,i/em,#p[style|class|name|id],#h?[align<center?justify?left?right|class|style|id],-span[class|style|id|title],textformat[blockindent|indent|leading|leftmargin|rightmargin|tabstops],sub[class],sup[class],img[width|height|class|align|style|src|border=0|alt|id|title|usemap],table[align<center?left?right|bgcolor|border|cellpadding|cellspacing|class|height|width|style|id|title],tbody[align<center?char?justify?left?right|class|valign<baseline?bottom?middle?top],#td[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|nowrap<nowrap|style|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|width],#th[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|style|width],thead[align<center?char?justify?left?right|class|valign<baseline?bottom?middle?top],-tr[align<center?char?justify?left?right|bgcolor|class|style|rowspan|valign<baseline?bottom?middle?top|id],-ol[class|type|compact],-ul[class|type|compact],#li[class]",
@@ -260,8 +272,6 @@ tinymce.init({"selector" : "textarea.tinyMCE,textarea.mceEditor", "language" : "
     "/file/resources/celRes/celements2%2Dcontent.css?version=20221118165414",
     "/file/BellisLayout/WebHome/Bellis%2Dcontent.css?version=20160122155749"
   ], "wiki_images_path" : "/download/Content_attachments/FileBaseDoc",
-  "wiki_attach_path" : "/Content_attachments/FileBaseDoc",
-  "wiki_imagedownload_path" : "/download/Content_attachments/FileBaseDoc",
   "wiki_linkpicker_space" : "Content",  "wiki_linkpicker_baseurl" : "/untitled1",
   "wiki_filepicker_upload_space" : "Content", "wiki_filepicker_space" : "Content",
   "wiki_filepicker_doc" : "untitled1",
@@ -270,5 +280,5 @@ tinymce.init({"selector" : "textarea.tinyMCE,textarea.mceEditor", "language" : "
   "autoresize_min_height" : 0, "style_formats" : [], "image_advtab": true, "image_uploadtab" : true,
   "images_upload_handler": celRteAdaptor.uploadImagesHandler.bind(celRteAdaptor),
   "file_picker_callback" :  celRteAdaptor.celRte_file_picker_handler.bind(celRteAdaptor),
-  "automatic_uploads": true, "filebaseFN" : "Content_attachments.FileBaseDoc"
+  "automatic_uploads": true
 });
