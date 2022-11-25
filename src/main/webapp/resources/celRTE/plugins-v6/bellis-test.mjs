@@ -113,12 +113,11 @@ class CelFilePicker {
           const file = item.getAsFile();
           console.log(`… file[${i}].name = ${file.name}`);
           this.uploadHandler.upload({
-            'name' : file.name,
-            'blob' : file
-          }, (standPercent) => console.log('upload1 progress ', standPercent));
+              'name' : file.name,
+              'blob' : file
+            }, (standPercent) => console.log('upload1 progress ', standPercent)
+          ).then(() => this.filePicker.updateAttachmentList());
         }
-      }).then(() => {
-        this.filePicker.updateAttachmentList();
       });
     } else {
       // Use DataTransfer interface to access the file(s)
