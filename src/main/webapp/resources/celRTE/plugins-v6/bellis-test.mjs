@@ -132,7 +132,9 @@ class CelFilePicker {
     }
   }
   
-  renderAttachmentList(attachEl, attList, options) {
+  renderAttachmentList(attList, options) {
+    const attachEl = document.createElement('div');
+    attachEl.id = 'attachments';
     for (const attElem of attList) {
       const cssClasses = ['imagePickerSource'];
       const attSrc = decodeURI(attElem.src);
@@ -165,6 +167,7 @@ class CelFilePicker {
       attachEl.appendChild(imgDiv);
       imgDiv.addEventListener('click', options.clickHandler);
     }
+    return attachEl;
   }
 
   updateAttachmentList() {
@@ -184,9 +187,7 @@ class CelFilePicker {
     }).then(resp => resp.json()
     ).then(data => {
       console.debug('imagePicker data: ', data);
-      const attachEl = document.createElement('div');
-      attachEl.id = 'attachments';
-      this.renderAttachmentList(data, {
+      const attachEl = this.renderAttachmentList(data, {
         'currentImgUrl' : new URL(this.selectedValue, window.location.href),
         'duplicateCheck' : false,
         'clickHandler' : (event) => {
