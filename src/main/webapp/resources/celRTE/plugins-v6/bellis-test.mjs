@@ -116,7 +116,7 @@ class CelFilePicker {
               'name' : file.name,
               'blob' : file
             }, (standPercent) => console.log('upload1 progress ', standPercent)
-          ).then(() => this.filePicker.updateAttachmentList());
+          ).then(() => this.updateAttachmentList());
         }
       });
     } else {
