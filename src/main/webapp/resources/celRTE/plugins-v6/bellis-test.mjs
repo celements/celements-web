@@ -7,7 +7,7 @@ class CelRteAdaptor {
 
   uploadImagesHandler(blobInfo, progress) {
     return this.uploadHandler({
-      'name' : blobInfo.filname(),
+      'name' : blobInfo.filename(),
       'blob' : blobInfo.blob()
     }, progress);
   }
