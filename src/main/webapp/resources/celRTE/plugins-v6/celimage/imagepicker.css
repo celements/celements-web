@@ -3,7 +3,20 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.filebasePicker div.imagePickerWrapper {
+.filebasePicker #attachments.celDropOverActive {
+  border: 3px dashed #3E3E3E;
+}
+.filebasePicker #attachments.celDropOverActive::after {
+    content: "drop files here";
+    position: absolute;
+    align-items: center;
+    display: block;
+    top: 50%;
+    left: 40%;
+    font-size: 50px;
+    font-weight: bold;
+    color: black;
+}.filebasePicker div.imagePickerWrapper {
   position: relative;
   margin: 0;
   margin-right: 4px;
@@ -29,8 +42,4 @@
 .filebasePicker div.imagePickerWrapper:hover div.imagePickerSource img {
   border-style: solid;
   cursor: pointer;
-}
-#drop_zone {
-  border: 3px solid #3E3E3E;
-  height: 50px;
 }
