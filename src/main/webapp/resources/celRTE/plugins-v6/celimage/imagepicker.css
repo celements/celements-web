@@ -16,7 +16,11 @@
     font-size: 50px;
     font-weight: bold;
     color: black;
-}.filebasePicker div.imagePickerWrapper {
+}
+.filebasePicker #attachments.celDropOverActive div.imagePickerWrapper {
+  opacity: 0.6;
+}
+.filebasePicker div.imagePickerWrapper {
   position: relative;
   margin: 0;
   margin-right: 4px;
