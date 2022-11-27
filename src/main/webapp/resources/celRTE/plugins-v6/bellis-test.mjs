@@ -98,7 +98,6 @@ class CelFilePicker {
 
 class CelRteAdaptor {
   #uploadHandler;
-  #uploadHandler;
   
   constructor(options) {
     this.#filePicker = new CelFilePicker(options);
