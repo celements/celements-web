@@ -1,99 +1,77 @@
 
 class CelUploadHandler {
   
-  constructor(baseUrl, imgUrl) {
-    this.baseUrl = baseUrl;
-    this.imgUrl = imgUrl;
+  constructor(uploadUrl, fileBaseUrl) {
+    this.uploadUrl = uploadUrl;
+    this.fileBaseUrl = fileBaseUrl;
   }
+
+  #createXhrForUpload(resolve, reject, progress) {
+    const xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+    xhr.open('POST', this.uploadUrl + '?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=upload');
   
+    xhr.upload.onprogress = (e) => {
+      progress(Math.round(e.loaded / e.total * 100));
+    };
+  
+    xhr.onload = () => {
+      if ((xhr.status >= 200) && (xhr.status < 300)) {
+        try {
+          const json = JSON.parse(xhr.responseText);
+          if (!json || typeof json.success != 'boolean') {
+            reject('Invalid JSON: ' + xhr.responseText);
+          }
+          if (!json.success) {
+            reject('failed to upload: ' + xhr.responseText);
+          }
+          resolve(this.fileBaseUrl + '/'+ json.attfilename);
+        } catch (err) {
+          reject('Invalid JSON: ' + xhr.responseText + ' parse error: ' + err);
+        }
+      } else if (xhr.status === 403) {
+        reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+      } else {
+        reject('HTTP Error: ' + xhr.status);
+      }
+    };
+  
+    xhr.onerror = () => {
+      reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+    };
+    return xhr;
+  }
+
   upload(fileInfo, progress) {
-    return  new Promise((resolve, reject) => {    
-      console.log('celRTE_image_upload_handler baseUrl, imgUrl ', this.baseUrl,
-       this.imgUrl);
-    
+    return  new Promise((resolve, reject) => {        
       fetch('?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=getTokenForCurrentUser')
-        .then((response) => response.json())
-        .then((respJson) => {
-          console.log('celRTE_image_upload_handler respJson', respJson, respJson.token);
-          const xhr = new XMLHttpRequest();
-          xhr.withCredentials = false;
-          xhr.open('POST', this.baseUrl + '?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=upload');
-        
-          xhr.upload.onprogress = (e) => {
-            progress(Math.round(e.loaded / e.total * 100));
-          };
-        
-          xhr.onload = () => {
-            if (xhr.status === 403) {
-              reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
-              return;
-            }
-        
-            if (xhr.status < 200 || xhr.status >= 300) {
-              reject('HTTP Error: ' + xhr.status);
-              return;
-            }
-        
-            const json = JSON.parse(xhr.responseText);
-        
-            if (!json || typeof json.success != 'boolean') {
-              reject('Invalid JSON: ' + xhr.responseText);
-              return;
-            }
-    
-            if (!json.success) {
-                  reject('failed to upload: ' + xhr.responseText);
-                  return;
-            }
-    
-        /**{
-         "success" : false,
-         "numSavedFiles" : 0,
-         "attfilename" : "Spalenhof_Innenhof_1.jpg",
-         "username" : "fpichler"}
-        */
-            resolve(this.imgUrl + '/'+ json.attfilename);
-          };
-        
-          xhr.onerror = () => {
-            reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
-          };
-        
-          console.log('celRTE_image_upload_handler token[', respJson.token, '] filename [',
-            fileInfo.name, ']');
-          const formData = new FormData();
-          formData.append('uploadToken', respJson.token);
-          formData.append('celTokenUploadCreateIfNotExists', true);
-          formData.append('filename', fileInfo.name);
-          formData.append('filepath', fileInfo.blob, fileInfo.name);
-          xhr.send(formData);
-      });
+      .then((response) => response.json())
+      .then((respJson) => {
+        console.log('celRTE_image_upload_handler respJson', respJson, respJson.token);
+        const xhr = this.#createXhrForUpload(resolve, reject, progress);
+        console.log('celRTE_image_upload_handler token[', respJson.token, '] filename [',
+          fileInfo.name, ']');
+        const formData = new FormData();
+        formData.append('uploadToken', respJson.token);
+        formData.append('celTokenUploadCreateIfNotExists', true);
+        formData.append('filename', fileInfo.name);
+        formData.append('filepath', fileInfo.blob, fileInfo.name);
+        xhr.send(formData);
+      }).catch((err) => reject({ message: 'Failed to get upload token. ' + err, remove: true  }));
     });
   }
 }
 
-class CelFilePicker {
-
-  constructor(options) {
-    this.imagePickerMaxDimension = 100;
-    this.filebaseFN = options.filebaseFN;
-    this.pickerOverlay = new window.CELEMENTS_Overlay([{
-      'src' : '/file/resources/celRTE/plugins-v6/celimage/imagepicker.css'
-    }]);
-    this.pickerOverlay.customCssClass = 'filebasePicker';
-    this.pickerOverlay.setZIndex(2000);
-    this.pickerOverlay.close();
-    this.uploadHandler = new CelUploadHandler(options.wiki_attach_path,
-      options.wiki_imagedownload_path);
+class CelFileDropHandler {
+  
+  constructor(uploadUrl, fileBaseUrl) {
+    this.uploadHandler = new CelUploadHandler(uploadUrl, fileBaseUrl);
   }
 
-  getDropZoneElem() {
-    const dropZoneElem = document.createElement('div');
-    dropZoneElem.id = 'drop_zone';
-    dropZoneElem.insertAdjacentHTML('afterbegin','<p>Drag one or more files to this <i>drop zone</i>.</p>');
-    dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
-    dropZoneElem.addEventListener('dragover', (event) => this.dragOverHandler(event));
-    return dropZoneElem;
+  registerHandler(dropZoneElem) {
+    this.dropZoneElem = dropZoneElem;
+    this.dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
+    this.dropZoneElem.addEventListener('dragover', (event) => this.dragOverHandler(event));
   }
 
   dragOverHandler(ev) {
@@ -131,6 +109,22 @@ class CelFilePicker {
     }
   }
   
+}
+
+class CelFilePicker {
+
+  constructor(options) {
+    this.dropHandler = new CelFileDropHandler();
+    this.imagePickerMaxDimension = 100;
+    this.filebaseFN = options.filebaseFN;
+    this.pickerOverlay = new window.CELEMENTS_Overlay([{
+      'src' : '/file/resources/celRTE/plugins-v6/celimage/imagepicker.css'
+    }]);
+    this.pickerOverlay.customCssClass = 'filebasePicker';
+    this.pickerOverlay.setZIndex(2000);
+    this.pickerOverlay.close();
+  }
+
   renderAttachmentList(attList, options) {
     const attachEl = document.createElement('div');
     attachEl.id = 'attachments';
@@ -195,7 +189,8 @@ class CelFilePicker {
           this.pickerOverlay.close();
         }
       });
-      this.pickerOverlay.updateContent([attachEl, this.getDropZoneElem()]);
+      this.dropHandler.registerHandler(attachEl);
+      this.pickerOverlay.updateContent([attachEl]);
     });
   }
 
