@@ -77,7 +77,7 @@ export class CelFileDropHandler {
     this.dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
     this.dropZoneElem.addEventListener('dragover', (event) => this.dragOverHandler(event));
     this.dropZoneElem.addEventListener('dragend', (event) => this.dragEndHandler(event));
-    this.dropZoneElem.addEventListener('dragleave', (event) => this.dragEndHandler(event));
+//    this.dropZoneElem.addEventListener('dragleave', (event) => this.dragEndHandler(event));
   }
 
   dragEndHandler(ev) {
