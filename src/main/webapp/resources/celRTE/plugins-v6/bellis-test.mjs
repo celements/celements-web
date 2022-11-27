@@ -98,7 +98,8 @@ class CelFilePicker {
 
 class CelRteAdaptor {
   #uploadHandler;
-  
+  #filePicker;
+
   constructor(options) {
     this.#filePicker = new CelFilePicker(options);
     this.#uploadHandler = new CelUploadHandler(options.wiki_attach_path,
@@ -117,12 +118,12 @@ class CelRteAdaptor {
     console.log('celRte_file_picker_handler ', value, meta, callback);
   
     if (meta.filetype == 'file') {
-      this.filePicker.renderFilePickerInOverlay(false, callback, value);
+      this.#filePicker.renderFilePickerInOverlay(false, callback, value);
     }
   
     // Provide image and alt text for the image dialog
     if (meta.filetype == 'image') {
-      this.filePicker.renderFilePickerInOverlay(true, callback, value);
+      this.#filePicker.renderFilePickerInOverlay(true, callback, value);
     }
   
     // Provide alternative source and posted for the media dialog
