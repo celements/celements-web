@@ -1,5 +1,7 @@
 
 export class CelUploadHandler {
+  #uploadUrl;
+  #fileBaseUrl;
   
   constructor(uploadUrl, fileBaseUrl) {
     this.#uploadUrl = uploadUrl;
@@ -63,6 +65,7 @@ export class CelUploadHandler {
 }
 
 export class CelFileDropHandler {
+  #uploadHandler;
   
   constructor(uploadUrl, fileBaseUrl) {
     this.#uploadHandler = new CelUploadHandler(uploadUrl, fileBaseUrl);

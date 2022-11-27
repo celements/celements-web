@@ -1,5 +1,5 @@
 
-import { CelUploadHandler, CelFileDropHandler } from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202211271330";
+import { CelUploadHandler, CelFileDropHandler } from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202211271744";
 
 class CelFilePicker {
 
@@ -98,10 +98,10 @@ class CelFilePicker {
 
 class CelRteAdaptor {
   #uploadHandler;
+  #uploadHandler;
   
   constructor(options) {
-    this.options = options
-    this.filePicker = new CelFilePicker(options);
+    this.#filePicker = new CelFilePicker(options);
     this.#uploadHandler = new CelUploadHandler(options.wiki_attach_path,
       options.wiki_imagedownload_path);
   }
