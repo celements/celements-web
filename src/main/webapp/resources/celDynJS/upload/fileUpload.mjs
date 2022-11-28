@@ -66,9 +66,11 @@ export class CelUploadHandler {
 
 export class CelFileDropHandler {
   #uploadHandler;
+  #updateAfterUpload;
   
-  constructor(uploadUrl, fileBaseUrl) {
+  constructor(uploadUrl, fileBaseUrl, updateAfterUpload) {
     this.#uploadHandler = new CelUploadHandler(uploadUrl, fileBaseUrl);
+    this.#updateAfterUpload = updateAfterUpload;
   }
 
   registerHandler(dropZoneElem) {
@@ -83,16 +85,14 @@ export class CelFileDropHandler {
 
   dragEndHandler(ev) {
     if (ev.target.classList.contains('celDropZone')) {
-      console.log('dragEnd target', ev.target, ' relatedTarget  ', ev.relatedTarget , ' closest ',
-      ev.target.closest('.celDropZone'), ev);
+      const insideDropZone = ev.relatedTarget?.closest('.celDropZone') !== null;
+      console.log('dragEnd relatedTarget  ', ev.relatedTarget , ' closest ', insideDropZone, ev);
       ev.target.classList.remove('celDropOverActive');
     }
   }
 
   dragEnterHandler(ev) {
     if (ev.target.classList.contains('celDropZone')) {
-      console.log('dragEnter target', ev.target, ' relatedTarget  ', ev.relatedTarget , ' closest ',
-      ev.target.closest('.celDropZone'), ev);
       ev.target.classList.add('celDropOverActive');
     }
   }
@@ -116,7 +116,11 @@ export class CelFileDropHandler {
               'name' : file.name,
               'blob' : file
             }, (standPercent) => console.log('upload1 progress ', standPercent)
-          ).then(() => this.updateAttachmentList());
+          ).then(() => { 
+            if (typeof this.#updateAfterUpload === 'function') {
+              this.#updateAfterUpload();
+            }
+          });
         }
       });
     } else {

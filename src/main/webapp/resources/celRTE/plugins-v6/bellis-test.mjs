@@ -1,10 +1,11 @@
 
-import { CelUploadHandler, CelFileDropHandler } from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202211280104";
+import { CelUploadHandler, CelFileDropHandler } from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202211280132";
 
 class CelFilePicker {
 
   constructor(options) {
-    this.dropHandler = new CelFileDropHandler();
+    this.dropHandler = new CelFileDropHandler(options.wiki_attach_path,
+      options.wiki_imagedownload_path, this.updateAttachmentList.bind(this));
     this.imagePickerMaxDimension = 100;
     this.filebaseFN = options.filebaseFN;
     this.pickerOverlay = new window.CELEMENTS_Overlay([{
