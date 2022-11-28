@@ -91,7 +91,7 @@ export class CelFileDropHandler {
 
   dragEnterHandler(ev) {
     console.log('dragEnter ', ev);
-    if (ev.target.classList.contains('celDropZone')) {
+    if (ev.target.closest('.celDropZone')) {
       ev.target.classList.add('celDropOverActive');
     }
   }
