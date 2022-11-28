@@ -79,14 +79,20 @@ export class CelFileDropHandler {
     this.dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
     document.body.addEventListener('dragover', (event) => this.dragOverHandler(event));
     this.dropZoneElem.addEventListener('dragenter', (event) => this.dragEnterHandler(event));
-    this.dropZoneElem.addEventListener('dragleave', (event) => this.dragEndHandler(event));
+    this.dropZoneElem.addEventListener('dragleave', (event) => this.dragLeaveHandler(event));
+    this.dropZoneElem.addEventListener('dragend', (event) => this.dragEndHandler(event));
+  }
+
+  dragLeaveHandler(ev) {
+    if (ev.target.classList.contains('celDropZone') && !ev.relatedTarget?.closest('.celDropZone')) {
+      console.log('dragleave ', ev);
+      this.dropZoneElem.classList.remove('celDropOverActive');
+    }
   }
 
   dragEndHandler(ev) {
-    if (ev.target.classList.contains('celDropZone') && !ev.relatedTarget?.closest('.celDropZone')) {
-      console.log('dragEnd ', ev);
-      this.dropZoneElem.classList.remove('celDropOverActive');
-    }
+    console.log('dragend ', ev);
+    this.dropZoneElem.classList.remove('celDropOverActive');
   }
 
   dragEnterHandler(ev) {
@@ -106,6 +112,7 @@ export class CelFileDropHandler {
   dropHandler(ev) {
     console.log('File(s) dropped');
     ev.preventDefault();
+    this.dropZoneElem.classList.remove('celDropOverActive');
     if (ev.dataTransfer.items) {
       // Use DataTransferItemList interface to access the file(s)
       [...ev.dataTransfer.items].forEach((item, i) => {
