@@ -5,6 +5,10 @@
 }
 .filebasePicker #attachments.celDropOverActive {
   border: 3px dashed #3E3E3E;
+  cursor: copy;
+}
+.celNoDrop {
+  cursor: no-drop;
 }
 .filebasePicker #attachments.celDropOverActive::after {
     content: "drop files here";
