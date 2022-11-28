@@ -67,10 +67,12 @@ export class CelUploadHandler {
 export class CelFileDropHandler {
   #uploadHandler;
   #updateAfterUpload;
+  #progressCallback;
   
-  constructor(uploadUrl, fileBaseUrl, updateAfterUpload) {
+  constructor(uploadUrl, fileBaseUrl, updateAfterUpload, progressCallback) {
     this.#uploadHandler = new CelUploadHandler(uploadUrl, fileBaseUrl);
     this.#updateAfterUpload = updateAfterUpload;
+    this.#progressCallback = progressCallback ?? function() {};
   }
 
   registerHandler(dropZoneElem) {
@@ -93,6 +95,18 @@ export class CelFileDropHandler {
     }
   }
 
+  uploadFile(file) {
+    this.#uploadHandler.upload({
+        'name' : file.name,
+        'blob' : file
+      }, this.#progressCallback
+    ).then(() => { 
+      if (typeof this.#updateAfterUpload === 'function') {
+        this.#updateAfterUpload();
+      }
+    });
+  }
+
   dropHandler(ev) {
     console.debug('File(s) dropped');
     ev.preventDefault();
@@ -103,26 +117,15 @@ export class CelFileDropHandler {
         // If dropped items aren't files, reject them
         if (item.kind === 'file') {
           const file = item.getAsFile();
-          console.log(`dropped file[${i}].name = ${file.name}`);
-          this.#uploadHandler.upload({
-              'name' : file.name,
-              'blob' : file
-            }, (standPercent) => console.log('upload1 progress ', standPercent)
-          ).then(() => { 
-            if (typeof this.#updateAfterUpload === 'function') {
-              this.#updateAfterUpload();
-            }
-          });
+          console.debug(`dropped file[${i}].name = ${file.name}`);
+          this.uploadFile(file);
         }
       });
     } else {
       // Use DataTransfer interface to access the file(s)
       [...ev.dataTransfer.files].forEach((file, i) => {
-        console.log(`… file[${i}].name = ${file.name}`);
-          return this.#uploadHandler.upload({
-            'name' : file.name,
-            'blob' : file
-          }, (standPercent) => console.log('upload2 progress ', standPercent));
+        console.debug(`… file[${i}].name = ${file.name}`);
+        this.uploadFile(file);
       });
     }
   }
