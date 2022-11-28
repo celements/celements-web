@@ -1,5 +1,5 @@
 
-import { CelUploadHandler, CelFileDropHandler } from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202211280226";
+import { CelUploadHandler, CelFileDropHandler } from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202211280234";
 
 class CelFilePicker {
 

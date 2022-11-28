@@ -85,14 +85,14 @@ export class CelFileDropHandler {
   dragEndHandler(ev) {
     if (ev.target.classList.contains('celDropZone') && !ev.relatedTarget?.closest('.celDropZone')) {
       console.log('dragEnd ', ev);
-      ev.target.classList.remove('celDropOverActive');
+      this.dropZoneElem.classList.remove('celDropOverActive');
     }
   }
 
   dragEnterHandler(ev) {
     console.log('dragEnter ', ev);
     if (ev.target.closest('.celDropZone')) {
-      ev.target.classList.add('celDropOverActive');
+      this.dropZoneElem.classList.add('celDropOverActive');
     }
   }
 
