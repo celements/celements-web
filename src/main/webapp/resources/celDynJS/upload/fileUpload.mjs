@@ -78,10 +78,11 @@ export class CelFileDropHandler {
     this.dropZoneElem.classList.add('celDropZone');
     this.dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
     document.body.addEventListener('dragover', (event) => this.dragOverHandler(event));
-    this.dropZoneElem.addEventListener('dragenter', (event) => this.dragEnterHandler(event));
+/**    this.dropZoneElem.addEventListener('dragenter', (event) => this.dragEnterHandler(event));
     this.dropZoneElem.addEventListener('dragleave', (event) => this.dragLeaveHandler(event));
     this.dropZoneElem.addEventListener('dragend', (event) => this.dragEndHandler(event));
-  }
+ */
+   }
 
   dragLeaveHandler(ev) {
     if (ev.target.classList.contains('celDropZone') && !ev.relatedTarget?.closest('.celDropZone')) {
@@ -106,7 +107,14 @@ export class CelFileDropHandler {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
     ev.stopPropagation();
-    ev.dataTransfer.dropEffect = (ev.target.closest('.celDropZone')) ? 'copy' : 'none';
+    const dragOverDropZoneElem = ev.target.closest('.celDropZone');
+    if (dragOverDropZoneElem) {
+      ev.dataTransfer.dropEffect = 'copy';
+      dragOverDropZoneElem.classList.add('celDropOverActive');
+    } else {
+      ev.dataTransfer.dropEffect = 'none';
+      dragOverDropZoneElem.classList.remove('celDropOverActive');
+    }
   }
 
   dropHandler(ev) {
