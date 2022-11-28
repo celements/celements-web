@@ -100,7 +100,7 @@ export class CelFileDropHandler {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
     ev.stopPropagation();
-    ev.dataTransfer.dropEffect = (ev.target.classList.contains('celDropZone')) ? 'copy' : 'none';
+    ev.dataTransfer.dropEffect = (ev.target.closest('.celDropZone')) ? 'copy' : 'none';
   }
 
   dropHandler(ev) {
