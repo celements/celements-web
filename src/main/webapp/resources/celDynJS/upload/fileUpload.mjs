@@ -79,18 +79,19 @@ export class CelFileDropHandler {
     this.dropZoneElem.addEventListener('drop', (event) => this.dropHandler(event));
     this.dropZoneElem.addEventListener('dragover', (event) => this.dragOverHandler(event));
     this.dropZoneElem.addEventListener('dragenter', (event) => this.dragEnterHandler(event));
-    this.dropZoneElem.addEventListener('dragend', (event) => this.dragEndHandler(event));
     this.dropZoneElem.addEventListener('dragleave', (event) => this.dragEndHandler(event));
   }
 
   dragEndHandler(ev) {
-    if (ev.target.classList.contains('celDropZone') && ev.relatedTarget?.closest('.celDropZone')) {
+    if (ev.target.classList.contains('celDropZone') && !ev.relatedTarget?.closest('.celDropZone')) {
       console.log('dragEnd ', ev);
       ev.target.classList.remove('celDropOverActive');
     }
   }
 
   dragEnterHandler(ev) {
+    console.log('dragEnter ', ev);
+    document.body.classList.add('celNoDrop');
     if (ev.target.classList.contains('celDropZone')) {
       ev.target.classList.add('celDropOverActive');
     }
