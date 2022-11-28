@@ -107,13 +107,12 @@ export class CelFileDropHandler {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
     ev.stopPropagation();
-    const dragOverDropZoneElem = ev.target.closest('.celDropZone');
-    if (dragOverDropZoneElem) {
+    if (ev.target.closest('.celDropZone') === this.dropZoneElem) {
       ev.dataTransfer.dropEffect = 'copy';
-      dragOverDropZoneElem.classList.add('celDropOverActive');
+      this.dropZoneElem.classList.add('celDropOverActive');
     } else {
       ev.dataTransfer.dropEffect = 'none';
-      dragOverDropZoneElem.classList.remove('celDropOverActive');
+      this.dropZoneElem.classList.remove('celDropOverActive');
     }
   }
 
