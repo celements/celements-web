@@ -1,6 +1,8 @@
 
 import { CelUploadHandler, CelFileDropHandler }
   from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202211290624";
+import { CelOverlay }
+  from "/file/resources/celDynJS/overlay/celOverlay.mjs?version=202211290624";
 
 class CelFilePicker {
 
@@ -10,7 +12,7 @@ class CelFilePicker {
       (standPercent) => console.log('upload progress ', standPercent));
     this.imagePickerMaxDimension = 100;
     this.filebaseFN = options.filebaseFN;
-    this.pickerOverlay = new window.CELEMENTS_Overlay([{
+    this.pickerOverlay = new CelOverlay([{
       'src' : '/file/resources/celRTE/plugins-v6/celimage/imagepicker.css'
     }]);
     this.pickerOverlay.customCssClass = 'filebasePicker';
