@@ -1,0 +1,244 @@
+/*
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+
+import { CelOverlayResize } from "./overlayResize.mjs?version=202211202144";
+import "../DynamicLoader/celLazyLoader.mjs?version=202211202144";
+
+export class CelOverlay {
+  /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
+   don't use it yet. '
+  #id;
+  #overlayElem;
+  #overlayBodyElem;
+  #overlayBgElem;
+  #loadingIndicator;
+  #overlayResizer;
+  idPrefix;
+  customCssClass;
+  title;
+  */
+
+  constructor(customCssFiles, idPrefix) {
+    Object.assign(this, window.CELEMENTS.mixins.Observable);
+    this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
+    this.idPrefix = idPrefix || "celOverlay_";
+    this._id = this._generateNextId(this.idPrefix);
+    this._closeBind = this.close.bind(this);
+    const cssFiles = [{
+        'src' : '/file/resources/celRes/overlay/celementsOverlayV2.css'
+      }];
+    if (customCssFiles) {
+      cssFiles.push(...customCssFiles);
+    }
+    this._addOverlayCssFiles(cssFiles);
+  }
+
+  _addOverlayCssFiles(cssFiles) {
+    for (const theCssFile of cssFiles) {
+      const cssSrc = theCssFile.src ?? theCssFile.href;
+      if (cssSrc !== '') {
+        const cssLazyLoadElem = document.createElement('cel-lazy-load-css');
+        cssLazyLoadElem.setAttribute('src', cssSrc);
+        document.body.appendChild(cssLazyLoadElem);
+      } else {
+        console.warn('CelOverlay skipping css file without source', theCssFile);
+      }
+    }
+  }
+
+  isMaxContentHeight() {
+    //TODO make configurable
+    return true;
+  }
+
+  _generateNextId(prefix) {
+    let nextId = 1;
+    while (document.getElementById(prefix + nextId.toString())) {
+      nextId++;
+    }
+    return prefix + nextId.toString();
+  }
+
+  _getOverlayResizer() {
+    if (!this._overlayResizer) {
+      this._overlayResizer= new CelOverlayResize(this);
+    }
+    return this._overlayResizer;
+  }
+
+  _showBgElem() {
+    this._getOverlayBgElem().hidden = false;
+    this._getOverlayBgElem().style.display = '';
+  }
+
+  _hideBgElem() {
+    this._getOverlayBgElem().hidden = true;
+    this._getOverlayBgElem().style.display = 'none';
+  }
+
+  setZIndex(newZindex) {
+    this.getOverlayElem().style.zIndex = newZindex;
+    this._getOverlayBgElem().style.zIndex = newZindex - 1;
+  }
+
+  _getOverlayBgElem() {
+    if (!this._overlayBgElem) {
+      const bgDiv = document.createElement('div');
+      bgDiv.classList.add('generalOverlay', 'OverlayBack');
+      bgDiv.hidden = true;
+      document.body.appendChild(bgDiv);
+      this._overlayBgElem = bgDiv;
+    }
+    return this._overlayBgElem;
+  }
+
+  _showOverlayElem() {
+    this.getOverlayElem().hidden = false;
+    this.getOverlayElem().style.display = '';
+  }
+
+  _hideOverlayElem() {
+    this.getOverlayElem().hidden = true;
+    this.getOverlayElem().style.display = 'none';
+  }
+
+  getOverlayElem() {
+    if (!this._overlayElem) {
+      const overlayElem = document.createElement('div');
+      overlayElem.id = this._id;
+      overlayElem.classList.add('generalOverlay', this.customCssClass);
+      const layoutSec = document.createElement('div');
+      layoutSec.classList.add('main', 'layoutsubsection');
+      const closeButton = document.createElement('a');
+      closeButton.classList.add('cel_closebutton');
+      closeButton.addEventListener('click', this._closeBind);
+      layoutSec.appendChild(closeButton);
+      layoutSec.appendChild(this.getOverlayBody());
+      overlayElem.appendChild(layoutSec);
+      overlayElem.hidden = true;
+      document.body.appendChild(overlayElem);
+      this._overlayElem = overlayElem;
+      this.celFire('celOverlay:afterRender', {
+        'overlayElem' : overlayElem,
+        'overlay' : this
+      });
+    }
+    return this._overlayElem;
+  }
+
+  getOverlayBody() {
+    if (!this._overlayBodyElem) {
+      const bodyElem = document.createElement('div');
+      bodyElem.classList.add('cel_overlaybody');
+      this._overlayBodyElem = bodyElem;
+    }
+    return this._overlayBodyElem;
+  }
+
+  show() {
+    this._showBgElem();
+    this._showOverlayElem();
+    this.celFire('celOverlay:afterShow', this);
+    document.body.style.overflow = 'hidden';
+  }
+
+  open() {
+    this.resetContent();
+    this.show();
+    this._getOverlayResizer.bind(this).delay(0.5);
+  }
+  
+  async openCelementsPage(url) {
+    this.open();
+    if (url) {
+      await this._loadContentAsync({
+       'url' : url,
+        'responseField' : 'celrenderedcontent',
+        'title' : data => (data.title || data.name)
+      });
+    }
+  }
+  
+  _parseHTML(html) {
+    const elem = document.createElement('div');
+    elem.insertAdjacentHTML('afterbegin', html);
+    return Array.from(elem.childNodes);
+  }
+
+  async _loadContentAsync(loadObj) {
+    const params = new FormData();
+    params.append('xpage', 'json');
+    await fetch(loadObj.url, {
+      method: 'POST',
+      redirect: 'follow',
+      body: params
+    }).then(resp => {
+      console.debug('ajax result: ', resp);
+      return resp.json();
+    }).then(data => {
+      this.updateContent(this._parseHTML(data[loadObj.responseField]));
+      this.title = loadObj.title(data);
+    }).catch(err => {
+      const event = this.celFire('celOverlay:asyncLoadFailed', {
+        'overlay' : this,
+        'error' : err
+      });
+      if (!event.stopped) {
+        this.updateContent(this._parseHTML('<p class="celErrMessage">Loading failed.</p>'));
+        console.warn('updateContent: failed to load content from ', loadObj.url, err);
+      }
+    });
+  }
+  
+  _getLoadingImg() {
+    const loaderimg = this._loadingIndicator.getLoadingIndicator(64);
+    Object.assign(loaderimg.style, {
+      display : 'block',
+      marginLeft : 'auto',
+      marginRight : 'auto'
+    });
+    return loaderimg;
+  }
+
+  resetContent() {
+    this.updateContent([this._getLoadingImg()]);
+  }
+
+  updateContent(newChildNodes) {
+    console.debug('updateContent: ', newChildNodes);
+    this.getOverlayBody().replaceChildren(...newChildNodes);
+    this.getOverlayBody().fire('celements:contentChanged', {
+       'htmlElem' : this.getOverlayBody()
+     });
+    this.celFire('celOverlay:contentChanged', this);
+  }
+
+  close() {
+    this._hideBgElem();
+    this._hideOverlayElem();
+    document.body.style.overflow = '';
+    console.debug('Overlay close before fire');
+    this.celFire('celOverlay:closed', this);
+  }
+
+}
+
+// For non module javascripts
+window.CELEMENTS_Overlay = CelOverlay;
