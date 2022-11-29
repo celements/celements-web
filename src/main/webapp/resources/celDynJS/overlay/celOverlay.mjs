@@ -160,8 +160,10 @@ export class CelOverlay {
     document.body.style.overflow = 'hidden';
   }
 
-  _escapeHandler(event) {
-    if(event.key === "Escape"){
+  _escapeHandler(ev) {
+    if(ev.key === "Escape"){
+      ev.preventDefault();
+      ev.stopPropagation();
       this.close();
     }
   }
