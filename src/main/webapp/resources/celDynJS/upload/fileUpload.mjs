@@ -49,16 +49,15 @@ export class CelUploadHandler {
       fetch('?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=getTokenForCurrentUser')
       .then((response) => response.json())
       .then((respJson) => {
-        console.log('celRTE_image_upload_handler respJson', respJson, respJson.token);
-        const xhr = this.#createXhrForUpload(resolve, reject, progress);
-        console.log('celRTE_image_upload_handler token[', respJson.token, '] filename [',
+        console.debug('upload: token[', respJson.token, '] filename [',
           fileInfo.name, ']');
         const formData = new FormData();
         formData.append('uploadToken', respJson.token);
         formData.append('celTokenUploadCreateIfNotExists', true);
         formData.append('filename', fileInfo.name);
         formData.append('filepath', fileInfo.blob, fileInfo.name);
-        xhr.send(formData);
+        this.#createXhrForUpload(resolve, reject, progress
+          ).send(formData);
       }).catch((err) => reject({ message: 'Failed to get upload token. ' + err, remove: true  }));
     });
   }
