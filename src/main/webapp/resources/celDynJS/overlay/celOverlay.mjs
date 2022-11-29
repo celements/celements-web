@@ -41,6 +41,7 @@ export class CelOverlay {
     this.idPrefix = idPrefix || "celOverlay_";
     this._id = this._generateNextId(this.idPrefix);
     this._closeBind = this.close.bind(this);
+    this.__escapeHandlerBind = this._escapeHandler.bind(this);
     const cssFiles = [{
         'src' : '/file/resources/celRes/overlay/celementsOverlayV2.css'
       }];
@@ -159,9 +160,25 @@ export class CelOverlay {
     document.body.style.overflow = 'hidden';
   }
 
+  _escapeHandler(event) {
+    if(event.key === "Escape"){
+      this.close();
+    }
+  }
+
+  _registerEscapeListener() {
+    document.removeEventListener('keydown', this._escapeHandlerBind);
+    document.addEventListener('keydown', this._escapeHandlerBind);
+  }
+
+  _unregisterEscapeListener() {
+    document.removeEventListener('keydown', this._escapeHandlerBind);
+  }
+
   open() {
     this.resetContent();
     this.show();
+    this._registerEscapeListener();
     this._getOverlayResizer.bind(this).delay(0.5);
   }
   
@@ -231,6 +248,7 @@ export class CelOverlay {
   }
 
   close() {
+    this._unregisterEscapeListener();
     this._hideBgElem();
     this._hideOverlayElem();
     document.body.style.overflow = '';
