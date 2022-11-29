@@ -26,27 +26,25 @@ export class CelOverlayResize {
   */
 
   constructor(theOverlay) {
-    const _me = this;
-    _me._overlay = theOverlay;
-    _me._resizeBind = _me.resize.bind(_me);
-    _me._overlay.celObserve('celOverlay:contentChanged', _me.startResizeObservers.bind(_me));
-    _me.startResizeObservers();
+    this._overlay = theOverlay;
+    this._resizeBind = this.resize.bind(this);
+    this._overlay.celObserve('celOverlay:contentChanged', this.startResizeObservers.bind(this));
+    this.startResizeObservers();
   }
 
   startResizeObservers() {
-    const _me = this;
-    window.addEventListener('resize', _me._resizeBind);
-    const overlayBodyElem = _me._overlay.getOverlayBody();
+    window.addEventListener('resize', this._resizeBind);
+    const overlayBodyElem = this._overlay.getOverlayBody();
     if (overlayBodyElem) {
-      overlayBodyElem.stopObserving('celoverlay:resize', _me._resizeBind);
-      overlayBodyElem.observe('celoverlay:resize', _me._resizeBind);
+      overlayBodyElem.stopObserving('celoverlay:resize', this._resizeBind);
+      overlayBodyElem.observe('celoverlay:resize', this._resizeBind);
     }
-    _me.resize();
+    this.resize();
   }
 
   _getOverlayBoxes() {
-    const _me = this;
-    const overlayBodyElem = _me._overlay.getOverlayBody();
+    const this = this;
+    const overlayBodyElem = this._overlay.getOverlayBody();
     let outerBox = overlayBodyElem.querySelector('.cel_overlay_outerBox');
     let innerBox = overlayBodyElem.querySelector('.cel_overlay_innerBox');
     let scrollBox;
@@ -99,7 +97,6 @@ export class CelOverlayResize {
   }
 
   _getCumulativeScrollboxHeight(boxes) {
-    const _me = this;
     const innerBox = boxes.innerBox;
     const scrollBox = boxes.scrollBox;
     let siblingHeight = 0;
@@ -111,18 +108,17 @@ export class CelOverlayResize {
         }
       }
     }
-    siblingHeight += (_me._cumulativeOffset(scrollBox).top
-      - _me._cumulativeOffset(innerBox).top);
+    siblingHeight += (this._cumulativeOffset(scrollBox).top
+      - this._cumulativeOffset(innerBox).top);
     return siblingHeight;
   }
 
   resize() {
-    const _me = this;
-    const boxes = _me._getOverlayBoxes();
+    const boxes = this._getOverlayBoxes();
     const outerBox = boxes.outerBox;
     const innerBox = boxes.innerBox;
     const scrollBox = boxes.scrollBox;
-    const overlayElem = _me._overlay.getOverlayElem();
+    const overlayElem = this._overlay.getOverlayElem();
     console.debug('overlay resize before computeResize: ', overlayElem, outerBox, innerBox,
       scrollBox);
     if (overlayElem && outerBox && innerBox) {
@@ -131,12 +127,12 @@ export class CelOverlayResize {
       const mainPadding = parseInt(mainElemStyle.paddingTop) || 0;
       const mainMargin = parseInt(mainElemStyle.marginTop) || 0;
       const mainBorders = 2 * (mainPadding + mainMargin);
-      const outerBoxSize = _me._getWinHeight() - mainBorders;
+      const outerBoxSize = this._getWinHeight() - mainBorders;
       let innerSize = outerBoxSize;
-      if (_me._overlay.isMaxContentHeight()) {
-        innerSize = Math.min(_me._getBoxHeight(innerBox), outerBoxSize)
+      if (this._overlay.isMaxContentHeight()) {
+        innerSize = Math.min(this._getBoxHeight(innerBox), outerBoxSize)
       }
-      const scrollableSize = innerSize - _me._getCumulativeScrollboxHeight(boxes);
+      const scrollableSize = innerSize - this._getCumulativeScrollboxHeight(boxes);
 
       console.debug('overlayResize: ', outerBoxSize, innerSize, scrollableSize);
        outerBox.style.height = Math.max(50, outerBoxSize) + "px";
