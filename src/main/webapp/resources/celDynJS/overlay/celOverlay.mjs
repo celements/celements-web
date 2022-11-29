@@ -113,6 +113,7 @@ export class CelOverlay {
   _showOverlayElem() {
     this.getOverlayElem().hidden = false;
     this.getOverlayElem().style.display = '';
+    this.getOverlayElem().focus();
   }
 
   _hideOverlayElem() {
@@ -123,6 +124,7 @@ export class CelOverlay {
   getOverlayElem() {
     if (!this._overlayElem) {
       const overlayElem = document.createElement('div');
+      overlayElem.tabIndex = -1;
       overlayElem.id = this._id;
       overlayElem.classList.add('generalOverlay', this.customCssClass);
       const layoutSec = document.createElement('div');
