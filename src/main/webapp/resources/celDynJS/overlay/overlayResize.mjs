@@ -43,7 +43,6 @@ export class CelOverlayResize {
   }
 
   _getOverlayBoxes() {
-    const this = this;
     const overlayBodyElem = this._overlay.getOverlayBody();
     let outerBox = overlayBodyElem.querySelector('.cel_overlay_outerBox');
     let innerBox = overlayBodyElem.querySelector('.cel_overlay_innerBox');
