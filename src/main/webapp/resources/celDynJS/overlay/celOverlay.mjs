@@ -41,7 +41,7 @@ export class CelOverlay {
     this.idPrefix = idPrefix || "celOverlay_";
     this._id = this._generateNextId(this.idPrefix);
     this._closeBind = this.close.bind(this);
-    this.__escapeHandlerBind = this._escapeHandler.bind(this);
+    this._escapeHandlerBind = this._escapeHandler.bind(this);
     const cssFiles = [{
         'src' : '/file/resources/celRes/overlay/celementsOverlayV2.css'
       }];
