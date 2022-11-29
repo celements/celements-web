@@ -77,23 +77,20 @@ export class CelOverlay {
   }
 
   _getOverlayResizer() {
-    const _me = this;
-    if (!_me._overlayResizer) {
-      _me._overlayResizer= new CelOverlayResize(_me);
+    if (!this._overlayResizer) {
+      this._overlayResizer= new CelOverlayResize(this);
     }
-    return _me._overlayResizer;
+    return this._overlayResizer;
   }
 
   _showBgElem() {
-    const _me = this;
-    _me._getOverlayBgElem().hidden = false;
-    _me._getOverlayBgElem().style.display = '';
+    this._getOverlayBgElem().hidden = false;
+    this._getOverlayBgElem().style.display = '';
   }
 
   _hideBgElem() {
-    const _me = this;
-    _me._getOverlayBgElem().hidden = true;
-    _me._getOverlayBgElem().style.display = 'none';
+    this._getOverlayBgElem().hidden = true;
+    this._getOverlayBgElem().style.display = 'none';
   }
 
   setZIndex(newZindex) {
@@ -102,84 +99,76 @@ export class CelOverlay {
   }
 
   _getOverlayBgElem() {
-    const _me = this;
-    if (!_me._overlayBgElem) {
+    if (!this._overlayBgElem) {
       const bgDiv = document.createElement('div');
       bgDiv.classList.add('generalOverlay', 'OverlayBack');
       bgDiv.hidden = true;
       document.body.appendChild(bgDiv);
-      _me._overlayBgElem = bgDiv;
+      this._overlayBgElem = bgDiv;
     }
-    return _me._overlayBgElem;
+    return this._overlayBgElem;
   }
 
   _showOverlayElem() {
-    const _me = this;
-    _me.getOverlayElem().hidden = false;
-    _me.getOverlayElem().style.display = '';
+    this.getOverlayElem().hidden = false;
+    this.getOverlayElem().style.display = '';
   }
 
   _hideOverlayElem() {
-    const _me = this;
-    _me.getOverlayElem().hidden = true;
-    _me.getOverlayElem().style.display = 'none';
+    this.getOverlayElem().hidden = true;
+    this.getOverlayElem().style.display = 'none';
   }
 
   getOverlayElem() {
-    const _me = this;
-    if (!_me._overlayElem) {
+    if (!this._overlayElem) {
       const overlayElem = document.createElement('div');
-      overlayElem.id = _me._id;
-      overlayElem.classList.add('generalOverlay', _me.customCssClass);
+      overlayElem.id = this._id;
+      overlayElem.classList.add('generalOverlay', this.customCssClass);
       const layoutSec = document.createElement('div');
       layoutSec.classList.add('main', 'layoutsubsection');
       const closeButton = document.createElement('a');
       closeButton.classList.add('cel_closebutton');
-      closeButton.addEventListener('click', _me._closeBind);
+      closeButton.addEventListener('click', this._closeBind);
       layoutSec.appendChild(closeButton);
-      layoutSec.appendChild(_me.getOverlayBody());
+      layoutSec.appendChild(this.getOverlayBody());
       overlayElem.appendChild(layoutSec);
       overlayElem.hidden = true;
       document.body.appendChild(overlayElem);
-      _me._overlayElem = overlayElem;
-      _me.celFire('celOverlay:afterRender', {
+      this._overlayElem = overlayElem;
+      this.celFire('celOverlay:afterRender', {
         'overlayElem' : overlayElem,
-        'overlay' : _me
+        'overlay' : this
       });
     }
-    return _me._overlayElem;
+    return this._overlayElem;
   }
 
   getOverlayBody() {
-    const _me = this;
-    if (!_me._overlayBodyElem) {
+    if (!this._overlayBodyElem) {
       const bodyElem = document.createElement('div');
       bodyElem.classList.add('cel_overlaybody');
-      _me._overlayBodyElem = bodyElem;
+      this._overlayBodyElem = bodyElem;
     }
-    return _me._overlayBodyElem;
+    return this._overlayBodyElem;
   }
 
   show() {
-    const _me = this;
-    _me._showBgElem();
-    _me._showOverlayElem();
-    _me.celFire('celOverlay:afterShow', _me);
+    this._showBgElem();
+    this._showOverlayElem();
+    this.celFire('celOverlay:afterShow', this);
     document.body.style.overflow = 'hidden';
   }
 
   open() {
-    const _me = this;
-    _me.resetContent();
-    _me.show();
-    _me._getOverlayResizer.bind(_me).delay(0.5);
+    this.resetContent();
+    this.show();
+    this._getOverlayResizer.bind(this).delay(0.5);
   }
   
   async openCelementsPage(url) {
-    const _me = this;
-    _me.open();
+    this.open();
     if (url) {
-      await _me._loadContentAsync({
+      await this._loadContentAsync({
        'url' : url,
         'responseField' : 'celrenderedcontent',
         'title' : data => (data.title || data.name)
@@ -194,7 +183,6 @@ export class CelOverlay {
   }
 
   async _loadContentAsync(loadObj) {
-    const _me = this;
     const params = new FormData();
     params.append('xpage', 'json');
     await fetch(loadObj.url, {
@@ -205,23 +193,22 @@ export class CelOverlay {
       console.debug('ajax result: ', resp);
       return resp.json();
     }).then(data => {
-      _me.updateContent(_me._parseHTML(data[loadObj.responseField]));
-      _me.title = loadObj.title(data);
+      this.updateContent(this._parseHTML(data[loadObj.responseField]));
+      this.title = loadObj.title(data);
     }).catch(err => {
-      const event = _me.celFire('celOverlay:asyncLoadFailed', {
-        'overlay' : _me,
+      const event = this.celFire('celOverlay:asyncLoadFailed', {
+        'overlay' : this,
         'error' : err
       });
       if (!event.stopped) {
-        _me.updateContent(_me._parseHTML('<p class="celErrMessage">Loading failed.</p>'));
+        this.updateContent(this._parseHTML('<p class="celErrMessage">Loading failed.</p>'));
         console.warn('updateContent: failed to load content from ', loadObj.url, err);
       }
     });
   }
   
   _getLoadingImg() {
-    const _me = this;
-    const loaderimg = _me._loadingIndicator.getLoadingIndicator(64);
+    const loaderimg = this._loadingIndicator.getLoadingIndicator(64);
     Object.assign(loaderimg.style, {
       display : 'block',
       marginLeft : 'auto',
@@ -231,29 +218,27 @@ export class CelOverlay {
   }
 
   resetContent() {
-    const _me = this;
-    _me.updateContent([_me._getLoadingImg()]);
+    this.updateContent([this._getLoadingImg()]);
   }
 
   updateContent(newChildNodes) {
-    const _me = this;
     console.debug('updateContent: ', newChildNodes);
-    _me.getOverlayBody().replaceChildren(...newChildNodes);
-    _me.getOverlayBody().fire('celements:contentChanged', {
-       'htmlElem' : _me.getOverlayBody()
+    this.getOverlayBody().replaceChildren(...newChildNodes);
+    this.getOverlayBody().fire('celements:contentChanged', {
+       'htmlElem' : this.getOverlayBody()
      });
-    _me.celFire('celOverlay:contentChanged', _me);
+    this.celFire('celOverlay:contentChanged', this);
   }
 
   close() {
-    const _me = this;
-    _me._hideBgElem();
-    _me._hideOverlayElem();
+    this._hideBgElem();
+    this._hideOverlayElem();
     document.body.style.overflow = '';
     console.debug('Overlay close before fire');
-    _me.celFire('celOverlay:closed', _me);
+    this.celFire('celOverlay:closed', this);
   }
 
 }
 
+// For non module javascripts
 window.CELEMENTS_Overlay = CelOverlay;
