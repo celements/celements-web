@@ -27,57 +27,61 @@ export class CelUploadHandler {
     this.#fileBaseUrl = fileBaseUrl;
   }
 
-  #createXhrForUpload(resolve, reject, progress) {
-    const xhr = new XMLHttpRequest();
-    xhr.withCredentials = false;
-    xhr.open('POST', this.#uploadUrl + '?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=upload');
-  
-    xhr.upload.onprogress = (e) => {
-      progress(Math.round(e.loaded / e.total * 100));
-    };
-  
-    xhr.onload = () => {
-      if ((xhr.status >= 200) && (xhr.status < 300)) {
-        try {
-          const json = JSON.parse(xhr.responseText);
-          if (!json || typeof json.success != 'boolean') {
-            reject('Invalid JSON: ' + xhr.responseText);
+  #sendXhrForUpload(formData, progress) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.withCredentials = false;
+      xhr.open('POST', this.#uploadUrl + '?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=upload');
+      xhr.upload.onprogress = (e) => {
+        progress(Math.round(e.loaded / e.total * 100));
+      };
+      xhr.onload = () => {
+        if ((xhr.status >= 200) && (xhr.status < 300)) {
+          try {
+            const json = JSON.parse(xhr.responseText);
+            if (!json || typeof json.success != 'boolean') {
+              reject('Invalid JSON: ' + xhr.responseText);
+            }
+            if (!json.success) {
+              reject('failed to upload: ' + xhr.responseText);
+            }
+            resolve(this.#fileBaseUrl + '/'+ json.attfilename);
+          } catch (err) {
+            reject('Invalid JSON: ' + xhr.responseText + ' parse error: ' + err);
           }
-          if (!json.success) {
-            reject('failed to upload: ' + xhr.responseText);
-          }
-          resolve(this.#fileBaseUrl + '/'+ json.attfilename);
-        } catch (err) {
-          reject('Invalid JSON: ' + xhr.responseText + ' parse error: ' + err);
+        } else if (xhr.status === 403) {
+          reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+        } else {
+          reject('HTTP Error: ' + xhr.status);
         }
-      } else if (xhr.status === 403) {
-        reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
-      } else {
-        reject('HTTP Error: ' + xhr.status);
-      }
-    };
-  
-    xhr.onerror = () => {
-      reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
-    };
-    return xhr;
+      };
+      xhr.onerror = () => {
+        reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+      };
+      xhr.send(formData);
+    });
   }
 
   upload(fileInfo, progress) {
-    return  new Promise((resolve, reject) => {        
-      fetch('?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=getTokenForCurrentUser')
-      .then((response) => response.json())
-      .then((respJson) => {
-        console.debug('upload: token[', respJson.token, '] filename [',
-          fileInfo.name, ']');
+    return new Promise((resolve, reject) => {
+      try {
+        const response = await fetch('?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=getTokenForCurrentUser')
+        if (!response.ok) {
+          throw new Error('Return status ' + response.status);
+        }
+        const respJson = await response.json();
+        console.debug('upload: token[', respJson.token, '] filename [', fileInfo.name, ']');
         const formData = new FormData();
         formData.append('uploadToken', respJson.token);
         formData.append('celTokenUploadCreateIfNotExists', true);
         formData.append('filename', fileInfo.name);
         formData.append('filepath', fileInfo.blob, fileInfo.name);
-        this.#createXhrForUpload(resolve, reject, progress
-          ).send(formData);
-      }).catch((err) => reject({ message: 'Failed to get upload token. ' + err, remove: true  }));
+        this.#sendXhrForUpload(formData, progress)
+          .then(resolve)
+          .catch(reject);
+      } catch(err) {
+        reject({ message: 'Failed to get upload token. ' + err, remove: true  });
+      }
     });
   }
 }
