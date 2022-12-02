@@ -31,7 +31,7 @@ export class CelUploadHandler {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = false;
-      xhr.open('POST', this.#uploadUrl + '?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=upload');
+      xhr.open('POST', this.#uploadUrl);
       xhr.upload.onprogress = (e) => {
         progress(Math.round(e.loaded / e.total * 100));
       };
@@ -64,14 +64,25 @@ export class CelUploadHandler {
 
   async upload(fileInfo, progress) {
     return new Promise((resolve, reject) => {
+      const params = new FormData();
+      params.append('xpage', 'celements_ajax');
+      params.append('ajax_mode', 'TokenFileUploader');
+      params.append('tfu_mode', 'getTokenForCurrentUser');
       try {
-        const response = await fetch('?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=getTokenForCurrentUser')
+        const response = await fetch(this.#uploadUrl, {
+          method: 'POST',
+          redirect: 'error',
+          body: params
+        });
         if (!response.ok) {
           throw new Error('Return status ' + response.status);
         }
         const respJson = await response.json();
         console.debug('upload: token[', respJson.token, '] filename [', fileInfo.name, ']');
         const formData = new FormData();
+        formData.append('xpage', 'celements_ajax');
+        formData.append('ajax_mode', 'TokenFileUploader');
+        formData.append('tfu_mode', 'upload');
         formData.append('uploadToken', respJson.token);
         formData.append('celTokenUploadCreateIfNotExists', true);
         formData.append('filename', fileInfo.name);
