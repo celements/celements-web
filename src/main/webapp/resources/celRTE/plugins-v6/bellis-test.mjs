@@ -3,7 +3,7 @@ import { CelUploadHandler, CelFileDropHandler }
   from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202212020804";
 import { CelOverlay }
   from "/file/resources/celDynJS/overlay/celOverlay.mjs?version=202212020804";
-import "/file/resources/celDynJS/DynamicLoader/celLazyLoader.mjs?version=202212021142";
+import "/file/resources/celDynJS/DynamicLoader/celLazyLoader.mjs?version=202212021204";
 
 class CelFilePicker {
 

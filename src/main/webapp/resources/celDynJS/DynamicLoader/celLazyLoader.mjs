@@ -72,6 +72,7 @@ class CelLazyLoaderUtils {
   fireLoaded = function(item, eventName) {
     item._reayState = 2;
     item._isSuccessfullLoaded = true;
+    console.debug('fireLoaded', eventName, item);
     $(item).fire(eventName, {
      'fileSrc' : item.getAttribute('src'),
      'successful' : true
