@@ -132,9 +132,8 @@ export class CelOverlayResize {
         innerSize = Math.min(this._getBoxHeight(innerBox), outerBoxSize)
       }
       const scrollableSize = innerSize - this._getCumulativeScrollboxHeight(boxes);
-
       console.debug('overlayResize: ', outerBoxSize, innerSize, scrollableSize);
-       outerBox.style.height = Math.max(50, outerBoxSize) + "px";
+      outerBox.style.height = Math.max(50, outerBoxSize) + "px";
       innerBox.style.height = Math.max(50, innerSize) + "px";
       scrollBox.style.height = Math.max(50, scrollableSize) + "px";
     } else {
