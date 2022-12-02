@@ -228,7 +228,7 @@ export class CelOverlay {
         this.updateContent(this._parseHTML('<p class="celErrMessage">Loading failed.</p>'));
         console.warn('updateContent: failed to load content from ', loadObj.url, err);
       }
-    });
+    }
   }
   
   _getLoadingImg() {
