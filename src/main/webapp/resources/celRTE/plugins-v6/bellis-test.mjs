@@ -182,9 +182,9 @@ jsLazyLoadElem.setAttribute('src', '/file/resources/celRTE/6.3.0/tinymce.min.js'
 jsLazyLoadElem.addEventListener('celements:jsFileLoaded', (ev) => {
   console.log('jsFileLoaded: was here ', ev);
 });
-body.addEventListener('celements:jsFileLoaded', (ev) => {
+document.body.addEventListener('celements:jsFileLoaded', (ev) => {
   console.log('jsFileLoaded: was here ', ev);
 });
-body.addEventListener('celements:jsFileLoaded', celRteAdaptor.initTinyMceV6.bind(celRteAdaptor));
+document.body.addEventListener('celements:jsFileLoaded', celRteAdaptor.initTinyMceV6.bind(celRteAdaptor));
 document.body.appendChild(jsLazyLoadElem);
 
