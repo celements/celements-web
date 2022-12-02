@@ -63,37 +63,33 @@ export class CelUploadHandler {
   }
 
   async upload(fileInfo, progress) {
-    return new Promise((resolve, reject) => {
-      const params = new FormData();
-      params.append('xpage', 'celements_ajax');
-      params.append('ajax_mode', 'TokenFileUploader');
-      params.append('tfu_mode', 'getTokenForCurrentUser');
-      try {
-        const response = await fetch(this.#uploadUrl, {
-          method: 'POST',
-          redirect: 'error',
-          body: params
-        });
-        if (!response.ok) {
-          throw new Error('Return status ' + response.status);
-        }
-        const respJson = await response.json();
-        console.debug('upload: token[', respJson.token, '] filename [', fileInfo.name, ']');
-        const formData = new FormData();
-        formData.append('xpage', 'celements_ajax');
-        formData.append('ajax_mode', 'TokenFileUploader');
-        formData.append('tfu_mode', 'upload');
-        formData.append('uploadToken', respJson.token);
-        formData.append('celTokenUploadCreateIfNotExists', true);
-        formData.append('filename', fileInfo.name);
-        formData.append('filepath', fileInfo.blob, fileInfo.name);
-        this.#sendXhrForUpload(formData, progress)
-          .then(resolve)
-          .catch(reject);
-      } catch(err) {
-        reject({ message: 'Failed to get upload token. ' + err, remove: true  });
+    const params = new FormData();
+    params.append('xpage', 'celements_ajax');
+    params.append('ajax_mode', 'TokenFileUploader');
+    params.append('tfu_mode', 'getTokenForCurrentUser');
+    try {
+      const response = await fetch(this.#uploadUrl, {
+        method: 'POST',
+        redirect: 'error',
+        body: params
+      });
+      if (!response.ok) {
+        throw new Error('Return status ' + response.status);
       }
-    });
+      const respJson = await response.json();
+      console.debug('upload: token[', respJson.token, '] filename [', fileInfo.name, ']');
+      const formData = new FormData();
+      formData.append('xpage', 'celements_ajax');
+      formData.append('ajax_mode', 'TokenFileUploader');
+      formData.append('tfu_mode', 'upload');
+      formData.append('uploadToken', respJson.token);
+      formData.append('celTokenUploadCreateIfNotExists', true);
+      formData.append('filename', fileInfo.name);
+      formData.append('filepath', fileInfo.blob, fileInfo.name);
+      return await this.#sendXhrForUpload(formData, progress);
+    } catch(err) {
+      throw new Error({ message: 'Failed to get upload token. ' + err, remove: true  });
+    }
   }
 }
 
