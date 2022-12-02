@@ -3,6 +3,7 @@ import { CelUploadHandler, CelFileDropHandler }
   from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202212020804";
 import { CelOverlay }
   from "/file/resources/celDynJS/overlay/celOverlay.mjs?version=202212020804";
+import "/file/resources/celDynJS/DynamicLoader/celLazyLoader.mjs?version=202212021142";
 
 class CelFilePicker {
 
@@ -137,6 +138,36 @@ class CelRteAdaptor {
     }
   }
  
+  initTinyMceV6() {
+    tinymce.init({"selector" : "textarea.tinyMCE,textarea.mceEditor", "language" : "de",
+      "valid_elements" : "b/strong,caption,hr[class|width|size|noshade],+a[href|class|target|onclick|name|id|title|rel|hreflang],br,i/em,#p[style|class|name|id],#h?[align<center?justify?left?right|class|style|id],-span[class|style|id|title],textformat[blockindent|indent|leading|leftmargin|rightmargin|tabstops],sub[class],sup[class],img[width|height|class|align|style|src|border=0|alt|id|title|usemap],table[align<center?left?right|bgcolor|border|cellpadding|cellspacing|class|height|width|style|id|title],tbody[align<center?char?justify?left?right|class|valign<baseline?bottom?middle?top],#td[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|nowrap<nowrap|style|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|width],#th[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|style|width],thead[align<center?char?justify?left?right|class|valign<baseline?bottom?middle?top],-tr[align<center?char?justify?left?right|bgcolor|class|style|rowspan|valign<baseline?bottom?middle?top|id],-ol[class|type|compact],-ul[class|type|compact],#li[class]",
+      "invalid_elements" : "blockquote,body,button,center,cite,code,col,colgroup,dd,del,dfn,dir,div,dl,dt,fieldset,font,form,frame,frameset,head,html,iframe,input,ins,kbd,isindex,label,legend,link,map,menu,meta,noframes,noscript,object,optgroup,option,param,pre/listing/plaintext/xmp,q,s,samp,script,select,small,strike,textarea,tfoot,tt,u,var",
+      "height" : "500", "width" : "1000", "menubar" : false, "branding" : false,
+      "plugins" : " preview searchreplace autolink directionality visualblocks visualchars fullscreen link template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help code media",
+      "external_plugins" : {
+        "celImage" : "/file/resources/celRTE/plugins-v6/celimage/plugin.js?version=20221119113500"
+      }, "toolbar"  : [
+        "celImage | link",
+        "removeformat formatselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist | unlink insertimage",
+        "pastetext paste | table | tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | tablesplitcells tablemergecells | template | code",
+        "media"
+      ], "celanim_slideshow" : true, "cel_crop" : true,
+      "gallerylist" : " (Gallery8)=Gallery.Gallery8, (Gallery9)=Gallery.Gallery9,Album1  (Gallery11)=Gallery.Gallery11,Bilderimport (TestgalerieBilderimport)=Gallery.TestgalerieBilderimport,Bringold demo Alt (Bringold-Demo)=Gallery.Bringold-Demo,Japan :-) (Gallery1)=Gallery.Gallery1,Mit Meta! (Gallery6)=Gallery.Gallery6,Neugier (TestgallerySilvia)=Gallery.TestgallerySilvia,Test Titel (Gallery7)=Gallery.Gallery7,Testfotoalbum (Celementsgalerie)=Gallery.Celementsgalerie,UmlautTest (UmlautTest)=Gallery.UmlautTest,Webseiten synventis (CMSsynventisReferenzseiten)=Gallery.CMSsynventisReferenzseiten",
+      "content_css" : [
+        "/file/resources/celRes/celements2%2Dcontent.css?version=20221118165414",
+        "/file/BellisLayout/WebHome/Bellis%2Dcontent.css?version=20160122155749"
+      ], "wiki_images_path" : "/download/Content_attachments/FileBaseDoc",
+      "wiki_linkpicker_space" : "Content",  "wiki_linkpicker_baseurl" : "/untitled1",
+      "wiki_filepicker_upload_space" : "Content", "wiki_filepicker_space" : "Content",
+      "wiki_filepicker_doc" : "untitled1",
+      "wiki_filebase_link" : "/untitled1?xpage=celements_ajax&ajax_mode=FileBase&picker=1&single_doc=Content_attachments.FileBaseDoc&fieldname=href&src_doc=Content.untitled1&columns=10&root=Content&hasUpload=1",
+      "wiki_filebase_single_doc" : "1", "entity_encoding" : "raw", "autoresize_bottom_margin" : 1,
+      "autoresize_min_height" : 0, "style_formats" : [], "image_advtab": true, "image_uploadtab" : true,
+      "images_upload_handler": this.uploadImagesHandler.bind(this),
+      "file_picker_callback" :  this.celRte_file_picker_handler.bind(this),
+      "automatic_uploads": true
+    });
+  }
 }
 
 export const celRteAdaptor = new CelRteAdaptor({
@@ -145,31 +176,8 @@ export const celRteAdaptor = new CelRteAdaptor({
   "filebaseFN" : "Content_attachments.FileBaseDoc"
 });
 
-tinymce.init({"selector" : "textarea.tinyMCE,textarea.mceEditor", "language" : "de",
-  "valid_elements" : "b/strong,caption,hr[class|width|size|noshade],+a[href|class|target|onclick|name|id|title|rel|hreflang],br,i/em,#p[style|class|name|id],#h?[align<center?justify?left?right|class|style|id],-span[class|style|id|title],textformat[blockindent|indent|leading|leftmargin|rightmargin|tabstops],sub[class],sup[class],img[width|height|class|align|style|src|border=0|alt|id|title|usemap],table[align<center?left?right|bgcolor|border|cellpadding|cellspacing|class|height|width|style|id|title],tbody[align<center?char?justify?left?right|class|valign<baseline?bottom?middle?top],#td[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|nowrap<nowrap|style|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|width],#th[align<center?char?justify?left?right|bgcolor|class|colspan|headers|height|rowspan|scope<col?colgroup?row?rowgroup|valign<baseline?bottom?middle?top|style|width],thead[align<center?char?justify?left?right|class|valign<baseline?bottom?middle?top],-tr[align<center?char?justify?left?right|bgcolor|class|style|rowspan|valign<baseline?bottom?middle?top|id],-ol[class|type|compact],-ul[class|type|compact],#li[class]",
-  "invalid_elements" : "blockquote,body,button,center,cite,code,col,colgroup,dd,del,dfn,dir,div,dl,dt,fieldset,font,form,frame,frameset,head,html,iframe,input,ins,kbd,isindex,label,legend,link,map,menu,meta,noframes,noscript,object,optgroup,option,param,pre/listing/plaintext/xmp,q,s,samp,script,select,small,strike,textarea,tfoot,tt,u,var",
-  "height" : "500", "width" : "1000", "menubar" : false, "branding" : false,
-  "plugins" : " preview searchreplace autolink directionality visualblocks visualchars fullscreen link template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help code media",
-  "external_plugins" : {
-    "celImage" : "/file/resources/celRTE/plugins-v6/celimage/plugin.js?version=20221119113500"
-  }, "toolbar"  : [
-    "celImage | link",
-    "removeformat formatselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist | unlink insertimage",
-    "pastetext paste | table | tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | tablesplitcells tablemergecells | template | code",
-    "media"
-  ], "celanim_slideshow" : true, "cel_crop" : true,
-  "gallerylist" : " (Gallery8)=Gallery.Gallery8, (Gallery9)=Gallery.Gallery9,Album1  (Gallery11)=Gallery.Gallery11,Bilderimport (TestgalerieBilderimport)=Gallery.TestgalerieBilderimport,Bringold demo Alt (Bringold-Demo)=Gallery.Bringold-Demo,Japan :-) (Gallery1)=Gallery.Gallery1,Mit Meta! (Gallery6)=Gallery.Gallery6,Neugier (TestgallerySilvia)=Gallery.TestgallerySilvia,Test Titel (Gallery7)=Gallery.Gallery7,Testfotoalbum (Celementsgalerie)=Gallery.Celementsgalerie,UmlautTest (UmlautTest)=Gallery.UmlautTest,Webseiten synventis (CMSsynventisReferenzseiten)=Gallery.CMSsynventisReferenzseiten",
-  "content_css" : [
-    "/file/resources/celRes/celements2%2Dcontent.css?version=20221118165414",
-    "/file/BellisLayout/WebHome/Bellis%2Dcontent.css?version=20160122155749"
-  ], "wiki_images_path" : "/download/Content_attachments/FileBaseDoc",
-  "wiki_linkpicker_space" : "Content",  "wiki_linkpicker_baseurl" : "/untitled1",
-  "wiki_filepicker_upload_space" : "Content", "wiki_filepicker_space" : "Content",
-  "wiki_filepicker_doc" : "untitled1",
-  "wiki_filebase_link" : "/untitled1?xpage=celements_ajax&ajax_mode=FileBase&picker=1&single_doc=Content_attachments.FileBaseDoc&fieldname=href&src_doc=Content.untitled1&columns=10&root=Content&hasUpload=1",
-  "wiki_filebase_single_doc" : "1", "entity_encoding" : "raw", "autoresize_bottom_margin" : 1,
-  "autoresize_min_height" : 0, "style_formats" : [], "image_advtab": true, "image_uploadtab" : true,
-  "images_upload_handler": celRteAdaptor.uploadImagesHandler.bind(celRteAdaptor),
-  "file_picker_callback" :  celRteAdaptor.celRte_file_picker_handler.bind(celRteAdaptor),
-  "automatic_uploads": true
-});
+const jsLazyLoadElem = document.createElement('cel-lazy-load-js');
+jsLazyLoadElem.setAttribute('src', '/file/resources/celRTE/6.3.0/tinymce.min.js');
+jsLazyLoadElem.addEventListener('celements:jsFileLoaded', celRteAdaptor.initTinyMceV6.bind(celRteAdaptor));
+document.body.appendChild(jsLazyLoadElem);
+

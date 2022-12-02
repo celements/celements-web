@@ -160,6 +160,12 @@
       <version>4.9.11-CEL5</version>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>tinymce-langs-v6</artifactId>
+      <version>6.3.00-CEL5-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
 
     <!-- celements dependencies -->
     <dependency>
