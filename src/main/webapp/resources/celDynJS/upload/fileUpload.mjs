@@ -62,7 +62,7 @@ export class CelUploadHandler {
     });
   }
 
-  upload(fileInfo, progress) {
+  async upload(fileInfo, progress) {
     return new Promise((resolve, reject) => {
       try {
         const response = await fetch('?xpage=celements_ajax&ajax_mode=TokenFileUploader&tfu_mode=getTokenForCurrentUser')
