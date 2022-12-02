@@ -102,7 +102,7 @@ export class CelOverlay {
   _getOverlayBgElem() {
     if (!this._overlayBgElem) {
       const bgDiv = document.createElement('div');
-      bgDiv.classList.add('generalOverlay', 'OverlayBack');
+      bgDiv.classList.add('generalOverlay', 'overlayBack');
       bgDiv.hidden = true;
       document.body.appendChild(bgDiv);
       this._overlayBgElem = bgDiv;
@@ -206,17 +206,20 @@ export class CelOverlay {
   async _loadContentAsync(loadObj) {
     const params = new FormData();
     params.append('xpage', 'json');
-    await fetch(loadObj.url, {
-      method: 'POST',
-      redirect: 'follow',
-      body: params
-    }).then(resp => {
-      console.debug('ajax result: ', resp);
-      return resp.json();
-    }).then(data => {
-      this.updateContent(this._parseHTML(data[loadObj.responseField]));
-      this.title = loadObj.title(data);
-    }).catch(err => {
+    try {
+      const response = await fetch(loadObj.url, {
+        method: 'POST',
+        redirect: 'follow',
+        body: params
+      });
+      if (response.ok) {
+        const data = await response.json() ?? {};
+        this.updateContent(this._parseHTML(data[loadObj.responseField]));
+        this.title = loadObj.title(data);
+      } else {
+        throw new Error('fetch failed: ', response.statusText);
+      }
+    } catch (error) {
       const event = this.celFire('celOverlay:asyncLoadFailed', {
         'overlay' : this,
         'error' : err

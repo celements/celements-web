@@ -15,7 +15,7 @@ html, body {
   justify-content: space-around;
 }
 
-.OverlayBack {
+.overlayBack {
   background-color: black;
   opacity: 0.5;
   filter: alpha(opacity = 50);
