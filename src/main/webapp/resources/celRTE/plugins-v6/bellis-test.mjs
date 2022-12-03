@@ -179,15 +179,5 @@ export const celRteAdaptor = new CelRteAdaptor({
 
 const jsLazyLoadElem = document.createElement('cel-lazy-load-js');
 jsLazyLoadElem.setAttribute('src', '/file/resources/celRTE/6.3.0/tinymce.min.js');
-console.log('bellis-test: before test addEventListener on elem');
-jsLazyLoadElem.addEventListener('celements:jsFileLoaded', (ev) => {
-  console.log('jsFileLoaded on elem: was here ', ev);
-});
-console.log('bellis-test: before test addEventListener on body');
-document.body.addEventListener('celements:jsFileLoaded', (ev) => {
-  console.log('jsFileLoaded on head: was here ', ev);
-});
-document.body.addEventListener('celements:jsFileLoaded', celRteAdaptor.initTinyMceV6.bind(celRteAdaptor));
-console.log('bellis-test: before add element to body');
+$(document.body).observe('celements:jsFileLoaded', celRteAdaptor.initTinyMceV6.bind(celRteAdaptor));
 document.body.appendChild(jsLazyLoadElem);
-console.log('bellis-test: done.');
