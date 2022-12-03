@@ -157,6 +157,7 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log('CelLazyLoaderJs connectedCallback:', this);
     this._loadJsScript();
   }
 }
