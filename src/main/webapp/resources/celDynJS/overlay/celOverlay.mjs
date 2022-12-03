@@ -18,8 +18,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-import { CelOverlayResize } from "./overlayResize.mjs?version=202211290702";
-import "../DynamicLoader/celLazyLoader.mjs?version=202212031707";
+import { CelOverlayResize } from "./overlayResize.mjs?version=202212031733";
+import "../DynamicLoader/celLazyLoader.mjs?version=202212031733";
 
 export class CelOverlay {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
