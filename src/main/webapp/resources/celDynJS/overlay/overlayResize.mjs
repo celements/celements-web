@@ -34,11 +34,7 @@ export class CelOverlayResize {
 
   startResizeObservers() {
     window.addEventListener('resize', this._resizeBind);
-    const overlayBodyElem = this._overlay.getOverlayBody();
-    if (overlayBodyElem) {
-      overlayBodyElem.stopObserving('celoverlay:resize', this._resizeBind);
-      overlayBodyElem.observe('celoverlay:resize', this._resizeBind);
-    }
+    this._overlay.celObserve('celOverlay:resize', this._resizeBind);
     this.resize();
   }
 
