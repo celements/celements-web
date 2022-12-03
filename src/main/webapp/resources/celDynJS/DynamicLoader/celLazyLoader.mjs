@@ -17,7 +17,6 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-//TODO replace prototype event handling as soon as CELDEV-1052 is done.
 
 class CelLazyLoaderUtils {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
@@ -72,16 +71,27 @@ class CelLazyLoaderUtils {
   fireLoaded = function(item, eventName) {
     item._reayState = 2;
     item._isSuccessfullLoaded = true;
-    $(item).fire(eventName, {
-     'fileSrc' : item.getAttribute('src'),
-     'successful' : true
+    console.debug('fireLoaded', eventName, item);
+    this.fireEvent(item, eventName, {
+      'fileSrc' : item.getAttribute('src'),
+      'successful' : true
     });
+  }
+
+  fireEvent(item, eventName, detail) {
+    const event = new CustomEvent(eventName, {
+      'bubbles' : true,
+      'cancelable' : true,
+      'detail' : detail
+    });
+    event.stopped = !item.dispatchEvent(event);
+    return event;
   }
 
   fireLoadedErr = function(item, eventName, message, source, lineno, colno, error) {
     item._reayState = 2;
     item._isSuccessfullLoaded = false;
-   $(item).fire(eventName, {
+    this.fireEvent(item, eventName, {
        'fileSrc' : source,
        'successful' : false,
        'message' : message,
@@ -156,6 +166,7 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log('CelLazyLoaderJs connectedCallback:', this);
     this._loadJsScript();
   }
 }
@@ -223,6 +234,7 @@ class CelLazyLoader extends HTMLElement {
     
   constructor () {
     super();
+    this._lazyLoadUtils = new CelLazyLoaderUtils();
     this.classList.add('celLoadLazyLoading');
     this._fetchResponse = this.src ? fetch(this.src) : null;
     this.attachShadow({ 'mode' : 'open' });
@@ -247,7 +259,7 @@ class CelLazyLoader extends HTMLElement {
     fragment.replaceChildren(...newChildNodes);
     parent.replaceChild(fragment, this);
     try {
-      $(parent).fire('celements:contentChanged', {
+      this._lazyLoadUtils.fireEvent(parent, 'celements:contentChanged', {
         'htmlElem': parent
       });
     } catch (exp) {
