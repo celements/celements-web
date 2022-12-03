@@ -19,7 +19,7 @@
  */
 
 import { CelOverlayResize } from "./overlayResize.mjs?version=202211290702";
-import "../DynamicLoader/celLazyLoader.mjs?version=202211202144";
+import "../DynamicLoader/celLazyLoader.mjs?version=202212031707";
 
 export class CelOverlay {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
@@ -248,9 +248,6 @@ export class CelOverlay {
   updateContent(newChildNodes) {
     console.debug('updateContent: ', newChildNodes);
     this.getOverlayBody().replaceChildren(...newChildNodes);
-    this.getOverlayBody().fire('celements:contentChanged', {
-       'htmlElem' : this.getOverlayBody()
-     });
     this.celFire('celOverlay:contentChanged', this);
   }
 

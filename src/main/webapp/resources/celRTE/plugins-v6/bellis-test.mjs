@@ -3,7 +3,7 @@ import { CelUploadHandler, CelFileDropHandler }
   from "/file/resources/celDynJS/upload/fileUpload.mjs?version=202212020804";
 import { CelOverlay }
   from "/file/resources/celDynJS/overlay/celOverlay.mjs?version=202212020804";
-import "/file/resources/celDynJS/DynamicLoader/celLazyLoader.mjs?version=202212031249";
+import "/file/resources/celDynJS/DynamicLoader/celLazyLoader.mjs?version=202212031707";
 
 class CelFilePicker {
 
@@ -179,5 +179,5 @@ export const celRteAdaptor = new CelRteAdaptor({
 
 const jsLazyLoadElem = document.createElement('cel-lazy-load-js');
 jsLazyLoadElem.setAttribute('src', '/file/resources/celRTE/6.3.0/tinymce.min.js');
-$(document.body).observe('celements:jsFileLoaded', celRteAdaptor.initTinyMceV6.bind(celRteAdaptor));
+document.body.addEventListener('celements:jsFileLoaded', celRteAdaptor.initTinyMceV6.bind(celRteAdaptor));
 document.body.appendChild(jsLazyLoadElem);
