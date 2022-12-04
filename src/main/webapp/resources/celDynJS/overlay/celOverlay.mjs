@@ -37,6 +37,7 @@ export class CelOverlay {
 
   constructor(customCssFiles, idPrefix) {
     Object.assign(this, window.CELEMENTS.mixins.Observable);
+    this._isOpen = false;
     this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
     this.idPrefix = idPrefix || "celOverlay_";
     this._id = this._generateNextId(this.idPrefix);
@@ -180,10 +181,16 @@ export class CelOverlay {
   }
 
   open() {
-    this.resetContent();
-    this.show();
-    this._registerEscapeListener();
-    this._getOverlayResizer.bind(this).delay(0.5);
+    if (!this._isOpen) {
+      this._isOpen = true;
+      this._activeBeforeElem = document.activeElement;
+      this.resetContent();
+      this.show();
+      this._registerEscapeListener();
+      this._getOverlayResizer.bind(this).delay(0.5);
+    } else {
+      console.warn('skip "open" because overlay is already opened. Call "close" first');
+    }
   }
   
   async openCelementsPage(url) {
@@ -252,12 +259,20 @@ export class CelOverlay {
   }
 
   close() {
-    this._unregisterEscapeListener();
-    this._hideBgElem();
-    this._hideOverlayElem();
-    document.body.style.overflow = '';
-    console.debug('Overlay close before fire');
-    this.celFire('celOverlay:closed', this);
+    if (this._isOpen) {
+      this._isOpen = false;
+      this._unregisterEscapeListener();
+      this._hideBgElem();
+      this._hideOverlayElem();
+      document.body.style.overflow = '';
+      if (this._activeBeforeElem) {
+        this._activeBeforeElem.focus();
+      }
+      console.debug('Overlay close before fire');
+      this.celFire('celOverlay:closed', this);
+    } else {
+      console.warn('skip "close" because overlay is already closed. Call "open" first');
+    }
   }
 
 }
