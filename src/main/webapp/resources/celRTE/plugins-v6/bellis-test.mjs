@@ -145,10 +145,8 @@ class CelRteAdaptor {
       "invalid_elements" : "blockquote,body,button,center,cite,code,col,colgroup,dd,del,dfn,dir,div,dl,dt,fieldset,font,form,frame,frameset,head,html,iframe,input,ins,kbd,isindex,label,legend,link,map,menu,meta,noframes,noscript,object,optgroup,option,param,pre/listing/plaintext/xmp,q,s,samp,script,select,small,strike,textarea,tfoot,tt,u,var",
       "height" : "500", "width" : "1000", "menubar" : false, "branding" : false,
       "plugins" : " preview searchreplace autolink directionality visualblocks visualchars fullscreen link template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help code media",
-      "external_plugins" : {
-        "celImage" : "/file/resources/celRTE/plugins-v6/celimage/plugin.js?version=20221119113500"
-      }, "toolbar"  : [
-        "celImage | link",
+      "toolbar"  : [
+        "image | link",
         "removeformat formatselect bold italic underline | alignleft aligncenter alignright alignjustify | bullist | unlink insertimage",
         "pastetext paste | table | tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | tablesplitcells tablemergecells | template | code",
         "media"
@@ -157,12 +155,9 @@ class CelRteAdaptor {
       "content_css" : [
         "/file/resources/celRes/celements2%2Dcontent.css?version=20221118165414",
         "/file/BellisLayout/WebHome/Bellis%2Dcontent.css?version=20160122155749"
-      ], "wiki_images_path" : "/download/Content_attachments/FileBaseDoc",
+      ],
       "wiki_linkpicker_space" : "Content",  "wiki_linkpicker_baseurl" : "/untitled1",
-      "wiki_filepicker_upload_space" : "Content", "wiki_filepicker_space" : "Content",
-      "wiki_filepicker_doc" : "untitled1",
-      "wiki_filebase_link" : "/untitled1?xpage=celements_ajax&ajax_mode=FileBase&picker=1&single_doc=Content_attachments.FileBaseDoc&fieldname=href&src_doc=Content.untitled1&columns=10&root=Content&hasUpload=1",
-      "wiki_filebase_single_doc" : "1", "entity_encoding" : "raw", "autoresize_bottom_margin" : 1,
+      "entity_encoding" : "raw", "autoresize_bottom_margin" : 1,
       "autoresize_min_height" : 0, "style_formats" : [], "image_advtab": true, "image_uploadtab" : true,
       "images_upload_handler": this.uploadImagesHandler.bind(this),
       "file_picker_callback" :  this.celRte_file_picker_handler.bind(this),
