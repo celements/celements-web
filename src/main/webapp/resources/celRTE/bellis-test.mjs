@@ -3,7 +3,7 @@ import "../celDynJS/DynamicLoader/celLazyLoader.mjs?version=202212031707";
 import { CelUploadHandler }
   from "../celDynJS/upload/fileUpload.mjs?version=202212020804";
 import { CelFilePicker }
-  from "./celImageAndFilePicker/celImageAndFilePicker.mjs?version=202212041326";
+  from "./celImageAndFilePicker/celImageAndFilePicker.mjs?version=202212041346";
 
 class CelRteAdaptor {
   #uploadHandler;
