@@ -12,7 +12,7 @@ export class CelFilePicker {
     this.imagePickerMaxDimension = 100;
     this.filebaseFN = options.filebaseFN;
     this.pickerOverlay = new CelOverlay([{
-      'src' : '/file/resources/celRTE/plugins-v6/celimage/imagepicker.css'
+      'src' : './imagepicker.css'
     }]);
     this.pickerOverlay.customCssClass = 'filebasePicker';
     this.pickerOverlay.setZIndex(2000);
