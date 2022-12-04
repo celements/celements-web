@@ -105,6 +105,7 @@ export class CelOverlay {
       const bgDiv = document.createElement('div');
       bgDiv.classList.add('generalOverlay', 'overlayBack');
       bgDiv.hidden = true;
+      bgDiv.style.display = 'none';
       document.body.appendChild(bgDiv);
       this._overlayBgElem = bgDiv;
     }
@@ -137,6 +138,7 @@ export class CelOverlay {
       layoutSec.appendChild(this.getOverlayBody());
       overlayElem.appendChild(layoutSec);
       overlayElem.hidden = true;
+      overlayElem.style.display = 'none';
       document.body.appendChild(overlayElem);
       this._overlayElem = overlayElem;
       this.celFire('celOverlay:afterRender', {
