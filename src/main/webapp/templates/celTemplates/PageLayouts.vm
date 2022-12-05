@@ -13,29 +13,29 @@
     <table>
       <tr>
         <th class="prettyname">Pretty Name</th>
-        <th class="wiki">Wiki</th>
         <th class="active">Active</th>
         #if($isAdmin)
-          <th class="actions">Actions</th>
+          <th class="actions" colspan="2">Actions</th>
         #end
       </tr>
       #foreach($layout in $layouts)
         #set($layoutWiki = $layout.spaceRef.parent.name)
         #if($layoutWiki != $prevLayoutWiki)
-        <tr><td colspan="10"><hr></td></tr>
+        <tr><th colspan="10"><hr></th></tr>
+        <tr><th colspan="10">$!layoutWiki</th></tr>
         #end
         <tr>
+          <!-- layout: $layout -->
           #set($layoutFN = $services.reference.serialize($layout.spaceRef))
           <td class="column${velocityCount}">
             #if($services.layout.layoutEditorAvailable())
-              <a href="$!services.url.getURL($layout.spaceRef)">
+              <a href="$!services.url.getExternalURL($layout.spaceRef)">
                 $!layout.prettyName
               </a>
             #else
               $!layout.prettyName
             #end
           </td>
-          <td>$!layoutWiki</td>
           <td>$!layout.isActive()</td>
           #if($isAdmin)
             #set($layoutFN = $services.reference.serialize($layout.spaceRef))
@@ -50,7 +50,7 @@
         </tr>
         #set($prevLayoutWiki = $layoutWiki)
       #end
-      <tr><td colspan="10"><hr></td></tr>
+      <tr><th colspan="10"><hr></th></tr>
     </table>
   #else
     <p>No Page Layouts found.</p>

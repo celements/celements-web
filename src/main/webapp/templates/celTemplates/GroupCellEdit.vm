@@ -36,7 +36,7 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
     	#if($layout.spaceRef != $doc.documentReference.lastSpaceReference)
         #set($layoutFN = $services.reference.serialize($layout.spaceRef))
         <option value="$layoutFN" #if("$!cel_currentRenderLayout" == "$!layoutFN")selected#end>
-          $!layouts.prettyName
+          $!layout.prettyName
         </option>
       #end
     #end
