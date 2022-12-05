@@ -43,16 +43,16 @@
       </select>
 </div>
 <div id="pro_pagemasterEdit" class="editblock">
-    $adminMsg.get('cel_tm_page_master'):
-    #set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
-    #set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
-    #set($cel_currentPageLayout = "$!cel_pageTypeObj.getProperty('page_layout').getValue()")
-    <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_layout" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_layout">
-        <option #if("$!cel_currentPageLayout" == '') selected="selected" #end value="" label="$cel_defaultLayout">$cel_defaultLayout</option>
-    #foreach($cel_pageLayoutKey in $cel_pageLayouts.keySet())
-        <option #if("$!cel_currentPageLayout" == "$!cel_pageLayoutKey") selected="selected" #end value="$cel_pageLayoutKey" label="$cel_pageLayouts.get($cel_pageLayoutKey)">$cel_pageLayouts.get($cel_pageLayoutKey)</option>
-    #end
-    </select>
+  $adminMsg.get('cel_tm_page_master'):
+  #set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
+  #set($cel_currentPageLayout = "$!cel_pageTypeObj.getProperty('page_layout').getValue()")
+  <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_layout" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_layout">
+    <option #if("$!cel_currentPageLayout" == '') selected="selected" #end value=""">$cel_defaultLayout</option>
+  #foreach($cel_pageLayout in $services.layout.getActiveLayouts())
+    #set($cel_pageLayoutFN = $services.reference.serialize($cel_pageLayout.spaceRef))
+    <option #if("$!cel_currentPageLayout" == "$!cel_pageLayoutFN")selected="selected"#end value="$!cel_pageLayoutFN">$!cel_pageLayout.prettyName</option>
+  #end
+  </select>
 </div>
 #if($isAdmin)
 #set($cel_editobj_dict_prefix = 'cel_pro_metaTag_' )
