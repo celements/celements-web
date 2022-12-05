@@ -143,13 +143,12 @@
       <tr>
       <td>$adminMsg.get('cel_tm_page_master')</td>
       <td>
-    #set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
-    <select size="1" name="page_layout">
-      <option selected="selected" value="" label="$cel_defaultLayout">$cel_defaultLayout</option>
-    #foreach($cel_pageLayout in $cel_pageLayouts)
-      #set($cel_pageLayoutFN = $services.reference.serialize($cel_pageLayout.spaceRef))
-      <option #if("$!cel_currentPageLayout" == "$!cel_pageLayoutFN")selected="selected"#end value="$!cel_pageLayoutFN">$!cel_pageLayout.prettyName</option>
-    #end
+      <select size="1" name="page_layout">
+        <option selected="selected" value="">$adminMsg.cel_default_pagelayout</option>
+      #foreach($cel_pageLayout in $cel_pageLayouts)
+        #set($cel_pageLayoutFN = $services.reference.serialize($cel_pageLayout.spaceRef))
+        <option value="$!cel_pageLayoutFN">$!cel_pageLayout.prettyName</option>
+      #end
     </select>
     </td>
     </tr>

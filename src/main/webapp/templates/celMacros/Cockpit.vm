@@ -36,7 +36,7 @@
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_layout" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_layout">
     #foreach($cel_pageLayout in $services.layout.getActiveLayouts())
       #set($cel_pageLayoutFN = $services.reference.serialize($cel_pageLayout.spaceRef))
-      <option #if("$!cel_currentPageLayout" == "$!cel_pageLayoutFN")selected="selected"#end value="$!cel_pageLayoutFN">$!cel_pageLayout.prettyName</option>
+      <option #if($cel_currentPageLayout == $cel_pageLayoutFN)selected="selected"#end value="$!cel_pageLayoutFN">$!cel_pageLayout.prettyName</option>
     #end
     </select>
 </div>
