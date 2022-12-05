@@ -18,8 +18,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-import { CelOverlayResize } from "./overlayResize.mjs?version=202211290702";
-import "../DynamicLoader/celLazyLoader.mjs?version=202211202144";
+import { CelOverlayResize } from "./overlayResize.mjs?version=202212031733";
+import "../DynamicLoader/celLazyLoader.mjs?version=202212031733";
 
 export class CelOverlay {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
@@ -37,6 +37,7 @@ export class CelOverlay {
 
   constructor(customCssFiles, idPrefix) {
     Object.assign(this, window.CELEMENTS.mixins.Observable);
+    this._isOpen = false;
     this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
     this.idPrefix = idPrefix || "celOverlay_";
     this._id = this._generateNextId(this.idPrefix);
@@ -104,6 +105,7 @@ export class CelOverlay {
       const bgDiv = document.createElement('div');
       bgDiv.classList.add('generalOverlay', 'overlayBack');
       bgDiv.hidden = true;
+      bgDiv.style.display = 'none';
       document.body.appendChild(bgDiv);
       this._overlayBgElem = bgDiv;
     }
@@ -136,6 +138,7 @@ export class CelOverlay {
       layoutSec.appendChild(this.getOverlayBody());
       overlayElem.appendChild(layoutSec);
       overlayElem.hidden = true;
+      overlayElem.style.display = 'none';
       document.body.appendChild(overlayElem);
       this._overlayElem = overlayElem;
       this.celFire('celOverlay:afterRender', {
@@ -180,10 +183,16 @@ export class CelOverlay {
   }
 
   open() {
-    this.resetContent();
-    this.show();
-    this._registerEscapeListener();
-    this._getOverlayResizer.bind(this).delay(0.5);
+    if (!this._isOpen) {
+      this._isOpen = true;
+      this._activeBeforeElem = document.activeElement;
+      this.resetContent();
+      this.show();
+      this._registerEscapeListener();
+      this._getOverlayResizer.bind(this).delay(0.5);
+    } else {
+      console.warn('skip "open" because overlay is already opened. Call "close" first');
+    }
   }
   
   async openCelementsPage(url) {
@@ -248,19 +257,24 @@ export class CelOverlay {
   updateContent(newChildNodes) {
     console.debug('updateContent: ', newChildNodes);
     this.getOverlayBody().replaceChildren(...newChildNodes);
-    this.getOverlayBody().fire('celements:contentChanged', {
-       'htmlElem' : this.getOverlayBody()
-     });
     this.celFire('celOverlay:contentChanged', this);
   }
 
   close() {
-    this._unregisterEscapeListener();
-    this._hideBgElem();
-    this._hideOverlayElem();
-    document.body.style.overflow = '';
-    console.debug('Overlay close before fire');
-    this.celFire('celOverlay:closed', this);
+    if (this._isOpen) {
+      this._isOpen = false;
+      this._unregisterEscapeListener();
+      this._hideBgElem();
+      this._hideOverlayElem();
+      document.body.style.overflow = '';
+      if (this._activeBeforeElem) {
+        this._activeBeforeElem.focus();
+      }
+      console.debug('Overlay close before fire');
+      this.celFire('celOverlay:closed', this);
+    } else {
+      console.warn('skip "close" because overlay is already closed. Call "open" first');
+    }
   }
 
 }
