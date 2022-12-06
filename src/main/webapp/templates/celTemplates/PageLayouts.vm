@@ -26,7 +26,6 @@
         #end
         <tr>
           <!-- layout: $layout -->
-          #set($layoutFN = $services.reference.serialize($layout.spaceRef))
           <td class="column${velocityCount}">
             #if($services.layout.layoutEditorAvailable())
               <a href="$!services.url.getExternalURL($layout.spaceRef)">

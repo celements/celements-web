@@ -338,8 +338,8 @@
       <select size="1" name="page_layout">
         <option #if("$!cel_currentPageLayout" == '')selected="selected"#end value="">$adminMsg.cel_default_pagelayout</option>
       #foreach($cel_pageLayout in $cel_pageLayouts)
-        #set($cel_pageLayoutFN = $services.reference.serialize($cel_pageLayout.spaceRef))
-        <option #if($cel_currentPageLayout == $cel_pageLayoutFN)selected="selected"#end value="$!cel_pageLayoutFN">$!cel_pageLayout.prettyName</option>
+        #set($cel_pageLayoutKey = $services.reference.serialize($cel_pageLayout.spaceRef))
+        <option #if($cel_currentPageLayout == $cel_pageLayoutKey)selected="selected"#end value="$!cel_pageLayoutKey">$!cel_pageLayout.prettyName</option>
       #end
       </select>
       </td>
