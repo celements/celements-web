@@ -146,7 +146,7 @@
       <select size="1" name="page_layout">
         <option selected="selected" value="">$adminMsg.cel_default_pagelayout</option>
       #foreach($cel_pageLayout in $cel_pageLayouts)
-        #set($cel_pageLayoutKey = $services.reference.serialize($cel_pageLayout.spaceRef))
+        #set($cel_pageLayoutKey = $cel_pageLayout.spaceRef.name)
         <option value="$!cel_pageLayoutKey">$!cel_pageLayout.prettyName</option>
       #end
     </select>
