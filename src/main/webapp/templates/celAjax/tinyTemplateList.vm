@@ -3,7 +3,7 @@
 
 #set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
 $jsonBuilder.openArray()##
-#foreach($templObj in $services.celementsweb.getRTETemplateList())
+#foreach($templObj in $services.rteconfig.getRTETemplateList())
 $jsonBuilder.openArray()##
 $jsonBuilder.addString("$!{templObj.getProperty('templateName').getValue()}")##
 $jsonBuilder.addString("$!{templObj.getProperty('templateUrl').getValue()}")##
