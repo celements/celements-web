@@ -87,7 +87,7 @@
     #elseif(("$!request.action" == 'delete') && $services.layout.layoutExists($layoutSpaceRef))
       #if("$!request.confirm" == '1')
         #if($services.layout.deleteLayout($layoutSpaceRef))
-	        <p>Successfully deleted layout '$request.layout'.</p>
+          <p>Successfully deleted layout '$request.layout'.</p>
         #else
           <p>Failed to delete layout '$request.layout'!</p>
         #end
