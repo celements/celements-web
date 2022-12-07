@@ -81,7 +81,8 @@ document.observe("load", function() { new XWiki.viewers.Attachments(); });
 </form>
 ## TODO remove after finishing [CELDEV-1077] UploadAction creates docs without sane defaults
 #if($doc.isNew())
-  $doc.save() ## avoid uploading stuff on new docs since UploadAction sucks balls
+  #set($newDoc = $services.modelAccess.getOrCreateDocument($doc.documentReference))
+  $newDoc.save() ## avoid uploading stuff on new docs since UploadAction sucks balls
 #end
 #end
       </div> ## attachments
