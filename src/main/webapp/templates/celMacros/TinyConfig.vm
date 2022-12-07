@@ -12,7 +12,7 @@
 #end
 #set($xwikiPref_template_url = "$!xwiki.getDocument('XWiki.XWikiPreferences').getAttachment('template-list.js')")
 #set($webPref_template_url = "$!xwiki.getDocument('${doc.space}.WebPreferences').getAttachment('template-list.js')")
-#if(!$services.celementsweb.getRTETemplateList().isEmpty())
+#if(!$services.rteconfig.getRTETemplateList().isEmpty())
   #set($template_external_list_url = $doc.getURL($context.action, 'xpage=celements_ajax&ajax_mode=tinyTemplateList'))
 #elseif ("$!webPref_template_url" != '')
   #set($template_external_list_url = $!services.celementsweb.getSkinFile("${doc.space}.WebPreferences;template-list.js", 'file'))
@@ -37,7 +37,7 @@
   "theme" : "advanced",
   "editor_css" : "$services.celementsweb.getSkinFile(':celRTE/celements-ui.css')",
   ## lookup the additional rte_plugins field in the XWiki and WebPreference
-  #set($rtePluginsConfig = $celementsweb.getRTEConfigField('plugins'))
+  #set($rtePluginsConfig = $services.rteconfig.getRTEConfigField('plugins'))
   ##FP 16.11.2012; remove "autoresize" from rtePluginsPre because there are issues
   #set($rtePluginsPre = ["safari","save","paste","advlink","template","table","lists","inlinepopups","advimage","contextmenu","celimage"])
   #set($rteOmitPlugins = [])
@@ -85,7 +85,7 @@
   "content_css" : "$!{content_css_filenameURL.replaceAll('^,', '')}",
   #end
   ## lookup the rte_styles field in the XWiki and WebPreference
-  #set($rteStyles = $celementsweb.getRTEConfigField('styles'))
+  #set($rteStyles = $services.rteconfig.getRTEConfigField('styles'))
 ##  #if("$!rteStyles" == '')
 ##    ## default back to the standard fields.
 ##    #set($rteStyles = 'cel_rte_style_titel=h1;cel_rte_style_untertitel=h2;cel_rte_style_text=text')
@@ -103,7 +103,7 @@
   #end
   ## lookup the rte button layout in XWiki- and WebPreferences and
   ## default back to the standard fields
-  #set($rte_row_1 = $celementsweb.getRTEConfigField('row_1'))
+  #set($rte_row_1 = $services.rteconfig.getRTEConfigField('row_1'))
   #if("$!rte_row_1" == '')
     #if(!$celNewButtons)
       #set($rte_row_1 = "$!{rte_row_1}save,cancel,|,")
@@ -115,13 +115,13 @@
   #elseif("$!rte_row_1" == 'none')
     #set($rte_row_1 = '')
   #end
-  #set($rte_row_2 = $celementsweb.getRTEConfigField('row_2'))
+  #set($rte_row_2 = $services.rteconfig.getRTEConfigField('row_2'))
   #if("$!rte_row_2" == '')
     #set($rte_row_2 = 'styleselect,fontselect,fontsizeselect,pastetext,pasteword')
   #elseif("$!rte_row_2" == 'none')
     #set($rte_row_2 = '')
   #end
-  #set($rte_row_3 = $celementsweb.getRTEConfigField('row_3')) 
+  #set($rte_row_3 = $services.rteconfig.getRTEConfigField('row_3')) 
   #if("$!rte_row_3" == '')
     #set($rte_row_3 = 'tablecontrols')
   #elseif("$!rte_row_3" == 'none')
@@ -146,7 +146,7 @@
   "theme_advanced_buttons1" : "$rte_row_1",
   "theme_advanced_buttons2" : "$rte_row_2",
   "theme_advanced_buttons3" : "$rte_row_3",
-  #set($rte_blockformats = $celementsweb.getRTEConfigField('blockformats'))
+  #set($rte_blockformats = $services.rteconfig.getRTEConfigField('blockformats'))
   ## get multilingual blockformat names
   #set($mlBlockFormat = '')
   #set($mlBlockFormatName = '')
@@ -162,7 +162,7 @@
   ## lookup the rte valid elements in XWiki- and WebPreferences and
   ## default back to the standard configuration
   ##TODO move to API-Call for better control on defaults.
-  #set($rte_valid_elements = $celementsweb.getRTEConfigField('valid_elements'))
+  #set($rte_valid_elements = $services.rteconfig.getRTEConfigField('valid_elements'))
   #if("$!rte_valid_elements" == '')
     #set($rte_valid_elements = "$!{rte_valid_elements}+a[href|class|target|onclick|name|id|title|rel|hreflang],b/strong,br,")
     #set($rte_valid_elements = "$!{rte_valid_elements}caption,#h?[align<center?justify?left?right|class|style|id],")
@@ -183,7 +183,7 @@
   ## lookup the rte invalid elements in XWiki- and WebPreferences and
   ## default back to the standard configuration
   ##TODO move to API-Call for better control on defaults.
-  #set($rte_invalid_elements = $celementsweb.getRTEConfigField('invalid_elements'))
+  #set($rte_invalid_elements = $services.rteconfig.getRTEConfigField('invalid_elements'))
   #if("$!rte_invalid_elements" == '')
     #set($rte_invalid_elements = "$!{rte_invalid_elements}abbr,acronym,address,applet,area,base,basefont,bdo,big,")
     #set($rte_invalid_elements = "$!{rte_invalid_elements}blockquote,body,button,center,cite,code,col,colgroup,")
