@@ -42,7 +42,7 @@
             #if($layoutWiki == $context.database)
             <td>
               <a href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layout=$!layoutFN">
-              <img src="$celementsweb.getSkinFile(':icons/silk/cross.gif', 'file')" style="border: 0px;" alt="delete"/></a>
+              <img src="$services.celementsweb.getSkinFile(':icons/silk/cross.gif', 'file')" style="border: 0px;" alt="delete"/></a>
             </td>
             #end
           #end
