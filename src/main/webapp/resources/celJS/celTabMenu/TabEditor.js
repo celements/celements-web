@@ -771,7 +771,7 @@ TE.prototype = {
  },
 
  loadCSSScripts : function(scripts) {
-  var _me = this;
+  const _me = this;
   var CSSLoaded = function() {
     _me.CSSLoading = false;
     _me.loadCSSScripts();
@@ -811,7 +811,7 @@ TE.prototype = {
  },
 
  loadScripts : function(scripts) {
-  var _me = this;
+  const _me = this;
   var scriptLoaded = function() {
     _me.scriptLoading = false;
     _me.loadScripts();
@@ -848,7 +848,7 @@ TE.prototype = {
  },
 
  _loadScriptsCheckFinished : function() {
-   var _me = this;
+   const _me = this;
    if (!_me.scriptLoading && _me.scriptQueue.size() <= 0) {
      console.log('TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded');
      $('tabMenuPanel').fire('tabedit:scriptsLoaded');
@@ -857,7 +857,7 @@ TE.prototype = {
  },
 
  scriptIsLoaded : function(scriptURL) {
-  var _me = this;
+  const _me = this;
   var isLoaded = false;
   $$('script').each(function(loadedScript) {
     //as long as new URL() is not available in IE use a-Element
@@ -872,7 +872,7 @@ TE.prototype = {
 },
 
  cssIsLoaded : function(script) {
-  var _me = this;
+  const _me = this;
   var isLoaded = false;
   $$('link[rel="stylesheet"]').each(function(loadedScript) {
     if(loadedScript.href === _me.getTMCelDomain() + script) {
@@ -883,7 +883,7 @@ TE.prototype = {
  },
 
  setButtonActive : function(id) {
-  var _me = this;
+  const _me = this;
   // set all buttons: inactive
   $$('.tabButton .cel-button-active').each(function(button) {
     button.removeClassName('cel-button-active');
@@ -916,7 +916,7 @@ TE.prototype = {
  },
 
  saveAndClose : function(formName) {
-  var _me = this;
+  const _me = this;
   if(!formName) {
     formName = _me.getFirstFormWithId();
   }
@@ -952,7 +952,7 @@ TE.prototype = {
  },
 
  saveAndContinue : function(execCallback) {
-  var _me = this;
+  const _me = this;
   //TODO add possibility to add JS-listener which can do additional 'isDirty' checks
   if (this.isDirty()) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
@@ -988,7 +988,7 @@ TE.prototype = {
   *          false if no errors have been displayed
   */
  showErrorMessages : function(jsonResponses) {
-   var _me = this;
+   const _me = this;
    var errorMessages = new Array();
    jsonResponses.each(function(response) {
 //     var formId = response.key;
@@ -1017,7 +1017,7 @@ TE.prototype = {
  },
 
  saveAndContinueAjax : function(formName, handler) {
-//   var _me = this;
+//   const _me = this;
 //  _me._log.logDimAndAgent('saveAndContinueAjax: start |' + formName + '|');
   if(!formName) { formName = 'edit'; }
   if(document.forms[formName]) {
@@ -1052,7 +1052,7 @@ TE.prototype = {
  },
 
  isDirty : function() {
-   var _me = this;
+   const _me = this;
    var isDirty = (_me.getDirtyFormIds().size() > 0) || _me._isEditorDirtyOnLoad;
    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
      console.log('isDirty: ', isDirty, ' , isEditorDirtyOnLoad: ',
@@ -1077,7 +1077,7 @@ TE.prototype = {
  },
 
  updateTinyMCETextAreas : function(formId) {
-   var _me = this;
+   const _me = this;
    var mceFields = document.forms[formId].select('textarea.mceEditor');
    console.log('updateTinyMCETextAreas: for ', formId, mceFields);
    mceFields.each(function(formfield) {
@@ -1105,7 +1105,7 @@ TE.prototype = {
   * @return
   */
  isDirtyField : function(fieldElem, optElementsValues) {
-   var _me = this;
+   const _me = this;
    if (fieldElem.hasClassName('celDirtyOnLoad')) {
      return true;
    }
@@ -1134,14 +1134,14 @@ TE.prototype = {
  },
 
  _formDirtyOnLoad : function(formId) {
-   var _me = this;
+   const _me = this;
    return _me._isEditorDirtyOnLoad ||
      (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
        && ($(formId).celFormDirtyOnLoad.value == 'true');
  },
 
  getDirtyFormIds : function() {
-   var _me = this;
+   const _me = this;
    var dirtyFormIds = new Array();
    _me.editorFormsInitialValues.each(function(entry) {
      var formId = entry.key;
@@ -1173,7 +1173,7 @@ TE.prototype = {
  },
 
  changeEditLanguage : function(newEditLanguage, execCancelCallback) {
-   var _me = this;
+   const _me = this;
    _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
      var successful = (typeof failed === 'undefined') || !failed;
      if (successful) {
@@ -1186,7 +1186,7 @@ TE.prototype = {
  },
 
  checkUnsavedChanges : function(execCallback, execCancelCallback) {
-   var _me = this;
+   const _me = this;
    execCallback = execCallback || function() {};
    execCancelCallback = execCancelCallback || function() {};
    if (_me.isDirty()) {
@@ -1230,7 +1230,7 @@ TE.prototype = {
  },
 
  saveAllFormsAjax : function(execCallback, doNotSaveFormId) {
-   var _me = this;
+   const _me = this;
 //   _me._log.logDimAndAgent('saveAllFormsAjax: start |' + doNotSaveFormId + '|');
    var dirtyFormIds = _me.getDirtyFormIds();
    var jsonResponses = new Hash();
