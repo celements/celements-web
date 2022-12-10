@@ -58,7 +58,8 @@ TE.prototype = {
   _loadingTabId : undefined,
 
   _init : function() {
-    var _me = this;
+    Object.assign(this, window.CELEMENTS.mixins.Observable);
+    const _me = this;
     _me.tmd = null;
     _me.tabMenuConfig = null;
     _me.scriptLoading = false;
@@ -108,7 +109,7 @@ TE.prototype = {
   },
 
   retrieveInitialValues : function(formId) {
-    var _me = this;
+    const _me = this;
     console.log('retrieveInitialValues: ', formId);
     if (_me.isValidFormId(formId)) {
       var elementsValues = new Hash();
@@ -135,7 +136,7 @@ TE.prototype = {
   },
 
   _insertLoadingIndicator : function() {
-    var _me = this;
+    const _me = this;
     var loaderimg = _me._loading.getLoadingIndicator().setStyle({
       'display' : 'block',
       'marginLeft' : 'auto',
@@ -167,7 +168,7 @@ TE.prototype = {
   },
 
   initTabMenu : function() {
-    var _me = this;
+    const _me = this;
     if (!$('tabMenuPanel').down('.xwikimessage')) {
       _me._insertLoadingIndicator();
       new Ajax.Request(getTMCelHost(), {
@@ -199,7 +200,7 @@ TE.prototype = {
   },
 
   tabMenuSetup : function(tabMenuConf) {
-    var _me = this;
+    const _me = this;
     console.log('tabMenuSetup start');
     _me.tabMenuConfig = tabMenuConf;
     var starttabId = '';
@@ -286,7 +287,7 @@ TE.prototype = {
   },
 
   _editorReadyDisplayNow : function() {
-    var _me = this;
+    const _me = this;
     console.log('editorReadyDisplayNow start');
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
     _me._displayNowEffect('tabMenuPanel','celementsLoadingIndicator');
@@ -294,7 +295,7 @@ TE.prototype = {
   },
   
   _tabReadyDisplayNow : function() {
-    var _me = this;
+    const _me = this;
     console.log('_tabReadyDisplayNow start', _me._loadingTabId);
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
     _me._displayNowEffect(_me._getTabBodyId(_me._loadingTabId), _me._getTabLoaderElement());
@@ -302,7 +303,7 @@ TE.prototype = {
   },
 
   _displayNowEffect : function(appearElem, fadeElem) {
-    var _me = this;
+    const _me = this;
     var tabBodyId = _me._getTabBodyId(_me._loadingTabId);
     console.log('_displayNowEffect start ', _me._loadingTabId);
     var displayNowEffect = new Effect.Parallel([
@@ -347,7 +348,7 @@ TE.prototype = {
   },
 
   checkBeforeUnload : function() {
-  var _me = this;
+  const _me = this;
     if (_me.isDirty() && !_me.tabMenuConfig.supressBeforeUnload) {
       if (_me.tabMenuConfig && _me.tabMenuConfig.unsavedChangesOnCloseMessage && (_me.tabMenuConfig.unsavedChangesOnCloseMessage != '')) {
         return _me.tabMenuConfig.unsavedChangesOnCloseMessage;
@@ -363,7 +364,7 @@ TE.prototype = {
   },
 
   initDefaultCloseButton : function() {
-    var _me = this;
+    const _me = this;
     /* close button functions */
     $$('.container-close')[0].innerHTML = _me.tabMenuConfig.tabEditorSaveAndClose;
     $$('.container-close')[0].onclick = function() {
@@ -380,7 +381,7 @@ TE.prototype = {
   },
 
   addActionButton : function(buttonLabel, clickHandler) {
-    var _me = this;
+    const _me = this;
     var tabData = [];
     tabData['label'] = buttonLabel;
     tabData['container'] = 'ActionButtonSpan' + _me.actionButtons.size();
@@ -422,7 +423,7 @@ TE.prototype = {
   },
 
   initSaveButton : function() {
-    var _me = this;
+    const _me = this;
     var saveClickHandler = function() {
       _me.saveAndContinue(function(transport, jsonResponses, failed) {
         if (!failed) {
@@ -446,7 +447,7 @@ TE.prototype = {
   },
 
   initCloseButton : function() {
-    var _me = this;
+    const _me = this;
     var closeClickHandler = function() {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         if (!failed) {
@@ -462,7 +463,7 @@ TE.prototype = {
   },
 
   _getCancelURL : function() {
-    var _me = this;
+    const _me = this;
     var redirectValue = '';
     if ($$('input.celEditorRedirect').size() > 0) {
       redirectValue = $F($$('input.celEditorRedirect')[0]);
@@ -485,7 +486,7 @@ TE.prototype = {
   },
 
   showTabMenu : function(tabId) {
-    var _me = this;
+    const _me = this;
     $('cel_overlay').setStyle({'display' : "block"});
     _me.getTab(tabId);
     var tabBodyId = _me._getTabBodyId(tabId);
@@ -500,7 +501,7 @@ TE.prototype = {
   },
 
   _getTabLoaderElement : function() {
-    var _me = this;
+    const _me = this;
     console.log('_getTabLoaderElement: start');
     if (!_me._tabLoaderElem) {
       console.log('_getTabLoaderElement: create tabLoader');
@@ -529,7 +530,7 @@ TE.prototype = {
   },
 
   _getOrCreateTabBody : function(tabBodyId) {
-    var _me = this;
+    const _me = this;
     console.log('_getOrCreateTabBody: start ', tabBodyId);
     var tabBodyElem = $(tabBodyId);
     if (!tabBodyElem) {
@@ -546,7 +547,7 @@ TE.prototype = {
   },
 
   getTab : function(tabId, reload) {
-    var _me = this;
+    const _me = this;
     $$('.menuTab').each(function(tab) { tab.hide(); });
     // create tab if it does not exist
     var tabBodyId = _me._getTabBodyId(tabId);
@@ -595,7 +596,7 @@ TE.prototype = {
   },
 
   _fireTabChange : function(tabId) {
-    var _me = this;
+    const _me = this;
     var tabBodyId = _me._getTabBodyId(tabId);
     console.log('_fireTabChange: fire tabedit:tabchange event for', tabId, tabBodyId);
     $(tabBodyId).fire('tabedit:tabchange', {
@@ -606,7 +607,7 @@ TE.prototype = {
   },
 
   _hideTabShowLoadingIndicator : function(tabId) {
-    var _me = this;
+    const _me = this;
     console.log('_hideTabShowLoadingIndicator: start ', tabId);
     _me._getTabLoaderElement().show();
     var tabBodyId = _me._getTabBodyId(tabId);
@@ -619,7 +620,7 @@ TE.prototype = {
   },
 
   _initializeLoadedTab : function(tabBodyId) {
-    var _me = this;
+    const _me = this;
     console.log('_initializeLoadedTab: before LazyLoadJS ', tabBodyId);
     var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
     _me.lazyLoadJS(tabBodyElem);
@@ -635,7 +636,7 @@ TE.prototype = {
   },
 
   _loadTabAsync : function(tabId) {
-    var _me = this;
+    const _me = this;
     console.log('_loadTabAsync: start loading async ', tabId);
     var lang = '';
     if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
@@ -682,7 +683,7 @@ TE.prototype = {
   },
 
   lazyLoadJS : function(parentEle, syncLoadOnly) {
-  var _me = this;
+  const _me = this;
   syncLoadOnly = syncLoadOnly || false;
   var scripts = [];
   var scriptElems = parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec');
@@ -740,8 +741,8 @@ TE.prototype = {
  },
 
  lazyLoadCSS : function(parentEle) {
-  var _me = this;
-  var scripts = [];
+  const _me = this;
+  const scripts = [];
   parentEle.select('span.cel_lazyloadCSS').each(function(scriptEle) {
     var scriptPath = scriptEle.innerHTML;
     var scriptPathObj = "";
