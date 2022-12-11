@@ -326,15 +326,28 @@ TE.prototype = {
        sync: true
     });
     console.log('_displayNowEffect: fire tabedit:finishedLoadingDisplayNow');
-    var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
-      'effect' : displayNowEffect,
+    const beforeDisplayEvent = this.celFire('tabedit:beforeDisplaying', {
+      'beforePromises' : [],
       'tabBodyId' : tabBodyId
     });
-    if (!defaultShowEvent.stopped) {
-      console.log('displayNow event not stopped -> displaying instantly');
-      displayNowEffect.start();
-    }
-    console.log('_displayNowEffect finish');
+    Promise.all(beforeDisplayEvent.memo.beforePromises).then(() => {
+      const defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
+        'effect' : displayNowEffect,
+        'tabBodyId' : tabBodyId
+      });
+      if (!defaultShowEvent.stopped) {
+        console.debug('displayNow event not stopped -> displaying instantly');
+        displayNowEffect.start();
+      } else {
+        console.warn('displayNow stopped. This usage is deprecated. Instead use beforeDisplaying '
+        + 'and promises');
+      }
+      console.debug('beforeDisplaying finish');
+    }).catch((err) => {
+      console.error('preparing tab failed. Displaying will not happen.', err);
+      //TODO show error message to user instead.
+    });
+    console.debug('_displayNowEffect finish');
   },
 
   _execOneListener : function(listener) {
