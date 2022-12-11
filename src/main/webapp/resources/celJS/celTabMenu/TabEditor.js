@@ -50,7 +50,6 @@ TE.prototype = {
   initDone : undefined,
   _tabsInitalized : undefined,
   _isEditorDirtyOnLoad : undefined,
-  afterInitListeners : undefined,
   _editorReadyDisplayNowBind : undefined,
   _tabReadyDisplayNowBind : undefined,
   _log : undefined,
@@ -73,7 +72,6 @@ TE.prototype = {
     _me.modalDialog = null;
     _me.initDone = false;
     _me._isEditorDirtyOnLoad = false;
-    _me.afterInitListeners = new Array();
     _me._tabsInitalized = new Array();
     _me._log = new CELEMENTS.mobile.Dimensions();
     _me._loading = new CELEMENTS.LoadingIndicator();
@@ -87,8 +85,9 @@ TE.prototype = {
   },
 
   addAfterInitListener : function(newListener) {
+    console.warn('deprecated usage addAfterInitListener; instead use celObserve("afterInit")');
     if (!this.initDone) {
-      this.afterInitListeners.push(newListener);
+      this.celObserve('afterInit', newListener);
     } else {
       this._execOneListener(newListener);
     }
@@ -281,8 +280,8 @@ TE.prototype = {
     console.log('tabMenuSetup activating browse away check');
     window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
-    console.log('tabMenuSetup before afterInitListeners');
-    _me.afterInitListeners.each(_me._execOneListener);
+    console.log('tabMenuSetup before "afterInit"');
+    _me.celFire('afterInit', { 'tabEditor' : _me });
     console.log('tabMenuSetup end');
   },
 
@@ -354,9 +353,7 @@ TE.prototype = {
     try {
       listener();
     } catch (exept) {
-      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('listener failed: ', listener);
-      }
+      console.warn('listener failed: ', listener);
     }
   },
 
