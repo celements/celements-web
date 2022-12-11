@@ -108,6 +108,7 @@
   
     var boxSize = winHeight - bottomBorder;
     getScrollboxes().each(function(scrollbox){
+      console.log('debugging resize: scrollbox ', scrollbox);
       //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
       //counting margin-auto offsets. Thus we need to use jquery.offset
       var scrollableSize = boxSize - $j(scrollbox).offset().top - bottomBorder;
