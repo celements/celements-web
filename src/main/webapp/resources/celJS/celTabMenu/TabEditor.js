@@ -329,6 +329,7 @@ TE.prototype = {
       'beforePromises' : [],
       'tabBodyId' : tabBodyId
     });
+    console.debug('_displayNowEffect: before promises', beforeDisplayEvent.memo.beforePromises);
     Promise.all(beforeDisplayEvent.memo.beforePromises).then(() => {
       const defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
         'effect' : displayNowEffect,
