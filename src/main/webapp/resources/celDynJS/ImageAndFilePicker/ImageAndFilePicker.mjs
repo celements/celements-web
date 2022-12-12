@@ -1,7 +1,7 @@
 import { CelFileDropHandler }
-  from "../../celDynJS/upload/fileUpload.mjs?version=202212020804";
+  from "../upload/fileUpload.mjs?version=202212020804";
 import { CelOverlay }
-  from "../../celDynJS/overlay/celOverlay.mjs?version=202212041427";
+  from "../overlay/celOverlay.mjs?version=202212041427";
 
 export class CelFilePicker {
 
@@ -12,7 +12,7 @@ export class CelFilePicker {
     this.imagePickerMaxDimension = 100;
     this.filebaseFN = options.filebaseFN;
     this.pickerOverlay = new CelOverlay([{
-      'src' : '/file/resources/celRTE/ImageAndFilePicker/ImageAndFilePicker.css'
+      'src' : '/file/resources/celRes/ImageAndFilePicker/ImageAndFilePicker.css'
     }]);
     this.pickerOverlay.customCssClass = 'filebasePicker';
     this.pickerOverlay.setZIndex(2000);
