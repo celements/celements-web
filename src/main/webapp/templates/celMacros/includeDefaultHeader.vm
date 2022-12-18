@@ -59,7 +59,6 @@ $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/validation.js'))#
 #else
   #set($extJsParamDefer = $extJsParamSync)
 #end
-$!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
 $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/mobile/MobileSupport.js'))##
 $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/scriptaculous/effects.js'))##
 #if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 1) == 0)##
@@ -100,12 +99,3 @@ $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/dateTimePicker/g
 #if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)##
   $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/adminUi/overlayResize.js'))##
 #end
-$!services.javascript.getAllExternalJavaScriptFiles()
-##
-## Hooks for inserting JavaScript skin extensions
-##
-## - Skin file extension hook. Placed first since skin extensions might need to have xwiki or external libraries included first to be able to work properly
-<!-- com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin -->
-## - Skin extension hook
-<!-- com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin -->
-##
