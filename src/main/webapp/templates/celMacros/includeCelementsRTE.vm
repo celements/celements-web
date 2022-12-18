@@ -2,7 +2,8 @@
   #set($lazyAdd = true)
 #end
 #set($jsService = $services.javascript)
-#set($extJsParamSync = $!jsService.createExtJSParam().setAction('file').setLazyLoad($lazyAdd))
+#set($jsLoadModeDefer = $!jsService.getJsLoadMode("DEFER"))
+#set($extJsParamDefer = $!jsService.createExtJSParam().setAction('file').setLoadMode($jsLoadModeDefer).setLazyLoad($lazyAdd))
 #foreach($jsFile in $services.rteconfig.rteImplementation.javaScriptFiles)
-  $!jsService.includeExtJsFile($extJsParamSync.setJsFile($jsFile))
+  $!jsService.includeExtJsFile($extJsParamDefer.setJsFile($jsFile))
 #end
