@@ -1062,8 +1062,10 @@ TE.prototype = {
    console.debug('updateOneTinyMCETextArea: updating field value', formfield.id);
    try {
      if (typeof ed.serializer !== 'undefined') {
-       formfield.value = ed.getContent();
-       console.log('updateOneTinyMCETextArea: for field', formfield.id, formfield.value);
+      console.warn('XXX debugging');
+      //XXX debugging
+//       formfield.value = ed.getContent();
+//       console.log('updateOneTinyMCETextArea: for field', formfield.id, formfield.value);
      } else {
        console.warn('updateOneTinyMCETextArea: no serializer -> skip', ed.id);
      }
