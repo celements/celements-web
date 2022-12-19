@@ -94,20 +94,6 @@ TE.prototype = {
     }
   },
 
-  /**
-   * @deprecated
-   */
-  retrieveInitalValues :  function(formId) {
-    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-      console.log('deprecated call for "retrieveInitalValues" instead'
-          + ' use "retrieveInitialValues".');
-      if ((typeof console.trace != 'undefined')) {
-        console.trace();
-      }
-    }
-    retrieveInitialValues(formId);
-  },
-
   retrieveInitialValues : function(formId) {
     const _me = this;
     console.log('retrieveInitialValues: ', formId);
@@ -182,11 +168,8 @@ TE.prototype = {
           if (transport.responseText.isJSON()) {
             console.log('initTabMenu: before tabMenuSetup ');
             _me.tabMenuSetup(transport.responseText.evalJSON());
-          } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+          } else  {
             console.log('failed to get CelTabMenu config: no valid JSON!', transport);
-          } else {
-            alert('Failed to load editor. Please try to reload the page and if it happens '
-               + 'again, contact support. ');
           }
           $$('body')[0].observe('scroll', function(event) {
             event.target.scrollTop = 0; //FF and IE fix
@@ -354,9 +337,7 @@ TE.prototype = {
     try {
       listener();
     } catch (exept) {
-      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('listener failed: ', listener);
-      }
+      console.log('listener failed: ', listener);
     }
   },
 
@@ -940,8 +921,6 @@ TE.prototype = {
     }
     _me.saveAllFormsAjax(function(transport) {
       window.onbeforeunload = null;
-//      _me._log.logDimAndAgent('saveAndClose: before synchronous submit for form |'
-//          + oldSaveFormName + '|');
       document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
   } else {
@@ -1030,17 +1009,12 @@ TE.prototype = {
  },
 
  saveAndContinueAjax : function(formName, handler) {
-//   const _me = this;
-//  _me._log.logDimAndAgent('saveAndContinueAjax: start |' + formName + '|');
   if(!formName) { formName = 'edit'; }
   if(document.forms[formName]) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
     document.forms[formName].select('textarea.mceEditor').each(function(formfield) {
-      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('textarea save tinymce: ', formfield.name, tinymce.get(formfield.id).save());
-      }
       formfield.value = tinymce.get(formfield.id).save();
     });
     $(formName).request(handler);
@@ -1158,26 +1132,22 @@ TE.prototype = {
      var formId = entry.key;
      if (_me.isValidFormId(formId)) {
        if (_me._formDirtyOnLoad(formId)) {
-         if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-           console.log('getDirtyFormIds formDirtyOnLoad found. ');
-         }
+         console.debug('getDirtyFormIds formDirtyOnLoad found. ');
          dirtyFormIds.push(formId);
        } else {
          var elementsValues = entry.value;
          _me.updateTinyMCETextAreas(formId);
          $(formId).getElements().each(function(elem) {
            if (_me._isSubmittableField(elem) && _me.isDirtyField(elem, elementsValues)) {
-             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-               console.log('getDirtyFormIds first found dirty field: ', elem.name);
-             }
+             console.debug('getDirtyFormIds first found dirty field: ', elem.name);
              dirtyFormIds.push(formId);
              throw $break;  //prototype each -> break
            }
          });
        }
-     } else if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+     } else {
        console.warn('getDirtyFormIds: form with id [' + formId
-           + '] disappeared since loading the editor.');
+         + '] disappeared since loading the editor.');
      }
    });
    return dirtyFormIds;
@@ -1219,12 +1189,8 @@ TE.prototype = {
                  var _dialog = this;
                  _me.saveAllFormsAjax(function(transport, jsonResponses) {
                    _dialog.hide();
-                   var failed = _me.showErrorMessages(jsonResponses);
-                   if ((typeof console != 'undefined')
-                       && (typeof console.log != 'undefined')) {
-                     console.log('saveAllFormsAjax returning: ', failed, jsonResponses,
-                         execCallback);
-                   }
+                   const failed = _me.showErrorMessages(jsonResponses);
+                   console.log('saveAllFormsAjax returning: ', failed, jsonResponses, execCallback);
              execCallback(transport, jsonResponses, failed);
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
@@ -1242,33 +1208,21 @@ TE.prototype = {
 
  saveAllFormsAjax : function(execCallback, doNotSaveFormId) {
    const _me = this;
-//   _me._log.logDimAndAgent('saveAllFormsAjax: start |' + doNotSaveFormId + '|');
    var dirtyFormIds = _me.getDirtyFormIds();
    var jsonResponses = new Hash();
    var saveAllForms = function(allDirtyFormIds) {
      var formId = allDirtyFormIds.pop();
      var remainingDirtyFormIds = allDirtyFormIds;
-//     _me._log.logDimAndAgent('saveAllFormsAjax: before saveAndContinueAjax in '
-//         + 'saveAllForms for formId |' + formId + '|, remainingDirtyFormIds: '
-//         + Object.toJSON(remainingDirtyFormIds));
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
-//         _me._log.logDimAndAgent('saveAllFormsAjax: received json Response |'
-//             + Object.toJSON(jsonResponses) + '|');
          _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
        }
        if (remainingDirtyFormIds.size() > 0) {
-         if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-           console.log('next saveAllForms with: ', remainingDirtyFormIds);
-         }
-//         _me._log.logDimAndAgent('saveAllFormsAjax: in success before recursive saveAllForms with remainingDirtyFormIds |'
-//             + Object.toJSON(remainingDirtyFormIds) + '|');
+         console.log('next saveAllForms with: ', remainingDirtyFormIds);
          saveAllForms(remainingDirtyFormIds);
          } else {
-           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-             console.log('save done.');
-           }
+           console.log('save done.');
            execCallback(transport, jsonResponses);
          }
      }});
@@ -1285,18 +1239,13 @@ TE.prototype = {
 
  _handleSaveAjaxResponse : function(formId, transport, jsonResponses) {
    if (transport.responseText.isJSON()) {
-     if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-       console.log('_handleSaveAjaxResponse with json result: ', transport.responseText);
-     }
+     console.debug('_handleSaveAjaxResponse with json result: ', transport.responseText);
      var jsonResult = transport.responseText.evalJSON();
      jsonResponses.set(formId, jsonResult);
      if (jsonResult.successful) {
        return true;
      } else {
-       if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-         console.warn('_handleSaveAjaxResponse: save failed for [' + formId + ']: ',
-             jsonResult);
-       }
+       console.warn('_handleSaveAjaxResponse: save failed for [' + formId + ']: ', jsonResult);
      }
    } else {
      return true;
@@ -1312,9 +1261,7 @@ TE.prototype = {
     url = url+"&pagefullname=" + pageFullName;
     url = url+"&lang=" + lang;
     url = url+"&"+queryString;
-    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-      console.warn('DEPRECATED saveWithAjax on TabEditor: ', pageFullName, queryString);
-    }
+    console.warn('DEPRECATED saveWithAjax on TabEditor: ', pageFullName, queryString);
     new Ajax.Request(url, {method: 'get'});
   },
 
@@ -1327,9 +1274,7 @@ TE.prototype = {
         pagefullname : pageFullName,
         lang : lang
      }).merge(paramsHash);
-    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-      console.warn('DEPRECATED saveWithAjaxPOST on TabEditor: ', pageFullName, queryString);
-    }
+    console.warn('DEPRECATED saveWithAjaxPOST on TabEditor: ', pageFullName, queryString);
     new Ajax.Request(getTMCelHost(), {
       method: 'post',
       parameters: ajaxParams,
