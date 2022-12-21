@@ -1,4 +1,4 @@
-#if($request.scheme == 'https')
+#if(($request.scheme == 'https') && $request.isSecure())
   true
 #else
   false
