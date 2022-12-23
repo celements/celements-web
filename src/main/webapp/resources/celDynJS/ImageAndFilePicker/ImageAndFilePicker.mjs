@@ -43,12 +43,10 @@ export class CelFilePicker {
       imgDiv.setAttribute('data-att-src', attSrc);
       imgDiv.setAttribute('data-filename', attElem.filename);
       imgDiv.appendChild(imgContainerDiv);
-      if(options.duplicateCheck) {
-        attachEl.querySelectorAll('.imagePickerWrapper').forEach(function(imgWrapper) {
-          if(imgWrapper.querySelector('img').src.href == attElemUrl.href) {
-            imgWrapper.remove();
-          }
-        });
+      if (options.duplicateCheck) {
+        [...attachEl.querySelectorAll('.imagePickerWrapper')]
+          .filter(imgWrapper => imgWrapper.querySelector('img').src.href == attElemUrl.href)
+          .forEach(imgWrapper => imgWrapper.remove());
       }
       attachEl.appendChild(imgDiv);
       imgDiv.addEventListener('click', options.clickHandler);
