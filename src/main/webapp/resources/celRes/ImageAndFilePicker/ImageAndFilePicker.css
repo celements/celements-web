@@ -11,15 +11,15 @@
   cursor: copy;
 }
 .filebasePicker #attachments.celDropOverActive::after {
-    content: "drop files here";
-    position: absolute;
-    align-items: center;
-    display: block;
-    top: 50%;
-    left: 40%;
-    font-size: 50px;
-    font-weight: bold;
-    color: black;
+  content: "drop files here";
+  position: absolute;
+  align-items: center;
+  display: block;
+  top: 50%;
+  left: 40%;
+  font-size: 50px;
+  font-weight: bold;
+  color: black;
 }
 .filebasePicker #attachments.celDropOverActive div.imagePickerWrapper {
   opacity: 0.6;
