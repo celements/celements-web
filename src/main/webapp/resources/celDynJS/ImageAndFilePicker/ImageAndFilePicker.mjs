@@ -3,6 +3,7 @@ import { CelFileDropHandler }
 import { CelOverlay }
   from "../overlay/celOverlay.mjs?version=202212041427";
 
+//TODO CELDEV-1078 - improve implementation 
 export class CelFilePicker {
 
   constructor(options) {
@@ -56,7 +57,7 @@ export class CelFilePicker {
     return attachEl;
   }
 
-  updateAttachmentList() {
+  async updateAttachmentList() {
     this.pickerOverlay.open();
     const formData = new FormData();
     formData.append('xpage', 'celements_ajax');
@@ -67,29 +68,28 @@ export class CelFilePicker {
     formData.append('tagList', this.tag);
     formData.append('onlyImages', this.onlyImages)
     formData.append('filebaseDocFN', this.filebaseFN)
-    fetch('/ajax/picker/filePickerList', {
+    const resp = await fetch('/ajax/picker/filePickerList', {
       method : 'POST',
       body : formData
-    }).then(resp => resp.json()
-    ).then(data => {
-      console.debug('imagePicker data: ', data);
-      const attachEl = this.renderAttachmentList(data, {
-        'currentImgUrl' : new URL(this.selectedValue, window.location.href),
-        'duplicateCheck' : false,
-        'clickHandler' : (event) => {
-          const imageDiv = event.currentTarget;
-          this.callback(imageDiv.dataset.attSrc, { alt : imageDiv.dataset.filename });
-          this.pickerOverlay.close();
-        }
-      });
-      this.dropHandler.registerHandler(attachEl);
-      this.pickerOverlay.updateContent([attachEl]);
     });
+    const data = await resp.json()
+    console.debug('imagePicker data: ', data);
+    const attachEl = this.renderAttachmentList(data, {
+      'currentImgUrl' : new URL(this.selectedValue, window.location.href),
+      'duplicateCheck' : false,
+      'clickHandler' : (event) => {
+        const imageDiv = event.currentTarget;
+        this.callback(imageDiv.dataset.attSrc, { alt : imageDiv.dataset.filename });
+        this.pickerOverlay.close();
+      }
+    });
+    this.dropHandler.registerHandler(attachEl);
+    this.pickerOverlay.updateContent([attachEl]);
   }
 
   renderFilePickerInOverlay(onlyImages, callback, value) {
     this.startPos = 0;
-    this.stepNumber = 25;
+    this.stepNumber = 1000; //TODO CELDEV-1078 - reduce initial stepNumber to 25
     this.tag = '';
     this.onlyImages = onlyImages;
     this.callback = callback;
