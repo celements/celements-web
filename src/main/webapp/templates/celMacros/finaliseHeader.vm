@@ -6,10 +6,20 @@
 ## INPUT(optional) : $after_skin_cssdoc (default: '')
 ##
 #if(!$finaliseHeaderRUN) ## prevent from being run twice and allow lacy calls.
+$!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
+$!services.javascript.getAllExternalJavaScriptFiles()
+##
+## Hooks for inserting JavaScript skin extensions
+##
+## - Skin file extension hook. Placed first since skin extensions might need to have xwiki or external libraries included first to be able to work properly
+<!-- com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin -->
+## - Skin extension hook
+<!-- com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin -->
+##
 ## Hook for inserting CSS skin extensions
 <!-- com.xpn.xwiki.plugin.skinx.CssSkinExtensionPlugin -->
 <!-- com.xpn.xwiki.plugin.skinx.CssSkinFileExtensionPlugin -->
-$xwiki.celementsweb.displayAllCSS()
+$services.css.displayAllCSS()
 ## get DocumentSpecific Meta-Tag - as of yet refresh can not be handled by BaseObjectMetaTagProvider because of different attribute name.
 #set($metaTags = $celementsweb.getDocMetaTags($language, $default_language))
 #foreach($metaTagKey in $metaTags.keySet())

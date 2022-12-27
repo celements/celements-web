@@ -58,7 +58,8 @@ TE.prototype = {
   _loadingTabId : undefined,
 
   _init : function() {
-    var _me = this;
+    Object.assign(this, window.CELEMENTS.mixins.Observable);
+    const _me = this;
     _me.tmd = null;
     _me.tabMenuConfig = null;
     _me.scriptLoading = false;
@@ -93,22 +94,8 @@ TE.prototype = {
     }
   },
 
-  /**
-   * @deprecated
-   */
-  retrieveInitalValues :  function(formId) {
-    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-      console.log('deprecated call for "retrieveInitalValues" instead'
-          + ' use "retrieveInitialValues".');
-      if ((typeof console.trace != 'undefined')) {
-        console.trace();
-      }
-    }
-    retrieveInitialValues(formId);
-  },
-
   retrieveInitialValues : function(formId) {
-    var _me = this;
+    const _me = this;
     console.log('retrieveInitialValues: ', formId);
     if (_me.isValidFormId(formId)) {
       var elementsValues = new Hash();
@@ -135,7 +122,7 @@ TE.prototype = {
   },
 
   _insertLoadingIndicator : function() {
-    var _me = this;
+    const _me = this;
     var loaderimg = _me._loading.getLoadingIndicator().setStyle({
       'display' : 'block',
       'marginLeft' : 'auto',
@@ -167,7 +154,7 @@ TE.prototype = {
   },
 
   initTabMenu : function() {
-    var _me = this;
+    const _me = this;
     if (!$('tabMenuPanel').down('.xwikimessage')) {
       _me._insertLoadingIndicator();
       new Ajax.Request(getTMCelHost(), {
@@ -181,11 +168,8 @@ TE.prototype = {
           if (transport.responseText.isJSON()) {
             console.log('initTabMenu: before tabMenuSetup ');
             _me.tabMenuSetup(transport.responseText.evalJSON());
-          } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+          } else  {
             console.log('failed to get CelTabMenu config: no valid JSON!', transport);
-          } else {
-            alert('Failed to load editor. Please try to reload the page and if it happens '
-               + 'again, contact support. ');
           }
           $$('body')[0].observe('scroll', function(event) {
             event.target.scrollTop = 0; //FF and IE fix
@@ -199,7 +183,7 @@ TE.prototype = {
   },
 
   tabMenuSetup : function(tabMenuConf) {
-    var _me = this;
+    const _me = this;
     console.log('tabMenuSetup start');
     _me.tabMenuConfig = tabMenuConf;
     var starttabId = '';
@@ -286,7 +270,7 @@ TE.prototype = {
   },
 
   _editorReadyDisplayNow : function() {
-    var _me = this;
+    const _me = this;
     console.log('editorReadyDisplayNow start');
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
     _me._displayNowEffect('tabMenuPanel','celementsLoadingIndicator');
@@ -294,7 +278,7 @@ TE.prototype = {
   },
   
   _tabReadyDisplayNow : function() {
-    var _me = this;
+    const _me = this;
     console.log('_tabReadyDisplayNow start', _me._loadingTabId);
     $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
     _me._displayNowEffect(_me._getTabBodyId(_me._loadingTabId), _me._getTabLoaderElement());
@@ -302,7 +286,7 @@ TE.prototype = {
   },
 
   _displayNowEffect : function(appearElem, fadeElem) {
-    var _me = this;
+    const _me = this;
     var tabBodyId = _me._getTabBodyId(_me._loadingTabId);
     console.log('_displayNowEffect start ', _me._loadingTabId);
     var displayNowEffect = new Effect.Parallel([
@@ -325,29 +309,40 @@ TE.prototype = {
        sync: true
     });
     console.log('_displayNowEffect: fire tabedit:finishedLoadingDisplayNow');
-    var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
-      'effect' : displayNowEffect,
+    const beforeDisplayEvent = this.celFire('tabedit:beforeDisplaying', {
+      'beforePromises' : [],
       'tabBodyId' : tabBodyId
     });
-    if (!defaultShowEvent.stopped) {
-      console.log('displayNow event not stopped -> displaying instantly');
-      displayNowEffect.start();
-    }
-    console.log('_displayNowEffect finish');
+    Promise.all(beforeDisplayEvent.memo.beforePromises).then(() => {
+      const defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
+        'effect' : displayNowEffect,
+        'tabBodyId' : tabBodyId
+      });
+      if (!defaultShowEvent.stopped) {
+        console.debug('displayNow event not stopped -> displaying instantly');
+        displayNowEffect.start();
+      } else {
+        console.warn('displayNow stopped. This usage is deprecated. Instead use beforeDisplaying '
+        + 'and promises');
+      }
+      console.debug('beforeDisplaying finish');
+    }).catch((err) => {
+      console.error('preparing tab failed. Displaying will not happen.', err);
+      //TODO show error message to user instead.
+    });
+    console.debug('_displayNowEffect finish');
   },
 
   _execOneListener : function(listener) {
     try {
       listener();
     } catch (exept) {
-      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('listener failed: ', listener);
-      }
+      console.log('listener failed: ', listener);
     }
   },
 
   checkBeforeUnload : function() {
-  var _me = this;
+  const _me = this;
     if (_me.isDirty() && !_me.tabMenuConfig.supressBeforeUnload) {
       if (_me.tabMenuConfig && _me.tabMenuConfig.unsavedChangesOnCloseMessage && (_me.tabMenuConfig.unsavedChangesOnCloseMessage != '')) {
         return _me.tabMenuConfig.unsavedChangesOnCloseMessage;
@@ -363,7 +358,7 @@ TE.prototype = {
   },
 
   initDefaultCloseButton : function() {
-    var _me = this;
+    const _me = this;
     /* close button functions */
     $$('.container-close')[0].innerHTML = _me.tabMenuConfig.tabEditorSaveAndClose;
     $$('.container-close')[0].onclick = function() {
@@ -380,7 +375,7 @@ TE.prototype = {
   },
 
   addActionButton : function(buttonLabel, clickHandler) {
-    var _me = this;
+    const _me = this;
     var tabData = [];
     tabData['label'] = buttonLabel;
     tabData['container'] = 'ActionButtonSpan' + _me.actionButtons.size();
@@ -422,7 +417,7 @@ TE.prototype = {
   },
 
   initSaveButton : function() {
-    var _me = this;
+    const _me = this;
     var saveClickHandler = function() {
       _me.saveAndContinue(function(transport, jsonResponses, failed) {
         if (!failed) {
@@ -446,7 +441,7 @@ TE.prototype = {
   },
 
   initCloseButton : function() {
-    var _me = this;
+    const _me = this;
     var closeClickHandler = function() {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         if (!failed) {
@@ -462,7 +457,7 @@ TE.prototype = {
   },
 
   _getCancelURL : function() {
-    var _me = this;
+    const _me = this;
     var redirectValue = '';
     if ($$('input.celEditorRedirect').size() > 0) {
       redirectValue = $F($$('input.celEditorRedirect')[0]);
@@ -485,7 +480,7 @@ TE.prototype = {
   },
 
   showTabMenu : function(tabId) {
-    var _me = this;
+    const _me = this;
     $('cel_overlay').setStyle({'display' : "block"});
     _me.getTab(tabId);
     var tabBodyId = _me._getTabBodyId(tabId);
@@ -500,7 +495,7 @@ TE.prototype = {
   },
 
   _getTabLoaderElement : function() {
-    var _me = this;
+    const _me = this;
     console.log('_getTabLoaderElement: start');
     if (!_me._tabLoaderElem) {
       console.log('_getTabLoaderElement: create tabLoader');
@@ -529,7 +524,7 @@ TE.prototype = {
   },
 
   _getOrCreateTabBody : function(tabBodyId) {
-    var _me = this;
+    const _me = this;
     console.log('_getOrCreateTabBody: start ', tabBodyId);
     var tabBodyElem = $(tabBodyId);
     if (!tabBodyElem) {
@@ -546,7 +541,7 @@ TE.prototype = {
   },
 
   getTab : function(tabId, reload) {
-    var _me = this;
+    const _me = this;
     $$('.menuTab').each(function(tab) { tab.hide(); });
     // create tab if it does not exist
     var tabBodyId = _me._getTabBodyId(tabId);
@@ -595,7 +590,7 @@ TE.prototype = {
   },
 
   _fireTabChange : function(tabId) {
-    var _me = this;
+    const _me = this;
     var tabBodyId = _me._getTabBodyId(tabId);
     console.log('_fireTabChange: fire tabedit:tabchange event for', tabId, tabBodyId);
     $(tabBodyId).fire('tabedit:tabchange', {
@@ -606,7 +601,7 @@ TE.prototype = {
   },
 
   _hideTabShowLoadingIndicator : function(tabId) {
-    var _me = this;
+    const _me = this;
     console.log('_hideTabShowLoadingIndicator: start ', tabId);
     _me._getTabLoaderElement().show();
     var tabBodyId = _me._getTabBodyId(tabId);
@@ -619,7 +614,7 @@ TE.prototype = {
   },
 
   _initializeLoadedTab : function(tabBodyId) {
-    var _me = this;
+    const _me = this;
     console.log('_initializeLoadedTab: before LazyLoadJS ', tabBodyId);
     var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
     _me.lazyLoadJS(tabBodyElem);
@@ -635,7 +630,7 @@ TE.prototype = {
   },
 
   _loadTabAsync : function(tabId) {
-    var _me = this;
+    const _me = this;
     console.log('_loadTabAsync: start loading async ', tabId);
     var lang = '';
     if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
@@ -682,7 +677,7 @@ TE.prototype = {
   },
 
   lazyLoadJS : function(parentEle, syncLoadOnly) {
-  var _me = this;
+  const _me = this;
   syncLoadOnly = syncLoadOnly || false;
   var scripts = [];
   var scriptElems = parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec');
@@ -740,8 +735,8 @@ TE.prototype = {
  },
 
  lazyLoadCSS : function(parentEle) {
-  var _me = this;
-  var scripts = [];
+  const _me = this;
+  const scripts = [];
   parentEle.select('span.cel_lazyloadCSS').each(function(scriptEle) {
     var scriptPath = scriptEle.innerHTML;
     var scriptPathObj = "";
@@ -770,7 +765,7 @@ TE.prototype = {
  },
 
  loadCSSScripts : function(scripts) {
-  var _me = this;
+  const _me = this;
   var CSSLoaded = function() {
     _me.CSSLoading = false;
     _me.loadCSSScripts();
@@ -810,7 +805,7 @@ TE.prototype = {
  },
 
  loadScripts : function(scripts) {
-  var _me = this;
+  const _me = this;
   var scriptLoaded = function() {
     _me.scriptLoading = false;
     _me.loadScripts();
@@ -847,7 +842,7 @@ TE.prototype = {
  },
 
  _loadScriptsCheckFinished : function() {
-   var _me = this;
+   const _me = this;
    if (!_me.scriptLoading && _me.scriptQueue.size() <= 0) {
      console.log('TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded');
      $('tabMenuPanel').fire('tabedit:scriptsLoaded');
@@ -856,7 +851,7 @@ TE.prototype = {
  },
 
  scriptIsLoaded : function(scriptURL) {
-  var _me = this;
+  const _me = this;
   var isLoaded = false;
   $$('script').each(function(loadedScript) {
     //as long as new URL() is not available in IE use a-Element
@@ -871,7 +866,7 @@ TE.prototype = {
 },
 
  cssIsLoaded : function(script) {
-  var _me = this;
+  const _me = this;
   var isLoaded = false;
   $$('link[rel="stylesheet"]').each(function(loadedScript) {
     if(loadedScript.href === _me.getTMCelDomain() + script) {
@@ -882,7 +877,7 @@ TE.prototype = {
  },
 
  setButtonActive : function(id) {
-  var _me = this;
+  const _me = this;
   // set all buttons: inactive
   $$('.tabButton .cel-button-active').each(function(button) {
     button.removeClassName('cel-button-active');
@@ -915,7 +910,7 @@ TE.prototype = {
  },
 
  saveAndClose : function(formName) {
-  var _me = this;
+  const _me = this;
   if(!formName) {
     formName = _me.getFirstFormWithId();
   }
@@ -926,8 +921,6 @@ TE.prototype = {
     }
     _me.saveAllFormsAjax(function(transport) {
       window.onbeforeunload = null;
-//      _me._log.logDimAndAgent('saveAndClose: before synchronous submit for form |'
-//          + oldSaveFormName + '|');
       document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
   } else {
@@ -951,7 +944,7 @@ TE.prototype = {
  },
 
  saveAndContinue : function(execCallback) {
-  var _me = this;
+  const _me = this;
   //TODO add possibility to add JS-listener which can do additional 'isDirty' checks
   if (this.isDirty()) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
@@ -987,7 +980,7 @@ TE.prototype = {
   *          false if no errors have been displayed
   */
  showErrorMessages : function(jsonResponses) {
-   var _me = this;
+   const _me = this;
    var errorMessages = new Array();
    jsonResponses.each(function(response) {
 //     var formId = response.key;
@@ -1016,17 +1009,12 @@ TE.prototype = {
  },
 
  saveAndContinueAjax : function(formName, handler) {
-//   var _me = this;
-//  _me._log.logDimAndAgent('saveAndContinueAjax: start |' + formName + '|');
   if(!formName) { formName = 'edit'; }
   if(document.forms[formName]) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
     document.forms[formName].select('textarea.mceEditor').each(function(formfield) {
-      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('textarea save tinymce: ', formfield.name, tinymce.get(formfield.id).save());
-      }
       formfield.value = tinymce.get(formfield.id).save();
     });
     $(formName).request(handler);
@@ -1051,17 +1039,15 @@ TE.prototype = {
  },
 
  isDirty : function() {
-   var _me = this;
-   var isDirty = (_me.getDirtyFormIds().size() > 0) || _me._isEditorDirtyOnLoad;
-   if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-     console.log('isDirty: ', isDirty, ' , isEditorDirtyOnLoad: ',
-         _me._isEditorDirtyOnLoad);
-   }
+   const _me = this;
+   const isDirty = (_me.getDirtyFormIds().size() > 0) || _me._isEditorDirtyOnLoad;
+   console.debug('isDirty: ', isDirty, ' , isEditorDirtyOnLoad: ', _me._isEditorDirtyOnLoad);
    return isDirty;
  },
 
  updateOneTinyMCETextArea : function(ed) {
-   var formfield = $(ed.id);
+   const formfield = document.getElementById(ed.id);
+   console.debug('updateOneTinyMCETextArea: updating field value', formfield.id);
    try {
      if (typeof ed.serializer !== 'undefined') {
        formfield.value = ed.getContent();
@@ -1076,15 +1062,15 @@ TE.prototype = {
  },
 
  updateTinyMCETextAreas : function(formId) {
-   var _me = this;
-   var mceFields = document.forms[formId].select('textarea.mceEditor');
+   const _me = this;
+   const mceFields = document.forms[formId].select('textarea.mceEditor');
    console.log('updateTinyMCETextAreas: for ', formId, mceFields);
    mceFields.each(function(formfield) {
      if ((typeof tinymce !== 'undefined') && tinymce.get(formfield.id)) {
        _me.updateOneTinyMCETextArea(tinymce.get(formfield.id));
      }
    });
-   console.log('updateTinyMCETextAreas: end ', formId);
+   console.debug('updateTinyMCETextAreas: end ', formId);
  },
 
  /**
@@ -1104,7 +1090,7 @@ TE.prototype = {
   * @return
   */
  isDirtyField : function(fieldElem, optElementsValues) {
-   var _me = this;
+   const _me = this;
    if (fieldElem.hasClassName('celDirtyOnLoad')) {
      return true;
    }
@@ -1133,46 +1119,42 @@ TE.prototype = {
  },
 
  _formDirtyOnLoad : function(formId) {
-   var _me = this;
+   const _me = this;
    return _me._isEditorDirtyOnLoad ||
      (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
        && ($(formId).celFormDirtyOnLoad.value == 'true');
  },
 
  getDirtyFormIds : function() {
-   var _me = this;
+   const _me = this;
    var dirtyFormIds = new Array();
    _me.editorFormsInitialValues.each(function(entry) {
      var formId = entry.key;
      if (_me.isValidFormId(formId)) {
        if (_me._formDirtyOnLoad(formId)) {
-         if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-           console.log('getDirtyFormIds formDirtyOnLoad found. ');
-         }
+         console.debug('getDirtyFormIds formDirtyOnLoad found. ');
          dirtyFormIds.push(formId);
        } else {
          var elementsValues = entry.value;
          _me.updateTinyMCETextAreas(formId);
          $(formId).getElements().each(function(elem) {
            if (_me._isSubmittableField(elem) && _me.isDirtyField(elem, elementsValues)) {
-             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-               console.log('getDirtyFormIds first found dirty field: ', elem.name);
-             }
+             console.debug('getDirtyFormIds first found dirty field: ', elem.name);
              dirtyFormIds.push(formId);
              throw $break;  //prototype each -> break
            }
          });
        }
-     } else if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+     } else {
        console.warn('getDirtyFormIds: form with id [' + formId
-    		   + '] disappeared since loading the editor.');
+         + '] disappeared since loading the editor.');
      }
    });
    return dirtyFormIds;
  },
 
  changeEditLanguage : function(newEditLanguage, execCancelCallback) {
-   var _me = this;
+   const _me = this;
    _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
      var successful = (typeof failed === 'undefined') || !failed;
      if (successful) {
@@ -1185,7 +1167,7 @@ TE.prototype = {
  },
 
  checkUnsavedChanges : function(execCallback, execCancelCallback) {
-   var _me = this;
+   const _me = this;
    execCallback = execCallback || function() {};
    execCancelCallback = execCancelCallback || function() {};
    if (_me.isDirty()) {
@@ -1207,12 +1189,8 @@ TE.prototype = {
                  var _dialog = this;
                  _me.saveAllFormsAjax(function(transport, jsonResponses) {
                    _dialog.hide();
-                   var failed = _me.showErrorMessages(jsonResponses);
-                   if ((typeof console != 'undefined')
-                       && (typeof console.log != 'undefined')) {
-                     console.log('saveAllFormsAjax returning: ', failed, jsonResponses,
-                         execCallback);
-                   }
+                   const failed = _me.showErrorMessages(jsonResponses);
+                   console.log('saveAllFormsAjax returning: ', failed, jsonResponses, execCallback);
              execCallback(transport, jsonResponses, failed);
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
@@ -1229,34 +1207,22 @@ TE.prototype = {
  },
 
  saveAllFormsAjax : function(execCallback, doNotSaveFormId) {
-   var _me = this;
-//   _me._log.logDimAndAgent('saveAllFormsAjax: start |' + doNotSaveFormId + '|');
+   const _me = this;
    var dirtyFormIds = _me.getDirtyFormIds();
    var jsonResponses = new Hash();
    var saveAllForms = function(allDirtyFormIds) {
      var formId = allDirtyFormIds.pop();
      var remainingDirtyFormIds = allDirtyFormIds;
-//     _me._log.logDimAndAgent('saveAllFormsAjax: before saveAndContinueAjax in '
-//         + 'saveAllForms for formId |' + formId + '|, remainingDirtyFormIds: '
-//         + Object.toJSON(remainingDirtyFormIds));
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
-//         _me._log.logDimAndAgent('saveAllFormsAjax: received json Response |'
-//             + Object.toJSON(jsonResponses) + '|');
          _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
        }
        if (remainingDirtyFormIds.size() > 0) {
-         if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-           console.log('next saveAllForms with: ', remainingDirtyFormIds);
-         }
-//         _me._log.logDimAndAgent('saveAllFormsAjax: in success before recursive saveAllForms with remainingDirtyFormIds |'
-//             + Object.toJSON(remainingDirtyFormIds) + '|');
+         console.log('next saveAllForms with: ', remainingDirtyFormIds);
          saveAllForms(remainingDirtyFormIds);
          } else {
-           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-             console.log('save done.');
-           }
+           console.log('save done.');
            execCallback(transport, jsonResponses);
          }
      }});
@@ -1273,18 +1239,13 @@ TE.prototype = {
 
  _handleSaveAjaxResponse : function(formId, transport, jsonResponses) {
    if (transport.responseText.isJSON()) {
-     if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-       console.log('_handleSaveAjaxResponse with json result: ', transport.responseText);
-     }
+     console.debug('_handleSaveAjaxResponse with json result: ', transport.responseText);
      var jsonResult = transport.responseText.evalJSON();
      jsonResponses.set(formId, jsonResult);
      if (jsonResult.successful) {
        return true;
      } else {
-       if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-         console.warn('_handleSaveAjaxResponse: save failed for [' + formId + ']: ',
-             jsonResult);
-       }
+       console.warn('_handleSaveAjaxResponse: save failed for [' + formId + ']: ', jsonResult);
      }
    } else {
      return true;
@@ -1300,9 +1261,7 @@ TE.prototype = {
     url = url+"&pagefullname=" + pageFullName;
     url = url+"&lang=" + lang;
     url = url+"&"+queryString;
-    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-      console.warn('DEPRECATED saveWithAjax on TabEditor: ', pageFullName, queryString);
-    }
+    console.warn('DEPRECATED saveWithAjax on TabEditor: ', pageFullName, queryString);
     new Ajax.Request(url, {method: 'get'});
   },
 
@@ -1315,9 +1274,7 @@ TE.prototype = {
         pagefullname : pageFullName,
         lang : lang
      }).merge(paramsHash);
-    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-      console.warn('DEPRECATED saveWithAjaxPOST on TabEditor: ', pageFullName, queryString);
-    }
+    console.warn('DEPRECATED saveWithAjaxPOST on TabEditor: ', pageFullName, queryString);
     new Ajax.Request(getTMCelHost(), {
       method: 'post',
       parameters: ajaxParams,
