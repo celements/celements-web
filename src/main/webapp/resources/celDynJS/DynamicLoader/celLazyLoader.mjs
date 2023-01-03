@@ -51,21 +51,21 @@ class CelLazyLoaderUtils {
     return scriptPath;
   }
 
-  jsIsLoaded(scriptURL) {
-    const scriptNewURLLink = new URL(scriptURL, window.location.href);
-    const isLoaded = [...document.getElementsByTagName('script')]
-      .some(script => script.src === scriptNewURLLink.href);
-    console.debug('jsIsLoaded: return ', isLoaded, scriptURL);
+  _checkIsLoaded(url, loadedTags) {
+    const loadedArray = [...loadedTags];
+    const newURLLink = new URL(url, window.location.href);
+    const isLoaded = loadedArray.some(
+      loadedElem => (loadedElem.src ?? loadedCss.href) === newURLLink.href);
+    console.debug('checkIsLoaded: return ', isLoaded, url);
     return isLoaded;
   }
 
-  cssIsLoaded(scriptURL) {
-    console.debug('cssIsLoaded ', scriptURL);
-    const cssNewUrlLink = new URL(scriptURL, window.location.href);
-    const isLoaded = [...document.querySelectorAll('link[rel=stylesheet]')]
-      .some(loadedCss => loadedCss.href === cssNewUrlLink.href);
-    console.log('cssIsLoaded: return ', isLoaded, scriptURL);
-    return isLoaded;
+  jsIsLoaded(scriptURL) {
+    return this._checkIsLoaded(scriptURL, document.getElementsByTagName('script'))
+  }
+
+  cssIsLoaded(cssURL) {
+    return this._checkIsLoaded(cssURL, document.querySelectorAll('link[rel=stylesheet]'))
   }
 
   fireLoaded = function(item, eventName) {
@@ -140,6 +140,7 @@ class CelLazyLoaderJs extends HTMLElement {
     if (loadMode && (loadMode !== 'sync')) {
       newEle.setAttribute(loadMode, '');
     }
+    //TODO CELDEV-1076 if (loadMode !== 'async') loading must be synchronised by JS
     return newEle;
   }
 
