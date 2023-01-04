@@ -104,28 +104,27 @@ class CelLazyLoaderUtils {
   }
 
   addRefireOnLoadedOrError(customElem, elem, eventName) {
-    const _me = this;
     return new Promise((resolve, reject) => {
       elem.addEventListener('load', () => {
-        _me.fireLoaded(customElem, eventName);
+        this.fireLoaded(customElem, eventName);
         resolve();
       });
       elem.addEventListener('error', (message, source, lineno, colno, error) => {
-      _me.fireLoadedErr(
+      this.fireLoadedErr(
         customElem, eventName, message, source, lineno, colno, error);
         reject();
       });
     });
   }
 
-  _loadScriptElem(elemType, isLoadedFn, createElemFn, src, eventName, loadMode) {
+  _loadScriptElem(customElem, elemType, isLoadedFn, createElemFn, src, eventName, loadMode) {
     const jsFileSrc = this.getScriptPath(src)
     if (!isLoadedFn(jsFileSrc)) {
       const newEle = createElemFn(jsFileSrc);
-      const loadedPromise = this.addRefireOnLoadedOrError(this, newEle, eventName);
+      const loadedPromise = this.addRefireOnLoadedOrError(customElem, newEle, eventName);
       console.debug('_loadScriptElem insert ', newEle);
-      this._reayState = 1;
-      if (loadMode === 'async') {
+      customElem._reayState = 1;
+      if (loadMode && (loadMode === 'async')) {
         document.head.appendChild(newEle);
       } else {
         const lastPromise = lastPromiseOfLoadingType[elemType] ?? Promise.resolve();
@@ -136,7 +135,7 @@ class CelLazyLoaderUtils {
       }
       return loadedPromise;
     } else {
-      this._reayState = 2;
+      customElem._reayState = 2;
       console.debug('skip js file already loaded', jsFileSrc);
       return Promise.resolve();
     }
@@ -187,7 +186,7 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   _loadJsScript() {
-    this._lazyLoadUtils._loadScriptElem('javascript',
+    this._lazyLoadUtils._loadScriptElem(this, 'javascript',
       jsFileSrc => this._lazyLoadUtils.jsIsLoaded(jsFileSrc),
       jsFileSrc => this._createJsElement(jsFileSrc),
       this.getAttribute('src'), 'celements:jsFileLoaded', this.getAttribute('loadMode'));
