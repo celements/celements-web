@@ -118,10 +118,10 @@ class CelLazyLoaderUtils {
   }
 
   _loadScriptElem(elemType, isLoadedFn, createElemFn, src, eventName, loadMode) {
-    const jsFileSrc = this._lazyLoadUtils.getScriptPath(src)
+    const jsFileSrc = this.getScriptPath(src)
     if (!isLoadedFn(jsFileSrc)) {
       const newEle = createElemFn(jsFileSrc);
-      const loadedPromise = this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, eventName);
+      const loadedPromise = this.addRefireOnLoadedOrError(this, newEle, eventName);
       console.debug('_loadScriptElem insert ', newEle);
       this._reayState = 1;
       if (loadMode === 'async') {
