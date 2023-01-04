@@ -89,6 +89,133 @@ function ContextMenuItem(link, text, icon, shortcut) {
 }
 
 /* ContextMenu Class */
+class ContextMenuNew {
+  #config;
+  #menuDiv;
+  
+  constructor() {
+    this.#config = [];
+  }
+
+  getMenuDiv() {
+    if (!this.#menuDiv) {
+      this.#menuDiv = document.createElement('div');
+      this.#menuDiv.id = 'contextMenu';
+      this.#menuDiv.classList.add('contextMenu');
+      this.#menuDiv.style.zIndex = 999;
+      this.#menuDiv.style.position = 'absolute';
+    }
+    return this.#menuDiv;
+  }
+
+  show(e, config, contextClickElementId) {
+    if ((typeof contextClickElementId != 'undefined') && $(contextClickElementId)) {
+      getCmOutliner().outlineElement($(contextClickElementId));
+    }
+    $(document).observe('mousedown', this.hide);
+    
+    this.config = this.config.concat(config);
+    
+    const mouseCoord = this.getMousePos(e);
+
+    let y = mouseCoord[1] - 6;
+    let x = mouseCoord[0] - 3;
+    
+    const h = this.config.length * 26 + 6;
+    console.log('>>> contextMenu border check2: width', this.getMenuDiv().getWidth(),
+      'height', this.getMenuDiv().getHeight(), 'getBoundingClientRect',
+      this.getMenuDiv().getBoundingClientRect());
+    
+    // if the context menu ist too close to the browser border
+    if(document.documentElement.clientHeight) { // NOTE: this works only in ff and ie strict mode
+      if(document.documentElement.clientHeight - mouseCoord[1] + document.documentElement.scrollTop < h) {
+        y = y - h;
+      }
+/**
+      if(document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft < w) {
+        x = x - w;
+      }
+ */
+     }
+    document.body.appendChild(this.getMenuDiv());
+    this.setPosition(y,x);
+    this.populate();        
+    console.log('>>> contextMenu border check after populate: width', this.getMenuDiv().getWidth(),
+      'height', this.getMenuDiv().getHeight(), 'getBoundingClientRect',
+      this.getMenuDiv().getBoundingClientRect());
+    return false;
+  }
+
+  setPosition(y, x) {
+    this.getMenuDiv().setStyle({
+      'left' : x + 'px',
+      'top' : y + 'px'
+    });
+  }
+
+  internal_hide() {
+    this.config = new Array();
+    if (this.#menuDiv) {
+      this.#menuDiv.remove();
+    }
+    this.#menuDiv = undefined;
+  
+    $(document).stopObserving('mousedown', this.hide);
+  }
+
+  _close(element) {
+    this.internal_hide();
+    getCmOutliner().removeAllOutlines(element);
+  }
+
+  closeAll() {
+    this._close($$('body')[0]);
+  }
+
+  hide(e) {
+    this._close(e.element());
+    e.stop();
+  }
+  
+  getMousePos(e) {
+    var tmpCoord = new Array(0,0);
+    
+    var posx = 0;
+    var posy = 0;
+    
+    if (!e) var e = window.event;
+    if (e.pageX || e.pageY) // Firefox & co.
+    {
+      posx = e.pageX;
+      posy = e.pageY;
+    }
+    else if (e.clientX || e.clientY) // IE
+    {
+      // NOTE: Explorer must be in strict mode for documentElement, otherwise use document.body.scrollLeft!
+      posx = e.clientX + document.documentElement.scrollLeft - 1;
+      posy = e.clientY + document.documentElement.scrollTop + 2;
+    }
+    
+    tmpCoord[0] = posx;
+    tmpCoord[1] = posy;
+  
+    return tmpCoord;
+  
+  };
+  
+  populate() {
+    var tmpHTML = "<div class='contextMenuCorner'></div>";
+    if (!contextMenuLoading) {
+      for(var i = 0; i < this.config.length; i++) {
+        tmpHTML += this.config[i].getHTML(i);
+      }
+    } else {
+      tmpHTML += "<div class='contextMenuItem'><img style='display:block; margin-right:auto; margin-left:auto;' src='"
+        + window.CELEMENTS.getUtils().getPathPrefix() + "/file/celRes/ajax-loader-small.gif'/></div>";
+    }
+    this.getMenuDiv().innerHTML = tmpHTML;
+  }
+}
 
 function ContextMenu() {
   var me = this;
@@ -104,7 +231,7 @@ function ContextMenu() {
     
     me.config = me.config.concat(config);
     
-    var mouseCoord = me.getMousePos(e);
+    const mouseCoord = me.getMousePos(e);
 
     let y = mouseCoord[1] - 6;
     let x = mouseCoord[0] - 3;
