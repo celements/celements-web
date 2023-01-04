@@ -18,6 +18,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
+ const lastPromiseOfLoadingType = {};
+
 class CelLazyLoaderUtils {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
    don't use it yet. '
@@ -102,9 +104,41 @@ class CelLazyLoaderUtils {
   }
 
   addRefireOnLoadedOrError(customElem, elem, eventName) {
-    elem.addEventListener('load', () => this.fireLoaded(customElem, eventName));
-    elem.addEventListener('error', (message, source, lineno, colno, error) => this.fireLoadedErr(
-      customElem, eventName, message, source, lineno, colno, error));
+    return new Promise((resolve, reject) => {
+      elem.addEventListener('load', () => {
+        this.fireLoaded(customElem, eventName);
+        resolve();
+      });
+      elem.addEventListener('error', (message, source, lineno, colno, error) => {
+      this.fireLoadedErr(
+        customElem, eventName, message, source, lineno, colno, error);
+        reject();
+      });
+    });
+  }
+
+  _loadScriptElem(elemType, isLoadedFn, createElemFn, src, eventName, loadMode) {
+    const jsFileSrc = this._lazyLoadUtils.getScriptPath(src)
+    if (!isLoadedFn(jsFileSrc)) {
+      const newEle = createElemFn(jsFileSrc);
+      const loadedPromise = this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, eventName);
+      console.debug('_loadScriptElem insert ', newEle);
+      this._reayState = 1;
+      if (loadMode === 'async') {
+        document.head.appendChild(newEle);
+      } else {
+        const lastPromise = lastPromiseOfLoadingType[elemType] ?? Promise.resolve();
+        lastPromiseOfLoadingType[elemType] = lastPromise.then(() => {
+          document.head.appendChild(newEle);
+          return loadedPromise;
+        });
+      }
+      return loadedPromise;
+    } else {
+      this._reayState = 2;
+      console.debug('skip js file already loaded', jsFileSrc);
+      return Promise.resolve();
+    }
   }
 
 }
@@ -140,7 +174,6 @@ class CelLazyLoaderJs extends HTMLElement {
     if (loadMode && (loadMode !== 'sync')) {
       newEle.setAttribute(loadMode, '');
     }
-    //TODO CELDEV-1076 if (loadMode !== 'async') loading must be synchronised by JS
     return newEle;
   }
 
@@ -153,17 +186,10 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   _loadJsScript() {
-    const jsFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'))
-    if (!this._lazyLoadUtils.jsIsLoaded(jsFileSrc)) {
-      const newEle = this._createJsElement(jsFileSrc);
-      this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, 'celements:jsFileLoaded');
-      console.debug('_loadJsScript insert ', newEle);
-      this._reayState = 1;
-      document.head.appendChild(newEle);
-    } else {
-      this._reayState = 2;
-      console.debug('skip js file already loaded', jsFileSrc);
-    }
+    this._lazyLoadUtils._loadScriptElem('javascript',
+      jsFileSrc => this._lazyLoadUtils.jsIsLoaded(jsFileSrc),
+      jsFileSrc => this._createJsElement(jsFileSrc),
+      this.getAttribute('src'), 'celements:jsFileLoaded', this.getAttribute('loadMode'));
   }
 
   connectedCallback() {
