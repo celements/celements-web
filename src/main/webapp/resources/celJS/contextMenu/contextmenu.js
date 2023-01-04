@@ -110,9 +110,8 @@ function ContextMenu() {
     let x = mouseCoord[0] - 3;
     
     const h = me.config.length * 26 + 6;
-    console.log('>>> contextMenu border check: h', h);
-    console.log('>>> contextMenu border check2: width', me.menuDiv?.width,
-     'height', me.menuDiv?.height);
+    console.log('>>> contextMenu border check2: width', me.menuDiv?.getWidth(),
+     'height', me.menuDiv?.getHeight(), 'getBoundingClientRect', me.menuDiv.getBoundingClientRect());
     
     // if the context menu ist too close to the browser border
     if(document.documentElement.clientHeight) { // NOTE: this works only in ff and ie strict mode
@@ -137,10 +136,9 @@ function ContextMenu() {
     } else {
       me.setPosition(y,x);
     }
-    me.populate();
-    console.log('>>> contextMenu border check after populate: width', me.menuDiv?.width,
-     'height', me.menuDiv?.height);
-        
+    me.populate();        
+    console.log('>>> contextMenu border check after populate: width', me.menuDiv?.getWidth(),
+     'height', me.menuDiv?.getHeight(), 'getBoundingClientRect', me.menuDiv.getBoundingClientRect());
     return false;
   };
   
