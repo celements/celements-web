@@ -19,61 +19,50 @@
  */
 
 /* HELPERS */
-var cmDefaultItems = new Array();
-var cmOutliner = null;
+const cmDefaultItems = new Array();
+let cmOutliner = null;
 
-function contextMouseOver(n){
-  classAttribute = n.getAttributeNode('class');
+const contextMouseOver = function(n) {
+  const classAttribute = n.getAttributeNode('class');
   classAttribute.nodeValue = "contextMenuLinkOver";
 
   $(document).stopObserving('mousedown', myContextMenu.hide);
   return true;
-}
+};
 
-function contextMouseOut(n){
-  classAttribute = n.getAttributeNode('class');
+const contextMouseOut = function(n) {
+  const classAttribute = n.getAttributeNode('class');
   classAttribute.nodeValue = "contextMenuLink";
   
   $(document).observe('mousedown', myContextMenu.hide);
   return true;
-}
+};
 
-function confirmURL(t, u){
-
+const confirmURL = function(t, u) {
   if(confirm(t))
     window.location.href=u;
-}
+};
 
 /* ContextMenuItem Class */
 
 function ContextMenuItem(link, text, icon, shortcut) {
-
-  var me = this;
+  const me = this;
   
   this.link = link;
   this.text = text;
   this.icon = icon;
   this.shortcut = shortcut;
   
-  this.getHTML = function(nr){
-  
-    var tmpHTML = "<div class='contextMenuItem'><div class='contextMenuIcon'>";
-/**
-    if (me.icon) {
-      tmpHTML += "<img src='"+me.icon+"' alt='"+me.text+"' />";
-    } else {
-      tmpHTML += "&nbsp;";
-    }
-    //icon deactivated for now
- */
+  this.getHTML = function(nr) {
+    let tmpHTML = "<div class='contextMenuItem'><div class='contextMenuIcon'>";
     tmpHTML += "&nbsp;";
     
     tmpHTML += "</div><div class='contextMenuLink' onmouseover='javascript:contextMouseOver(this)' onmouseout='javascript:contextMouseOut(this)' onclick='javascript:";
     tmpHTML += me.link;
-    tmpHTML += "'>"+me.text;
+    tmpHTML += "'>" + me.text;
 
     if (me.shortcut) {
-      tmpHTML += '<span class="contextMenuItemShortcut">' + me.getShortcutHTML(); + '</span>';
+      tmpHTML += '<span class="contextMenuItemShortcut">' + me.getShortcutHTML() + '</span>';
     }
 
     tmpHTML += "</div></div>";
@@ -101,14 +90,13 @@ function ContextMenuItem(link, text, icon, shortcut) {
 
 /* ContextMenu Class */
 
-function ContextMenu(){
-
+function ContextMenu() {
   var me = this;
   
   this.config = new Array();
   this.menuDiv = null;
   
-  this.show = function(e, config, contextClickElementId){
+  this.show = function(e, config, contextClickElementId) {
     if ((typeof contextClickElementId != 'undefined') && $(contextClickElementId)) {
       getCmOutliner().outlineElement($(contextClickElementId));
     }
@@ -118,21 +106,21 @@ function ContextMenu(){
     
     var mouseCoord = me.getMousePos(e);
 
-    var y = mouseCoord[1] - 6;
-    var x = mouseCoord[0] - 3;
+    let y = mouseCoord[1] - 6;
+    let x = mouseCoord[0] - 3;
     
-    var h = me.config.length*14 + 6;
-    h = null;
-    var w = null;
+    const h = me.config.length * 26 + 6;
+    console.log('>>> contextMenu border check: h', h, 'w', w, me.menuDiv?.width);
+    console.log('>>> contextMenu border check2: width', me.menuDiv?.width,
+     'height', me.menuDiv?.height);
     
     // if the context menu ist too close to the browser border
-/*    if(document.documentElement.clientHeight){ // NOTE: this works only in ff and ie strict mode
+    if(document.documentElement.clientHeight) { // NOTE: this works only in ff and ie strict mode
       if(document.documentElement.clientHeight - mouseCoord[1] + document.documentElement.scrollTop < h)
         y = y - h;
       if(document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft < w)
         x = x - w;
     }
-*/
     if(!me.menuDiv) {
       me.menuDiv = new Element('div', {
         'id' : 'contextMenu',
@@ -142,13 +130,12 @@ function ContextMenu(){
         'position' : 'absolute'
       });
       $$('body')[0].insert(me.menuDiv);
-//      me.menuDiv = new Div("contextMenu", null, document.getElementsByTagName("body")[0], y,x,h,w, "contextMenu");
     } else {
       me.setPosition(y,x);
-//      me.menuDiv.setPosition(y,x);
-    //  me.menuDiv.setSize(h,w);
     }
     me.populate();
+    console.log('>>> contextMenu border check after populate: width', me.menuDiv?.width,
+     'height', me.menuDiv?.height);
         
     return false;
   };
@@ -178,12 +165,12 @@ function ContextMenu(){
     me._close($$('body')[0]);
   };
 
-  this.hide = function(e){
+  this.hide = function(e) {
     me._close(e.element());
     e.stop();
   };
   
-  this.getMousePos = function(e){
+  this.getMousePos = function(e) {
     var tmpCoord = new Array(0,0);
     
     var posx = 0;
@@ -209,11 +196,11 @@ function ContextMenu(){
   
   };
   
-  this.populate = function(){
+  this.populate = function() {
   
     var tmpHTML = "<div class='contextMenuCorner'></div>";
     if (!contextMenuLoading) {
-      for(var i = 0; i < me.config.length; i++){
+      for(var i = 0; i < me.config.length; i++) {
         tmpHTML += me.config[i].getHTML(i);
       }
     } else {
@@ -347,14 +334,8 @@ var loadContextMenuForClassNames = function (cssClassNames) {
       contextMenuIdCssClassNamesMap);
   
   if (reducedCssClassMap.size() > 0) {
-//    if(contextMenuIdCssClassNamesMap) {
-//  	  console.log('>>>contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
-//  	}
-//    console.log('>>>cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
     var reducedClassNameIdMap = contextMenuConvertIdClassMapToClassIdMap(reducedCssClassMap);
-//    console.log('>>>reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
     var reqArray = contextMenuWriteReqArray(reducedClassNameIdMap);
-//    console.log('>>>reduced reqArray: ', reqArray.size(), Object.toJSON(reqArray));
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
@@ -377,8 +358,6 @@ var loadContextMenuForClassNames = function (cssClassNames) {
                 contextMenuItemDataForElemId.set(elemIdMenuItems.elemId, articleCMenu);
                 htmlElem.stopObserving('contextmenu', contextClickHandler);
                 htmlElem.observe('contextmenu', contextClickHandler);
-//              } else {
-//                console.warn('ContextMenuAjax ignore "vanished" element ', elemIdMenuItems.elemId);
               }
             } catch (exp) {
               console.error('ContextMenuAjax failed to process elemIdMenuItems: ',
@@ -386,9 +365,6 @@ var loadContextMenuForClassNames = function (cssClassNames) {
             }
           });
           cm_mark_loading_finished();
-        /**} else {
-          alert("error: noJSON! Please contact your administrator.");
-          **/
         }
       }
     });
@@ -443,7 +419,7 @@ var getCmOutliner = function() {
   return cmOutliner;
 }
 
-var documentContextClickHandler = function(event) {
+const documentContextClickHandler = function(event) {
   if (!event.shiftKey && !myContextMenu.show(event, cmDefaultItems)) {
     event.stop();
     return false;
@@ -451,5 +427,12 @@ var documentContextClickHandler = function(event) {
   return true;
 };
 
-var contextMenuLoading = true;
+let contextMenuLoading = true;
 $j(document).ready(initContextMenuAsync);
+
+document.addEventListener(window, 'load', function() {
+  if (document.body.classList.contains('cel_show_cm')) {
+    $(document).observe('contextmenu', documentContextClickHandler);
+  }
+});
+
