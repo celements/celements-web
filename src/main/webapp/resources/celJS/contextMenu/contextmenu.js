@@ -421,7 +421,7 @@ var getCmOutliner = function() {
 
 const documentContextClickHandler = function(event) {
   if (!event.shiftKey && !myContextMenu.show(event, cmDefaultItems)) {
-    event.stop();
+    event.preventDefault();
     return false;
   }
   return true;
@@ -430,9 +430,9 @@ const documentContextClickHandler = function(event) {
 let contextMenuLoading = true;
 $j(document).ready(initContextMenuAsync);
 
-document.addEventListener(window, 'load', function() {
+window.addEventListener('load', function() {
   if (document.body.classList.contains('cel_show_cm')) {
-    $(document).observe('contextmenu', documentContextClickHandler);
+    document.addEventListener('contextmenu', documentContextClickHandler);
   }
 });
 
