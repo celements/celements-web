@@ -195,12 +195,12 @@ class ContextMenu {
   
     return tmpCoord;
   
-  };
+  }
   
   populate() {
     var tmpHTML = "<div class='contextMenuCorner'></div>";
     if (!contextMenuLoading) {
-      for(const i = 0; i < this.#config.length; i++) {
+      for (let i = 0; i < this.#config.length; i++) {
         tmpHTML += this.#config[i].getHTML(i);
       }
     } else {
