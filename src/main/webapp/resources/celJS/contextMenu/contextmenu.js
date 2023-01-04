@@ -89,7 +89,7 @@ function ContextMenuItem(link, text, icon, shortcut) {
 }
 
 /* ContextMenu Class */
-class ContextMenuNew {
+class ContextMenu {
   #config;
   #menuDiv;
   
@@ -114,35 +114,27 @@ class ContextMenuNew {
     }
     $(document).observe('mousedown', this.hide);
     
-    this.config = this.config.concat(config);
+    this.#config = this.#config.concat(config);
     
     const mouseCoord = this.getMousePos(e);
 
     let y = mouseCoord[1] - 6;
     let x = mouseCoord[0] - 3;
     
-    const h = this.config.length * 26 + 6;
-    console.log('>>> contextMenu border check2: width', this.getMenuDiv().getWidth(),
-      'height', this.getMenuDiv().getHeight(), 'getBoundingClientRect',
-      this.getMenuDiv().getBoundingClientRect());
+    const menuDivDim = this.getMenuDiv().getBoundingClientRect();
     
+    const distanceToBottom = document.documentElement.clientHeight - mouseCoord[1] + document.documentElement.scrollTop;
+    const distanceToRight = document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft;
     // if the context menu ist too close to the browser border
-    if(document.documentElement.clientHeight) { // NOTE: this works only in ff and ie strict mode
-      if(document.documentElement.clientHeight - mouseCoord[1] + document.documentElement.scrollTop < h) {
-        y = y - h;
-      }
-/**
-      if(document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft < w) {
-        x = x - w;
-      }
- */
-     }
+    if(distanceToBottom < menuDivDim.height) {
+      y = y - menuDivDim.height;
+    }
+    if(distanceToRight < menuDivDim.width) {
+      x = x - menuDivDim.width;
+    }
     document.body.appendChild(this.getMenuDiv());
     this.setPosition(y,x);
-    this.populate();        
-    console.log('>>> contextMenu border check after populate: width', this.getMenuDiv().getWidth(),
-      'height', this.getMenuDiv().getHeight(), 'getBoundingClientRect',
-      this.getMenuDiv().getBoundingClientRect());
+    this.populate();
     return false;
   }
 
@@ -154,7 +146,7 @@ class ContextMenuNew {
   }
 
   internal_hide() {
-    this.config = new Array();
+    this.#config = [];
     if (this.#menuDiv) {
       this.#menuDiv.remove();
     }
@@ -206,8 +198,8 @@ class ContextMenuNew {
   populate() {
     var tmpHTML = "<div class='contextMenuCorner'></div>";
     if (!contextMenuLoading) {
-      for(var i = 0; i < this.config.length; i++) {
-        tmpHTML += this.config[i].getHTML(i);
+      for(const i = 0; i < this.#config.length; i++) {
+        tmpHTML += this.#config[i].getHTML(i);
       }
     } else {
       tmpHTML += "<div class='contextMenuItem'><img style='display:block; margin-right:auto; margin-left:auto;' src='"
@@ -215,130 +207,6 @@ class ContextMenuNew {
     }
     this.getMenuDiv().innerHTML = tmpHTML;
   }
-}
-
-function ContextMenu() {
-  var me = this;
-  
-  this.config = new Array();
-  this.menuDiv = null;
-  
-  this.show = function(e, config, contextClickElementId) {
-    if ((typeof contextClickElementId != 'undefined') && $(contextClickElementId)) {
-      getCmOutliner().outlineElement($(contextClickElementId));
-    }
-    $(document).observe('mousedown', me.hide);
-    
-    me.config = me.config.concat(config);
-    
-    const mouseCoord = me.getMousePos(e);
-
-    let y = mouseCoord[1] - 6;
-    let x = mouseCoord[0] - 3;
-    
-    const h = me.config.length * 26 + 6;
-    console.log('>>> contextMenu border check2: width', me.menuDiv?.getWidth(),
-     'height', me.menuDiv?.getHeight(), 'getBoundingClientRect', me.menuDiv?.getBoundingClientRect());
-    
-    // if the context menu ist too close to the browser border
-    if(document.documentElement.clientHeight) { // NOTE: this works only in ff and ie strict mode
-      if(document.documentElement.clientHeight - mouseCoord[1] + document.documentElement.scrollTop < h) {
-        y = y - h;
-      }
-/**
-      if(document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft < w) {
-        x = x - w;
-      }
- */
-     }
-    if(!me.menuDiv) {
-      me.menuDiv = new Element('div', {
-        'id' : 'contextMenu',
-        'class' : 'contextMenu'
-      }).setStyle({
-        'z-index' : 999,
-        'position' : 'absolute'
-      });
-      $$('body')[0].insert(me.menuDiv);
-    } else {
-      me.setPosition(y,x);
-    }
-    me.populate();        
-    console.log('>>> contextMenu border check after populate: width', me.menuDiv?.getWidth(),
-     'height', me.menuDiv?.getHeight(), 'getBoundingClientRect', me.menuDiv?.getBoundingClientRect());
-    return false;
-  };
-  
-  this.setPosition = function (y, x) {
-    me.menuDiv.setStyle({
-      'left' : x + 'px',
-      'top' : y + 'px'
-    });
-  };
-  
-  this.internal_hide = function() {
-    me.config = new Array();
-    if(me.menuDiv)
-      me.menuDiv.remove();
-    me.menuDiv = null;
-  
-    $(document).stopObserving('mousedown', me.hide);
-  };
-
-  this._close = function(element) {
-    me.internal_hide();
-    getCmOutliner().removeAllOutlines(element);
-  };
-
-  this.closeAll = function() {
-    me._close($$('body')[0]);
-  };
-
-  this.hide = function(e) {
-    me._close(e.element());
-    e.stop();
-  };
-  
-  this.getMousePos = function(e) {
-    var tmpCoord = new Array(0,0);
-    
-    var posx = 0;
-    var posy = 0;
-    
-    if (!e) var e = window.event;
-    if (e.pageX || e.pageY) // Firefox & co.
-    {
-      posx = e.pageX;
-      posy = e.pageY;
-    }
-    else if (e.clientX || e.clientY) // IE
-    {
-      // NOTE: Explorer must be in strict mode for documentElement, otherwise use document.body.scrollLeft!
-      posx = e.clientX + document.documentElement.scrollLeft - 1;
-      posy = e.clientY + document.documentElement.scrollTop + 2;
-    }
-    
-    tmpCoord[0] = posx;
-    tmpCoord[1] = posy;
-  
-    return tmpCoord;
-  
-  };
-  
-  this.populate = function() {
-  
-    var tmpHTML = "<div class='contextMenuCorner'></div>";
-    if (!contextMenuLoading) {
-      for(var i = 0; i < me.config.length; i++) {
-        tmpHTML += me.config[i].getHTML(i);
-      }
-    } else {
-      tmpHTML += "<div class='contextMenuItem'><img style='display:block; margin-right:auto; margin-left:auto;' src='"
-        + window.CELEMENTS.getUtils().getPathPrefix() + "/file/celRes/ajax-loader-small.gif'/></div>";
-    }
-    me.menuDiv.innerHTML = tmpHTML;
-  };
-  return true;
 }
 
 // global variable, the context menu object
