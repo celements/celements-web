@@ -104,13 +104,14 @@ class CelLazyLoaderUtils {
   }
 
   addRefireOnLoadedOrError(customElem, elem, eventName) {
+    const _me = this;
     return new Promise((resolve, reject) => {
       elem.addEventListener('load', () => {
-        this.fireLoaded(customElem, eventName);
+        _me.fireLoaded(customElem, eventName);
         resolve();
       });
       elem.addEventListener('error', (message, source, lineno, colno, error) => {
-      this.fireLoadedErr(
+      _me.fireLoadedErr(
         customElem, eventName, message, source, lineno, colno, error);
         reject();
       });
