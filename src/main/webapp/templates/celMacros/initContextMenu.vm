@@ -1,4 +1,0 @@
-## initContextMenu
-## loads the header parts needed to enable the contextMenu
-##
-#set($cel_loadContextMenu = ($isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0)) && ("$context.action" != 'edit') && ("$context.action" != 'inline') && ("$!supress_ContextMenu" != '1'))
