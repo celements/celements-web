@@ -141,10 +141,8 @@ class ContextMenu {
   }
 
   setPosition(y, x) {
-    this.getMenuDiv().setStyle({
-      'left' : x + 'px',
-      'top' : y + 'px'
-    });
+    this.getMenuDiv().style.left = x + 'px';
+    this.getMenuDiv().style.top = y + 'px';
   }
 
   internal_hide() {
