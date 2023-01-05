@@ -26,7 +26,7 @@
     #parse("celMacros/DarkBox.vm")
     $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/celTabMenu/TabEditor.js'))
     $!jsService.includeExtJsFile($extJsParamDefer.setJsFile(':celJS/celTabMenu/celementsTabMenu.js'))
-    $celementsweb.includeCSSPage(':celRes/celTabMenu/tabMenu.css')
+    $!services.css.includeCSSPage(':celRes/celTabMenu/tabMenu.css')
     #set($skinBodyAttributes = "$!{skinBodyAttributes}style='overflow:hidden;'")
     #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celementseditmode")
     #set($HTMLBodyCSSClasses = $HTMLBodyCSSClasses.trim())

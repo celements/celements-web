@@ -34,7 +34,7 @@ const contextMouseOut = function(n) {
   const classAttribute = n.getAttributeNode('class');
   classAttribute.nodeValue = "contextMenuLink";
   
-  document.addEventListener('mousedown', myContextMenu.hideBind);
+  document.addEventListener('mousedown', e => myContextMenu.hide(e));
   return true;
 };
 
@@ -99,7 +99,7 @@ class ContextMenu {
     this.hideBind = this.hide.bind(this);
   }
 
-  getMenuDiv() {
+  get menuDiv() {
     if (!this.#menuDiv) {
       this.#menuDiv = document.createElement('div');
       this.#menuDiv.id = 'contextMenu';
@@ -141,10 +141,8 @@ class ContextMenu {
   }
 
   setPosition(y, x) {
-    this.getMenuDiv().setStyle({
-      'left' : x + 'px',
-      'top' : y + 'px'
-    });
+    this.getMenuDiv().style.left = x + 'px';
+    this.getMenuDiv().style.top = y + 'px';
   }
 
   internal_hide() {
@@ -152,7 +150,7 @@ class ContextMenu {
     if (this.#menuDiv) {
       this.#menuDiv.remove();
     }
-    this.#menuDiv = undefined;
+    this.#menuDiv = null;
   
     document.removeEventListener('mousedown', this.hideBind);
   }
