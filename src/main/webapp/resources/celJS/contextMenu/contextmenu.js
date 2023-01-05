@@ -34,7 +34,7 @@ const contextMouseOut = function(n) {
   const classAttribute = n.getAttributeNode('class');
   classAttribute.nodeValue = "contextMenuLink";
   
-  document.addEventListener('mousedown', myContextMenu.hideBind);
+  document.addEventListener('mousedown', e => myContextMenu.hide(e));
   return true;
 };
 
