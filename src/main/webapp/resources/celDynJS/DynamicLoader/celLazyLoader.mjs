@@ -117,26 +117,29 @@ class CelLazyLoaderUtils {
     });
   }
 
-  _loadScriptElem(customElem, elemType, isLoadedFn, createElemFn, src, eventName, loadMode) {
-    const jsFileSrc = this.getScriptPath(src)
-    if (!isLoadedFn(jsFileSrc)) {
-      const newEle = createElemFn(jsFileSrc);
-      const loadedPromise = this.addRefireOnLoadedOrError(customElem, newEle, eventName);
-      console.debug('_loadScriptElem insert ', newEle);
+  async _addScriptToSyncLoadQueue(newElem) {
+    const lastPromise = lastPromiseOfLoadingType[elemType] ?? Promise.resolve();
+    await lastPromise;
+    document.head.appendChild(newElem);
+  }
+
+  _loadScriptElem(customElem, elemType, isLoadedFn, createElemFn, eventName) {
+    const fileSrc = this.getScriptPath(customElem.getAttribute('src'))
+    if (!isLoadedFn(fileSrc)) {
+      const newElem = createElemFn(fileSrc);
+      const loadedPromise = this.addRefireOnLoadedOrError(customElem, newElem, eventName);
+      console.debug('_loadScriptElem insert ', newElem);
       customElem._reayState = 1;
-      if (loadMode && (loadMode === 'async')) {
-        document.head.appendChild(newEle);
+      if (customElem.getAttribute('loadMode') === 'async') {
+        document.head.appendChild(newElem);
       } else {
-        const lastPromise = lastPromiseOfLoadingType[elemType] ?? Promise.resolve();
-        lastPromiseOfLoadingType[elemType] = lastPromise.then(() => {
-          document.head.appendChild(newEle);
-          return loadedPromise;
-        });
+        this._addScriptToSyncLoadQueue(newElem);
+        lastPromiseOfLoadingType[elemType] = newElem;
       }
       return loadedPromise;
     } else {
       customElem._reayState = 2;
-      console.debug('skip js file already loaded', jsFileSrc);
+      console.debug('_loadScriptElem: skip file already loaded', fileSrc);
       return Promise.resolve();
     }
   }
@@ -189,7 +192,7 @@ class CelLazyLoaderJs extends HTMLElement {
     this._lazyLoadUtils._loadScriptElem(this, 'javascript',
       jsFileSrc => this._lazyLoadUtils.jsIsLoaded(jsFileSrc),
       jsFileSrc => this._createJsElement(jsFileSrc),
-      this.getAttribute('src'), 'celements:jsFileLoaded', this.getAttribute('loadMode'));
+      'celements:jsFileLoaded');
   }
 
   connectedCallback() {
@@ -231,17 +234,10 @@ class CelLazyLoaderCss extends HTMLElement {
   }
 
   _loadCssScript() {
-    const cssFileSrc = this._lazyLoadUtils.getScriptPath(this.getAttribute('src'));
-    if (!this._lazyLoadUtils.cssIsLoaded(cssFileSrc)) {
-      const newEle = this._createCssElement(cssFileSrc);
-      this._lazyLoadUtils.addRefireOnLoadedOrError(this, newEle, 'celements:cssFileLoaded');
-      console.debug('_loadCssScript insert ', newEle);
-      this._reayState = 1;
-      document.head.appendChild(newEle);
-    } else {
-      this._reayState = 2;
-      console.debug('skip css file already loaded', cssFileSrc);
-    }
+    this._lazyLoadUtils._loadScriptElem(this, 'css',
+      cssFileSrc => this._lazyLoadUtils.cssIsLoaded(cssFileSrc),
+      cssFileSrc => this._createCssElement(cssFileSrc),
+      'celements:cssFileLoaded');
   }
 
   connectedCallback() {
