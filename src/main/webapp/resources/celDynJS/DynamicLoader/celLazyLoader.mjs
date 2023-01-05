@@ -117,7 +117,7 @@ class CelLazyLoaderUtils {
     });
   }
 
-  async _addScriptToSyncLoadQueue(newElem) {
+  async _addScriptToSyncLoadQueue(newElem, elemType) {
     const lastPromise = lastPromiseOfLoadingType[elemType] ?? Promise.resolve();
     await lastPromise;
     document.head.appendChild(newElem);
@@ -133,8 +133,8 @@ class CelLazyLoaderUtils {
       if (customElem.getAttribute('loadMode') === 'async') {
         document.head.appendChild(newElem);
       } else {
-        this._addScriptToSyncLoadQueue(newElem);
-        lastPromiseOfLoadingType[elemType] = newElem;
+        this._addScriptToSyncLoadQueue(newElem, elemType);
+        lastPromiseOfLoadingType[elemType] = loadedPromise;
       }
       return loadedPromise;
     } else {
