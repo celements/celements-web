@@ -150,7 +150,7 @@ class ContextMenu {
     if (this.#menuDiv) {
       this.#menuDiv.remove();
     }
-    this.#menuDiv = undefined;
+    this.#menuDiv = null;
   
     document.removeEventListener('mousedown', this.hideBind);
   }
