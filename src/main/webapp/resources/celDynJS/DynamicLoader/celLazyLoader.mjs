@@ -57,7 +57,7 @@ class CelLazyLoaderUtils {
     const loadedArray = [...loadedTags];
     const newURLLink = new URL(url, window.location.href);
     const isLoaded = loadedArray.some(
-      loadedElem => (loadedElem.src ?? loadedCss.href) === newURLLink.href);
+      loadedElem => (loadedElem.src ?? loadedElem.href) === newURLLink.href);
     console.debug('checkIsLoaded: return ', isLoaded, url);
     return isLoaded;
   }
