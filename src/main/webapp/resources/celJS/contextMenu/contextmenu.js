@@ -26,7 +26,7 @@ const contextMouseOver = function(n) {
   const classAttribute = n.getAttributeNode('class');
   classAttribute.nodeValue = "contextMenuLinkOver";
 
-  document.removeEventListener('mousedown', myContextMenu.hideBind);
+  document.removeEventListener('mousedown', e => myContextMenu.hide(e));
   return true;
 };
 
@@ -92,11 +92,9 @@ function ContextMenuItem(link, text, icon, shortcut) {
 class ContextMenu {
   #config;
   #menuDiv;
-  hideBind;
   
   constructor() {
     this.#config = [];
-    this.hideBind = this.hide.bind(this);
   }
 
   get menuDiv() {
@@ -114,7 +112,7 @@ class ContextMenu {
     if ((typeof contextClickElementId != 'undefined') && $(contextClickElementId)) {
       getCmOutliner().outlineElement($(contextClickElementId));
     }
-    document.addEventListener('mousedown', this.hideBind);
+    document.addEventListener('mousedown', ev => this.hide(ev));
     
     this.#config = this.#config.concat(config);
     
@@ -123,7 +121,7 @@ class ContextMenu {
     let y = mouseCoord[1] - 6;
     let x = mouseCoord[0] - 3;
     
-    const menuDivDim = this.getMenuDiv().getBoundingClientRect();
+    const menuDivDim = this.menuDiv.getBoundingClientRect();
     
     const distanceToBottom = document.documentElement.clientHeight - mouseCoord[1] + document.documentElement.scrollTop;
     const distanceToRight = document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft;
@@ -134,15 +132,15 @@ class ContextMenu {
     if(distanceToRight < menuDivDim.width) {
       x = x - menuDivDim.width;
     }
-    document.body.appendChild(this.getMenuDiv());
+    document.body.appendChild(this.menuDiv);
     this.setPosition(y,x);
     this.populate();
     return false;
   }
 
   setPosition(y, x) {
-    this.getMenuDiv().style.left = x + 'px';
-    this.getMenuDiv().style.top = y + 'px';
+    this.menuDiv.style.left = x + 'px';
+    this.menuDiv.style.top = y + 'px';
   }
 
   internal_hide() {
@@ -152,7 +150,7 @@ class ContextMenu {
     }
     this.#menuDiv = null;
   
-    document.removeEventListener('mousedown', this.hideBind);
+    document.removeEventListener('mousedown', ev => this.hide(ev));
   }
 
   _close(element) {
@@ -169,13 +167,14 @@ class ContextMenu {
     e.stop();
   }
   
-  getMousePos(e) {
-    var tmpCoord = new Array(0,0);
+  getMousePos(ev) {
+    let e = ev;
+    const tmpCoord = [0,0];
     
-    var posx = 0;
-    var posy = 0;
+    let posx = 0;
+    let posy = 0;
     
-    if (!e) var e = window.event;
+    if (!e) e = window.event;
     if (e.pageX || e.pageY) // Firefox & co.
     {
       posx = e.pageX;
@@ -196,7 +195,7 @@ class ContextMenu {
   }
   
   populate() {
-    var tmpHTML = "<div class='contextMenuCorner'></div>";
+    let tmpHTML = "<div class='contextMenuCorner'></div>";
     if (!contextMenuLoading) {
       for (let i = 0; i < this.#config.length; i++) {
         tmpHTML += this.#config[i].getHTML(i);
@@ -205,7 +204,7 @@ class ContextMenu {
       tmpHTML += "<div class='contextMenuItem'><img style='display:block; margin-right:auto; margin-left:auto;' src='"
         + window.CELEMENTS.getUtils().getPathPrefix() + "/file/celRes/ajax-loader-small.gif'/></div>";
     }
-    this.getMenuDiv().innerHTML = tmpHTML;
+    this.menuDiv.innerHTML = tmpHTML;
   }
 }
 
