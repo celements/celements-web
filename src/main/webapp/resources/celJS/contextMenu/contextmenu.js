@@ -99,7 +99,7 @@ class ContextMenu {
     this.hideBind = this.hide.bind(this);
   }
 
-  getMenuDiv() {
+  get menuDiv() {
     if (!this.#menuDiv) {
       this.#menuDiv = document.createElement('div');
       this.#menuDiv.id = 'contextMenu';
