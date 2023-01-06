@@ -19,7 +19,7 @@
  */
 
 import { CelOverlayResize } from "./overlayResize.mjs?version=202212031733";
-import "../DynamicLoader/celLazyLoader.mjs?version=202212031733";
+import "../DynamicLoader/celLazyLoader.mjs?version=202301052318";
 
 export class CelOverlay {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
