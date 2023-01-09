@@ -1,4 +1,4 @@
 #set($cellObj = $celldoc.getObject('Celements.GroupCellClass', false))
 #set($cellLayoutName = $cellObj.getProperty('render_layout').getValue())
-#set($cellLayoutRef = $services.reference.create().space($cellLayoutName).build())
+#set($cellLayoutRef = $services.reference.resolveSpaceRef($cellLayoutName))
 $services.layout.renderPageLayout($cellLayoutRef)
