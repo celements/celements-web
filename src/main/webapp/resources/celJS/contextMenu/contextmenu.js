@@ -25,22 +25,21 @@ let cmOutliner = null;
 const contextMouseOver = function(n) {
   const classAttribute = n.getAttributeNode('class');
   classAttribute.nodeValue = "contextMenuLinkOver";
-
-  document.removeEventListener('mousedown', e => myContextMenu.hide(e));
+  document.removeEventListener('mousedown', myContextMenu.hideHandler);
   return true;
 };
 
 const contextMouseOut = function(n) {
   const classAttribute = n.getAttributeNode('class');
   classAttribute.nodeValue = "contextMenuLink";
-  
-  document.addEventListener('mousedown', e => myContextMenu.hide(e));
+  document.addEventListener('mousedown', myContextMenu.hideHandler);
   return true;
 };
 
 const confirmURL = function(t, u) {
-  if(confirm(t))
+  if (confirm(t)) {
     window.location.href=u;
+  }
 };
 
 /* ContextMenuItem Class */
@@ -90,11 +89,15 @@ function ContextMenuItem(link, text, icon, shortcut) {
 
 /* ContextMenu Class */
 class ContextMenu {
+
   #config;
   #menuDiv;
   
+  hideHandler;
+  
   constructor() {
     this.#config = [];
+    this.hideHandler = this.hide.bind(this);
   }
 
   get menuDiv() {
@@ -109,27 +112,26 @@ class ContextMenu {
   }
 
   show(e, config, contextClickElementId) {
-    if ((typeof contextClickElementId != 'undefined') && $(contextClickElementId)) {
+    this.#config = this.#config.concat(config || []);
+    if (!contextMenuLoading && this.#config.length == 0) {
+      return false; // nothin to show
+    }
+    if (contextClickElementId && $(contextClickElementId)) {
       getCmOutliner().outlineElement($(contextClickElementId));
     }
-    document.addEventListener('mousedown', ev => this.hide(ev));
-    
-    this.#config = this.#config.concat(config);
+    document.addEventListener('mousedown', this.hideHandler);
     
     const mouseCoord = this.getMousePos(e);
-
     let y = mouseCoord[1] - 6;
     let x = mouseCoord[0] - 3;
-    
     const menuDivDim = this.menuDiv.getBoundingClientRect();
-    
     const distanceToBottom = document.documentElement.clientHeight - mouseCoord[1] + document.documentElement.scrollTop;
     const distanceToRight = document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft;
     // if the context menu ist too close to the browser border
-    if(distanceToBottom < menuDivDim.height) {
+    if (distanceToBottom < menuDivDim.height) {
       y = y - menuDivDim.height;
     }
-    if(distanceToRight < menuDivDim.width) {
+    if (distanceToRight < menuDivDim.width) {
       x = x - menuDivDim.width;
     }
     document.body.appendChild(this.menuDiv);
@@ -145,12 +147,12 @@ class ContextMenu {
 
   internal_hide() {
     this.#config = [];
-    if (this.#menuDiv) {
+    if (this.#menuDiv && this.#menuDiv.parentNode) {
       this.#menuDiv.remove();
     }
     this.#menuDiv = null;
   
-    document.removeEventListener('mousedown', ev => this.hide(ev));
+    document.removeEventListener('mousedown', this.hideHandler);
   }
 
   _close(element) {
@@ -371,7 +373,7 @@ const loadContextMenuForClassNames = function (cssClassNames) {
 };
 
 const cm_mark_loading_finished = function() {
-  if(myContextMenu.menuDiv) {
+  if (myContextMenu.menuDiv) {
     myContextMenu.internal_hide();
   }
   contextMenuLoading = false;
@@ -392,7 +394,7 @@ const contextClickHandler = function(event) {
 
 const contextKeydownExecuter = function(ev, nodeId) {
    var cmi_action_found = false;
-   if(nodeId && contextMenuItemDataForElemId.get(nodeId)) {
+   if (nodeId && contextMenuItemDataForElemId.get(nodeId)) {
      contextMenuItemDataForElemId.get(nodeId).each(function(cmiElem) {
        if ((!cmiElem.shortcut.altKey || ev.altKey)
           && (!cmiElem.shortcut.ctrlKey || ev.ctrlKey)
@@ -408,7 +410,7 @@ const contextKeydownExecuter = function(ev, nodeId) {
 };
 
 const getCmOutliner = function() {
-  if(cmOutliner == null) {
+  if (cmOutliner == null) {
     cmOutliner = new CELEMENTS.layout.Outliner;
   }
   return cmOutliner;
