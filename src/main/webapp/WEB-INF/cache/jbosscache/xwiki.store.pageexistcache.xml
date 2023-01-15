@@ -7,7 +7,7 @@
    -->
 	<eviction wakeUpInterval="500">
 		<default algorithmClass="org.jboss.cache.eviction.LRUAlgorithm">
-		<!-- maxNodes may be overwritten in xwiki.cfg : xwiki.store.cache.pageexistcapacity -->
+		<!-- maxNodes may be overwritten in properties : celements.store.docCache.capacityExists -->
 			<property name="maxNodes" value="50000" />
 		</default>
 	</eviction>
