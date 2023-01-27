@@ -26,7 +26,7 @@ function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-import './cel-data.min.mjs?version=202212031733';
+import './cel-data.min.mjs?version=202301171532';
 var _htmlElem = /*#__PURE__*/new WeakMap();
 var _template = /*#__PURE__*/new WeakMap();
 var _insertEntry = /*#__PURE__*/new WeakSet();
