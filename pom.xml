@@ -182,7 +182,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>5.7</version>
+      <version>5.8-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
