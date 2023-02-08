@@ -307,6 +307,32 @@
           </overlays>
         </configuration>
       </plugin>
+      <plugin>
+          <groupId>com.jarslab.maven</groupId>
+          <artifactId>babel-maven-plugin</artifactId>
+          <version>1.6</version>
+          <executions>
+              <execution>
+                  <id>js-transpile</id>
+                  <phase>process-resources</phase>
+                  <goals>
+                      <goal>babel</goal>
+                  </goals>
+                  <configuration>
+                      <verbose>true</verbose>
+                      <threads>4</threads>
+                      <babelSrc>${project.basedir}/target/classes/assets/jslib/babel.min.js</babelSrc>
+                      <sourceDir>${project.basedir}/target/classes/assets/</sourceDir>
+                      <targetDir>${project.basedir}/target/classes/assets/</targetDir>
+                      <jsSourceIncludes>
+                          <jsSourceInclude>src/*.mjs</jsSourceInclude>
+                      </jsSourceIncludes>
+                      <prefix>trans-</prefix>
+                      <presets>react,es2015</presets>
+                  </configuration>
+              </execution>
+          </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
