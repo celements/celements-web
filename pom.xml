@@ -321,13 +321,12 @@
                   <configuration>
                       <verbose>true</verbose>
                       <threads>4</threads>
-                      <babelSrc>${project.basedir}/target/classes/assets/jslib/babel.min.js</babelSrc>
-                      <sourceDir>${project.basedir}/target/classes/assets/</sourceDir>
-                      <targetDir>${project.basedir}/target/classes/assets/</targetDir>
-                      <jsSourceIncludes>
-                          <jsSourceInclude>src/*.mjs</jsSourceInclude>
-                      </jsSourceIncludes>
-                      <prefix>trans-</prefix>
+                      <babelSrc>${project.basedir}/babel-jslib/babel.min.js</babelSrc>
+                      <sourceDir>${project.basedir}/src/main/webapp/resources/</sourceDir>
+                      <targetDir>${project.basedir}/target/celements-web/resources/</targetDir>
+                      <jsIncludes>
+                          <jsInclude >**/*.mjs</jsInclude>
+                      </jsIncludes>
                       <presets>react,es2015</presets>
                   </configuration>
               </execution>
