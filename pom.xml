@@ -325,9 +325,9 @@
                       <sourceDir>${project.basedir}/src/main/webapp/resources/</sourceDir>
                       <targetDir>${project.basedir}/target/celements-web/resources/</targetDir>
                       <jsIncludes>
-                          <jsInclude >**/*.mjs</jsInclude>
+                          <jsInclude>**/*.mjs</jsInclude>
                       </jsIncludes>
-                      <presets>react,es2015</presets>
+                      <presets>es2016</presets>
                   </configuration>
               </execution>
           </executions>
