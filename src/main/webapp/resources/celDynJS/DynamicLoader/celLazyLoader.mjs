@@ -70,7 +70,7 @@ class CelLazyLoaderUtils {
     return this._checkIsLoaded(cssURL, document.querySelectorAll('link[rel=stylesheet]'))
   }
 
-  fireLoaded = function(item, eventName) {
+  fireLoaded(item, eventName) {
     item._reayState = 2;
     item._isSuccessfullLoaded = true;
     console.debug('fireLoaded', eventName, item);
@@ -90,7 +90,7 @@ class CelLazyLoaderUtils {
     return event;
   }
 
-  fireLoadedErr = function(item, eventName, message, source, lineno, colno, error) {
+  fireLoadedErr(item, eventName, message, source, lineno, colno, error) {
     item._reayState = 2;
     item._isSuccessfullLoaded = false;
     this.fireEvent(item, eventName, {
