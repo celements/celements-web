@@ -328,7 +328,7 @@
                           <jsInclude>**/*.mjs</jsInclude>
                       </jsIncludes>
                       <formatPresets>false</formatPresets>
-                      <presets>["es2015", { "modules": false }]</presets>
+                      <presets>["env", { "modules": false }]</presets>
                   </configuration>
               </execution>
           </executions>
