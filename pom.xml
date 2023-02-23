@@ -307,6 +307,10 @@
           </overlays>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.jarslab.maven</groupId>
+        <artifactId>babel-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 </project>
