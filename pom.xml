@@ -328,7 +328,16 @@
                           <jsInclude>**/*.mjs</jsInclude>
                       </jsIncludes>
                       <formatPresets>false</formatPresets>
-                      <presets>["env", { "modules": false }]</presets>
+                      <presets>
+                          [ "env",
+                            {
+                              "modules": false,
+                              "targets": {
+                                "esmodules": true
+                              }
+                            }
+                          ]
+                      </presets>
                   </configuration>
               </execution>
           </executions>
