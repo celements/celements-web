@@ -209,7 +209,7 @@ export class CelOverlay {
   _parseHTML(html) {
     const elem = document.createElement('div');
     elem.insertAdjacentHTML('afterbegin', html);
-    return Array.from(elem.childNodes);
+    return [...elem.childNodes];
   }
 
   async _loadContentAsync(loadObj) {
