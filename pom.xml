@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>5.8</version>
+    <version>5.9-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -145,7 +145,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>5.6</version>
+      <version>5.7-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -308,30 +308,8 @@
         </configuration>
       </plugin>
       <plugin>
-          <groupId>com.jarslab.maven</groupId>
-          <artifactId>babel-maven-plugin</artifactId>
-          <version>1.6</version>
-          <executions>
-              <execution>
-                  <id>js-transpile</id>
-                  <phase>process-resources</phase>
-                  <goals>
-                      <goal>babel</goal>
-                  </goals>
-                  <configuration>
-                      <verbose>true</verbose>
-                      <threads>4</threads>
-                      <babelSrc>${project.basedir}/babel-jslib/babel.min.js</babelSrc>
-                      <sourceDir>${project.basedir}/src/main/webapp/resources/</sourceDir>
-                      <targetDir>${project.basedir}/target/celements-web/resources/</targetDir>
-                      <jsIncludes>
-                          <jsInclude>**/*.mjs</jsInclude>
-                      </jsIncludes>
-                      <formatPresets>false</formatPresets>
-                      <presets>["env", { "modules": false }]</presets>
-                  </configuration>
-              </execution>
-          </executions>
+        <groupId>com.jarslab.maven</groupId>
+        <artifactId>babel-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
