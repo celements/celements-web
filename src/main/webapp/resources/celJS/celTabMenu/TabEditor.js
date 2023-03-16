@@ -961,12 +961,16 @@ TE.prototype = {
       savingDialog.hide();
       var failed = _me.showErrorMessages(jsonResponses);
       if ((typeof(execCallback) != 'undefined') && execCallback) {
-        execCallback(transport, jsonResponses, failed);
-        if (failed) {
-          $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
-        } else {
-          $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
+        try {
+          if (failed) {
+            $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
+          } else {
+            $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
+          }
+        } catch (exp) {
+          console.error('Saved-listener failed.', exp);
         }
+        execCallback(transport, jsonResponses, failed);
       }
     });
   }
