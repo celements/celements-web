@@ -919,7 +919,18 @@ TE.prototype = {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
-    _me.saveAllFormsAjax(function(transport) {
+    _me.saveAllFormsAjax(function(transport, jsonResponses) {
+      savingDialog.hide();
+      var failed = _me.showErrorMessages(jsonResponses);
+      try {
+        if (failed) {
+          $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
+        } else {
+          $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
+        }
+      } catch (exp) {
+        console.error('Saved-listener failed.', exp);
+      }
       window.onbeforeunload = null;
       document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
@@ -960,16 +971,16 @@ TE.prototype = {
     _me.saveAllFormsAjax(function(transport, jsonResponses) {
       savingDialog.hide();
       var failed = _me.showErrorMessages(jsonResponses);
-      if ((typeof(execCallback) != 'undefined') && execCallback) {
-        try {
-          if (failed) {
-            $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
-          } else {
-            $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
-          }
-        } catch (exp) {
-          console.error('Saved-listener failed.', exp);
+      try {
+        if (failed) {
+          $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
+        } else {
+          $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
         }
+      } catch (exp) {
+        console.error('Saved-listener failed.', exp);
+      }
+      if ((typeof(execCallback) != 'undefined') && execCallback) {
         execCallback(transport, jsonResponses, failed);
       }
     });
