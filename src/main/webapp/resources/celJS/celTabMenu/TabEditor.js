@@ -446,7 +446,7 @@ TE.prototype = {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         if (!failed) {
           window.onbeforeunload = null;
-          window.location.href = _me._getCancelURL();
+//          window.location.href = _me._getCancelURL();
         } else {
           console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
         }
