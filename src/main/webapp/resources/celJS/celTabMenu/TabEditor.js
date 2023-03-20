@@ -921,18 +921,20 @@ TE.prototype = {
     }
     _me.saveAllFormsAjax(function(transport, jsonResponses) {
       savingDialog.hide();
+      console.log('saveAllFormsAjax callback', jsonResponses);
       var failed = _me.showErrorMessages(jsonResponses);
       try {
         if (failed) {
           $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
         } else {
+          console.log('saveAllFormsAjax sucessfulSaved', jsonResponses);
           $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
         }
       } catch (exp) {
         console.error('Saved-listener failed.', exp);
       }
       window.onbeforeunload = null;
-      document.forms[oldSaveFormName].submit();
+//      document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
   } else {
     alert("Error: No 'edit' form!");
