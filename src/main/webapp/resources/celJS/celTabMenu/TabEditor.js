@@ -919,10 +919,9 @@ TE.prototype = {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
-    _me.saveAllFormsAjax(function(transport, jsonResponses) {
+    _me.saveAllFormsAjax(function(transport, jsonResponses, failed) {
       savingDialog.hide();
-      console.log('saveAllFormsAjax callback', jsonResponses, oldSaveFormName);
-      var failed = _me.showErrorMessages(jsonResponses);
+      console.log('saveAllFormsAjax callback', jsonResponses, failed, oldSaveFormName);
       try {
         if (failed) {
           $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
