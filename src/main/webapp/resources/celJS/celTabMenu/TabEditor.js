@@ -921,7 +921,7 @@ TE.prototype = {
     }
     _me.saveAllFormsAjax(function(transport, jsonResponses) {
       savingDialog.hide();
-      console.log('saveAllFormsAjax callback', jsonResponses);
+      console.log('saveAllFormsAjax callback', jsonResponses, oldSaveFormName);
       var failed = _me.showErrorMessages(jsonResponses);
       try {
         if (failed) {
