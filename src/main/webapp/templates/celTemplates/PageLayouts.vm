@@ -38,15 +38,13 @@
             #end
           </td>
           <td>$!layout.isActive()</td>
-          #if($isAdmin)
+          #if($isAdmin && ($layoutWiki == $context.database))
             #set($layoutFN = $services.reference.serialize($layout.spaceRef))
             <td><a href="?xpage=overlay&conf=PageLayoutsListing&action=export&layout=$!layoutFN">export</a></td>
-            #if($layoutWiki == $context.database)
             <td>
               <a href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layout=$!layoutFN">
               <img src="$services.celementsweb.getSkinFile(':icons/silk/cross.gif', 'file')" style="border: 0px;" alt="delete"/></a>
             </td>
-            #end
           #end
         </tr>
         #set($prevLayoutWiki = $layoutWiki)

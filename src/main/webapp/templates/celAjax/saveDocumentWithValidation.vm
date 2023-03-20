@@ -1,13 +1,12 @@
 #set($jsonBuilder = $services.json.newBuilder())
 $jsonBuilder.openDictionary()
-#set($map = $util.getHashMap())
-#set($devnull = $map.putAll($request.getParameterMap()))
-#set($validationResult = $services.editorsupport.validateRequest())
+#set($params = $services.docForm.parseRequestParams())
+#set($validationResult = $services.editorsupport.validate($params))
 ## Handle Validation Results
 #set($validationPassed = ($validationResult.size() == 0))
 #set($successful = $validationPassed)
 #if($validationPassed)
-  #set($updateResult = $services.docform.updateAndSaveDocFromMap($doc.documentReference, $map))
+  #set($updateResult = $services.docform.updateAndSaveDoc($doc.documentReference, $params))
   $jsonBuilder.addProperty("numSavedDocVersions", $updateResult.get('successful').size())
   $jsonBuilder.openArray("successfullySaved")
   #foreach($savedDocRef in $updateResult.get('successful'))
@@ -23,14 +22,11 @@ $jsonBuilder.openDictionary()
   #set($successful = $updateResult.failed.isEmpty())
 #else
   $jsonBuilder.openArray('errorMessages')
-  #foreach($key in $validationResult.keySet())
-    #foreach($messages in $validationResult.get($key).values())
-      #foreach($msg in $messages)
-        $jsonBuilder.addValue($adminMsg.get($msg))
-      #end
-      #if($services.stream.join($messages.stream(), '').isEmpty())
-        $jsonBuilder.addValue($key)
-      #end
+  #foreach($result in $validationResult)
+    #if("$!result.message" != '')
+      $jsonBuilder.addValue($adminMsg.get($result.message))
+    #else
+      $jsonBuilder.addValue($result.name)
     #end
   #end
   $jsonBuilder.closeArray()
