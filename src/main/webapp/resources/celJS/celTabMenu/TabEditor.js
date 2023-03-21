@@ -446,9 +446,9 @@ TE.prototype = {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
         try {
           if (failed) {
-            this.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
+            _me.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
           } else {
-            this.celFire('tabedit:successfulSaved', { 'jsonResponses' : jsonResponses });
+            _me.celFire('tabedit:successfulSaved', { 'jsonResponses' : jsonResponses });
           }
         } catch (exp) {
           console.error('Saved-listener failed.', exp);
