@@ -928,7 +928,7 @@ TE.prototype = {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
-    _me.saveAllFormsAjax(function(transport, jsonResponses, failed) {
+    _me.saveAllFormsAjax(function(transport) {
       window.onbeforeunload = null;
       document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
