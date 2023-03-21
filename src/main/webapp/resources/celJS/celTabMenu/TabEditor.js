@@ -959,7 +959,7 @@ TE.prototype = {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
-    var savingDialog = _me._getModalDialog();
+    const savingDialog = _me._getModalDialog();
     savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
     savingDialog.setBody(_me._loading.getLoadingIndicator(true));
     savingDialog.cfg.queueProperty("buttons", null);
@@ -968,7 +968,7 @@ TE.prototype = {
     //TODO add possibility to add JS-listener which can execute alternative save actions
     _me.saveAllFormsAjax(function(transport, jsonResponses) {
       savingDialog.hide();
-      var failed = _me.showErrorMessages(jsonResponses);
+      const failed = _me.showErrorMessages(jsonResponses);
       try {
         if (failed) {
           _me.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
@@ -996,9 +996,8 @@ TE.prototype = {
   */
  showErrorMessages : function(jsonResponses) {
    const _me = this;
-   var errorMessages = new Array();
+   const errorMessages = new Array();
    jsonResponses.each(function(response) {
-//     var formId = response.key;
      var formSaveResponse = response.value;
      if (!formSaveResponse.successful) {
        errorMessages.push(formSaveResponse.errorMessages);
@@ -1006,7 +1005,7 @@ TE.prototype = {
      }
    });
    if (errorMessages.length > 0) {
-     var errorMesgDialog = _me._getModalDialog();
+     const errorMesgDialog = _me._getModalDialog();
      errorMesgDialog.setHeader('Saving failed!');
      errorMesgDialog.setBody("saving failed for the following reasons:<ul><li>"
          + errorMessages.join('</li><li>').replace(new RegExp('<li>$'),'') + "</ul>");
