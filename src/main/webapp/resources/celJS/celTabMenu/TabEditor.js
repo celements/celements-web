@@ -955,11 +955,11 @@ TE.prototype = {
  saveAndContinue : function(execCallback) {
   const _me = this;
   //TODO add possibility to add JS-listener which can do additional 'isDirty' checks
-  if (this.isDirty()) {
+  if (_me.isDirty()) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
-    var savingDialog = this._getModalDialog();
+    var savingDialog = _me._getModalDialog();
     savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
     savingDialog.setBody(_me._loading.getLoadingIndicator(true));
     savingDialog.cfg.queueProperty("buttons", null);
@@ -971,10 +971,10 @@ TE.prototype = {
       var failed = _me.showErrorMessages(jsonResponses);
       try {
         if (failed) {
-          this.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
+          _me.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
           $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
         } else {
-          this.celFire('tabedit:successfulSaved', { 'jsonResponses' : jsonResponses });
+          _me.celFire('tabedit:successfulSaved', { 'jsonResponses' : jsonResponses });
           $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
         }
       } catch (exp) {
