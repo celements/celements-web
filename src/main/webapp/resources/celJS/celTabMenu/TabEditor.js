@@ -453,6 +453,7 @@ TE.prototype = {
         } catch (exp) {
           console.error('Saved-listener failed.', exp);
         }
+        alert('debugging?');
         if (!failed) {
           window.onbeforeunload = null;
           window.location.href = _me._getCancelURL();
