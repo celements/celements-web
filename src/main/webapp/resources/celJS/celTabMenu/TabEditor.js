@@ -444,9 +444,18 @@ TE.prototype = {
     const _me = this;
     var closeClickHandler = function() {
       _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
+        try {
+          if (failed) {
+            this.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
+          } else {
+            this.celFire('tabedit:successfulSaved', { 'jsonResponses' : jsonResponses });
+          }
+        } catch (exp) {
+          console.error('Saved-listener failed.', exp);
+        }
         if (!failed) {
           window.onbeforeunload = null;
-//          window.location.href = _me._getCancelURL();
+          window.location.href = _me._getCancelURL();
         } else {
           console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
         }
@@ -920,20 +929,8 @@ TE.prototype = {
       doBeforeEditSubmit();
     }
     _me.saveAllFormsAjax(function(transport, jsonResponses, failed) {
-      savingDialog.hide();
-      console.log('saveAllFormsAjax callback', jsonResponses, failed, oldSaveFormName);
-      try {
-        if (failed) {
-          $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
-        } else {
-          console.log('saveAllFormsAjax sucessfulSaved', jsonResponses);
-          $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
-        }
-      } catch (exp) {
-        console.error('Saved-listener failed.', exp);
-      }
       window.onbeforeunload = null;
-//      document.forms[oldSaveFormName].submit();
+      document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
   } else {
     alert("Error: No 'edit' form!");
@@ -974,8 +971,10 @@ TE.prototype = {
       var failed = _me.showErrorMessages(jsonResponses);
       try {
         if (failed) {
+          this.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
           $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
         } else {
+          this.celFire('tabedit:successfulSaved', { 'jsonResponses' : jsonResponses });
           $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
         }
       } catch (exp) {
