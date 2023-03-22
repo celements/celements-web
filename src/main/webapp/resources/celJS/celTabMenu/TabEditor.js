@@ -980,9 +980,7 @@ TE.prototype = {
       } catch (exp) {
         console.error('Saved-listener failed.', exp);
       }
-      if ((typeof(execCallback) != 'undefined') && execCallback) {
-        execCallback(transport, jsonResponses, failed);
-      }
+      execCallback && execCallback(transport, jsonResponses, failed);
     });
   }
  },
