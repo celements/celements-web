@@ -1,6 +1,6 @@
 #set($jsonBuilder = $services.json.newBuilder())
 $jsonBuilder.openDictionary()
-#set($params = $services.docForm.parseRequestParams())
+#set($params = $services.docform.parseRequestParams())
 #set($validationResult = $services.editorsupport.validate($params))
 ## Handle Validation Results
 #set($validationPassed = ($validationResult.size() == 0))
