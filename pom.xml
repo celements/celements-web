@@ -32,7 +32,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>5.10</version>
+  <version>5.10-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -169,7 +169,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-richtext-web</artifactId>
-      <version>5.1</version>
+      <version>5.2-SNAPSHOT</version>
       <type>war</type>
     </dependency>
 
