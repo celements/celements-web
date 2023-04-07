@@ -212,12 +212,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>5.7</version>
+      <version>5.8-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>5.12</version>
+      <version>5.13-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
