@@ -1065,10 +1065,10 @@ TE.prototype = {
        formfield.value = ed.getContent();
        console.log('updateOneTinyMCETextArea: for field ', formfield.id, formfield.value);
      } else {
-       console.warn('updateOneTinyMCETextArea: no serializer -> skip ' + ed.id);
+       console.warn('updateOneTinyMCETextArea: no serializer -> skip', ed.id);
      }
    } catch (exp) {
-     console.error('updateOneTinyMCETextArea: failed with exception ' + formfield.id,
+     console.error('updateOneTinyMCETextArea: failed with exception', formfield.id,
          ed.serializer, exp);
    }
  },
