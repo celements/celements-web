@@ -993,17 +993,11 @@ TE.prototype = {
   *          false if no errors have been displayed
   */
  showErrorMessages : function(jsonResponses) {
-   const _me = this;
-   const errorMessages = new Array();
-   jsonResponses.each(function(response) {
-     var formSaveResponse = response.value;
-     if (!formSaveResponse.successful) {
-       errorMessages.push(formSaveResponse.errorMessages);
-       errorMessages = errorMessages.flatten();
-     }
-   });
+   const errorMessages = jsonResponses.values()
+     .filter(response => response && !response.successful)
+     .flatMap(response => response.errorMessages || []);
    if (errorMessages.length > 0) {
-     const errorMesgDialog = _me._getModalDialog();
+     const errorMesgDialog = this._getModalDialog();
      errorMesgDialog.setHeader('Saving failed!');
      errorMesgDialog.setBody("saving failed for the following reasons:<ul><li>"
          + errorMessages.join('</li><li>').replace(new RegExp('<li>$'),'') + "</ul>");
