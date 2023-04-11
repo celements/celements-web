@@ -10,10 +10,11 @@
   #end
   #set($redirectedParams = "${redirectedParams}${param}=$!{request.get($param)}")
 #end
+#set($redDocRef = $services.reference.resolve($origRedURL))
 #if(!$origRedURL.startsWith('http://') && !$origRedURL.startsWith('https://'))
-  #set($redExternalURL = $xwiki.getURL($origRedURL, "view", "${redirectedParams}"))
-  #set($redFN = $!origRedURL)
-  #set($redURL = $xwiki.getURL($redFN, "view"))
+  #set($redExternalURL = $services.url.getURL($redDocRef, "view", "$!{redirectedParams}"))
+  #set($redFN = $services.reference.serialize($redDocRef))
+  #set($redURL = $services.url.getURL($redDocRef, "view"))
   #set($showIFrame = false)
 #else
   #set($redFN = '')
@@ -23,7 +24,7 @@
   #set($showIFrame = true)
 #end
 #if("$context.action" == 'view')
-#if(!$isAjaxCall && ("$!red_obj" == '') || ("$!origRedURL" == '') || (!$xwiki.exists($origRedURL) && !$origRedURL.startsWith('http://') && !$origRedURL.startsWith('https://')))
+#if(!$isAjaxCall && ("$!red_obj" == '') || ("$!origRedURL" == '') || (!$services.modelAccess.exists($redDocRef) && !$origRedURL.startsWith('http://') && !$origRedURL.startsWith('https://')))
 #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
 #set($overwriteRenderDocument = 'celInlineTemplates/RedirectDoesNotExistView.vm')
 $xwiki.parseTemplate("frameheader.vm")
