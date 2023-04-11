@@ -2179,12 +2179,14 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   });
 
 
+/* removed because it is standard for long and leads to issues in tinymce6
   function remove(element) {
     element = $(element);
     console.log('prototype remove', element, element.parentNode);
     element.parentNode.removeChild(element);
     return element;
   }
+*/
 
   var SELECT_ELEMENT_INNERHTML_BUGGY = (function(){
     var el = document.createElement("select"),
