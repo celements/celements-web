@@ -10,7 +10,7 @@
   #end
   #set($redirectedParams = "${redirectedParams}${param}=$!{request.get($param)}")
 #end
-#set($redDocRef = $services.reference.resolve($origRedURL))
+#set($redDocRef = $services.model.resolveDocument($origRedURL))
 #if(!$origRedURL.startsWith('http://') && !$origRedURL.startsWith('https://'))
   #set($redExternalURL = $services.url.getURL($redDocRef, "view", "$!{redirectedParams}"))
   #set($redFN = $services.reference.serialize($redDocRef))
