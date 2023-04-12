@@ -2178,6 +2178,12 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     show:    show
   });
 
+  const origRemoveFunc = Element.prototype.remove;
+  function remove(element) {
+    origRemoveFunc.call(element);
+    return $(element);
+  }
+
   var SELECT_ELEMENT_INNERHTML_BUGGY = (function(){
     var el = document.createElement("select"),
         isBuggy = true;
@@ -2530,6 +2536,7 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 
   Object.extend(methods, {
+    remove:  remove,
     update:  update,
     replace: replace,
     insert:  insert,
