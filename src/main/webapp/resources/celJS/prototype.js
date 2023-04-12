@@ -1,5 +1,7 @@
 /*  Prototype JavaScript framework, version 1.7.2
- *  (c) 2005-2010 Sam Stephenson, (c) 2023 forking to transition to vanilla js
+ *  (c) 2005-2010 Sam Stephenson
+ *  2022 start new forkt to transition to vanilla js
+ *  (c) 2022-2023 Synventis
  *
  *  Prototype is freely distributable under the terms of an MIT-style license.
  *  For details, see the Prototype web site: http://www.prototypejs.org/
