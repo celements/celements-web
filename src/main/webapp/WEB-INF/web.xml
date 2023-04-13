@@ -73,9 +73,9 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <!-- Initializes XWiki -->
+  <!-- Initializes Celements -->
   <listener>
-    <listener-class>org.xwiki.container.servlet.XWikiServletContextListener</listener-class>
+    <listener-class>com.celements.servlet.CelementsServletContextListener</listener-class>
   </listener>
 
   <listener>
