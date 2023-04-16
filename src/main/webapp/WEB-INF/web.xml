@@ -75,7 +75,7 @@
 
   <!-- Initializes Celements -->
   <listener>
-    <listener-class>com.celements.servlet.CelementsServletContextListener</listener-class>
+    <listener-class>com.celements.servlet.CelServletContextListener</listener-class>
   </listener>
 
   <listener>
