@@ -61,6 +61,10 @@
     <log4j.properties.logdir>${catalina.home}/logs</log4j.properties.logdir>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
     <!-- START xwiki-web-standard war -->
