@@ -179,7 +179,7 @@
 
   <servlet-mapping>
     <servlet-name>spring-dispatcher</servlet-name>
-    <url-pattern>/spring/*</url-pattern>
+    <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
  
   <!-- We override the mime type definition for javascript, javascript module and css files,
