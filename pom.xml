@@ -55,8 +55,6 @@
     <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
     <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
-    <hibernate.cfg.xml.connection.port />
-    <hibernate.cfg.xml.connection.host>localhost</hibernate.cfg.xml.connection.host>
     <log4j.properties.monitorInterval>60</log4j.properties.monitorInterval>
     <log4j.properties.logdir>${catalina.home}/logs</log4j.properties.logdir>
   </properties>
