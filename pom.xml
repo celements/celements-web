@@ -169,7 +169,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-richtext-web</artifactId>
-      <version>5.1.4</version>
+      <version>5.2</version>
       <type>war</type>
     </dependency>
 
@@ -212,7 +212,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>5.13-SNAPSHOT</version>
+      <version>5.13</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
