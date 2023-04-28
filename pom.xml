@@ -165,7 +165,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-commons</artifactId>
-      <version>5.0</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -180,7 +180,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-reference</artifactId>
-      <version>5.1</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -190,12 +190,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>5.0</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>5.1</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
