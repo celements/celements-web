@@ -80,7 +80,7 @@
       #if($plApi.exportLayoutXAR(false))
         $plApi.getPrettyName() successfully exported to xar.
       #else
-        <p>Failed to export layout '$request.layout'!</p>
+        <p>Failed to export layout $plApi.getPrettyName()!</p>
       #end
     #elseif(("$!request.action" == 'delete') && $services.layout.layoutExists($layoutSpaceRef))
       #if("$!request.confirm" == '1')
