@@ -1,72 +1,27 @@
 @charset "UTF-8";
-.struct_table {
-    display: flex;
-    flex-flow: column;
-    margin: 16px 0px;
+.cel_cell.searchbar {
+    position: relative;
+    width: 100%;
 }
 
-.struct_table_header {
-    padding: 5px 0px;
-    margin: 0px 0px;
-    font-weight: bold;
+.cel_cell.searchbar::before {
+    font-family: 'FontAwesome';
+    content: "\f002";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: lightgray;
 }
 
-.struct_table_data {
-    padding: 0px 0px;
-    margin: 0px 0px;
-}
+.cel_cell.searchbar input {
+    width: 100%;
+    padding: 10px 30px;
+    border: none;
+    border-bottom: 2px solid lightgrey;
+    margin: 3px 0 12px;
+  }
 
-.struct_table_row {
-    display: flex;
-    flex-flow: row;
-    padding: 2px 0px;
-}
-
-.struct_table_data .struct_table_row:nth-child(odd){
-    background-color: whitesmoke;
-}
-
-.struct_table ul.struct_table_data li.struct_table_row:hover,
-.struct_table ul.struct_table_data li.struct_table_row.open {
-    background-color: lightgrey;
-}
-
-.struct_table ul li.struct_table_row .struct_table_cell.editContentRTE {
-    flex: 0 0 99%;
-    max-height: 0;
-    padding: 0 2px;
-    transition: max-height 0.3s ease-out;
-}
-
-.struct_table ul li.struct_table_row.open .struct_table_cell.editContentRTE {
-    margin-bottom: 3px;
-    max-height: 1000px;
-    transition: max-height 0.8s ease-in;
-}
-
-.column_name {
-    flex: 1 0 150px;
-}
-
-.column_firstname{
-    flex: 1 0 100px;
-}
-
-.column_email{
-    flex: 1 0 350px;
-}
-
-.column_roles {
-    flex: 2 0 120px;
-}
-
-.column_action {
-    flex: 0 0 50px;
-}
-
-.struct_table_data .column_action {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-evenly;
-    text-align: center;
+.cel_cell.searchbar input:focus {
+    outline:none;
+    border-bottom: 2px solid black;
 }
