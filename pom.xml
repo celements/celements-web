@@ -55,27 +55,15 @@
     <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
     <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
-    <hibernate.cfg.xml.connection.port />
-    <hibernate.cfg.xml.connection.host>localhost</hibernate.cfg.xml.connection.host>
-    <log4j.properties.monitorInterval>60</log4j.properties.monitorInterval>
-    <log4j.properties.logdir>${catalina.home}/logs</log4j.properties.logdir>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
     <!-- START xwiki-web-standard war -->
-    <!-- needed for JSR 303 (Bean Validation) clients such as xwiki-core properties. 
-         It is just one JSR 303 implements among others so it's distribution decision to choose this one.
-         Note that hibernate-validator depends on Java 6 since 4.1 branch.
-    -->
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-    </dependency>
     <!-- Captcha component -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -90,11 +78,6 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-core-csrf</artifactId>
-    </dependency>
-    <!-- Legacy / Backward compatibility -->
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-core-legacy</artifactId>
     </dependency>
     <!-- END xwiki-web-standard war -->
     <dependency>
@@ -177,7 +160,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-commons</artifactId>
-      <version>5.0</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -192,7 +175,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-reference</artifactId>
-      <version>5.1</version>
+      <version>6.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-observation</artifactId>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -202,12 +190,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>5.0</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>5.1</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -222,7 +210,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>5.8</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -234,6 +222,12 @@
       <artifactId>celements-subsystem-migration-manager</artifactId>
       <version>5.2</version>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-spring-mvc</artifactId>
+      <version>6.0-SNAPSHOT</version>
+    </dependency>
+
     <!-- other dependencies -->
     <dependency>
       <groupId>xalan</groupId>
@@ -286,6 +280,13 @@
         </exclusion>
       </exclusions>
     </dependency>
+
+    <!-- JDBC connector -->
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>celements-web</finalName>

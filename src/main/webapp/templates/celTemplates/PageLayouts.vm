@@ -66,7 +66,7 @@
 #if($services.rightsAccess.isLayoutEditor())
   <div id="pagelayoutlist">
     <h1>Page Layout Manager</h1>
-    #set($layoutSpaceRef = $services.reference.resolve($request.layout))
+    #set($layoutSpaceRef = $services.reference.resolveSpaceRef($request.layout))
     #if("$!request.action" == 'createnew')
       #if("$!request.spacename" != '')
         #set($layoutSpaceRef = $services.reference.create().space($request.spacename).build())
@@ -80,7 +80,7 @@
       #if($plApi.exportLayoutXAR(false))
         $plApi.getPrettyName() successfully exported to xar.
       #else
-        FAILED to export $plApi.getPrettyName() as xar!
+        <p>Failed to export layout $plApi.getPrettyName()!</p>
       #end
     #elseif(("$!request.action" == 'delete') && $services.layout.layoutExists($layoutSpaceRef))
       #if("$!request.confirm" == '1')

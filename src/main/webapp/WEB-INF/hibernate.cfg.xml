@@ -38,13 +38,13 @@
     <property name="connection.provider_class">${hibernate.cfg.xml.connection.provider_class}</property>
     <property name="connection.pool_size">${hibernate.cfg.xml.connection.pool_size}</property>
     <property name="statement_cache.size">${hibernate.cfg.xml.statement_cache.size}</property>
-    <mapping resource="xwiki.celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
-    <mapping resource="feeds.celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
-    <mapping resource="event_class${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
-    <mapping resource="celements${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
-    <mapping resource="config_type_class${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
-    <mapping resource="config_type_properties_class${hibernate.cfg.xml.dbtype_extension}.hbm.xml"/>
-    <mapping resource="celements_blog${hibernate.cfg.xml.dbtype_extension}.hbm.xml" />
+    <mapping resource="xwiki.celements.hbm.xml"/>
+    <mapping resource="feeds.celements.hbm.xml"/>
+    <mapping resource="event_class.hbm.xml"/>
+    <mapping resource="celements.hbm.xml"/>
+    <mapping resource="config_type_class.hbm.xml"/>
+    <mapping resource="config_type_properties_class.hbm.xml"/>
+    <mapping resource="celements_blog.hbm.xml" />
     
   </session-factory>
 </hibernate-configuration>
