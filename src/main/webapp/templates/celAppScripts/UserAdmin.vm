@@ -1,0 +1,2 @@
+#set($layoutSpaceRef = $services.reference.resolveSpaceRef("UserAdmin"))
+$!services.layout.renderPageLayout($layoutSpaceRef)
