@@ -18,6 +18,11 @@
     margin: 0px 0px;
 }
 
+li.struct_table_row_full {
+  display: flex;
+  flex-flow: column;
+}
+
 .struct_table_data .struct_table_row_full:nth-child(odd){
     background-color: whitesmoke;
 }
