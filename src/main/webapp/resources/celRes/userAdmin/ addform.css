@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+#formwrapper {
+    display: flex;
+    flex-flow: row;
+}
+
+#personalien {
+    width: 100%;
+    padding: 0px 10px 0px 0px;
+}
+
+#optionswrapper {
+    width: 100%;
+    padding: 0px 0px 0px 10px;
+}
+
+.cel_cell.adduser input, select, .btn-group, .submitaction {
+    width: 100%;
+    margin: 3px 0 12px;
+}
+
+.cel_cell.adduser input[type=text] {
+    padding: 10px 10px;
+    border: none;
+    border-bottom: 2px solid lightgrey;
+}
+
+.cel_cell.adduser input[type=text]:focus {
+    outline:none;
+    border-bottom: 2px solid black;
+}
+
+select.cel_cell.adduser  {
+    padding: 10px 10px;
+    border: none;
+    background-color: lightgrey;
+}
+
+button.multiselect {
+    width: 100%;
+    padding: 10px 10px;
+    border: none;
+    background-color: lightgrey;
+}
+
+.cel_cell.submitaction {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    height: 100%;
+    background-color: lightgrey;
+    color: black;
+    border: none;
+    padding: 8px 8px;
+    margin: 6px 0 12px;
+}

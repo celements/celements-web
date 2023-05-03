@@ -1,0 +1,84 @@
+@charset "UTF-8";
+#useradmin {
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-flow: column;
+    margin: 8px 30px;
+}
+
+#useradmin *{
+    box-sizing: border-box;
+}
+
+#useradmin h1 {
+    background-color: steelblue;
+    color: white;
+    font-size: 16px;
+    padding: 6px 10px;
+}
+
+#useradmin h2 {
+    background-color: steelblue;
+    color: white;
+    font-size: 14px;
+    padding: 4px 10px;
+}
+
+#useradmin #main {
+    flex-grow: 6;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+}
+.cel_cell .dropdown  {
+    display: block;
+    width: 60px;
+    float: right;
+    position: relative;
+}
+
+.cel_cell .dropbtn {
+    display: block;
+    border: 2px solid steelblue;
+    color: steelblue;
+    text-align: center;
+    font-weight: bold;
+    padding: 0px 0px 10px;
+    margin: 1px 0px;
+}
+
+.cel_cell .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.cel_cell .dropdown-content {
+    display: none;
+    background-color: lightgray;
+    min-width: 160px;
+    position: absolute;
+    right: 0;
+    border-left: 0.5px solid black;
+    border-right: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+}
+
+.cel_cell .dropdown-content a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    border-top: 0.5px solid black;
+}
+
+.cel_cell .dropdown-content a:hover {
+    background-color: whitesmoke;
+}
+
+#useradmin #searchform, #addform{
+    margin: 0px 20px;
+}
+
+#useradmin #searchform {
+    display: flex;
+    flex-flow: column;
+}
