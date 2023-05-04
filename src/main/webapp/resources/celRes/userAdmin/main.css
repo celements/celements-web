@@ -60,6 +60,7 @@
     border-left: 0.5px solid black;
     border-right: 0.5px solid black;
     border-bottom: 0.5px solid black;
+    z-index: 1000;
 }
 
 .cel_cell .dropdown-content a {
