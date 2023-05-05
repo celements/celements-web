@@ -5,6 +5,10 @@
     margin: 16px 0px;
 }
 
+.struct_table ul.struct_table_header, .struct_table ul.struct_table_data {
+    list-style-type: none;
+}
+
 .struct_table_header {
     padding: 5px 0px;
     margin: 0px 0px;
@@ -12,34 +16,29 @@
 }
 
 .struct_table_data {
-	  display: flex;
+    display: flex;
     flex-flow: column;
     padding: 0px 0px;
     margin: 0px 0px;
 }
 
-li.struct_table_row_full {
-  display: flex;
-  flex-flow: column;
-}
-
-.struct_table_data .struct_table_row_full:nth-child(odd){
+.struct_table_data .struct_table_row:nth-child(odd){
     background-color: whitesmoke;
 }
 
-.struct_table_row {
+li.struct_table_row {
     display: flex;
-    flex-flow: row;
+    flex-flow: row wrap;
     padding: 2px 0px;
 }
 
-.struct_table ul.struct_table_data li.struct_table_row_full:hover,
-.struct_table ul.struct_table_data li.struct_table_row_full.open {
+.struct_table ul.struct_table_data li.struct_table_row:hover,
+.struct_table ul.struct_table_data li.struct_table_row.open {
     background-color: lightgrey;
 }
 
-.struct_table ul li.struct_table_row_full .struct_table_cell.editContentRTE {
-	  display: flex;
+.struct_table ul li.struct_table_row .struct_table_cell.editContentRTE {
+	display: flex;
     flex-flow: row;
     flex: 0 0 99%;
     max-height: 0;
@@ -47,7 +46,7 @@ li.struct_table_row_full {
     transition: max-height 0.3s ease-out;
 }
 
-.struct_table ul li.struct_table_row_full.open .struct_table_cell.editContentRTE {
+.struct_table ul li.struct_table_row.open .struct_table_cell.editContentRTE {
     margin-bottom: 3px;
     max-height: 1000px;
     transition: max-height 0.8s ease-in;
