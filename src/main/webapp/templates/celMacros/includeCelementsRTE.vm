@@ -2,8 +2,11 @@
   #set($lazyAdd = true)
 #end
 #set($jsService = $services.javascript)
-#set($jsLoadModeDefer = $!jsService.getJsLoadMode("DEFER"))
-#set($extJsParamDefer = $!jsService.createExtJSParam().setAction('file').setLoadMode($jsLoadModeDefer).setLazyLoad($lazyAdd))
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+#set($extJsParam = $extJsParam.setLazyLoad($lazyAdd))
+#if($xwiki.getXWikiPreferenceAsInt("cel_activate_jsdefer", 0) == 1)
+  #set($extJsParam = $extJsParam.setLoadMode($jsService.getJsLoadMode('DEFER')))
+#end
 #foreach($jsFile in $services.rteconfig.rteImplementation.javaScriptFiles)
-  $!jsService.includeExtJsFile($extJsParamDefer.setJsFile($jsFile))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile($jsFile))
 #end
