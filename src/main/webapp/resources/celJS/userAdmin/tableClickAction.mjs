@@ -1,9 +1,7 @@
-const entry = document.querySelector('.struct_table_row');
-
-entry.addEventListener("focus", () => {
-  entry.classList.toggle('open');
-});
-
-entry.addEventListener("blur", () => {
-  entry.classList.remove('open');
+document.querySelectorAll('.struct_table_data .struct_table_row').forEach(entry => { 
+  entry.addEventListener("click", () => {
+     document.querySelectorAll('.struct_table_data .struct_table_row').forEach(e => 
+              e.classList.remove('open'));
+          entry.classList.add('open');
+  }); 
 });
