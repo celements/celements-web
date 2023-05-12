@@ -2,7 +2,6 @@
 .struct_table {
     display: flex;
     flex-flow: column;
-    margin: 16px 0px;
 }
 
 .struct_table ul.struct_table_header, .struct_table ul.struct_table_data {

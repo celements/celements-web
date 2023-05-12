@@ -3,15 +3,17 @@
     width: 60px;
     float: right;
     position: relative;
+    margin: 15px 0px 0px;
 }
 
 .cel_cell .dropbtn {
     display: block;
-    border: 2px solid steelblue;
-    color: steelblue;
+    border: 2px solid #156eb9;;
+    color: #156eb9;;
+    font-size: 14px;
     text-align: center;
-    font-weight: bold;
-    padding: 0px 0px 10px;
+    font-weight: bolder;
+    padding: 0px 0px 6px;
     margin: 1px 0px;
 }
 
