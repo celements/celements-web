@@ -39,7 +39,6 @@
     <property name="connection.pool_size">${hibernate.cfg.xml.connection.pool_size}</property>
     <property name="statement_cache.size">${hibernate.cfg.xml.statement_cache.size}</property>
     <mapping resource="xwiki.celements.hbm.xml"/>
-    <mapping resource="feeds.celements.hbm.xml"/>
     <mapping resource="event_class.hbm.xml"/>
     <mapping resource="celements.hbm.xml"/>
     <mapping resource="config_type_class.hbm.xml"/>
