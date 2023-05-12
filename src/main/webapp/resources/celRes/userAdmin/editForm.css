@@ -1,16 +1,16 @@
 @charset "UTF-8";
 
-#formwrapper {
+.formWrapper {
     display: flex;
     flex-flow: row;
 }
 
-#personalien {
+.personalData {
     width: 100%;
     padding: 0px 10px 0px 0px;
 }
 
-#optionswrapper {
+.optionsWrapper {
     width: 100%;
     padding: 0px 0px 0px 10px;
 }
