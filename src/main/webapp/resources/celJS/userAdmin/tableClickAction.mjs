@@ -6,7 +6,9 @@ function registerListeners(entry){
   entry.addEventListener("mouseout", () => {entry.classList.remove('open')});
 }
 
-
+/* Tipp von Marc: click Event registrieren auf Body. bei jedem Klick den DOMTree hochgehen und prüfen, 
+ob der Klick auf "meinem" Element ist. Wenn nicht, schliesse das Element. 
+Vermutlich Performancehungrig, nach Alternativen googeln.*/
 
 /*document.querySelectorAll('.struct_table_data .struct_table_row').forEach(entry => { 
   entry.addEventListener("click", () => {
