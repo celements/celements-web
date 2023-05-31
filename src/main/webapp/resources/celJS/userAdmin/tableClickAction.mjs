@@ -8,7 +8,8 @@ function registerListeners(entry){
 
 /* Tipp von Marc: click Event registrieren auf Body. bei jedem Klick den DOMTree hochgehen und prüfen, 
 ob der Klick auf "meinem" Element ist. Wenn nicht, schliesse das Element. 
-Vermutlich Performancehungrig, nach Alternativen googeln.*/
+Alternative: Pfeil-Button zum Klicken, analog Mock-Filebase
+*/
 
 /*document.querySelectorAll('.struct_table_data .struct_table_row').forEach(entry => { 
   entry.addEventListener("click", () => {
