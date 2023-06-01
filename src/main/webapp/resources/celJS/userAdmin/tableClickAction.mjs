@@ -5,9 +5,9 @@ function openCloseTableRow(arrow){
   const entry = arrow.closest('ul.struct_table_data li.struct_table_row');
   entry.classList.toggle('open');
   if(classList.contains('open')){
-    arrow.innerHTML = <i class="fa fa-caret-down"></i>
+    arrow.innerHTML = '<i class="fa fa-caret-down"></i>';
   } else {
-    arrow.innerHTML = <i class="fa fa-caret-right"></i>
+    arrow.innerHTML = '<i class="fa fa-caret-right"></i>';
   }
 }
 
