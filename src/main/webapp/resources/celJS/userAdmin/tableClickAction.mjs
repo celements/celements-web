@@ -3,8 +3,8 @@ document.querySelectorAll('ul.struct_table_data li.struct_table_row .column_arro
             
 function registerListeners(arrow){
   const entry = arrow.closest('ul.struct_table_data li.struct_table_row');
-  
-  entry.addEventListener("click", () => {entry.classList.toggle('open')});
+  console.log(entry)
+  arrow.addEventListener("click", () => {entry.classList.toggle('open')});
 }
 
 /* Tipp von Marc: click Event registrieren auf Body. bei jedem Klick den DOMTree hochgehen und prüfen, 
