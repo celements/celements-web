@@ -1,9 +1,10 @@
-document.querySelectorAll('ul.struct_table_data > li.struct_table_row')
-            .forEach(entry => registerListeners(entry));
-
-function registerListeners(entry){
-  entry.addEventListener("mouseover", () => {entry.classList.add('open')});
-  entry.addEventListener("mouseout", () => {entry.classList.remove('open')});
+document.querySelectorAll('ul.struct_table_data li.struct_table_row .column_arrow')
+            .forEach(arrow => registerListeners(arrow));
+            
+function registerListeners(arrow){
+  const entry = arrow.closest('ul.struct_table_data li.struct_table_row');
+  
+  entry.addEventListener("click", () => {entry.classList.toggle('open')});
 }
 
 /* Tipp von Marc: click Event registrieren auf Body. bei jedem Klick den DOMTree hochgehen und prüfen, 
