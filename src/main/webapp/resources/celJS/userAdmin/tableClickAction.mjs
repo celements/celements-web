@@ -2,6 +2,7 @@ document.querySelectorAll('ul.struct_table_data li.struct_table_row .column_arro
      .forEach(arrow => arrow.addEventListener("click", () => openCloseTableRow(arrow)));
      
 function openCloseTableRow(arrow) {
+  const entry = arrow.closest('ul.struct_table_data li.struct_table_row');
   entry.classList.toggle('open');
   if (entry.classList.contains('open')) {
     arrow.innerHTML = '<i class="fa fa-caret-down"></i>';
