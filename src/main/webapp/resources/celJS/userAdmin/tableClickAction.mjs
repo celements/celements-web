@@ -8,8 +8,8 @@ function openCloseTableRow(arrow) {
     arrow.innerHTML = '<i class="fa fa-caret-down"></i>';
   } else {
     arrow.innerHTML = '<i class="fa fa-caret-right"></i>';
-  }
-}*/
+  }*/
+}
 
 /* Tipp von Marc: click Event registrieren auf Body. bei jedem Klick den DOMTree hochgehen und prüfen, 
 ob der Klick auf "meinem" Element ist. Wenn nicht, schliesse das Element. 
