@@ -36,27 +36,39 @@ li.struct_table_row {
     background-color: lightgrey;
 }
 
-.struct_table ul li.struct_table_row .struct_table_cell.editContentRTE {
-	display: flex;
-    flex-flow: row;
-    flex: 0 0 99%;
-    max-height: 0;
-    padding: 0 0px;
-    margin-left: 20px;
-    transition: max-height 0.3s ease-out;
-    overflow: hidden;
-}
-
-.struct_table ul li.struct_table_row.open .struct_table_cell.editContentRTE {
-    margin-left: 20px;
-    margin-bottom: 3px;
-    max-height: 1000px;
-    transition: max-height 0.8s ease-in;
-}
-
 .column_arrow {
     flex: 0 0 20px;
     text-align: center;
+}
+
+li.struct_table_row .column_arrow {
+    -webkit-transition: transform 0.5s linear;
+    -moz-transition: transform 0.5s linear;
+    -o-transition: transform 0.5s linear;
+    transition: transform 0.5s linear;
+    transform: rotate(0deg);
+    content: "\f0da";
+  }
+
+li.struct_table_row.open .column_arrow {
+    -webkit-transition: transform 0.5s linear;
+    -moz-transition: transform 0.5s linear;
+    -o-transition: transform 0.5s linear;
+    transition: transform 0.5s linear;
+    transform: rotate(90deg);
+}
+
+.column_active {
+    flex: 0 0 20px;
+    text-align: center;
+}
+
+.column_active.active {
+    content: "\f007";
+}
+
+.column_active.inactive {
+    content: "\f05e";
 }
 
 .column_name {
@@ -84,4 +96,22 @@ li.struct_table_row {
     flex-flow: row;
     justify-content: space-evenly;
     text-align: center;
+}
+
+.struct_table ul li.struct_table_row .struct_table_cell.editContentRTE {
+	display: flex;
+    flex-flow: row;
+    flex: 0 0 99%;
+    max-height: 0;
+    padding: 0 0px;
+    margin-left: 20px;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+}
+
+.struct_table ul li.struct_table_row.open .struct_table_cell.editContentRTE {
+    margin-left: 40px;
+    margin-bottom: 3px;
+    max-height: 1000px;
+    transition: max-height 0.8s ease-in;
 }
