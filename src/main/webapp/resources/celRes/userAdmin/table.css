@@ -59,7 +59,7 @@ li.struct_table_row.open .column_arrow {
 }
 
 .column_active {
-    flex: 0 0 20px;
+    flex: 0 0 22px;
     text-align: center;
 }
 
@@ -83,20 +83,18 @@ li.struct_table_row.open .column_arrow {
     flex: 2 0 120px;
 }
 
-.column_action {
-    flex: 0 0 50px;
+.column_edit, .column_delete {
+    flex: 0 0 20px;
 }
 
-.struct_table_data .column_action {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-evenly;
-    text-align: center;
+.column_edit .icon-link, .column_delete .icon-link {
+    text-decoration: none;
+    color: black;
 }
 
-.column_action .fa {
-    align-self: center;
-  }
+.column_edit .icon-link:hover, .column_delete .icon-link:hover {
+    color: #156eb9;
+}
 
 .struct_table ul li.struct_table_row .struct_table_cell.editContentRTE {
 	display: flex;

@@ -44,7 +44,7 @@ button.multiselect {
     background-color: lightgrey;
 }
 
-.cel_cell.submitaction {
+.submitaction, .cancelaction {
     display: block;
     text-align: center;
     text-decoration: none;
@@ -54,4 +54,13 @@ button.multiselect {
     border: none;
     padding: 8px 8px;
     margin: 6px 0 12px;
+}
+
+.submitaction a, .cancelaction a {
+    text-decoration: none;
+    color: black;
+}
+
+.submitaction:hover, .cancelaction:hover {
+    opacity: 80%;
 }
