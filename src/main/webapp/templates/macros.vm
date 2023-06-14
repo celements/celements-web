@@ -79,17 +79,6 @@ $xwiki.includeForm($topic)
 #end
 ##
 ##
-## #includeServlet("/xwiki/bin/view/Some/Document?params")
-## Invokes on the server another servlet corresponding to the passed URL, and returns the output.
-## This is done using standard servlet mechanisms (javax.servlet.RequestDispatcher#include).
-##
-#macro(includeServlet $url)
-<!-- including $url -->
-$xwiki.invokeServletAndReturnAsString($url)
-<!-- included $url -->
-#end
-##
-##
 ## #versions()
 ## Displays links to the last 4 versions (including the current one), and to the full history
 ## page of the current document.
