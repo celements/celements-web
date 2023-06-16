@@ -32,7 +32,7 @@
 #set($filled = ($request.get('submitted') == '1'))
 #set($complete = ($request_menu_link != ""))
 #set($newDocFN = "${space}.$request_menu_link")
-#set($newDocRef = $services.model.resolveDocument($newDocFN))
+#set($newDocRef = $services.reference.resolveDocRef($newDocFN))
 #set($exists = $xwiki.exists($newDocRef))
 ## check for valid Document Name
 #set($valid = ($request_menu_link == $xwiki.getFormEncoded($request_menu_link)))
@@ -41,12 +41,11 @@
   ## check if allowed to be moved if exists
   ## the moved page may not be one of it future parents itself
   #set($docParents = $services.webUtils.getDocumentParentsDocRefList($services.reference.resolve($doc_parent), true))
-  #set($addPage_isMovable = !$docParents.contains($services.reference.resolveDocRef("$!newDocFN")))
+  #set($addPage_isMovable = !$docParents.contains($newDocRef))
   #if(("$!{addPage_isMovable_LocalCheckMacro}" != '') && $xwiki.exists("$addPage_isMovable_LocalCheckMacro"))
     $xwiki.includeForm("$addPage_isMovable_LocalCheckMacro", false)
   #end
   #set($valid = $valid && $addPage_isMovable)
-##  <!-- exists already: $valid , $addPage_isMovable , $doc_parent , $docParents.contains("$!newDocFN") , '$docParents' , $addPage_isMovable_LocalCheckMacro -->
 #end
 #set($force_move = $!request.get("force_move") == "1")
 
