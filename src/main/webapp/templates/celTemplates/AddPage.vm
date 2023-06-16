@@ -41,7 +41,7 @@
   ## check if allowed to be moved if exists
   ## the moved page may not be one of it future parents itself
   #set($docParents = $services.webUtils.getDocumentParentsDocRefList($services.reference.resolve($doc_parent), true))
-  #set($addPage_isMovable = !$docParents.contains("$!newDocFN"))
+  #set($addPage_isMovable = !$docParents.contains($services.reference.resolveDocRef("$!newDocFN")))
   #if(("$!{addPage_isMovable_LocalCheckMacro}" != '') && $xwiki.exists("$addPage_isMovable_LocalCheckMacro"))
     $xwiki.includeForm("$addPage_isMovable_LocalCheckMacro", false)
   #end
