@@ -19,61 +19,49 @@
  */
 
 /* HELPERS */
-var cmDefaultItems = new Array();
-var cmOutliner = null;
+const cmDefaultItems = new Array();
+let cmOutliner = null;
 
-function contextMouseOver(n){
-  classAttribute = n.getAttributeNode('class');
+const contextMouseOver = function(n) {
+  const classAttribute = n.getAttributeNode('class');
   classAttribute.nodeValue = "contextMenuLinkOver";
-
-  $(document).stopObserving('mousedown', myContextMenu.hide);
+  document.removeEventListener('mousedown', myContextMenu.hideHandler);
   return true;
-}
+};
 
-function contextMouseOut(n){
-  classAttribute = n.getAttributeNode('class');
+const contextMouseOut = function(n) {
+  const classAttribute = n.getAttributeNode('class');
   classAttribute.nodeValue = "contextMenuLink";
-  
-  $(document).observe('mousedown', myContextMenu.hide);
+  document.addEventListener('mousedown', myContextMenu.hideHandler);
   return true;
-}
+};
 
-function confirmURL(t, u){
-
-  if(confirm(t))
+const confirmURL = function(t, u) {
+  if (confirm(t)) {
     window.location.href=u;
-}
+  }
+};
 
 /* ContextMenuItem Class */
 
 function ContextMenuItem(link, text, icon, shortcut) {
-
-  var me = this;
+  const me = this;
   
   this.link = link;
   this.text = text;
   this.icon = icon;
   this.shortcut = shortcut;
   
-  this.getHTML = function(nr){
-  
-    var tmpHTML = "<div class='contextMenuItem'><div class='contextMenuIcon'>";
-/**
-    if (me.icon) {
-      tmpHTML += "<img src='"+me.icon+"' alt='"+me.text+"' />";
-    } else {
-      tmpHTML += "&nbsp;";
-    }
-    //icon deactivated for now
- */
+  this.getHTML = function(nr) {
+    let tmpHTML = "<div class='contextMenuItem'><div class='contextMenuIcon'>";
     tmpHTML += "&nbsp;";
     
     tmpHTML += "</div><div class='contextMenuLink' onmouseover='javascript:contextMouseOver(this)' onmouseout='javascript:contextMouseOut(this)' onclick='javascript:";
     tmpHTML += me.link;
-    tmpHTML += "'>"+me.text;
+    tmpHTML += "'>" + me.text;
 
     if (me.shortcut) {
-      tmpHTML += '<span class="contextMenuItemShortcut">' + me.getShortcutHTML(); + '</span>';
+      tmpHTML += '<span class="contextMenuItemShortcut">' + me.getShortcutHTML() + '</span>';
     }
 
     tmpHTML += "</div></div>";
@@ -100,96 +88,95 @@ function ContextMenuItem(link, text, icon, shortcut) {
 }
 
 /* ContextMenu Class */
+class ContextMenu {
 
-function ContextMenu(){
+  #config;
+  #menuDiv;
+  
+  hideHandler;
+  
+  constructor() {
+    this.#config = [];
+    this.hideHandler = this.hide.bind(this);
+  }
 
-  var me = this;
-  
-  this.config = new Array();
-  this.menuDiv = null;
-  
-  this.show = function(e, config, contextClickElementId){
-    if ((typeof contextClickElementId != 'undefined') && $(contextClickElementId)) {
+  get menuDiv() {
+    if (!this.#menuDiv) {
+      this.#menuDiv = document.createElement('div');
+      this.#menuDiv.id = 'contextMenu';
+      this.#menuDiv.classList.add('contextMenu');
+      this.#menuDiv.style.zIndex = 999;
+      this.#menuDiv.style.position = 'absolute';
+    }
+    return this.#menuDiv;
+  }
+
+  show(e, config, contextClickElementId) {
+    this.#config = this.#config.concat(config || []);
+    if (!contextMenuLoading && this.#config.length == 0) {
+      return false; // nothin to show
+    }
+    if (contextClickElementId && $(contextClickElementId)) {
       getCmOutliner().outlineElement($(contextClickElementId));
     }
-    $(document).observe('mousedown', me.hide);
+    document.addEventListener('mousedown', this.hideHandler);
     
-    me.config = me.config.concat(config);
-    
-    var mouseCoord = me.getMousePos(e);
-
-    var y = mouseCoord[1] - 6;
-    var x = mouseCoord[0] - 3;
-    
-    var h = me.config.length*14 + 6;
-    h = null;
-    var w = null;
-    
+    const mouseCoord = this.getMousePos(e);
+    let y = mouseCoord[1] - 6;
+    let x = mouseCoord[0] - 3;
+    const menuDivDim = this.menuDiv.getBoundingClientRect();
+    const distanceToBottom = document.documentElement.clientHeight - mouseCoord[1] + document.documentElement.scrollTop;
+    const distanceToRight = document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft;
     // if the context menu ist too close to the browser border
-/*    if(document.documentElement.clientHeight){ // NOTE: this works only in ff and ie strict mode
-      if(document.documentElement.clientHeight - mouseCoord[1] + document.documentElement.scrollTop < h)
-        y = y - h;
-      if(document.documentElement.clientWidth - mouseCoord[0] + document.documentElement.scrollLeft < w)
-        x = x - w;
+    if (distanceToBottom < menuDivDim.height) {
+      y = y - menuDivDim.height;
     }
-*/
-    if(!me.menuDiv) {
-      me.menuDiv = new Element('div', {
-        'id' : 'contextMenu',
-        'class' : 'contextMenu'
-      }).setStyle({
-        'z-index' : 999,
-        'position' : 'absolute'
-      });
-      $$('body')[0].insert(me.menuDiv);
-//      me.menuDiv = new Div("contextMenu", null, document.getElementsByTagName("body")[0], y,x,h,w, "contextMenu");
-    } else {
-      me.setPosition(y,x);
-//      me.menuDiv.setPosition(y,x);
-    //  me.menuDiv.setSize(h,w);
+    if (distanceToRight < menuDivDim.width) {
+      x = x - menuDivDim.width;
     }
-    me.populate();
-        
+    document.body.appendChild(this.menuDiv);
+    this.setPosition(y,x);
+    this.populate();
     return false;
-  };
-  
-  this.setPosition = function (y, x) {
-    me.menuDiv.setStyle({
-      'left' : x + 'px',
-      'top' : y + 'px'
-    });
-  };
-  
-  this.internal_hide = function() {
-    me.config = new Array();
-    if(me.menuDiv)
-      me.menuDiv.remove();
-    me.menuDiv = null;
-  
-    $(document).stopObserving('mousedown', me.hide);
-  };
+  }
 
-  this._close = function(element) {
-    me.internal_hide();
+  setPosition(y, x) {
+    this.menuDiv.style.left = x + 'px';
+    this.menuDiv.style.top = y + 'px';
+  }
+
+  internal_hide() {
+    this.#config = [];
+    if (this.#menuDiv && this.#menuDiv.parentNode) {
+      this.#menuDiv.remove();
+    }
+    this.#menuDiv = null;
+  
+    document.removeEventListener('mousedown', this.hideHandler);
+  }
+
+  _close(element) {
+    this.internal_hide();
     getCmOutliner().removeAllOutlines(element);
-  };
+  }
 
-  this.closeAll = function() {
-    me._close($$('body')[0]);
-  };
+  closeAll() {
+    this._close($$('body')[0]);
+  }
 
-  this.hide = function(e){
-    me._close(e.element());
+  hide(e) {
+    this._close(e.element());
     e.stop();
-  };
+  }
   
-  this.getMousePos = function(e){
-    var tmpCoord = new Array(0,0);
+  getMousePos(ev) {
+    let e = ev;
+    const tmpCoord = [0,0];
     
-    var posx = 0;
-    var posy = 0;
+    let posx = 0;
+    let posy = 0;
     
-    if (!e) var e = window.event;
+    if (!e) e = window.event;
     if (e.pageX || e.pageY) // Firefox & co.
     {
       posx = e.pageX;
@@ -207,22 +194,20 @@ function ContextMenu(){
   
     return tmpCoord;
   
-  };
+  }
   
-  this.populate = function(){
-  
-    var tmpHTML = "<div class='contextMenuCorner'></div>";
+  populate() {
+    let tmpHTML = "<div class='contextMenuCorner'></div>";
     if (!contextMenuLoading) {
-      for(var i = 0; i < me.config.length; i++){
-        tmpHTML += me.config[i].getHTML(i);
+      for (let i = 0; i < this.#config.length; i++) {
+        tmpHTML += this.#config[i].getHTML(i);
       }
     } else {
       tmpHTML += "<div class='contextMenuItem'><img style='display:block; margin-right:auto; margin-left:auto;' src='"
         + window.CELEMENTS.getUtils().getPathPrefix() + "/file/celRes/ajax-loader-small.gif'/></div>";
     }
-    me.menuDiv.innerHTML = tmpHTML;
-  };
-  return true;
+    this.menuDiv.innerHTML = tmpHTML;
+  }
 }
 
 // global variable, the context menu object
@@ -264,8 +249,8 @@ var initContextMenuAsync = function() {
   }
 };
 
-var getElemIdsForClassName = function(cssClassName) {
-  var elemNames = new Array();
+const getElemIdsForClassName = function(cssClassName) {
+  const elemNames = new Array();
   $$('.' + cssClassName).each(function(elem) {
     if ((elem.id != '') &&(elemNames.indexOf(elem.id) < 0)) {
      elemNames[elemNames.size()] = elem.id;
@@ -274,8 +259,8 @@ var getElemIdsForClassName = function(cssClassName) {
   return elemNames;
 };
 
-var contextMenuAddValueForKeysToMap = function(resultMap, keysForValue, valueName) {
-  var getAndAddValueArray = function(id, theValue) {
+const contextMenuAddValueForKeysToMap = function(resultMap, keysForValue, valueName) {
+  const getAndAddValueArray = function(id, theValue) {
     var theValueArray = resultMap.get(id);
     if (!theValueArray) {
       theValueArray = new Array();
@@ -290,7 +275,7 @@ var contextMenuAddValueForKeysToMap = function(resultMap, keysForValue, valueNam
   });
 };
 
-var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
+const contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
     oldCssClassMap) {
   var reducedCssClassMap = new Hash(newCssClassMap);
   if (oldCssClassMap) {
@@ -299,7 +284,7 @@ var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
       var classNameArrayOld = oldCssClassMap.get(id);
       if (classNameArrayNew && classNameArrayOld
           && (classNameArrayOld.size() === classNameArrayNew.size())) {
-        var diffArray = classNameArrayOld.without(classNameArrayNew);
+        const diffArray = classNameArrayOld.without(classNameArrayNew);
         if (diffArray.size() <= 0) {
 //          console.log('>>>diffArray: unset ', id, diffArray, classNameArrayOld, classNameArrayNew);
           reducedCssClassMap.unset(id);
@@ -312,20 +297,20 @@ var contextMenuRemoveEqualsFromCssClassNamesMap = function(newCssClassMap,
   return reducedCssClassMap;
 };
 
-var contextMenuConvertIdClassMapToClassIdMap = function(cssClassMap) {
-  var classIdMap = new Hash();
+const contextMenuConvertIdClassMapToClassIdMap = function(cssClassMap) {
+  const classIdMap = new Hash();
   cssClassMap.keys().each(function(idKey) {
     contextMenuAddValueForKeysToMap(classIdMap, cssClassMap.get(idKey), idKey);
   });
   return classIdMap;
 };
 
-var contextMenuWriteReqArray = function(cssClassNameIdMap) {
-  var reqArray = new Array();
+const contextMenuWriteReqArray = function(cssClassNameIdMap) {
+  const reqArray = new Array();
   cssClassNameIdMap.keys().each(function(cssClass) {
-    var idsForCssClass = cssClassNameIdMap.get(cssClass);
+    const idsForCssClass = cssClassNameIdMap.get(cssClass);
     if (idsForCssClass.size() > 0) {
-      var reqDict = new Hash();
+      const reqDict = new Hash();
       reqDict.set('cmClassName', cssClass);
       reqDict.set('elemIds', idsForCssClass);
       reqArray.push(reqDict);
@@ -334,9 +319,9 @@ var contextMenuWriteReqArray = function(cssClassNameIdMap) {
   return reqArray;
 };
 
-var contextMenuItemDataForElemId = new Hash();
-var contextMenuIdCssClassNamesMap = null;
-var loadContextMenuForClassNames = function (cssClassNames) {
+const contextMenuItemDataForElemId = new Hash();
+let contextMenuIdCssClassNamesMap = null;
+const loadContextMenuForClassNames = function (cssClassNames) {
   var cssClassMap = new Hash();
   cssClassNames.each(function(cssClass) {
     var idsForCssClass = getElemIdsForClassName(cssClass);
@@ -347,14 +332,8 @@ var loadContextMenuForClassNames = function (cssClassNames) {
       contextMenuIdCssClassNamesMap);
   
   if (reducedCssClassMap.size() > 0) {
-//    if(contextMenuIdCssClassNamesMap) {
-//  	  console.log('>>>contextMenuIdCssClassNamesMap old: ', contextMenuIdCssClassNamesMap.size(), contextMenuIdCssClassNamesMap.inspect());
-//  	}
-//    console.log('>>>cssClassMap diff new: ', reducedCssClassMap.size(), reducedCssClassMap.inspect());
     var reducedClassNameIdMap = contextMenuConvertIdClassMapToClassIdMap(reducedCssClassMap);
-//    console.log('>>>reducedClassNameIdMap diff new: ', reducedClassNameIdMap.size(), reducedClassNameIdMap.inspect());
     var reqArray = contextMenuWriteReqArray(reducedClassNameIdMap);
-//    console.log('>>>reduced reqArray: ', reqArray.size(), Object.toJSON(reqArray));
     new Ajax.Request(getCelHost(), {
       method: 'post',
       parameters: {
@@ -375,10 +354,8 @@ var loadContextMenuForClassNames = function (cssClassNames) {
                       menuItemObj.text, menuItemObj.icon, menuItemObj.shortcut);
                 });
                 contextMenuItemDataForElemId.set(elemIdMenuItems.elemId, articleCMenu);
-                htmlElem.stopObserving('contextmenu', contextClickHandler);
-                htmlElem.observe('contextmenu', contextClickHandler);
-//              } else {
-//                console.warn('ContextMenuAjax ignore "vanished" element ', elemIdMenuItems.elemId);
+                htmlElem.removeEventListener('contextmenu', contextClickHandler);
+                htmlElem.addEventListener('contextmenu', contextClickHandler);
               }
             } catch (exp) {
               console.error('ContextMenuAjax failed to process elemIdMenuItems: ',
@@ -386,30 +363,26 @@ var loadContextMenuForClassNames = function (cssClassNames) {
             }
           });
           cm_mark_loading_finished();
-        /**} else {
-          alert("error: noJSON! Please contact your administrator.");
-          **/
         }
       }
     });
     contextMenuIdCssClassNamesMap = cssClassMap;
   } else {
-//    console.log('>>>skip contextmenu reloading.');
     cm_mark_loading_finished();
   }
 };
 
-var cm_mark_loading_finished = function() {
-  if(myContextMenu.menuDiv) {
+const cm_mark_loading_finished = function() {
+  if (myContextMenu.menuDiv) {
     myContextMenu.internal_hide();
   }
   contextMenuLoading = false;
   Event.fire(window, 'celcontextmenu:loadingfinished');
 };
 
-var contextClickElement = null;
+let contextClickElement = null;
 
-var contextClickHandler = function(event) {
+const contextClickHandler = function(event) {
   contextClickElement = this; // use 'this' to get the element on which the clickHandler
                   // is installed. event.element() returns the clicked element
   if (!event.shiftKey && (contextClickElement.id != "")
@@ -419,9 +392,9 @@ var contextClickHandler = function(event) {
   }
 };
 
-var contextKeydownExecuter = function(ev, nodeId) {
+const contextKeydownExecuter = function(ev, nodeId) {
    var cmi_action_found = false;
-   if(nodeId && contextMenuItemDataForElemId.get(nodeId)) {
+   if (nodeId && contextMenuItemDataForElemId.get(nodeId)) {
      contextMenuItemDataForElemId.get(nodeId).each(function(cmiElem) {
        if ((!cmiElem.shortcut.altKey || ev.altKey)
           && (!cmiElem.shortcut.ctrlKey || ev.ctrlKey)
@@ -436,20 +409,27 @@ var contextKeydownExecuter = function(ev, nodeId) {
    return cmi_action_found;
 };
 
-var getCmOutliner = function() {
-  if(cmOutliner == null) {
+const getCmOutliner = function() {
+  if (cmOutliner == null) {
     cmOutliner = new CELEMENTS.layout.Outliner;
   }
   return cmOutliner;
 }
 
-var documentContextClickHandler = function(event) {
+const documentContextClickHandler = function(event) {
   if (!event.shiftKey && !myContextMenu.show(event, cmDefaultItems)) {
-    event.stop();
+    event.preventDefault();
     return false;
   }
   return true;
 };
 
-var contextMenuLoading = true;
+let contextMenuLoading = true;
 $j(document).ready(initContextMenuAsync);
+
+window.addEventListener('load', function() {
+  if (document.body.classList.contains('cel_show_cm')) {
+    document.addEventListener('contextmenu', documentContextClickHandler);
+  }
+});
+

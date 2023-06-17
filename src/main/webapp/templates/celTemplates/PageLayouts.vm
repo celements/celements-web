@@ -1,46 +1,55 @@
 #macro(showListing)
-  #set($isLayoutEditorAvailable = $celementsweb.layoutEditorAvailable())
-  #if(!$isLayoutEditorAvailable)
+  #set($importDocRef = $services.reference.create().space('XWiki').doc('Import').build())
+  #set($importUrl = $services.url.getURL($importDocRef, 'import', 'xpage=overlay&conf=XarImport'))
+  #if(!$services.layout.layoutEditorAvailable())
     <p>The celements LayoutEditor is missing. Please get a current version from
       <a target="_blank" href="http://maven.celements.ch/releases/celLayoutEditor/?C=M;O=D">http://maven.celements.ch/releases/celLayoutEditor/</a>
-      and install it with the <a href="$xwiki.getURL('XWiki.Import','import','xpage=overlay&conf=XarImport')">Import Manager</a>.
+      and install it with the <a href="$!importUrl">Import Manager</a>.
     </p>
   #else
     <p>click Pretty Name to edit</p>
-    <p>Import additional Layouts with the <a href="$xwiki.getURL('XWiki.Import','import','xpage=overlay&conf=XarImport')">Import Manager</a>.
+    <p>Import additional Layouts with the <a href="$!importUrl">Import Manager</a>.
   #end
-  #set($layoutsMap = $celementsweb.getAllPageLayouts())
-  #if($layoutsMap.keySet().size() > 0)
+  #set($layouts = $services.layout.getAllLayouts())
+  #if(!$layouts.isEmpty())
     <table>
       <tr>
         <th class="prettyname">Pretty Name</th>
         <th class="active">Active</th>
         #if($isAdmin)
-          <th class="actions">Actions</th>
+          <th class="actions" colspan="2">Actions</th>
         #end
       </tr>
-      #foreach($layoutKey in $layoutsMap.keySet())
+      #foreach($layout in $layouts)
+        #set($layoutWiki = $layout.spaceRef.parent.name)
+        #if($layoutWiki != $prevLayoutWiki)
+        <tr><th colspan="10"><hr></th></tr>
+        <tr><th colspan="10">$!layoutWiki</th></tr>
+        #end
         <tr>
-          #set($pretty_name = $layoutsMap.get($layoutKey))
-          #set($plApi = $celementsweb.getPageLayoutApiForName($layoutKey))
+          <!-- layout: $layout -->
           <td class="column${velocityCount}">
-            #if($isLayoutEditorAvailable)
-              #set($editLink = $xwiki.getURL("$!{layoutKey}.WebHome", 'view'))
-              <a href="$editLink">$!pretty_name</a>
+            #if($services.layout.layoutEditorAvailable())
+              <a href="$!services.url.getExternalURL($layout.spaceRef)">
+                $!layout.prettyName
+              </a>
             #else
-              $!pretty_name
+              $!layout.prettyName
             #end
           </td>
-          <td>$plApi.isActive()</td>
-            #if($isAdmin)
-              <td><a href="?xpage=overlay&conf=PageLayoutsListing&action=export&layoutName=$!layoutKey">export</a></td>
-              <td>
-                <a href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layoutName=$!layoutKey">
-                <img src="$celementsweb.getSkinFile(':icons/silk/cross.gif', 'file')" style="border: 0px;" alt="delete"/></a>
-              </td>
-            #end
+          <td>$!layout.isActive()</td>
+          #if($isAdmin && ($layoutWiki == $context.database))
+            #set($layoutFN = $services.reference.serialize($layout.spaceRef))
+            <td><a href="?xpage=overlay&conf=PageLayoutsListing&action=export&layout=$!layoutFN">export</a></td>
+            <td>
+              <a href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layout=$!layoutFN">
+              <img src="$services.celementsweb.getSkinFile(':icons/silk/cross.gif', 'file')" style="border: 0px;" alt="delete"/></a>
+            </td>
+          #end
         </tr>
+        #set($prevLayoutWiki = $layoutWiki)
       #end
+      <tr><th colspan="10"><hr></th></tr>
     </table>
   #else
     <p>No Page Layouts found.</p>
@@ -54,39 +63,36 @@
   </form>
 #end ## showListing
 
-#if($xwiki.hasAdminRights())
+#if($services.rightsAccess.isLayoutEditor())
   <div id="pagelayoutlist">
     <h1>Page Layout Manager</h1>
+    #set($layoutSpaceRef = $services.reference.resolveSpaceRef($request.layout))
     #if("$!request.action" == 'createnew')
       #if("$!request.spacename" != '')
-        $adminMsg.get($services.layout.createNewLayout("$!request.spacename"))
+        #set($layoutSpaceRef = $services.reference.create().space($request.spacename).build())
+        $adminMsg.get($services.layout.createLayout($layoutSpaceRef))
       #else
         <p style="color:red;">Please enter a non empty layout space name!</p>
       #end
       <p><a href="">back to listing</a></p>
-    #elseif($isAdmin && ("$!request.action" == 'export') && $celementsweb.layoutExists("$!request.layoutName"))
-      #set($plApi = $celementsweb.getPageLayoutApiForName("$!request.layoutName"))
+    #elseif(("$!request.action" == 'export') && $services.layout.layoutExists($layoutSpaceRef))
+      #set($plApi = $services.layout.getPageLayoutApiForRef($layoutSpaceRef))
       #if($plApi.exportLayoutXAR(false))
         $plApi.getPrettyName() successfully exported to xar.
       #else
-        FAILED to export $plApi.getPrettyName() as xar!
+        <p>Failed to export layout $plApi.getPrettyName()!</p>
       #end
-    #elseif(("$!request.action" == 'delete') && $celementsweb.layoutExists("$!request.layoutName"))
-      #set($layoutKey = "$!{request.layoutName}")
+    #elseif(("$!request.action" == 'delete') && $services.layout.layoutExists($layoutSpaceRef))
       #if("$!request.confirm" == '1')
-        #if(!$isAdmin)
-          <p style="color:red;">Sorry you do not have enough rights to delete a layout.</p>
+        #if($services.layout.deleteLayout($layoutSpaceRef))
+          <p>Successfully deleted layout '$request.layout'.</p>
         #else
-          #if($isAdmin && $celementsweb.deleteLayout($layoutKey))
-		        <p>Successfully deleted layout '$!layoutKey'.</p>
-          #else
-            <p>Failed to delete layout '$!layoutKey'!</p>
-          #end
+          <p>Failed to delete layout '$request.layout'!</p>
         #end
         #showListing()
       #else
-        <p>Are you sure you want delete the '$!layoutKey' layout?</p>
-        <a class="deleteyes" href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layoutName=$!layoutKey&confirm=1">delete</a>
+        <p>Are you sure you want delete the '$request.layout' layout?</p>
+        <a class="deleteyes" href="?xpage=overlay&conf=PageLayoutsListing&action=delete&layout=$!{request.layout}&confirm=1">delete</a>
         <a class="deleteno" href="?xpage=overlay&conf=PageLayoutsListing">do NOT delete</a>
       #end
     #else

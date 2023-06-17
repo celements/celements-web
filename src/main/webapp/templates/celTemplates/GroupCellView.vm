@@ -1,6 +1,4 @@
-#set($cellObj = "")
 #set($cellObj = $celldoc.getObject('Celements.GroupCellClass', false))
-#set($groupCellLayout = "$!cellObj.getProperty('render_layout').getValue()")
-#if("$!groupCellLayout" != '')
-$celementsweb.renderPageLayout($groupCellLayout)
-#end
+#set($cellLayoutName = $cellObj.getProperty('render_layout').getValue())
+#set($cellLayoutRef = $services.reference.resolveSpaceRef($cellLayoutName))
+$services.layout.renderPageLayout($cellLayoutRef)

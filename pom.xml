@@ -27,12 +27,12 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>5.7</version>
+    <version>6.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>5.6-SNAPSHOT</version>
+  <version>6.0-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -48,34 +48,21 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <catalina.port>10081</catalina.port>
     <catalina.home>${env.CATALINA_HOME}</catalina.home>
     <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
     <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
     <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
-    <hibernate.cfg.xml.connection.port />
-    <hibernate.cfg.xml.connection.host>localhost</hibernate.cfg.xml.connection.host>
-    <log4j.properties.monitorInterval>60</log4j.properties.monitorInterval>
-    <log4j.properties.logdir>${catalina.home}/logs</log4j.properties.logdir>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
     <!-- START xwiki-web-standard war -->
-    <!-- needed for JSR 303 (Bean Validation) clients such as xwiki-core properties. 
-         It is just one JSR 303 implements among others so it's distribution decision to choose this one.
-         Note that hibernate-validator depends on Java 6 since 4.1 branch.
-    -->
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-validator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-    </dependency>
     <!-- Captcha component -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -91,16 +78,11 @@
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-core-csrf</artifactId>
     </dependency>
-    <!-- Legacy / Backward compatibility -->
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-core-legacy</artifactId>
-    </dependency>
     <!-- END xwiki-web-standard war -->
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-scheduler</artifactId>
-      <version>5.0</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
@@ -133,19 +115,19 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>5.7</version>
+      <version>6.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>5.5</version>
+      <version>6.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>5.5</version>
+      <version>6.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -160,63 +142,91 @@
       <version>4.9.11-CEL5</version>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>tinymce-langs-v6</artifactId>
+      <version>6.3.0-CEL5</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-richtext-web</artifactId>
+      <version>6.0-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
 
     <!-- celements dependencies -->
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-commons</artifactId>
-      <version>5.0</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>5.6</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-component</artifactId>
-      <version>5.2</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-reference</artifactId>
-      <version>5.0</version>
+      <version>6.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-observation</artifactId>
+      <version>6.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-servlet</artifactId>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>5.0</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>5.0</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>5.4</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>5.7-SNAPSHOT</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>5.3</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-captcha</artifactId>
-      <version>5.1</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-subsystem-migration-manager</artifactId>
-      <version>5.2</version>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-spring-mvc</artifactId>
+      <version>6.0-SNAPSHOT</version>
+    </dependency>
+
     <!-- other dependencies -->
     <dependency>
       <groupId>xalan</groupId>
@@ -243,10 +253,6 @@
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
     </dependency>
-    <dependency>
-      <groupId>info.informatica</groupId>
-      <artifactId>jclf</artifactId>
-    </dependency>
     <!-- JAX-RS implementation -->
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
@@ -269,7 +275,14 @@
         </exclusion>
       </exclusions>
     </dependency>
-   </dependencies>
+
+    <!-- JDBC connector -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+
+  </dependencies>
   <build>
     <finalName>celements-web</finalName>
     <plugins>
@@ -294,6 +307,10 @@
             </overlay>
           </overlays>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.jarslab.maven</groupId>
+        <artifactId>babel-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

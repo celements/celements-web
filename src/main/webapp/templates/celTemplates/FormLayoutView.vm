@@ -10,8 +10,7 @@
 #set($formLayoutName = "$!formConfigObj.getProperty('formLayout').getValue()")
 ##
 <div class="formLayout">
-#set($formLayoutDocRef = $services.model.createDocumentReference("", $formLayoutName, "WebHome"))
-#set($formLayoutSpaceRef = $formLayoutDocRef.lastSpaceReference)
+#set($formLayoutSpaceRef = $services.reference.create().space($formLayoutName).build())
   #if($services.layout.canRenderLayout($formLayoutSpaceRef))
     #set($layoutApi = $services.layout.getPageLayoutApiForRef($formLayoutSpaceRef))
     #if($layoutApi.isEditorLayoutType())

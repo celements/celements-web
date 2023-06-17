@@ -1,0 +1,53 @@
+@import url(https://fonts.googleapis.com/css?family=Terminal+Dosis:400,200,300,500,600,700,800);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+
+.filebasePicker #attachments {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.filebasePicker #attachments.celDropOverActive {
+  border: 3px dashed #3E3E3E;
+  cursor: copy;
+}
+.filebasePicker #attachments.celDropOverActive::after {
+  content: "drop files here";
+  position: absolute;
+  align-items: center;
+  display: block;
+  top: 50%;
+  left: 40%;
+  font-size: 50px;
+  font-weight: bold;
+  color: black;
+}
+.filebasePicker #attachments.celDropOverActive div.imagePickerWrapper {
+  opacity: 0.6;
+}
+.filebasePicker div.imagePickerWrapper {
+  position: relative;
+  margin: 0;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  width: 107px;
+  height: 107px;
+  border: 1px solid #D2D2D2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0px;
+  font-size: 0px;
+}
+.filebasePicker div.imagePickerWrapper div.imagePickerSource {
+  border: 4px dashed transparent;
+}
+.filebasePicker div.imagePickerWrapper div.imagePickerSource img {
+  background: url(../celRes/transpBGsmall.gif);
+}
+.filebasePicker div.imagePickerWrapper div.imagePickerSource.selected {
+  border: 4px dashed #ff9900;
+}
+.filebasePicker div.imagePickerWrapper:hover div.imagePickerSource img {
+  border-style: solid;
+  cursor: pointer;
+}

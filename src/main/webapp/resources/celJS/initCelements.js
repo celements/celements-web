@@ -780,18 +780,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const metas = $$('meta[name="cel-GAA-Num"]');
     if ((metas.size() > 0) && (metas[0].content != '')) {
       const gaaNum = metas[0].content;
-
-      (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() {
-          (i[r].q = i[r].q || []).push(arguments);
-        }, i[r].l = 1 * new Date(); a = s.createElement(o),
-          m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
-      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-      ga('create', gaaNum, window.getCelDomain());
-      ga('set', 'anonymizeIp', true);
-      ga('send', 'pageview');
-      console.log('finish initalizing google universal analytics.', gaaNum);
+      if (gaaNum.startsWith('UA-')) { // deprecated Universal Analytics (obsolete by 1.7.2023)
+        (function(i, s, o, g, r, a, m) {
+          i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments);
+          }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', gaaNum, window.getCelDomain());
+        ga('set', 'anonymizeIp', true);
+        ga('send', 'pageview');
+        console.log('finish initalizing google universal analytics.', gaaNum);
+      } else {
+        (function(d, o, g, s, m) {
+          s = d.createElement(o); m = d.getElementsByTagName(o)[0];
+          s.async = 1; s.src = g; m.parentNode.insertBefore(s, m);
+        })(document, 'script', 'https://www.googletagmanager.com/gtag/js?id='+gaaNum);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', gaaNum);
+        console.log('finish initalizing google analytics v4.', gaaNum);
+      }
     }
   });
 

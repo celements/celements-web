@@ -1,0 +1,98 @@
+@charset "UTF-8";
+html, body {
+  height: 100%;
+}
+
+.generalOverlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.overlayBack {
+  background-color: black;
+  opacity: 0.5;
+  filter: alpha(opacity = 50);
+}
+
+.cel_langbar {
+  margin-bottom: 13px;
+}
+
+.cel_langbar .langitem {
+  margin-right: 13px;
+}
+
+.cel_closebutton {
+  background-image: url(/file/resources/celRes/close.png);
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  right: -15px;
+  top: -15px;
+  cursor: pointer;
+}
+.cel_closebutton:hover {
+  background-image: url("/file/resources/celRes/close-hover.png");
+}
+
+.main.layoutsubsection {
+  margin: 0 auto;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  padding:30px;
+  background: white;
+  position: relative;
+  width:800px;
+}
+
+body.celementsmenubarvisible .main.layoutsubsection {
+  margin-top: 42px;
+}
+
+.generalOverlay .layoutsubsection .cel_overlaybody {
+  position: relative;
+  width: 100%;
+  overflow-y : auto;
+  overflow-x : hidden;
+}
+
+.generalOverlay .cel_overlaybody h1,
+.generalOverlay .cel_overlaybody h2,
+.generalOverlay .cel_overlaybody h3 {
+  font-size: 18px;
+  line-height: 21px;
+  margin-left: 0;
+  margin-bottom: 25px;
+  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-style: normal;
+  color: black;
+}
+
+.generalOverlay .cel_overlaybody h2 {
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.generalOverlay .cel_overlaybody h3 {
+  font-size: 14px;
+  line-height: 17px;
+}
+/* MOBILE LANDSCAPE */
+
+@media only screen and (max-width: 800px) { 
+  .main.layoutsubsection {
+    position:relative;
+    width:75%;
+    margin-top: 4%;
+  }
+}

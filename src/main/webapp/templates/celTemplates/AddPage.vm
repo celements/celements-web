@@ -58,7 +58,7 @@
   #set($editAction = 'inline')
   #set($newDocTemplateDocRef = $services.model.resolveDocument($newDocTemplateFN))
   #set($page_type = $services.pageType.getPageTypeRef($newDocTemplateDocRef))
-  #set($layout_type = $xwiki.celementsweb.getPageLayoutForDoc($newDocTemplateDocRef))
+  #set($layout_type = $services.layout.getPageLayoutForDoc($newDocTemplateDocRef))
 #end
 #if("$!request.get('page_type')" != '')
   #set($page_type = $!request.get('page_type'))
@@ -329,26 +329,19 @@
       </select>
       </td>
       </tr>
-    #set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
-    #if($cel_pageLayouts.keySet().size() > 1)
+    #set($cel_pageLayouts = $services.layout.getActiveLayouts())
+    #if(!$cel_pageLayouts.isEmpty())
       <tr>
       <td>$adminMsg.get('cel_tm_page_master')</td>
       <td>
-    #set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
-    <select size="1" name="page_layout">
-      #set($layoutSelected = '')
-      #if("$!layout_type" == '')
-        #set($layoutSelected = 'selected="selected" ')
+      #set($cel_currentPageLayout = "$!layout_type")
+      <select size="1" name="page_layout">
+        <option #if("$!cel_currentPageLayout" == '')selected="selected"#end value="">$adminMsg.cel_default_pagelayout</option>
+      #foreach($cel_pageLayout in $cel_pageLayouts)
+        #set($cel_pageLayoutKey = $cel_pageLayout.spaceRef.name)
+        <option #if($cel_currentPageLayout == $cel_pageLayoutKey)selected="selected"#end value="$!cel_pageLayoutKey">$!cel_pageLayout.prettyName</option>
       #end
-      <option $!{layoutSelected}value="" label="$cel_defaultLayout">$cel_defaultLayout</option>
-    #foreach($cel_pageLayoutKey in $cel_pageLayouts.keySet())
-      #set($layoutSelected = '')
-      #if("$!layout_type" == "$!cel_pageLayoutKey")
-        #set($layoutSelected = 'selected="selected" ')
-      #end
-      <option $!{layoutSelected}value="$cel_pageLayoutKey" label="$cel_pageLayouts.get($cel_pageLayoutKey)">$cel_pageLayouts.get($cel_pageLayoutKey)</option>
-    #end
-    </select>
+      </select>
       </td>
       </tr>
       #end

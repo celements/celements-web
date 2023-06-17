@@ -28,21 +28,15 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
     <input type="hidden" name="language" value="$!tdoc.language" />
   #if($celementsweb.getSubMenuItemsForParent($doc.getFullName(), $doc.getSpace()).size() == 0)
     <div id="groupcell_container">
-    #set($layoutsMap = $celementsweb.getAllPageLayouts())
     #set($cel_currentRenderLayout = "$!cellObj.getProperty('render_layout').getValue()")
     <label for="Celements.GroupCellClass_${cellObj.number}_render_layout" style="font-size:7pt">Select Sub-Layout: </label>
     <select id="Celements.GroupCellClass_${cellObj.number}_render_layout" size="1" style="width:100px;" name="Celements.GroupCellClass_${cellObj.number}_render_layout">
-        <option #if("$!cel_currentRenderLayout" == '') selected="selected" #end value="" label="---">---</option>
-    #foreach($layoutKey in $layoutsMap.keySet())
-    	#if("$!item" != "$doc.space")
-    	  #set($layoutApi = $celementsweb.getPageLayoutApiForName($layoutKey))
-    	  #if("$!layoutsMap.get($layoutKey)" != '')
-            #set($layoutName = $layoutsMap.get($layoutKey))
-    	  #else
-            #set($layoutName = $layoutKey)
-          #end
-          <option #if("$!cel_currentRenderLayout" == "$!layoutKey") selected="selected" #end value="$layoutKey" label="$layoutApi.getPrettyName()">$layoutName</option>
-        #end
+      <option value="" #if("$!cel_currentRenderLayout" == '')selected#end>---</option>
+    #foreach($cel_pageLayout in $services.layout.getAllLayouts())
+    	#if($cel_pageLayout.spaceRef != $doc.documentReference.lastSpaceReference)
+        #set($cel_pageLayoutKey = $cel_pageLayout.spaceRef.name)
+        <option #if($cel_currentRenderLayout == $cel_pageLayoutKey)selected="selected"#end value="$!cel_pageLayoutKey">$!cel_pageLayout.prettyName</option>
+      #end
     #end
     </select>
     </div>

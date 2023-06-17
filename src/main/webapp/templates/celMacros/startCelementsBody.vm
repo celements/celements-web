@@ -5,7 +5,7 @@
 ## OUTPUT:
 ##
 #if(!$finaliseCelementsDocumentHeaderRUN) ## lacy call
-$xwiki.parseTemplate("celMacros/finaliseCelementsDocumentHeader.vm")
+#parse("celMacros/finaliseCelementsDocumentHeader.vm")
 #end
 $!services.metatag.collectHeaderTags()
 $!services.metatag.displayCollectedMetaTags()
@@ -19,6 +19,10 @@ $!services.metatag.displayCollectedMetaTags()
   #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celdocpath_${parentFullName}")
   #set($HTMLBodyCSSClasses = $HTMLBodyCSSClasses.trim())
 #end
+#if($cel_loadContextMenu)
+  #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} cel_show_cm")
+  #set($HTMLBodyCSSClasses = $HTMLBodyCSSClasses.trim())
+#end
 #if($cel_loadAdminMenuBar)
   #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celementsmenubarvisible")
   #set($HTMLBodyCSSClasses = $HTMLBodyCSSClasses.trim())
@@ -29,14 +33,14 @@ $!services.metatag.displayCollectedMetaTags()
   #set($onLoadJS = "${onLoadJS};")
 #end
 ## get page specific onLoad JavaScripts
-$xwiki.parseTemplate("celMacros/getOnLoad.vm")
+#parse("celMacros/getOnLoad.vm")
 #set($onLoadJS = "$!{onLoadJS}$!{additionalOnLoad}")
 <body##
 #if("$!skinBodyAttributes" != '') $!{skinBodyAttributes}#end
 #if("$!HTMLBodyCSSClasses" != '') class="$!{HTMLBodyCSSClasses}"#end##
 #if("$!onLoadJS" != '') onload="$!{onLoadJS}"#end>
 #if($cel_isEditMode && !$cel_useInlineEditorMode)
-$xwiki.parseTemplate("celMacros/getTabMenu.vm")
+#parse("celMacros/getTabMenu.vm")
 #elseif($cel_loadAdminMenuBar)
 #parse('celMacros/MenuBar.vm')
 #end
@@ -49,5 +53,5 @@ $xwiki.includeForm("celements2web:${celementsLoadInOverlay}",false)
 #else
 $xwiki.parseTemplate("${celementsLoadInOverlay}")
 #end
-$xwiki.parseTemplate("celMacros/closeInlineOverlay.vm")
+#parse("celMacros/closeInlineOverlay.vm")
 #end

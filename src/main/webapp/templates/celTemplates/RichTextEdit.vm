@@ -1,2 +1,2 @@
 	<!-- loadTabRTE -->
-    $xwiki.parseTemplate('celMacros/loadTabRTE.vm')
+    #parse('celMacros/loadTabRTE.vm')

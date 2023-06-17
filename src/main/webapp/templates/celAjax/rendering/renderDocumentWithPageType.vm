@@ -1,0 +1,28 @@
+#set($isAjaxCall = ("$!request.ajax" == '1'))
+#if(!$isAjaxCall)
+## start a Celements Document
+#parse("celMacros/startCelementsDocument.vm")
+##
+## start the celements body (and lacily finalise the header)
+#parse("celMacros/startCelementsBody.vm")
+##
+#end
+#if($services.celementsweb.isAppScriptRequest())
+#set($celAppScript = $services.celementsweb.getScriptNameFromURL())
+#set($overwriteRenderDocument = 'celInlineTemplates/app.vm')
+#end
+#set($isCellSkin = true)
+#set($doclang = $tdoc.getLanguage())
+#if("$!doclang" == '')
+  #set($doclang = $tdoc.getDefaultLanguage())
+#end
+#set($pageContent = $services.celementsweb.renderCelementsDocument($!tdoc.documentReference, $doclang, "view"))
+#set($maxHeight = $util.parseInt("$!request.maxHeight"))
+#set($maxWidth = $util.parseInt("$!request.maxWidth"))
+#if(($maxHeight > 0) || ($maxWidth > 0))
+#set($pageContent = $services.celementsphoto.fixMaxImageSizes($pageContent, $maxWidth, $maxHeight))
+#end
+$!pageContent
+#if(!$isAjaxCall)
+#parse('celMacros/finaliseCelementsDocument.vm')
+#end

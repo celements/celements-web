@@ -2,5 +2,35 @@
 ## loads the header parts needed to enable the Celements AdminInterface and
 ## the contextMenu
 ##
-  #parse("celMacros/loadBackend.vm")
-  #parse("celMacros/initContextMenu.vm")
+## decide if contextmenu must be loaded
+#set($cel_loadContextMenu = ($isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0)) && ("$context.action" != 'edit') && ("$context.action" != 'inline') && ("$!supress_ContextMenu" != '1'))
+
+#if($hasedit || $isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0))
+  #set($jsService = $services.javascript)
+  #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+  #if($xwiki.getXWikiPreferenceAsInt("cel_activate_jsdefer", 0) == 1)
+    #set($extJsParam = $extJsParam.setLoadMode($jsService.getJsLoadMode('DEFER')))
+  #end
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/moofx/moo.fx.js'))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/moofx/moo.fx.utils.js'))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/adminUi/admininterface.js'))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/layoutSupport/Outliner.js'))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':layouts/layoutEditor/outlineCells.js'))
+  #if($cel_loadContextMenu)
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/contextMenu/contextmenu-hover.js'))
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/contextMenu/contextmenu.js'))
+  #end
+##   $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/validation.js') ## always loaded in includeDefaultHeader.vm
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/adminUi/menubar.js'))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/supportLink/supportLink.js'))
+## keep the following if async with the one in celMacros/startCelementsBody.vm to load getTabMenu!!
+  #if($cel_isEditMode && !$cel_useInlineEditorMode)
+    #parse("celMacros/DarkBox.vm")
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/celTabMenu/TabEditor.js'))
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/celTabMenu/celementsTabMenu.js'))
+    $!services.css.includeCSSPage(':celRes/celTabMenu/tabMenu.css')
+    #set($skinBodyAttributes = "$!{skinBodyAttributes}style='overflow:hidden;'")
+    #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celementseditmode")
+    #set($HTMLBodyCSSClasses = $HTMLBodyCSSClasses.trim())
+  #end
+#end
