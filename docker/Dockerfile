@@ -16,12 +16,13 @@ COPY pom.xml ./
 RUN mvn verify clean --fail-never > /dev/null
 # Layer: package
 COPY src src
-RUN mvn clean compile war:exploded | grep -v 'Downloading'
+COPY babel-jslib babel-jslib
+RUN mvn clean compile war:exploded
 
 # —————————————————————————————————————————————— #
 # Stage: execute                                 #
 # —————————————————————————————————————————————— #
-FROM tomcat:8-jdk11-openjdk AS execute
+FROM tomcat:9-jdk11-temurin AS execute
 
 # when using docker-compose, these ENV values may be overridden from the .env file
 ENV CELEMENTS_DATA=/usr/local/celements
@@ -46,15 +47,13 @@ CMD ["catalina.sh", "jpda", "run"]
 RUN apt-get update \
  && apt-get --no-install-recommends -y install \
       gettext-base \
-      libmariadb-java \
  && rm -rf \
       /var/lib/apt/lists/* \
       ${CATALINA_HOME}/webapps/* \
  && mkdir -p \
       ${CELEMENTS_DATA} \
       ${CATALINA_HOME}/temp \
- && cp /usr/local/config/setenv.sh ${CATALINA_HOME}/bin/ \
- && cp /usr/share/java/mariadb-java-client.jar ${CATALINA_HOME}/lib/
+ && cp /usr/local/config/setenv.sh ${CATALINA_HOME}/bin/
 
 # add sources from build stage
 COPY --from=build /usr/local/src/target/celements-web ${CATALINA_HOME}/webapps/ROOT

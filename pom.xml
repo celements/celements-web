@@ -48,6 +48,7 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
+    <xwiki.cfg.xwiki.db.prefix>cel_</xwiki.cfg.xwiki.db.prefix>
     <catalina.port>10081</catalina.port>
     <catalina.home>${env.CATALINA_HOME}</catalina.home>
     <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>

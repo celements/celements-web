@@ -24,8 +24,8 @@
     <property name="dbcp.ps.maxWait">120000</property>
     <property name="dbcp.ps.maxIdle">20</property>
 
-    <!-- database configuration -->    
-    <property name="connection.url">${DB_SCHEME}://${DB_HOST}:${DB_PORT}/${DB_PREFIX}_main?useServerPrepStmts=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;sessionVariables=sql_mode='</property>
+    <!-- database configuration -->
+    <property name="connection.url">${DB_SCHEME}://${DB_HOST}:${DB_PORT}/${DB_PREFIX}_${DB_MAIN}?useServerPrepStmts=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;sessionVariables=sql_mode=''&amp;usePipelineAuth=false&amp;disablePipeline=true</property>
     <property name="connection.username">${DB_USER}</property>
     <property name="connection.password">${DB_PASSWORD}</property>
     <property name="connection.driver_class">${DB_DRIVER}</property>
@@ -37,7 +37,6 @@
     <!-- mappings -->
     <!-- celements-xwiki-core -->
     <mapping resource="xwiki.celements.hbm.xml"/>
-    <mapping resource="feeds.celements.hbm.xml"/>
     <!-- celements-core -->
     <mapping resource="celements.hbm.xml"/>
     <mapping resource="config_type_class.hbm.xml"/>
