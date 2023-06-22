@@ -48,7 +48,6 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <catalina.port>10081</catalina.port>
     <catalina.home>${env.CATALINA_HOME}</catalina.home>
     <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
@@ -259,10 +258,6 @@
     <dependency>
       <groupId>org.jsoup</groupId>
       <artifactId>jsoup</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>info.informatica</groupId>
-      <artifactId>jclf</artifactId>
     </dependency>
     <!-- JAX-RS implementation -->
     <dependency>
