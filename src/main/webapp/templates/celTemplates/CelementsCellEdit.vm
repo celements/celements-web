@@ -18,7 +18,7 @@
     <input type="hidden" name="template" value="$!doc.getTemplate()" />
     <input type="hidden" name="xredirect" value="$!xredirect" />
     <input type="hidden" name="language" value="$!tdoc.language" />
-  #if($services.treeNode.getSubNodesForParent($doc.getDocumentReference()).size() == 0)
+  #if($services.treeNode.getSubNodesForParentRef($doc.getDocumentReference()).size() == 0)
     <div id="editablecode_container">
       $xwiki.getTextArea($tdoc.content)
     </div>
