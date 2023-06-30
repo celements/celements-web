@@ -78,7 +78,7 @@
     
     _sendHits : function() {
       var _me = this;
-      console.debug('send hits, _running', _me._running, ', queue size is', _me._sizeBind());
+      //console.debug('send hits, _running', _me._running, ', queue size is', _me._sizeBind());
       if (_me._running) {
         while (_me._highPrioritySizeBind() > 0) {
           var nextHit = _me._analyticsPriorizedEventQueue.shift();
@@ -88,6 +88,7 @@
           var nextHit = _me._analyticsEventQueue.shift();
           window._paq.push(['trackEvent', 'Ad', nextHit.action, nextHit.params]);
         }
+        _me._sendHitsBind.delay(.5);
       }
     },
 
