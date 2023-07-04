@@ -95,30 +95,20 @@ TE.prototype = {
   },
 
   retrieveInitialValues : function(formId) {
-    const _me = this;
-    console.log('retrieveInitialValues: ', formId);
-    if (_me.isValidFormId(formId)) {
-      var elementsValues = new Hash();
-      _me.updateTinyMCETextAreas(formId);
-      $(formId).getElements().each(function(elem) {
-        console.log('retrieveInitialValues: check field ', formId, elem);
-        if (_me._isSubmittableField(elem) && (!elementsValues.get(elem.name)
-            || (elementsValues.get(elem.name) == ''))) {
-          console.log('initValue for: ', elem.name, elem.value);
-          var isInputElem = (elem.tagName.toLowerCase() == 'input');
-          var elemValue = elem.value;
-          if (isInputElem && (elem.type.toLowerCase() == 'radio')) {
-            elemValue = elem.getValue() || elementsValues.get(elem.name) || null;
-          } else if (isInputElem && (elem.type.toLowerCase() == 'checkbox')) {
-            elemValue = elem.checked;
-          }
-          elementsValues.set(elem.name, elemValue);
-        }
+    console.debug('retrieveInitialValues: ', formId);
+    if (this.isValidFormId(formId)) {
+      this.updateTinyMCETextAreas(formId);
+      const formdata = new FormData(document.getElementById(formId));
+      const newInitialValues = {};
+      [...formdata.keys()].forEach(key => {
+        newInitialValues[key] = new Set(formdata.getAll(key));
       });
-      console.log('retrieveInitialValues: before add elementsValues ', formId);
-      _me.editorFormsInitialValues.set(formId, elementsValues);
+      console.debug('retrieveInitialValues: before add newInitialValues',
+        formId, newInitialValues);
+      this.editorFormsInitialValues.set(formId, Object.freeze(
+        newInitialValues));
     }
-    console.log('retrieveInitialValues: end');
+    console.debug('retrieveInitialValues: end');
   },
 
   _insertLoadingIndicator : function() {
