@@ -69,7 +69,7 @@ TE.prototype = {
     _me.tabButtons = new Hash();
     _me.actionButtons = new Hash();
     _me.dirtyFlag = new Hash();
-    _me.editorFormsInitialValues = new Hash();
+    _me.editorFormsInitialValues = new Map();
     _me.modalDialog = null;
     _me.initDone = false;
     _me._isEditorDirtyOnLoad = false;
@@ -1112,29 +1112,28 @@ TE.prototype = {
  },
 
  getDirtyFormIds : function() {
-   const _me = this;
-   var dirtyFormIds = new Array();
-   _me.editorFormsInitialValues.each(function(entry) {
-     var formId = entry.key;
-     if (_me.isValidFormId(formId)) {
-       if (_me._formDirtyOnLoad(formId)) {
+   const dirtyFormIds = [];
+   for(let entry of this.editorFormsInitialValues) {
+     let formId = entry.key;
+     if (this.isValidFormId(formId)) {
+       if (this._formDirtyOnLoad(formId)) {
          console.debug('getDirtyFormIds formDirtyOnLoad found. ');
          dirtyFormIds.push(formId);
        } else {
-         _me.updateTinyMCETextAreas(formId);
-         $(formId).getElements().each(function(elem) {
-           if (_me._isSubmittableField(elem) && _me.isDirtyField(elem)) {
+         this.updateTinyMCETextAreas(formId);
+         for(let elem of document.getElementById(formId).elements) {
+           if (this._isSubmittableField(elem) && this.isDirtyField(elem)) {
              console.debug('getDirtyFormIds first found dirty field: ', elem.name);
              dirtyFormIds.push(formId);
-             throw $break;  //prototype each -> break
+             break;
            }
-         });
+         }
        }
      } else {
        console.warn('getDirtyFormIds: form with id [' + formId
          + '] disappeared since loading the editor.');
      }
-   });
+   }
    return dirtyFormIds;
  },
 
