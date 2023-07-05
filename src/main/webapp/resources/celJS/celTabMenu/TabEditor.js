@@ -1082,37 +1082,27 @@ TE.prototype = {
   * isDirtyField and needs saving
   *
   * @param fieldElem
-  * @param optElementsValues optional hash with initial values of all elements in the form
   * @return
   */
- isDirtyField : function(fieldElem, optElementsValues) {
-   const _me = this;
-   if (fieldElem.hasClassName('celDirtyOnLoad')) {
-     return true;
-   }
-   var formId = fieldElem.up('form').id;
-   var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
-   if (fieldElem.hasClassName('mceEditor') && tinymce && tinymce.get(fieldElem.id)) {
-     //FIXME sometimes isDirty from tinymce is wrong... thus we compare the .getContent
-     //FIXME with the editorFormsInitialValues instead.
-//     return tinymce.get(fieldElem.id).isDirty();
-     return (elementsValues.get(fieldElem.name) != tinymce.get(fieldElem.id).getContent());
-   } else if (!fieldElem.hasClassName('celIgnoreDirty')) {
-     var isInputElem = (fieldElem.tagName.toLowerCase() == 'input');
-     var elemValue = fieldElem.value;
-     if (isInputElem && (fieldElem.type.toLowerCase() == 'radio')) {
-       if (fieldElem.checked) {
-         elemValue = fieldElem.getValue();
-       } else {
-         return false;
-       }
-     } else if (isInputElem && (fieldElem.type.toLowerCase() == 'checkbox')) {
-       elemValue = fieldElem.checked;
-     }
-     return (elementsValues.get(fieldElem.name) != elemValue);
-   }
-   return false;
- },
+  isDirtyField : function(fieldElem) {
+    if (fieldElem.hasClassName('celDirtyOnLoad')) {
+      return true;
+    }
+    const formElem = fieldElem.closest('form');
+    const formdata = new FormData(formElem);
+    const formElements = formElem.elements;
+    const elementsValues = this.editorFormsInitialValues.get(formElem.id);
+    const dirtyFields = [...formdata.keys()].filter(key => 
+      !formElements[key].classList.contains('celIgnoreDirty')
+      && !this._equalsParamValues(formdata.getAll(key), elementsValues[key]));
+    console.debug('isDirtyField: dirtyFields found', dirtyFields);
+    return dirtyFields.length > 0;
+  },
+
+  _equalsParamValues : function(currentValueArr, initValueSet = new Set()) {
+    return (currentValueArr.length === initValueSet.size)
+      && currentValueArr.every(val => initValueSet.has(val));
+  },
 
  _formDirtyOnLoad : function(formId) {
    const _me = this;
@@ -1131,10 +1121,9 @@ TE.prototype = {
          console.debug('getDirtyFormIds formDirtyOnLoad found. ');
          dirtyFormIds.push(formId);
        } else {
-         var elementsValues = entry.value;
          _me.updateTinyMCETextAreas(formId);
          $(formId).getElements().each(function(elem) {
-           if (_me._isSubmittableField(elem) && _me.isDirtyField(elem, elementsValues)) {
+           if (_me._isSubmittableField(elem) && _me.isDirtyField(elem)) {
              console.debug('getDirtyFormIds first found dirty field: ', elem.name);
              dirtyFormIds.push(formId);
              throw $break;  //prototype each -> break
