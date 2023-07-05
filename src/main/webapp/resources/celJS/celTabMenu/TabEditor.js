@@ -1114,7 +1114,7 @@ TE.prototype = {
  getDirtyFormIds : function() {
    const dirtyFormIds = [];
    for(let entry of this.editorFormsInitialValues) {
-     let formId = entry.key;
+     let formId = entry[0];
      if (this.isValidFormId(formId)) {
        if (this._formDirtyOnLoad(formId)) {
          console.debug('getDirtyFormIds formDirtyOnLoad found. ');
