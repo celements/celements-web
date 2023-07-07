@@ -1,5 +1,5 @@
-@import url(../celRes/google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
-@import url(../celRes/google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
+@import url(google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
+@import url(google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
 
 .filebasePicker #attachments {
   display: flex;
