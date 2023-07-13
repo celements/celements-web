@@ -16,7 +16,8 @@
   #end
 #end
 
-#if(("$!request.get('update')" == '1') && $isAdmin)
+#set($editLevel = $services.rightsAccess.getEAccessLevel('edit'))
+#if(("$!request.update" == '1') && $services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel))
  ### XWikiGuest 
  #set($rights = $!request.get('select_XWiki.XWikiGuest'))
  #set($rightsobj = $doc.getObject('XWiki.XWikiRights', 'users', 'XWiki.XWikiGuest', false))
