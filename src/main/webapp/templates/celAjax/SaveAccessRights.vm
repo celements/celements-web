@@ -16,8 +16,11 @@
   #end
 #end
 
+#set($isXWikiSpace = $doc.documentReference.lastSpaceReference.name == 'XWiki')
+#set($hasGrpObject = $doc.getObject('XWiki.XWikiGroups'))
 #set($editLevel = $services.rightsAccess.getEAccessLevel('edit'))
-#if(("$!request.update" == '1') && $services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel))
+#set($hasEditRights = !$isXWikiSpace && !$hasGrpObject && $services.rightsAccess.hasAccessLevel($doc.documentReference, $editLevel))
+#if(("$!request.update" == '1') && ($isAdmin || $hasEditRights))
  ### XWikiGuest 
  #set($rights = $!request.get('select_XWiki.XWikiGuest'))
  #set($rightsobj = $doc.getObject('XWiki.XWikiRights', 'users', 'XWiki.XWikiGuest', false))
