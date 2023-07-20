@@ -26,7 +26,7 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
     <input type="hidden" name="template" value="$!doc.getTemplate()" />
     <input type="hidden" name="xredirect" value="$!xredirect" />
     <input type="hidden" name="language" value="$!tdoc.language" />
-  #if($celementsweb.getSubMenuItemsForParent($doc.getFullName(), $doc.getSpace()).size() == 0)
+    #if($services.treeNode.getSubNodesForParentRef($doc.getDocumentReference()).size() == 0)
     <div id="groupcell_container">
     #set($cel_currentRenderLayout = "$!cellObj.getProperty('render_layout').getValue()")
     <label for="Celements.GroupCellClass_${cellObj.number}_render_layout" style="font-size:7pt">Select Sub-Layout: </label>

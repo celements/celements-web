@@ -7,7 +7,7 @@
   $navObj.set('presentation_type', "renderedContent")
 #end
 #if("$!navObj.getProperty('menu_space').getValue().trim()" == '')
-  $navObj.set('menu_space', "$doc.getName()")
+  $navObj.set('menu_space', "$doc.lastSpaceReference.name")
 #end
 <form id="edit" method="post" action="?" target="_parent">
   <input type="hidden" name="xpage" value="celements_ajax" />

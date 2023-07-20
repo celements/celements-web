@@ -27,7 +27,7 @@ $response.sendRedirect($doc.getURL('edit', $redirectStr))
     <input type="hidden" name="template" value="$!doc.getTemplate()" />
     <input type="hidden" name="xredirect" value="$!xredirect" />
     <input type="hidden" name="language" value="$!tdoc.language" />
-  #if($celementsweb.getSubMenuItemsForParent($doc.getFullName(), $doc.getSpace()).size() == 0)
+  #if($services.treeNode.getSubNodesForParentRef($doc.getDocumentReference()).size() == 0)
     <div id="editablecode_container">
 #set($cel_editobj_dict_prefix = 'cel_navcell_edit_' )
 #set($cel_embedded_editobj = true)
