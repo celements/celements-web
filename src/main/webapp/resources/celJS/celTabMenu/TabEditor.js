@@ -69,7 +69,7 @@ TE.prototype = {
     _me.tabButtons = new Hash();
     _me.actionButtons = new Hash();
     _me.dirtyFlag = new Hash();
-    _me.editorFormsInitialValues = new Hash();
+    _me.editorFormsInitialValues = new Map();
     _me.modalDialog = null;
     _me.initDone = false;
     _me._isEditorDirtyOnLoad = false;
@@ -95,30 +95,20 @@ TE.prototype = {
   },
 
   retrieveInitialValues : function(formId) {
-    const _me = this;
-    console.log('retrieveInitialValues: ', formId);
-    if (_me.isValidFormId(formId)) {
-      var elementsValues = new Hash();
-      _me.updateTinyMCETextAreas(formId);
-      $(formId).getElements().each(function(elem) {
-        console.log('retrieveInitialValues: check field ', formId, elem);
-        if (_me._isSubmittableField(elem) && (!elementsValues.get(elem.name)
-            || (elementsValues.get(elem.name) == ''))) {
-          console.log('initValue for: ', elem.name, elem.value);
-          var isInputElem = (elem.tagName.toLowerCase() == 'input');
-          var elemValue = elem.value;
-          if (isInputElem && (elem.type.toLowerCase() == 'radio')) {
-            elemValue = elem.getValue() || elementsValues.get(elem.name) || null;
-          } else if (isInputElem && (elem.type.toLowerCase() == 'checkbox')) {
-            elemValue = elem.checked;
-          }
-          elementsValues.set(elem.name, elemValue);
-        }
+    console.debug('retrieveInitialValues: ', formId);
+    if (this.isValidFormId(formId)) {
+      this.updateTinyMCETextAreas(formId);
+      const formdata = new FormData(document.getElementById(formId));
+      const newInitialValues = {};
+      [...formdata.keys()].forEach(key => {
+        newInitialValues[key] = new Set(formdata.getAll(key));
       });
-      console.log('retrieveInitialValues: before add elementsValues ', formId);
-      _me.editorFormsInitialValues.set(formId, elementsValues);
+      console.debug('retrieveInitialValues: before add newInitialValues',
+        formId, newInitialValues);
+      this.editorFormsInitialValues.set(formId, Object.freeze(
+        newInitialValues));
     }
-    console.log('retrieveInitialValues: end');
+    console.debug('retrieveInitialValues: end');
   },
 
   _insertLoadingIndicator : function() {
@@ -1092,37 +1082,27 @@ TE.prototype = {
   * isDirtyField and needs saving
   *
   * @param fieldElem
-  * @param optElementsValues optional hash with initial values of all elements in the form
   * @return
   */
- isDirtyField : function(fieldElem, optElementsValues) {
-   const _me = this;
-   if (fieldElem.hasClassName('celDirtyOnLoad')) {
-     return true;
-   }
-   var formId = fieldElem.up('form').id;
-   var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
-   if (fieldElem.hasClassName('mceEditor') && tinymce && tinymce.get(fieldElem.id)) {
-     //FIXME sometimes isDirty from tinymce is wrong... thus we compare the .getContent
-     //FIXME with the editorFormsInitialValues instead.
-//     return tinymce.get(fieldElem.id).isDirty();
-     return (elementsValues.get(fieldElem.name) != tinymce.get(fieldElem.id).getContent());
-   } else if (!fieldElem.hasClassName('celIgnoreDirty')) {
-     var isInputElem = (fieldElem.tagName.toLowerCase() == 'input');
-     var elemValue = fieldElem.value;
-     if (isInputElem && (fieldElem.type.toLowerCase() == 'radio')) {
-       if (fieldElem.checked) {
-         elemValue = fieldElem.getValue();
-       } else {
-         return false;
-       }
-     } else if (isInputElem && (fieldElem.type.toLowerCase() == 'checkbox')) {
-       elemValue = fieldElem.checked;
-     }
-     return (elementsValues.get(fieldElem.name) != elemValue);
-   }
-   return false;
- },
+  isDirtyField : function(fieldElem) {
+    if (fieldElem.hasClassName('celDirtyOnLoad')) {
+      return true;
+    }
+    const formElem = fieldElem.closest('form');
+    const formdata = new FormData(formElem);
+    const formElements = formElem.elements;
+    const elementsValues = this.editorFormsInitialValues.get(formElem.id);
+    const dirtyFields = [...formdata.keys()].filter(key => 
+      !formElements[key].classList.contains('celIgnoreDirty')
+      && !this._equalsParamValues(formdata.getAll(key), elementsValues[key]));
+    console.debug('isDirtyField: dirtyFields found', dirtyFields);
+    return dirtyFields.length > 0;
+  },
+
+  _equalsParamValues : function(currentValueArr, initValueSet = new Set()) {
+    return (currentValueArr.length === initValueSet.size)
+      && currentValueArr.every(val => initValueSet.has(val));
+  },
 
  _formDirtyOnLoad : function(formId) {
    const _me = this;
@@ -1132,30 +1112,28 @@ TE.prototype = {
  },
 
  getDirtyFormIds : function() {
-   const _me = this;
-   var dirtyFormIds = new Array();
-   _me.editorFormsInitialValues.each(function(entry) {
-     var formId = entry.key;
-     if (_me.isValidFormId(formId)) {
-       if (_me._formDirtyOnLoad(formId)) {
+   const dirtyFormIds = [];
+   for(let entry of this.editorFormsInitialValues) {
+     let formId = entry[0];
+     if (this.isValidFormId(formId)) {
+       if (this._formDirtyOnLoad(formId)) {
          console.debug('getDirtyFormIds formDirtyOnLoad found. ');
          dirtyFormIds.push(formId);
        } else {
-         var elementsValues = entry.value;
-         _me.updateTinyMCETextAreas(formId);
-         $(formId).getElements().each(function(elem) {
-           if (_me._isSubmittableField(elem) && _me.isDirtyField(elem, elementsValues)) {
+         this.updateTinyMCETextAreas(formId);
+         for(let elem of document.getElementById(formId).elements) {
+           if (this._isSubmittableField(elem) && this.isDirtyField(elem)) {
              console.debug('getDirtyFormIds first found dirty field: ', elem.name);
              dirtyFormIds.push(formId);
-             throw $break;  //prototype each -> break
+             break;
            }
-         });
+         }
        }
      } else {
        console.warn('getDirtyFormIds: form with id [' + formId
          + '] disappeared since loading the editor.');
      }
-   });
+   }
    return dirtyFormIds;
  },
 

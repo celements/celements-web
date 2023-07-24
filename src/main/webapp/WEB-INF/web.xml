@@ -73,11 +73,6 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <!-- Initializes Celements -->
-  <listener>
-    <listener-class>com.celements.servlet.CelServletContextListener</listener-class>
-  </listener>
-
   <listener>
     <listener-class>org.xwiki.container.servlet.SetThreadNameServletRequestListener</listener-class>
   </listener>
@@ -87,10 +82,17 @@
       <listener-class>com.twelvemonkeys.servlet.image.IIOProviderContextListener</listener-class>
   </listener>
 
-  <!--Cleanup Spring Web -->
+  <!-- Spring Web -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
   <listener>
     <listener-class>org.springframework.web.context.ContextCleanupListener</listener-class>
   </listener>
+  <context-param>
+    <param-name>contextClass</param-name>
+    <param-value>com.celements.servlet.CelSpringWebContext</param-value>
+  </context-param>
 
   <servlet>
     <servlet-name>action</servlet-name>
