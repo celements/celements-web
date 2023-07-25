@@ -1093,10 +1093,15 @@ TE.prototype = {
     const formElements = formElem.elements;
     const elementsValues = this.editorFormsInitialValues.get(formElem.id);
     const dirtyFields = [...formdata.keys()].filter(key => 
-      !(!formElements[key].classList || formElements[key].classList.contains('celIgnoreDirty'))
+      !this._isIgnoreDirty(formElements, key)
       && !this._equalsParamValues(formdata.getAll(key), elementsValues[key]));
     console.debug('isDirtyField: dirtyFields found', dirtyFields);
     return dirtyFields.length > 0;
+  },
+
+  _isIgnoreDirty : function(formElements, key) {
+    return formElements[key].classList
+    && formElements[key].classList.contains('celIgnoreDirty');
   },
 
   _equalsParamValues : function(currentValueArr, initValueSet = new Set()) {
