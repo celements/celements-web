@@ -1101,7 +1101,7 @@ TE.prototype = {
 
   _isIgnoreDirty : function(formElements, key) {
     return formElements[key].classList
-    && formElements[key].classList.contains('celIgnoreDirty');
+      && formElements[key].classList.contains('celIgnoreDirty');
   },
 
   _equalsParamValues : function(currentValueArr, initValueSet = new Set()) {
