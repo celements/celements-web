@@ -215,12 +215,12 @@ TE.prototype = {
 
     if (starttabId == '') {
       var starttablist = $$('.celements3_tabMenu .starttab');
-      if (starttablist.size() > 0) {
+      if (starttablist.length > 0) {
         starttabId = starttablist[0].id.substring(0, starttablist[0].id.length - 4);
         starttablist[0].select('form').each(function(formelem) {
           _me.retrieveInitialValues(formelem.id);
         });
-      } else if(_me.tabMenuConfig.tabMenuPanelData.size() > 0) {
+      } else if(_me.tabMenuConfig.tabMenuPanelData.length > 0) {
         starttabId = _me.tabMenuConfig.tabMenuPanelData[0]['id'];
       }
     }
@@ -233,7 +233,7 @@ TE.prototype = {
     }
     console.log('tabMenuSetup after showTabMenu');
 
-    if($$('.container-close').size() > 0) {
+    if($$('.container-close').length > 0) {
       _me.initDefaultCloseButton();
       _me._addClearButtons();
     }
@@ -458,7 +458,7 @@ TE.prototype = {
   _getCancelURL : function() {
     const _me = this;
     var redirectValue = '';
-    if ($$('input.celEditorRedirect').size() > 0) {
+    if ($$('input.celEditorRedirect').length > 0) {
       redirectValue = $F($$('input.celEditorRedirect')[0]);
     } else {
       var firstFormName = _me.getFirstFormWithId() || 0;
@@ -632,7 +632,7 @@ TE.prototype = {
     const _me = this;
     console.log('_loadTabAsync: start loading async ', tabId);
     var lang = '';
-    if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
+    if($$('.celTabLanguage') && $$('.celTabLanguage').length > 0) {
       lang = $$('.celTabLanguage')[0].value;
     }
     console.log('_loadTabAsync: celTabLanguage? ', lang);
@@ -769,7 +769,7 @@ TE.prototype = {
     _me.CSSLoading = false;
     _me.loadCSSScripts();
   };
-  if(!_me.CSSLoading && (_me.CSSQueue.size() > 0)) {
+  if(!_me.CSSLoading && (_me.CSSQueue.length > 0)) {
     var loadScript = _me.CSSQueue.first();
     _me.CSSQueue = _me.CSSQueue.slice(1); // remove first element
     if(loadScript.isUrl) {
@@ -795,7 +795,7 @@ TE.prototype = {
       eval(loadScript.value);
       _me.loadScripts();
     }
-  } else if((scripts != undefined) && (scripts.size() > 0)) {
+  } else if((scripts != undefined) && (scripts.length > 0)) {
     $A(scripts).each( function(ele) {
       _me.CSSQueue.push(ele);
     });
@@ -809,7 +809,7 @@ TE.prototype = {
     _me.scriptLoading = false;
     _me.loadScripts();
   };
-  if(!_me.scriptLoading && (_me.scriptQueue.size() > 0)) {
+  if(!_me.scriptLoading && (_me.scriptQueue.length > 0)) {
     var loadScript = _me.scriptQueue.first();
     _me.scriptQueue = _me.scriptQueue.slice(1); // remove first element
     if(loadScript.isUrl) {
@@ -831,7 +831,7 @@ TE.prototype = {
       eval(loadScript.value);
       _me.loadScripts();
     }
-  } else if((scripts != undefined) && (scripts.size() > 0)) {
+  } else if((scripts != undefined) && (scripts.length > 0)) {
     $A(scripts).each( function(ele) {
       _me.scriptQueue.push(ele);
     });
@@ -842,7 +842,7 @@ TE.prototype = {
 
  _loadScriptsCheckFinished : function() {
    const _me = this;
-   if (!_me.scriptLoading && _me.scriptQueue.size() <= 0) {
+   if (!_me.scriptLoading && _me.scriptQueue.length <= 0) {
      console.log('TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded');
      $('tabMenuPanel').fire('tabedit:scriptsLoaded');
    }
@@ -1036,7 +1036,7 @@ TE.prototype = {
 
  isDirty : function() {
    const _me = this;
-   const isDirty = (_me.getDirtyFormIds().size() > 0) || _me._isEditorDirtyOnLoad;
+   const isDirty = (_me.getDirtyFormIds().length > 0) || _me._isEditorDirtyOnLoad;
    console.debug('isDirty: ', isDirty, ' , isEditorDirtyOnLoad: ', _me._isEditorDirtyOnLoad);
    return isDirty;
  },
@@ -1093,10 +1093,15 @@ TE.prototype = {
     const formElements = formElem.elements;
     const elementsValues = this.editorFormsInitialValues.get(formElem.id);
     const dirtyFields = [...formdata.keys()].filter(key => 
-      !formElements[key].classList.contains('celIgnoreDirty')
+      !this._isIgnoreDirty(formElements, key)
       && !this._equalsParamValues(formdata.getAll(key), elementsValues[key]));
     console.debug('isDirtyField: dirtyFields found', dirtyFields);
     return dirtyFields.length > 0;
+  },
+
+  _isIgnoreDirty : function(formElements, key) {
+    return formElements[key].classList
+      && formElements[key].classList.contains('celIgnoreDirty');
   },
 
   _equalsParamValues : function(currentValueArr, initValueSet = new Set()) {
@@ -1202,7 +1207,7 @@ TE.prototype = {
          _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
        }
-       if (remainingDirtyFormIds.size() > 0) {
+       if (remainingDirtyFormIds.length > 0) {
          console.log('next saveAllForms with: ', remainingDirtyFormIds);
          saveAllForms(remainingDirtyFormIds);
          } else {
@@ -1214,7 +1219,7 @@ TE.prototype = {
    if (doNotSaveFormId && (doNotSaveFormId != '')) {
      dirtyFormIds = dirtyFormIds.without(doNotSaveFormId);
    }
-   if (dirtyFormIds.size() > 0) {
+   if (dirtyFormIds.length > 0) {
      saveAllForms(dirtyFormIds);
    } else {
      execCallback();
