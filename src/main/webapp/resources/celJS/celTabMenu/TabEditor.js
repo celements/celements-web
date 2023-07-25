@@ -1036,7 +1036,7 @@ TE.prototype = {
 
  isDirty : function() {
    const _me = this;
-   const isDirty = (_me.getDirtyFormIds().size() > 0) || _me._isEditorDirtyOnLoad;
+   const isDirty = (_me.getDirtyFormIds().length > 0) || _me._isEditorDirtyOnLoad;
    console.debug('isDirty: ', isDirty, ' , isEditorDirtyOnLoad: ', _me._isEditorDirtyOnLoad);
    return isDirty;
  },
@@ -1202,7 +1202,7 @@ TE.prototype = {
          _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
        }
-       if (remainingDirtyFormIds.size() > 0) {
+       if (remainingDirtyFormIds.length > 0) {
          console.log('next saveAllForms with: ', remainingDirtyFormIds);
          saveAllForms(remainingDirtyFormIds);
          } else {
@@ -1214,7 +1214,7 @@ TE.prototype = {
    if (doNotSaveFormId && (doNotSaveFormId != '')) {
      dirtyFormIds = dirtyFormIds.without(doNotSaveFormId);
    }
-   if (dirtyFormIds.size() > 0) {
+   if (dirtyFormIds.length > 0) {
      saveAllForms(dirtyFormIds);
    } else {
      execCallback();
