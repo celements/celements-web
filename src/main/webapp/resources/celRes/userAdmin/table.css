@@ -112,11 +112,12 @@ li.struct_table_row.open .column_arrow {
 .struct_table ul li.struct_table_row.open .struct_table_cell.editContentRTE {
     margin-left: 22px;
     margin-right: 45px;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
+    margin-top: 4px;
     max-height: 1000px;
     transition: max-height 0.8s ease-in;
-    border: 1px solid darkgrey;
-    padding: 5px;
+    border-top: 1px solid darkgray;
+    padding: 3px 15px;
 }
 
 .companyWrapper, .languageWrapper, .forcePwdChangeWrapper {
