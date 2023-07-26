@@ -28,6 +28,7 @@
 li.struct_table_row {
     display: flex;
     flex-flow: row wrap;
+    align-items: flex-start;
     padding: 2px 0px;
 }
 
@@ -99,7 +100,7 @@ li.struct_table_row.open .column_arrow {
 .struct_table ul li.struct_table_row .struct_table_cell.editContentRTE {
 	display: flex;
     flex-flow: row;
-    flex: 0 0 99%;
+    flex: 1 1 100%;
     max-height: 0;
     padding: 0 0px;
     margin-left: 40px;
@@ -108,8 +109,29 @@ li.struct_table_row.open .column_arrow {
 }
 
 .struct_table ul li.struct_table_row.open .struct_table_cell.editContentRTE {
-    margin-left: 40px;
+    margin-left: 22px;
+    margin-right: 45px;
     margin-bottom: 3px;
     max-height: 1000px;
     transition: max-height 0.8s ease-in;
+    border: 1px solid darkgrey;
+    padding: 5px;
+}
+
+.companyWrapper, .languageWrapper, .forcePwdChangeWrapper {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0px 10px;
+}
+
+.companyWrapper {
+    flex: 0 0 200px;
+}
+
+.languageWrapper {
+    flex: 0 0 60px;
+}
+
+.forcePwdChangeWrapper {
+    flex: 0 0 200px;
 }
