@@ -15,9 +15,52 @@
     padding: 0px 0px 0px 10px;
 }
 
-.cel_cell.adduser input, select, .btn-group, .submitaction {
+#groups {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 3px 0px 12px;
+}
+
+#groups div.checkboxWrapper {
+    display: flex;
+    flex-flow: row;
+    flex: 0 0 200px;
+}
+
+.cel_cell.adduser input, select, .submitaction {
     width: 100%;
     margin: 3px 0 12px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    position: relative;
+    width: 16px !important;
+    height: 16px;
+    margin: 0px !important;
+    border: 2px solid lightgray;
+    border-radius: 1px;
+    align-self: center;
+}
+
+input[type="checkbox"]:checked {
+    border-color: #156eb9;
+    background-color: #156eb9;
+}
+
+input[type="checkbox"]:checked::before {
+    font-family: 'FontAwesome';
+    content: "\f00c";
+    display: block;
+    color: lightgray;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+div.checkboxWrapper label {
+    padding-left: 5px;
 }
 
 .cel_cell.adduser input[type=text] {
@@ -32,13 +75,6 @@
 }
 
 select.cel_cell.adduser  {
-    padding: 10px 10px;
-    border: none;
-    background-color: lightgrey;
-}
-
-button.multiselect {
-    width: 100%;
     padding: 10px 10px;
     border: none;
     background-color: lightgrey;
