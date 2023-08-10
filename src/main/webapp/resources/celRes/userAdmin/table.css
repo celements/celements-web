@@ -65,9 +65,9 @@ li.struct_table_row.open .column_arrow {
     text-align: center;
 }
 
-.fa.fa-ban {
+.fa-user-slash {
     color: red;
-  }
+}
 
 .column_name {
     flex: 1 0 150px;
