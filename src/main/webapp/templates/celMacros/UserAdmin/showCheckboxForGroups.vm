@@ -1,0 +1,22 @@
+#set($xwikiAllGroupDoc = $services.modelAccess.getDocument($services.reference.resolveDocRef("XWiki.XWikiAllGroup")))
+#set($rm = $xwiki.rightsmanager.groupsApi)
+#set($groupsDocList = $rm.getAllLocalGroups())
+#set($dev = $groupsDocList.remove($xwikiAllGroupDoc))
+#foreach($groupDoc in $groupsDocList)
+  #set($groupDocRef = $groupDoc.getDocumentReference())
+  #set($prettyName = $adminMsg.get("cel_groupname_${groupDocRef.name}"))
+  #set($objNb = $groupDoc.getObject('XWiki.XWikiGroups', 'member', "$doc").number)
+  #set($isMember = 1)
+  #if (!$objNb)
+    #set($objNb = $groupDoc.getObject('XWiki.XWikiGroups', 'member', '').number)
+    #set($isMember = 0)
+  #end
+  #if (!$objNb)
+    #set($objNb = -1)
+  #end
+  <div class='checkboxWrapper'>
+    <input type='checkbox' value='$doc' name='XWiki.${groupDocRef.name}_XWiki.XWikiGroups_${objNb}_member' #if($isMember == 1)  checked #end>
+    <input type='hidden' value='' name='XWiki.${groupDocRef.name}_XWiki.XWikiGroups_${objNb}_member'>
+    <label for='XWiki.${groupDocRef.name}_XWiki.XWikiGroups_${objNb}_member'>$prettyName</label>
+  </div>
+#end
