@@ -137,7 +137,7 @@ export class CelDataImage extends CelData {
     return this.getAttribute('additional-params') ?? '';
   }
 
-  get urlImageSrc() {
+  urlImageSrc(data) {
     const src = data?.[this.field];
     if (src) {
       const del = (src.indexOf('?') > -1) ? '&' : '?';
@@ -157,7 +157,7 @@ export class CelDataImage extends CelData {
   updateData(data) {
     console.debug('updateData', this, data);
     const img = this.querySelector('img');
-    img.src = this.urlImageSrc || this.srcFallback;
+    img.src = this.urlImageSrc(data) || this.srcFallback;
     img.alt = this.alt;
     img.loading = this.loading;
   }
