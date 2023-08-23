@@ -58,10 +58,6 @@ export class CelData extends HTMLElement {
 
 export class CelDataDateTime extends CelData {
 
-  constructor() {
-    super();
-  }
-
   get locale() {
     return this.getAttribute('locale') || navigator.language;
   }
@@ -95,10 +91,6 @@ export class CelDataDateTime extends CelData {
 
 export class CelDataLink extends CelData {
 
-  constructor() {
-    super();
-  }
-
   get target() {
     return this.getAttribute('target') ?? '';
   }
@@ -129,10 +121,6 @@ export class CelDataLink extends CelData {
 
 export class CelDataImage extends CelData {
 
-  constructor() {
-    super();
-  }
-
   get srcFallback() {
     return this.getAttribute('src-fallback') ?? '';
   }
@@ -145,6 +133,10 @@ export class CelDataImage extends CelData {
     return this.getAttribute('loading') ?? '';
   }
 
+  get additionalParams() {
+    return this.getAttribute('additional-params') ?? '';
+  }
+
   connectedCallback() {
     super.connectedCallback();
     if (!this.querySelector('img')) {
@@ -153,10 +145,19 @@ export class CelDataImage extends CelData {
     }
   }
 
+  #urlImageSrc() {
+    const src = data?.[this.field];
+    if (src) {
+      const del = (src.indexOf('?') > -1) ? '&' : '?';
+      return src + del + this.additionalParams;
+    }
+    return undefined;
+  }
+
   updateData(data) {
     console.debug('updateData', this, data);
     const img = this.querySelector('img');
-    img.src = data?.[this.field] || this.srcFallback;
+    img.src = this.#urlImageSrc() || this.srcFallback;
     img.alt = this.alt;
     img.loading = this.loading;
   }
