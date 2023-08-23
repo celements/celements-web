@@ -137,15 +137,7 @@ export class CelDataImage extends CelData {
     return this.getAttribute('additional-params') ?? '';
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    if (!this.querySelector('img')) {
-      this.replaceChildren(document.createElement('img'));
-      this.updateData({});
-    }
-  }
-
-  #urlImageSrc() {
+  get urlImageSrc() {
     const src = data?.[this.field];
     if (src) {
       const del = (src.indexOf('?') > -1) ? '&' : '?';
@@ -154,10 +146,18 @@ export class CelDataImage extends CelData {
     return undefined;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (!this.querySelector('img')) {
+      this.replaceChildren(document.createElement('img'));
+      this.updateData({});
+    }
+  }
+
   updateData(data) {
     console.debug('updateData', this, data);
     const img = this.querySelector('img');
-    img.src = this.#urlImageSrc() || this.srcFallback;
+    img.src = this.urlImageSrc || this.srcFallback;
     img.alt = this.alt;
     img.loading = this.loading;
   }
