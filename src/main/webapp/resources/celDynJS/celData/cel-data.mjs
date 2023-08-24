@@ -134,7 +134,7 @@ export class CelDataImage extends CelData {
   }
 
   get additionalParams() {
-    return this.getAttribute('additional-params') ?? '';
+    return this.getAttribute('img-src-params') ?? '';
   }
 
   urlImageSrc(data) {
