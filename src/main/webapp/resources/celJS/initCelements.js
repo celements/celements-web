@@ -114,7 +114,7 @@
       celObserve: function(eventKey, callbackFN) {
         console.debug('cel celObserve:', eventKey, callbackFN);
         if (!eventKey) {
-          throw "undefined eventKey in observe call ";
+          throw "undefined eventKey in celObserve call";
         }
         this._getCelEventMap(eventKey).push(callbackFN);
       },
@@ -122,19 +122,20 @@
       celStopObserving: function(eventKey, callbackFN) {
         console.debug('cel celStopObserving:', eventKey, callbackFN);
         if (!eventKey) {
-          throw "undefined eventKey in celStopObserving call ";
+          throw "undefined eventKey in celStopObserving call";
         }
         this._getCelEventMap().set(eventKey, this._getCelEventMap(eventKey)
           .filter(function(fn) { return fn !== callbackFN; }));
       },
 
       celFire: function(eventKey, memo) {
-        console.debug('cel celFire:', eventKey, memo);
         if (!eventKey) {
-          throw "undefined eventKey in celObserve call ";
+          throw "undefined eventKey in celFire call";
         }
         const event = new CELEMENTS.mixins.Event(eventKey, memo, this);
-        this._getCelEventMap(eventKey).forEach(function(callbackFN) {
+        const listeners = this._getCelEventMap(eventKey);
+        console.debug('cel celFire:', event, 'on', listeners);
+        listeners.forEach(function(callbackFN) {
           try {
             callbackFN(event);
           } catch (exp) {
