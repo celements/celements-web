@@ -140,8 +140,11 @@ export class CelDataImage extends CelData {
   urlImageSrc(data) {
     const src = data?.[this.field];
     if (src) {
-      const del = (src.indexOf('?') > -1) ? '&' : '?';
-      return src + del + this.additionalParams;
+      const url = new URL(src);
+      for (const [key, value] of new URLSearchParams(this.additionalParams)) {
+        url.searchParams.append(key, value);
+      }
+      return url.toString();
     }
     return undefined;
   }
