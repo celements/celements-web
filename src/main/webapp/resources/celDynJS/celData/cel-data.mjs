@@ -133,7 +133,7 @@ export class CelDataImage extends CelData {
     return this.getAttribute('loading') ?? '';
   }
 
-  get additionalParams() {
+  get imgSrcParams() {
     return this.getAttribute('img-src-params') ?? '';
   }
 
@@ -141,10 +141,10 @@ export class CelDataImage extends CelData {
     const src = data?.[this.field];
     if (src) {
       const url = new URL(src);
-      for (const [key, value] of new URLSearchParams(this.additionalParams)) {
+      for (const [key, value] of new URLSearchParams(this.imgSrcParams)) {
         url.searchParams.append(key, value);
       }
-      return url.toString();
+      return url.href;
     }
     return undefined;
   }
