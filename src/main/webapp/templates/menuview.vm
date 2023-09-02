@@ -1,4 +1,3 @@
-#if($isInServletMode)## Visible only in a page
 <div id="actionmenu" class="layoutsubsection">
 <strong id="xwikimenutitle" class="hidden">$msg.get('menu')</strong>
 <div class="rightmenu">
@@ -32,19 +31,6 @@
 #if($hasEdit && !$isReadOnly)
 ## Compute the default edit mode
 #set($editaction = $doc.getDefaultEditMode())
-##
-## Create menu
-##
-##if($hasEdit)
-### #xwikitopmenuentrystart($doc.getURL($editaction, $!languageparams) $msg.get('core.menu.create') 'tmCreate')
-##xwikitopmenuentrystart($xwiki.getURL('XWiki.CreateSubpage', 'view', "parent=$!{escapetool.url(${doc.fullName})}") $msg.get('core.menu.create') 'tmCreate')
-##submenuitem($xwiki.getURL('XWiki.CreatePage', 'view', "parent=$!{escapetool.url(${doc.fullName})}") $msg.get('core.menu.create.page') 'tmCreatePage')
-##submenuitem($xwiki.getURL('XWiki.CreatePage', 'view', 'tocreate=space') $msg.get('core.menu.create.space') 'tmCreateSpace')
-##submenuitem($xwiki.getURL('Blog.CreateBlogPost') $msg.get('core.menu.create.blogpost') 'tmCreateBlogPost')
-##if($xwiki.hasAccessLevel('edit', 'Main.EventCalendar'))#submenuitem($xwiki.getURL('Main.EventCalendar') $msg.get('core.menu.create.event') 'tmCreateCalendarEvent')#end
-##if($hasAdmin)#submenuitem($xwiki.getURL('Panels.WebHome') $msg.get('core.menu.create.panel') 'tmCreatePanel')#end
-##xwikitopmenuentryend()
-##end
 ##
 ## Edit menu
 ##
@@ -196,4 +182,3 @@
 #end
 </div>
 </div>
-#end

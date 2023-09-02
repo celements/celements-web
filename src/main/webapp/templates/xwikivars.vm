@@ -103,6 +103,4 @@
   #set ($docvariant = "${languageparams}${revparams}")
 #end
 #set ($keyboardShortcutsEnabled = $isAdvancedUser)
-#set ($isInServletMode = $xwikimode == 0)
-#set ($isInPortletMode = $xwikimode == 1)
 #template("deprecatedVars.vm")

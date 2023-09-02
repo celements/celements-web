@@ -1,8 +1,4 @@
 </div>## xwikimaincontainerinner
 </div>## xwikimaincontainer
-#if($isInServletMode)
 </body>
 </html>
-#else ## Portlet Mode
-</div>
-#end
