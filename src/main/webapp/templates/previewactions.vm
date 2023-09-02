@@ -15,11 +15,7 @@
       #if($doc.content.indexOf("includeForm(") != -1)
         #set($editorUrl = $tdoc.getURL('inline', "$!docvariant"))
       #else
-        #if($xwiki.getUserPreference('editor') == 'Wysiwyg' && (!$tdoc.isAdvancedContent()))
-          #set($editorUrl = $tdoc.getURL("edit", "editor=wysiwyg&amp;$docvariant"))
-        #else
-          #set($editorUrl = $tdoc.getURL("edit", "editor=wiki&amp;$docvariant"))
-        #end
+        #set($editorUrl = $tdoc.getURL("edit", "editor=wiki&amp;$docvariant"))
       #end
     #end
   #end
