@@ -1,3 +1,5 @@
+@import url(google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
+@import url(google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
 /**
 
 General layout of the page
@@ -111,15 +113,17 @@ Global header
   width: 100%;
 }
 
-#companylogo{
-padding: 3em 0 0 40px;
+#companylogo {
+  padding: 3em 0 0 40px;
+  font-family: "Open Sans", sans-serif;
+  color: #505050;
+  font-weight: bold;
+  font-size: 38px;
+  line-height: 40px;
 }
 
 #globaldoctitle {
   display: none; /*pour éviter pb dans IE -- a regler*/
-}
-
-#globaldoctitle h1{
 }
 
 
@@ -219,7 +223,7 @@ Space header, footer
 #xwikidocinfo {
   width: 100%;
 }
-#xwikiplatformversion {
+#celementsplatformversion {
   float: left;
   margin-left: 5px;
 }
