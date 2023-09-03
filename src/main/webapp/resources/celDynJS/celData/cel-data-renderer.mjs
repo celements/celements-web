@@ -23,13 +23,11 @@ export default class CelDataRenderer {
 
   #htmlElem;
   #template;
-  #clearContent;
 
   constructor(htmlElem, template) {
     if (htmlElem == null) {
       throw new Error("missing htmlElem");
     }
-    this.#clearContent = true;
     this.#htmlElem = htmlElem;
     if (template == null) {
       throw new Error("missing template");
@@ -50,10 +48,9 @@ export default class CelDataRenderer {
     console.debug('render', this);
     this.htmlElem.classList.remove('cel-data-rendered');
     this.htmlElem.classList.add('cel-data-rendering');
-    this.#clearContent = true;
     try {
       const data = await dataPromise || [];
-      data.forEach(entryData => this.#insertEntry(entryData));
+      data.forEach((entryData, idx) => this.#insertEntry(entryData, idx == 0));
       if (data.length === 0) {
         this.htmlElem.classList.add('cel-data-empty');
       }
@@ -65,12 +62,11 @@ export default class CelDataRenderer {
     this.htmlElem.classList.replace('cel-data-rendering', 'cel-data-rendered');
   }
 
-  #insertEntry(entryData) {
+  #insertEntry(entryData, clearContent) {
     const newElem = this.template.content.cloneNode(true);
     const dataRoot = newElem.querySelector('.cel-data-root');
-    if (this.#clearContent) {
+    if (clearContent) {
       this.htmlElem.replaceChildren();
-      this.#clearContent = false;
     }
     this.htmlElem.appendChild(newElem);
     if (dataRoot) {
