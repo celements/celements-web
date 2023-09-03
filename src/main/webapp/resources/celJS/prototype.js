@@ -1106,7 +1106,6 @@ function $A(iterable) {
   return results;
 }
 
-
 function $w(string) {
   if (!Object.isString(string)) return [];
   string = string.strip();
