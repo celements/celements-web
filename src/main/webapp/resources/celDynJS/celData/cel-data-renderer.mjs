@@ -50,7 +50,7 @@ export default class CelDataRenderer {
     this.htmlElem.classList.add('cel-data-rendering');
     try {
       const data = await dataPromise || [];
-      data.forEach((entryData, idx) => this.#insertEntry(entryData, idx == 0));
+      data.forEach((entryData, idx) => this.#insertEntry(entryData, idx === 0));
       if (data.length === 0) {
         this.htmlElem.classList.add('cel-data-empty');
       }
