@@ -23,6 +23,12 @@ services:
     image: mariadb:10.1
     ports:
       - "3307:3306" # for direct client access 
+    command:
+      --max_allowed_packet=64M
+      --innodb_flush_log_at_trx_commit=1
+      --innodb_file_per_table=1
+      --character-set-server=utf8mb3
+      --collation-server=utf8mb3_general_ci
     env_file: docker/.env
     volumes:
       - celements-dev-db-data:/var/lib/mysql

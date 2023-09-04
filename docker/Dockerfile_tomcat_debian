@@ -1,0 +1,39 @@
+# Using the Tomcat image with OpenJDK Temurin based on Ubuntu Jammy as a source for Java and Tomcat binaries
+FROM tomcat:10-jre11-temurin-jammy AS tomcat
+
+# Start with the Debian Bookworm as the base image
+FROM debian:bookworm-slim
+
+# Wishful thinking comment: It'd be great if Docker supported copying environment variables directly
+# TODO wouldn't it be neat if we could "COPY --from" an environment variable? 🤔
+
+# Setting up the JAVA_HOME environment variable. This is where the Java binaries will reside.
+ENV JAVA_HOME /opt/java/openjdk
+
+# Copy Java binaries from the Temurin-based Tomcat image into our current image
+COPY --from=tomcat $JAVA_HOME $JAVA_HOME
+
+# Setting up the CATALINA_HOME environment variable. This is where the Tomcat binaries will reside.
+ENV CATALINA_HOME /usr/local/tomcat
+
+# Copy Tomcat binaries from the Temurin-based Tomcat image into our current image
+COPY --from=tomcat $CATALINA_HOME $CATALINA_HOME
+
+# Add the Java and Tomcat binaries to the system PATH, so they can be executed from anywhere
+ENV PATH="${CATALINA_HOME}/bin:${JAVA_HOME}/bin:${PATH}"
+
+# Setting environment variables for Tomcat Native library. It provides native methods to improve Tomcat performance.
+ENV TOMCAT_NATIVE_LIBDIR $CATALINA_HOME/native-jni-lib
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$TOMCAT_NATIVE_LIBDIR
+
+# Run a series of commands:
+# 1. Update the package list
+# 2. Install dependencies required by the Tomcat Native library
+# 3. Clean up to minimize the image size by removing temporary files and package lists
+RUN set -eux; \
+	apt-get update; \
+	xargs -rt apt-get install -y --no-install-recommends < "$TOMCAT_NATIVE_LIBDIR/.dependencies.txt"; \
+	rm -rf /var/lib/apt/lists/*
+
+# Define the default command to run when the container starts: This starts the Tomcat server
+CMD ["catalina.sh", "run"]
