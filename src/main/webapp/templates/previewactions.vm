@@ -7,7 +7,6 @@
   #if($backToEditAction == '')
     #set($backToEditAction = 'edit')
   #end
-  #set($keyboardShortcutsEnabled = true)
   #set($editorUrl = "$!request.xcontinue")
   #if($editorUrl == '')
     #set($editorUrl = "$!request.getHeader('Referer')")

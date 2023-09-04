@@ -49,22 +49,6 @@
 #else ## !isAdvanced
 #xwikitopmenuentry($doc.getURL($editaction, $!languageparams) $msg.get('core.menu.edit') 'tmEdit')
 #end
-#if($keyboardShortcutsEnabled)
-<script type="text/javascript">
-//<![CDATA[
-  shortcut.add("$msg.get('core.shortcuts.view.edit')",function() { location.href=$('tmEdit').down('a').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-  #if($isAdvancedUser)
-    shortcut.add("$msg.get('core.shortcuts.view.wiki')",function() { location.href=$('tmEditWiki').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-    shortcut.add("$msg.get('core.shortcuts.view.inline')",function() { location.href=$('tmEditInline').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-    shortcut.add("$msg.get('core.shortcuts.view.rights')",function() { location.href=$('tmEditRights').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-    shortcut.add("$msg.get('core.shortcuts.view.objects')",function() { location.href=$('tmEditObject').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-    #if($hasAdmin)
-      shortcut.add("$msg.get('core.shortcuts.view.class')",function() { location.href=$('tmEditClass').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-    #end
-  #end
-//]]>
-</script>
-#end
 #end
 ##
 ## Show menu
@@ -79,18 +63,6 @@
 #submenuitem($doc.getURL('view', "viewer=code&amp;$docvariant") $msg.get('core.menu.view.source') 'tmShowCode')
 #end
 #xwikitopmenuentryend()
-#if($keyboardShortcutsEnabled)
-<script type="text/javascript">
-//<![CDATA[
-  shortcut.add("$msg.get('core.shortcuts.view.comments')",function() { location.href=$('tmShowComments').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-  shortcut.add("$msg.get('core.shortcuts.view.attachments')",function() { location.href=$('tmShowAttachments').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-  shortcut.add("$msg.get('core.shortcuts.view.history')",function() { location.href=$('tmShowHistory').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-  #if ($isAdvancedUser)
-    shortcut.add("$msg.get('core.shortcuts.view.code')",function() { location.href=$('tmShowCode').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-  #end
-//]]>
-</script>
-#end
 #end ## isNew
 ##
 ## Print menu
@@ -129,14 +101,6 @@
     $xwiki.ssx.use('XWiki.SharePage')
   #end
   #xwikitopmenuentryend()
-  #if($canDelete && $keyboardShortcutsEnabled)
-    <script type="text/javascript">
-      //<![CDATA[
-      shortcut.add("$msg.get('core.shortcuts.view.delete')",function() { location.href=$('tmActionDelete').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-      shortcut.add("$msg.get('core.shortcuts.view.rename')",function() { location.href=$('tmActionRename').href; }, { 'type':'keypress', 'propagate':false, 'disable_in_input':true });
-      //]]>
-    </script>
-  #end
 #end
 ##
 ## Watch menu

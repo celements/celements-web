@@ -102,5 +102,4 @@
 #else
   #set ($docvariant = "${languageparams}${revparams}")
 #end
-#set ($keyboardShortcutsEnabled = $isAdvancedUser)
 #template("deprecatedVars.vm")
