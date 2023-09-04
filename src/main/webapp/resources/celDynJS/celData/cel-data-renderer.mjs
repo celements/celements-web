@@ -46,12 +46,11 @@ export default class CelDataRenderer {
 
   async render(dataPromise) {
     console.debug('render', this);
-    this.htmlElem.replaceChildren();
     this.htmlElem.classList.remove('cel-data-rendered');
     this.htmlElem.classList.add('cel-data-rendering');
     try {
       const data = await dataPromise || [];
-      data.forEach(entryData => this.#insertEntry(entryData));
+      data.forEach((entryData, idx) => this.#insertEntry(entryData, idx === 0));
       if (data.length === 0) {
         this.htmlElem.classList.add('cel-data-empty');
       }
@@ -63,9 +62,12 @@ export default class CelDataRenderer {
     this.htmlElem.classList.replace('cel-data-rendering', 'cel-data-rendered');
   }
 
-  #insertEntry(entryData) {
+  #insertEntry(entryData, clearContent) {
     const newElem = this.template.content.cloneNode(true);
     const dataRoot = newElem.querySelector('.cel-data-root');
+    if (clearContent) {
+      this.htmlElem.replaceChildren();
+    }
     this.htmlElem.appendChild(newElem);
     if (dataRoot) {
       dataRoot.dispatchEvent(new CustomEvent('celData:update', {
