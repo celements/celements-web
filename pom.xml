@@ -50,6 +50,7 @@
   <properties>
     <catalina.port>10081</catalina.port>
     <catalina.home>${env.CATALINA_HOME}</catalina.home>
+    <log4j.properties.logger.config></log4j.properties.logger.config>
     <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
     <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
@@ -179,7 +180,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-observation</artifactId>
-      <version>6.0</version>
+      <version>6.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
