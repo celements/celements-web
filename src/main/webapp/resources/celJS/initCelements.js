@@ -53,78 +53,93 @@
   if (typeof window.CELEMENTS.mixins === "undefined") { window.CELEMENTS.mixins = {}; }
   if (typeof window.CELEMENTS.mixins.Event === 'undefined') {
     window.CELEMENTS.mixins.Event = Class.create({
+
       memo: undefined,
       stopped: undefined,
       eventName: undefined,
+      // CustomEvent compatibility
+      type: undefined,
+      detail: undefined,
+      cancelable: undefined,
+      defaultPrevented: undefined,
+      target: undefined,
 
-      initialize: function(eventName, memo) {
-        const _me = this;
-        _me.memo = memo;
-        _me.eventName = eventName;
-        _me.stopped = false;
+      initialize: function(eventName, memo, target) {
+        this.memo = memo;
+        this.eventName = eventName;
+        this.stopped = false;
+        this.type = eventName;
+        this.detail = memo;
+        this.cancelable = true;
+        this.defaultPrevented = false;
+        this.target = target || (memo ? memo.target : null);
       },
 
       stop: function() {
-        const _me = this;
-        _me.stopped = true;
+        if (this.cancelable) {
+          this.stopped = true;
+          this.defaultPrevented = true;
+        }
       },
 
+      // CustomEvent compatibility
+      preventDefault: function() {
+        this.stop();
+      },
+
+      // PrototypeJS compatibility
       findElement: function() {
-        return undefined;
+        return this.target;
       }
 
     });
   }
   if (typeof window.CELEMENTS.mixins.Observable === 'undefined') {
     window.CELEMENTS.mixins.Observable = {
-      _celEventHash: null,
+      _celEventMap: null,
 
-      _getCelEventHash: function(eventKey) {
-        const _me = this;
-        if (!_me._celEventHash) {
-          _me._celEventHash = new Hash();
+      _getCelEventMap: function(eventKey) {
+        if (!this._celEventMap) {
+          this._celEventMap = new Map();
         }
         if (eventKey) {
-          if (!_me._celEventHash.get(eventKey)) {
-            _me._celEventHash.set(eventKey, new Array());
+          if (!this._celEventMap.has(eventKey)) {
+            this._celEventMap.set(eventKey, []);
           }
-          return _me._celEventHash.get(eventKey);
+          return this._celEventMap.get(eventKey);
         }
-        return _me._celEventHash;
+        return this._celEventMap;
       },
 
       celObserve: function(eventKey, callbackFN) {
-        const _me = this;
-        console.debug('cel celObserve: ', _me._celEventHash, eventKey, callbackFN);
+        console.debug('cel celObserve:', eventKey, callbackFN);
         if (!eventKey) {
-          throw "undefined eventKey in observe call ";
+          throw "undefined eventKey in celObserve call";
         }
-        this._getCelEventHash(eventKey).push(callbackFN);
+        this._getCelEventMap(eventKey).push(callbackFN);
       },
 
       celStopObserving: function(eventKey, callbackFN) {
-        const _me = this;
-        console.debug('cel celStopObserving: ', _me._celEventHash, eventKey, callbackFN);
+        console.debug('cel celStopObserving:', eventKey, callbackFN);
         if (!eventKey) {
-          throw "undefined eventKey in celStopObserving call ";
+          throw "undefined eventKey in celStopObserving call";
         }
-        this._getCelEventHash().set(eventKey, this._getCelEventHash(eventKey
-        ).without(callbackFN));
+        this._getCelEventMap().set(eventKey, this._getCelEventMap(eventKey)
+          .filter(function(fn) { return fn !== callbackFN; }));
       },
 
       celFire: function(eventKey, memo) {
-        const _me = this;
-        console.debug('cel celFire: ', _me._celEventHash, eventKey, memo);
         if (!eventKey) {
-          throw "undefined eventKey in celObserve call ";
+          throw "undefined eventKey in celFire call";
         }
-        const event = new CELEMENTS.mixins.Event(eventKey, memo);
-        this._getCelEventHash(eventKey).each(function(listenerFN) {
+        const event = new CELEMENTS.mixins.Event(eventKey, memo, this);
+        const listeners = this._getCelEventMap(eventKey);
+        console.debug('cel celFire:', event, 'on', listeners);
+        listeners.forEach(function(callbackFN) {
           try {
-            listenerFN(event);
+            callbackFN(event);
           } catch (exp) {
-            console.error('listener in celFire failed for event ', eventKey, listenerFN,
-              exp);
+            console.error('listener in celFire failed for event', eventKey, callbackFN, exp);
           }
         });
         return event;
