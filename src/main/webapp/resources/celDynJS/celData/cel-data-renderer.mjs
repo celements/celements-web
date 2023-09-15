@@ -23,6 +23,8 @@ export default class CelDataRenderer {
 
   #htmlElem;
   #template;
+  #entryRootTag;
+  #cssClasses = {};
 
   constructor(htmlElem, template) {
     if (htmlElem == null) {
@@ -44,39 +46,216 @@ export default class CelDataRenderer {
     return this.#template;
   }
 
-  async render(dataPromise) {
-    console.debug('render', this);
-    this.htmlElem.classList.remove('cel-data-rendered');
-    this.htmlElem.classList.add('cel-data-rendering');
-    try {
-      const data = await dataPromise || [];
-      data.forEach((entryData, idx) => this.#insertEntry(entryData, idx === 0));
-      if (data.length === 0) {
-        this.htmlElem.classList.add('cel-data-empty');
-      }
-      this.htmlElem.classList.remove('cel-data-error');
-    } catch (error) {
-      console.error('awaiting data failed', error, this);
-      this.htmlElem.classList.add('cel-data-error');
-    }
-    this.htmlElem.classList.replace('cel-data-rendering', 'cel-data-rendered');
+  get entryRootTag() {
+    return this.#entryRootTag;
   }
 
-  #insertEntry(entryData, clearContent) {
-    const newElem = this.template.content.cloneNode(true);
-    const dataRoot = newElem.querySelector('.cel-data-root');
-    if (clearContent) {
-      this.htmlElem.replaceChildren();
-    }
-    this.htmlElem.appendChild(newElem);
-    if (dataRoot) {
-      dataRoot.dispatchEvent(new CustomEvent('celData:update', {
-        bubbles: false,
-        detail: entryData
-      }));
+  /**
+   * @param {string} tagName - new entries will be wrapped in a single tag with the given name if
+   *                           the template doesn't already have the root element
+   */
+  withEntryRoot(tagName) {
+    this.#entryRootTag = tagName?.toUpperCase();
+    return this;
+  }
+
+  /**
+   * enables css classes to be managed by the renderer
+   * @param {object} cssClasses - optional, see defaults
+   */
+  withCssClasses(cssClasses) {
+    this.#cssClasses = cssClasses || {
+      render: 'cel-data-render', // added on the htmlElem while rendering
+      empty: 'cel-data-empty', // added on the htmlElem if it is empty after rendering
+      error: 'cel-data-error', // added on the htmlElem if the dataPromise fails
+      entry: 'cel-data-entry' // added to each created entry
+    };
+    return this;
+  }
+
+  /**
+   * enables animation of created and removed entries
+   * 
+   * @param {object} cssClasses - optional, see defaults
+   */
+  withAnimation(cssClasses) {
+    this.#cssClasses.animate = cssClasses || {
+      create: 'cel-data-entry-create', // removed from each created entry within an animation frame
+      remove: 'cel-data-entry-remove' // added to each removed entry within an animation frame
+    };
+    return this;
+  }
+
+  /**
+   * @param {Promise} dataPromise - the data to append to the htmlElem
+   * @param {function} preInserter - optional, see `render`
+   * @returns {Promise} - the entries that were inserted
+   */
+  async append(dataPromise, preInserter) {
+    return this.render(dataPromise, preInserter, HTMLElement.prototype.append);
+  }
+
+  /**
+   * @param {Promise} dataPromise - the data to prepend to the htmlElem
+   * @param {function} preInserter - optional, see `render`
+   * @returns {Promise} - the entries that were inserted
+   */
+  async prepend(dataPromise, preInserter) {
+    return this.render(dataPromise, preInserter, HTMLElement.prototype.prepend);
+  }
+
+  /**
+   * @param {Promise} dataPromise - the data to replace the htmlElem content
+   * @param {string} removeSelector - optional, the selector to remove the old entries
+   * @param {function} preInserter - optional, see `render`
+   * @returns {Promise} - the entries that were inserted
+   */
+  async replace(dataPromise, removeSelector = '*', preInserter) {
+    const replacePromise = Promise.all([dataPromise, this.remove(removeSelector)])
+      .then(([data, removedEntries]) => data);
+    return this.#render(replacePromise, preInserter);
+  }
+
+  /**
+   * @param {Promise} dataPromise - the data to add to the htmlElem content
+   * @param {function} preInserter - optional, params: `(entry, data)`
+   *        called before the entry is inserted into the DOM.
+   *        may call `entry.remove()` to prevent DOM insertion.
+   * @param {function} inserter - optional, params: `(elem, fragment)`
+   *        the function which inserts the entries into the DOM
+   * @returns {Promise} - array of inserted entries
+   */
+  async render(dataPromise, preInserter, inserter) {
+    if (inserter) {
+      return this.#render(dataPromise, preInserter, inserter);
     } else {
-      console.warn('no cel-data-root in template', newElem);
+      return this.replace(dataPromise, '*', preInserter);
     }
+  }
+
+  async #render(dataPromise, preInserter, inserter) {
+    console.debug('render', this);
+    this.#cssClasses.error && this.htmlElem.classList.remove(this.#cssClasses.error);
+    this.#cssClasses.render && this.htmlElem.classList.add(this.#cssClasses.render);
+    try {
+      const result = await dataPromise;
+      return (Array.isArray(result) ? result : [result].filter(Boolean))
+        .map(data => this.#insert(data, preInserter, inserter));
+    } catch (error) {
+      console.error('awaiting data failed', error, this);
+      this.#cssClasses.error && this.htmlElem.classList.add(this.#cssClasses.error);
+      return [];
+    } finally {
+      this.#cssClasses.empty && this.htmlElem.classList.toggle(this.#cssClasses.empty,
+        this.htmlElem.children.length == 0);
+      this.#cssClasses.render && this.htmlElem.classList.remove(this.#cssClasses.render);
+    }
+  }
+
+  #insert(data, preInserter = entry => undefined, inserter = HTMLElement.prototype.append) {
+    if (typeof preInserter !== 'function') {
+      throw new TypeError('preInserter must be a function');
+    }
+    if (typeof inserter !== 'function') {
+      throw new TypeError('inserter must be a function');
+    }
+    const fragment = this.#cloneTemplate();
+    for (const entry of fragment.children) {
+      this.#cssClasses.entry && entry.classList.add(this.#cssClasses.entry);
+      this.#cssClasses.animate?.create && entry.classList.add(this.#cssClasses.animate.create);
+      preInserter(entry, data); // may call entry.remove()
+    }
+    const children = [...fragment.children]; // copy the children to know which were inserted
+    inserter.call(this.htmlElem, fragment); // may empty the fragment
+    for (const entry of children) {
+      this.#dispatchEntryEvents(entry, data);
+      this.#cssClasses.animate?.create && requestAnimationFrame(
+        () => entry.classList.remove(this.#cssClasses.animate.create));
+    }
+    return children;
+  }
+
+  #cloneTemplate() {
+    const fragment = this.template.content.cloneNode(true);
+    if (!this.entryRootTag) {
+      return fragment;
+    }
+    const hasSingleChild = fragment.children.length === 1;
+    const hasEntryRoot = this.entryRootTag === fragment.children[0]?.tagName;
+    if (hasSingleChild && hasEntryRoot) {
+      return fragment;
+    }
+    // root the fragment in a single element of tag this.entryRootTag
+    const rootedFragment = document.createDocumentFragment();
+    const root = document.createElement(this.entryRootTag);
+    rootedFragment.append(root);
+    root.append(fragment);
+    return rootedFragment;
+  }
+
+  #dispatchEntryEvents(entry, data) {
+    const dataRoot = entry.querySelector('.cel-data-root');
+    dataRoot?.dispatchEvent(new CustomEvent('celData:update', {
+      bubbles: false,
+      detail: data
+    }));
+    if (entry.fire) {
+      entry.fire('celements:contentChanged', { 'htmlElem' : entry });
+    }
+  }
+
+  /**
+   * @param {string} removeSelector - optional, selector to remove entries, default '*'
+   * @param {function} remover - optional, params: `(entry)`
+   *        called to remove the entry
+   */
+  async remove(removeSelector = '*', remover) {
+    const toRemoveEntries = removeSelector 
+      ? [...this.htmlElem.querySelectorAll(':scope > ' + removeSelector)]
+      : [];
+    return Promise.all(toRemoveEntries.map(entry => this.removeEntry(entry, remover)
+      .then(() => entry)));
+  }
+
+  /**
+   * @param {HTMLElement} entry - the entry to remove
+   * @param {function} remover - optional, params: `(entry)`
+   *        called to remove the entry
+   * @returns {Promise} - of the entry that was removed
+   */
+  async removeEntry(entry, remover = entry => entry.remove()) {
+    if (!entry || entry.parentElement !== this.htmlElem) {
+      return;
+    }
+    if (typeof remover !== 'function') {
+      throw new TypeError('remover must be a function');
+    }
+    await this.#cssClasses.animate?.remove
+      ? this.#animateRemove(entry)
+      : Promise.resolve();
+    return remover(entry);
+  }
+
+  async #animateRemove(entry, maxAnimationTime = 2000) {
+    requestAnimationFrame(() => entry.classList.add(this.#cssClasses.animate.remove));
+    const result = await Promise.race([
+      // await transition end
+      new Promise(resolve => entry.addEventListener('transitionend', resolve, { once: true })),
+      // or resolve after maxAnimationTime in case transitionend is never fired
+      new Promise(resolve => setTimeout(() => resolve('timeout'), maxAnimationTime))
+    ]);
+    if (result === 'timeout') {
+      console.warn('transitionend on', this.#cssClasses.animate.remove , 'timed out for', entry);
+    }
+    entry.classList.remove(this.#cssClasses.animate.remove);
+  }
+
+  /**
+   * @param {HTMLElement} entry - the entry to hide
+   * @returns {Promise} - of the entry that was hidden
+   */
+  hideEntry(entry) {
+    this.removeEntry(entry, entry => entry.style.display = 'none');
   }
 
 }
