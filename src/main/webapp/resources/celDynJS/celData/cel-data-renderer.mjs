@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-import './cel-data.mjs?version=202212031733';
+import './cel-data.mjs?version=20230806';
 
 export default class CelDataRenderer {
 
@@ -25,6 +25,12 @@ export default class CelDataRenderer {
   #template;
   #entryRootTag;
   #cssClasses = {};
+  #defaultCssClasses = Object.freeze({
+    render: 'cel-data-render', // added on the htmlElem while rendering
+    empty: 'cel-data-empty', // added on the htmlElem if it is empty after rendering
+    error: 'cel-data-error', // added on the htmlElem if the dataPromise fails
+    created: 'cel-data-entry-created' // added to each created entry
+  });
 
   constructor(htmlElem, template) {
     if (htmlElem == null) {
@@ -50,6 +56,10 @@ export default class CelDataRenderer {
     return this.#entryRootTag;
   }
 
+  get cssClasses() {
+    return this.#cssClasses;
+  }
+
   /**
    * @param {string} tagName - new entries will be wrapped in a single tag with the given name if
    *                           the template doesn't already have the root element
@@ -60,16 +70,18 @@ export default class CelDataRenderer {
   }
 
   /**
-   * enables css classes to be managed by the renderer
-   * @param {object} cssClasses - optional, see defaults
+   * adds additional css classes to be managed by the renderer
+   * 
+   * @param {object} cssClasses - optional, see #defaultCssClasses
    */
   withCssClasses(cssClasses) {
-    this.#cssClasses = cssClasses || {
-      render: 'cel-data-render', // added on the htmlElem while rendering
-      empty: 'cel-data-empty', // added on the htmlElem if it is empty after rendering
-      error: 'cel-data-error', // added on the htmlElem if the dataPromise fails
-      entry: 'cel-data-entry' // added to each created entry
-    };
+    const classes = {};
+    for (const [key, value] of Object.entries(this.#defaultCssClasses)) {
+      const additional = (cssClasses[key] || '').split(' ').filter(Boolean);
+      classes[key] = Object.freeze([value].concat(additional));
+    }
+    classes.animate = this.#cssClasses.animate;
+    this.#cssClasses = Object.freeze(classes);
     return this;
   }
 
@@ -79,10 +91,10 @@ export default class CelDataRenderer {
    * @param {object} cssClasses - optional, see defaults
    */
   withAnimation(cssClasses) {
-    this.#cssClasses.animate = cssClasses || {
+    this.#cssClasses.animate = Object.freeze(cssClasses || {
       create: 'cel-data-entry-create', // removed from each created entry within an animation frame
       remove: 'cel-data-entry-remove' // added to each removed entry within an animation frame
-    };
+    });
     return this;
   }
 
@@ -135,24 +147,27 @@ export default class CelDataRenderer {
 
   async #render(dataPromise, preInserter, inserter) {
     console.debug('render', this);
-    this.#cssClasses.error && this.htmlElem.classList.remove(this.#cssClasses.error);
-    this.#cssClasses.render && this.htmlElem.classList.add(this.#cssClasses.render);
+    this.htmlElem.classList.remove(...this.cssClasses.error);
+    this.htmlElem.classList.add(...this.cssClasses.render);
     try {
       const result = await dataPromise;
       return (Array.isArray(result) ? result : [result].filter(Boolean))
         .map(data => this.#insert(data, preInserter, inserter));
     } catch (error) {
       console.error('awaiting data failed', error, this);
-      this.#cssClasses.error && this.htmlElem.classList.add(this.#cssClasses.error);
+      this.htmlElem.classList.add(...this.cssClasses.error);
       return [];
     } finally {
-      this.#cssClasses.empty && this.htmlElem.classList.toggle(this.#cssClasses.empty,
-        this.htmlElem.children.length == 0);
-      this.#cssClasses.render && this.htmlElem.classList.remove(this.#cssClasses.render);
+      this.cssClasses.empty.forEach(cssClass => this.htmlElem.classList
+        .toggle(cssClass, this.htmlElem.children.length == 0));
+      this.htmlElem.classList.remove(...this.cssClasses.render);
     }
   }
 
-  #insert(data, preInserter = entry => undefined, inserter = HTMLElement.prototype.append) {
+  /**
+   * creates entries from the template, inserts them into the DOM and dispatches events
+   */
+  #insert(data, preInserter = (entry, data) => undefined, inserter = HTMLElement.prototype.append) {
     if (typeof preInserter !== 'function') {
       throw new TypeError('preInserter must be a function');
     }
@@ -161,20 +176,25 @@ export default class CelDataRenderer {
     }
     const fragment = this.#cloneTemplate();
     for (const entry of fragment.children) {
-      this.#cssClasses.entry && entry.classList.add(this.#cssClasses.entry);
-      this.#cssClasses.animate?.create && entry.classList.add(this.#cssClasses.animate.create);
+      entry.classList.add(...this.cssClasses.created);
+      this.cssClasses.animate?.create && entry.classList.add(this.cssClasses.animate.create);
       preInserter(entry, data); // may call entry.remove()
     }
     const children = [...fragment.children]; // copy the children to know which were inserted
     inserter.call(this.htmlElem, fragment); // may empty the fragment
     for (const entry of children) {
       this.#dispatchEntryEvents(entry, data);
-      this.#cssClasses.animate?.create && requestAnimationFrame(
-        () => entry.classList.remove(this.#cssClasses.animate.create));
+      this.cssClasses.animate?.create && requestAnimationFrame(
+        () => entry.classList.remove(this.cssClasses.animate.create));
     }
     return children;
   }
 
+  /**
+   * clones the template and wraps it in a single element of tag this.entryRootTag if necessary
+   * 
+   * @returns {DocumentFragment} - a clone of the template
+   */
   #cloneTemplate() {
     const fragment = this.template.content.cloneNode(true);
     if (!this.entryRootTag) {
@@ -221,23 +241,21 @@ export default class CelDataRenderer {
    * @param {HTMLElement} entry - the entry to remove
    * @param {function} remover - optional, params: `(entry)`
    *        called to remove the entry
-   * @returns {Promise} - of the entry that was removed
+   * @returns {Promise} - the entry that was removed
    */
-  async removeEntry(entry, remover = entry => entry.remove()) {
+  async removeEntry(entry, remover = (entry) => entry.remove()) {
     if (!entry || entry.parentElement !== this.htmlElem) {
       return;
     }
     if (typeof remover !== 'function') {
       throw new TypeError('remover must be a function');
     }
-    await this.#cssClasses.animate?.remove
-      ? this.#animateRemove(entry)
-      : Promise.resolve();
+    await this.cssClasses.animate?.remove ? this.#animateRemove(entry) : Promise.resolve();
     return remover(entry);
   }
 
   async #animateRemove(entry, maxAnimationTime = 2000) {
-    requestAnimationFrame(() => entry.classList.add(this.#cssClasses.animate.remove));
+    requestAnimationFrame(() => entry.classList.add(this.cssClasses.animate.remove));
     const result = await Promise.race([
       // await transition end
       new Promise(resolve => entry.addEventListener('transitionend', resolve, { once: true })),
@@ -245,14 +263,14 @@ export default class CelDataRenderer {
       new Promise(resolve => setTimeout(() => resolve('timeout'), maxAnimationTime))
     ]);
     if (result === 'timeout') {
-      console.warn('transitionend on', this.#cssClasses.animate.remove , 'timed out for', entry);
+      console.warn('transitionend on', this.cssClasses.animate.remove , 'timed out for', entry);
     }
-    entry.classList.remove(this.#cssClasses.animate.remove);
+    entry.classList.remove(this.cssClasses.animate.remove);
   }
 
   /**
    * @param {HTMLElement} entry - the entry to hide
-   * @returns {Promise} - of the entry that was hidden
+   * @returns {Promise} - the entry that was hidden
    */
   hideEntry(entry) {
     this.removeEntry(entry, entry => entry.style.display = 'none');
