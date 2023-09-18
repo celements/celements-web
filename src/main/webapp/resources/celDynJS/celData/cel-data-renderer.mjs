@@ -216,12 +216,14 @@ export default class CelDataRenderer {
    * @param {string} removeSelector - optional, selector to remove entries, default '*'
    * @param {function} remover - optional, params: `(entry)`
    *        called to remove the entry
+   * @returns {Promise} - array of removed entries
    */
   async remove(removeSelector = '*', remover) {
     const toRemoveEntries = removeSelector 
       ? [...this.htmlElem.querySelectorAll(':scope > ' + removeSelector)]
       : [];
-    return Promise.all(toRemoveEntries.map(entry => this.removeEntry(entry, remover)
+    return Promise.all(toRemoveEntries.map(entry => this
+      .removeEntry(entry, remover)
       .then(() => entry)));
   }
 
@@ -229,11 +231,11 @@ export default class CelDataRenderer {
    * @param {HTMLElement} entry - the entry to remove
    * @param {function} remover - optional, params: `(entry)`
    *        called to remove the entry
-   * @returns {Promise} - the entry that was removed
+   * @returns {Promise} - whatever the remover returns
    */
   async removeEntry(entry, remover = (entry) => entry.remove()) {
     if (!entry || entry.parentElement !== this.htmlElem) {
-      return;
+      return; // ignore non-entries of this.htmlElem
     }
     if (typeof remover !== 'function') {
       throw new TypeError('remover must be a function');
@@ -242,8 +244,11 @@ export default class CelDataRenderer {
     return remover(entry);
   }
 
+  /**
+   * triggers and awaits the remove animation if any, else returns an empty promise
+   */
   async #animateRemove(entry) {
-    entry.classList.add(...this.cssClasses.removing); // trigger remove animation if any
+    entry.classList.add(...this.cssClasses.removing);
     console.debug('animateRemove - awaiting', entry.getAnimations());
     const animationResult = await Promise.all(entry.getAnimations()
       .map((animation) => animation.finished));
