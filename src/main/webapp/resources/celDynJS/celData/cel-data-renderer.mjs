@@ -29,7 +29,9 @@ export default class CelDataRenderer {
     render: 'cel-data-render', // added on the htmlElem while rendering
     empty: 'cel-data-empty', // added on the htmlElem if it is empty after rendering
     error: 'cel-data-error', // added on the htmlElem if the dataPromise fails
-    created: 'cel-data-entry-created' // added to each created entry
+    entry: 'cel-data-entry', // added to each created entry
+    creating: 'cel-data-creating', // toggled on each created entry over an animation frame
+    removing: 'cel-data-removing' // toggled on each removed entry over an animation frame
   });
 
   constructor(htmlElem, template) {
@@ -41,6 +43,7 @@ export default class CelDataRenderer {
       throw new Error("missing template");
     }
     this.#template = template;
+    this.withCssClasses();
     console.debug('CelDataRenderer init', this.htmlElem, this.template);
   }
 
@@ -72,29 +75,14 @@ export default class CelDataRenderer {
   /**
    * adds additional css classes to be managed by the renderer
    * 
-   * @param {object} cssClasses - optional, see #defaultCssClasses
+   * @param {object} classes - optional, see #defaultCssClasses
    */
-  withCssClasses(cssClasses) {
+  withCssClasses(cssClasses = {}) {
     const classes = {};
     for (const [key, value] of Object.entries(this.#defaultCssClasses)) {
-      const additional = (cssClasses[key] || '').split(' ').filter(Boolean);
-      classes[key] = Object.freeze([value].concat(additional));
+      classes[key] = new Set([value].concat((cssClasses[key] || '').split(' ').filter(Boolean)));
     }
-    classes.animate = this.#cssClasses.animate;
     this.#cssClasses = Object.freeze(classes);
-    return this;
-  }
-
-  /**
-   * enables animation of created and removed entries
-   * 
-   * @param {object} cssClasses - optional, see defaults
-   */
-  withAnimation(cssClasses) {
-    this.#cssClasses.animate = Object.freeze(cssClasses || {
-      create: 'cel-data-entry-create', // removed from each created entry within an animation frame
-      remove: 'cel-data-entry-remove' // added to each removed entry within an animation frame
-    });
     return this;
   }
 
@@ -176,16 +164,16 @@ export default class CelDataRenderer {
     }
     const fragment = this.#cloneTemplate();
     for (const entry of fragment.children) {
-      entry.classList.add(...this.cssClasses.created);
-      this.cssClasses.animate?.create && entry.classList.add(this.cssClasses.animate.create);
+      entry.classList.add(...this.cssClasses.entry);
+      entry.classList.add(...this.cssClasses.creating);
       preInserter(entry, data); // may call entry.remove()
     }
     const children = [...fragment.children]; // copy the children to know which were inserted
     inserter.call(this.htmlElem, fragment); // may empty the fragment
     for (const entry of children) {
       this.#dispatchEntryEvents(entry, data);
-      this.cssClasses.animate?.create && requestAnimationFrame(
-        () => entry.classList.remove(this.cssClasses.animate.create));
+      // trigger create animation if any
+      requestAnimationFrame(() => entry.classList.remove(...this.cssClasses.creating));
     }
     return children;
   }
@@ -250,22 +238,17 @@ export default class CelDataRenderer {
     if (typeof remover !== 'function') {
       throw new TypeError('remover must be a function');
     }
-    await this.cssClasses.animate?.remove ? this.#animateRemove(entry) : Promise.resolve();
+    await this.#animateRemove(entry);
     return remover(entry);
   }
 
-  async #animateRemove(entry, maxAnimationTime = 2000) {
-    requestAnimationFrame(() => entry.classList.add(this.cssClasses.animate.remove));
-    const result = await Promise.race([
-      // await transition end
-      new Promise(resolve => entry.addEventListener('transitionend', resolve, { once: true })),
-      // or resolve after maxAnimationTime in case transitionend is never fired
-      new Promise(resolve => setTimeout(() => resolve('timeout'), maxAnimationTime))
-    ]);
-    if (result === 'timeout') {
-      console.warn('transitionend on', this.cssClasses.animate.remove , 'timed out for', entry);
-    }
-    entry.classList.remove(this.cssClasses.animate.remove);
+  async #animateRemove(entry) {
+    entry.classList.add(...this.cssClasses.removing); // trigger remove animation if any
+    console.debug('animateRemove - awaiting', entry.getAnimations());
+    const animationResult = await Promise.all(entry.getAnimations()
+      .map((animation) => animation.finished));
+    entry.classList.remove(...this.cssClasses.removing);
+    return animationResult;
   }
 
   /**
