@@ -16,7 +16,7 @@ $!services.metatag.displayCollectedMetaTags()
 #end
 #foreach($parentDocRef in $docRefList)
   #set($parentWikiName = $parentDocRef.wikiReference.name)
-  #if(!"$!{HTMLBodyCSSClasses} ".contains("_${parentWikiName} "))
+  #if(!$HTMLBodyCSSClasses.contains("_${parentWikiName} "))
     #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celdb_${parentWikiName}")
   #end
   #set($parentFullName = $services.model.serialize($parentDocRef, 'local'))
