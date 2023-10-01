@@ -32,7 +32,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>6.1-SNAPSHOT</version>
+  <version>6.2-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -50,7 +50,7 @@
   <properties>
     <catalina.port>10081</catalina.port>
     <catalina.home>${env.CATALINA_HOME}</catalina.home>
-    <log4j.properties.logger.config></log4j.properties.logger.config>
+    <log4j.properties.logger.config />
     <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
     <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
@@ -165,7 +165,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -180,12 +180,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-observation</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-servlet</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -205,7 +205,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
