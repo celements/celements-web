@@ -32,7 +32,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>6.1-SNAPSHOT</version>
+  <version>6.1-RC1</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -45,12 +45,12 @@
     <connection>scm:git:git://github.com/celements/celements-web</connection>
     <developerConnection>scm:git:git@github.com:celements/celements-web.git</developerConnection>
     <url>https://github.com/celements/celements-web</url>
-    <tag>HEAD</tag>
+    <tag>celements-web-6.1-RC1</tag>
   </scm>
   <properties>
     <catalina.port>10081</catalina.port>
     <catalina.home>${env.CATALINA_HOME}</catalina.home>
-    <log4j.properties.logger.config></log4j.properties.logger.config>
+    <log4j.properties.logger.config />
     <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
     <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
