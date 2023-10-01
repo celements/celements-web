@@ -165,7 +165,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -180,12 +180,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-observation</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-servlet</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -205,7 +205,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
