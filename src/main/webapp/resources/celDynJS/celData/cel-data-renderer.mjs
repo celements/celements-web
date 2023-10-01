@@ -130,9 +130,9 @@ export default class CelDataRenderer {
    */
   async render(dataPromise, preInserter, inserter) {
     if (inserter) {
-      return this.#render(dataPromise, preInserter, inserter);
+      return await this.#render(dataPromise, preInserter, inserter);
     } else {
-      return this.replace(dataPromise, '*', preInserter);
+      return await this.replace(dataPromise, '*', preInserter);
     }
   }
 
