@@ -142,6 +142,7 @@ export default class CelDataRenderer {
     this.htmlElem.classList.add(...this.cssClasses.render);
     try {
       const result = await dataPromise;
+      console.debug('render got result', result);
       return (Array.isArray(result) ? result : [result].filter(Boolean))
         .map(data => this.#insert(data, preInserter, inserter));
     } catch (error) {
