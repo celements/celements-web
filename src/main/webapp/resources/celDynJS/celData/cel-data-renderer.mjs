@@ -116,7 +116,7 @@ export default class CelDataRenderer {
       await this.remove(removeSelector);
       return data;
     };
-    return this.#render(loadThenReplacePromise, preInserter);
+    return await this.#render(loadThenReplacePromise, preInserter);
   }
 
   /**
