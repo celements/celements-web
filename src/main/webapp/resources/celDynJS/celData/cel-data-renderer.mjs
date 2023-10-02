@@ -111,11 +111,11 @@ export default class CelDataRenderer {
    * @returns {Promise} - the entries that were inserted
    */
   async replace(dataPromise, removeSelector = '*', preInserter) {
-    const loadThenReplacePromise = async () => {
+    const loadThenReplacePromise = (async () => {
       const data = await dataPromise;
       await this.remove(removeSelector);
       return data;
-    };
+    })();
     return this.#render(loadThenReplacePromise, preInserter);
   }
 
