@@ -116,7 +116,7 @@ export default class CelDataRenderer {
       await this.remove(removeSelector);
       return data;
     };
-    return await this.#render(loadThenReplacePromise, preInserter);
+    return this.#render(loadThenReplacePromise, preInserter);
   }
 
   /**
@@ -130,9 +130,9 @@ export default class CelDataRenderer {
    */
   async render(dataPromise, preInserter, inserter) {
     if (inserter) {
-      return await this.#render(dataPromise, preInserter, inserter);
+      return this.#render(dataPromise, preInserter, inserter);
     } else {
-      return await this.replace(dataPromise, '*', preInserter);
+      return this.replace(dataPromise, '*', preInserter);
     }
   }
 
@@ -142,7 +142,6 @@ export default class CelDataRenderer {
     this.htmlElem.classList.add(...this.cssClasses.render);
     try {
       const result = await dataPromise;
-      console.debug('render got result', result);
       return (Array.isArray(result) ? result : [result].filter(Boolean))
         .map(data => this.#insert(data, preInserter, inserter));
     } catch (error) {
