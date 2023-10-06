@@ -92,7 +92,7 @@ export class CelData extends HTMLElement {
   }
 
   async extractValue(data, extractMode) {
-    fieldValue = data?.[this.field];
+    let fieldValue = data?.[this.field];
     if (this.extract && extractMode) {
       fieldValue = CelDataExtractorRegistry
         .resolve(extractMode, fieldValue, this.extract);
