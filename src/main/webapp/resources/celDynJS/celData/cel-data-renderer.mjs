@@ -177,8 +177,9 @@ export default class CelDataRenderer {
     inserter.call(this.htmlElem, fragment); // may empty the fragment
     for (const entry of children) {
       this.#dispatchEntryEvents(entry, data);
-      // trigger create animation if any
-      requestAnimationFrame(() => entry.classList.remove(...this.cssClasses.creating));
+      // trigger create animation if any, double requestAnimationFrame to ensure consistency
+      requestAnimationFrame(() => requestAnimationFrame(() => entry.classList
+        .remove(...this.cssClasses.creating)));
     }
     return children;
   }
