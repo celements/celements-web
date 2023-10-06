@@ -23,6 +23,7 @@ export default class CelDataRenderer {
 
   #htmlElem;
   #template;
+  #extractMode;
   #entryRootTag;
   #cssClasses = {};
   #defaultCssClasses = Object.freeze({
@@ -34,7 +35,7 @@ export default class CelDataRenderer {
     removing: 'cel-data-removing' // toggled on each removed entry over an animation frame
   });
 
-  constructor(htmlElem, template) {
+  constructor(htmlElem, template, extractMode = "jsonata") {
     if (htmlElem == null) {
       throw new Error("missing htmlElem");
     }
@@ -43,6 +44,7 @@ export default class CelDataRenderer {
       throw new Error("missing template");
     }
     this.#template = template;
+    this.#extractMode = extractMode;
     this.withCssClasses();
     console.debug('CelDataRenderer init', this.htmlElem, this.template);
   }
@@ -210,7 +212,10 @@ export default class CelDataRenderer {
     console.trace('dispatching events for entry', entry, 'on data root', dataRoot);
     dataRoot?.dispatchEvent(new CustomEvent('celData:update', {
       bubbles: false,
-      detail: data
+      detail: {
+        data : data,
+        extractMode : this.#extractMode
+      }
     }));
     if (entry.fire) {
       entry.fire('celements:contentChanged', { 'htmlElem' : entry });

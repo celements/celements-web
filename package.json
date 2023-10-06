@@ -20,5 +20,8 @@
     "prebuild": "npm run clean && cp -r $npm_package_config_src $npm_package_config_dist",
     "build": "npm run babel",
     "clean": "rm -rf $npm_package_config_dist"
+  },
+  "dependencies": {
+    "jsonata": "^2.0.3"
   }
 }
