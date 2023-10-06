@@ -17,12 +17,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-class CelDataExtractRegistry {
+class CelDataExtractorRegistry {
   #registry = new Map();
 
   addResolver(shortname, extractFunc) {
-    if (typeof extractFunc !== "function") {
-      throw new Exception("extractFunc must be a function");
+    if (typeof extractFunc !== 'function') {
+      throw new Error("extractFunc must be a function [" + (typeof extractFunc) + "]");
     }
     this.#registry.set(shortname, extractFunc);
   }
@@ -34,7 +34,7 @@ class CelDataExtractRegistry {
     return this.#registry.get(shortname)(data, expression);
   }
 }
-export const celDataExtractRegistry = new CelDataExtractRegistry();
+export const celDERegistry = new CelDataExtractorRegistry();
 
 class JSONataAdaptor {
   constructor() {
@@ -51,7 +51,7 @@ class JSONataAdaptor {
   }
 }
 let jsonataAdaptor;
-celDataExtractRegistry.addResolver(async (data, expression) => {
+celDERegistry.addResolver('jsonata', async (data, expression) => {
   jsonataAdaptor = jsonataAdaptor ?? new JSONataAdaptor();
   await jsonataAdaptor.resolve(data, expression);
 });
@@ -94,7 +94,7 @@ export class CelData extends HTMLElement {
   async extractValue(data, extractMode) {
     fieldValue = data?.[this.field];
     if (this.extract && extractMode) {
-      fieldValue = celDataExtractRegistry
+      fieldValue = CelDataExtractorRegistry
         .resolve(extractMode, fieldValue, this.extract);
     }
     return fieldValue ??
