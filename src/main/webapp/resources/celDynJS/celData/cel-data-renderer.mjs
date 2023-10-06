@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-import './cel-data.mjs?version=20230917';
+import './cel-data.mjs?version=20231006';
 
 export default class CelDataRenderer {
 
