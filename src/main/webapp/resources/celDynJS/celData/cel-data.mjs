@@ -67,9 +67,9 @@ class JSONataAdaptor {
   }
 
   async resolve(data, expression) {
-    return await this.#loaded.then(() => {
+    return await this.#loaded.then(async () => {
       console.log('JSONataAdaptor.resolve', jsonata, expression, data, this.#isLoaded());
-      jsonata(expression).evaluate(data);
+      return await jsonata(expression).evaluate(data);
     });
   }
 }
