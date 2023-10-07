@@ -68,8 +68,10 @@ class JSONataAdaptor {
 
   async evaluate(data, expression) {
     return await this.#loaded.then(async () => {
-      console.log('JSONataAdaptor.evaluate', jsonata, expression, data, this.#isLoaded());
-      return await jsonata(expression).evaluate(data);
+      console.log('JSONataAdaptor.evaluate', data, jsonata, expression, this.#isLoaded());
+      const result = await jsonata(expression).evaluate(data);
+      console.log('JSONataAdaptor.evaluate', data, expression, result);
+      return result;
     });
   }
 }
