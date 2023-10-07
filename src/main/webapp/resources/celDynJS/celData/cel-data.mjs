@@ -42,7 +42,7 @@ class JSONataAdaptor {
     newEle.id = 'JSONata'
     newEle.type = "text/javascript";
     newEle.src = "/file/resource/celDynJS/JSONata/jsonata.min.js";
-    if (!document.head.querySelector("script#" + newEl.id)) {
+    if (!document.head.querySelector("script#" + newEle.id)) {
       document.head.appendChild(newElem);
     }
   }
