@@ -76,7 +76,7 @@ class JSONataAdaptor {
 let jsonataAdaptor;
 celDERegistry.addResolver('jsonata', async (data, expression) => {
   jsonataAdaptor = jsonataAdaptor ?? new JSONataAdaptor();
-  await jsonataAdaptor.evaluate(data, expression);
+  return await jsonataAdaptor.evaluate(data, expression);
 });
 
 export class CelData extends HTMLElement {
