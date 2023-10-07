@@ -38,11 +38,11 @@ class CelDataExtractorRegistry {
     this.#registry.set(shortname, extractFunc);
   }
 
-  resolve(shortname = "jsonata", data, expression) {
+  async evaluate(shortname = "jsonata", data, expression) {
     if (!this.#registry.has(shortname)) {
-      throw new Exception("no registred extraction function for " + shortname);
+      throw new Error("no registred extraction function for " + shortname);
     }
-    return this.#registry.get(shortname)(data, expression);
+    return await this.#registry.get(shortname)(data, expression);
   }
 }
 export const celDERegistry = new CelDataExtractorRegistry();
@@ -66,9 +66,9 @@ class JSONataAdaptor {
     return document.head.querySelector("script#" + this.#SCRIPT_ID);
   }
 
-  async resolve(data, expression) {
+  async evaluate(data, expression) {
     return await this.#loaded.then(async () => {
-      console.log('JSONataAdaptor.resolve', jsonata, expression, data, this.#isLoaded());
+      console.log('JSONataAdaptor.evaluate', jsonata, expression, data, this.#isLoaded());
       return await jsonata(expression).evaluate(data);
     });
   }
@@ -76,7 +76,7 @@ class JSONataAdaptor {
 let jsonataAdaptor;
 celDERegistry.addResolver('jsonata', async (data, expression) => {
   jsonataAdaptor = jsonataAdaptor ?? new JSONataAdaptor();
-  await jsonataAdaptor.resolve(data, expression);
+  await jsonataAdaptor.evaluate(data, expression);
 });
 
 export class CelData extends HTMLElement {
@@ -118,8 +118,8 @@ export class CelData extends HTMLElement {
     let fieldValue = data?.[this.field];
     console.debug("extractValue fieldValue", this.field, fieldValue);
     if (this.extract && extractMode) {
-      fieldValue = celDERegistry.resolve(extractMode, fieldValue, this.extract);
-      console.debug("extractValue fieldValue after resolve", this.field, fieldValue);
+      fieldValue = await celDERegistry.evaluate(extractMode, fieldValue, this.extract);
+      console.debug("extractValue fieldValue after evaluate", this.field, fieldValue);
     }
     return fieldValue ??
       (this.isDebug ? `{'${this.field}' is undefined}` : '');
