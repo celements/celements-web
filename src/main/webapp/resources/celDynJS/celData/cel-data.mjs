@@ -95,8 +95,7 @@ export class CelData extends HTMLElement {
     let fieldValue = data?.[this.field];
     console.debug("extractValue fieldValue", this.field, fieldValue);
     if (this.extract && extractMode) {
-      fieldValue = CelDataExtractorRegistry
-        .resolve(extractMode, fieldValue, this.extract);
+      fieldValue = celDERegistry.resolve(extractMode, fieldValue, this.extract);
       console.debug("extractValue fieldValue after resolve", this.field, fieldValue);
     }
     return fieldValue ??
