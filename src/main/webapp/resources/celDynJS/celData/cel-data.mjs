@@ -56,23 +56,21 @@ class JSONataAdaptor {
     newEle.id = this.#SCRIPT_ID;
     newEle.type = "text/javascript";
     newEle.src = "/file/resource/celDynJS/JSONata/jsonata.min.js";
-    if (!this.#isLoaded()) {
+    if (this.#isNotLoaded()) {
       document.head.appendChild(newEle);
     }
     this.#loaded = celDERegistry.getLoadedPromise(newEle);
   }
 
-  #isLoaded() {
-    return document.head.querySelector("script#" + this.#SCRIPT_ID);
+  #isNotLoaded() {
+    return !document.head.querySelector("script#" + this.#SCRIPT_ID);
   }
 
   async evaluate(data, expression) {
-    return await this.#loaded.then(async () => {
-      console.log('JSONataAdaptor.evaluate', data, jsonata, expression, this.#isLoaded());
-      const result = await jsonata(expression).evaluate(data);
-      console.log('JSONataAdaptor.evaluate', data, expression, result);
-      return result;
-    });
+    await this.#loaded;
+    const result = await jsonata(expression).evaluate(data);
+    console.log('JSONataAdaptor.evaluate', data, expression, result);
+    return result;
   }
 }
 let jsonataAdaptor;
