@@ -93,9 +93,11 @@ export class CelData extends HTMLElement {
 
   async extractValue(data, extractMode) {
     let fieldValue = data?.[this.field];
+    console.debug("extractValue fieldValue", fieldValue);
     if (this.extract && extractMode) {
       fieldValue = CelDataExtractorRegistry
         .resolve(extractMode, fieldValue, this.extract);
+      console.debug("extractValue fieldValue after resolve", fieldValue);
     }
     return fieldValue ??
       (this.isDebug ? `{'${this.field}' is undefined}` : '');
