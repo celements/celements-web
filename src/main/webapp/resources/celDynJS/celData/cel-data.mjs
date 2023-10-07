@@ -93,11 +93,11 @@ export class CelData extends HTMLElement {
 
   async extractValue(data, extractMode) {
     let fieldValue = data?.[this.field];
-    console.debug("extractValue fieldValue", fieldValue);
+    console.debug("extractValue fieldValue", this.field, fieldValue);
     if (this.extract && extractMode) {
       fieldValue = CelDataExtractorRegistry
         .resolve(extractMode, fieldValue, this.extract);
-      console.debug("extractValue fieldValue after resolve", fieldValue);
+      console.debug("extractValue fieldValue after resolve", this.field, fieldValue);
     }
     return fieldValue ??
       (this.isDebug ? `{'${this.field}' is undefined}` : '');
@@ -194,7 +194,7 @@ export class CelDataImage extends CelData {
 
   async urlImageSrc(data, extractMode) {
     const src = await this.extractValue(data, extractMode);
-    console.debug('urlImageSrc after extractValue',data, extractMode, src);
+    console.debug('urlImageSrc after extractValue', this.field, data, extractMode, src);
     if (src) {
       const url = new URL(src);
       for (const [key, value] of new URLSearchParams(this.imgSrcParams)) {
@@ -214,7 +214,7 @@ export class CelDataImage extends CelData {
   }
 
   async updateData(data, extractMode) {
-    console.debug('updateData', this, data);
+    console.debug('updateData', this.field, data);
     const img = this.querySelector('img');
     img.src = await this.urlImageSrc(data, extractMode) || this.srcFallback;
     img.alt = this.alt;
