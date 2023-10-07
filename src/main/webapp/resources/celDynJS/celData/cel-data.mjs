@@ -194,6 +194,7 @@ export class CelDataImage extends CelData {
 
   async urlImageSrc(data, extractMode) {
     const src = await this.extractValue(data, extractMode);
+    console.debug('urlImageSrc after extractValue',data, extractMode, src);
     if (src) {
       const url = new URL(src);
       for (const [key, value] of new URLSearchParams(this.imgSrcParams)) {
