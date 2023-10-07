@@ -49,19 +49,28 @@ export const celDERegistry = new CelDataExtractorRegistry();
 
 class JSONataAdaptor {
   #loaded;
+  #SCRIPT_ID = 'JSONata';
   
   constructor() {
     const newEle = document.createElement('script');
-    newEle.id = 'JSONata'
+    newEle.id = this.#SCRIPT_ID;
     newEle.type = "text/javascript";
     newEle.src = "/file/resource/celDynJS/JSONata/jsonata.min.js";
-    if (!document.head.querySelector("script#" + newEle.id)) {
+    if (!this.#isLoaded()) {
       document.head.appendChild(newEle);
     }
     this.#loaded = celDERegistry.getLoadedPromise(newEle);
   }
+
+  #isLoaded() {
+    return document.head.querySelector("script#" + this.#SCRIPT_ID);
+  }
+
   async resolve(data, expression) {
-    return await this.#loaded.then(jsonata(expression).evaluate(data));
+    return await this.#loaded.then(() => {
+      console.log('JSONataAdaptor.resolve', jsonata, expression, data, this.#isLoaded());
+      jsonata(expression).evaluate(data);
+    });
   }
 }
 let jsonataAdaptor;
