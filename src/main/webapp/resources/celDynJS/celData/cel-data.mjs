@@ -20,7 +20,24 @@
 class CelDataExtractorRegistry {
   #registry = new Map();
 
-  getLoadedPromise(elem) {
+  addJS(scriptId, jsPath) {
+    const newEle = document.createElement('script');
+    newEle.id = scriptId;
+    newEle.type = "text/javascript";
+    newEle.src = jsPath;
+    if (this.#isNotLoaded()) {
+      const loaded = this.#getLoadedPromise(newEle);
+      document.head.appendChild(newEle);
+      return loaded;
+    }
+    return Promise.resolve();
+  }
+
+  #isNotLoaded() {
+    return !document.head.querySelector("script#" + this.#SCRIPT_ID);
+  }
+
+  #getLoadedPromise(elem) {
     return new Promise((resolve, reject) => {
       elem.addEventListener('load', () => {
         resolve();
@@ -48,36 +65,15 @@ class CelDataExtractorRegistry {
 export const celDERegistry = new CelDataExtractorRegistry();
 
 class JSONataAdaptor {
-  #loaded;
   #SCRIPT_ID = 'JSONata';
   
-  constructor() {
-    const newEle = document.createElement('script');
-    newEle.id = this.#SCRIPT_ID;
-    newEle.type = "text/javascript";
-    newEle.src = "/file/resource/celDynJS/JSONata/jsonata.min.js";
-    if (this.#isNotLoaded()) {
-      document.head.appendChild(newEle);
-    }
-    this.#loaded = celDERegistry.getLoadedPromise(newEle);
-  }
-
-  #isNotLoaded() {
-    return !document.head.querySelector("script#" + this.#SCRIPT_ID);
-  }
-
   async evaluate(data, expression) {
-    await this.#loaded;
-    const result = await jsonata(expression).evaluate(data);
-    console.log('JSONataAdaptor.evaluate', data, expression, result);
-    return result;
+    await addJS(this.#SCRIPT_ID,
+      "/file/resource/celDynJS/JSONata/jsonata.min.js");
+    return await jsonata(expression).evaluate(data);
   }
 }
-let jsonataAdaptor;
-celDERegistry.addResolver('jsonata', async (data, expression) => {
-  jsonataAdaptor = jsonataAdaptor ?? new JSONataAdaptor();
-  return await jsonataAdaptor.evaluate(data, expression);
-});
+celDERegistry.addResolver('jsonata', new JSONataAdaptor().evaluate);
 
 export class CelData extends HTMLElement {
 
