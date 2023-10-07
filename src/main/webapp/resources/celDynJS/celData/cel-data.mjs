@@ -43,7 +43,7 @@ class JSONataAdaptor {
     newEle.type = "text/javascript";
     newEle.src = "/file/resource/celDynJS/JSONata/jsonata.min.js";
     if (!document.head.querySelector("script#" + newEle.id)) {
-      document.head.appendChild(newElem);
+      document.head.appendChild(newEle);
     }
   }
   async resolve(data, expression) {
