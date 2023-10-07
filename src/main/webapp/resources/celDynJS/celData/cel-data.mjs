@@ -20,6 +20,17 @@
 class CelDataExtractorRegistry {
   #registry = new Map();
 
+  getLoadedPromise(elem) {
+    return new Promise((resolve, reject) => {
+      elem.addEventListener('load', () => {
+        resolve();
+      });
+      elem.addEventListener('error', (message, source, lineno, colno, error) => {
+        reject(message, source, lineno, colno, error);
+      });
+    });
+  }
+
   addResolver(shortname, extractFunc) {
     if (typeof extractFunc !== 'function') {
       throw new Error("extractFunc must be a function [" + (typeof extractFunc) + "]");
@@ -37,6 +48,8 @@ class CelDataExtractorRegistry {
 export const celDERegistry = new CelDataExtractorRegistry();
 
 class JSONataAdaptor {
+  #loaded;
+  
   constructor() {
     const newEle = document.createElement('script');
     newEle.id = 'JSONata'
@@ -45,9 +58,10 @@ class JSONataAdaptor {
     if (!document.head.querySelector("script#" + newEle.id)) {
       document.head.appendChild(newEle);
     }
+    this.#loaded = celDERegistry.getLoadedPromise(newEle);
   }
   async resolve(data, expression) {
-    return await jsonata(expression).evaluate(data);
+    return await this.#loaded.then(jsonata(expression).evaluate(data));
   }
 }
 let jsonataAdaptor;
