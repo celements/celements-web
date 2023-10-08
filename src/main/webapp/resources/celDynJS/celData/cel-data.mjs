@@ -20,32 +20,6 @@
 class CelDataExtractorRegistry {
   #registry = new Map();
 
-  addJS(scriptId, jsPath) {
-    const newEle = document.createElement('script');
-    newEle.id = scriptId;
-    newEle.type = "text/javascript";
-    newEle.src = jsPath;
-    if (!document.head.querySelector("script#" + scriptId)) {
-      const loaded = this.#getLoadedPromise(newEle);
-      document.head.appendChild(newEle);
-      return loaded;
-    }
-    return Promise.resolve();
-  }
-
-  #getLoadedPromise(elem) {
-    return new Promise((resolve, reject) => {
-      
-      elem.addEventListener('load', () => {
-        console.log('script loaded', elem);
-        resolve();
-      });
-      elem.addEventListener('error', (message, source, lineno, colno, error) => {
-        reject(message, source, lineno, colno, error);
-      });
-    });
-  }
-
   addResolver(shortname, extractFunc) {
     if (typeof extractFunc !== 'function') {
       throw new Error("extractFunc must be a function [" + (typeof extractFunc) + "]");
@@ -63,11 +37,7 @@ class CelDataExtractorRegistry {
 export const celDERegistry = new CelDataExtractorRegistry();
 
 celDERegistry.addResolver('jsonata', async (data, expression) => {
-/*  await celDERegistry.addJS('JSONata',
-    "/file/resource/celDynJS/JSONata/jsonata.min.js");
-    */
   await import("/file/resource/celDynJS/JSONata/jsonata.min.js");
-  console.log('jsonata loaded', globalThis.jsonata);
   return await jsonata(expression).evaluate(data);
 });
 
