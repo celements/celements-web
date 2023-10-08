@@ -25,16 +25,12 @@ class CelDataExtractorRegistry {
     newEle.id = scriptId;
     newEle.type = "text/javascript";
     newEle.src = jsPath;
-    if (this.#isNotLoaded()) {
+    if (!document.head.querySelector("script#" + scriptId)) {
       const loaded = this.#getLoadedPromise(newEle);
       document.head.appendChild(newEle);
       return loaded;
     }
     return Promise.resolve();
-  }
-
-  #isNotLoaded() {
-    return !document.head.querySelector("script#" + this.#SCRIPT_ID);
   }
 
   #getLoadedPromise(elem) {
@@ -64,19 +60,13 @@ class CelDataExtractorRegistry {
 }
 export const celDERegistry = new CelDataExtractorRegistry();
 
-class JSONataAdaptor {
-  #SCRIPT_ID = 'JSONata';
-  
-  async evaluate(data, expression) {
-    await addJS(this.#SCRIPT_ID,
-      "/file/resource/celDynJS/JSONata/jsonata.min.js");
-    return await jsonata(expression).evaluate(data);
-  }
-}
-celDERegistry.addResolver('jsonata', new JSONataAdaptor().evaluate);
+celDERegistry.addResolver('jsonata', async (data, expression) => {
+  await celDERegistry.addJS('JSONata',
+    "/file/resource/celDynJS/JSONata/jsonata.min.js");
+  return await jsonata(expression).evaluate(data);
+});
 
 export class CelData extends HTMLElement {
-
   #rootElem;
   #updateHandler;
 
