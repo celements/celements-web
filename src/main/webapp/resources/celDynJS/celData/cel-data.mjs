@@ -35,7 +35,9 @@ class CelDataExtractorRegistry {
 
   #getLoadedPromise(elem) {
     return new Promise((resolve, reject) => {
+      
       elem.addEventListener('load', () => {
+        console.log('script loaded', elem);
         resolve();
       });
       elem.addEventListener('error', (message, source, lineno, colno, error) => {
@@ -61,8 +63,11 @@ class CelDataExtractorRegistry {
 export const celDERegistry = new CelDataExtractorRegistry();
 
 celDERegistry.addResolver('jsonata', async (data, expression) => {
-  await celDERegistry.addJS('JSONata',
+/*  await celDERegistry.addJS('JSONata',
     "/file/resource/celDynJS/JSONata/jsonata.min.js");
+    */
+  await import("/file/resource/celDynJS/JSONata/jsonata.min.js");
+  console.log('jsonata loaded', globalThis.jsonata);
   return await jsonata(expression).evaluate(data);
 });
 
