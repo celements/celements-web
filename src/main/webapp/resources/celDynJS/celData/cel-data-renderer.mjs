@@ -210,7 +210,7 @@ export default class CelDataRenderer {
   #dispatchEntryEvents(entry, data) {
     const dataRoot = entry.classList.contains('cel-data-root')
       ? entry : entry.querySelector('.cel-data-root');
-    console.trace('dispatching events for entry', entry, 'on data root', dataRoot);
+    console.debug('dispatching events for entry', entry, 'on data root', dataRoot);
     dataRoot?.dispatchEvent(new CustomEvent('celData:update', {
       bubbles: false,
       detail: {
