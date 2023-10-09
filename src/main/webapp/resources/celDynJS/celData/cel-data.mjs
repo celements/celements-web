@@ -27,7 +27,7 @@ class CelDataExtractorRegistry {
     this.#registry.set(shortname, extractFunc);
   }
 
-  async evaluate(shortname = "jsonata", data, expression) {
+  async evaluate(data, expression, shortname = "jsonata") {
     if (!this.#registry.has(shortname)) {
       throw new Error("no registred extraction function for " + shortname);
     }
@@ -47,8 +47,7 @@ export class CelData extends HTMLElement {
 
   constructor() {
     super();
-    this.#updateHandler = async event => await this.updateData(event.detail.data,
-      event.detail.extractMode);
+    this.#updateHandler = async event => await this.updateData(event.detail.data);
   }
 
   get isDebug() {
@@ -61,6 +60,11 @@ export class CelData extends HTMLElement {
 
   get extract() {
     return this.getAttribute('extract') || undefined;
+  }
+  
+  get extractMode() {
+    return this.getAttribute('extract-mode') || this.#rootElem.getAttribute('extract-mode')
+      || undefined;
   }
 
   connectedCallback() {
@@ -75,10 +79,10 @@ export class CelData extends HTMLElement {
     console.debug('disconnected', this);
   }
 
-  async extractValue(data, extractMode) {
+  async extractValue(data) {
     let fieldValue = data?.[this.field];
-    if (this.extract && extractMode) {
-      fieldValue = await celDERegistry.evaluate(extractMode, fieldValue, this.extract);
+    if (fieldValue && this.extract && extractMode) {
+      fieldValue = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
     }
     console.debug("extractValue fieldValue after evaluate", this.field, extractMode, this.extract,
       fieldValue);
@@ -86,9 +90,9 @@ export class CelData extends HTMLElement {
       (this.isDebug ? `{'${this.field}' is undefined}` : '');
   }
 
-  async updateData(data, extractMode) {
+  async updateData(data) {
     this.replaceChildren();
-    this.insertAdjacentHTML('beforeend', await this.extractValue(data, extractMode));
+    this.insertAdjacentHTML('beforeend', await this.extractValue(data));
   }
 
 }
@@ -112,8 +116,8 @@ export class CelDataDateTime extends CelData {
     return new Intl.DateTimeFormat(this.locale, this.options);
   }
 
-  async updateData(data, extractMode) {
-    const value = await this.extractValue(data, extractMode);
+  async updateData(data) {
+    const value = await this.extractValue(data);
     let formatted;
     try {
       formatted = this.formatter.format(new Date(value));
@@ -131,19 +135,18 @@ export class CelDataLink extends CelData {
     return this.getAttribute('target') ?? '';
   }
 
-  async connectedCallback() {
+  connectedCallback() {
     super.connectedCallback();
     if (!this.querySelector('a')) {
       const link = document.createElement('a');
       link.replaceChildren(...this.childNodes);
       this.replaceChildren(link);
-      await this.updateData({});
     }
   }
 
-  async updateData(data, extractMode) {
+  async updateData(data) {
     const link = this.querySelector('a');
-    const value = await this.extractValue(data, extractMode);
+    const value = await this.extractValue(data);
     if (value) {
       link.href = value;
       link.target = this.target;
@@ -172,8 +175,8 @@ export class CelDataImage extends CelData {
     return this.getAttribute('img-src-params') ?? '';
   }
 
-  async urlImageSrc(data, extractMode) {
-    const src = await this.extractValue(data, extractMode);
+  async urlImageSrc(data) {
+    const src = await this.extractValue(data);
     if (src) {
       const url = new URL(src);
       for (const [key, value] of new URLSearchParams(this.imgSrcParams)) {
@@ -184,19 +187,19 @@ export class CelDataImage extends CelData {
     return undefined;
   }
 
-  async connectedCallback() {
+  connectedCallback() {
     super.connectedCallback();
     if (!this.querySelector('img')) {
       this.replaceChildren(document.createElement('img'));
-      await this.updateData({});
+      img.alt = this.alt;
+      img.loading = this.loading;
+      img.src = this.srcFallback;
     }
   }
 
-  async updateData(data, extractMode) {
+  async updateData(data) {
     const img = this.querySelector('img');
-    img.src = await this.urlImageSrc(data, extractMode) || this.srcFallback;
-    img.alt = this.alt;
-    img.loading = this.loading;
+    img.src = await this.urlImageSrc(data) || this.srcFallback;
   }
 
 }

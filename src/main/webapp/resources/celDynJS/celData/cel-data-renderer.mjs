@@ -214,8 +214,7 @@ export default class CelDataRenderer {
     dataRoot?.dispatchEvent(new CustomEvent('celData:update', {
       bubbles: false,
       detail: {
-        data : data,
-        extractMode : this.#extractMode
+        data : data
       }
     }));
     if (entry.fire) {
