@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-import './cel-data.mjs?version=20230917';
+import './cel-data.mjs?version=2023100802';
 
 export default class CelDataRenderer {
 
@@ -208,10 +208,12 @@ export default class CelDataRenderer {
   #dispatchEntryEvents(entry, data) {
     const dataRoot = entry.classList.contains('cel-data-root')
       ? entry : entry.querySelector('.cel-data-root');
-    console.trace('dispatching events for entry', entry, 'on data root', dataRoot);
+    console.debug('dispatching events for entry', entry, 'on data root', dataRoot);
     dataRoot?.dispatchEvent(new CustomEvent('celData:update', {
       bubbles: false,
-      detail: data
+      detail: {
+        data : data
+      }
     }));
     if (entry.fire) {
       entry.fire('celements:contentChanged', { 'htmlElem' : entry });
