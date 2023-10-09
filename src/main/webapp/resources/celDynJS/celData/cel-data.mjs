@@ -17,14 +17,37 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-export class CelData extends HTMLElement {
+class CelDataExtractorRegistry {
+  #registry = new Map();
 
+  addResolver(shortname, extractFunc) {
+    if (typeof extractFunc !== 'function') {
+      throw new Error("extractFunc must be a function [" + (typeof extractFunc) + "]");
+    }
+    this.#registry.set(shortname, extractFunc);
+  }
+
+  async evaluate(data, expression, shortname = "jsonata") {
+    if (!this.#registry.has(shortname)) {
+      throw new Error("no registred extraction function for " + shortname);
+    }
+    return await this.#registry.get(shortname)(data, expression);
+  }
+}
+export const celDERegistry = new CelDataExtractorRegistry();
+
+celDERegistry.addResolver('jsonata', async (data, expression) => {
+  await import("/file/resource/deps/JSONata/jsonata.min.js");
+  return await jsonata(expression).evaluate(data);
+});
+
+export class CelData extends HTMLElement {
   #rootElem;
   #updateHandler;
 
   constructor() {
     super();
-    this.#updateHandler = event => this.updateData(event.detail);
+    this.#updateHandler = async event => await this.updateData(event.detail.data);
   }
 
   get isDebug() {
@@ -33,6 +56,15 @@ export class CelData extends HTMLElement {
 
   get field() {
     return this.getAttribute('field') || undefined;
+  }
+
+  get extract() {
+    return this.getAttribute('extract') || undefined;
+  }
+  
+  get extractMode() {
+    return this.getAttribute('extract-mode') || this.#rootElem.getAttribute('extract-mode')
+      || undefined;
   }
 
   connectedCallback() {
@@ -47,11 +79,20 @@ export class CelData extends HTMLElement {
     console.debug('disconnected', this);
   }
 
-  updateData(data) {
-    console.debug('updateData', this, data);
+  async extractValue(data) {
+    let fieldValue = data?.[this.field];
+    if (fieldValue && this.extract) {
+      fieldValue = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
+    }
+    console.debug("extractValue fieldValue after evaluate", this.field, this.extractMode,
+      this.extract, fieldValue);
+    return fieldValue ??
+      (this.isDebug ? `{'${this.field}' is undefined}` : '');
+  }
+
+  async updateData(data) {
     this.replaceChildren();
-    this.insertAdjacentHTML('beforeend', data?.[this.field] ??
-      (this.isDebug ? `{'${this.field}' is undefined}` : ''));
+    this.insertAdjacentHTML('beforeend', await this.extractValue(data));
   }
 
 }
@@ -75,16 +116,15 @@ export class CelDataDateTime extends CelData {
     return new Intl.DateTimeFormat(this.locale, this.options);
   }
 
-  updateData(data) {
-    console.debug('updateData', this, data);
-    const value = data?.[this.field];
+  async updateData(data) {
+    const value = await this.extractValue(data);
     let formatted;
     try {
       formatted = this.formatter.format(new Date(value));
     } catch (error) {
       console.warn('error formatting date', error, value);
     }
-    super.updateData({ [this.field]: formatted });
+    await super.updateData({ [this.field]: formatted });
   }
 
 }
@@ -101,14 +141,12 @@ export class CelDataLink extends CelData {
       const link = document.createElement('a');
       link.replaceChildren(...this.childNodes);
       this.replaceChildren(link);
-      this.updateData({});
     }
   }
 
-  updateData(data) {
-    console.debug('updateData', this, data);
+  async updateData(data) {
     const link = this.querySelector('a');
-    const value = data?.[this.field];
+    const value = await this.extractValue(data);
     if (value) {
       link.href = value;
       link.target = this.target;
@@ -137,8 +175,8 @@ export class CelDataImage extends CelData {
     return this.getAttribute('img-src-params') ?? '';
   }
 
-  urlImageSrc(data) {
-    const src = data?.[this.field];
+  async urlImageSrc(data) {
+    const src = await this.extractValue(data);
     if (src) {
       const url = new URL(src);
       for (const [key, value] of new URLSearchParams(this.imgSrcParams)) {
@@ -152,17 +190,17 @@ export class CelDataImage extends CelData {
   connectedCallback() {
     super.connectedCallback();
     if (!this.querySelector('img')) {
-      this.replaceChildren(document.createElement('img'));
-      this.updateData({});
+      const img = document.createElement('img');
+      img.alt = this.alt;
+      img.loading = this.loading;
+      img.src = this.srcFallback;
+      this.replaceChildren(img);
     }
   }
 
-  updateData(data) {
-    console.debug('updateData', this, data);
+  async updateData(data) {
     const img = this.querySelector('img');
-    img.src = this.urlImageSrc(data) || this.srcFallback;
-    img.alt = this.alt;
-    img.loading = this.loading;
+    img.src = await this.urlImageSrc(data) || this.srcFallback;
   }
 
 }
