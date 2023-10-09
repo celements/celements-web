@@ -23,7 +23,6 @@ export default class CelDataRenderer {
 
   #htmlElem;
   #template;
-  #extractMode;
   #entryRootTag;
   #cssClasses = {};
   #defaultCssClasses = Object.freeze({
@@ -35,7 +34,7 @@ export default class CelDataRenderer {
     removing: 'cel-data-removing' // toggled on each removed entry over an animation frame
   });
 
-  constructor(htmlElem, template, extractMode = "jsonata") {
+  constructor(htmlElem, template) {
     if (htmlElem == null) {
       throw new Error("missing htmlElem");
     }
@@ -44,7 +43,6 @@ export default class CelDataRenderer {
       throw new Error("missing template");
     }
     this.#template = template;
-    this.#extractMode = extractMode;
     this.withCssClasses();
     console.debug('CelDataRenderer init', this.htmlElem, this.template);
   }
