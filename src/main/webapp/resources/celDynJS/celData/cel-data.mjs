@@ -190,10 +190,11 @@ export class CelDataImage extends CelData {
   connectedCallback() {
     super.connectedCallback();
     if (!this.querySelector('img')) {
-      this.replaceChildren(document.createElement('img'));
+      const img = document.createElement('img');
       img.alt = this.alt;
       img.loading = this.loading;
       img.src = this.srcFallback;
+      this.replaceChildren(img);
     }
   }
 
