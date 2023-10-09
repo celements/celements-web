@@ -81,7 +81,7 @@ export class CelData extends HTMLElement {
 
   async extractValue(data) {
     let fieldValue = data?.[this.field];
-    if (fieldValue && this.extract && this.extractMode) {
+    if (fieldValue && this.extract) {
       fieldValue = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
     }
     console.debug("extractValue fieldValue after evaluate", this.field, this.extractMode,
