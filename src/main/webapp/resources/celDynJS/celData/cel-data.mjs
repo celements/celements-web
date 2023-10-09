@@ -37,7 +37,7 @@ class CelDataExtractorRegistry {
 export const celDERegistry = new CelDataExtractorRegistry();
 
 celDERegistry.addResolver('jsonata', async (data, expression) => {
-  await import("/file/resource/celDynJS/JSONata/jsonata.min.js");
+  await import("/file/resource/deps/JSONata/jsonata.min.js");
   return await jsonata(expression).evaluate(data);
 });
 
