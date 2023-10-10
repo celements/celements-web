@@ -12,9 +12,10 @@ $xwiki.includeForm($services.model.serialize($appScriptDocRef, "default"), false
 #elseif($services.appscript.isAppScriptAvailable("$!celAppScript"))
 #set($appResult = $xwiki.parseTemplate($services.appscript.getAppScriptTemplatePath("$!celAppScript")))
 $appResult
-#elseif($services.appscript.hasDocAppRecursiveScript("$!celAppScript"))
-#set($appScriptDocRef = $services.appscript.getAppRecursiveScriptDocRef("$!celAppScript"))
-$xwiki.includeForm($services.model.serialize($appScriptDocRef, "default"), false)
+#else
+#set($appRecursiveScriptDocRef = $services.appscript.getAppRecursiveScriptDocRef("$!celAppScript"))
+#if($appRecursiveScriptDocRef)
+$services.celementsweb.renderDocument($appRecursiveScriptDocRef)
 #else
 #set($appRecursiveScript = $services.appscript.getAppRecursiveScript("$!celAppScript"))
 #if($appRecursiveScript)
@@ -22,5 +23,6 @@ $xwiki.includeForm($services.model.serialize($appScriptDocRef, "default"), false
 $appResult
 #else
 #unkownScriptError()
-#end
+#end ##if appRecursiveScript
+#end ##if appRecursiveScriptDocRef
 #end
