@@ -6,12 +6,23 @@ Unkown script [$!celAppScript]!
 #set($celAppScript = "$!request.s")
 #end
 ##DEBUG: $celAppScript<br/>
-#if($services.celementsweb.hasDocAppScript("$!celAppScript"))
-#set($appScriptDocRef = $services.celementsweb.getAppScriptDocRef("$!celAppScript"))
+#if($services.appscript.hasDocAppScript("$!celAppScript"))
+#set($appScriptDocRef = $services.appscript.getAppScriptDocRef("$!celAppScript"))
 $xwiki.includeForm($services.model.serialize($appScriptDocRef, "default"), false)
-#elseif($services.celementsweb.isAppScriptAvailable("$!celAppScript"))
-#set($appResult = $xwiki.parseTemplate($services.celementsweb.getAppScriptTemplatePath("$!celAppScript")))
+#elseif($services.appscript.isAppScriptAvailable("$!celAppScript"))
+#set($appResult = $xwiki.parseTemplate($services.appscript.getAppScriptTemplatePath("$!celAppScript")))
+$appResult
+#else
+#set($appRecursiveScriptDocRef = $services.appscript.getAppRecursiveScriptDocRef("$!celAppScript"))
+#if($appRecursiveScriptDocRef)
+$services.celementsweb.renderDocument($appRecursiveScriptDocRef)
+#else
+#set($appRecursiveScript = $services.appscript.getAppRecursiveScript("$!celAppScript"))
+#if($appRecursiveScript)
+#set($appResult = $xwiki.parseTemplate($services.appscript.getAppScriptTemplatePath($appRecursiveScript)))
 $appResult
 #else
 #unkownScriptError()
+#end ##if appRecursiveScript
+#end ##if appRecursiveScriptDocRef
 #end
