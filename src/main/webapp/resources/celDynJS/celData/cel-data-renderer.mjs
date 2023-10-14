@@ -139,6 +139,7 @@ export default class CelDataRenderer {
   async #render(dataPromise, preInserter, inserter) {
     console.debug('render', this);
     this.htmlElem.classList.remove(...this.cssClasses.error);
+    this.htmlElem.classList.remove(...this.cssClasses.empty);
     this.htmlElem.classList.add(...this.cssClasses.render);
     try {
       const result = await dataPromise;
