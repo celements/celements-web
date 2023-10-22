@@ -63,7 +63,7 @@ export class CelData extends HTMLElement {
   }
   
   get extractMode() {
-    return this.getAttribute('extract-mode') || this.#rootElem.getAttribute('extract-mode')
+    return this.getAttribute('extract-mode') || this.#rootElem?.getAttribute('extract-mode')
       || undefined;
   }
 
