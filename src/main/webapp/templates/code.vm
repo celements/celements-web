@@ -1,6 +1,7 @@
 ###
 ### Code page in the "view" mode
 ###
+#if($isAdmin)
 $xwiki.jsfx.use('uicomponents/viewers/code.js', true)##
 $xwiki.jsfx.use('uicomponents/widgets/fullScreen.js', true)##
 $xwiki.ssfx.use('uicomponents/widgets/fullScreen.css', true)##
@@ -38,3 +39,6 @@ $doc.name.format("%${positions}d:", $velocityCount) $line
   <textarea readonly="readonly" class="wiki-code" rows="25" cols="80">$escapedcontent</textarea>
 #end
 </div>
+#else
+  $response.setStatus(403)
+#end
