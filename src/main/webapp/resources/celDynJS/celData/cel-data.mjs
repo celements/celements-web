@@ -151,7 +151,7 @@ export class CelDataLink extends CelData {
     if (value) {
       link.href = value;
       link.target = this.target;
-      if (!this.hasChildNodes()) {
+      if (!link.hasChildNodes()) {
         const [, urlWithoutProtocol] = value.split('://');
         link.innerText = urlWithoutProtocol || value;
       }
