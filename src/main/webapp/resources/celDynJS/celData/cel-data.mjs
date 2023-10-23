@@ -87,7 +87,8 @@ export class CelData extends HTMLElement {
       this.isDebug && console.debug('for', this.field, "extracted value", extracted, 
           'from', fieldValue, 'with', this.extract, this.extractMode || '');
     }
-    return extracted ?? (this.isDebug ? `{'${this.field}${this.extract}' is undefined}` : '');
+    return extracted ?? (!this.isDebug ? ''
+      : `{'${[this.field, this.extract].filter(Boolean).join('.')}' is undefined}`);
   }
 
   async updateData(data) {
