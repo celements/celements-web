@@ -80,14 +80,14 @@ export class CelData extends HTMLElement {
   }
 
   async extractValue(data) {
-    let fieldValue = data?.[this.field];
+    const fieldValue = data?.[this.field];
+    let extracted = fieldValue;
     if (fieldValue && this.extract) {
-      fieldValue = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
+      extracted = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
+      this.isDebug && console.debug('for', this.field, "extracted value", extracted, 
+          'from', fieldValue, 'with', this.extract, extracted);
     }
-    console.debug("extractValue fieldValue after evaluate", this.field, this.extractMode,
-      this.extract, fieldValue);
-    return fieldValue ??
-      (this.isDebug ? `{'${this.field}' is undefined}` : '');
+    return extracted ?? (this.isDebug ? `{'${this.field}${this.extract}' is undefined}` : '');
   }
 
   async updateData(data) {
