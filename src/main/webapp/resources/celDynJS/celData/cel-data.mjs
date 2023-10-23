@@ -85,7 +85,7 @@ export class CelData extends HTMLElement {
     if (fieldValue && this.extract) {
       extracted = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
       this.isDebug && console.debug('for', this.field, "extracted value", extracted, 
-          'from', fieldValue, 'with', this.extract, extracted);
+          'from', fieldValue, 'with', this.extract, this.extractMode || '');
     }
     return extracted ?? (this.isDebug ? `{'${this.field}${this.extract}' is undefined}` : '');
   }
