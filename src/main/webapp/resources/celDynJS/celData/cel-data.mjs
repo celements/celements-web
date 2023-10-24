@@ -63,7 +63,7 @@ export class CelData extends HTMLElement {
   }
   
   get extractMode() {
-    return this.getAttribute('extract-mode') || this.#rootElem.getAttribute('extract-mode')
+    return this.getAttribute('extract-mode') || this.#rootElem?.getAttribute('extract-mode')
       || undefined;
   }
 
@@ -80,14 +80,15 @@ export class CelData extends HTMLElement {
   }
 
   async extractValue(data) {
-    let fieldValue = data?.[this.field];
+    const fieldValue = data?.[this.field];
+    let extracted = fieldValue;
     if (fieldValue && this.extract) {
-      fieldValue = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
+      extracted = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
+      this.isDebug && console.debug('for', this.field, "extracted value", extracted, 
+          'from', fieldValue, 'with', this.extract, this.extractMode || '');
     }
-    console.debug("extractValue fieldValue after evaluate", this.field, this.extractMode,
-      this.extract, fieldValue);
-    return fieldValue ??
-      (this.isDebug ? `{'${this.field}' is undefined}` : '');
+    return extracted ?? (!this.isDebug ? ''
+      : `{'${[this.field, this.extract].filter(Boolean).join('.')}' is undefined}`);
   }
 
   async updateData(data) {
@@ -150,6 +151,10 @@ export class CelDataLink extends CelData {
     if (value) {
       link.href = value;
       link.target = this.target;
+      if (!link.hasChildNodes()) {
+        const [, urlWithoutProtocol] = value.split('://');
+        link.innerText = urlWithoutProtocol || value;
+      }
     } else {
       link.removeAttribute('href');
     }
