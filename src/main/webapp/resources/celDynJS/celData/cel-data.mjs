@@ -55,7 +55,14 @@ export class CelData extends HTMLElement {
   }
 
   get field() {
-    return this.getAttribute('field') || undefined;
+    return this.fields[0];
+  }
+
+  get fields() {
+    return (this.getAttribute('field') || '')
+      .split(',')
+      .map(f => f.trim())
+      .filter(Boolean);
   }
 
   get extract() {
@@ -82,18 +89,25 @@ export class CelData extends HTMLElement {
   async extractValue(data) {
     const fieldValue = data?.[this.field];
     let extracted = fieldValue;
-    if (fieldValue && this.extract) {
-      extracted = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
-      this.isDebug && console.debug('for', this.field, "extracted value", extracted, 
-          'from', fieldValue, 'with', this.extract, this.extractMode || '');
+    if (this.extract) {
+      const extractData = (this.fields.length > 1)
+        ? Object.fromEntries(this.fields.map(f => [f, data?.[f]]))
+        : fieldValue;
+      extracted = await celDERegistry.evaluate(extractData, this.extract, this.extractMode);
+      this.isDebug && console.debug("for fields", this.fields, "extracted values '", extracted, 
+          "' from '", extractData, "' with:", this.extract, this.extractMode || '');
     }
     return extracted ?? (!this.isDebug ? ''
-      : `{'${[this.field, this.extract].filter(Boolean).join('.')}' is undefined}`);
+      : `{'${[this.fields.join(','), this.extract].filter(Boolean).join('.')}' is undefined}`);
   }
 
   async updateData(data) {
+    this.replaceContent(await this.extractValue(data));
+  }
+
+  replaceContent(value) {
     this.replaceChildren();
-    this.insertAdjacentHTML('beforeend', await this.extractValue(data));
+    this.insertAdjacentHTML('beforeend', value);
   }
 
 }
@@ -125,7 +139,7 @@ export class CelDataDateTime extends CelData {
     } catch (error) {
       console.warn('error formatting date', error, value);
     }
-    await super.updateData({ [this.field]: formatted });
+    super.replaceContent(formatted);
   }
 
 }
