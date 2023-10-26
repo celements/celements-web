@@ -135,11 +135,11 @@ export class CelDataDateTime extends CelData {
     const value = await this.extractValue(data);
     let formatted;
     try {
-      formatted = this.formatter.format(new Date(value));
+      formatted = value ? this.formatter.format(new Date(value)) : value;
     } catch (error) {
-      console.warn('error formatting date', error, value);
+      console.warn('error formatting date', error, this, value);
     }
-    super.replaceContent(formatted);
+    this.replaceContent(formatted || '');
   }
 
 }
