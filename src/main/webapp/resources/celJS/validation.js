@@ -152,11 +152,9 @@
       Form.getElements(this.form).each(Validation.reset);
     },
     clickOnSubmitLinkHandler : function(event) {
-      const _me = this;
-      event.stop();
-      if (_me.validate()) {
-        _me.form.submit();
-      }
+      event.preventDefault();
+      event.stopPropagation();
+      this.form.requestSubmit(); // triggers onSubmit
     }
   };
   
