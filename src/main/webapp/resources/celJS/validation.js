@@ -154,7 +154,11 @@
     clickOnSubmitLinkHandler : function(event) {
       event.preventDefault();
       event.stopPropagation();
-      this.form.requestSubmit(); // triggers onSubmit
+      if (this.form.requestSubmit) {
+        this.form.requestSubmit(); // triggers onSubmit
+      } else if (!this.form.fire('celForm:prepareSubmit').stopped) {
+        this.form.submit();
+      }
     }
   };
   
