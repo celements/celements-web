@@ -150,8 +150,9 @@ export default class CelDataRenderer {
       this.htmlElem.classList.add(...this.cssClasses.error);
       return [];
     } finally {
-      this.cssClasses.empty.forEach(cssClass => this.htmlElem.classList
-        .toggle(cssClass, this.htmlElem.children.length == 0));
+      const isEmpty = [...this.htmlElem.children]
+        .every(entry => entry.classList.contains('cel-data-removing'));
+      this.cssClasses.empty.forEach(cssClass => this.htmlElem.classList.toggle(cssClass, isEmpty));
       this.htmlElem.classList.remove(...this.cssClasses.render);
     }
   }
