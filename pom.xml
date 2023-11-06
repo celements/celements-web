@@ -32,7 +32,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>6.2-SNAPSHOT</version>
+  <version>6.3-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -116,7 +116,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -128,7 +128,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -152,7 +152,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-richtext-web</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
       <type>war</type>
     </dependency>
 
@@ -205,12 +205,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.2-SNAPSHOT</version>
+      <version>6.4</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>

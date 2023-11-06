@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-import './cel-data.mjs?version=2023100802';
+import './cel-data.mjs?version=20231026';
 
 export default class CelDataRenderer {
 
@@ -139,6 +139,7 @@ export default class CelDataRenderer {
   async #render(dataPromise, preInserter, inserter) {
     console.debug('render', this);
     this.htmlElem.classList.remove(...this.cssClasses.error);
+    this.htmlElem.classList.remove(...this.cssClasses.empty);
     this.htmlElem.classList.add(...this.cssClasses.render);
     try {
       const result = await dataPromise;
@@ -149,8 +150,9 @@ export default class CelDataRenderer {
       this.htmlElem.classList.add(...this.cssClasses.error);
       return [];
     } finally {
-      this.cssClasses.empty.forEach(cssClass => this.htmlElem.classList
-        .toggle(cssClass, this.htmlElem.children.length == 0));
+      const isEmpty = [...this.htmlElem.children]
+        .every(entry => entry.classList.contains('cel-data-removing'));
+      this.cssClasses.empty.forEach(cssClass => this.htmlElem.classList.toggle(cssClass, isEmpty));
       this.htmlElem.classList.remove(...this.cssClasses.render);
     }
   }

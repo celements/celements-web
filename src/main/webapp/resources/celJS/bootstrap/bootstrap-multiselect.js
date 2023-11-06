@@ -1394,6 +1394,14 @@
         },
 
         /**
+         * Toggles open/closed the dropdown
+         * https://github.com/davidstutz/bootstrap-multiselect/issues/996#issuecomment-614734374
+         */
+        toggle: function () {
+            this.$button.click();
+        },
+
+        /**
          * The provided data will be used to build the dropdown.
          */
         dataprovider: function(dataprovider) {
