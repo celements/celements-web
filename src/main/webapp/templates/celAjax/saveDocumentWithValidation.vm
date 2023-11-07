@@ -19,7 +19,7 @@ $jsonBuilder.openDictionary()
     $jsonBuilder.addValue("$adminMsg.get('cel_tm_saving_failed_document'): $services.model.serialize($errDocRef, 'local')")
   #end
   $jsonBuilder.closeArray()
-  #set($successful = $updateResult.failed.isEmpty())
+  #set($successful = $updateResult.failed.isEmpty() && !$updateResult.isEmpty())
 #else
   $jsonBuilder.openArray('errorMessages')
   #foreach($result in $validationResult)
