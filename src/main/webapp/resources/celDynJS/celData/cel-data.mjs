@@ -55,7 +55,14 @@ export class CelData extends HTMLElement {
   }
 
   get field() {
-    return this.getAttribute('field') || undefined;
+    return this.fields[0];
+  }
+
+  get fields() {
+    return (this.getAttribute('field') || '')
+      .split(',')
+      .map(f => f.trim())
+      .filter(Boolean);
   }
 
   get extract() {
@@ -63,7 +70,7 @@ export class CelData extends HTMLElement {
   }
   
   get extractMode() {
-    return this.getAttribute('extract-mode') || this.#rootElem.getAttribute('extract-mode')
+    return this.getAttribute('extract-mode') || this.#rootElem?.getAttribute('extract-mode')
       || undefined;
   }
 
@@ -80,19 +87,27 @@ export class CelData extends HTMLElement {
   }
 
   async extractValue(data) {
-    let fieldValue = data?.[this.field];
-    if (fieldValue && this.extract) {
-      fieldValue = await celDERegistry.evaluate(fieldValue, this.extract, this.extractMode);
+    const fieldValue = data?.[this.field];
+    let extracted = fieldValue;
+    if (this.extract) {
+      const extractData = (this.fields.length > 1)
+        ? Object.fromEntries(this.fields.map(f => [f, data?.[f]]))
+        : fieldValue;
+      extracted = await celDERegistry.evaluate(extractData, this.extract, this.extractMode);
+      this.isDebug && console.debug("for fields", this.fields, "extracted values '", extracted, 
+          "' from '", extractData, "' with:", this.extract, this.extractMode || '');
     }
-    console.debug("extractValue fieldValue after evaluate", this.field, this.extractMode,
-      this.extract, fieldValue);
-    return fieldValue ??
-      (this.isDebug ? `{'${this.field}' is undefined}` : '');
+    return extracted ?? (!this.isDebug ? ''
+      : `{'${[this.fields.join(','), this.extract].filter(Boolean).join('.')}' is undefined}`);
   }
 
   async updateData(data) {
+    this.replaceContent(await this.extractValue(data));
+  }
+
+  replaceContent(value) {
     this.replaceChildren();
-    this.insertAdjacentHTML('beforeend', await this.extractValue(data));
+    this.insertAdjacentHTML('beforeend', value);
   }
 
 }
@@ -120,11 +135,11 @@ export class CelDataDateTime extends CelData {
     const value = await this.extractValue(data);
     let formatted;
     try {
-      formatted = this.formatter.format(new Date(value));
+      formatted = value ? this.formatter.format(new Date(value)) : value;
     } catch (error) {
-      console.warn('error formatting date', error, value);
+      console.warn('error formatting date', error, this, value);
     }
-    await super.updateData({ [this.field]: formatted });
+    this.replaceContent(formatted || '');
   }
 
 }
@@ -150,6 +165,10 @@ export class CelDataLink extends CelData {
     if (value) {
       link.href = value;
       link.target = this.target;
+      if (!link.hasChildNodes()) {
+        const [, urlWithoutProtocol] = value.split('://');
+        link.innerText = urlWithoutProtocol || value;
+      }
     } else {
       link.removeAttribute('href');
     }
