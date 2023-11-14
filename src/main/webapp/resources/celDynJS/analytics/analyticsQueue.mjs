@@ -18,111 +18,98 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-(function(window, undefined) {
-  "use strict";
+export class Queue {
+  static _running = false;
+  _analyticsEventQueue;
+  _analyticsPriorizedEventQueue;
+  _addBind;
+  _priorityAddBind;
+  _sizeBind;
+  _lowPrioritySizeBind;
+  _highPrioritySizeBind;
+  _sendHitsBind;
+  _getPrioMsgPartBind;
 
-  var Queue = Class.create({
-    _running : false,
-    _analyticsEventQueue : undefined,
-    _analyticsPriorizedEventQueue : undefined,
-    _addBind : undefined,
-    _priorityAddBind : undefined,
-    _sizeBind : undefined,
-    _lowPrioritySizeBind : undefined,
-    _highPrioritySizeBind : undefined,
-    _sendHitsBind : undefined,
-    _getPrioMsgPartBind : undefined,
+  constructor() {
+	  this._analyticsEventQueue = [];
+    this._analyticsPriorizedEventQueue = [];
+    this._addBind = this.add.bind(this);
+    this._priorityAddBind = this.priorityAdd.bind(this);
+    this._sizeBind = this.size.bind(this);
+    this._lowPrioritySizeBind = this.lowPrioritySize.bind(this);
+    this._highPrioritySizeBind = this.highPrioritySize.bind(this);
+    this._sendHitsBind = this._sendHits.bind(this);
+    this._getPrioMsgPartBind = this._getPrioMsgPart.bind(this);
+    Queue._running = true;
+    this._sendHitsBind();
+    Event.observe(window, 'beforeunload', this._sendMissedHits.bind(this));
+  }
 
-    initialize : function() {
-      var _me = this;
-  	  _me._analyticsEventQueue = new Array();
-      _me._analyticsPriorizedEventQueue = new Array();
-	  _me._addBind = _me.add.bind(_me);
-	  _me._priorityAddBind = _me.priorityAdd.bind(_me);
-	  _me._sizeBind = _me.size.bind(_me);
-	  _me._lowPrioritySizeBind = _me.lowPrioritySize.bind(_me);
-	  _me._highPrioritySizeBind = _me.highPrioritySize.bind(_me);
-	  _me._sendHitsBind = _me._sendHits.bind(_me);
-	  _me._getPrioMsgPartBind = _me._getPrioMsgPart.bind(_me);
-	  _me._running = true;
-	  _me._sendHitsBind();
-	  Event.observe(window, 'beforeunload', _me._sendMissedHits.bind(_me));
-    },
+  add(action, parameters) {
+    this._analyticsEventQueue.push({ 'action' : action, 'params' : parameters });
+  }
 
-    add : function(action, parameters) {
-      var _me = this;
-      _me._analyticsEventQueue.push({ 'action' : action, 'params' : parameters });
-    },
+  priorityAdd(action, parameters) {
+    this._analyticsPriorizedEventQueue.push({ 'action' : action, 'params' : parameters });
+  }
 
-    priorityAdd : function(action, parameters) {
-      var _me = this;
-      _me._analyticsPriorizedEventQueue.push({ 'action' : action, 'params' : parameters });
-    },
+  size() {
+    return this._lowPrioritySizeBind() + this._highPrioritySizeBind();
+  }
 
-    size : function() {
-      var _me = this;
-      return _me._lowPrioritySizeBind() + _me._highPrioritySizeBind();
-    },
+  lowPrioritySize() {
+    return this._analyticsEventQueue.length;
+  }
 
-    lowPrioritySize : function() {
-      var _me = this;
-      return _me._analyticsEventQueue.length;
-    },
-
-    highPrioritySize : function() {
-      var _me = this;
-      return _me._analyticsPriorizedEventQueue.length;
-    },
-    
-    _sendHits : function() {
-      var _me = this;
-      console.debug('send hits, _running', _me._running, ', queue size is', _me._sizeBind());
-      if (_me._running) {
-        while (_me._highPrioritySizeBind() > 0) {
-          var nextHit = _me._analyticsPriorizedEventQueue.shift();
-          window.CELEMENTS.analytics.MatomoQueue().push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
-        }
-        while (_me._lowPrioritySizeBind() > 0) {
-          var nextHit = _me._analyticsEventQueue.shift();
-          window.CELEMENTS.analytics.MatomoQueue().push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
-        }
-        _me._sendHitsBind.delay(.5);
-      }
-    },
-
-    _sendMissedHits : function(event) {
-      var _me = this;
-      _me._sendHitsBind();
-      _me._running = false;
-      if ((_me._highPrioritySizeBind() + _me._sizeBind()) > 0) {
-        window.CELEMENTS.analytics.MatomoQueue().push(['trackEvent', 'Ad', 'Missed hits: ', _me._getPrioMsgPartBind() + _me._sizeBind() + ' in queue on unload']);
-      }
-    },
-
-    _getPrioMsgPart : function() {
-      var _me = this;
-      var prioMsg = 'No priority events remaining. ';
-      if(_me._highPrioritySizeBind() > 0) {
-        var nextPrioObj = _me._analyticsPriorizedEventQueue.shift();
-        prioMsg = _me._highPrioritySizeBind() + ' remaining high prio hits. Top most of which has' +
-            ' action [' + nextPrioObj.eventAction + '] and label [' + nextPrioObj.eventLabel + ']. ';
-      }
-      return prioMsg;
-    }
-  });
+  highPrioritySize() {
+    return this._analyticsPriorizedEventQueue.length;
+  }
   
-  const initQueue = function() {
-	if (window.CELEMENTS.analytics.MatomoQueue && window.CELEMENTS.analytics.MatomoQueue()) {
-      window.CELEMENTS.analytics.Queue = new Queue();
-    } else {
-	  //console.debug('analytics delay', window.CELEMENTS.analytics.MatomoQueue);
-	  setTimeout(initQueue, 200);
-	}
-  };
+  _sendHits() {
+    console.debug('send hits, _running', Queue._running, ', queue size is', this._sizeBind());
+    if (Queue._running) {
+      while (this._highPrioritySizeBind() > 0) {
+        const nextHit = this._analyticsPriorizedEventQueue.shift();
+        window.CELEMENTS.analytics.MatomoQueue().push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
+      }
+      while (this._lowPrioritySizeBind() > 0) {
+        const nextHit = this._analyticsEventQueue.shift();
+        window.CELEMENTS.analytics.MatomoQueue().push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
+      }
+      this._sendHitsBind.delay(.5);
+    }
+  }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    if (typeof window.CELEMENTS === "undefined"){ window.CELEMENTS={}; };
-    if (typeof window.CELEMENTS.analytics === "undefined"){ window.CELEMENTS.analytics={}; };
-    initQueue();
-  });
-})(window);
+  _sendMissedHits(event) {
+    this._sendHitsBind();
+    Queue._running = false;
+    if ((this._highPrioritySizeBind() + this._sizeBind()) > 0) {
+      window.CELEMENTS.analytics.MatomoQueue().push(['trackEvent', 'Ad', 'Missed hits: ', this._getPrioMsgPartBind() + this._sizeBind() + ' in queue on unload']);
+    }
+  }
+
+  _getPrioMsgPart() {
+    let prioMsg = 'No priority events remaining. ';
+    if(this._highPrioritySizeBind() > 0) {
+      const nextPrioObj = this._analyticsPriorizedEventQueue.shift();
+      prioMsg = this._highPrioritySizeBind() + ' remaining high prio hits. Top most of which has' +
+          ' action [' + nextPrioObj.eventAction + '] and label [' + nextPrioObj.eventLabel + ']. ';
+    }
+    return prioMsg;
+  }
+}
+
+const initQueue = function() {
+if (window.CELEMENTS.analytics.MatomoQueue && window.CELEMENTS.analytics.MatomoQueue()) {
+    window.CELEMENTS.analytics.Queue = new Queue();
+  } else {
+  //console.debug('analytics delay', window.CELEMENTS.analytics.MatomoQueue);
+  setTimeout(initQueue, 200);
+}
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof window.CELEMENTS === "undefined"){ window.CELEMENTS={}; };
+  if (typeof window.CELEMENTS.analytics === "undefined"){ window.CELEMENTS.analytics={}; };
+  initQueue();
+});

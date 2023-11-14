@@ -37,7 +37,6 @@
     _getPrioMsgPartBind : undefined,
 
     initialize : function() {
-      var _me = this;
   	  _me._analyticsEventQueue = new Array();
       _me._analyticsPriorizedEventQueue = new Array();
 	  _me._addBind = _me.add.bind(_me);
