@@ -21,9 +21,6 @@
 (function(window, undefined) {
   "use strict";
 
-  console.warn('analyticsQueue.js is deprecated since November 2023.'
-    + ' Instead use celDynJS/analytics/analyticsQueue.mjs');
-
   var Queue = Class.create({
     _running : false,
     _analyticsEventQueue : undefined,
