@@ -19,97 +19,79 @@
  */
 
 export class Queue {
-  static _running = false;
-  _analyticsEventQueue;
-  _analyticsPriorizedEventQueue;
-  _addBind;
-  _priorityAddBind;
-  _sizeBind;
-  _lowPrioritySizeBind;
-  _highPrioritySizeBind;
-  _sendHitsBind;
-  _getPrioMsgPartBind;
+  #running = false;
+  #analyticsEventQueue;
+  #analyticsPriorizedEventQueue;
 
   constructor() {
-	  this._analyticsEventQueue = [];
-    this._analyticsPriorizedEventQueue = [];
-    this._addBind = this.add.bind(this);
-    this._priorityAddBind = this.priorityAdd.bind(this);
-    this._sizeBind = this.size.bind(this);
-    this._lowPrioritySizeBind = this.lowPrioritySize.bind(this);
-    this._highPrioritySizeBind = this.highPrioritySize.bind(this);
-    this._sendHitsBind = this._sendHits.bind(this);
-    this._getPrioMsgPartBind = this._getPrioMsgPart.bind(this);
-    Queue._running = true;
-    this._sendHitsBind();
     Event.observe(window, 'beforeunload', this._sendMissedHits.bind(this));
+	  this.#analyticsEventQueue = [];
+    this.#analyticsPriorizedEventQueue = [];
+    this.#running = true;
+    this._sendHits();
   }
 
   add(action, parameters) {
-    this._analyticsEventQueue.push({ 'action' : action, 'params' : parameters });
+    this.#analyticsEventQueue.push({ 'action' : action, 'params' : parameters });
   }
 
   priorityAdd(action, parameters) {
-    this._analyticsPriorizedEventQueue.push({ 'action' : action, 'params' : parameters });
+    this.#analyticsPriorizedEventQueue.push({ 'action' : action, 'params' : parameters });
   }
 
   size() {
-    return this._lowPrioritySizeBind() + this._highPrioritySizeBind();
+    return this._lowPrioritySize() + this._highPrioritySize();
   }
 
   lowPrioritySize() {
-    return this._analyticsEventQueue.length;
+    return this.#analyticsEventQueue.length;
   }
 
   highPrioritySize() {
-    return this._analyticsPriorizedEventQueue.length;
+    return this.#analyticsPriorizedEventQueue.length;
   }
   
-  _sendHits() {
-    console.debug('send hits, _running', Queue._running, ', queue size is', this._sizeBind());
-    if (Queue._running) {
-      while (this._highPrioritySizeBind() > 0) {
-        const nextHit = this._analyticsPriorizedEventQueue.shift();
-        window.CELEMENTS.analytics.MatomoQueue().push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
-      }
-      while (this._lowPrioritySizeBind() > 0) {
-        const nextHit = this._analyticsEventQueue.shift();
-        window.CELEMENTS.analytics.MatomoQueue().push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
-      }
-      this._sendHitsBind.delay(.5);
+  #sleep(sec, __method, ...args) {
+    return new Promise(resolve => window.setTimeout(function() {
+      resolve(__method.apply(__method, args));
+    }, sec * 1000));
+  }
+
+  async _sendHits() {
+    console.debug('send hits, #running', this.#running, ', queue size is', this._size());
+    while (this.#running) {
+      this._sendHitsOnce();
+      await this.#sleep(.5);
     }
   }
 
+  _sendHitsOnce() {
+      while (this._highPrioritySize() > 0) {
+        const nextHit = this.#analyticsPriorizedEventQueue.shift();
+        window._mtm.push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
+      }
+      while (this._lowPrioritySize() > 0) {
+        const nextHit = this.#analyticsEventQueue.shift();
+        window._mtm.push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
+      }
+  }
+
   _sendMissedHits(event) {
-    this._sendHitsBind();
-    Queue._running = false;
-    if ((this._highPrioritySizeBind() + this._sizeBind()) > 0) {
-      window.CELEMENTS.analytics.MatomoQueue().push(['trackEvent', 'Ad', 'Missed hits: ', this._getPrioMsgPartBind() + this._sizeBind() + ' in queue on unload']);
+    this.#running = false;
+    this._sendHitsOnce();
+    if ((this._highPrioritySize() + this._size()) > 0) {
+      window._mtm.push(['trackEvent', 'Ad', 'Missed hits: ',
+       this._getPrioMsgPart() + this._size() + ' in queue on unload']);
     }
   }
 
   _getPrioMsgPart() {
     let prioMsg = 'No priority events remaining. ';
-    if(this._highPrioritySizeBind() > 0) {
-      const nextPrioObj = this._analyticsPriorizedEventQueue.shift();
-      prioMsg = this._highPrioritySizeBind() + ' remaining high prio hits. Top most of which has' +
+    if(this._highPrioritySize() > 0) {
+      const nextPrioObj = this.#analyticsPriorizedEventQueue.shift();
+      prioMsg = this._highPrioritySize() + ' remaining high prio hits. Top most of which has' +
           ' action [' + nextPrioObj.eventAction + '] and label [' + nextPrioObj.eventLabel + ']. ';
     }
     return prioMsg;
   }
 }
-
-const initQueue = function() {
-if (window.CELEMENTS.analytics.MatomoQueue && window.CELEMENTS.analytics.MatomoQueue()) {
-    window.CELEMENTS.analytics.Queue = new Queue();
-  } else {
-  //console.debug('analytics delay', window.CELEMENTS.analytics.MatomoQueue);
-  setTimeout(initQueue, 200);
-}
-};
-
-document.addEventListener('DOMContentLoaded', function() {
-  if (typeof window.CELEMENTS === "undefined"){ window.CELEMENTS={}; };
-  if (typeof window.CELEMENTS.analytics === "undefined"){ window.CELEMENTS.analytics={}; };
-  initQueue();
-});
