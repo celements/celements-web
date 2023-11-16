@@ -24,7 +24,11 @@ export class Queue {
   #analyticsPriorizedEventQueue;
 
   constructor() {
-    Event.observe(window, 'beforeunload', this._sendMissedHits.bind(this));
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === "hidden") {
+        this._sendMissedHits();
+      }
+    });
 	  this.#analyticsEventQueue = [];
     this.#analyticsPriorizedEventQueue = [];
     this.#running = true;
@@ -40,7 +44,7 @@ export class Queue {
   }
 
   size() {
-    return this._lowPrioritySize() + this._highPrioritySize();
+    return this.lowPrioritySize() + this.highPrioritySize();
   }
 
   lowPrioritySize() {
@@ -51,14 +55,12 @@ export class Queue {
     return this.#analyticsPriorizedEventQueue.length;
   }
   
-  #sleep(sec, __method, ...args) {
-    return new Promise(resolve => window.setTimeout(function() {
-      resolve(__method.apply(__method, args));
-    }, sec * 1000));
+  #sleep(sec) {
+    return new Promise(resolve => window.setTimeout(resolve, sec * 1000));
   }
 
   async _sendHits() {
-    console.debug('send hits, #running', this.#running, ', queue size is', this._size());
+    console.debug('send hits, #running', this.#running, ', queue size is', this.size());
     while (this.#running) {
       this._sendHitsOnce();
       await this.#sleep(.5);
@@ -66,30 +68,30 @@ export class Queue {
   }
 
   _sendHitsOnce() {
-      while (this._highPrioritySize() > 0) {
+      while (this.highPrioritySize() > 0) {
         const nextHit = this.#analyticsPriorizedEventQueue.shift();
         window._mtm.push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
       }
-      while (this._lowPrioritySize() > 0) {
+      while (this.lowPrioritySize() > 0) {
         const nextHit = this.#analyticsEventQueue.shift();
         window._mtm.push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
       }
   }
 
-  _sendMissedHits(event) {
+  _sendMissedHits() {
     this.#running = false;
     this._sendHitsOnce();
-    if ((this._highPrioritySize() + this._size()) > 0) {
+    if ((this.highPrioritySize() + this.size()) > 0) {
       window._mtm.push(['trackEvent', 'Ad', 'Missed hits: ',
-       this._getPrioMsgPart() + this._size() + ' in queue on unload']);
+       this._getPrioMsgPart() + this.size() + ' in queue on unload']);
     }
   }
 
   _getPrioMsgPart() {
     let prioMsg = 'No priority events remaining. ';
-    if(this._highPrioritySize() > 0) {
+    if(this.highPrioritySize() > 0) {
       const nextPrioObj = this.#analyticsPriorizedEventQueue.shift();
-      prioMsg = this._highPrioritySize() + ' remaining high prio hits. Top most of which has' +
+      prioMsg = this.highPrioritySize() + ' remaining high prio hits. Top most of which has' +
           ' action [' + nextPrioObj.eventAction + '] and label [' + nextPrioObj.eventLabel + ']. ';
     }
     return prioMsg;
