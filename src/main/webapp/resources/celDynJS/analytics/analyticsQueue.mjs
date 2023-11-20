@@ -70,11 +70,11 @@ export class Queue {
   _sendHitsOnce() {
       while (this.highPrioritySize() > 0) {
         const nextHit = this.#analyticsPriorizedEventQueue.shift();
-        window._mtm.push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
+        window._paq.push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
       }
       while (this.lowPrioritySize() > 0) {
         const nextHit = this.#analyticsEventQueue.shift();
-        window._mtm.push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
+        window._paq.push(['trackEvent', nextHit.params.eventAction, nextHit.params.eventLabel, nextHit.params.eventValue]);
       }
   }
 
@@ -82,7 +82,7 @@ export class Queue {
     this.#running = false;
     this._sendHitsOnce();
     if ((this.highPrioritySize() + this.size()) > 0) {
-      window._mtm.push(['trackEvent', 'Ad', 'Missed hits: ',
+      window._paq.push(['trackEvent', 'Ad', 'Missed hits: ',
        this._getPrioMsgPart() + this.size() + ' in queue on unload']);
     }
   }
