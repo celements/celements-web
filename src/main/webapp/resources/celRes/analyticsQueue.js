@@ -37,18 +37,18 @@
     _getPrioMsgPartBind : undefined,
 
     initialize : function() {
-  	  _me._analyticsEventQueue = new Array();
+      _me._analyticsEventQueue = new Array();
       _me._analyticsPriorizedEventQueue = new Array();
-	  _me._addBind = _me.add.bind(_me);
-	  _me._priorityAddBind = _me.priorityAdd.bind(_me);
-	  _me._sizeBind = _me.size.bind(_me);
-	  _me._lowPrioritySizeBind = _me.lowPrioritySize.bind(_me);
-	  _me._highPrioritySizeBind = _me.highPrioritySize.bind(_me);
-	  _me._sendHitsBind = _me._sendHits.bind(_me);
-	  _me._getPrioMsgPartBind = _me._getPrioMsgPart.bind(_me);
-	  _me._running = true;
-	  _me._sendHitsBind();
-	  Event.observe(window, 'beforeunload', _me._sendMissedHits.bind(_me));
+      _me._addBind = _me.add.bind(_me);
+      _me._priorityAddBind = _me.priorityAdd.bind(_me);
+      _me._sizeBind = _me.size.bind(_me);
+      _me._lowPrioritySizeBind = _me.lowPrioritySize.bind(_me);
+      _me._highPrioritySizeBind = _me.highPrioritySize.bind(_me);
+      _me._sendHitsBind = _me._sendHits.bind(_me);
+      _me._getPrioMsgPartBind = _me._getPrioMsgPart.bind(_me);
+      _me._running = true;
+      _me._sendHitsBind();
+      Event.observe(window, 'beforeunload', _me._sendMissedHits.bind(_me));
     },
 
     add : function(action, parameters) {
