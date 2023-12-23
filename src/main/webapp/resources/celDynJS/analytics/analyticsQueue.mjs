@@ -29,7 +29,7 @@ export class Queue {
         this._sendMissedHits();
       }
     });
-	  this.#analyticsEventQueue = [];
+    this.#analyticsEventQueue = [];
     this.#analyticsPriorizedEventQueue = [];
     this.#running = true;
     this._sendHits();
