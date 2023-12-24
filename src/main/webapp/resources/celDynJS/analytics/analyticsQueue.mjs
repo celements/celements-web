@@ -26,13 +26,13 @@ export class Queue {
   constructor() {
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === "hidden") {
-        this._sendMissedHits();
+        this.#sendMissedHits();
       }
     });
     this.#analyticsEventQueue = [];
     this.#analyticsPriorizedEventQueue = [];
     this.#running = true;
-    this._sendHits();
+    this.#sendHits();
   }
 
   add(action, parameters) {
@@ -59,15 +59,15 @@ export class Queue {
     return new Promise(resolve => window.setTimeout(resolve, sec * 1000));
   }
 
-  async _sendHits() {
+  async #sendHits() {
     console.debug('send hits, #running', this.#running, ', queue size is', this.size());
     while (this.#running) {
-      this._sendHitsOnce();
+      this.#sendHitsOnce();
       await this.#sleep(.5);
     }
   }
 
-  _sendHitsOnce() {
+  #sendHitsOnce() {
     while (this.highPrioritySize() > 0) {
       const nextHit = this.#analyticsPriorizedEventQueue.shift();
       window._paq.push(['trackEvent', nextHit.params.eventCategory, nextHit.params.eventAction,
@@ -80,16 +80,16 @@ export class Queue {
     }
   }
 
-  _sendMissedHits() {
+  #sendMissedHits() {
     this.#running = false;
-    this._sendHitsOnce();
+    this.#sendHitsOnce();
     if (this.size() > 0) {
       window._paq.push(['trackEvent', 'Ad', 'Missed hits: ',
-       this._getPrioMsgPart() + this.size() + ' in queue on unload']);
+       this.#getPrioMsgPart() + this.size() + ' in queue on unload']);
     }
   }
 
-  _getPrioMsgPart() {
+  #getPrioMsgPart() {
     let prioMsg = 'No priority events remaining. ';
     if(this.highPrioritySize() > 0) {
       const nextPrioObj = this.#analyticsPriorizedEventQueue.shift();
