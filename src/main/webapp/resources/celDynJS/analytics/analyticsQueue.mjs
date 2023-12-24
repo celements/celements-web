@@ -83,7 +83,7 @@ export class Queue {
   _sendMissedHits() {
     this.#running = false;
     this._sendHitsOnce();
-    if ((this.highPrioritySize() + this.size()) > 0) {
+    if (this.size() > 0) {
       window._paq.push(['trackEvent', 'Ad', 'Missed hits: ',
        this._getPrioMsgPart() + this.size() + ' in queue on unload']);
     }
