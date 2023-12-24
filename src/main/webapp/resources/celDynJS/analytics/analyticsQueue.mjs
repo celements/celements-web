@@ -68,16 +68,16 @@ export class Queue {
   }
 
   _sendHitsOnce() {
-      while (this.highPrioritySize() > 0) {
-        const nextHit = this.#analyticsPriorizedEventQueue.shift();
-        window._paq.push(['trackEvent', nextHit.params.eventCategory,  nextHit.params.eventAction,
-         nextHit.params.eventLabel, nextHit.params.eventValue]);
-      }
-      while (this.lowPrioritySize() > 0) {
-        const nextHit = this.#analyticsEventQueue.shift();
-        window._paq.push(['trackEvent', nextHit.params.eventCategory,  nextHit.params.eventAction,
-         nextHit.params.eventLabel, nextHit.params.eventValue]);
-      }
+    while (this.highPrioritySize() > 0) {
+      const nextHit = this.#analyticsPriorizedEventQueue.shift();
+      window._paq.push(['trackEvent', nextHit.params.eventCategory, nextHit.params.eventAction,
+        nextHit.params.eventLabel, nextHit.params.eventValue]);
+    }
+    while (this.lowPrioritySize() > 0) {
+      const nextHit = this.#analyticsEventQueue.shift();
+      window._paq.push(['trackEvent', nextHit.params.eventCategory, nextHit.params.eventAction,
+        nextHit.params.eventLabel, nextHit.params.eventValue]);
+    }
   }
 
   _sendMissedHits() {
