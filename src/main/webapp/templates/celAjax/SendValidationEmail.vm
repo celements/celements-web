@@ -1,7 +1,7 @@
 #if($doc.hasAccessLevel('admin'))
   #if("$!request.get('user')" != '')
     Erstelle fuer $request.get('user') neuen Schluessel und versende Aktivierungsmail.
-    $xwiki.celementsweb.sendNewValidation("$!request.get('user')", "email,loginname")
+    $xwiki.authentication.sendNewValidation("$!request.get('user')", "email,loginname")
   #else
     <form action="" method="post">
       Accountname oder Emailadresse <input type="text" name="user" />
