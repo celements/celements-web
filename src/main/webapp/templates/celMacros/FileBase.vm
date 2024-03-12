@@ -652,7 +652,7 @@ function change() {
       <input type="hidden" name="xredirect" value="" />
       <input type="hidden" id="uploadDoc" name="fullName" value="$services.model.serialize($uploadDoc.documentReference, 'local')" />
       <input type="hidden" id="uploadFilename" name="filename" value="" size="20" />
-      <input type="hidden" id="celfileuploadToken" name="uploadToken" value="$!{celementsweb.getNewCelementsTokenForUser()}" />
+      <input type="hidden" id="celfileuploadToken" name="uploadToken" value="$!{services.authentication.getNewCelementsTokenForUser()}" />
       <input id="uploadBrowser" class="celfileupload celSupressAttachmentList" name="filepath" type="file" size="50" />
       <input type="hidden" name="celTokenUploadCreateIfNotExists" value="true" />
                             </form>
