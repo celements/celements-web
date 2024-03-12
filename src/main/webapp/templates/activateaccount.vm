@@ -2,7 +2,7 @@
   #set($afterLoginLandingPage = "$!xwiki.getXWikiPreference('afterLoginLandingPage')")
   #if("$!afterLoginLandingPage" == '')
     #set($afterLoginLandingPage = '')
-    #set($afterLoginLandingURL = $xwiki.celementsweb.getLoginRedirectURL())
+    #set($afterLoginLandingURL = $services.authentication.getLoginRedirectURL())
   #end
   #if("$!afterLoginLandingPage" == '')
     #set($afterLoginLandingPage = "Content.login")

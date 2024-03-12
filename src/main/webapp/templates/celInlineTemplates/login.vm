@@ -63,7 +63,7 @@
     #set($red = "$xwiki.getURL($redDoc.getObject('Celements2.Redirect').getProperty('redirect').getValue(),'view')")
 #end
 #if("$!red" == '')
-    #set($red = $celementsweb.getLoginRedirectURL())
+    #set($red = $services.authentication.getLoginRedirectURL())
 #end
 <input type="hidden" name="xredirect" value="$red" />
 ##
