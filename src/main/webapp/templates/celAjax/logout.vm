@@ -1,4 +1,4 @@
-#set($params = "logout=1&xredirect=$celementsweb.getLogoutRedirectURL()")
+#set($params = "logout=1&xredirect=$services.authentication.getLogoutRedirectURL()")
 #set($redExternalURL = "${doc.getURL('logout', ${params})}")
 #if("$redExternalURL" != "")
 Redirect to $redExternalURL
