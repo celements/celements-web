@@ -49,7 +49,7 @@ $adminMsg.get('cel_tm_rte_edit')
 <!-- FIX? : $tdoc.fullName , $tdoc.language -->
 #if($rteHasTitle)
 <div id="con_titleEdit" class="editblock">$adminMsg.get('cel_tm_title'):
-    <input id="pagetitle" name="title" class="fullwidth" value="$!xwiki.getFormEncoded($!tdoc.getTitle())" type="text">
+    <input id="pagetitle" name="title" class="fullwidth" value="$!escapetool.html($!tdoc.getTitle())" type="text">
 </div>
 #end
 <div id="con_contentEdit" class="editblock">
