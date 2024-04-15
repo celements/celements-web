@@ -1,0 +1,1 @@
+import cloneArrayBuffer from"./_cloneArrayBuffer.js";function cloneDataView(e,r){var f=r?cloneArrayBuffer(e.buffer):e.buffer;return new e.constructor(f,e.byteOffset,e.byteLength)}export default cloneDataView;

@@ -1,0 +1,1 @@
+import arraySample from"./_arraySample.js";import baseSample from"./_baseSample.js";import isArray from"./isArray.js";function sample(a){return(isArray(a)?arraySample:baseSample)(a)}export default sample;

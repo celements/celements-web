@@ -1,0 +1,1 @@
+import before from"./before.js";function once(e){return before(2,e)}export default once;

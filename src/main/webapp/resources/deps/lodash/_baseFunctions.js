@@ -1,0 +1,1 @@
+import arrayFilter from"./_arrayFilter.js";import isFunction from"./isFunction.js";function baseFunctions(r,n){return arrayFilter(n,(function(n){return isFunction(r[n])}))}export default baseFunctions;

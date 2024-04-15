@@ -1,0 +1,1 @@
+import baseExtremum from"./_baseExtremum.js";import baseLt from"./_baseLt.js";import identity from"./identity.js";function min(t){return t&&t.length?baseExtremum(t,identity,baseLt):void 0}export default min;

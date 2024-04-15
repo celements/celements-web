@@ -1,0 +1,1 @@
+import baseSortedUniq from"./_baseSortedUniq.js";function sortedUniq(e){return e&&e.length?baseSortedUniq(e):[]}export default sortedUniq;

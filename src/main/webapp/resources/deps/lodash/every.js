@@ -1,0 +1,1 @@
+import arrayEvery from"./_arrayEvery.js";import baseEvery from"./_baseEvery.js";import baseIteratee from"./_baseIteratee.js";import isArray from"./isArray.js";import isIterateeCall from"./_isIterateeCall.js";function every(r,e,a){var t=isArray(r)?arrayEvery:baseEvery;return a&&isIterateeCall(r,e,a)&&(e=void 0),t(r,baseIteratee(e,3))}export default every;

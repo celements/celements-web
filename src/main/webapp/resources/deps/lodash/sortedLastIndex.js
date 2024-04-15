@@ -1,0 +1,1 @@
+import baseSortedIndex from"./_baseSortedIndex.js";function sortedLastIndex(e,t){return baseSortedIndex(e,t,!0)}export default sortedLastIndex;

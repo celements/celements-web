@@ -1,0 +1,1 @@
+import createRound from"./_createRound.js";var ceil=createRound("ceil");export default ceil;

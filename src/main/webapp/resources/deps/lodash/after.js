@@ -1,0 +1,1 @@
+import toInteger from"./toInteger.js";var FUNC_ERROR_TEXT="Expected a function";function after(t,e){if("function"!=typeof e)throw new TypeError(FUNC_ERROR_TEXT);return t=toInteger(t),function(){if(--t<1)return e.apply(this,arguments)}}export default after;

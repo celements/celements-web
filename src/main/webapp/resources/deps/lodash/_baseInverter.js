@@ -1,0 +1,1 @@
+import baseForOwn from"./_baseForOwn.js";function baseInverter(e,r,n,o){return baseForOwn(e,(function(e,t,a){r(o,n(e),t,a)})),o}export default baseInverter;

@@ -1,0 +1,1 @@
+import basePropertyOf from"./_basePropertyOf.js";var htmlUnescapes={"&amp;":"&","&lt;":"<","&gt;":">","&quot;":'"',"&#39;":"'"},unescapeHtmlChar=basePropertyOf(htmlUnescapes);export default unescapeHtmlChar;

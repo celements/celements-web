@@ -1,0 +1,1 @@
+import baseGetTag from"./_baseGetTag.js";import isArray from"./isArray.js";import isObjectLike from"./isObjectLike.js";var stringTag="[object String]";function isString(r){return"string"==typeof r||!isArray(r)&&isObjectLike(r)&&baseGetTag(r)==stringTag}export default isString;

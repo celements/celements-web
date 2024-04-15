@@ -1,0 +1,1 @@
+import createRound from"./_createRound.js";var floor=createRound("floor");export default floor;

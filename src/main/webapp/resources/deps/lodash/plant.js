@@ -1,0 +1,1 @@
+import baseLodash from"./_baseLodash.js";import wrapperClone from"./_wrapperClone.js";function wrapperPlant(r){for(var a,_=this;_ instanceof baseLodash;){var e=wrapperClone(_);e.__index__=0,e.__values__=void 0,a?p.__wrapped__=e:a=e;var p=e;_=_.__wrapped__}return p.__wrapped__=r,a}export default wrapperPlant;

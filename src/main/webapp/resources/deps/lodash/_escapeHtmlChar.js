@@ -1,0 +1,1 @@
+import basePropertyOf from"./_basePropertyOf.js";var htmlEscapes={"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"},escapeHtmlChar=basePropertyOf(htmlEscapes);export default escapeHtmlChar;

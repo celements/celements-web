@@ -1,0 +1,1 @@
+import toString from"./toString.js";import upperFirst from"./upperFirst.js";function capitalize(t){return upperFirst(toString(t).toLowerCase())}export default capitalize;

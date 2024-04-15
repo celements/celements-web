@@ -1,0 +1,1 @@
+import castSlice from"./_castSlice.js";import hasUnicode from"./_hasUnicode.js";import stringToArray from"./_stringToArray.js";import toString from"./toString.js";function createCaseFirst(r){return function(t){t=toString(t);var i=hasUnicode(t)?stringToArray(t):void 0,o=i?i[0]:t.charAt(0),s=i?castSlice(i,1).join(""):t.slice(1);return o[r]()+s}}export default createCaseFirst;

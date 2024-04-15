@@ -1,0 +1,1 @@
+import basePick from"./_basePick.js";import flatRest from"./_flatRest.js";var pick=flatRest((function(t,e){return null==t?{}:basePick(t,e)}));export default pick;

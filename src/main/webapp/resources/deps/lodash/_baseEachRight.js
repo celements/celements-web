@@ -1,0 +1,1 @@
+import baseForOwnRight from"./_baseForOwnRight.js";import createBaseEach from"./_createBaseEach.js";var baseEachRight=createBaseEach(baseForOwnRight,!0);export default baseEachRight;

@@ -1,0 +1,1 @@
+import copyObject from"./_copyObject.js";import createAssigner from"./_createAssigner.js";import keysIn from"./keysIn.js";var assignIn=createAssigner((function(e,s){copyObject(s,keysIn(s),e)}));export default assignIn;

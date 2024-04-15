@@ -1,0 +1,1 @@
+var reWrapDetails=/\{\n\/\* \[wrapped with (.+)\] \*/,reSplitDetails=/,? & /;function getWrapDetails(t){var e=t.match(reWrapDetails);return e?e[1].split(reSplitDetails):[]}export default getWrapDetails;

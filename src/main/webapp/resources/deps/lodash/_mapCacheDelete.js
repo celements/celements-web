@@ -1,0 +1,1 @@
+import getMapData from"./_getMapData.js";function mapCacheDelete(e){var t=getMapData(this,e).delete(e);return this.size-=t?1:0,t}export default mapCacheDelete;

@@ -1,0 +1,1 @@
+import baseOrderBy from"./_baseOrderBy.js";import isArray from"./isArray.js";function orderBy(r,e,o,s){return null==r?[]:(isArray(e)||(e=null==e?[]:[e]),isArray(o=s?void 0:o)||(o=null==o?[]:[o]),baseOrderBy(r,e,o))}export default orderBy;

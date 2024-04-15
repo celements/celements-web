@@ -1,0 +1,1 @@
+import isObject from"./isObject.js";function isStrictComparable(t){return t==t&&!isObject(t)}export default isStrictComparable;

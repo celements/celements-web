@@ -1,0 +1,1 @@
+import isPrototype from"./_isPrototype.js";import nativeKeys from"./_nativeKeys.js";var objectProto=Object.prototype,hasOwnProperty=objectProto.hasOwnProperty;function baseKeys(t){if(!isPrototype(t))return nativeKeys(t);var r=[];for(var o in Object(t))hasOwnProperty.call(t,o)&&"constructor"!=o&&r.push(o);return r}export default baseKeys;

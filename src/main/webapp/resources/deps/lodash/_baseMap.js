@@ -1,0 +1,1 @@
+import baseEach from"./_baseEach.js";import isArrayLike from"./isArrayLike.js";function baseMap(a,r){var e=-1,i=isArrayLike(a)?Array(a.length):[];return baseEach(a,(function(a,s,t){i[++e]=r(a,s,t)})),i}export default baseMap;

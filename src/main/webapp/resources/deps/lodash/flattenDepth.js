@@ -1,0 +1,1 @@
+import baseFlatten from"./_baseFlatten.js";import toInteger from"./toInteger.js";function flattenDepth(t,e){return(null==t?0:t.length)?(e=void 0===e?1:toInteger(e),baseFlatten(t,e)):[]}export default flattenDepth;

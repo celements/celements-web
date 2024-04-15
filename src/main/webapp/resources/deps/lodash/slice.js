@@ -1,0 +1,1 @@
+import baseSlice from"./_baseSlice.js";import isIterateeCall from"./_isIterateeCall.js";import toInteger from"./toInteger.js";function slice(e,t,r){var l=null==e?0:e.length;return l?(r&&"number"!=typeof r&&isIterateeCall(e,t,r)?(t=0,r=l):(t=null==t?0:toInteger(t),r=void 0===r?l:toInteger(r)),baseSlice(e,t,r)):[]}export default slice;

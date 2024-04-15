@@ -1,0 +1,1 @@
+import assignValue from"./_assignValue.js";import baseAssignValue from"./_baseAssignValue.js";function copyObject(s,a,e,i){var o=!e;e||(e={});for(var r=-1,n=a.length;++r<n;){var t=a[r],u=i?i(e[t],s[t],t,e,s):void 0;void 0===u&&(u=s[t]),o?baseAssignValue(e,t,u):assignValue(e,t,u)}return e}export default copyObject;

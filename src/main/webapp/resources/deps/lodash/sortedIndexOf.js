@@ -1,0 +1,1 @@
+import baseSortedIndex from"./_baseSortedIndex.js";import eq from"./eq.js";function sortedIndexOf(e,r){var t=null==e?0:e.length;if(t){var d=baseSortedIndex(e,r);if(d<t&&eq(e[d],r))return d}return-1}export default sortedIndexOf;

@@ -1,0 +1,1 @@
+import baseIsDate from"./_baseIsDate.js";import baseUnary from"./_baseUnary.js";import nodeUtil from"./_nodeUtil.js";var nodeIsDate=nodeUtil&&nodeUtil.isDate,isDate=nodeIsDate?baseUnary(nodeIsDate):baseIsDate;export default isDate;

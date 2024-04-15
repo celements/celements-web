@@ -1,0 +1,1 @@
+import coreJsData from"./_coreJsData.js";import isFunction from"./isFunction.js";import stubFalse from"./stubFalse.js";var isMaskable=coreJsData?isFunction:stubFalse;export default isMaskable;

@@ -1,0 +1,1 @@
+import baseExtremum from"./_baseExtremum.js";import baseGt from"./_baseGt.js";import identity from"./identity.js";function max(t){return t&&t.length?baseExtremum(t,identity,baseGt):void 0}export default max;

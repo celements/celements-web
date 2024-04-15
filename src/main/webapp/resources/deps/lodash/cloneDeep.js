@@ -1,0 +1,1 @@
+import baseClone from"./_baseClone.js";var CLONE_DEEP_FLAG=1,CLONE_SYMBOLS_FLAG=4;function cloneDeep(e){return baseClone(e,CLONE_DEEP_FLAG|CLONE_SYMBOLS_FLAG)}export default cloneDeep;

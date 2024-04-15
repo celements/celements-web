@@ -1,0 +1,1 @@
+import createCaseFirst from"./_createCaseFirst.js";var lowerFirst=createCaseFirst("toLowerCase");export default lowerFirst;

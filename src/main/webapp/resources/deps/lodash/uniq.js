@@ -1,0 +1,1 @@
+import baseUniq from"./_baseUniq.js";function uniq(n){return n&&n.length?baseUniq(n):[]}export default uniq;

@@ -1,0 +1,1 @@
+import baseNth from"./_baseNth.js";import toInteger from"./toInteger.js";function nth(t,e){return t&&t.length?baseNth(t,toInteger(e)):void 0}export default nth;

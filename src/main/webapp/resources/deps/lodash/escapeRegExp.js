@@ -1,0 +1,1 @@
+import toString from"./toString.js";var reRegExpChar=/[\\^$.*+?()[\]{}|]/g,reHasRegExpChar=RegExp(reRegExpChar.source);function escapeRegExp(e){return(e=toString(e))&&reHasRegExpChar.test(e)?e.replace(reRegExpChar,"\\$&"):e}export default escapeRegExp;

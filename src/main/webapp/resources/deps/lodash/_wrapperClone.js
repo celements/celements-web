@@ -1,0 +1,1 @@
+import LazyWrapper from"./_LazyWrapper.js";import LodashWrapper from"./_LodashWrapper.js";import copyArray from"./_copyArray.js";function wrapperClone(r){if(r instanceof LazyWrapper)return r.clone();var _=new LodashWrapper(r.__wrapped__,r.__chain__);return _.__actions__=copyArray(r.__actions__),_.__index__=r.__index__,_.__values__=r.__values__,_}export default wrapperClone;
