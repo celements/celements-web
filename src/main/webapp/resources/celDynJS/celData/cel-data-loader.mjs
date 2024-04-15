@@ -1,4 +1,4 @@
-import { mergeWith } from '/file/resource/deps/lodash/lodash.min.js';
+import { mergeWith } from '/file/resource/deps/lodash/lodash.js';
 
 export default class CelDataLoader {
   #resource;
