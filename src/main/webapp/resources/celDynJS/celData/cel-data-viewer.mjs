@@ -1,5 +1,5 @@
-import CelDataRenderer from '/file/resources/celDynJS/celData/cel-data-renderer.mjs?ver=20240414';
-import CelDataLoader from '/file/resources/celDynJS/celData/cel-data-loader.mjs?ver=20240414';
+import CelDataRenderer from './cel-data-renderer.mjs?ver=20240414';
+import CelDataLoader from './cel-data-loader.mjs?ver=20240414';
 
 export class Config {
   tagName;
@@ -33,8 +33,8 @@ export class Config {
 
 export class CelDataViewerElement extends HTMLElement {
   #config;
-  #renderer;
   #loader;
+  #renderer;
   #currentRenderState = {};
 
   constructor(config) {
@@ -120,9 +120,6 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   #init(page) {
-    const hookElem = this.querySelector(`.${this.#config.tagName}-hook, ul, ol`) ?? this;
-    const template = document.querySelector(this.template);
-    this.#renderer = new CelDataRenderer(hookElem, template);
     this.#loader = new CelDataLoader({
       origin: this.origin,
       path: this.path,
@@ -130,6 +127,9 @@ export class CelDataViewerElement extends HTMLElement {
       paramsProcessor: params => this.#config.processParams(params),
       defaultParams: { fields: this.#collectFields(template) },
     });
+    const hookElem = this.querySelector(`.${this.#config.tagName}-hook, ul, ol`) ?? this;
+    const template = document.querySelector(this.template);
+    this.#renderer = new CelDataRenderer(hookElem, template);
     this.#resetRenderState(page);
     this.#loadmoreTriggers.forEach(t => this.#initLoadmore(t));
   }
