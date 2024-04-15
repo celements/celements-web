@@ -1,5 +1,6 @@
 #if("$!rteHasTitle" == '')
-  #set($rteHasTitle = $celementsweb.getPageType($doc.fullName).hasPageTitle())
+  #set($pageTypeRef = $services.pageType.getPageTypeRef($doc.documentReference))
+  #set($rteHasTitle = $services.pageType.getPageTypeConfig($pageTypeRef).hasPageTitle())
 #end
 #if("$!tinyMCE_height" == '')
   #set($tinyMCE_height = 500)
