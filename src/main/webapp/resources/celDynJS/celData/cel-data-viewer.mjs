@@ -126,6 +126,7 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   #init(page) {
+    const template = document.querySelector(this.template);
     this.#loader = new CelDataLoader({
       url: this.origin + this.path,
       method: this.method,
@@ -133,7 +134,6 @@ export class CelDataViewerElement extends HTMLElement {
       defaultParams: { fields: this.#collectFields(template) },
     });
     const hookElem = this.querySelector(`.${this.#config.tagName}-hook, ul, ol`) ?? this;
-    const template = document.querySelector(this.template);
     this.#renderer = new CelDataRenderer(hookElem, template);
     this.#resetRenderState(page);
     this.#loadmoreTriggers.forEach(t => this.#initLoadmore(t));
