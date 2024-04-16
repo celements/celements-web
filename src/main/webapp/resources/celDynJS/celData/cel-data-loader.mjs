@@ -1,37 +1,33 @@
 import { mergeWith } from '/file/resource/deps/lodash/lodash.js';
 
 export default class CelDataLoader {
-  #resource;
+  #url;
   #method;
   #paramsProcessor;
   #defaultParams;
   #abortController;
 
   constructor({
-      origin = this.#documentOrigin,
-      path = '',
+      url,
       method = 'POST',
       paramsProcessor,
       defaultParams = {}
   }) {
-    this.#resource = origin + path;
+    this.#url = new URL(url);
+    if (!this.#url) {
+      throw new Error('url is required');
+    }
     this.#method = method?.toUpperCase();
     if (!['GET', 'POST'].includes(this.#method)) {
       throw new Error('unsupported method: ' + this.#method);
     }
     this.#paramsProcessor = paramsProcessor;
     this.#defaultParams = { ...defaultParams };
-    console.debug('CelDataLoader init', this.#resource, this.#method);
+    console.debug('CelDataLoader init', this.#url, this.#method);
   }
 
-  get #documentOrigin() {
-    const parser = document.createElement('a');
-    parser.href = import.meta.url;
-    return parser.origin;
-  }
-
-  get resource() {
-    return this.#resource;
+  get url() {
+    return this.#url;
   }
 
   get method() {
@@ -73,18 +69,17 @@ export default class CelDataLoader {
   }
 
   #buildRequest(params) {
-    const url = new URL(this.#resource);
     this.#abortController = new AbortController();
     const options = {
       signal: this.#abortController.signal,
       method: this.#method,
     }
     if (this.#method === 'GET') {
-      url.search = this.#buildSearchParams(params).toString();
+      this.url.search = this.#buildSearchParams(params).toString();
     } else {
       options.body = this.#buildSearchParams(params);
     }
-    return new Request(url, options);
+    return new Request(this.url, options);
   }
 
   #buildSearchParams(params) {

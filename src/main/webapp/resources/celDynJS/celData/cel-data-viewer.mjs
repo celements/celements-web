@@ -45,7 +45,13 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   get origin() {
-    return this.getAttribute('origin') || undefined;
+    return this.getAttribute('origin') || this.#documentOrigin;
+  }
+
+  get #documentOrigin() {
+    const parser = document.createElement('a');
+    parser.href = import.meta.url;
+    return parser.origin;
   }
 
   get path() {
@@ -121,8 +127,7 @@ export class CelDataViewerElement extends HTMLElement {
 
   #init(page) {
     this.#loader = new CelDataLoader({
-      origin: this.origin,
-      path: this.path,
+      url: this.origin + this.path,
       method: this.method,
       paramsProcessor: params => this.#config.processParams(params),
       defaultParams: { fields: this.#collectFields(template) },
