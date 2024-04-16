@@ -6,9 +6,13 @@ export class Config {
   tagName;
   ParamsClass;
 
-  toParamsClass(params) {
-    if (!this.ParamsClass) return;
-    const ret = new this.ParamsClass();
+  createParams() {
+    return (this.ParamsClass instanceof Function) ? new this.ParamsClass() : undefined;
+  }
+
+  toParams(params) {
+    const ret = this.createParams();
+    if (!ret) return;
     for (const [key, defaultVal] of Object.entries(ret)) {
       let val = params[key] ?? defaultVal;
       if (Array.isArray(defaultVal) && !Array.isArray(val)) {
@@ -102,13 +106,14 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   get params() {
+    const ret = this.#config.createParams() ?? {};
     const json = this.getAttribute('params') || '{}';
     try {
-      return JSON.parse(json);
+      Object.assign(ret, JSON.parse(json));
     } catch (error) {
       console.warn("failed parsing params", json, error);
-      return {};
     }
+    return ret;
   }
 
   set params(value) {
@@ -147,7 +152,7 @@ export class CelDataViewerElement extends HTMLElement {
 
   #processParams(params) {
     params = this.#config.processParams(params);
-    return this.#config.toParamsClass(params) ?? params;
+    return this.#config.toParams(params) ?? params;
   }
 
   #collectFields(template) {
