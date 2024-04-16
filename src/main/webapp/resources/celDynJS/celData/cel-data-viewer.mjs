@@ -19,11 +19,11 @@ export class Config {
   }
 
   extractResults(data) {
-    return [];
+    return Array.isArray(data) ? data : undefined;
   }
 
   extractCount(data) {
-    return 0;
+    return undefined;
   }
 
   extractHasMore(data) {
@@ -206,7 +206,7 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   #renderResults(pagePromise) {
-    const resultsPromise = pagePromise.then(data => this.#config.extractResults?.(data) ?? []);
+    const resultsPromise = pagePromise.then(data => this.#config.extractResults(data) ?? []);
     if (this.mode === 'paging') {
       return this.#renderer?.replace(resultsPromise);
     } else if (this.mode === 'loadmore') {
@@ -219,8 +219,8 @@ export class CelDataViewerElement extends HTMLElement {
   async #handleMetaData(pagePromise) {
     this.#loadmoreTriggers.forEach(trigger => trigger.disabled = true);
     const data = await pagePromise;
-    this.setAttribute('count', this.#config.extractCount?.(data) ?? '');
-    const hasMore = !!this.#config.extractHasMore?.(data);
+    this.setAttribute('count', this.#config.extractCount(data) ?? '');
+    const hasMore = !!this.#config.extractHasMore(data);
     this.toggleAttribute('has-more', hasMore);
     this.#loadmoreTriggers.forEach(trigger => trigger.disabled = !hasMore);
   }
