@@ -1,12 +1,13 @@
 import CelDataRenderer from './cel-data-renderer.mjs?ver=20240414';
 import CelDataLoader from './cel-data-loader.mjs?ver=20240414';
+import uniq from '/file/resource/deps/lodash/uniq.js';
 
 export class Config {
   tagName;
   ParamsClass;
 
-  processParams(params) {
-    if (!this.ParamsClass) return params;
+  toParamsClass(params) {
+    if (!this.ParamsClass) return;
     const ret = new this.ParamsClass();
     for (const [key, defaultVal] of Object.entries(ret)) {
       let val = params[key] ?? defaultVal;
@@ -16,6 +17,11 @@ export class Config {
       ret[key] = val;
     }
     return ret;
+  }
+
+  processParams(params) {
+    params.fields = uniq(params?.fields ?? []);
+    return params;
   }
 
   extractResults(data) {
@@ -130,13 +136,24 @@ export class CelDataViewerElement extends HTMLElement {
     this.#loader = new CelDataLoader({
       url: this.origin + this.path,
       method: this.method,
-      paramsProcessor: params => this.#config.processParams(params),
+      paramsProcessor: params => this.#processParams(params),
       defaultParams: { fields: this.#collectFields(template) },
     });
     const hookElem = this.querySelector(`.${this.#config.tagName}-hook, ul, ol`) ?? this;
     this.#renderer = new CelDataRenderer(hookElem, template);
     this.#resetRenderState(page);
     this.#loadmoreTriggers.forEach(t => this.#initLoadmore(t));
+  }
+
+  #processParams(params) {
+    params = this.#config.processParams(params);
+    return this.#config.toParamsClass(params) ?? params;
+  }
+
+  #collectFields(template) {
+    return uniq([...template?.content.querySelectorAll('[field]') || []]
+      .map(e => e.getAttribute('field'))
+      .filter(Boolean));
   }
 
   #initLoadmore(trigger) {
@@ -149,13 +166,6 @@ export class CelDataViewerElement extends HTMLElement {
   #loadmoreHandler = (event) => {
     event.preventDefault();
     !event.target?.disabled && this.next();
-  }
-
-  #collectFields(template) {
-    const fields = [...template?.content.querySelectorAll('[field]') || []]
-        .map(e => e.getAttribute('field'))
-        .filter(Boolean);
-    return [...new Set(fields)];
   }
 
   next() {

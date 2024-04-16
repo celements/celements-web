@@ -1,4 +1,4 @@
-import { mergeWith } from '/file/resource/deps/lodash/lodash.js';
+import mergeWith from '/file/resource/deps/lodash/mergeWith.js';
 
 export default class CelDataLoader {
   #url;
@@ -79,7 +79,9 @@ export default class CelDataLoader {
     } else {
       options.body = this.#buildSearchParams(params);
     }
-    return new Request(this.url, options);
+    const request = new Request(this.url, options);
+    console.debug('buildRequest', request);
+    return request;
   }
 
   #buildSearchParams(params) {
