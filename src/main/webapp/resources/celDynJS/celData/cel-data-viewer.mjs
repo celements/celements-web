@@ -1,26 +1,23 @@
+import pick from '/file/resource/deps/lodash/pick.js';
+import uniq from '/file/resource/deps/lodash/uniq.js';
 import CelDataRenderer from './cel-data-renderer.mjs?ver=20240414';
 import CelDataLoader from './cel-data-loader.mjs?ver=20240414';
-import uniq from '/file/resource/deps/lodash/uniq.js';
 
 export class Config {
   tagName;
   ParamsClass;
 
-  createParams() {
-    return (this.ParamsClass instanceof Function) ? new this.ParamsClass() : undefined;
-  }
-
-  toParams(params) {
-    const ret = this.createParams();
-    if (!ret) return;
-    for (const [key, defaultVal] of Object.entries(ret)) {
-      let val = params[key] ?? defaultVal;
-      if (Array.isArray(defaultVal) && !Array.isArray(val)) {
-        val = [val].filter(v => v != null);
-      }
-      ret[key] = val;
+  createParams(props) {
+    if (!(this.ParamsClass instanceof Function)) return;
+    const params = new this.ParamsClass();
+    if (props) {
+      const defaults = { ...params };
+      Object.assign(params, pick(props, Object.keys(params)));
+      Object.entries(defaults)
+        .filter(([key, val]) => Array.isArray(val) && !Array.isArray(params[key]))
+        .forEach(([key, val]) => params[key] = [params[key]].filter(v => v != null));
     }
-    return ret;
+    return params;
   }
 
   processParams(params) {
@@ -54,6 +51,18 @@ export class CelDataViewerElement extends HTMLElement {
     this.#config = Object.freeze(config);
   }
 
+  get config() {
+    return this.#config;
+  }
+
+  get loader() {
+    return this.#loader;
+  }
+
+  get renderer() {
+    return this.#renderer;
+  }
+
   get origin() {
     return this.getAttribute('origin') || this.#documentOrigin;
   }
@@ -70,10 +79,6 @@ export class CelDataViewerElement extends HTMLElement {
 
   get method() {
     return this.getAttribute('method') || undefined;
-  }
-
-  get loader() {
-    return this.#loader;
   }
 
   get template() {
@@ -106,18 +111,19 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   get params() {
-    const ret = this.#config.createParams() ?? {};
     const json = this.getAttribute('params') || '{}';
+    let params = {};
     try {
-      Object.assign(ret, JSON.parse(json));
+      params = JSON.parse(json);
     } catch (error) {
       console.warn("failed parsing params", json, error);
     }
-    return ret;
+    return this.#config.createParams(params) ?? params;
   }
 
   set params(value) {
-    this.setAttribute('params', JSON.stringify(value));
+    const params = this.#config.createParams(value) ?? value;
+    this.setAttribute('params', JSON.stringify(params));
   }
 
   setParams(key, value) {
@@ -152,7 +158,7 @@ export class CelDataViewerElement extends HTMLElement {
 
   #processParams(params) {
     params = this.#config.processParams(params);
-    return this.#config.toParams(params) ?? params;
+    return this.#config.createParams(params) ?? params;
   }
 
   #collectFields(template) {
