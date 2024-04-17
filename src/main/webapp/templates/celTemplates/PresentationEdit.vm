@@ -22,7 +22,7 @@
   <input type="hidden" name="template" value="$!doc.getTemplate()" />
   #if($rteHasTitle)
   <div id="con_titleEdit" class="editblock">$adminMsg.get('cel_tm_title'):
-      <input id="pagetitle" name="title" class="fullwidth" value="$!escapetool.html($!tdoc.getTitle())" type="text">
+      <input id="pagetitle" name="title" class="fullwidth" value="$!escapetool.xml($!tdoc.getTitle())" type="text">
   </div>
   #end
   <div id="editablecode_container">
@@ -59,7 +59,7 @@
 <span class='cel_lazyloadJS' style='display: none;'>celJS/yui/animation/animation-min.js</span>
 <span class='cel_lazyloadJS' style='display: none;'>celJS/navigation/reorderMenuItems.js</span>
 <span class='cel_lazyloadJS' style='display: none;'>celJS/celpresentation/reorder.js</span>
-#set($structNav = $celementsweb.createNavigation())
+#set($structNav = $services.treeNode.getDefaultNavigation())
 $structNav.setMenuPart("")
 ##$structNav.setShowAll(true)
 $structNav.setShowInactiveToLevel(1)
