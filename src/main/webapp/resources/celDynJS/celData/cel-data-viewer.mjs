@@ -26,7 +26,7 @@ export class Config {
   }
 
   extractResults(data) {
-    return Array.isArray(data) ? data : undefined;
+    return Array.isArray(data) ? data : [data];
   }
 
   extractCount(data) {
@@ -192,7 +192,7 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['page', 'size', 'params'].concat(CelDataViewerElement.initAttributes);
+    return ['page', 'size', 'params'].concat(this.initAttributes);
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -200,7 +200,7 @@ export class CelDataViewerElement extends HTMLElement {
     if (this.isConnected && this.loader && (oldValue !== newValue)) {
       if (name === 'page') {
         this.render();
-      } else if (CelDataViewerElement.initAttributes.includes(name)) {
+      } else if (this.constructor.initAttributes.includes(name)) {
         this.#init();
       } else {
         this.#resetRenderState();
