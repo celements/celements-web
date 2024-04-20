@@ -1,3 +1,7 @@
+#if("$!rteHasTitle" == '')
+  #set($pageTypeRef = $services.pageType.getPageTypeRef($doc.documentReference))
+  #set($rteHasTitle = $services.pageType.getPageTypeConfig($pageTypeRef).hasPageTitle())
+#end
 #set($navObj = $doc.getObject('Celements2.NavigationConfigClass'))
 #if("$!navObj" == '')
   #set($navObj = $doc.newObject('Celements2.NavigationConfigClass'))
@@ -16,6 +20,11 @@
   <input type="hidden" name="xredirect" value="$!xredirect" />
   <input type="hidden" name="language" value="$!tdoc.language" />
   <input type="hidden" name="template" value="$!doc.getTemplate()" />
+  #if($rteHasTitle)
+  <div id="con_titleEdit" class="editblock">$adminMsg.get('cel_tm_title'):
+      <input id="pagetitle" name="title" class="fullwidth" value="$!escapetool.xml($!tdoc.getTitle())" type="text">
+  </div>
+  #end
   <div id="editablecode_container">
   #set($cel_embedded_editobj = true)
   #set($cel_editobj_classname = "Celements2.NavigationConfigClass")
@@ -50,7 +59,7 @@
 <span class='cel_lazyloadJS' style='display: none;'>celJS/yui/animation/animation-min.js</span>
 <span class='cel_lazyloadJS' style='display: none;'>celJS/navigation/reorderMenuItems.js</span>
 <span class='cel_lazyloadJS' style='display: none;'>celJS/celpresentation/reorder.js</span>
-#set($structNav = $celementsweb.createNavigation())
+#set($structNav = $services.treeNode.getDefaultNavigation())
 $structNav.setMenuPart("")
 ##$structNav.setShowAll(true)
 $structNav.setShowInactiveToLevel(1)
