@@ -1,6 +1,6 @@
-##only include if legacy celements2web.xar is installed
-#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
-$xwiki.includeForm("celements2web:Macros.initCelements", false)
+#set($celAppScriptSetup = "$!{services.appscript.getScriptNameFromURL()}_setup")
+#if($services.appscript.isAppScriptAvailable("$!celAppScriptSetup"))
+#parse($services.appscript.getAppScriptTemplatePath("$!celAppScriptSetup"))
 #end
 $xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
 #set($overwriteRenderDocument = 'celInlineTemplates/app.vm')
