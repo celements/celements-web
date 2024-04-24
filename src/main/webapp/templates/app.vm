@@ -1,9 +1,9 @@
+$xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
+#set($overwriteRenderDocument = 'celInlineTemplates/app.vm')
 #set($celAppScriptSetup = "$!{services.appscript.getScriptNameFromURL()}_setup")
 #if($services.appscript.isAppScriptAvailable("$!celAppScriptSetup"))
 #parse($services.appscript.getAppScriptTemplatePath("$!celAppScriptSetup"))
 #end
-$xwiki.parseTemplate("celMacros/checkForcePasswordChange.vm")
-#set($overwriteRenderDocument = 'celInlineTemplates/app.vm')
 $xwiki.parseTemplate("frameheader.vm")
 #if(!$contextIsFinished)
 #if("$!overwriteRenderDocument" != '')
