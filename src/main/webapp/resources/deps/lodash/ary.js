@@ -1,0 +1,1 @@
+import createWrap from"./_createWrap.js";var WRAP_ARY_FLAG=128;function ary(r,a,e){return a=e?void 0:a,a=r&&null==a?r.length:a,createWrap(r,WRAP_ARY_FLAG,void 0,void 0,void 0,void 0,a)}export default ary;

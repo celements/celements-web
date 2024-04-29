@@ -1,0 +1,1 @@
+import baseRest from"./_baseRest.js";import pullAll from"./pullAll.js";var pull=baseRest(pullAll);export default pull;

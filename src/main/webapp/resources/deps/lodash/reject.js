@@ -1,0 +1,1 @@
+import arrayFilter from"./_arrayFilter.js";import baseFilter from"./_baseFilter.js";import baseIteratee from"./_baseIteratee.js";import isArray from"./isArray.js";import negate from"./negate.js";function reject(r,e){return(isArray(r)?arrayFilter:baseFilter)(r,negate(baseIteratee(e,3)))}export default reject;

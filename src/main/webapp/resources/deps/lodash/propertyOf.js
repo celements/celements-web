@@ -1,0 +1,1 @@
+import baseGet from"./_baseGet.js";function propertyOf(e){return function(t){return null==e?void 0:baseGet(e,t)}}export default propertyOf;

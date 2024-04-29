@@ -1,0 +1,1 @@
+import Uint8Array from"./_Uint8Array.js";function cloneArrayBuffer(r){var n=new r.constructor(r.byteLength);return new Uint8Array(n).set(new Uint8Array(r)),n}export default cloneArrayBuffer;

@@ -1,0 +1,1 @@
+import baseValues from"./_baseValues.js";import keys from"./keys.js";function values(e){return null==e?[]:baseValues(e,keys(e))}export default values;

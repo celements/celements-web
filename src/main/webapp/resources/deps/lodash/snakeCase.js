@@ -1,0 +1,1 @@
+import createCompounder from"./_createCompounder.js";var snakeCase=createCompounder((function(e,r,o){return e+(o?"_":"")+r.toLowerCase()}));export default snakeCase;

@@ -1,0 +1,1 @@
+import baseDifference from"./_baseDifference.js";import baseFlatten from"./_baseFlatten.js";import baseUniq from"./_baseUniq.js";function baseXor(e,r,a){var n=e.length;if(n<2)return n?baseUniq(e[0]):[];for(var s=-1,t=Array(n);++s<n;)for(var f=e[s],b=-1;++b<n;)b!=s&&(t[s]=baseDifference(t[s]||f,e[b],r,a));return baseUniq(baseFlatten(t,1),r,a)}export default baseXor;

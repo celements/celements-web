@@ -1,0 +1,1 @@
+import createBaseFor from"./_createBaseFor.js";var baseFor=createBaseFor();export default baseFor;

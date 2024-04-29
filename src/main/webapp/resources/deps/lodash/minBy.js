@@ -1,0 +1,1 @@
+import baseExtremum from"./_baseExtremum.js";import baseIteratee from"./_baseIteratee.js";import baseLt from"./_baseLt.js";function minBy(e,t){return e&&e.length?baseExtremum(e,baseIteratee(t,2),baseLt):void 0}export default minBy;

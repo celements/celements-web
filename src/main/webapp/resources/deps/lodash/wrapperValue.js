@@ -1,0 +1,1 @@
+import baseWrapperValue from"./_baseWrapperValue.js";function wrapperValue(){return baseWrapperValue(this.__wrapped__,this.__actions__)}export default wrapperValue;

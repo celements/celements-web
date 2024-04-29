@@ -1,0 +1,1 @@
+import toString from"./toString.js";var idCounter=0;function uniqueId(t){var r=++idCounter;return toString(t)+r}export default uniqueId;

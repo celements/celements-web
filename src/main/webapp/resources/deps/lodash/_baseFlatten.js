@@ -1,0 +1,1 @@
+import arrayPush from"./_arrayPush.js";import isFlattenable from"./_isFlattenable.js";function baseFlatten(a,t,e,r,l){var n=-1,s=a.length;for(e||(e=isFlattenable),l||(l=[]);++n<s;){var o=a[n];t>0&&e(o)?t>1?baseFlatten(o,t-1,e,r,l):arrayPush(l,o):r||(l[l.length]=o)}return l}export default baseFlatten;

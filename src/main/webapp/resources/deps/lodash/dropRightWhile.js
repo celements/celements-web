@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import baseWhile from"./_baseWhile.js";function dropRightWhile(e,t){return e&&e.length?baseWhile(e,baseIteratee(t,3),!0,!0):[]}export default dropRightWhile;

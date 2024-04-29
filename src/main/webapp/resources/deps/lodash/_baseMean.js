@@ -1,0 +1,1 @@
+import baseSum from"./_baseSum.js";var NAN=NaN;function baseMean(a,e){var n=null==a?0:a.length;return n?baseSum(a,e)/n:NAN}export default baseMean;

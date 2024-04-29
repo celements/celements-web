@@ -1,0 +1,1 @@
+import baseAssignValue from"./_baseAssignValue.js";import createAggregator from"./_createAggregator.js";var objectProto=Object.prototype,hasOwnProperty=objectProto.hasOwnProperty,groupBy=createAggregator((function(r,e,o){hasOwnProperty.call(r,o)?r[o].push(e):baseAssignValue(r,o,[e])}));export default groupBy;

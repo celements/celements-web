@@ -1,0 +1,1 @@
+import baseForOwn from"./_baseForOwn.js";import createBaseEach from"./_createBaseEach.js";var baseEach=createBaseEach(baseForOwn);export default baseEach;

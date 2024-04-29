@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import baseUniq from"./_baseUniq.js";function uniqBy(e,t){return e&&e.length?baseUniq(e,baseIteratee(t,2)):[]}export default uniqBy;

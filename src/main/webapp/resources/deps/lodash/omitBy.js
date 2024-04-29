@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import negate from"./negate.js";import pickBy from"./pickBy.js";function omitBy(e,t){return pickBy(e,negate(baseIteratee(t)))}export default omitBy;

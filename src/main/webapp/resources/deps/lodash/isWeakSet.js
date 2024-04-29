@@ -1,0 +1,1 @@
+import baseGetTag from"./_baseGetTag.js";import isObjectLike from"./isObjectLike.js";var weakSetTag="[object WeakSet]";function isWeakSet(e){return isObjectLike(e)&&baseGetTag(e)==weakSetTag}export default isWeakSet;

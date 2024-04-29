@@ -1,0 +1,1 @@
+import baseIsEqual from"./_baseIsEqual.js";function isEqual(a,s){return baseIsEqual(a,s)}export default isEqual;

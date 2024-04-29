@@ -1,0 +1,1 @@
+import createCtor from"./_createCtor.js";import root from"./_root.js";var WRAP_BIND_FLAG=1;function createBind(t,r,o){var e=r&WRAP_BIND_FLAG,i=createCtor(t);return function r(){return(this&&this!==root&&this instanceof r?i:t).apply(e?o:this,arguments)}}export default createBind;

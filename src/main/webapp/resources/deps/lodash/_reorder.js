@@ -1,0 +1,1 @@
+import copyArray from"./_copyArray.js";import isIndex from"./_isIndex.js";var nativeMin=Math.min;function reorder(r,e){for(var n=r.length,o=nativeMin(e.length,n),i=copyArray(r);o--;){var t=e[o];r[o]=isIndex(t,n)?i[t]:void 0}return r}export default reorder;

@@ -1,0 +1,1 @@
+import baseGetTag from"./_baseGetTag.js";import isObjectLike from"./isObjectLike.js";var symbolTag="[object Symbol]";function isSymbol(e){return"symbol"==typeof e||isObjectLike(e)&&baseGetTag(e)==symbolTag}export default isSymbol;

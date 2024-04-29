@@ -1,0 +1,1 @@
+import baseHas from"./_baseHas.js";import hasPath from"./_hasPath.js";function has(a,s){return null!=a&&hasPath(a,s,baseHas)}export default has;

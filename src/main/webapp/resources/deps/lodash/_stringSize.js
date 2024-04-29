@@ -1,0 +1,1 @@
+import asciiSize from"./_asciiSize.js";import hasUnicode from"./_hasUnicode.js";import unicodeSize from"./_unicodeSize.js";function stringSize(i){return hasUnicode(i)?unicodeSize(i):asciiSize(i)}export default stringSize;

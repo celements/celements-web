@@ -1,0 +1,1 @@
+import arrayFilter from"./_arrayFilter.js";import baseRest from"./_baseRest.js";import baseXor from"./_baseXor.js";import isArrayLikeObject from"./isArrayLikeObject.js";var xor=baseRest((function(r){return baseXor(arrayFilter(r,isArrayLikeObject))}));export default xor;

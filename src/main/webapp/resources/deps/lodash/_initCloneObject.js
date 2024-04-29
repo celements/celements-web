@@ -1,0 +1,1 @@
+import baseCreate from"./_baseCreate.js";import getPrototype from"./_getPrototype.js";import isPrototype from"./_isPrototype.js";function initCloneObject(t){return"function"!=typeof t.constructor||isPrototype(t)?{}:baseCreate(getPrototype(t))}export default initCloneObject;

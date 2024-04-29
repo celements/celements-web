@@ -1,0 +1,1 @@
+import chain from"./chain.js";function wrapperChain(){return chain(this)}export default wrapperChain;

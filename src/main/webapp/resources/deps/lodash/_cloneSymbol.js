@@ -1,0 +1,1 @@
+import Symbol from"./_Symbol.js";var symbolProto=Symbol?Symbol.prototype:void 0,symbolValueOf=symbolProto?symbolProto.valueOf:void 0;function cloneSymbol(o){return symbolValueOf?Object(symbolValueOf.call(o)):{}}export default cloneSymbol;

@@ -1,0 +1,1 @@
+import toString from"./toString.js";function toLower(t){return toString(t).toLowerCase()}export default toLower;

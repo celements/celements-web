@@ -1,0 +1,1 @@
+import eq from"./eq.js";function baseSortedUniq(e,r){for(var t=-1,o=e.length,a=0,n=[];++t<o;){var f=e[t],i=r?r(f):f;if(!t||!eq(i,q)){var q=i;n[a++]=0===f?0:f}}return n}export default baseSortedUniq;

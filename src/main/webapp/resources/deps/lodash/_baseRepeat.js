@@ -1,0 +1,1 @@
+var MAX_SAFE_INTEGER=9007199254740991,nativeFloor=Math.floor;function baseRepeat(e,a){var r="";if(!e||a<1||a>MAX_SAFE_INTEGER)return r;do{a%2&&(r+=e),(a=nativeFloor(a/2))&&(e+=e)}while(a);return r}export default baseRepeat;

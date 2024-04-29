@@ -1,0 +1,1 @@
+import flatten from"./flatten.js";import overRest from"./_overRest.js";import setToString from"./_setToString.js";function flatRest(t){return setToString(overRest(t,void 0,flatten),t+"")}export default flatRest;

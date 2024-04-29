@@ -1,0 +1,1 @@
+import toString from"./toString.js";function toUpper(t){return toString(t).toUpperCase()}export default toUpper;

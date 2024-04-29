@@ -1,0 +1,1 @@
+import baseFindIndex from"./_baseFindIndex.js";import baseIsNaN from"./_baseIsNaN.js";import strictIndexOf from"./_strictIndexOf.js";function baseIndexOf(e,s,n){return s==s?strictIndexOf(e,s,n):baseFindIndex(e,baseIsNaN,n)}export default baseIndexOf;

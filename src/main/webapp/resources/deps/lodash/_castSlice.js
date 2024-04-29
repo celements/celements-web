@@ -1,0 +1,1 @@
+import baseSlice from"./_baseSlice.js";function castSlice(e,c,i){var t=e.length;return i=void 0===i?t:i,!c&&i>=t?e:baseSlice(e,c,i)}export default castSlice;

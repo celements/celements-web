@@ -1,0 +1,1 @@
+import baseFlatten from"./_baseFlatten.js";function flatten(t){return(null==t?0:t.length)?baseFlatten(t,1):[]}export default flatten;
