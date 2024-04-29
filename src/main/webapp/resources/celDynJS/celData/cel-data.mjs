@@ -34,9 +34,9 @@ class CelDataExtractorRegistry {
     return await this.#registry.get(shortname)(data, expression);
   }
 }
-export const celDERegistry = new CelDataExtractorRegistry();
+export const extractor = new CelDataExtractorRegistry();
 
-celDERegistry.addResolver('jsonata', async (data, expression) => {
+extractor.addResolver('jsonata', async (data, expression) => {
   await import("/file/resource/deps/JSONata/jsonata.min.js");
   return await jsonata(expression).evaluate(data);
 });
@@ -65,6 +65,13 @@ export class CelData extends HTMLElement {
       .filter(Boolean);
   }
 
+  get select() {
+    return (this.getAttribute('select') || '')
+      .split(',')
+      .map(f => f.trim())
+      .filter(Boolean);
+  }
+
   get extract() {
     return this.getAttribute('extract') || undefined;
   }
@@ -87,18 +94,22 @@ export class CelData extends HTMLElement {
   }
 
   async extractValue(data) {
-    const fieldValue = data?.[this.field];
-    let extracted = fieldValue;
+    let extracted = this.#extractForFields(data, this.fields);
     if (this.extract) {
-      const extractData = (this.fields.length > 1)
-        ? Object.fromEntries(this.fields.map(f => [f, data?.[f]]))
-        : fieldValue;
-      extracted = await celDERegistry.evaluate(extractData, this.extract, this.extractMode);
+      extracted = await extractor.evaluate(extracted ?? data, this.extract, this.extractMode);
       this.isDebug && console.debug("for fields", this.fields, "extracted values '", extracted, 
           "' from '", extractData, "' with:", this.extract, this.extractMode || '');
     }
     return extracted ?? (!this.isDebug ? ''
       : `{'${[this.fields.join(','), this.extract].filter(Boolean).join('.')}' is undefined}`);
+  }
+
+  #extractForFields(data, fields) {
+    if (fields.length > 1) {
+      return Object.fromEntries(fields.map(f => [f, data?.[f]]));
+    } else if (fields.length > 0) {
+      return data?.[fields[0]];
+    }
   }
 
   async updateData(data) {
@@ -224,15 +235,16 @@ export class CelDataImage extends CelData {
 
 }
 
-if (!customElements.get('cel-data')) {
-  customElements.define('cel-data', CelData);
-}
-if (!customElements.get('cel-data-datetime')) {
-  customElements.define('cel-data-datetime', CelDataDateTime);
-}
-if (!customElements.get('cel-data-a')) {
-  customElements.define('cel-data-a', CelDataLink);
-}
-if (!customElements.get('cel-data-img')) {
-  customElements.define('cel-data-img', CelDataImage);
-}
+const components = [
+  ['cel-data', CelData],
+  ['cel-data-datetime', CelDataDateTime],
+  ['cel-data-time', CelDataTime],
+  ['cel-data-a', CelDataLink],
+  ['cel-data-img', CelDataImage]
+];
+
+components
+  .filter(([name]) => !customElements.get(name))
+  .forEach(([name, constr]) => customElements.define(name, constr));
+
+export const celDataTags = Object.freeze(components.map(([name]) => name));
