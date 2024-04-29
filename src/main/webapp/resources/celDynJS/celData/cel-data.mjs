@@ -100,6 +100,11 @@ export class CelData extends HTMLElement {
       this.isDebug && console.debug("for fields", this.fields, "extracted values '", extracted, 
           "' from '", extractData, "' with:", this.extract, this.extractMode || '');
     }
+    try {
+      extracted = this.marshaller?.parse(extracted) ?? extracted;
+    } catch (error) {
+      console.warn('failed parsing', extracted, 'with', this.marshaller, error);
+    }
     return extracted ?? (!this.isDebug ? ''
       : `{'${[this.fields.join(','), this.extract].filter(Boolean).join('.')}' is undefined}`);
   }
@@ -117,6 +122,11 @@ export class CelData extends HTMLElement {
   }
 
   replaceContent(value) {
+    try {
+      value = this.marshaller?.format(value) ?? value;
+    } catch (error) {
+      console.warn('failed formatting', value, 'with', this.marshaller, error);
+    }
     this.replaceChildren();
     this.insertAdjacentHTML('beforeend', value);
   }
@@ -139,18 +149,49 @@ export class CelDataDateTime extends CelData {
   }
 
   get formatter() {
-    return new Intl.DateTimeFormat(this.locale, this.options);
+    return this.marshaller.formatter;
   }
 
-  async updateData(data) {
-    const value = await this.extractValue(data);
-    let formatted;
-    try {
-      formatted = value ? this.formatter.format(new Date(value)) : value;
-    } catch (error) {
-      console.warn('error formatting date', error, this, value);
-    }
-    this.replaceContent(formatted || '');
+  get marshaller() {
+    const formatter = new Intl.DateTimeFormat(this.locale, this.options);
+    return {
+      parse: value => value ? new Date(value) : value,
+      format: date => date ? formatter.format(date) : '',
+      formatter,
+    };
+  }
+
+}
+
+export class CelDataTime extends CelDataDateTime {
+
+  get timeStyle () {
+    return this.getAttribute('time-style') || 'short';
+  }
+
+  get options() {
+    return { timeStyle: this.timeStyle };
+  }
+  
+  get isNonZero() {
+    return this.hasAttribute('non-zero');  
+  }
+
+  get marshaller() {
+    const marshaller = super.marshaller;
+    marshaller.parse = value => marshaller.parse(
+      value && !value.includes('T') ? `2000-01-01T${value}` : value
+    );
+    marshaller.format = date => marshaller.format(
+      (this.isNonZero && this.#isZero(date)) ? null : date
+    );
+    return marshaller;
+  }
+
+  #isZero(date) {
+    const zeroed = new Date(date);
+    zeroed.setHours(0, 0, 0, 0);
+    return date.getTime() === zeroed.getTime();
   }
 
 }
