@@ -179,16 +179,19 @@ export class CelDataTime extends CelDataDateTime {
 
   get marshaller() {
     const marshaller = super.marshaller;
-    marshaller.parse = value => marshaller.parse(
-      value && !value.includes('T') ? `2000-01-01T${value}` : value
-    );
-    marshaller.format = date => marshaller.format(
-      (this.isNonZero && this.#isZero(date)) ? null : date
-    );
-    return marshaller;
+    return {
+      ...marshaller,
+      parse: value => marshaller.parse(
+        value && !value.includes('T') ? `2000-01-01T${value}` : value
+      ),
+      format: date => marshaller.format(
+        (this.isNonZero && this.#isZero(date)) ? null : date
+      ),
+    };
   }
 
   #isZero(date) {
+    if (!date) return false;
     const zeroed = new Date(date);
     zeroed.setHours(0, 0, 0, 0);
     return date.getTime() === zeroed.getTime();
