@@ -86,6 +86,10 @@ export class CelDataViewerElement extends HTMLElement {
     return this.getAttribute('template') || undefined;
   }
 
+  get selectTags() {
+    return this.getAttribute('select-tags') || '';
+  }
+
   get mode() {
     return this.getAttribute('mode') || 'paging';
   }
@@ -164,7 +168,8 @@ export class CelDataViewerElement extends HTMLElement {
 
   #collectFields(template) {
     if (!template) return [];
-    return uniq([template, ...template.content.querySelectorAll(celDataTags.join(', '))]
+    const selectTags = [...celDataTags, this.selectTags.trim()].filter(Boolean);
+    return uniq([template, ...template.content.querySelectorAll(selectTags.join(', '))]
       .map(e => e.getAttribute('select') || e.getAttribute('field') || '')
       .flatMap(s => s.split(','))
       .map(s => s.trim())
