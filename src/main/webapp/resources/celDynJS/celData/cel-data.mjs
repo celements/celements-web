@@ -135,10 +135,18 @@ export class CelData extends HTMLElement {
 
 export class CelDataIf extends CelData {
 
-    async updateData(data) {
-      const condition = await this.extractValue(data);
+  get elseRemove() {
+    return this.hasAttribute('else-remove');
+  }
+
+  async updateData(data) {
+    const condition = await this.extractValue(data);
+    if (this.elseRemove) {
+      this.remove();
+    } else {
       this.style.display = condition ? '' : 'none';
     }
+  }
 
 }
 
