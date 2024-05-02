@@ -133,6 +133,15 @@ export class CelData extends HTMLElement {
 
 }
 
+export class CelDataIf extends CelData {
+
+    async updateData(data) {
+      const condition = await this.extractValue(data);
+      this.style.display = condition ? '' : 'none';
+    }
+
+}
+
 export class CelDataDateTime extends CelData {
 
   get locale() {
@@ -281,6 +290,7 @@ export class CelDataImage extends CelData {
 
 const components = [
   ['cel-data', CelData],
+  ['cel-data-if', CelDataIf],
   ['cel-data-datetime', CelDataDateTime],
   ['cel-data-time', CelDataTime],
   ['cel-data-a', CelDataLink],
