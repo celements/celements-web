@@ -141,10 +141,10 @@ export class CelDataIf extends CelData {
 
   async updateData(data) {
     const condition = await this.extractValue(data);
-    if (this.elseRemove) {
-      this.remove();
-    } else {
+    if (!this.elseRemove) {
       this.style.display = condition ? '' : 'none';
+    } else if (!condition) {
+      this.remove();
     }
   }
 
