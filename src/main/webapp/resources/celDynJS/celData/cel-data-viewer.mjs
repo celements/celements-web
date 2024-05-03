@@ -170,7 +170,7 @@ export class CelDataViewerElement extends HTMLElement {
     if (!template) return [];
     const selectTags = [...celDataTags, this.selectTags.trim()].filter(Boolean);
     const celDataElems = template.content.querySelectorAll(selectTags.join(', '));
-    return uniq(celDataElems.flatMap(e => e.select ?? []));
+    return uniq([...celDataElems].flatMap(e => e.select ?? []));
   }
 
   #initLoadmore(trigger) {
