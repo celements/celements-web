@@ -59,15 +59,17 @@ export class CelData extends HTMLElement {
   }
 
   get fields() {
-    return this.#getAttributeList('field');
+    return (this.getAttribute('field') || '')
+      .split(',')
+      .map(f => f.trim())
+      .filter(Boolean);
   }
 
   get select() {
-    return [...this.#getAttributeList('select'), ...this.fields];
-  }
-
-  #getAttributeList(attr) {
-    return (this.getAttribute(attr) || '').split(',').map(v => v.trim()).filter(Boolean);
+    return (this.getAttribute('select') || '')
+      .split(',')
+      .map(f => f.trim())
+      .filter(Boolean);
   }
 
   get extract() {
