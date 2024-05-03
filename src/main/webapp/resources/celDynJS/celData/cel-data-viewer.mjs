@@ -169,11 +169,8 @@ export class CelDataViewerElement extends HTMLElement {
   #collectFields(template) {
     if (!template) return [];
     const selectTags = [...celDataTags, this.selectTags.trim()].filter(Boolean);
-    return uniq([template, ...template.content.querySelectorAll(selectTags.join(', '))]
-      .map(e => e.getAttribute('select') || e.getAttribute('field') || '')
-      .flatMap(s => s.split(','))
-      .map(s => s.trim())
-      .filter(Boolean));
+    const celDataElems = template.content.querySelectorAll(selectTags.join(', '));
+    return uniq(celDataElems.flatMap(e => e.select ?? []));
   }
 
   #initLoadmore(trigger) {
