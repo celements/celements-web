@@ -1,0 +1,1 @@
+import Symbol from"./_Symbol.js";import isArguments from"./isArguments.js";import isArray from"./isArray.js";var spreadableSymbol=Symbol?Symbol.isConcatSpreadable:void 0;function isFlattenable(r){return isArray(r)||isArguments(r)||!!(spreadableSymbol&&r&&r[spreadableSymbol])}export default isFlattenable;

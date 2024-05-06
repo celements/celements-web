@@ -1,0 +1,1 @@
+import getMapData from"./_getMapData.js";function mapCacheSet(t,a){var e=getMapData(this,t),i=e.size;return e.set(t,a),this.size+=e.size==i?0:1,this}export default mapCacheSet;

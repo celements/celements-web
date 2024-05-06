@@ -1,0 +1,1 @@
+import apply from"./_apply.js";import baseRest from"./_baseRest.js";import isError from"./isError.js";var attempt=baseRest((function(r,t){try{return apply(r,void 0,t)}catch(r){return isError(r)?r:new Error(r)}}));export default attempt;

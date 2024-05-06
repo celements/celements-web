@@ -1,0 +1,1 @@
+import baseAssignValue from"./_baseAssignValue.js";import baseForOwn from"./_baseForOwn.js";import baseIteratee from"./_baseIteratee.js";function mapKeys(e,s){var a={};return s=baseIteratee(s,3),baseForOwn(e,(function(e,r,t){baseAssignValue(a,s(e,r,t),e)})),a}export default mapKeys;

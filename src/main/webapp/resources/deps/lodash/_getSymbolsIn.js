@@ -1,0 +1,1 @@
+import arrayPush from"./_arrayPush.js";import getPrototype from"./_getPrototype.js";import getSymbols from"./_getSymbols.js";import stubArray from"./stubArray.js";var nativeGetSymbols=Object.getOwnPropertySymbols,getSymbolsIn=nativeGetSymbols?function(t){for(var r=[];t;)arrayPush(r,getSymbols(t)),t=getPrototype(t);return r}:stubArray;export default getSymbolsIn;

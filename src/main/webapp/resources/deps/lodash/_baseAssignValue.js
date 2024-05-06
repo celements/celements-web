@@ -1,0 +1,1 @@
+import defineProperty from"./_defineProperty.js";function baseAssignValue(e,r,o){"__proto__"==r&&defineProperty?defineProperty(e,r,{configurable:!0,enumerable:!0,value:o,writable:!0}):e[r]=o}export default baseAssignValue;

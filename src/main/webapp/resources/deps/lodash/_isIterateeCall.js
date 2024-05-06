@@ -1,0 +1,1 @@
+import eq from"./eq.js";import isArrayLike from"./isArrayLike.js";import isIndex from"./_isIndex.js";import isObject from"./isObject.js";function isIterateeCall(e,r,i){if(!isObject(i))return!1;var t=typeof r;return!!("number"==t?isArrayLike(i)&&isIndex(r,i.length):"string"==t&&r in i)&&eq(i[r],e)}export default isIterateeCall;

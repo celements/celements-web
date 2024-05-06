@@ -1,0 +1,1 @@
+import baseClamp from"./_baseClamp.js";import baseToString from"./_baseToString.js";import toInteger from"./toInteger.js";import toString from"./toString.js";function startsWith(t,r,o){return t=toString(t),o=null==o?0:baseClamp(toInteger(o),0,t.length),r=baseToString(r),t.slice(o,o+r.length)==r}export default startsWith;

@@ -1,0 +1,1 @@
+import baseNth from"./_baseNth.js";import baseRest from"./_baseRest.js";import toInteger from"./toInteger.js";function nthArg(t){return t=toInteger(t),baseRest((function(e){return baseNth(e,t)}))}export default nthArg;

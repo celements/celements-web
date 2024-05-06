@@ -1,0 +1,1 @@
+import asciiWords from"./_asciiWords.js";import hasUnicodeWord from"./_hasUnicodeWord.js";import toString from"./toString.js";import unicodeWords from"./_unicodeWords.js";function words(o,r,i){return o=toString(o),void 0===(r=i?void 0:r)?hasUnicodeWord(o)?unicodeWords(o):asciiWords(o):o.match(r)||[]}export default words;

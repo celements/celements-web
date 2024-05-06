@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import isArrayLike from"./isArrayLike.js";import keys from"./keys.js";function createFind(e){return function(r,t,i){var a=Object(r);if(!isArrayLike(r)){var s=baseIteratee(t,3);r=keys(r),t=function(e){return s(a[e],e,a)}}var n=e(r,t,i);return n>-1?a[s?r[n]:n]:void 0}}export default createFind;

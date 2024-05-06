@@ -1,0 +1,1 @@
+import baseIsArrayBuffer from"./_baseIsArrayBuffer.js";import baseUnary from"./_baseUnary.js";import nodeUtil from"./_nodeUtil.js";var nodeIsArrayBuffer=nodeUtil&&nodeUtil.isArrayBuffer,isArrayBuffer=nodeIsArrayBuffer?baseUnary(nodeIsArrayBuffer):baseIsArrayBuffer;export default isArrayBuffer;

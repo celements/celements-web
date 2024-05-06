@@ -1,0 +1,1 @@
+import baseRange from"./_baseRange.js";import isIterateeCall from"./_isIterateeCall.js";import toFinite from"./toFinite.js";function createRange(e){return function(t,i,o){return o&&"number"!=typeof o&&isIterateeCall(t,i,o)&&(i=o=void 0),t=toFinite(t),void 0===i?(i=t,t=0):i=toFinite(i),o=void 0===o?t<i?1:-1:toFinite(o),baseRange(t,i,o,e)}}export default createRange;

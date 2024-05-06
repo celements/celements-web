@@ -1,0 +1,1 @@
+import baseSet from"./_baseSet.js";function setWith(t,e,o,i){return i="function"==typeof i?i:void 0,null==t?t:baseSet(t,e,o,i)}export default setWith;

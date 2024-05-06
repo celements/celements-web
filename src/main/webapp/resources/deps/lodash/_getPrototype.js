@@ -1,0 +1,1 @@
+import overArg from"./_overArg.js";var getPrototype=overArg(Object.getPrototypeOf,Object);export default getPrototype;

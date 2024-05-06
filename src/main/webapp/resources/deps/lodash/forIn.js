@@ -1,0 +1,1 @@
+import baseFor from"./_baseFor.js";import castFunction from"./_castFunction.js";import keysIn from"./keysIn.js";function forIn(o,n){return null==o?o:baseFor(o,castFunction(n),keysIn)}export default forIn;

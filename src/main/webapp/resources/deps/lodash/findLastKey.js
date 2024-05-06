@@ -1,0 +1,1 @@
+import baseFindKey from"./_baseFindKey.js";import baseForOwnRight from"./_baseForOwnRight.js";import baseIteratee from"./_baseIteratee.js";function findLastKey(e,t){return baseFindKey(e,baseIteratee(t,3),baseForOwnRight)}export default findLastKey;

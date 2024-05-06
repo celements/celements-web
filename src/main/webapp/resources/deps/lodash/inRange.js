@@ -1,0 +1,1 @@
+import baseInRange from"./_baseInRange.js";import toFinite from"./toFinite.js";import toNumber from"./toNumber.js";function inRange(e,t,n){return t=toFinite(t),void 0===n?(n=t,t=0):n=toFinite(n),e=toNumber(e),baseInRange(e,t,n)}export default inRange;

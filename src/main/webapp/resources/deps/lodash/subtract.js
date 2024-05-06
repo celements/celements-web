@@ -1,0 +1,1 @@
+import createMathOperation from"./_createMathOperation.js";var subtract=createMathOperation((function(t,r){return t-r}),0);export default subtract;

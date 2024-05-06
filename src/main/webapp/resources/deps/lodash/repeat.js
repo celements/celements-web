@@ -1,0 +1,1 @@
+import baseRepeat from"./_baseRepeat.js";import isIterateeCall from"./_isIterateeCall.js";import toInteger from"./toInteger.js";import toString from"./toString.js";function repeat(e,t,r){return t=(r?isIterateeCall(e,t,r):void 0===t)?1:toInteger(t),baseRepeat(toString(e),t)}export default repeat;

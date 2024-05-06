@@ -1,0 +1,1 @@
+import isPlainObject from"./isPlainObject.js";function customOmitClone(t){return isPlainObject(t)?void 0:t}export default customOmitClone;

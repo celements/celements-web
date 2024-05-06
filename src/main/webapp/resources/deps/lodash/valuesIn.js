@@ -1,0 +1,1 @@
+import baseValues from"./_baseValues.js";import keysIn from"./keysIn.js";function valuesIn(e){return null==e?[]:baseValues(e,keysIn(e))}export default valuesIn;

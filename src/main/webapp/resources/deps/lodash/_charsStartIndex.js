@@ -1,0 +1,1 @@
+import baseIndexOf from"./_baseIndexOf.js";function charsStartIndex(e,r){for(var t=-1,a=e.length;++t<a&&baseIndexOf(r,e[t],0)>-1;);return t}export default charsStartIndex;

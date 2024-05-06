@@ -1,0 +1,1 @@
+import realNames from"./_realNames.js";var objectProto=Object.prototype,hasOwnProperty=objectProto.hasOwnProperty;function getFuncName(e){for(var r=e.name+"",a=realNames[r],t=hasOwnProperty.call(realNames,r)?a.length:0;t--;){var o=a[t],n=o.func;if(null==n||n==e)return o.name}return r}export default getFuncName;

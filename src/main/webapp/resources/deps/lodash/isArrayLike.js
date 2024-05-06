@@ -1,0 +1,1 @@
+import isFunction from"./isFunction.js";import isLength from"./isLength.js";function isArrayLike(i){return null!=i&&isLength(i.length)&&!isFunction(i)}export default isArrayLike;

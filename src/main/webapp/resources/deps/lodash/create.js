@@ -1,0 +1,1 @@
+import baseAssign from"./_baseAssign.js";import baseCreate from"./_baseCreate.js";function create(e,s){var a=baseCreate(e);return null==s?a:baseAssign(a,s)}export default create;

@@ -1,0 +1,1 @@
+import baseSetToString from"./_baseSetToString.js";import shortOut from"./_shortOut.js";var setToString=shortOut(baseSetToString);export default setToString;

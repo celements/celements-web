@@ -1,0 +1,1 @@
+import baseProperty from"./_baseProperty.js";import basePropertyDeep from"./_basePropertyDeep.js";import isKey from"./_isKey.js";import toKey from"./_toKey.js";function property(e){return isKey(e)?baseProperty(toKey(e)):basePropertyDeep(e)}export default property;

@@ -1,0 +1,1 @@
+import baseEach from"./_baseEach.js";function baseFilter(a,e){var r=[];return baseEach(a,(function(a,t,s){e(a,t,s)&&r.push(a)})),r}export default baseFilter;

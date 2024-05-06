@@ -1,0 +1,1 @@
+import isArrayLikeObject from"./isArrayLikeObject.js";function castArrayLikeObject(r){return isArrayLikeObject(r)?r:[]}export default castArrayLikeObject;

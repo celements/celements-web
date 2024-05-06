@@ -1,0 +1,1 @@
+import getNative from"./_getNative.js";var nativeCreate=getNative(Object,"create");export default nativeCreate;

@@ -1,0 +1,1 @@
+import identity from"./identity.js";import overRest from"./_overRest.js";import setToString from"./_setToString.js";function baseRest(t,e){return setToString(overRest(t,e,identity),t+"")}export default baseRest;

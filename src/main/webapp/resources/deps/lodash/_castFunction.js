@@ -1,0 +1,1 @@
+import identity from"./identity.js";function castFunction(t){return"function"==typeof t?t:identity}export default castFunction;

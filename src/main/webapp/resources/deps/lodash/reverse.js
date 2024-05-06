@@ -1,0 +1,1 @@
+var arrayProto=Array.prototype,nativeReverse=arrayProto.reverse;function reverse(e){return null==e?e:nativeReverse.call(e)}export default reverse;

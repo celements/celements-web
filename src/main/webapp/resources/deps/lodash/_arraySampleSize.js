@@ -1,0 +1,1 @@
+import baseClamp from"./_baseClamp.js";import copyArray from"./_copyArray.js";import shuffleSelf from"./_shuffleSelf.js";function arraySampleSize(r,e){return shuffleSelf(copyArray(r),baseClamp(e,0,r.length))}export default arraySampleSize;

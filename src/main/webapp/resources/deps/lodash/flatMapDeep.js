@@ -1,0 +1,1 @@
+import baseFlatten from"./_baseFlatten.js";import map from"./map.js";var INFINITY=1/0;function flatMapDeep(a,t){return baseFlatten(map(a,t),INFINITY)}export default flatMapDeep;

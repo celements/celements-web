@@ -1,0 +1,1 @@
+import createFind from"./_createFind.js";import findIndex from"./findIndex.js";var find=createFind(findIndex);export default find;

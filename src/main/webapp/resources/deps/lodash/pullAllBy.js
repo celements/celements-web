@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import basePullAll from"./_basePullAll.js";function pullAllBy(l,e,t){return l&&l.length&&e&&e.length?basePullAll(l,e,baseIteratee(t,2)):l}export default pullAllBy;

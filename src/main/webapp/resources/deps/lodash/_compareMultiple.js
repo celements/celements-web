@@ -1,0 +1,1 @@
+import compareAscending from"./_compareAscending.js";function compareMultiple(e,r,i){for(var n=-1,c=e.criteria,t=r.criteria,a=c.length,o=i.length;++n<a;){var p=compareAscending(c[n],t[n]);if(p)return n>=o?p:p*("desc"==i[n]?-1:1)}return e.index-r.index}export default compareMultiple;

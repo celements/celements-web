@@ -1,0 +1,1 @@
+import identity from"./identity.js";import metaMap from"./_metaMap.js";var baseSetData=metaMap?function(t,a){return metaMap.set(t,a),t}:identity;export default baseSetData;

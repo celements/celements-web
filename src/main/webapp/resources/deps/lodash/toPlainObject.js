@@ -1,0 +1,1 @@
+import copyObject from"./_copyObject.js";import keysIn from"./keysIn.js";function toPlainObject(t){return copyObject(t,keysIn(t))}export default toPlainObject;

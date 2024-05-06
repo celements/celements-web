@@ -1,0 +1,1 @@
+import baseForOwnRight from"./_baseForOwnRight.js";import castFunction from"./_castFunction.js";function forOwnRight(t,n){return t&&baseForOwnRight(t,castFunction(n))}export default forOwnRight;

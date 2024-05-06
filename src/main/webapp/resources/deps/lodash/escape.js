@@ -1,0 +1,1 @@
+import escapeHtmlChar from"./_escapeHtmlChar.js";import toString from"./toString.js";var reUnescapedHtml=/[&<>"']/g,reHasUnescapedHtml=RegExp(reUnescapedHtml.source);function escape(e){return(e=toString(e))&&reHasUnescapedHtml.test(e)?e.replace(reUnescapedHtml,escapeHtmlChar):e}export default escape;

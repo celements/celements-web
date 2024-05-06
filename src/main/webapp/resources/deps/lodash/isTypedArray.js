@@ -1,0 +1,1 @@
+import baseIsTypedArray from"./_baseIsTypedArray.js";import baseUnary from"./_baseUnary.js";import nodeUtil from"./_nodeUtil.js";var nodeIsTypedArray=nodeUtil&&nodeUtil.isTypedArray,isTypedArray=nodeIsTypedArray?baseUnary(nodeIsTypedArray):baseIsTypedArray;export default isTypedArray;

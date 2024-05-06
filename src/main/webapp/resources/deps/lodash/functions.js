@@ -1,0 +1,1 @@
+import baseFunctions from"./_baseFunctions.js";import keys from"./keys.js";function functions(n){return null==n?[]:baseFunctions(n,keys(n))}export default functions;

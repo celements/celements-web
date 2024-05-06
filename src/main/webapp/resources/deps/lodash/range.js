@@ -1,0 +1,1 @@
+import createRange from"./_createRange.js";var range=createRange();export default range;

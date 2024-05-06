@@ -1,0 +1,1 @@
+import baseProperty from"./_baseProperty.js";var asciiSize=baseProperty("length");export default asciiSize;

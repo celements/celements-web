@@ -1,0 +1,1 @@
+import baseAssignValue from"./_baseAssignValue.js";import eq from"./eq.js";function assignMergeValue(e,s,a){(void 0!==a&&!eq(e[s],a)||void 0===a&&!(s in e))&&baseAssignValue(e,s,a)}export default assignMergeValue;

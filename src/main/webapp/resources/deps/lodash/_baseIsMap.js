@@ -1,0 +1,1 @@
+import getTag from"./_getTag.js";import isObjectLike from"./isObjectLike.js";var mapTag="[object Map]";function baseIsMap(e){return isObjectLike(e)&&getTag(e)==mapTag}export default baseIsMap;

@@ -1,0 +1,1 @@
+import toFinite from"./toFinite.js";function toInteger(t){var e=toFinite(t),o=e%1;return e==e?o?e-o:e:0}export default toInteger;

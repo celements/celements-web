@@ -1,0 +1,1 @@
+import baseGetTag from"./_baseGetTag.js";import isObjectLike from"./isObjectLike.js";var arrayBufferTag="[object ArrayBuffer]";function baseIsArrayBuffer(e){return isObjectLike(e)&&baseGetTag(e)==arrayBufferTag}export default baseIsArrayBuffer;

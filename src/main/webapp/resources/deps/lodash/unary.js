@@ -1,0 +1,1 @@
+import ary from"./ary.js";function unary(r){return ary(r,1)}export default unary;

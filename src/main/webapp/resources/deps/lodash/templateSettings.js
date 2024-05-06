@@ -1,0 +1,1 @@
+import escape from"./escape.js";import reEscape from"./_reEscape.js";import reEvaluate from"./_reEvaluate.js";import reInterpolate from"./_reInterpolate.js";var templateSettings={escape:reEscape,evaluate:reEvaluate,interpolate:reInterpolate,variable:"",imports:{_:{escape:escape}}};export default templateSettings;

@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import baseMean from"./_baseMean.js";function meanBy(e,a){return baseMean(e,baseIteratee(a,2))}export default meanBy;

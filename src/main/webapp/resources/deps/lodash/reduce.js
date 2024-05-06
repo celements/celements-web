@@ -1,0 +1,1 @@
+import arrayReduce from"./_arrayReduce.js";import baseEach from"./_baseEach.js";import baseIteratee from"./_baseIteratee.js";import baseReduce from"./_baseReduce.js";import isArray from"./isArray.js";function reduce(e,r,a){var s=isArray(e)?arrayReduce:baseReduce,t=arguments.length<3;return s(e,baseIteratee(r,4),a,t,baseEach)}export default reduce;

@@ -1,0 +1,1 @@
+import baseClamp from"./_baseClamp.js";import toInteger from"./toInteger.js";var MAX_ARRAY_LENGTH=4294967295;function toLength(t){return t?baseClamp(toInteger(t),0,MAX_ARRAY_LENGTH):0}export default toLength;

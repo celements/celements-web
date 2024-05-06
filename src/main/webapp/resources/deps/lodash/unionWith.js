@@ -1,0 +1,1 @@
+import baseFlatten from"./_baseFlatten.js";import baseRest from"./_baseRest.js";import baseUniq from"./_baseUniq.js";import isArrayLikeObject from"./isArrayLikeObject.js";import last from"./last.js";var unionWith=baseRest((function(t){var e=last(t);return e="function"==typeof e?e:void 0,baseUniq(baseFlatten(t,1,isArrayLikeObject,!0),void 0,e)}));export default unionWith;
