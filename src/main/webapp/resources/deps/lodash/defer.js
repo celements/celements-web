@@ -1,0 +1,1 @@
+import baseDelay from"./_baseDelay.js";import baseRest from"./_baseRest.js";var defer=baseRest((function(e,a){return baseDelay(e,1,a)}));export default defer;

@@ -1,0 +1,1 @@
+import getMapData from"./_getMapData.js";function mapCacheGet(t){return getMapData(this,t).get(t)}export default mapCacheGet;

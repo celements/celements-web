@@ -1,0 +1,1 @@
+import baseGetTag from"./_baseGetTag.js";import isObject from"./isObject.js";var asyncTag="[object AsyncFunction]",funcTag="[object Function]",genTag="[object GeneratorFunction]",proxyTag="[object Proxy]";function isFunction(t){if(!isObject(t))return!1;var n=baseGetTag(t);return n==funcTag||n==genTag||n==asyncTag||n==proxyTag}export default isFunction;

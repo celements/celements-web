@@ -1,0 +1,1 @@
+import overArg from"./_overArg.js";var nativeKeys=overArg(Object.keys,Object);export default nativeKeys;

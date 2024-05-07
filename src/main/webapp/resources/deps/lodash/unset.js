@@ -1,0 +1,1 @@
+import baseUnset from"./_baseUnset.js";function unset(e,t){return null==e||baseUnset(e,t)}export default unset;

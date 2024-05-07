@@ -1,0 +1,1 @@
+import baseIsMatch from"./_baseIsMatch.js";import getMatchData from"./_getMatchData.js";function isMatchWith(t,a,c){return c="function"==typeof c?c:void 0,baseIsMatch(t,a,getMatchData(a),c)}export default isMatchWith;

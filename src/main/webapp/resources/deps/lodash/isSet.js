@@ -1,0 +1,1 @@
+import baseIsSet from"./_baseIsSet.js";import baseUnary from"./_baseUnary.js";import nodeUtil from"./_nodeUtil.js";var nodeIsSet=nodeUtil&&nodeUtil.isSet,isSet=nodeIsSet?baseUnary(nodeIsSet):baseIsSet;export default isSet;

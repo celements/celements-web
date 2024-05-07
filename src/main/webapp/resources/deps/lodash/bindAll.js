@@ -1,0 +1,1 @@
+import arrayEach from"./_arrayEach.js";import baseAssignValue from"./_baseAssignValue.js";import bind from"./bind.js";import flatRest from"./_flatRest.js";import toKey from"./_toKey.js";var bindAll=flatRest((function(a,r){return arrayEach(r,(function(r){r=toKey(r),baseAssignValue(a,r,bind(a[r],a))})),a}));export default bindAll;

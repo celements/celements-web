@@ -1,0 +1,1 @@
+import baseAssignValue from"./_baseAssignValue.js";import baseForOwn from"./_baseForOwn.js";import baseIteratee from"./_baseIteratee.js";function mapValues(e,a){var s={};return a=baseIteratee(a,3),baseForOwn(e,(function(e,r,t){baseAssignValue(s,r,a(e,r,t))})),s}export default mapValues;

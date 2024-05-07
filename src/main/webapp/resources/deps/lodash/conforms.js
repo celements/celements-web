@@ -1,0 +1,1 @@
+import baseClone from"./_baseClone.js";import baseConforms from"./_baseConforms.js";var CLONE_DEEP_FLAG=1;function conforms(o){return baseConforms(baseClone(o,CLONE_DEEP_FLAG))}export default conforms;

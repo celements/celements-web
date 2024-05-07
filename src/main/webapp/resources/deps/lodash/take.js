@@ -1,0 +1,1 @@
+import baseSlice from"./_baseSlice.js";import toInteger from"./toInteger.js";function take(e,t,o){return e&&e.length?(t=o||void 0===t?1:toInteger(t),baseSlice(e,0,t<0?0:t)):[]}export default take;

@@ -1,0 +1,1 @@
+import baseIsEqual from"./_baseIsEqual.js";function isEqualWith(i,a,o){var s=(o="function"==typeof o?o:void 0)?o(i,a):void 0;return void 0===s?baseIsEqual(i,a,void 0,o):!!s}export default isEqualWith;

@@ -1,0 +1,1 @@
+import toInteger from"./toInteger.js";import toLength from"./toLength.js";function baseFill(t,e,o,r){var n=t.length;for((o=toInteger(o))<0&&(o=-o>n?0:n+o),(r=void 0===r||r>n?n:toInteger(r))<0&&(r+=n),r=o>r?0:toLength(r);o<r;)t[o++]=e;return t}export default baseFill;

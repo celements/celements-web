@@ -1,0 +1,1 @@
+import arraySome from"./_arraySome.js";import baseIteratee from"./_baseIteratee.js";import baseSome from"./_baseSome.js";import isArray from"./isArray.js";import isIterateeCall from"./_isIterateeCall.js";function some(e,r,a){var o=isArray(e)?arraySome:baseSome;return a&&isIterateeCall(e,r,a)&&(r=void 0),o(e,baseIteratee(r,3))}export default some;

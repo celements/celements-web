@@ -34,9 +34,9 @@ class CelDataExtractorRegistry {
     return await this.#registry.get(shortname)(data, expression);
   }
 }
-export const celDERegistry = new CelDataExtractorRegistry();
+export const extractor = new CelDataExtractorRegistry();
 
-celDERegistry.addResolver('jsonata', async (data, expression) => {
+extractor.addResolver('jsonata', async (data, expression) => {
   await import("/file/resource/deps/JSONata/jsonata.min.js");
   return await jsonata(expression).evaluate(data);
 });
@@ -65,6 +65,13 @@ export class CelData extends HTMLElement {
       .filter(Boolean);
   }
 
+  get select() {
+    return (this.getAttribute('select') || '')
+      .split(',')
+      .map(f => f.trim())
+      .filter(Boolean);
+  }
+
   get extract() {
     return this.getAttribute('extract') || undefined;
   }
@@ -87,18 +94,27 @@ export class CelData extends HTMLElement {
   }
 
   async extractValue(data) {
-    const fieldValue = data?.[this.field];
-    let extracted = fieldValue;
+    let extracted = this.#extractForFields(data, this.fields);
     if (this.extract) {
-      const extractData = (this.fields.length > 1)
-        ? Object.fromEntries(this.fields.map(f => [f, data?.[f]]))
-        : fieldValue;
-      extracted = await celDERegistry.evaluate(extractData, this.extract, this.extractMode);
+      extracted = await extractor.evaluate(extracted ?? data, this.extract, this.extractMode);
       this.isDebug && console.debug("for fields", this.fields, "extracted values '", extracted, 
           "' from '", extractData, "' with:", this.extract, this.extractMode || '');
     }
+    try {
+      extracted = this.marshaller?.parse(extracted) ?? extracted;
+    } catch (error) {
+      console.warn('failed parsing', extracted, 'with', this.marshaller, error);
+    }
     return extracted ?? (!this.isDebug ? ''
       : `{'${[this.fields.join(','), this.extract].filter(Boolean).join('.')}' is undefined}`);
+  }
+
+  #extractForFields(data, fields) {
+    if (fields.length > 1) {
+      return Object.fromEntries(fields.map(f => [f, data?.[f]]));
+    } else if (fields.length > 0) {
+      return data?.[fields[0]];
+    }
   }
 
   async updateData(data) {
@@ -106,8 +122,30 @@ export class CelData extends HTMLElement {
   }
 
   replaceContent(value) {
+    try {
+      value = this.marshaller?.format(value) ?? value;
+    } catch (error) {
+      console.warn('failed formatting', value, 'with', this.marshaller, error);
+    }
     this.replaceChildren();
     this.insertAdjacentHTML('beforeend', value);
+  }
+
+}
+
+export class CelDataIf extends CelData {
+
+  get elseRemove() {
+    return this.hasAttribute('else-remove');
+  }
+
+  async updateData(data) {
+    const condition = await this.extractValue(data);
+    if (!this.elseRemove) {
+      this.style.display = condition ? '' : 'none';
+    } else if (!condition) {
+      this.remove();
+    }
   }
 
 }
@@ -128,18 +166,52 @@ export class CelDataDateTime extends CelData {
   }
 
   get formatter() {
-    return new Intl.DateTimeFormat(this.locale, this.options);
+    return this.marshaller.formatter;
   }
 
-  async updateData(data) {
-    const value = await this.extractValue(data);
-    let formatted;
-    try {
-      formatted = value ? this.formatter.format(new Date(value)) : value;
-    } catch (error) {
-      console.warn('error formatting date', error, this, value);
-    }
-    this.replaceContent(formatted || '');
+  get marshaller() {
+    const formatter = new Intl.DateTimeFormat(this.locale, this.options);
+    return {
+      parse: value => value ? new Date(value) : value,
+      format: date => date ? formatter.format(date) : '',
+      formatter,
+    };
+  }
+
+}
+
+export class CelDataTime extends CelDataDateTime {
+
+  get timeStyle () {
+    return this.getAttribute('time-style') || 'short';
+  }
+
+  get options() {
+    return { timeStyle: this.timeStyle };
+  }
+  
+  get isNonZero() {
+    return this.hasAttribute('non-zero');  
+  }
+
+  get marshaller() {
+    const marshaller = super.marshaller;
+    return {
+      ...marshaller,
+      parse: value => marshaller.parse(
+        value && !value.includes('T') ? `2000-01-01T${value}` : value
+      ),
+      format: date => marshaller.format(
+        (this.isNonZero && this.#isZero(date)) ? null : date
+      ),
+    };
+  }
+
+  #isZero(date) {
+    if (!date) return false;
+    const zeroed = new Date(date);
+    zeroed.setHours(0, 0, 0, 0);
+    return date.getTime() === zeroed.getTime();
   }
 
 }
@@ -224,15 +296,17 @@ export class CelDataImage extends CelData {
 
 }
 
-if (!customElements.get('cel-data')) {
-  customElements.define('cel-data', CelData);
-}
-if (!customElements.get('cel-data-datetime')) {
-  customElements.define('cel-data-datetime', CelDataDateTime);
-}
-if (!customElements.get('cel-data-a')) {
-  customElements.define('cel-data-a', CelDataLink);
-}
-if (!customElements.get('cel-data-img')) {
-  customElements.define('cel-data-img', CelDataImage);
-}
+const components = [
+  ['cel-data', CelData],
+  ['cel-data-if', CelDataIf],
+  ['cel-data-datetime', CelDataDateTime],
+  ['cel-data-time', CelDataTime],
+  ['cel-data-a', CelDataLink],
+  ['cel-data-img', CelDataImage]
+];
+
+components
+  .filter(([name]) => !customElements.get(name))
+  .forEach(([name, constr]) => customElements.define(name, constr));
+
+export const celDataTags = Object.freeze(components.map(([name]) => name));

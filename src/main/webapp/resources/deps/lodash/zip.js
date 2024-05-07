@@ -1,0 +1,1 @@
+import baseRest from"./_baseRest.js";import unzip from"./unzip.js";var zip=baseRest(unzip);export default zip;

@@ -1,0 +1,1 @@
+import baseRest from"./_baseRest.js";import createWrap from"./_createWrap.js";import getHolder from"./_getHolder.js";import replaceHolders from"./_replaceHolders.js";var WRAP_PARTIAL_FLAG=32,partial=baseRest((function(r,e){var a=replaceHolders(e,getHolder(partial));return createWrap(r,WRAP_PARTIAL_FLAG,void 0,e,a)}));partial.placeholder={};export default partial;

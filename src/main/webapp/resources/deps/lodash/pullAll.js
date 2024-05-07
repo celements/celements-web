@@ -1,0 +1,1 @@
+import basePullAll from"./_basePullAll.js";function pullAll(l,e){return l&&l.length&&e&&e.length?basePullAll(l,e):l}export default pullAll;

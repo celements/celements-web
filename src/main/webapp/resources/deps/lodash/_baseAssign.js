@@ -1,0 +1,1 @@
+import copyObject from"./_copyObject.js";import keys from"./keys.js";function baseAssign(e,s){return e&&copyObject(s,keys(s),e)}export default baseAssign;

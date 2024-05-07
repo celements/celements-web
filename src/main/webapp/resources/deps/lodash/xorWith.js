@@ -1,0 +1,1 @@
+import arrayFilter from"./_arrayFilter.js";import baseRest from"./_baseRest.js";import baseXor from"./_baseXor.js";import isArrayLikeObject from"./isArrayLikeObject.js";import last from"./last.js";var xorWith=baseRest((function(r){var t=last(r);return t="function"==typeof t?t:void 0,baseXor(arrayFilter(r,isArrayLikeObject),void 0,t)}));export default xorWith;

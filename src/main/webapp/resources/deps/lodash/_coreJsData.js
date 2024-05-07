@@ -1,0 +1,1 @@
+import root from"./_root.js";var coreJsData=root["__core-js_shared__"];export default coreJsData;

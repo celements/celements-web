@@ -1,0 +1,1 @@
+import arrayMap from"./_arrayMap.js";function baseToPairs(r,a){return arrayMap(a,(function(a){return[a,r[a]]}))}export default baseToPairs;

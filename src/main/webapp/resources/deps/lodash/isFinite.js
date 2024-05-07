@@ -1,0 +1,1 @@
+import root from"./_root.js";var nativeIsFinite=root.isFinite;function isFinite(i){return"number"==typeof i&&nativeIsFinite(i)}export default isFinite;

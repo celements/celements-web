@@ -1,0 +1,1 @@
+import createCompounder from"./_createCompounder.js";import upperFirst from"./upperFirst.js";var startCase=createCompounder((function(r,e,t){return r+(t?" ":"")+upperFirst(e)}));export default startCase;

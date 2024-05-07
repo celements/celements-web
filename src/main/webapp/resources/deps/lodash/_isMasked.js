@@ -1,0 +1,1 @@
+import coreJsData from"./_coreJsData.js";var maskSrcKey=function(){var a=/[^.]+$/.exec(coreJsData&&coreJsData.keys&&coreJsData.keys.IE_PROTO||"");return a?"Symbol(src)_1."+a:""}();function isMasked(a){return!!maskSrcKey&&maskSrcKey in a}export default isMasked;

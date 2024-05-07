@@ -1,0 +1,1 @@
+import baseGet from"./_baseGet.js";function get(e,t,o){var r=null==e?void 0:baseGet(e,t);return void 0===r?o:r}export default get;

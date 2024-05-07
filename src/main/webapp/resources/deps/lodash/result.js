@@ -1,0 +1,1 @@
+import castPath from"./_castPath.js";import isFunction from"./isFunction.js";import toKey from"./_toKey.js";function result(t,o,r){var i=-1,n=(o=castPath(o,t)).length;for(n||(n=1,t=void 0);++i<n;){var s=null==t?void 0:t[toKey(o[i])];void 0===s&&(i=n,s=r),t=isFunction(s)?s.call(t):s}return t}export default result;

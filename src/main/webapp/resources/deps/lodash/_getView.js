@@ -1,0 +1,1 @@
+var nativeMax=Math.max,nativeMin=Math.min;function getView(e,a,t){for(var i=-1,r=t.length;++i<r;){var n=t[i],s=n.size;switch(n.type){case"drop":e+=s;break;case"dropRight":a-=s;break;case"take":a=nativeMin(a,e+s);break;case"takeRight":e=nativeMax(e,a-s)}}return{start:e,end:a}}export default getView;

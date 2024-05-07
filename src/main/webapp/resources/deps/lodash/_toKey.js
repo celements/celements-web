@@ -1,0 +1,1 @@
+import isSymbol from"./isSymbol.js";var INFINITY=1/0;function toKey(o){if("string"==typeof o||isSymbol(o))return o;var r=o+"";return"0"==r&&1/o==-INFINITY?"-0":r}export default toKey;

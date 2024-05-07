@@ -1,0 +1,1 @@
+import isKeyable from"./_isKeyable.js";function getMapData(a,t){var e=a.__data__;return isKeyable(t)?e["string"==typeof t?"string":"hash"]:e.map}export default getMapData;

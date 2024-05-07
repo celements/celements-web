@@ -1,0 +1,1 @@
+import nativeCreate from"./_nativeCreate.js";var HASH_UNDEFINED="__lodash_hash_undefined__",objectProto=Object.prototype,hasOwnProperty=objectProto.hasOwnProperty;function hashGet(t){var e=this.__data__;if(nativeCreate){var r=e[t];return r===HASH_UNDEFINED?void 0:r}return hasOwnProperty.call(e,t)?e[t]:void 0}export default hashGet;

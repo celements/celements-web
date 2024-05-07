@@ -1,0 +1,1 @@
+import root from"./_root.js";import toString from"./toString.js";var reTrimStart=/^\s+/,nativeParseInt=root.parseInt;function parseInt(r,t,o){return o||null==t?t=0:t&&(t=+t),nativeParseInt(toString(r).replace(reTrimStart,""),t||0)}export default parseInt;

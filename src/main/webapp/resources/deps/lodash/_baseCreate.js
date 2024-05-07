@@ -1,0 +1,1 @@
+import isObject from"./isObject.js";var objectCreate=Object.create,baseCreate=function(){function e(){}return function(t){if(!isObject(t))return{};if(objectCreate)return objectCreate(t);e.prototype=t;var r=new e;return e.prototype=void 0,r}}();export default baseCreate;

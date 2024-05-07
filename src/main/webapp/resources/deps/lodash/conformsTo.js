@@ -1,0 +1,1 @@
+import baseConformsTo from"./_baseConformsTo.js";import keys from"./keys.js";function conformsTo(o,s){return null==s||baseConformsTo(o,s,keys(s))}export default conformsTo;

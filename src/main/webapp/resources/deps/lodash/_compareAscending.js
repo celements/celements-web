@@ -1,0 +1,1 @@
+import isSymbol from"./isSymbol.js";function compareAscending(i,o){if(i!==o){var r=void 0!==i,n=null===i,e=i==i,l=isSymbol(i),m=void 0!==o,s=null===o,t=o==o,u=isSymbol(o);if(!s&&!u&&!l&&i>o||l&&m&&t&&!s&&!u||n&&m&&t||!r&&t||!e)return 1;if(!n&&!l&&!u&&i<o||u&&r&&e&&!n&&!l||s&&r&&e||!m&&e||!t)return-1}return 0}export default compareAscending;

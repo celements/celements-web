@@ -1,0 +1,1 @@
+import lodash from"./wrapperLodash.js";function chain(a){var r=lodash(a);return r.__chain__=!0,r}export default chain;

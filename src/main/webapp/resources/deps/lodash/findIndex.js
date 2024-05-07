@@ -1,0 +1,1 @@
+import baseFindIndex from"./_baseFindIndex.js";import baseIteratee from"./_baseIteratee.js";import toInteger from"./toInteger.js";var nativeMax=Math.max;function findIndex(e,t,n){var r=null==e?0:e.length;if(!r)return-1;var a=null==n?0:toInteger(n);return a<0&&(a=nativeMax(r+a,0)),baseFindIndex(e,baseIteratee(t,3),a)}export default findIndex;

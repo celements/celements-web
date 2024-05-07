@@ -1,0 +1,1 @@
+import isInteger from"./isInteger.js";var MAX_SAFE_INTEGER=9007199254740991;function isSafeInteger(e){return isInteger(e)&&e>=-MAX_SAFE_INTEGER&&e<=MAX_SAFE_INTEGER}export default isSafeInteger;

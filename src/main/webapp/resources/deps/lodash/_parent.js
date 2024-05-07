@@ -1,0 +1,1 @@
+import baseGet from"./_baseGet.js";import baseSlice from"./_baseSlice.js";function parent(e,t){return t.length<2?e:baseGet(e,baseSlice(t,0,-1))}export default parent;

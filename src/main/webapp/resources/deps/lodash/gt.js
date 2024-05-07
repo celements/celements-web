@@ -1,0 +1,1 @@
+import baseGt from"./_baseGt.js";import createRelationalOperation from"./_createRelationalOperation.js";var gt=createRelationalOperation(baseGt);export default gt;

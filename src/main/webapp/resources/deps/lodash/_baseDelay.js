@@ -1,0 +1,1 @@
+var FUNC_ERROR_TEXT="Expected a function";function baseDelay(e,t,n){if("function"!=typeof e)throw new TypeError(FUNC_ERROR_TEXT);return setTimeout((function(){e.apply(void 0,n)}),t)}export default baseDelay;

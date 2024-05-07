@@ -1,0 +1,1 @@
+import constant from"./constant.js";import defineProperty from"./_defineProperty.js";import identity from"./identity.js";var baseSetToString=defineProperty?function(t,e){return defineProperty(t,"toString",{configurable:!0,enumerable:!1,value:constant(e),writable:!0})}:identity;export default baseSetToString;

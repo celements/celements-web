@@ -1,0 +1,1 @@
+import baseFlatten from"./_baseFlatten.js";import map from"./map.js";import toInteger from"./toInteger.js";function flatMapDepth(t,e,a){return a=void 0===a?1:toInteger(a),baseFlatten(map(t,e),a)}export default flatMapDepth;

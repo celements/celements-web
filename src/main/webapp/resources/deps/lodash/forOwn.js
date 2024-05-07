@@ -1,0 +1,1 @@
+import baseForOwn from"./_baseForOwn.js";import castFunction from"./_castFunction.js";function forOwn(n,o){return n&&baseForOwn(n,castFunction(o))}export default forOwn;

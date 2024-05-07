@@ -1,0 +1,1 @@
+import baseDifference from"./_baseDifference.js";import baseFlatten from"./_baseFlatten.js";import baseRest from"./_baseRest.js";import isArrayLikeObject from"./isArrayLikeObject.js";var difference=baseRest((function(e,r){return isArrayLikeObject(e)?baseDifference(e,baseFlatten(r,1,isArrayLikeObject,!0)):[]}));export default difference;

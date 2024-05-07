@@ -1,0 +1,1 @@
+import baseMerge from"./_baseMerge.js";import createAssigner from"./_createAssigner.js";var mergeWith=createAssigner((function(e,r,s,t){baseMerge(e,r,s,t)}));export default mergeWith;

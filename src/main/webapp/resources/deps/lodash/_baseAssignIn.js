@@ -1,0 +1,1 @@
+import copyObject from"./_copyObject.js";import keysIn from"./keysIn.js";function baseAssignIn(e,s){return e&&copyObject(s,keysIn(s),e)}export default baseAssignIn;

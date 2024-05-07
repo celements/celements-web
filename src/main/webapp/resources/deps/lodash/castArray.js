@@ -1,0 +1,1 @@
+import isArray from"./isArray.js";function castArray(){if(!arguments.length)return[];var r=arguments[0];return isArray(r)?r:[r]}export default castArray;

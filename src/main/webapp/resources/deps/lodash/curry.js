@@ -1,0 +1,1 @@
+import createWrap from"./_createWrap.js";var WRAP_CURRY_FLAG=8;function curry(r,e,o){var a=createWrap(r,WRAP_CURRY_FLAG,void 0,void 0,void 0,void 0,void 0,e=o?void 0:e);return a.placeholder=curry.placeholder,a}curry.placeholder={};export default curry;

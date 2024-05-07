@@ -1,0 +1,1 @@
+import toNumber from"./toNumber.js";function createRelationalOperation(t){return function(e,r){return"string"==typeof e&&"string"==typeof r||(e=toNumber(e),r=toNumber(r)),t(e,r)}}export default createRelationalOperation;

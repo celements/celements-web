@@ -1,0 +1,1 @@
+import assocIndexOf from"./_assocIndexOf.js";function listCacheGet(t){var e=this.__data__,s=assocIndexOf(e,t);return s<0?void 0:e[s][1]}export default listCacheGet;
