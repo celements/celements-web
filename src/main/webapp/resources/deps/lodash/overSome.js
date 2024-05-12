@@ -1,0 +1,1 @@
+import arraySome from"./_arraySome.js";import createOver from"./_createOver.js";var overSome=createOver(arraySome);export default overSome;

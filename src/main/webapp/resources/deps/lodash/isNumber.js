@@ -1,0 +1,1 @@
+import baseGetTag from"./_baseGetTag.js";import isObjectLike from"./isObjectLike.js";var numberTag="[object Number]";function isNumber(e){return"number"==typeof e||isObjectLike(e)&&baseGetTag(e)==numberTag}export default isNumber;

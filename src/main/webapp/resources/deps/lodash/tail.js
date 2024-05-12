@@ -1,0 +1,1 @@
+import baseSlice from"./_baseSlice.js";function tail(e){var l=null==e?0:e.length;return l?baseSlice(e,1,l):[]}export default tail;

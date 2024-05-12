@@ -1,0 +1,1 @@
+import copyObject from"./_copyObject.js";import getSymbols from"./_getSymbols.js";function copySymbols(o,t){return copyObject(o,getSymbols(o),t)}export default copySymbols;

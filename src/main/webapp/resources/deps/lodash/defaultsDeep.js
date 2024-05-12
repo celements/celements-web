@@ -1,0 +1,1 @@
+import apply from"./_apply.js";import baseRest from"./_baseRest.js";import customDefaultsMerge from"./_customDefaultsMerge.js";import mergeWith from"./mergeWith.js";var defaultsDeep=baseRest((function(e){return e.push(void 0,customDefaultsMerge),apply(mergeWith,void 0,e)}));export default defaultsDeep;

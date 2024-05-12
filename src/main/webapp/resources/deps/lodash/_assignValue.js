@@ -1,0 +1,1 @@
+import baseAssignValue from"./_baseAssignValue.js";import eq from"./eq.js";var objectProto=Object.prototype,hasOwnProperty=objectProto.hasOwnProperty;function assignValue(e,o,s){var a=e[o];hasOwnProperty.call(e,o)&&eq(a,s)&&(void 0!==s||o in e)||baseAssignValue(e,o,s)}export default assignValue;

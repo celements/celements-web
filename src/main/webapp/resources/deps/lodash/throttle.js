@@ -1,0 +1,1 @@
+import debounce from"./debounce.js";import isObject from"./isObject.js";var FUNC_ERROR_TEXT="Expected a function";function throttle(t,e,i){var n=!0,r=!0;if("function"!=typeof t)throw new TypeError(FUNC_ERROR_TEXT);return isObject(i)&&(n="leading"in i?!!i.leading:n,r="trailing"in i?!!i.trailing:r),debounce(t,e,{leading:n,maxWait:e,trailing:r})}export default throttle;

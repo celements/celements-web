@@ -1,0 +1,1 @@
+import baseFor from"./_baseFor.js";import keys from"./keys.js";function baseForOwn(r,e){return r&&baseFor(r,e,keys)}export default baseForOwn;

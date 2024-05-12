@@ -1,0 +1,1 @@
+import basePickBy from"./_basePickBy.js";import hasIn from"./hasIn.js";function basePick(s,a){return basePickBy(s,a,(function(a,e){return hasIn(s,e)}))}export default basePick;

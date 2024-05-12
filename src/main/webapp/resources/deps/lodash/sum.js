@@ -1,0 +1,1 @@
+import baseSum from"./_baseSum.js";import identity from"./identity.js";function sum(t){return t&&t.length?baseSum(t,identity):0}export default sum;

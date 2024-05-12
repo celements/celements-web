@@ -1,0 +1,1 @@
+import castPath from"./_castPath.js";import toKey from"./_toKey.js";function baseGet(t,e){for(var o=0,a=(e=castPath(e,t)).length;null!=t&&o<a;)t=t[toKey(e[o++])];return o&&o==a?t:void 0}export default baseGet;

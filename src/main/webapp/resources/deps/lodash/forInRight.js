@@ -1,0 +1,1 @@
+import baseForRight from"./_baseForRight.js";import castFunction from"./_castFunction.js";import keysIn from"./keysIn.js";function forInRight(t,o){return null==t?t:baseForRight(t,castFunction(o),keysIn)}export default forInRight;

@@ -1,0 +1,1 @@
+import baseGet from"./_baseGet.js";function basePropertyDeep(e){return function(t){return baseGet(t,e)}}export default basePropertyDeep;

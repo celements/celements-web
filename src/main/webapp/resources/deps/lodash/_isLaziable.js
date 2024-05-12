@@ -1,0 +1,1 @@
+import LazyWrapper from"./_LazyWrapper.js";import getData from"./_getData.js";import getFuncName from"./_getFuncName.js";import lodash from"./wrapperLodash.js";function isLaziable(a){var r=getFuncName(a),t=lodash[r];if("function"!=typeof t||!(r in LazyWrapper.prototype))return!1;if(a===t)return!0;var e=getData(t);return!!e&&a===e[0]}export default isLaziable;

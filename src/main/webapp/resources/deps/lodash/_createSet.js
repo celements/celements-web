@@ -1,0 +1,1 @@
+import Set from"./_Set.js";import noop from"./noop.js";import setToArray from"./_setToArray.js";var INFINITY=1/0,createSet=Set&&1/setToArray(new Set([,-0]))[1]==INFINITY?function(e){return new Set(e)}:noop;export default createSet;

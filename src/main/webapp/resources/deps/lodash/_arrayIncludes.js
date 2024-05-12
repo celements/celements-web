@@ -1,0 +1,1 @@
+import baseIndexOf from"./_baseIndexOf.js";function arrayIncludes(e,n){return!!(null==e?0:e.length)&&baseIndexOf(e,n,0)>-1}export default arrayIncludes;

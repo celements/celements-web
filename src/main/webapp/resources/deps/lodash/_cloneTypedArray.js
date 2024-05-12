@@ -1,0 +1,1 @@
+import cloneArrayBuffer from"./_cloneArrayBuffer.js";function cloneTypedArray(r,e){var f=e?cloneArrayBuffer(r.buffer):r.buffer;return new r.constructor(f,r.byteOffset,r.length)}export default cloneTypedArray;

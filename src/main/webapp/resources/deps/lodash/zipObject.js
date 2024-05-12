@@ -1,0 +1,1 @@
+import assignValue from"./_assignValue.js";import baseZipObject from"./_baseZipObject.js";function zipObject(e,i){return baseZipObject(e||[],i||[],assignValue)}export default zipObject;

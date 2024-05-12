@@ -1,0 +1,1 @@
+import LodashWrapper from"./_LodashWrapper.js";function wrapperCommit(){return new LodashWrapper(this.value(),this.__chain__)}export default wrapperCommit;

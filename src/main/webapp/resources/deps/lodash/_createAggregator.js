@@ -1,0 +1,1 @@
+import arrayAggregator from"./_arrayAggregator.js";import baseAggregator from"./_baseAggregator.js";import baseIteratee from"./_baseIteratee.js";import isArray from"./isArray.js";function createAggregator(r,e){return function(a,t){var g=isArray(a)?arrayAggregator:baseAggregator,o=e?e():{};return g(a,r,baseIteratee(t,2),o)}}export default createAggregator;

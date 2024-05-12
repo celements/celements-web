@@ -1,0 +1,1 @@
+var FUNC_ERROR_TEXT="Expected a function";function negate(t){if("function"!=typeof t)throw new TypeError(FUNC_ERROR_TEXT);return function(){var e=arguments;switch(e.length){case 0:return!t.call(this);case 1:return!t.call(this,e[0]);case 2:return!t.call(this,e[0],e[1]);case 3:return!t.call(this,e[0],e[1],e[2])}return!t.apply(this,e)}}export default negate;

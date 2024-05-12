@@ -1,0 +1,1 @@
+import createCaseFirst from"./_createCaseFirst.js";var upperFirst=createCaseFirst("toUpperCase");export default upperFirst;

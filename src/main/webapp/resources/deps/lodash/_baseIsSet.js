@@ -1,0 +1,1 @@
+import getTag from"./_getTag.js";import isObjectLike from"./isObjectLike.js";var setTag="[object Set]";function baseIsSet(e){return isObjectLike(e)&&getTag(e)==setTag}export default baseIsSet;

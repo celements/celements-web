@@ -1,0 +1,1 @@
+import isSymbol from"./isSymbol.js";function baseExtremum(r,m,o){for(var e=-1,t=r.length;++e<t;){var i=r[e],l=m(i);if(null!=l&&(void 0===a?l==l&&!isSymbol(l):o(l,a)))var a=l,s=i}return s}export default baseExtremum;

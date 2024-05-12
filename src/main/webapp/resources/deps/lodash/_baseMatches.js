@@ -1,0 +1,1 @@
+import baseIsMatch from"./_baseIsMatch.js";import getMatchData from"./_getMatchData.js";import matchesStrictComparable from"./_matchesStrictComparable.js";function baseMatches(t){var a=getMatchData(t);return 1==a.length&&a[0][2]?matchesStrictComparable(a[0][0],a[0][1]):function(e){return e===t||baseIsMatch(e,t,a)}}export default baseMatches;

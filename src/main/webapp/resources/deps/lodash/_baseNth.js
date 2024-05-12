@@ -1,0 +1,1 @@
+import isIndex from"./_isIndex.js";function baseNth(e,t){var i=e.length;if(i)return isIndex(t+=t<0?i:0,i)?e[t]:void 0}export default baseNth;

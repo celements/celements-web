@@ -1,0 +1,1 @@
+import baseFlatten from"./_baseFlatten.js";var INFINITY=1/0;function flattenDeep(e){return(null==e?0:e.length)?baseFlatten(e,INFINITY):[]}export default flattenDeep;

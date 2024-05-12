@@ -1,0 +1,1 @@
+import metaMap from"./_metaMap.js";import noop from"./noop.js";var getData=metaMap?function(t){return metaMap.get(t)}:noop;export default getData;

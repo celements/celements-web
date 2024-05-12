@@ -1,0 +1,1 @@
+import createWrap from"./_createWrap.js";var WRAP_FLIP_FLAG=512;function flip(r){return createWrap(r,WRAP_FLIP_FLAG)}export default flip;

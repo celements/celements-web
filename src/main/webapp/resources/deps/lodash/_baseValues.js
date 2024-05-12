@@ -1,0 +1,1 @@
+import arrayMap from"./_arrayMap.js";function baseValues(a,r){return arrayMap(r,(function(r){return a[r]}))}export default baseValues;

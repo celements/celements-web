@@ -1,0 +1,1 @@
+import memoize from"./memoize.js";var MAX_MEMOIZE_SIZE=500;function memoizeCapped(e){var m=memoize(e,(function(e){return o.size===MAX_MEMOIZE_SIZE&&o.clear(),e})),o=m.cache;return m}export default memoizeCapped;

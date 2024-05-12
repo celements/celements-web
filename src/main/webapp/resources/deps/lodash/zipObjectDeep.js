@@ -1,0 +1,1 @@
+import baseSet from"./_baseSet.js";import baseZipObject from"./_baseZipObject.js";function zipObjectDeep(e,t){return baseZipObject(e||[],t||[],baseSet)}export default zipObjectDeep;

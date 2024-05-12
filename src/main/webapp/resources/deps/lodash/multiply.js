@@ -1,0 +1,1 @@
+import createMathOperation from"./_createMathOperation.js";var multiply=createMathOperation((function(t,e){return t*e}),1);export default multiply;

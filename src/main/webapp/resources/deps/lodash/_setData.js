@@ -1,0 +1,1 @@
+import baseSetData from"./_baseSetData.js";import shortOut from"./_shortOut.js";var setData=shortOut(baseSetData);export default setData;

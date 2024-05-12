@@ -1,0 +1,1 @@
+import isArray from"./isArray.js";import isKey from"./_isKey.js";import stringToPath from"./_stringToPath.js";import toString from"./toString.js";function castPath(t,r){return isArray(t)?t:isKey(t,r)?[t]:stringToPath(toString(t))}export default castPath;

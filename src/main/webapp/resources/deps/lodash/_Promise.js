@@ -1,0 +1,1 @@
+import getNative from"./_getNative.js";import root from"./_root.js";var Promise=getNative(root,"Promise");export default Promise;

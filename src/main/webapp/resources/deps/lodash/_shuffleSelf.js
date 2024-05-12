@@ -1,0 +1,1 @@
+import baseRandom from"./_baseRandom.js";function shuffleSelf(e,f){var a=-1,o=e.length,n=o-1;for(f=void 0===f?o:f;++a<f;){var r=baseRandom(a,n),l=e[r];e[r]=e[a],e[a]=l}return e.length=f,e}export default shuffleSelf;

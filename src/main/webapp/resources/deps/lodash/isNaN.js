@@ -1,0 +1,1 @@
+import isNumber from"./isNumber.js";function isNaN(r){return isNumber(r)&&r!=+r}export default isNaN;

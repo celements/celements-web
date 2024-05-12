@@ -1,0 +1,1 @@
+import baseMerge from"./_baseMerge.js";import isObject from"./isObject.js";function customDefaultsMerge(e,t,s,r,o,u){return isObject(e)&&isObject(t)&&(u.set(t,e),baseMerge(e,t,void 0,customDefaultsMerge,u),u.delete(t)),e}export default customDefaultsMerge;

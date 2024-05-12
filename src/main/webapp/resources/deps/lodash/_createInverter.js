@@ -1,0 +1,1 @@
+import baseInverter from"./_baseInverter.js";function createInverter(e,r){return function(t,n){return baseInverter(t,e,r(n),{})}}export default createInverter;

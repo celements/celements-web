@@ -1,0 +1,1 @@
+import baseExtremum from"./_baseExtremum.js";import baseGt from"./_baseGt.js";import baseIteratee from"./_baseIteratee.js";function maxBy(e,t){return e&&e.length?baseExtremum(e,baseIteratee(t,2),baseGt):void 0}export default maxBy;

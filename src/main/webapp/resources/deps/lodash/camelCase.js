@@ -1,0 +1,1 @@
+import capitalize from"./capitalize.js";import createCompounder from"./_createCompounder.js";var camelCase=createCompounder((function(e,a,r){return a=a.toLowerCase(),e+(r?capitalize(a):a)}));export default camelCase;

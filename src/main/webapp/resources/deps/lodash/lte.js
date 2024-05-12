@@ -1,0 +1,1 @@
+import createRelationalOperation from"./_createRelationalOperation.js";var lte=createRelationalOperation((function(e,t){return e<=t}));export default lte;

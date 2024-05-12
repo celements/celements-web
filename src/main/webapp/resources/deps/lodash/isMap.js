@@ -1,0 +1,1 @@
+import baseIsMap from"./_baseIsMap.js";import baseUnary from"./_baseUnary.js";import nodeUtil from"./_nodeUtil.js";var nodeIsMap=nodeUtil&&nodeUtil.isMap,isMap=nodeIsMap?baseUnary(nodeIsMap):baseIsMap;export default isMap;

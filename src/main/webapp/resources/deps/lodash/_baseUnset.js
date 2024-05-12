@@ -1,0 +1,1 @@
+import castPath from"./_castPath.js";import last from"./last.js";import parent from"./_parent.js";import toKey from"./_toKey.js";function baseUnset(t,e){return e=castPath(e,t),null==(t=parent(t,e))||delete t[toKey(last(e))]}export default baseUnset;

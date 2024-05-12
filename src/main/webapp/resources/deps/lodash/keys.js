@@ -1,0 +1,1 @@
+import arrayLikeKeys from"./_arrayLikeKeys.js";import baseKeys from"./_baseKeys.js";import isArrayLike from"./isArrayLike.js";function keys(r){return isArrayLike(r)?arrayLikeKeys(r):baseKeys(r)}export default keys;

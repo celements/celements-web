@@ -1,0 +1,1 @@
+import createMathOperation from"./_createMathOperation.js";var divide=createMathOperation((function(e,t){return e/t}),1);export default divide;

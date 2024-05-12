@@ -1,0 +1,1 @@
+import toInteger from"./toInteger.js";function isInteger(e){return"number"==typeof e&&e==toInteger(e)}export default isInteger;

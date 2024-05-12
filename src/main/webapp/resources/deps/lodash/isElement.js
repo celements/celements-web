@@ -1,0 +1,1 @@
+import isObjectLike from"./isObjectLike.js";import isPlainObject from"./isPlainObject.js";function isElement(e){return isObjectLike(e)&&1===e.nodeType&&!isPlainObject(e)}export default isElement;

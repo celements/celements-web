@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import baseSortedUniq from"./_baseSortedUniq.js";function sortedUniqBy(e,t){return e&&e.length?baseSortedUniq(e,baseIteratee(t,2)):[]}export default sortedUniqBy;

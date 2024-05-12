@@ -1,0 +1,1 @@
+import arrayEachRight from"./_arrayEachRight.js";import baseEachRight from"./_baseEachRight.js";import castFunction from"./_castFunction.js";import isArray from"./isArray.js";function forEachRight(r,a){return(isArray(r)?arrayEachRight:baseEachRight)(r,castFunction(a))}export default forEachRight;

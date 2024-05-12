@@ -1,0 +1,1 @@
+import baseInvoke from"./_baseInvoke.js";import baseRest from"./_baseRest.js";var invoke=baseRest(baseInvoke);export default invoke;

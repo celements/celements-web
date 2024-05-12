@@ -1,0 +1,1 @@
+import arrayReduce from"./_arrayReduce.js";import deburr from"./deburr.js";import words from"./words.js";var rsApos="['’]",reApos=RegExp(rsApos,"g");function createCompounder(r){return function(e){return arrayReduce(words(deburr(e).replace(reApos,"")),r,"")}}export default createCompounder;

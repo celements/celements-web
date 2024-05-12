@@ -1,0 +1,1 @@
+import LazyWrapper from"./_LazyWrapper.js";import arrayPush from"./_arrayPush.js";import arrayReduce from"./_arrayReduce.js";function baseWrapperValue(r,a){var e=r;return e instanceof LazyWrapper&&(e=e.value()),arrayReduce(a,(function(r,a){return a.func.apply(a.thisArg,arrayPush([r],a.args))}),e)}export default baseWrapperValue;

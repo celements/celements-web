@@ -1,0 +1,1 @@
+import baseClamp from"./_baseClamp.js";import baseToString from"./_baseToString.js";import toInteger from"./toInteger.js";import toString from"./toString.js";function endsWith(t,r,e){t=toString(t),r=baseToString(r);var o=t.length,n=e=void 0===e?o:baseClamp(toInteger(e),0,o);return(e-=r.length)>=0&&t.slice(e,n)==r}export default endsWith;

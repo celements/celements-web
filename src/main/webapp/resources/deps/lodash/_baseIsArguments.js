@@ -1,0 +1,1 @@
+import baseGetTag from"./_baseGetTag.js";import isObjectLike from"./isObjectLike.js";var argsTag="[object Arguments]";function baseIsArguments(e){return isObjectLike(e)&&baseGetTag(e)==argsTag}export default baseIsArguments;

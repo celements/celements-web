@@ -1,0 +1,1 @@
+import createMathOperation from"./_createMathOperation.js";var add=createMathOperation((function(t,a){return t+a}),0);export default add;

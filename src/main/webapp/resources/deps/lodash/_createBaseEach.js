@@ -1,0 +1,1 @@
+import isArrayLike from"./isArrayLike.js";function createBaseEach(r,e){return function(t,a){if(null==t)return t;if(!isArrayLike(t))return r(t,a);for(var i=t.length,n=e?i:-1,u=Object(t);(e?n--:++n<i)&&!1!==a(u[n],n,u););return t}}export default createBaseEach;

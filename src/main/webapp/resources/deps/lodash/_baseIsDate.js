@@ -1,0 +1,1 @@
+import baseGetTag from"./_baseGetTag.js";import isObjectLike from"./isObjectLike.js";var dateTag="[object Date]";function baseIsDate(e){return isObjectLike(e)&&baseGetTag(e)==dateTag}export default baseIsDate;
