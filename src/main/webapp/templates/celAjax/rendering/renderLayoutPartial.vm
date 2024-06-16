@@ -1,0 +1,2 @@
+#set($startNodeRef = $services.reference.create().space($request.layoutName).doc($request.nodeName).build())
+$services.layout.renderLayoutPartial($startNodeRef)
