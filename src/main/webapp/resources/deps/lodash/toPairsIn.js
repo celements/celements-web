@@ -1,0 +1,1 @@
+import createToPairs from"./_createToPairs.js";import keysIn from"./keysIn.js";var toPairsIn=createToPairs(keysIn);export default toPairsIn;

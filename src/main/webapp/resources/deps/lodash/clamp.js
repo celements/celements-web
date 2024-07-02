@@ -1,0 +1,1 @@
+import baseClamp from"./_baseClamp.js";import toNumber from"./toNumber.js";function clamp(o,m,r){return void 0===r&&(r=m,m=void 0),void 0!==r&&(r=(r=toNumber(r))==r?r:0),void 0!==m&&(m=(m=toNumber(m))==m?m:0),baseClamp(toNumber(o),m,r)}export default clamp;

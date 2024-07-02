@@ -1,0 +1,1 @@
+import eq from"./eq.js";function assocIndexOf(e,r){for(var f=e.length;f--;)if(eq(e[f][0],r))return f;return-1}export default assocIndexOf;

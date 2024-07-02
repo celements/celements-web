@@ -1,0 +1,1 @@
+var reFlags=/\w*$/;function cloneRegExp(e){var r=new e.constructor(e.source,reFlags.exec(e));return r.lastIndex=e.lastIndex,r}export default cloneRegExp;

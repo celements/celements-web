@@ -1,0 +1,1 @@
+import baseClamp from"./_baseClamp.js";import toInteger from"./toInteger.js";var MAX_SAFE_INTEGER=9007199254740991;function toSafeInteger(e){return e?baseClamp(toInteger(e),-MAX_SAFE_INTEGER,MAX_SAFE_INTEGER):0===e?e:0}export default toSafeInteger;

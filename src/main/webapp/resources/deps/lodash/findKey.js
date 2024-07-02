@@ -1,0 +1,1 @@
+import baseFindKey from"./_baseFindKey.js";import baseForOwn from"./_baseForOwn.js";import baseIteratee from"./_baseIteratee.js";function findKey(e,r){return baseFindKey(e,baseIteratee(r,3),baseForOwn)}export default findKey;

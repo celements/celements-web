@@ -1,0 +1,1 @@
+import baseGetTag from"./_baseGetTag.js";import isObjectLike from"./isObjectLike.js";var regexpTag="[object RegExp]";function baseIsRegExp(e){return isObjectLike(e)&&baseGetTag(e)==regexpTag}export default baseIsRegExp;

@@ -1,0 +1,1 @@
+import baseIsRegExp from"./_baseIsRegExp.js";import baseUnary from"./_baseUnary.js";import nodeUtil from"./_nodeUtil.js";var nodeIsRegExp=nodeUtil&&nodeUtil.isRegExp,isRegExp=nodeIsRegExp?baseUnary(nodeIsRegExp):baseIsRegExp;export default isRegExp;

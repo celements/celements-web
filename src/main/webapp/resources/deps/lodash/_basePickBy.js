@@ -1,0 +1,1 @@
+import baseGet from"./_baseGet.js";import baseSet from"./_baseSet.js";import castPath from"./_castPath.js";function basePickBy(t,e,a){for(var s=-1,r=e.length,o={};++s<r;){var b=e[s],c=baseGet(t,b);a(c,b)&&baseSet(o,castPath(b,t),c)}return o}export default basePickBy;

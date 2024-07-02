@@ -1,0 +1,1 @@
+import baseHasIn from"./_baseHasIn.js";import hasPath from"./_hasPath.js";function hasIn(a,s){return null!=a&&hasPath(a,s,baseHasIn)}export default hasIn;

@@ -1,0 +1,1 @@
+var nativeMax=Math.max;function composeArgs(r,a,e,t){for(var o=-1,n=r.length,f=e.length,g=-1,h=a.length,l=nativeMax(n-f,0),s=Array(h+l),v=!t;++g<h;)s[g]=a[g];for(;++o<f;)(v||o<n)&&(s[e[o]]=r[o]);for(;l--;)s[g++]=r[o++];return s}export default composeArgs;

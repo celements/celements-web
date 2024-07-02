@@ -1,0 +1,1 @@
+import baseConformsTo from"./_baseConformsTo.js";import keys from"./keys.js";function baseConforms(o){var r=keys(o);return function(s){return baseConformsTo(s,o,r)}}export default baseConforms;

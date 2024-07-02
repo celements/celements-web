@@ -1,0 +1,1 @@
+import baseUpdate from"./_baseUpdate.js";import castFunction from"./_castFunction.js";function updateWith(t,a,e,n){return n="function"==typeof n?n:void 0,null==t?t:baseUpdate(t,a,castFunction(e),n)}export default updateWith;

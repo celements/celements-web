@@ -1,0 +1,1 @@
+import copyArray from"./_copyArray.js";import shuffleSelf from"./_shuffleSelf.js";function arrayShuffle(f){return shuffleSelf(copyArray(f))}export default arrayShuffle;

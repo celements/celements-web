@@ -1,0 +1,1 @@
+import isArrayLike from"./isArrayLike.js";import isObjectLike from"./isObjectLike.js";function isArrayLikeObject(i){return isObjectLike(i)&&isArrayLike(i)}export default isArrayLikeObject;

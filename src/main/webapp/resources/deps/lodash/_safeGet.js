@@ -1,0 +1,1 @@
+function safeGet(e,t){return"__proto__"==t?void 0:e[t]}export default safeGet;

@@ -1,0 +1,1 @@
+import baseForRight from"./_baseForRight.js";import keys from"./keys.js";function baseForOwnRight(r,e){return r&&baseForRight(r,e,keys)}export default baseForOwnRight;

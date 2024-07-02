@@ -1,0 +1,1 @@
+import createWrap from"./_createWrap.js";var WRAP_CURRY_RIGHT_FLAG=16;function curryRight(r,e,o){var a=createWrap(r,WRAP_CURRY_RIGHT_FLAG,void 0,void 0,void 0,void 0,void 0,e=o?void 0:e);return a.placeholder=curryRight.placeholder,a}curryRight.placeholder={};export default curryRight;

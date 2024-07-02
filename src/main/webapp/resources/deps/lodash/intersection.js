@@ -1,0 +1,1 @@
+import arrayMap from"./_arrayMap.js";import baseIntersection from"./_baseIntersection.js";import baseRest from"./_baseRest.js";import castArrayLikeObject from"./_castArrayLikeObject.js";var intersection=baseRest((function(r){var e=arrayMap(r,castArrayLikeObject);return e.length&&e[0]===r[0]?baseIntersection(e):[]}));export default intersection;

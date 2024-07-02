@@ -1,0 +1,1 @@
+import get from"./get.js";function baseAt(t,e){for(var r=-1,o=e.length,a=Array(o),n=null==t;++r<o;)a[r]=n?void 0:get(t,e[r]);return a}export default baseAt;

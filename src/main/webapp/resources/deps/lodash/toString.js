@@ -1,0 +1,1 @@
+import baseToString from"./_baseToString.js";function toString(t){return null==t?"":baseToString(t)}export default toString;

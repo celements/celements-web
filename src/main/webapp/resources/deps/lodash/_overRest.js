@@ -1,0 +1,1 @@
+import apply from"./_apply.js";var nativeMax=Math.max;function overRest(r,a,t){return a=nativeMax(void 0===a?r.length-1:a,0),function(){for(var e=arguments,n=-1,o=nativeMax(e.length-a,0),v=Array(o);++n<o;)v[n]=e[a+n];n=-1;for(var i=Array(a+1);++n<a;)i[n]=e[n];return i[a]=t(v),apply(r,this,i)}}export default overRest;

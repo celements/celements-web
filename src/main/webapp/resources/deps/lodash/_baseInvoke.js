@@ -1,0 +1,1 @@
+import apply from"./_apply.js";import castPath from"./_castPath.js";import last from"./last.js";import parent from"./_parent.js";import toKey from"./_toKey.js";function baseInvoke(t,a,o){a=castPath(a,t);var r=null==(t=parent(t,a))?t:t[toKey(last(a))];return null==r?void 0:apply(r,t,o)}export default baseInvoke;

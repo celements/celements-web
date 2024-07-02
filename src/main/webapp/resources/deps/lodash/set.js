@@ -1,0 +1,1 @@
+import baseSet from"./_baseSet.js";function set(e,t,s){return null==e?e:baseSet(e,t,s)}export default set;

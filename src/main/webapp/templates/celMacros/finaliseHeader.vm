@@ -3,7 +3,6 @@
 ## and therefor need to be addded last.
 ##
 ## INPUT(optional) : $stylesheet_space (default: $doc.space)
-## INPUT(optional) : $after_skin_cssdoc (default: '')
 ##
 #if(!$finaliseHeaderRUN) ## prevent from being run twice and allow lacy calls.
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##

@@ -1,11 +1,8 @@
-#if($isInServletMode)
 ## This template is necessary so that different skins can use different edit Panels.
 ## Thus each skin is allowed to override the editpanelsvars.vm file.
 #template("editpanelsvars.vm")
-#if($editor == "wiki" || $editor == "wysiwyg")
+#if($editor == "wiki")
   #set($editorPanels = $editorPanelsWiki)
-#elseif($editor == "wysiwyg")
-  #set($editorPanels = $editorPanelsWysiwyg)
 #elseif($editor == "object")
   #set($editorPanels = $editorPanelsObjects)
 #elseif($editor == "class")
@@ -21,17 +18,3 @@
   #displaypanel($panel)
 #end
 </div>
-#if($editor == "wysiwyg")
-<script type="text/javascript">
-//<![CDATA[
-  if (browser.isIE || browser.isMozilla || browser.isGecko  || browser.isSafari) {
-    var panels = document.getElementById("editPanels");
-    if(document.getElementById("xwikisyntaxhelppanel"))
-        panels.removeChild(document.getElementById("xwikisyntaxhelppanel"));
-    if (document.getElementById("simpleedittoolbar"))
-        document.getElementById("simpleedittoolbar").style.display = "none";
-  }
-//]]>
-</script>
-#end
-#end

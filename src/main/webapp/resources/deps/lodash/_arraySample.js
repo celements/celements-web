@@ -1,0 +1,1 @@
+import baseRandom from"./_baseRandom.js";function arraySample(a){var r=a.length;return r?a[baseRandom(0,r-1)]:void 0}export default arraySample;

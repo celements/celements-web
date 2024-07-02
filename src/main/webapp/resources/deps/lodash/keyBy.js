@@ -1,0 +1,1 @@
+import baseAssignValue from"./_baseAssignValue.js";import createAggregator from"./_createAggregator.js";var keyBy=createAggregator((function(e,r,a){baseAssignValue(e,a,r)}));export default keyBy;

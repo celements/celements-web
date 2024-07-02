@@ -1,0 +1,1 @@
+import arraySample from"./_arraySample.js";import values from"./values.js";function baseSample(a){return arraySample(values(a))}export default baseSample;

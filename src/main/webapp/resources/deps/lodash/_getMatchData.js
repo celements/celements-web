@@ -1,0 +1,1 @@
+import isStrictComparable from"./_isStrictComparable.js";import keys from"./keys.js";function getMatchData(t){for(var r=keys(t),a=r.length;a--;){var e=r[a],o=t[e];r[a]=[e,o,isStrictComparable(o)]}return r}export default getMatchData;

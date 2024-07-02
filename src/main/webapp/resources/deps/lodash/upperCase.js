@@ -1,0 +1,1 @@
+import createCompounder from"./_createCompounder.js";var upperCase=createCompounder((function(e,r,o){return e+(o?" ":"")+r.toUpperCase()}));export default upperCase;

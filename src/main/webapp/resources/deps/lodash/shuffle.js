@@ -1,0 +1,1 @@
+import arrayShuffle from"./_arrayShuffle.js";import baseShuffle from"./_baseShuffle.js";import isArray from"./isArray.js";function shuffle(f){return(isArray(f)?arrayShuffle:baseShuffle)(f)}export default shuffle;

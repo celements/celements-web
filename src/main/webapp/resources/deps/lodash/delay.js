@@ -1,0 +1,1 @@
+import baseDelay from"./_baseDelay.js";import baseRest from"./_baseRest.js";import toNumber from"./toNumber.js";var delay=baseRest((function(e,a,r){return baseDelay(e,toNumber(a)||0,r)}));export default delay;

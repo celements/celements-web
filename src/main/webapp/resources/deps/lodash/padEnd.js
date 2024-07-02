@@ -1,0 +1,1 @@
+import createPadding from"./_createPadding.js";import stringSize from"./_stringSize.js";import toInteger from"./toInteger.js";import toString from"./toString.js";function padEnd(t,r,e){t=toString(t);var i=(r=toInteger(r))?stringSize(t):0;return r&&i<r?t+createPadding(r-i,e):t}export default padEnd;

@@ -1,0 +1,1 @@
+import baseSlice from"./_baseSlice.js";import toInteger from"./toInteger.js";function dropRight(e,t,r){var o=null==e?0:e.length;return o?(t=r||void 0===t?1:toInteger(t),baseSlice(e,0,(t=o-t)<0?0:t)):[]}export default dropRight;

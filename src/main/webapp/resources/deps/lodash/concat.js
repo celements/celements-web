@@ -1,0 +1,1 @@
+import arrayPush from"./_arrayPush.js";import baseFlatten from"./_baseFlatten.js";import copyArray from"./_copyArray.js";import isArray from"./isArray.js";function concat(){var r=arguments.length;if(!r)return[];for(var a=Array(r-1),t=arguments[0],o=r;o--;)a[o-1]=arguments[o];return arrayPush(isArray(t)?copyArray(t):[t],baseFlatten(a,1))}export default concat;

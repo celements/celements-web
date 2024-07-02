@@ -1,0 +1,1 @@
+import arrayEach from"./_arrayEach.js";import baseEach from"./_baseEach.js";import castFunction from"./_castFunction.js";import isArray from"./isArray.js";function forEach(r,a){return(isArray(r)?arrayEach:baseEach)(r,castFunction(a))}export default forEach;

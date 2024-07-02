@@ -1,0 +1,1 @@
+import baseFill from"./_baseFill.js";import isIterateeCall from"./_isIterateeCall.js";function fill(l,e,t,r){var a=null==l?0:l.length;return a?(t&&"number"!=typeof t&&isIterateeCall(l,e,t)&&(t=0,r=a),baseFill(l,e,t,r)):[]}export default fill;

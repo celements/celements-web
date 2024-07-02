@@ -1,0 +1,1 @@
+import apply from"./_apply.js";import arrayMap from"./_arrayMap.js";import unzip from"./unzip.js";function unzipWith(r,p){if(!r||!r.length)return[];var a=unzip(r);return null==p?a:arrayMap(a,(function(r){return apply(p,void 0,r)}))}export default unzipWith;

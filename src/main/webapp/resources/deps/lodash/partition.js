@@ -1,0 +1,1 @@
+import createAggregator from"./_createAggregator.js";var partition=createAggregator((function(r,t,e){r[e?0:1].push(t)}),(function(){return[[],[]]}));export default partition;

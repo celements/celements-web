@@ -1,0 +1,1 @@
+import baseClone from"./_baseClone.js";import baseMatches from"./_baseMatches.js";var CLONE_DEEP_FLAG=1;function matches(e){return baseMatches(baseClone(e,CLONE_DEEP_FLAG))}export default matches;

@@ -1,0 +1,1 @@
+import arrayMap from"./_arrayMap.js";import baseIteratee from"./_baseIteratee.js";import baseMap from"./_baseMap.js";import isArray from"./isArray.js";function map(a,r){return(isArray(a)?arrayMap:baseMap)(a,baseIteratee(r,3))}export default map;

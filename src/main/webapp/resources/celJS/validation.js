@@ -152,10 +152,12 @@
       Form.getElements(this.form).each(Validation.reset);
     },
     clickOnSubmitLinkHandler : function(event) {
-      const _me = this;
-      event.stop();
-      if (_me.validate()) {
-        _me.form.submit();
+      event.preventDefault();
+      event.stopPropagation();
+      if (this.form.requestSubmit) {
+        this.form.requestSubmit(); // triggers onSubmit
+      } else if (!this.form.fire('celForm:prepareSubmit').stopped) {
+        this.form.submit();
       }
     }
   };

@@ -1,0 +1,1 @@
+import baseGet from"./_baseGet.js";import baseSet from"./_baseSet.js";function baseUpdate(e,t,a,s){return baseSet(e,t,a(baseGet(e,t)),s)}export default baseUpdate;

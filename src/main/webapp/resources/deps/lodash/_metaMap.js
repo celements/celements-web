@@ -1,0 +1,1 @@
+import WeakMap from"./_WeakMap.js";var metaMap=WeakMap&&new WeakMap;export default metaMap;

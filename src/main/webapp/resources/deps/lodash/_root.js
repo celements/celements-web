@@ -1,0 +1,1 @@
+import freeGlobal from"./_freeGlobal.js";var freeSelf="object"==typeof self&&self&&self.Object===Object&&self,root=freeGlobal||freeSelf||Function("return this")();export default root;

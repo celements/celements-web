@@ -1,0 +1,1 @@
+import baseEach from"./_baseEach.js";function baseAggregator(a,e,r,t){return baseEach(a,(function(a,o,g){e(t,a,r(a),g)})),t}export default baseAggregator;

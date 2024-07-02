@@ -13,16 +13,8 @@
 #end
   <div id="company">
   <div id="companylogo">
-    <a href="$!xwiki.getURL("Main.WebHome", "view")" title="Home" rel="home">
-#set($logoname = $xwiki.getSkinPreference("logo", "logo.png"))
-#set($logo = $!prefdoc.getAttachment($logoname))
-#if(!$logo)
-#set($logourl = $xwiki.getSkinFile($logoname, true))
-      <img src="$!logourl" alt="XWiki" width="200" height="70"/>
-#else
-#set($logourl = $prefdoc.getAttachmentURL($logo.filename, "download"))
-      <img src="$!logourl" alt="XWiki"/>
-#end
+    <a href="https://www.open-celements.org/" title="Home" rel="home">
+Open Celements
     </a>
   </div>
   <div id="globaldoctitle">

@@ -1,0 +1,1 @@
+import assocIndexOf from"./_assocIndexOf.js";var arrayProto=Array.prototype,splice=arrayProto.splice;function listCacheDelete(e){var t=this.__data__,a=assocIndexOf(t,e);return!(a<0)&&(a==t.length-1?t.pop():splice.call(t,a,1),--this.size,!0)}export default listCacheDelete;

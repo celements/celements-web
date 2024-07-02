@@ -1,0 +1,1 @@
+import createWrap from"./_createWrap.js";import flatRest from"./_flatRest.js";var WRAP_REARG_FLAG=256,rearg=flatRest((function(r,t){return createWrap(r,WRAP_REARG_FLAG,void 0,void 0,void 0,t)}));export default rearg;

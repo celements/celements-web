@@ -1,0 +1,1 @@
+import baseSlice from"./_baseSlice.js";function initial(i){return(null==i?0:i.length)?baseSlice(i,0,-1):[]}export default initial;

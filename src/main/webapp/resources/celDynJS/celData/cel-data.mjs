@@ -17,14 +17,37 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-export class CelData extends HTMLElement {
+class CelDataExtractorRegistry {
+  #registry = new Map();
 
+  addResolver(shortname, extractFunc) {
+    if (typeof extractFunc !== 'function') {
+      throw new Error("extractFunc must be a function [" + (typeof extractFunc) + "]");
+    }
+    this.#registry.set(shortname, extractFunc);
+  }
+
+  async evaluate(data, expression, shortname = "jsonata") {
+    if (!this.#registry.has(shortname)) {
+      throw new Error("no registred extraction function for " + shortname);
+    }
+    return await this.#registry.get(shortname)(data, expression);
+  }
+}
+export const extractor = new CelDataExtractorRegistry();
+
+extractor.addResolver('jsonata', async (data, expression) => {
+  await import("/file/resource/deps/JSONata/jsonata.min.js");
+  return await jsonata(expression).evaluate(data);
+});
+
+export class CelData extends HTMLElement {
   #rootElem;
   #updateHandler;
 
   constructor() {
     super();
-    this.#updateHandler = event => this.updateData(event.detail);
+    this.#updateHandler = async event => await this.updateData(event.detail.data);
   }
 
   get isDebug() {
@@ -32,7 +55,30 @@ export class CelData extends HTMLElement {
   }
 
   get field() {
-    return this.getAttribute('field') || undefined;
+    return this.fields[0];
+  }
+
+  get fields() {
+    return (this.getAttribute('field') || '')
+      .split(',')
+      .map(f => f.trim())
+      .filter(Boolean);
+  }
+
+  get select() {
+    return (this.getAttribute('select') || '')
+      .split(',')
+      .map(f => f.trim())
+      .filter(Boolean);
+  }
+
+  get extract() {
+    return this.getAttribute('extract') || undefined;
+  }
+  
+  get extractMode() {
+    return this.getAttribute('extract-mode') || this.#rootElem?.getAttribute('extract-mode')
+      || undefined;
   }
 
   connectedCallback() {
@@ -47,20 +93,64 @@ export class CelData extends HTMLElement {
     console.debug('disconnected', this);
   }
 
-  updateData(data) {
-    console.debug('updateData', this, data);
+  async extractValue(data) {
+    let extracted = this.#extractForFields(data, this.fields);
+    if (this.extract) {
+      extracted = await extractor.evaluate(extracted ?? data, this.extract, this.extractMode);
+      this.isDebug && console.debug("for fields", this.fields, "extracted values '", extracted, 
+          "' from '", extractData, "' with:", this.extract, this.extractMode || '');
+    }
+    try {
+      extracted = this.marshaller?.parse(extracted) ?? extracted;
+    } catch (error) {
+      console.warn('failed parsing', extracted, 'with', this.marshaller, error);
+    }
+    return extracted ?? (!this.isDebug ? ''
+      : `{'${[this.fields.join(','), this.extract].filter(Boolean).join('.')}' is undefined}`);
+  }
+
+  #extractForFields(data, fields) {
+    if (fields.length > 1) {
+      return Object.fromEntries(fields.map(f => [f, data?.[f]]));
+    } else if (fields.length > 0) {
+      return data?.[fields[0]];
+    }
+  }
+
+  async updateData(data) {
+    this.replaceContent(await this.extractValue(data));
+  }
+
+  replaceContent(value) {
+    try {
+      value = this.marshaller?.format(value) ?? value;
+    } catch (error) {
+      console.warn('failed formatting', value, 'with', this.marshaller, error);
+    }
     this.replaceChildren();
-    this.insertAdjacentHTML('beforeend', data?.[this.field] ??
-      (this.isDebug ? `{'${this.field}' is undefined}` : ''));
+    this.insertAdjacentHTML('beforeend', value);
+  }
+
+}
+
+export class CelDataIf extends CelData {
+
+  get elseRemove() {
+    return this.hasAttribute('else-remove');
+  }
+
+  async updateData(data) {
+    const condition = await this.extractValue(data);
+    if (!this.elseRemove) {
+      this.style.display = condition ? '' : 'none';
+    } else if (!condition) {
+      this.remove();
+    }
   }
 
 }
 
 export class CelDataDateTime extends CelData {
-
-  constructor() {
-    super();
-  }
 
   get locale() {
     return this.getAttribute('locale') || navigator.language;
@@ -76,31 +166,68 @@ export class CelDataDateTime extends CelData {
   }
 
   get formatter() {
-    return new Intl.DateTimeFormat(this.locale, this.options);
+    return this.marshaller.formatter;
   }
 
-  updateData(data) {
-    console.debug('updateData', this, data);
-    const value = data?.[this.field];
-    let formatted;
-    try {
-      formatted = this.formatter.format(new Date(value));
-    } catch (error) {
-      console.warn('error formatting date', error, value);
-    }
-    super.updateData({ [this.field]: formatted });
+  get marshaller() {
+    const formatter = new Intl.DateTimeFormat(this.locale, this.options);
+    return {
+      parse: value => value ? new Date(value) : value,
+      format: date => date ? formatter.format(date) : '',
+      formatter,
+    };
+  }
+
+}
+
+export class CelDataTime extends CelDataDateTime {
+
+  get timeStyle () {
+    return this.getAttribute('time-style') || 'short';
+  }
+
+  get options() {
+    return { timeStyle: this.timeStyle };
+  }
+  
+  get isNonZero() {
+    return this.hasAttribute('non-zero');  
+  }
+
+  get marshaller() {
+    const marshaller = super.marshaller;
+    return {
+      ...marshaller,
+      parse: value => marshaller.parse(
+        value && !value.includes('T') ? `2000-01-01T${value}` : value
+      ),
+      format: date => marshaller.format(
+        (this.isNonZero && this.#isZero(date)) ? null : date
+      ),
+    };
+  }
+
+  #isZero(date) {
+    if (!date) return false;
+    const zeroed = new Date(date);
+    zeroed.setHours(0, 0, 0, 0);
+    return date.getTime() === zeroed.getTime();
   }
 
 }
 
 export class CelDataLink extends CelData {
 
-  constructor() {
-    super();
-  }
-
   get target() {
     return this.getAttribute('target') ?? '';
+  }
+
+  /**
+   * defines the parts of the href to display in the content of the link if no content is provided.
+   * valid values are props of https://developer.mozilla.org/docs/Web/API/HTMLAnchorElement
+   */
+  get contentHrefParts() {
+    return this.getAttribute('content-href-parts')?.split(', ') ?? ['hostname'];
   }
 
   connectedCallback() {
@@ -109,17 +236,19 @@ export class CelDataLink extends CelData {
       const link = document.createElement('a');
       link.replaceChildren(...this.childNodes);
       this.replaceChildren(link);
-      this.updateData({});
     }
   }
 
-  updateData(data) {
-    console.debug('updateData', this, data);
+  async updateData(data) {
     const link = this.querySelector('a');
-    const value = data?.[this.field];
+    const value = await this.extractValue(data);
     if (value) {
-      link.href = value;
+      link.href = value.includes('://') ? value : `https://${value}`;
       link.target = this.target;
+      if (!link.hasChildNodes()) {
+        const content = this.contentHrefParts.map(p => link[p]).filter(Boolean).join('');
+        link.innerText = content || value;
+      }
     } else {
       link.removeAttribute('href');
     }
@@ -128,10 +257,6 @@ export class CelDataLink extends CelData {
 }
 
 export class CelDataImage extends CelData {
-
-  constructor() {
-    super();
-  }
 
   get srcFallback() {
     return this.getAttribute('src-fallback') ?? '';
@@ -145,33 +270,51 @@ export class CelDataImage extends CelData {
     return this.getAttribute('loading') ?? '';
   }
 
+  get imgSrcParams() {
+    return this.getAttribute('img-src-params') ?? '';
+  }
+
+  async urlImageSrc(data) {
+    const src = await this.extractValue(data);
+    if (src) {
+      const url = new URL(src);
+      for (const [key, value] of new URLSearchParams(this.imgSrcParams)) {
+        url.searchParams.append(key, value);
+      }
+      return url.href;
+    }
+    return undefined;
+  }
+
   connectedCallback() {
     super.connectedCallback();
     if (!this.querySelector('img')) {
-      this.replaceChildren(document.createElement('img'));
-      this.updateData({});
+      const img = document.createElement('img');
+      img.alt = this.alt;
+      img.loading = this.loading;
+      img.src = this.srcFallback;
+      this.replaceChildren(img);
     }
   }
 
-  updateData(data) {
-    console.debug('updateData', this, data);
+  async updateData(data) {
     const img = this.querySelector('img');
-    img.src = data?.[this.field] || this.srcFallback;
-    img.alt = this.alt;
-    img.loading = this.loading;
+    img.src = await this.urlImageSrc(data) || this.srcFallback;
   }
 
 }
 
-if (!customElements.get('cel-data')) {
-  customElements.define('cel-data', CelData);
-}
-if (!customElements.get('cel-data-datetime')) {
-  customElements.define('cel-data-datetime', CelDataDateTime);
-}
-if (!customElements.get('cel-data-a')) {
-  customElements.define('cel-data-a', CelDataLink);
-}
-if (!customElements.get('cel-data-img')) {
-  customElements.define('cel-data-img', CelDataImage);
-}
+const components = [
+  ['cel-data', CelData],
+  ['cel-data-if', CelDataIf],
+  ['cel-data-datetime', CelDataDateTime],
+  ['cel-data-time', CelDataTime],
+  ['cel-data-a', CelDataLink],
+  ['cel-data-img', CelDataImage]
+];
+
+components
+  .filter(([name]) => !customElements.get(name))
+  .forEach(([name, constr]) => customElements.define(name, constr));
+
+export const celDataTags = Object.freeze(components.map(([name]) => name));
