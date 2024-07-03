@@ -1,5 +1,3 @@
-version: "3"
-
 services:
 
   # the webserver container that runs Celements on Tomcat
@@ -10,8 +8,8 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     ports:
-      - "8080:8080" # tomcat
-      - "8000:8000" # remote debugging
+      - "2080:8080" # tomcat
+      - "2000:8000" # remote debugging
     env_file: docker/.env
     restart: unless-stopped
     depends_on:

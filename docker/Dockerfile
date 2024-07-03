@@ -24,7 +24,7 @@ RUN mvn clean compile war:exploded
 # —————————————————————————————————————————————— #
 FROM tomcat:9-jdk11-temurin AS execute
 
-# when using docker-compose, these ENV values may be overridden from the .env file
+# when using docker compose, these ENV values may be overridden from the .env file
 ENV CELEMENTS_DATA=/usr/local/celements
 # add tomcat jpda debugging environmental variables
 # ENV JPDA_OPTS="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n"
