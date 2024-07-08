@@ -146,7 +146,7 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/filebase/filebase.js'
 #end
 #if(("$!filters" == '') && ("$!single_doc_space" != ''))
   #set($menuSpaceRef = $services.model.createDocumentReference('', "$single_doc_space", '').lastSpaceReference)
-  #set($menu = $celementsweb.getSubNodesForParentRef($menuSpaceRef))
+  #set($menu = $services.treeNode.getSubNodesForParentRef($menuSpaceRef))
   #set($filters = [])
   #foreach($item in $menu)
     #set($!devnull = $!filters.add($services.model.serialize($item.documentReference, 'local')))
