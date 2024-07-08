@@ -14,12 +14,12 @@
   #set($insertAfterDocRef = $util.null)
   #if("$!insertAfterItemFN" != '')
     #set($newInsertAfterDocRef = $services.model.resolveDocument($insertAfterItemFN))
-    #if($xwiki.celementsweb.isTreeNode($newInsertAfterDocRef))
+    #if($services.treeNode.isTreeNode($newInsertAfterDocRef))
       #set($insertAfterDocRef = $newInsertAfterDocRef)
     #end
   #end
   
-  #if($xwiki.celementsweb.isTreeNode($moveDocRef))
+  #if($services.treeNode.isTreeNode($moveDocRef))
     $services.celementsweb.moveTreeDocAfter($moveDocRef, $insertAfterDocRef)
   #end
 #end
