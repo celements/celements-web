@@ -229,7 +229,7 @@ export class CelDataViewerElement extends HTMLElement {
         loadPromise: pagePromise,
       });
       this.#handleMetaData(pagePromise);
-      this.dispatchEvent(new CustomEvent(`progon:${this.#config.tagName}:changed`,
+      this.dispatchEvent(new CustomEvent(`cel:${this.#config.tagName}:changed`,
         { detail: this.#currentRenderState }));
       return renderPromise;
     }

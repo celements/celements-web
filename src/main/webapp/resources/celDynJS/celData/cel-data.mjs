@@ -222,6 +222,14 @@ export class CelDataLink extends CelData {
     return this.getAttribute('target') ?? '';
   }
 
+  /**
+   * defines the parts of the href to display in the content of the link if no content is provided.
+   * valid values are props of https://developer.mozilla.org/docs/Web/API/HTMLAnchorElement
+   */
+  get contentHrefParts() {
+    return this.getAttribute('content-href-parts')?.split(', ') ?? ['hostname'];
+  }
+
   connectedCallback() {
     super.connectedCallback();
     if (!this.querySelector('a')) {
@@ -235,11 +243,11 @@ export class CelDataLink extends CelData {
     const link = this.querySelector('a');
     const value = await this.extractValue(data);
     if (value) {
-      link.href = value;
+      link.href = value.includes('://') ? value : `https://${value}`;
       link.target = this.target;
       if (!link.hasChildNodes()) {
-        const [, urlWithoutProtocol] = value.split('://');
-        link.innerText = urlWithoutProtocol || value;
+        const content = this.contentHrefParts.map(p => link[p]).filter(Boolean).join('');
+        link.innerText = content || value;
       }
     } else {
       link.removeAttribute('href');
