@@ -120,7 +120,7 @@ $structNav.includeNavigation()
 #end
 #end
 #foreach($parentRef in $spaceParentRefs)
-#if($celementsweb.getSubNodesForParentRef($parentRef).size() > 0)
+#if($services.treeNode.getSubNodesForParentRef($parentRef).size() > 0)
 <h2>Unterknoten f&uuml;r $services.model.serialize($parentRef,'local')</h2>
 $structNav.includeNavigation($parentRef)
 #end
@@ -136,9 +136,9 @@ $structNav.includeNavigation($parentRef)
 #foreach($docFN in $theQuery.execute())
   #if("$!docFN" != '')
     #set($outsideDocRef = $services.model.resolveDocument($docFN))
-    #if(!$celementsweb.isTreeNode($outsideDocRef))
+    #if(!$services.treeNode.isTreeNode($outsideDocRef))
       #set($outsideDoc = $xwiki.getDocument($outsideDocRef))
-      #set($hasChildren = ($celementsweb.getSubNodesForParentRef($outsideDocRef).size() > 0))
+      #set($hasChildren = ($services.treeNode.getSubNodesForParentRef($outsideDocRef).size() > 0))
       #if("$!outsideOddEven" == 'cel_nav_odd')
         #set($outsideOddEven = 'cel_nav_even')
       #else

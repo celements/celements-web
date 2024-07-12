@@ -46,7 +46,7 @@
 #set($menuSpace = "$!request.get('tag_space')")
 #set($menuSpaceRef = $services.model.createDocumentReference('', $menuSpace, '').lastSpaceReference)
 ## get $menu with list of all menu items in space
-#set($menu = $celementsweb.getSubNodesForParentRef($menuSpaceRef))
+#set($menu = $services.treeNode.getSubNodesForParentRef($menuSpaceRef))
 #if("$!request.get('save')" == '1')
   #set($att_doc = "$!request.get('att_doc')")
   #set($att_name = "$!request.get('att_name')")

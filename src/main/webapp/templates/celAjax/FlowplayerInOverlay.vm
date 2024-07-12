@@ -12,7 +12,7 @@ $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/initCelements.min
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/celanim/movieplayer.js'))
 <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':celRes/celanim/movieplayerDefaults.css', 'file')" /> 
 ## write out javascripts
-$!celementsweb.getAllExternalJavaScriptFiles()
+$!services.javascript.getAllExternalJavaScriptFiles()
 <script type="text/javascript">
  Event.observe(window, 'load', function() {
   setTimeout("$$('body a')[0].show();", 700);

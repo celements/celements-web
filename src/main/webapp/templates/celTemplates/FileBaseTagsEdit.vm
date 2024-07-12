@@ -6,7 +6,7 @@
 #set($edit = "$!request.get('editTag')")
 #if("$!request.get('addTag')" == '1')
   #set($spaceRef = $services.model.createDocumentReference('', $space, '').lastSpaceReference)
-  #set($menu = $xwiki.celementsweb.getSubNodesForParentRef($spaceRef))
+  #set($menu = $services.treeNode.getSubNodesForParentRef($spaceRef))
   #set($tagDocRef = $xwiki.celementsweb.getNextTitledPageDocRef($space, "tag"))
   #set($newMenuName = $tagDocRef.name)
   #set($newDoc = $xwiki.getDocument($tagDocRef))
@@ -72,7 +72,7 @@
 <ol>
   #if("$!space" != '')
     #set($spaceRef = $services.model.createDocumentReference('', $space, '').lastSpaceReference)
-    #foreach($tagNode in $xwiki.celementsweb.getSubNodesForParentRef($spaceRef))
+    #foreach($tagNode in $services.treeNode.getSubNodesForParentRef($spaceRef))
       #set($docName = $tagNode.documentReference.name)
       #set($tagDocFN = $services.model.serialize($tagNode.documentReference, 'local'))
       #set($menuName = $helpNav.getMultilingualMenuName($tagDocFN, $language))
