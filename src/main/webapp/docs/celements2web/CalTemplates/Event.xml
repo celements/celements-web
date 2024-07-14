@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>CalTemplates</web>
+<name>Event</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>xwiki:XWiki.ebeutler</creator>
+<author>xwiki:XWiki.msladek</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.msladek</contentAuthor>
+<creationDate>1245149971000</creationDate>
+<date>1539796418000</date>
+<contentUpdateDate>1539796418000</contentUpdateDate>
+<version>1.1</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment>Imported from XAR</comment>
+<minorEdit>false</minorEdit>
+<syntaxId>xwiki/1.0</syntaxId>
+<hidden>false</hidden>
+<object>
+<class>
+<name>Celements2.PageType</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<page_layout>
+<disabled>0</disabled>
+<name>page_layout</name>
+<number>2</number>
+<prettyName>Page Layout</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</page_layout>
+<page_type>
+<disabled>0</disabled>
+<name>page_type</name>
+<number>1</number>
+<prettyName>Page Type</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</page_type>
+</class>
+<name>CalTemplates.Event</name>
+<number>0</number>
+<className>Celements2.PageType</className>
+<guid>ae4e8b6c-3fac-467d-b318-e8603ec12c22</guid>
+<property>
+<page_type>Event</page_type>
+</property>
+</object>
+<content> </content></xwikidoc>

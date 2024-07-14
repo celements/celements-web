@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>WikiCode</web>
+<name>LastCreatedWikisCode</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent>WikiCode.WebHome</parent>
+<creator>XWiki.Admin</creator>
+<author>XWiki.superadmin</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+<creationDate>1221576990000</creationDate>
+<date>1529283495000</date>
+<contentUpdateDate>1529283495000</contentUpdateDate>
+<version>1.1</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment>Imported from XAR</comment>
+<minorEdit>false</minorEdit>
+<syntaxId>xwiki/1.0</syntaxId>
+<hidden>false</hidden>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<disabled>0</disabled>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator>|</separator>
+<separators>|,</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>WikiCode.LastCreatedWikisCode</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<guid>6b8ac337-2183-41e9-8c46-cab03a304e26</guid>
+<property>
+<tags/>
+</property>
+</object>
+<content>#############################################################################
+## Print the list of last created wikis with there respective owner.
+##
+## Can use URL parameters :
+## -nb   : The maximum number of results to print
+##
+#############################################################################
+#if ($request.nb)
+  #set($nb = $util.parseInt($request.nb))
+#end
+#############################################################################
+#includeMacros("WikiCode.Macros")
+#set($WikiManager = $xwiki.wikimanager)
+#if(!$WikiManager)
+  #error($msg.get("wikimanager.pluginnotenabled"))
+#end
+#set($Exception = $WikiManager.DefaultException)
+##
+#############################################################################
+##
+#if(!$nb)
+  #set($nb = 5)
+#end
+##
+#if(!$allwikilist)
+  #set($allwikilist = $WikiManager.getAllWikis())
+#end
+##
+#if(!$creationsortedallwikilist)
+  #sortDocumentByCreationDate($allwikilist $creationsortedallwikilist false)
+#end
+##
+#############################################################################
+##
+#if(!$creationsortedallwikilist.isEmpty())
+  #foreach($wikidoc in $creationsortedallwikilist)
+    #set($firstWikiAlias = $wikidoc.firstWikiAlias)
+    #if($velocityCount &lt; $nb)
+      #displaymodification($wikidoc.wikiName $firstWikiAlias.getHomePageUrl() $wikidoc.creationDate $formatDate $wikidoc.creator true)
+    #end
+  #end
+#end
+##
+#if (!$doc.name.equals("LastCreatedWikisCode"))
+&lt;br/&gt;
+[See more&gt;WikiCode.LastCreatedWikisCode]
+#end</content></xwikidoc>
