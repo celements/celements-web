@@ -1,37 +1,36 @@
 services:
 
-  # the webserver container that runs Celements on Tomcat
-  webserver: 
+  # the tomcat container that runs celements
+  tomcat: 
     container_name: celements-dev-web
     image: celements-dev:latest
-    build: 
+    build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/Dockerfile-dev
     ports:
       - "2080:8080" # tomcat
       - "2000:8000" # remote debugging
+    environment:
+      - TZ=Europe/Zurich
     env_file: docker/.env
+    volumes:
+      - ./target/celements-web:/usr/local/tomcat/webapps/ROOT:ro
+      - ./docker/tomcat/log4j2.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j2.properties:ro
     restart: unless-stopped
     depends_on:
-      - database
+      - mariadb
 
-  # The database container that runs MariaDB
-  database:
+  # The sqlserver container that runs MariaDB
+  sqlserver:
     container_name: celements-dev-db
     image: mariadb:10.1
     ports:
-      - "3307:3306" # for direct client access 
-    command:
-      --max_allowed_packet=64M
-      --innodb_flush_log_at_trx_commit=1
-      --innodb_file_per_table=1
-      --character-set-server=utf8mb3
-      --collation-server=utf8mb3_general_ci
+      - "3307:3306" # for direct client access
     env_file: docker/.env
     volumes:
       - celements-dev-db-data:/var/lib/mysql
-      - ./docker/database/celements.cnf:/etc/mysql/conf.d/celements.cnf:ro
-      - ./docker/database/init:/docker-entrypoint-initdb.d:ro
+      - ./docker/sqlserver/celements.cnf:/etc/mysql/conf.d/celements.cnf:ro
+      - ./docker/sqlserver/init:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped
 
 volumes:

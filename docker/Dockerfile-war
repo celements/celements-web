@@ -1,5 +1,4 @@
-FROM tomcat:9-jdk11-openjdk
-LABEL maintainer="marc@sladek.me"
+FROM tomcat:9-jdk11-temurin
 #           _                           _       
 #   ___ ___| | ___ _ __ ___   ___ _ __ | |_ ___ 
 #  / __/ _ \ |/ _ \ '_ ` _ \ / _ \ '_ \| __/ __|
@@ -38,11 +37,6 @@ COPY setenv.sh ${CATALINA_HOME}/bin/
 # Setup the Hibernate configuration
 # TODO this is already done when building the war, should it be changable at this point?
 # COPY hibernate.cfg.xml /usr/local/tomcat/webapps/ROOT/WEB-INF/hibernate.cfg.xml
-
-# add tomcat jpda debugging environmental variables
-# ENV JPDA_OPTS="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n"
-ENV JPDA_ADDRESS="8000"
-ENV JPDA_TRANSPORT="dt_socket"
 
 # start tomcat (with remote debugging)
 CMD ["catalina.sh", "jpda", "run"]
