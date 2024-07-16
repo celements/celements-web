@@ -157,8 +157,20 @@
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
+      <artifactId>celements-wiki-manager-web</artifactId>
+      <version>6.0-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
       <artifactId>celements-user-manager-web</artifactId>
       <version>6.1-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-layout-web</artifactId>
+      <version>6.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
 
@@ -232,11 +244,6 @@
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-mvc</artifactId>
       <version>6.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.celements</groupId>
-      <artifactId>celements-wiki-manager</artifactId>
-      <version>6.0-SNAPSHOT</version>
     </dependency>
 
     <!-- other dependencies -->
