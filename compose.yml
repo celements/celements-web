@@ -18,7 +18,7 @@ services:
       - ./docker/tomcat/log4j2.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j2.properties:ro
     restart: unless-stopped
     depends_on:
-      - mariadb
+      - sqlserver
 
   # The sqlserver container that runs MariaDB
   sqlserver:
