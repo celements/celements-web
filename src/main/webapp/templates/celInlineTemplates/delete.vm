@@ -64,4 +64,8 @@
     #set($fullmsg = "${fullmsg}$adminMsg.get('core.delete.confirm')")
   #end
 #end
-#xwikimessagebox($adminMsg.get("core.delete") $fullmsg $doc.getURL("delete", "confirm=1$!{redirectparam}&amp;$languageparams") $doc.getURL("view") $adminMsg.get("yes") $adminMsg.get("no"))
+#set($cancelUrl = $doc.getURL("view"))
+#if($request.xcancel != '')
+  #set($cancelUrl = $request.xcancel)
+#end
+#xwikimessagebox($adminMsg.get("core.delete") $fullmsg $doc.getURL("delete", "confirm=1$!{redirectparam}&amp;$languageparams") $cancelUrl $adminMsg.get("yes") $adminMsg.get("no"))
