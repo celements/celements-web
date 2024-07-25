@@ -66,8 +66,7 @@
 #end
 #if($request.xcancel != '')
   #set($cancelUrl = $request.xcancel)
-#end
-#if(!$cancelUrl)
+#else
   #set($cancelUrl = $doc.getURL("view"))
 #end
 #xwikimessagebox($adminMsg.get("core.delete") $fullmsg $doc.getURL("delete", "confirm=1$!{redirectparam}&amp;$languageparams") $cancelUrl $adminMsg.get("yes") $adminMsg.get("no"))
