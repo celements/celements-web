@@ -243,7 +243,7 @@ export class CelDataLink extends CelData {
     const link = this.querySelector('a');
     const value = await this.extractValue(data);
     if (value) {
-      link.href = parseURL(value)?.href ?? '';
+      link.href = this.#parseURL(value)?.href ?? '';
       link.target = this.target;
       if (!link.hasChildNodes()) {
         const content = this.contentHrefParts.map(p => link[p]).filter(Boolean).join('');
