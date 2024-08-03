@@ -243,7 +243,7 @@ export class CelDataLink extends CelData {
     const link = this.querySelector('a');
     const value = await this.extractValue(data);
     if (value) {
-      link.href = value.includes('://') ? value : `https://${value}`;
+      link.href = parseURL(value)?.href ?? '';
       link.target = this.target;
       if (!link.hasChildNodes()) {
         const content = this.contentHrefParts.map(p => link[p]).filter(Boolean).join('');
@@ -252,6 +252,20 @@ export class CelDataLink extends CelData {
     } else {
       link.removeAttribute('href');
     }
+  }
+
+  #parseURL(value) {
+    const parsers = [
+      // absolute URL
+      x => URL.parse(x),
+      // likely URL without protocol, assuming https
+      x => (x.indexOf('.') > 0) 
+          && ((x.indexOf('/') < 0) || (x.indexOf('.') < x.indexOf('/')))
+          && URL.parse(`https://${x}`),
+      // assuming host relative URL
+      x => URL.parse(x, document.baseURI),
+    ];
+    return parsers.map(parser => parser(value)).find(x => !!x);
   }
 
 }
