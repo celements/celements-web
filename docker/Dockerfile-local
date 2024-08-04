@@ -16,7 +16,6 @@ ENV JPDA_TRANSPORT="dt_socket"
 
 # copy configurations / scripts
 COPY docker/tomcat /usr/local/config
-# TODO COPY docker/config/xwiki.cfg xwiki_template.cfg
 
 # TODO ENV CATALINA_OPTS="-Dkey=value" working?
 
@@ -28,4 +27,3 @@ ${CATALINA_HOME}/temp \
 
 # define custom command (with remote debugging)
 CMD ["catalina.sh", "jpda", "run"]
-
