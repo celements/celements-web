@@ -7,17 +7,17 @@
 
 FROM tomcat:9-jdk11-temurin
 
-# when using docker compose, these ENV values may be overridden from the .env file
+# environment variables, may be overridden from the .env file
+# celements
 ENV CELEMENTS_DATA=/usr/local/celements
-# add tomcat jpda debugging environmental variables
-# ENV JPDA_OPTS="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n"
+# tomcat
+ENV CATALINA_XMX="2g"
+# tomcat jpda debugging
 ENV JPDA_ADDRESS="8000"
 ENV JPDA_TRANSPORT="dt_socket"
 
 # copy configurations / scripts
 COPY docker/tomcat /usr/local/config
-
-# TODO ENV CATALINA_OPTS="-Dkey=value" working?
 
 # installs and setup
 RUN mkdir -p \
