@@ -18,6 +18,8 @@ services:
     restart: unless-stopped
     networks:
       - celements
+    logging:
+      driver: journald
     depends_on:
       - sqlserver
 
