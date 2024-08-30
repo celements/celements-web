@@ -334,7 +334,8 @@ class CelDataRegistry {
   }
 }
 
-export const celDataRegistry = new CelDataRegistry();
+export const celDataRegistry = window.CELEMENTS_celDataRegistry ?? new CelDataRegistry();
+window.CELEMENTS_celDataRegistry = celDataRegistry;
 celDataRegistry.define('cel-data', CelData);
 celDataRegistry.define('cel-data-if', CelDataIf);
 celDataRegistry.define('cel-data-datetime', CelDataDateTime);
