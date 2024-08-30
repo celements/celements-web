@@ -1,6 +1,6 @@
 import pick from '/file/resource/deps/lodash/pick.js';
 import uniq from '/file/resource/deps/lodash/uniq.js';
-import CelDataRenderer from './cel-data-renderer.mjs?version=20240803';
+import CelDataRenderer from './cel-data-renderer.mjs?version=20240830';
 import CelDataLoader from './cel-data-loader.mjs?version=20240425';
 import { celDataRegistry } from './cel-data.mjs?version=20240830';
 
