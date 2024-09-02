@@ -318,17 +318,27 @@ export class CelDataImage extends CelData {
 
 }
 
-const components = [
-  ['cel-data', CelData],
-  ['cel-data-if', CelDataIf],
-  ['cel-data-datetime', CelDataDateTime],
-  ['cel-data-time', CelDataTime],
-  ['cel-data-a', CelDataLink],
-  ['cel-data-img', CelDataImage]
-];
+class CelDataRegistry {
+  #tags = new Set();
 
-components
-  .filter(([name]) => !customElements.get(name))
-  .forEach(([name, constr]) => customElements.define(name, constr));
+  define(tag, constr) {
+    if (!customElements.get(tag)) {
+      customElements.define(tag, constr);
+      return true;
+    }
+    this.#tags.add(tag);
+  }
 
-export const celDataTags = Object.freeze(components.map(([name]) => name));
+  get tags() {
+    return [...this.#tags];
+  }
+}
+
+export const celDataRegistry = window.celDataRegistry ?? new CelDataRegistry();
+window.celDataRegistry = celDataRegistry;
+celDataRegistry.define('cel-data', CelData);
+celDataRegistry.define('cel-data-if', CelDataIf);
+celDataRegistry.define('cel-data-datetime', CelDataDateTime);
+celDataRegistry.define('cel-data-time', CelDataTime);
+celDataRegistry.define('cel-data-a', CelDataLink);
+celDataRegistry.define('cel-data-img', CelDataImage);
