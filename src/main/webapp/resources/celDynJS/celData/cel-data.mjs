@@ -257,13 +257,13 @@ export class CelDataLink extends CelData {
   #parseURL(value) {
     const parsers = [
       // absolute URL
-      x => URL.parse(x),
+      x => tryParseUrl(x),
       // likely URL without protocol, assuming https
       x => (x.indexOf('.') > 0) 
           && ((x.indexOf('/') < 0) || (x.indexOf('.') < x.indexOf('/')))
-          && URL.parse(`https://${x}`),
+          && tryParseUrl(`https://${x}`),
       // assuming host relative URL
-      x => URL.parse(x, document.baseURI),
+      x => tryParseUrl(x, document.baseURI),
     ];
     return parsers.map(parser => parser(value)).find(x => !!x);
   }
@@ -342,3 +342,12 @@ celDataRegistry.define('cel-data-datetime', CelDataDateTime);
 celDataRegistry.define('cel-data-time', CelDataTime);
 celDataRegistry.define('cel-data-a', CelDataLink);
 celDataRegistry.define('cel-data-img', CelDataImage);
+
+// like URL.parse, but that's too new :(
+const tryParseUrl = (url, base) => {
+  try {
+    return new URL(url, base);
+  } catch (e) {
+    return null;
+  }
+};
