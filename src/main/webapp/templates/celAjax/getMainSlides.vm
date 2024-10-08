@@ -1,7 +1,7 @@
 #set($spaceDocRef = $services.model.createDocumentReference('', "$!{request.spaceName}", ''))
 #set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
 $jsonBuilder.openArray()
-#foreach($subSlideNode in $celementsweb.getSubNodesForParentRef($spaceDocRef.lastSpaceReference))
+#foreach($subSlideNode in $services.treeNode.getSubNodesForParentRef($spaceDocRef.lastSpaceReference))
 #set($subSlideFN = $services.model.serialize($subSlideNode.getDocumentReference(), 'local'))
 $jsonBuilder.addString($subSlideFN)
 #end
