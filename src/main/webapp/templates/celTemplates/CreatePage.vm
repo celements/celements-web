@@ -7,7 +7,7 @@
 #if($!request.get("space") != "")
 	#set($space = $!request.get("space"))
 #else
-	#set($space = "$!celementsweb.defaultSpace")
+	#set($space = "$!services.celementsweb.getDefaultSpace")
 #end
 #set($redirmode = "$!request.get('redirmode')")
 #set($redir = "$!request.get('xredirect')")
