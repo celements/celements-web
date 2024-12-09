@@ -6,7 +6,7 @@
 #if(!$withoutDefaultHeaders || ($!withoutDefaultHeaders == ''))
   #set($withoutDefaultHeaders = false)
 #end
-g## check favicon.ico
+## check favicon.ico
 #if("$doc.fullName" == 'Content.favicon.ico')
   $context.getResponse().sendRedirect($skin_doc.getAttachmentURL('favicon.ico','skin'))
 #end
