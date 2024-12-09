@@ -6,10 +6,6 @@
 #if(!$withoutDefaultHeaders || ($!withoutDefaultHeaders == ''))
   #set($withoutDefaultHeaders = false)
 #end
-#if(!$initCelementsWasRun && $xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
-  ## define the celements variables (this is a lacy call)
-  $xwiki.includeForm("celements2web:Macros.initCelements", false)
-#end
 ## check favicon.ico
 #if("$doc.fullName" == 'Content.favicon.ico')
   $context.getResponse().sendRedirect($skin_doc.getAttachmentURL('favicon.ico','skin'))
