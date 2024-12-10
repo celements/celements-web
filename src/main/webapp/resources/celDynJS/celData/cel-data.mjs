@@ -324,7 +324,6 @@ class CelDataRegistry {
   define(tag, constr) {
     if (!customElements.get(tag)) {
       customElements.define(tag, constr);
-      return true;
     }
     this.#tags.add(tag);
   }
