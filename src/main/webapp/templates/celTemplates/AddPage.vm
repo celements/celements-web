@@ -71,9 +71,9 @@
 #if($menu.size() > 0)
   #set($lastitemNum = $menu.size() - 1)
   #if("$!request.get('insert_pos')" != 'b')
-    #set($next_menu_item_nr = $menu.get($aO).getPosition() + 1) ## add as last element
+    #set($next_menu_item_nr = $menu.get($lastitemNum).getPosition() + 1) ## add as last element
   #else
-    #set($next_menu_item_nr = $menu.get(0).getPosition() -1 ) ## add as first element
+    #set($next_menu_item_nr = $mathtool.sub($menu.get(0).getPosition(), 1)) ## add as first element
   #end
 #else
 #set($next_menu_item_nr = 0)
