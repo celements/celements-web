@@ -867,6 +867,10 @@ cel_reconnector_retryDelayNotice=Erneuter Versuch in {} Sekunden.
 cel_pagetype_prettyname_StructuredDataEditor=Struct-Editor
 cel_struct_autocomplete_placeholder_default=Bitte auswählen...
 cel_struct_autocomplete_UrlToNewElementEditorButtonText_default=Neues hinzufügen
+## ADD PAGE
+cel_addpage_insert_pos=Einfügeposition
+cel_addpage_insert_bottom=Unten einfügen
+cel_addpage_insert_top=Oben einfügen
 ## SelectTag Options
 cel_yes=Ja
 cel_no=Nein

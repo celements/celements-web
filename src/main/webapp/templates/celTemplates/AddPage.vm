@@ -70,11 +70,11 @@
 #set($menu = $xwiki.celementsweb.getSubNodesForParent("$doc_parent", "$space"))
 #if($menu.size() > 0)
   #set($lastitemNum = $menu.size() - 1)
-##  #set($next_menu_item_nr = $menu.get($lastitemNum).getPosition() + 1)## add as last element
-  #set($next_menu_item_nr = $menu.get(0).getPosition() -1 )## add as first element  
-
-===>>> Wie / Wo kann ich override machen?
-
+  #if("$!request.get('insert_pos')" != 'b')
+    #set($next_menu_item_nr = $menu.get($aO).getPosition() + 1) ## add as last element
+  #else
+    #set($next_menu_item_nr = $menu.get(0).getPosition() -1 ) ## add as first element
+  #end
 #else
 #set($next_menu_item_nr = 0)
 #end
@@ -311,6 +311,21 @@
   </div>
   <div id="celements2_addpage_optional">
   <table class="celements2_table">
+      <td>
+        <td width="50%">
+          $!adminMsg.get('cel_addpage_insert_pos')
+        </td>
+        <td width="50%">
+          <span class="insert_bottom">
+            $adminMsg.get("cel_addpage_insert_bottom")
+            <input type="radio" name="insert_pos" value="b" />
+          </span>
+          <span class="insert_top">
+            $adminMsg.get("cel_addpage_insert_top")
+            <input type="radio" name="insert_pos" value="t" selected="selected" />
+          </span>
+        </td>
+      </tr>
       <tr>
       <td width="50%">$adminMsg.get('cel_tm_page_type')</td>
       <td width="50%">
