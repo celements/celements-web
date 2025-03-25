@@ -352,7 +352,11 @@
       },
 
       _createPlayerElement: function (linkElem) {
-        var audioElem = new Element('audio', { 'controls': '', 'class': linkElem.classNames() });
+        var audioElem = new Element('audio', {
+            'controls': '',
+            'class': linkElem.classNames(),
+            'preload': 'none',
+        });
         var audioSrcElem = new Element('source', {
           'src': linkElem.href,
           'type': 'audio/mpeg'
