@@ -184,6 +184,20 @@
     <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
  
+  <!-- Added mappings for Swagger UI support -->
+  <servlet-mapping>
+    <servlet-name>spring-dispatcher</servlet-name>
+    <url-pattern>/swagger-ui.html</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>spring-dispatcher</servlet-name>
+    <url-pattern>/v2/api-docs</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>spring-dispatcher</servlet-name>
+    <url-pattern>/webjars/*</url-pattern>
+  </servlet-mapping>
+
   <!-- We override the mime type definition for javascript, javascript module and css files,
        as some containers don't provide it, causing problems for javascript files containg
        velocity code, like fullscreenEdit.js -->
