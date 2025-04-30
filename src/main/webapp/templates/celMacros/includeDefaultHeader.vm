@@ -53,18 +53,14 @@ $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery-noconflict
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/initCelements.min.js'))##
 ## FIXME [CELDEV-904] validation.js cannot be loaded defer before fixing this issue.
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/validation.js'))##
-#set($extJsParam = $extJsParamSync)
 #if($xwiki.getXWikiPreferenceAsInt("cel_activate_jsdefer", 0) == 1)##
   #set($jsLoadModeDefer = $jsService.getJsLoadMode('DEFER'))
   #set($extJsParam = $jsService.createExtJSParam().setAction('file').setLoadMode($jsLoadModeDefer))
 #else
-  
+  #set($extJsParam = $extJsParamSync)  
 #end
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/mobile/MobileSupport.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/scriptaculous/effects.js'))##
-#if($xwiki.getXWikiPreferenceAsInt("cel_disable_swfobject", 1) == 0)##
-  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/SWFObject-2.2/swfobject.js'))##
-#end
 ##
 $services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/bootstrap/bootstrap.min.js'))##
@@ -79,9 +75,9 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/dateTimePicker/genera
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/highslide/highslide-full.min.js'))##
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/celanim/overlaySlide.js'))##
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/celanim/slideshow.js'))##
-  $services.css.includeCSSAfterSkin(':celJS/highslide/highslide.css')##
-  $services.css.includeCSSAfterSkin(':celRes/images/slideshow.css')##
-  $services.css.includeCSSAfterSkin(':celRes/celanim/overlay.css')##
+  $services.css.includeCSSAfterPreferences(':celJS/highslide/highslide.css')##
+  $services.css.includeCSSAfterPreferences(':celRes/images/slideshow.css')##
+  $services.css.includeCSSAfterPreferences(':celRes/celanim/overlay.css')##
   #if($xwiki.getSpacePreferenceAsInt('celNewImageGallery', 0) == 1)##
     ##new image gallery slideshow
     $!services.javascript.includeExtJsFile($extJsParam.setJsFile(':celJS/yui/element/element-min.js'))##
@@ -92,9 +88,9 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/dateTimePicker/genera
     $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/images/galleryClass.js'))##
     $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/images/SlideShowAnimation.js'))##
     $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/images/imageSlideShow.js'))##
-    $services.css.includeCSSAfterSkin(':celJS/yui/container/assets/skins/sam/container.css')##
-    $services.css.includeCSSAfterSkin(':celJS/yui/button/assets/skins/sam/button.css')##
-    $services.css.includeCSSAfterSkin(':celRes/galleryYuiOverlay.css')##
+    $services.css.includeCSSAfterPreferences(':celJS/yui/container/assets/skins/sam/container.css')##
+    $services.css.includeCSSAfterPreferences(':celJS/yui/button/assets/skins/sam/button.css')##
+    $services.css.includeCSSAfterPreferences(':celRes/galleryYuiOverlay.css')##
   #end
 #end
 #if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)##
