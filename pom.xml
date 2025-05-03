@@ -78,10 +78,6 @@
     </profile>
   </profiles>
   <dependencies>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-    </dependency>
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
     <!-- START xwiki-web-standard war -->
@@ -265,7 +261,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-mvc</artifactId>
-      <version>6.0</version>
+      <version>6.1-SNAPSHOT</version>
     </dependency>
 
     <!-- other dependencies -->
