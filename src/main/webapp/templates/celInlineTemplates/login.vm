@@ -37,7 +37,7 @@
   #end
 #end
 <div class="loginscreen">
-#if(!$celementsweb.useXWikiLoginLayout() && (("$!context.getRequest().get('j_username')" != "") || ("$!request.get('redir')" == '1')))
+#if(!$services.layout.useXWikiLoginLayout() && (("$!context.getRequest().get('j_username')" != "") || ("$!request.get('redir')" == '1')))
 <div class="cel_oldstyle_login_error" style="font-weight:bold;color:#ff0000">Login Error! Invalid Username/Password</div>
 #end
 #set($formaction = "$xwiki.getURL('XWiki.XWikiLogin','loginsubmit')")
@@ -77,7 +77,7 @@
 #xwikimessageboxend()
 <br/>
 #end
-#if($celementsweb.useXWikiLoginLayout())
+#if($services.layout.useXWikiLoginLayout())
 #xwikimessageboxstart($msg.get("login") "")
 #set($message = $msg.get($xwiki.parseMessage()))
 #if($message)

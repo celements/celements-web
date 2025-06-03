@@ -32,7 +32,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>6.6-SNAPSHOT</version>
+  <version>6.8-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -78,10 +78,6 @@
     </profile>
   </profiles>
   <dependencies>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-    </dependency>
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
     <!-- START xwiki-web-standard war -->
@@ -107,8 +103,9 @@
       <version>6.1</version>
     </dependency>
     <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-mailsender</artifactId>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-mailsender</artifactId>
+      <version>6.0</version>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
@@ -137,7 +134,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>6.3</version>
+      <version>6.4</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -149,7 +146,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>6.3</version>
+      <version>6.4</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -185,13 +182,13 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-user-manager-web</artifactId>
-      <version>6.1</version>
+      <version>6.2</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-layout-web</artifactId>
-      <version>6.0</version>
+      <version>6.2</version>
       <type>war</type>
     </dependency>
 
@@ -204,7 +201,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>6.3</version>
+      <version>6.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-global-redirect</artifactId>
+      <version>6.0</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -244,7 +246,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.8</version>
+      <version>6.12</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -264,7 +266,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-mvc</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.2-SNAPSHOT</version>
     </dependency>
 
     <!-- other dependencies -->
