@@ -50,6 +50,16 @@
 <!--    <filter-class>com.xpn.xwiki.web.ActionFilter</filter-class> -->
   </filter>
   
+  <!-- setup execution context -->
+  <filter>
+      <filter-name>executionContextFilter</filter-name>
+      <filter-class>org.xwiki.context.ExecutionContextFilter</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>executionContextFilter</filter-name>
+      <url-pattern>/api/*</url-pattern>
+  </filter-mapping>
+
   <!-- Spring Security Filter -->
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
