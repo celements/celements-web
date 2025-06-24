@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-         version="3.1">
+  version="3.1">
 
   <display-name>celements-web</display-name>
   <description>Celements-Web Application</description>
@@ -36,33 +36,33 @@
        specification, which is a mechanism that enables cross-origin requests.
        TODO [CELDEV-1169] instead use Spring MVC @CrossOrigin when struts is replaced
    -->
-	<filter>
-	  <filter-name>CorsFilter</filter-name>
-	  <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
-	  <init-param>
-	    <!-- any origin is default value -->
-	    <param-name>cors.allowed.origins</param-name>
-	    <param-value>*</param-value>
-	  </init-param>
-	  <init-param>
-	    <!-- allowed headers is the default values plus:
-	     x-prototype-version,x-json -->
-	    <param-name>cors.allowed.headers</param-name>
-	    <param-value>Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,x-prototype-version,X-Prototype-Version,x-json,X-JSON,Authorization</param-value>
-	  </init-param>
+  <filter>
+    <filter-name>CorsFilter</filter-name>
+    <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
     <init-param>
-        <param-name>cors.allowed.methods</param-name>
-        <param-value>GET,POST,PUT,PATCH,DELETE,OPTIONS</param-value>
+	    <!-- any origin is default value -->
+      <param-name>cors.allowed.origins</param-name>
+      <param-value>*</param-value>
     </init-param>
-	  <init-param>
-	    <param-name>cors.exposed.headers</param-name>
-	    <param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials,X-JSON,x-json,X-Prototype-Version,x-prototype-version</param-value>
-	  </init-param>
-  	</filter>
-	<filter-mapping>
-	  <filter-name>CorsFilter</filter-name>
-	  <url-pattern>/*</url-pattern>
-	</filter-mapping>
+    <init-param>
+	    <!-- allowed headers is the default values plus:
+	     x-prototype-version,x-json,Authorization -->
+      <param-name>cors.allowed.headers</param-name>
+      <param-value>Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,x-prototype-version,X-Prototype-Version,x-json,X-JSON,Authorization</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.allowed.methods</param-name>
+      <param-value>GET,POST,PUT,PATCH,DELETE,OPTIONS</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.exposed.headers</param-name>
+      <param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials,X-JSON,x-json,X-Prototype-Version,x-prototype-version</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CorsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
   <!-- A filter that allows requests to be saved and reused later. For example when the current request contains an expired
        authentication token, and the authorization module redirects to the login page, all the information sent by the
@@ -84,12 +84,12 @@
   
   <!-- setup execution context -->
   <filter>
-      <filter-name>executionContextFilter</filter-name>
-      <filter-class>com.celements.init.ExecutionContextFilter</filter-class>
+    <filter-name>executionContextFilter</filter-name>
+    <filter-class>com.celements.init.ExecutionContextFilter</filter-class>
   </filter>
   <filter-mapping>
-      <filter-name>executionContextFilter</filter-name>
-      <url-pattern>/*</url-pattern>
+    <filter-name>executionContextFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 
   <!-- Spring Security Filter -->
@@ -132,8 +132,8 @@
   </listener>
 
   <listener>
-      <display-name>ImageIO service provider loader/unloader</display-name>
-      <listener-class>com.twelvemonkeys.servlet.image.IIOProviderContextListener</listener-class>
+    <display-name>ImageIO service provider loader/unloader</display-name>
+    <listener-class>com.twelvemonkeys.servlet.image.IIOProviderContextListener</listener-class>
   </listener>
 
   <!-- Spring Web -->
@@ -202,17 +202,17 @@
     </init-param>
     <load-on-startup>3</load-on-startup>
   </servlet>
-  
+
   <servlet-mapping>
     <servlet-name>action</servlet-name>
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
-  
+
   <servlet-mapping>
     <servlet-name>action</servlet-name>
     <url-pattern>/bin/*</url-pattern>
   </servlet-mapping>
-  
+
   <servlet-mapping>
     <servlet-name>action</servlet-name>
     <url-pattern>/wiki/*</url-pattern>
