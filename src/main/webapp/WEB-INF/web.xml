@@ -32,6 +32,38 @@
     </init-param>
   </filter>
 
+  <!-- This filter is an implementation of W3C's CORS (Cross-Origin Resource Sharing)
+       specification, which is a mechanism that enables cross-origin requests.
+       TODO [CELDEV-1169] instead use Spring MVC @CrossOrigin when struts is replaced
+   -->
+	<filter>
+	  <filter-name>CorsFilter</filter-name>
+	  <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+	  <init-param>
+	    <!-- any origin is default value -->
+	    <param-name>cors.allowed.origins</param-name>
+	    <param-value>*</param-value>
+	  </init-param>
+	  <init-param>
+	    <!-- allowed headers is the default values plus:
+	     x-prototype-version,x-json -->
+	    <param-name>cors.allowed.headers</param-name>
+	    <param-value>Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,x-prototype-version,X-Prototype-Version,x-json,X-JSON,Authorization</param-value>
+	  </init-param>
+    <init-param>
+        <param-name>cors.allowed.methods</param-name>
+        <param-value>GET,POST,PUT,PATCH,DELETE,OPTIONS</param-value>
+    </init-param>
+	  <init-param>
+	    <param-name>cors.exposed.headers</param-name>
+	    <param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials,X-JSON,x-json,X-Prototype-Version,x-prototype-version</param-value>
+	  </init-param>
+  	</filter>
+	<filter-mapping>
+	  <filter-name>CorsFilter</filter-name>
+	  <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
   <!-- A filter that allows requests to be saved and reused later. For example when the current request contains an expired
        authentication token, and the authorization module redirects to the login page, all the information sent by the
        client would be lost; this filter allows to save all that information, and after a successful login, injects the
