@@ -268,6 +268,12 @@
       <artifactId>celements-spring-mvc</artifactId>
       <version>6.2-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-keycloak</artifactId>
+      <version>6.0-SNAPSHOT</version>
+    </dependency>
+
 
     <!-- other dependencies -->
     <dependency>
