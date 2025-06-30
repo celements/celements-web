@@ -27,7 +27,7 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>6.1-SNAPSHOT</version>
+    <version>6.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -188,7 +188,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-layout-web</artifactId>
-      <version>6.3-SNAPSHOT</version>
+      <version>6.3</version>
       <type>war</type>
     </dependency>
 
@@ -201,7 +201,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>6.5-SNAPSHOT</version>
+      <version>6.5</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -226,27 +226,27 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-servlet</artifactId>
-      <version>6.2-SNAPSHOT</version>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>6.4-SNAPSHOT</version>
+      <version>6.4</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.13-SNAPSHOT</version>
+      <version>6.13</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -266,12 +266,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-mvc</artifactId>
-      <version>6.2-SNAPSHOT</version>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-keycloak</artifactId>
-      <version>6.0-SNAPSHOT</version>
+      <version>6.0</version>
     </dependency>
 
 
