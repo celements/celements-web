@@ -27,12 +27,12 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>6.0</version>
+    <version>6.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>6.5-SNAPSHOT</version>
+  <version>6.9-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -56,12 +56,29 @@
     <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
     <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
+    <xwiki.plugins.lucene.indexdir>/usr/local/celements/lucene</xwiki.plugins.lucene.indexdir>
   </properties>
+  <profiles>
+    <profile>
+      <id>local</id>
+      <properties>
+        <maven.test.skip>true</maven.test.skip>
+        <hibernate.cfg.xml.connection.scheme>${dotenv.DB_SCHEME}</hibernate.cfg.xml.connection.scheme>
+        <hibernate.cfg.xml.connection.host>${dotenv.DB_HOST}</hibernate.cfg.xml.connection.host>
+        <hibernate.cfg.xml.connection.port>:${dotenv.DB_PORT}</hibernate.cfg.xml.connection.port>
+        <hibernate.cfg.xml.connection.username>${dotenv.DB_USER}</hibernate.cfg.xml.connection.username>
+        <hibernate.cfg.xml.connection.password>${dotenv.DB_PASSWORD}</hibernate.cfg.xml.connection.password>
+        <hibernate.cfg.xml.connection.driver_class>${dotenv.DB_DRIVER}</hibernate.cfg.xml.connection.driver_class>
+        <xwiki.cfg.xwiki.db>${dotenv.DB_MAIN}</xwiki.cfg.xwiki.db>
+        <xwiki.cfg.xwiki.db.prefix>${dotenv.DB_PREFIX}_</xwiki.cfg.xwiki.db.prefix>
+        <celements.store.docCache.capacityDoc>10000</celements.store.docCache.capacityDoc>
+        <celements.store.docCache.capacityExists>100000</celements.store.docCache.capacityExists>
+        <log4j.properties.monitorInterval>10</log4j.properties.monitorInterval>
+        <xwiki.plugins.lucene.indexdir>${dotenv.CELEMENTS_DATA}/lucene</xwiki.plugins.lucene.indexdir>
+      </properties>
+    </profile>
+  </profiles>
   <dependencies>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-    </dependency>
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
     <!-- START xwiki-web-standard war -->
@@ -84,11 +101,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-scheduler</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-mailsender</artifactId>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-mailsender</artifactId>
+      <version>6.0</version>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
@@ -117,19 +135,19 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>6.3-SNAPSHOT</version>
+      <version>6.4</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.1</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>6.3-SNAPSHOT</version>
+      <version>6.4</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -147,31 +165,31 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tinymce-langs-v6</artifactId>
-      <version>6.8.3-CEL6-SNAPSHOT</version>
+      <version>6.8.3-CEL6</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-richtext-web</artifactId>
-      <version>6.2-SNAPSHOT</version>
+      <version>6.2</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-wiki-manager-web</artifactId>
-      <version>6.0-SNAPSHOT</version>
+      <version>6.0</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-user-manager-web</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.2</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-layout-web</artifactId>
-      <version>6.0-SNAPSHOT</version>
+      <version>6.3</version>
       <type>war</type>
     </dependency>
 
@@ -184,7 +202,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>6.2-SNAPSHOT</version>
+      <version>6.7-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-global-redirect</artifactId>
+      <version>6.0</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -204,32 +227,32 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-servlet</artifactId>
-      <version>6.1</version>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>6.2-SNAPSHOT</version>
+      <version>6.5-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.7-SNAPSHOT</version>
+      <version>6.13</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>6.2-SNAPSHOT</version>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -244,8 +267,14 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-mvc</artifactId>
+      <version>6.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-keycloak</artifactId>
       <version>6.0</version>
     </dependency>
+
 
     <!-- other dependencies -->
     <dependency>
@@ -278,6 +307,14 @@
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-common</artifactId>
     </dependency>
+    <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>javax.ws.rs-api</artifactId>
+    </dependency>
+      <dependency>
+        <groupId>jakarta.ws.rs</groupId>
+        <artifactId>jakarta.ws.rs-api</artifactId>
+    </dependency>
     <!--  hibernate annotations needed for org.hibernate.type.EnumType -->
     <dependency>
        <groupId>org.hibernate</groupId>
@@ -306,6 +343,26 @@
   <build>
     <finalName>celements-web</finalName>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+              <files>
+                <file>.env</file>
+              </files>
+              <keyPrefix>dotenv.</keyPrefix>
+              <quiet>true</quiet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>

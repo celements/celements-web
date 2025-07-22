@@ -243,7 +243,7 @@ export class CelDataLink extends CelData {
     const link = this.querySelector('a');
     const value = await this.extractValue(data);
     if (value) {
-      link.href = value.includes('://') ? value : `https://${value}`;
+      link.href = this.#parseURL(value)?.href ?? '';
       link.target = this.target;
       if (!link.hasChildNodes()) {
         const content = this.contentHrefParts.map(p => link[p]).filter(Boolean).join('');
@@ -252,6 +252,20 @@ export class CelDataLink extends CelData {
     } else {
       link.removeAttribute('href');
     }
+  }
+
+  #parseURL(value) {
+    const parsers = [
+      // absolute URL
+      x => tryParseUrl(x),
+      // likely URL without protocol, assuming https
+      x => (x.indexOf('.') > 0) 
+          && ((x.indexOf('/') < 0) || (x.indexOf('.') < x.indexOf('/')))
+          && tryParseUrl(`https://${x}`),
+      // assuming host relative URL
+      x => tryParseUrl(x, document.baseURI),
+    ];
+    return parsers.map(parser => parser(value)).find(x => !!x);
   }
 
 }
@@ -304,17 +318,35 @@ export class CelDataImage extends CelData {
 
 }
 
-const components = [
-  ['cel-data', CelData],
-  ['cel-data-if', CelDataIf],
-  ['cel-data-datetime', CelDataDateTime],
-  ['cel-data-time', CelDataTime],
-  ['cel-data-a', CelDataLink],
-  ['cel-data-img', CelDataImage]
-];
+class CelDataRegistry {
+  #tags = new Set();
 
-components
-  .filter(([name]) => !customElements.get(name))
-  .forEach(([name, constr]) => customElements.define(name, constr));
+  define(tag, constr) {
+    if (!customElements.get(tag)) {
+      customElements.define(tag, constr);
+    }
+    this.#tags.add(tag);
+  }
 
-export const celDataTags = Object.freeze(components.map(([name]) => name));
+  get tags() {
+    return [...this.#tags];
+  }
+}
+
+export const celDataRegistry = window.celDataRegistry ?? new CelDataRegistry();
+window.celDataRegistry = celDataRegistry;
+celDataRegistry.define('cel-data', CelData);
+celDataRegistry.define('cel-data-if', CelDataIf);
+celDataRegistry.define('cel-data-datetime', CelDataDateTime);
+celDataRegistry.define('cel-data-time', CelDataTime);
+celDataRegistry.define('cel-data-a', CelDataLink);
+celDataRegistry.define('cel-data-img', CelDataImage);
+
+// like URL.parse, but that's too new :(
+const tryParseUrl = (url, base) => {
+  try {
+    return new URL(url, base);
+  } catch (e) {
+    return null;
+  }
+};

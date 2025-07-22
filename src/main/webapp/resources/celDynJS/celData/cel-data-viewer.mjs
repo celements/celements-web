@@ -1,8 +1,8 @@
 import pick from '/file/resource/deps/lodash/pick.js';
 import uniq from '/file/resource/deps/lodash/uniq.js';
-import CelDataRenderer from './cel-data-renderer.mjs?version=20240425';
+import CelDataRenderer from './cel-data-renderer.mjs?version=20241209';
 import CelDataLoader from './cel-data-loader.mjs?version=20240425';
-import { celDataTags } from './cel-data.mjs?version=20240425';
+import { celDataRegistry } from './cel-data.mjs?version=20241209';
 
 export class Config {
   tagName;
@@ -168,7 +168,7 @@ export class CelDataViewerElement extends HTMLElement {
 
   #collectFields(template) {
     if (!template) return [];
-    const selectTags = [...celDataTags, this.selectTags.trim()].filter(Boolean);
+    const selectTags = [...celDataRegistry.tags, this.selectTags.trim()].filter(Boolean);
     return uniq([template, ...template.content.querySelectorAll(selectTags.join(', '))]
       .map(e => e.getAttribute('select') || e.getAttribute('field') || '')
       .flatMap(s => s.split(','))

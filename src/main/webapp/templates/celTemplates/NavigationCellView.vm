@@ -2,7 +2,7 @@
 #set($createdNav = $injectedNavigationObject)
 #set($injectedNavigationObject = '')
 #else
-#set($createdNav = $celementsweb.createNavigation())
+#set($createdNav = $services.treeNode.createNavigation())
 $createdNav.loadConfigFromDoc($celldoc.documentReference)
 #end
 #if("$!overwriteNavPresentationType" != '')

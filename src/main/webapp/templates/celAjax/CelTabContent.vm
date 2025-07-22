@@ -7,7 +7,7 @@
 #elseif("$!{request.id}" == 'tbrights')
   $xwiki.parseTemplate("celEditorTabs/loadTabAccessRights.vm")
 #elseif("$!{request.id}" == 'tb4')
-#if($xwiki.celementsweb.layoutExists($doc.space))
+#if($services.layout.layoutExists($doc.space))
   $xwiki.parseTemplate("celEditorTabs/loadTabCellProperties.vm")
 #else
   $xwiki.parseTemplate("celEditorTabs/loadTabProperties.vm")
