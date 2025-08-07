@@ -27,12 +27,12 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>6.0</version>
+    <version>6.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>6.8-SNAPSHOT</version>
+  <version>6.9-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -188,7 +188,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-layout-web</artifactId>
-      <version>6.2</version>
+      <version>6.3</version>
       <type>war</type>
     </dependency>
 
@@ -201,7 +201,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>6.4</version>
+      <version>6.7</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -226,27 +226,27 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-servlet</artifactId>
-      <version>6.1</version>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>6.3</version>
+      <version>6.5</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.12</version>
+      <version>6.13</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -266,8 +266,14 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-mvc</artifactId>
-      <version>6.1</version>
+      <version>6.2</version>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-keycloak</artifactId>
+      <version>6.0</version>
+    </dependency>
+
 
     <!-- other dependencies -->
     <dependency>
@@ -299,6 +305,14 @@
     <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-common</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>javax.ws.rs</groupId>
+        <artifactId>javax.ws.rs-api</artifactId>
+    </dependency>
+      <dependency>
+        <groupId>jakarta.ws.rs</groupId>
+        <artifactId>jakarta.ws.rs-api</artifactId>
     </dependency>
     <!--  hibernate annotations needed for org.hibernate.type.EnumType -->
     <dependency>
