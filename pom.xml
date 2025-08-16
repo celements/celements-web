@@ -118,10 +118,6 @@
     <!-- END xwiki-enterprise-web war -->
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-application-manager</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
     </dependency>
     <dependency>
@@ -190,6 +186,12 @@
       <artifactId>celements-layout-web</artifactId>
       <version>6.3</version>
       <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-xapp</artifactId>
+      <version>6.0-SNAPSHOT</version>
+      <type>jar</type>
     </dependency>
 
     <!-- celements dependencies -->
