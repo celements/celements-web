@@ -172,7 +172,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-wiki-manager-web</artifactId>
-      <version>6.0</version>
+      <version>6.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
