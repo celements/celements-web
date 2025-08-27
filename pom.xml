@@ -231,7 +231,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>6.1</version>
+      <version>6.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
