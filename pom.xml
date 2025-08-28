@@ -246,7 +246,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.13</version>
+      <version>6.14-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
