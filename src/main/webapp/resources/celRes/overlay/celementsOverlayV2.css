@@ -53,6 +53,7 @@ html, body {
   background: white;
   position: relative;
   width:800px;
+  height: calc(100vh - 115px);
 }
 
 body.celementsmenubarvisible .main.layoutsubsection {
@@ -62,6 +63,7 @@ body.celementsmenubarvisible .main.layoutsubsection {
 .generalOverlay .layoutsubsection .cel_overlaybody {
   position: relative;
   width: 100%;
+  height: 100%;
   overflow-y : auto;
   overflow-x : hidden;
 }
