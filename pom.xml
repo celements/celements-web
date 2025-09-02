@@ -357,6 +357,41 @@
     </dependency>
 
   </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <!-- Align ALL Spring 5.3.x artifacts -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>5.3.39</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+  
+      <!-- Align ALL Jackson 2.x artifacts (core, databind, annotations, dataformats, datatype-*) -->
+      <dependency>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>2.16.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+  
+      <!-- Force the newer JTA for old Hibernate transitive -->
+      <dependency>
+        <groupId>javax.transaction</groupId>
+        <artifactId>jta</artifactId>
+        <version>1.1</version>
+      </dependency>
+  
+      <!-- Resolve mixed versions of celements-model (6.1 vs 6.6) -->
+      <dependency>
+        <groupId>com.celements</groupId>
+        <artifactId>celements-model</artifactId>
+        <version>6.6</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <build>
     <finalName>celements-web</finalName>
     <plugins>
@@ -405,6 +440,25 @@
       <plugin>
         <groupId>com.jarslab.maven</groupId>
         <artifactId>babel-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.4.1</version>
+        <executions>
+          <execution>
+            <id>enforce-dependency-convergence</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <DependencyConvergence />
+              </rules>
+              <fail>true</fail>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
