@@ -244,7 +244,7 @@ let overlaySlideIsDebug = false;
   const celanimOverlay_getOrCreateStartImgElem = function(overlayContentId, hsConfig) {
     const overlayContentElem = celanimOverlay_getOrCreateContentElem(overlayContentId,
         hsConfig);
-    const overlayStartImg = overlayContentElem.down('img.highslide-image');
+    let overlayStartImg = overlayContentElem.down('img.highslide-image');
     if (!overlayStartImg) {
       overlayStartImg = new Element('img', {
         'class' : 'highslide-image'
