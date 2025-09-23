@@ -182,14 +182,16 @@ export class CelOverlay {
     document.removeEventListener('keydown', this._escapeHandlerBind);
   }
 
-  open() {
+  open(useJsResizer = false) {
     if (!this._isOpen) {
       this._isOpen = true;
       this._activeBeforeElem = document.activeElement;
       this.resetContent();
       this.show();
       this._registerEscapeListener();
-      this._getOverlayResizer.bind(this).delay(0.5);
+      if (useJsResizer) {
+        this._getOverlayResizer.bind(this).delay(0.5);
+      }
     } else {
       console.warn('skip "open" because overlay is already opened. Call "close" first');
     }
