@@ -1,5 +1,5 @@
-import { CelData, celDataRegistry } from './cel-data.mjs?version=20241209';
-import CelDataRenderer from './cel-data-renderer.mjs?version=20241209';
+import { CelData, celDataRegistry } from './cel-data.mjs?version=20250901';
+import CelDataRenderer from './cel-data-renderer.mjs?version=20250901';
 
 export class CelDataFor extends CelData {
   #renderer;

@@ -130,7 +130,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>6.5-SNAPSHOT</version>
+      <version>6.6-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
