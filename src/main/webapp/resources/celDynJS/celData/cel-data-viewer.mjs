@@ -1,8 +1,8 @@
 import pick from '/file/resource/deps/lodash/pick.js';
 import uniq from '/file/resource/deps/lodash/uniq.js';
-import CelDataRenderer from './cel-data-renderer.mjs?version=20241209';
-import CelDataLoader from './cel-data-loader.mjs?version=20240425';
-import { celDataRegistry } from './cel-data.mjs?version=20241209';
+import CelDataRenderer from './cel-data-renderer.mjs?version=20250901';
+import CelDataLoader from './cel-data-loader.mjs?version=20250901';
+import { celDataRegistry } from './cel-data.mjs?version=20250901';
 
 export class Config {
   tagName;
@@ -109,7 +109,7 @@ export class CelDataViewerElement extends HTMLElement {
   set page(value) {
     value = Math.max(value, 1);
     if ((this.mode !== 'paging') && value < this.page) {
-      console.error(this.mode, 'doesnt support page decrease');
+      console.error(this.tagName, this.mode, 'doesnt support page decrease');
     } else if (this.page !== value) {
       this.setAttribute('page', value);
     }
@@ -121,7 +121,7 @@ export class CelDataViewerElement extends HTMLElement {
     try {
       params = JSON.parse(json);
     } catch (error) {
-      console.warn("failed parsing params", json, error);
+      console.warn(this.tagName, "failed parsing params", json, error);
     }
     return this.#config.createParams(params) ?? params;
   }
@@ -148,6 +148,7 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   #init(page) {
+    console.info(this.tagName, 'init', { page });
     const template = document.querySelector(this.template);
     this.#loader = new CelDataLoader({
       url: this.origin + this.path,
@@ -180,7 +181,7 @@ export class CelDataViewerElement extends HTMLElement {
     trigger.removeEventListener('click', this.#loadmoreHandler);
     trigger.addEventListener('click', this.#loadmoreHandler);
     trigger.disabled = true;
-    console.debug('registered loadmore trigger', trigger, this);
+    console.debug(this.tagName, 'registered loadmore trigger', trigger, this);
   }
 
   #loadmoreHandler = (event) => {
@@ -205,7 +206,7 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    console.debug('attributeChangedCallback', name, oldValue, newValue);
+    console.debug(this.tagName, 'attributeChangedCallback', name, oldValue, newValue);
     if (this.isConnected && this.loader && (oldValue !== newValue)) {
       if (name === 'page') {
         this.render();
@@ -221,9 +222,14 @@ export class CelDataViewerElement extends HTMLElement {
     if (this.page === this.#currentRenderState.page) {
       return this.#currentRenderState.promise;
     } else {
+      const id = (this.#currentRenderState?.id ?? 0) + 1;
       const pagePromise = this.loader?.getPage(this.page, this.size, this.params);
-      const renderPromise = this.#renderResults(pagePromise);
+      console.debug(this.tagName, 'schedule render', { id, page: this.page });
+      const renderPromise = (this.#currentRenderState.promise ?? Promise.resolve())
+        .catch(() => {}) // ignore previous errors
+        .then(() => this.#triggerRender(id, pagePromise)); // chain rendering
       this.#currentRenderState = Object.freeze({
+        id,
         page: this.page,
         promise: renderPromise,
         loadPromise: pagePromise,
@@ -235,7 +241,8 @@ export class CelDataViewerElement extends HTMLElement {
     }
   }
 
-  #renderResults(pagePromise) {
+  #triggerRender(id, pagePromise) {
+    console.debug(this.tagName, 'trigger render', { id });
     const resultsPromise = pagePromise.then(data => this.#config.extractResults(data) ?? []);
     if (this.mode === 'paging') {
       return this.#renderer?.replace(resultsPromise);
@@ -247,11 +254,16 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   async #handleMetaData(pagePromise) {
-    this.#loadmoreTriggers.forEach(trigger => trigger.disabled = true);
+    this.#setMetaData(null, false);
     const data = await pagePromise;
-    this.setAttribute('count', this.#config.extractCount(data) ?? '');
-    const hasMore = !!this.#config.extractHasMore(data);
-    this.toggleAttribute('has-more', hasMore);
+    const count = this.#config.extractCount(data);
+    const hasMore = this.#config.extractHasMore(data);
+    this.#setMetaData(count, hasMore);
+  }
+
+  #setMetaData(count, hasMore) {
+    this.setAttribute('count', count ?? '');
+    this.toggleAttribute('has-more', !!hasMore);
     this.#loadmoreTriggers.forEach(trigger => trigger.disabled = !hasMore);
   }
 
@@ -262,14 +274,14 @@ export class CelDataViewerElement extends HTMLElement {
   }
 
   async #resetRenderState(page = 1) {
-    console.debug('resetRenderState', page);
+    console.debug(this.tagName, 'resetRenderState', page);
     try {
       this.loader?.abort();
       await this.#currentRenderState.promise;
     } catch (error) {
-      console.error('current render failed', error);
+      console.error(this.tagName, 'current render failed', error);
     }
-    this.#currentRenderState = {};
+    this.#currentRenderState = Object.freeze({ ...this.#currentRenderState, page: null });
     this.#renderer?.remove();
     this.setAttribute('page', page);
     return this.render();

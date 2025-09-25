@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-import './cel-data.mjs?version=20241209';
+import './cel-data.mjs?version=20250901';
 
 export default class CelDataRenderer {
 
@@ -33,6 +33,7 @@ export default class CelDataRenderer {
     creating: 'cel-data-creating', // toggled on each created entry over an animation frame
     removing: 'cel-data-removing' // toggled on each removed entry over an animation frame
   });
+  #preInserter = (entry, data) => undefined;
 
   constructor(htmlElem, template) {
     if (htmlElem == null) {
@@ -87,8 +88,21 @@ export default class CelDataRenderer {
   }
 
   /**
+   * @param {function} preInserter - optional, params: `(entry, data)`
+   *        called before the entry is inserted into the DOM.
+   *        may call `entry.remove()` to prevent DOM insertion.
+   */
+  withPreInsert(preInserter = (entry, data) => undefined) {
+    if (typeof preInserter !== 'function') {
+      throw new TypeError('preInserter must be a function');
+    }
+    this.#preInserter = preInserter;
+    return this;
+  }
+
+  /**
    * @param {Promise} dataPromise - the data to append to the htmlElem
-   * @param {function} preInserter - optional, see `render`
+   * @param {function} preInserter - optional, see `withPreInsert`
    * @returns {Promise} - the entries that were inserted
    */
   async append(dataPromise, preInserter) {
@@ -97,7 +111,7 @@ export default class CelDataRenderer {
 
   /**
    * @param {Promise} dataPromise - the data to prepend to the htmlElem
-   * @param {function} preInserter - optional, see `render`
+   * @param {function} preInserter - optional, see `withPreInsert`
    * @returns {Promise} - the entries that were inserted
    */
   async prepend(dataPromise, preInserter) {
@@ -107,7 +121,7 @@ export default class CelDataRenderer {
   /**
    * @param {Promise} dataPromise - the data to replace the htmlElem content
    * @param {string} removeSelector - optional, the selector to remove the old entries
-   * @param {function} preInserter - optional, see `render`
+   * @param {function} preInserter - optional, see `withPreInsert`
    * @returns {Promise} - the entries that were inserted
    */
   async replace(dataPromise, removeSelector = '*', preInserter) {
@@ -121,9 +135,7 @@ export default class CelDataRenderer {
 
   /**
    * @param {Promise} dataPromise - the data to add to the htmlElem content
-   * @param {function} preInserter - optional, params: `(entry, data)`
-   *        called before the entry is inserted into the DOM.
-   *        may call `entry.remove()` to prevent DOM insertion.
+   * @param {function} preInserter - optional, see `withPreInsert`
    * @param {function} inserter - optional, params: `(elem, fragment)`
    *        the function which inserts the entries into the DOM
    * @returns {Promise} - array of inserted entries
@@ -160,7 +172,7 @@ export default class CelDataRenderer {
   /**
    * creates entries from the template, inserts them into the DOM and dispatches events
    */
-  #insert(data, preInserter = (entry, data) => undefined, inserter = HTMLElement.prototype.append) {
+  #insert(data, preInserter = this.#preInserter, inserter = HTMLElement.prototype.append) {
     if (typeof preInserter !== 'function') {
       throw new TypeError('preInserter must be a function');
     }
