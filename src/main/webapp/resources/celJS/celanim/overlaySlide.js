@@ -59,7 +59,7 @@ let overlaySlideIsDebug = false;
     });
   };
 
-  const loadOverlaySlide = function() {
+  const loadOverlaySlide = () => {
     $(document.body).fire('celanim_overlay:beforeLoadOverlaySlide-Link');
     registerCelanimOverlayLinkListeners(document.body);
     $(document.body).fire('celanim_overlay:beforeLoadOverlaySlide-Image');
@@ -72,7 +72,7 @@ let overlaySlideIsDebug = false;
     });
   };
   
-  const celanimOverlay_getDimensionsFromElem = function(elem) {
+  const celanimOverlay_getDimensionsFromElem = (elem) => {
     if (elem && elem.id && (elem.id != '')) {
       const elemSplits = elem.id.split(':');
       const overlayWidth = elemSplits[4];
@@ -86,7 +86,7 @@ let overlaySlideIsDebug = false;
   };
   
   const celanimOverlay_openConfig = new Hash();
-  const celanimOverlay_addOpenConfig = function(elemId, openConfig) {
+  const celanimOverlay_addOpenConfig = (elemId, openConfig) => {
     if ($(elemId)) {
       const openConfigObj = $H(celanimOverlay_getDimensionsFromElem($(elemId))
         ).merge({ id : elemId }).merge(openConfig).toObject();
@@ -104,21 +104,17 @@ let overlaySlideIsDebug = false;
         $(elemId).stopObserving('celanim_overlay:openOverlay', celanimOverlay_OpenInOverlay);
         $(elemId).observe('celanim_overlay:openOverlay', celanimOverlay_OpenInOverlay);
       } else {
-        if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-          console.warn('Skipping add open config because one of the required config fields'
-             +' (src, width, height) is missing for id "' + elemId + '".', openConfigObj);
-        }
+        console.warn('Skipping add open config because one of the required config fields'
+           +' (src, width, height) is missing for id "' + elemId + '".', openConfigObj);
       }
     } else {
-      if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-        console.warn('Skipping add open config because no element with id "' + elemId
-            + '" found.');
-      }
+      console.warn('Skipping add open config because no element with id "' + elemId
+          + '" found.');
     }
   };
   
-  const celanimOverlay_AfterExpandHandler = function(hsExpander) {
-    $$('.highslide-html').each(function(overlayHTMLDiv) {
+  const celanimOverlay_AfterExpandHandler = (hsExpander) => {
+    document.querySelectorAll('.highslide-html').forEach((overlayHTMLDiv) => {
       //FIX width of overlayWrapper after opening second time.
       //IMPORTANT: do not set height similarly, because sometimes it is only 16px on first opening.
       const overlayHTMLDiv2 = overlayHTMLDiv.down('div');
@@ -130,7 +126,7 @@ let overlaySlideIsDebug = false;
           'class' : 'closebutton',
           'title' : 'Close'
         });
-        closeButtonElem.observe('click', function() {
+        closeButtonElem.addEventListener('click', () => {
           hs.close(this);
         });
         overlayHTMLDiv.insert({
@@ -150,23 +146,21 @@ let overlaySlideIsDebug = false;
       }
     });
     $(hsExpander.thumb).fire('celanim_overlay:afterExpand', hsExpander);
-    $$('body')[0].fire('celanim_overlay:afterExpandGeneral', hsExpander);
+    $(document.body).fire('celanim_overlay:afterExpandGeneral', hsExpander);
   };
   
-  const celanimOverlay_BeforeExpandHandler = function(hsExpander) {
-    if (overlaySlideIsDebug && (typeof console != 'undefined')
-        && (typeof console.debug != 'undefined')) {
-      console.debug('celanimOverlay_BeforeExpandHandler: ', hsExpander.thumb, ', ',
-          hsExpander);
+  const celanimOverlay_BeforeExpandHandler = (hsExpander) => {
+    if (overlaySlideIsDebug) {
+      console.debug('celanimOverlay_BeforeExpandHandler: ', hsExpander.thumb, ', ', hsExpander);
     }
-    $$('.highslide-html').each(function(overlayHTMLDiv) {
+    document.querySelectorAll('.highslide-html').forEach((overlayHTMLDiv) => {
       const overlayHTMLDiv2 = overlayHTMLDiv.down('div');
       const overlayWrapper = overlayHTMLDiv2.up('.highslide-wrapper');
       overlayWrapper.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
       overlayHTMLDiv.setStyle({ 'width' : overlayHTMLDiv2.getWidth() + 'px' });
       //fix height of internal divs
       const imgInOverlay = overlayHTMLDiv.down('img.highslide-image');
-      overlayHTMLDiv.select('div').each(function(divElem) {
+      overlayHTMLDiv.querySelectorAll('div').forEach((divElem) => {
         if (!divElem.hasClassName('highslide-header')) {
           divElem.setStyle({'height' : '100%'});
         }
@@ -179,17 +173,16 @@ let overlaySlideIsDebug = false;
       }
     });
     $(hsExpander.thumb).fire('celanim_overlay:beforeExpand', hsExpander);
-    $$('body')[0].fire('celanim_overlay:beforeExpandGeneral', hsExpander);
+    $(document.body).fire('celanim_overlay:beforeExpandGeneral', hsExpander);
   };
   
-  const celanimOverlay_AfterCloseHandler = function(hsExpander) {
+  const celanimOverlay_AfterCloseHandler = (hsExpander) => {
     $(hsExpander.thumb).fire('celanim_overlay:afterClose', hsExpander);
-    $$('body')[0].fire('celanim_overlay:afterCloseGeneral', hsExpander);
+    $(document.body).fire('celanim_overlay:afterCloseGeneral', hsExpander);
   };
   
-  const celanimOverlay_OpenInOverlay = function(event) {
-    if (overlaySlideIsDebug && (typeof console != 'undefined')
-        && (typeof console.debug != 'undefined')) {
+  const celanimOverlay_OpenInOverlay = (event) => {
+    if (overlaySlideIsDebug) {
       console.debug('celanimOverlay_OpenInOverlay: ', this, ', ', event);
     }
     const openConfig = celanimOverlay_openConfig.get(this.id);
@@ -223,27 +216,23 @@ let overlaySlideIsDebug = false;
       hs.htmlExpand(this, hsConfig.toObject());
       event.stop();
     } else {
-      if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-        console.warn('Skipping open-in-overlay event, because no open config for elemId"'
-            + this.id + '" found.');
-      }
+      console.warn('Skipping open-in-overlay event, because no open config for elemId"' + this.id
+        + '" found.');
     }
   };
   
-  const celanimOverlay_HandleImageContent = function(hsConfig) {
+  const celanimOverlay_HandleImageContent = (hsConfig) => {
     hsConfig.unset('objectType');
     const overlayContentId = 'celanim_overlay_contentId_image_' + hsConfig.get('id');
     hsConfig.set('contentId', overlayContentId);
-    const overlayStartImg = celanimOverlay_getOrCreateStartImgElem(overlayContentId,
-        hsConfig);
+    const overlayStartImg = celanimOverlay_getOrCreateStartImgElem(overlayContentId, hsConfig);
     overlayStartImg.src = hsConfig.get('src');
     hsConfig.unset('src');
     return hsConfig;
   };
   
-  const celanimOverlay_getOrCreateStartImgElem = function(overlayContentId, hsConfig) {
-    const overlayContentElem = celanimOverlay_getOrCreateContentElem(overlayContentId,
-        hsConfig);
+  const celanimOverlay_getOrCreateStartImgElem = (overlayContentId, hsConfig) => {
+    const overlayContentElem = celanimOverlay_getOrCreateContentElem(overlayContentId, hsConfig);
     let overlayStartImg = overlayContentElem.down('img.highslide-image');
     if (!overlayStartImg) {
       overlayStartImg = new Element('img', {
@@ -254,7 +243,7 @@ let overlaySlideIsDebug = false;
     return overlayStartImg;
   };
   
-  const celanimOverlay_getOrCreateContentElem = function(overlayContentId, hsConfig) {
+  const celanimOverlay_getOrCreateContentElem = (overlayContentId, hsConfig) => {
     let overlayContentElem = $(overlayContentId);
     if (!overlayContentElem) {
       overlayContentElem = new Element('div', {
@@ -263,7 +252,7 @@ let overlaySlideIsDebug = false;
         'width' : hsConfig.get('width') + 'px',
         'height' : hsConfig.get('height') + 'px'
       }).hide();
-      $$('body')[0].insert(overlayContentElem);
+      $(document.body).insert(overlayContentElem);
     }
     return overlayContentElem;
   };
