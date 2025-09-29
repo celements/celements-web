@@ -127,7 +127,7 @@ let overlaySlideIsDebug = false;
           'title' : 'Close'
         });
         closeButtonElem.addEventListener('click', () => {
-          hs.close(this);
+          hs.close(closeButtonElem);
         });
         overlayHTMLDiv.insert({
           'after' : closeButtonElem
