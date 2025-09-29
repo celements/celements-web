@@ -181,7 +181,7 @@ let overlaySlideIsDebug = false;
     $(document.body).fire('celanim_overlay:afterCloseGeneral', hsExpander);
   };
   
-  const celanimOverlay_OpenInOverlay = (event) => {
+  const celanimOverlay_OpenInOverlay = function(event)  {
     if (overlaySlideIsDebug) {
       console.debug('celanimOverlay_OpenInOverlay: ', this, ', ', event);
     }
