@@ -99,7 +99,7 @@
   </filter>
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
-    <url-pattern>/api/*</url-pattern>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 
   <!-- The encoding filter MUST always be the first one, as setting the encoding does not work after accessing the request data. -->
