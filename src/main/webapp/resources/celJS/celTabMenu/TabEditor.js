@@ -434,7 +434,7 @@ TE.prototype = {
 
   initCloseButton : function() {
     const _me = this;
-    const closeClickHandler = function() {
+    const closeClickHandler = () => {
       _me.checkUnsavedChanges(function(_, jsonResponses, failed) {
         try {
           if (failed) {
@@ -447,6 +447,7 @@ TE.prototype = {
         }
         if (!failed) {
           window.onbeforeunload = null;
+          console.log('window close?', _me._isWindowCloseOnClose());
           if (_me._isWindowCloseOnClose()) {
             window.close();
           } else {
