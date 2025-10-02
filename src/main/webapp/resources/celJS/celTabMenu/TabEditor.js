@@ -435,6 +435,7 @@ TE.prototype = {
   initCloseButton : function() {
     const _me = this;
     const closeClickHandler = () => {
+      console.log('closeClickHandler start');
       _me.checkUnsavedChanges(function(_, jsonResponses, failed) {
         try {
           if (failed) {
@@ -457,6 +458,7 @@ TE.prototype = {
           console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
         }
       });
+      console.log('closeClickHandler ende');
     };
     const buttonLabel = _me.tabMenuConfig.closeButtonLabel || 'Close';
     _me.addActionButton(buttonLabel, closeClickHandler);
@@ -1170,11 +1172,11 @@ TE.prototype = {
    execCallback = execCallback || function() {};
    execCancelCallback = execCancelCallback || function() {};
    if (_me.isDirty()) {
-   var saveBeforeCloseQuestion = _me._getModalDialog();
-     saveBeforeCloseQuestion.setHeader(_me.tabMenuConfig.savingDialogWarningHeader);
-     saveBeforeCloseQuestion.setBody(_me.tabMenuConfig.savingDialogMessage);
-     saveBeforeCloseQuestion.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
-     saveBeforeCloseQuestion.cfg.queueProperty("buttons",
+     const saveBeforeCloseQuestion = _me._getModalDialog();
+       saveBeforeCloseQuestion.setHeader(_me.tabMenuConfig.savingDialogWarningHeader);
+       saveBeforeCloseQuestion.setBody(_me.tabMenuConfig.savingDialogMessage);
+       saveBeforeCloseQuestion.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
+       saveBeforeCloseQuestion.cfg.queueProperty("buttons",
          [ { text: _me.tabMenuConfig.savingDialogButtonDoNotSave, handler:function() {
              window.onbeforeunload = null;
              this.hide();
@@ -1198,9 +1200,10 @@ TE.prototype = {
                  _dialog.render();
                }, isDefault:true }
              ]);
-     saveBeforeCloseQuestion.render();
-     saveBeforeCloseQuestion.show();
+       saveBeforeCloseQuestion.render();
+       saveBeforeCloseQuestion.show();
    } else {
+     console.log('checkUnsavedChanges successfully finishing');
      execCallback();
    }
  },
