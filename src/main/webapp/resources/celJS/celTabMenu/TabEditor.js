@@ -56,6 +56,7 @@ TE.prototype = {
   _log : undefined,
   _tabLoaderElem : undefined,
   _loadingTabId : undefined,
+  _urlParams : undefined,
 
   _init : function() {
     Object.assign(this, window.CELEMENTS.mixins.Observable);
@@ -79,6 +80,7 @@ TE.prototype = {
     _me._loading = new CELEMENTS.LoadingIndicator();
     _me._editorReadyDisplayNowBind = _me._editorReadyDisplayNow.bind(_me);
     _me._tabReadyDisplayNowBind = _me._tabReadyDisplayNow.bind(_me);
+    _me._urlParams = new URLSearchParams(window.location.search);
   },
 
   isValidFormId : function(formId) {
@@ -408,8 +410,8 @@ TE.prototype = {
 
   initSaveButton : function() {
     const _me = this;
-    var saveClickHandler = function() {
-      _me.saveAndContinue(function(transport, jsonResponses, failed) {
+    const saveClickHandler = function() {
+      _me.saveAndContinue(function(_, jsonResponses, failed) {
         if (!failed) {
           //remove template in url query after creating document in inline mode
           try {
@@ -426,14 +428,14 @@ TE.prototype = {
         }
       });
     };
-    var buttonLabel = _me.tabMenuConfig.saveButtonLabel || 'Save';
+    const buttonLabel = _me.tabMenuConfig.saveButtonLabel || 'Save';
     _me.addActionButton(buttonLabel, saveClickHandler);
   },
 
   initCloseButton : function() {
     const _me = this;
-    var closeClickHandler = function() {
-      _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
+    const closeClickHandler = function() {
+      _me.checkUnsavedChanges(function(_, jsonResponses, failed) {
         try {
           if (failed) {
             _me.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
@@ -445,24 +447,31 @@ TE.prototype = {
         }
         if (!failed) {
           window.onbeforeunload = null;
-          window.location.href = _me._getCancelURL();
+          if (_me._isWindowCloseOnClose()) {
+            window.close();
+          } else {
+            window.location.href = _me._getCancelURL();
+          }
         } else {
           console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
         }
       });
     };
-    var buttonLabel = _me.tabMenuConfig.closeButtonLabel || 'Close';
+    const buttonLabel = _me.tabMenuConfig.closeButtonLabel || 'Close';
     _me.addActionButton(buttonLabel, closeClickHandler);
   },
 
+  _isWindowCloseOnClose : () => this._urlParams.has('windowClose', 'true'),
+
   _getCancelURL : function() {
     const _me = this;
-    var redirectValue = '';
-    if ($$('input.celEditorRedirect').length > 0) {
-      redirectValue = $F($$('input.celEditorRedirect')[0]);
+    let redirectValue = '';
+    const editorRedirectInput = document.querySelectorAll('input.celEditorRedirect');
+    if (editorRedirectInput.length > 0) {
+      redirectValue = $F(editorRedirectInput[0]);
     } else {
-      var firstFormName = _me.getFirstFormWithId() || 0;
-      var firstForm = document.forms[firstFormName];
+      const firstFormName = _me.getFirstFormWithId() || 0;
+      const firstForm = document.forms[firstFormName];
       if (firstForm && firstForm['xredirect']) {
         if (firstForm['xredirect'][0]) {
           redirectValue = $F(firstForm['xredirect'][0]);
@@ -471,7 +480,7 @@ TE.prototype = {
         }
       }
     }
-    var redirectBaseValue = window.location.pathname.replace(/\/edit\/|\/inline\//,
+    const redirectBaseValue = window.location.pathname.replace(/\/edit\/|\/inline\//,
         '/cancel/');
     redirectValue = redirectBaseValue + '?xredirect=' + redirectValue;
     console.log('_getCancelURL: return redirectValue ', redirectValue);
@@ -918,7 +927,7 @@ TE.prototype = {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
-    _me.saveAllFormsAjax(function(transport) {
+    _me.saveAllFormsAjax(function(_) {
       window.onbeforeunload = null;
       document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
@@ -1144,7 +1153,7 @@ TE.prototype = {
 
  changeEditLanguage : function(newEditLanguage, execCancelCallback) {
    const _me = this;
-   _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
+   _me.checkUnsavedChanges(function(_, jsonResponses, failed) {
      var successful = (typeof failed === 'undefined') || !failed;
      if (successful) {
        window.location.href = '?language=' + newEditLanguage + '&'
@@ -1229,7 +1238,7 @@ TE.prototype = {
  _handleSaveAjaxResponse : function(formId, transport, jsonResponses) {
    if (transport.responseText.isJSON()) {
      console.debug('_handleSaveAjaxResponse with json result: ', transport.responseText);
-     var jsonResult = transport.responseText.evalJSON();
+     const jsonResult = transport.responseText.evalJSON();
      jsonResponses.set(formId, jsonResult);
      if (jsonResult.successful) {
        return true;
