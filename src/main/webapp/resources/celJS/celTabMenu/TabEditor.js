@@ -467,7 +467,11 @@ TE.prototype = {
     _me.addActionButton(buttonLabel, closeClickHandler);
   },
 
-  _isWindowCloseOnClose : () => this._urlParams.has('windowClose', 'true'),
+  _isWindowCloseOnClose : () => {
+    console.log('_isWindowCloseOnClose this', this);
+    console.log('_isWindowCloseOnClose urlParams', this._urlParams);
+    return this._urlParams.has('windowClose', 'true');
+  },
 
   _getCancelURL : function() {
     const _me = this;
@@ -1206,8 +1210,11 @@ TE.prototype = {
        saveBeforeCloseQuestion.render();
        saveBeforeCloseQuestion.show();
    } else {
-     console.log('checkUnsavedChanges successfully finishing');
-     execCallback();
+     try {
+       execCallback();
+     } catch(exp) {
+       console.error('checkUnsavedChanges execCallback failed', exp);
+     }
    }
  },
 
