@@ -462,8 +462,6 @@ TE.prototype = {
   },
 
   _isWindowCloseOnClose : function() {
-    console.log('_isWindowCloseOnClose this', this);
-    console.log('_isWindowCloseOnClose urlParams', this._urlParams);
     return this._urlParams.has('windowClose', 'true');
   },
 
