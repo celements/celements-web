@@ -435,9 +435,7 @@ TE.prototype = {
   initCloseButton : function() {
     const _me = this;
     const closeClickHandler = () => {
-      console.log('closeClickHandler start');
       _me.checkUnsavedChanges(function(_, jsonResponses, failed) {
-        console.log('start exec-callback for checkUnsavedChanges');
         try {
           if (failed) {
             _me.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
@@ -447,10 +445,8 @@ TE.prototype = {
         } catch (exp) {
           console.error('Saved-listener failed.', exp);
         }
-        console.log('after saved-listener');
         if (!failed) {
           window.onbeforeunload = null;
-          console.log('window close?', _me._isWindowCloseOnClose());
           if (_me._isWindowCloseOnClose()) {
             window.close();
           } else {
@@ -459,9 +455,7 @@ TE.prototype = {
         } else {
           console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
         }
-        console.log('ende closeClickHandler');
       });
-      console.log('ende exec-callback for checkUnsavedChanges');
     };
     const buttonLabel = _me.tabMenuConfig.closeButtonLabel || 'Close';
     _me.addActionButton(buttonLabel, closeClickHandler);
