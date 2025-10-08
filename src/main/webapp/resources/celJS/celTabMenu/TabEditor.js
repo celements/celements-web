@@ -468,9 +468,9 @@ TE.prototype = {
   _getCancelURL : function() {
     const _me = this;
     let redirectValue = '';
-    const editorRedirectInput = document.querySelectorAll('input.celEditorRedirect');
-    if (editorRedirectInput.length > 0) {
-      redirectValue = $F(editorRedirectInput[0]);
+    const editorRedirectInput = document.querySelector('input.celEditorRedirect');
+    if (editorRedirectInput) {
+      redirectValue = $F(editorRedirectInput);
     } else {
       const firstFormName = _me.getFirstFormWithId() || 0;
       const firstForm = document.forms[firstFormName];
