@@ -1204,7 +1204,7 @@ TE.prototype = {
    } else {
      try {
        execCallback();
-     } catch(exp) {
+     } catch (exp) {
        console.error('checkUnsavedChanges execCallback failed', exp);
      }
    }
