@@ -91,6 +91,7 @@ $celementsweb.addExtJSfileOnce(':celJS/yui/animation/animation-min.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/navigation/reorderMenuItems.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/celpresentation/reorder.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/celpresentation/sitemap.js', 'file')
+<cel-lazy-load-js load-mode="defer" src="$!services.celementsweb.getSkinFile(':celDynJS/cel-editor/editor-window-helper.mjs', 'file')"></cel-lazy-load-js>
 #set($structNav = $celementsweb.createNavigation())
 $structNav.setMenuPart("")
 $structNav.setShowAll(true)
