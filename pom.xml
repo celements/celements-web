@@ -271,12 +271,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-security</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-keycloak</artifactId>
-      <version>6.1-SNAPSHOT</version>
+      <version>6.2-SNAPSHOT</version>
     </dependency>
 
 
