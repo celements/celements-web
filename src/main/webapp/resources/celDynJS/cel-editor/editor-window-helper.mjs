@@ -3,6 +3,7 @@ class EditorWindow {
   
   constructor() {
     this.#registerUnloadMessage();
+    this.#receivingChildEvent();
   }
   
   #registerUnloadMessage() {
@@ -25,7 +26,7 @@ class EditorWindow {
     this.#sendMessageForEvent('BEFORE_CLOSE');
   }
     
-  receivingChildEvent() {
+  #receivingChildEvent() {
     window.addEventListener('message', (event) => {
       console.debug('Received message from child:', event);
       if (event.origin !== window.location.origin) return;
