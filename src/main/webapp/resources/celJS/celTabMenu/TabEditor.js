@@ -336,7 +336,8 @@ TE.prototype = {
   checkBeforeUnload : function() {
   const _me = this;
     if (_me.isDirty() && !_me.tabMenuConfig.supressBeforeUnload) {
-      if (_me.tabMenuConfig && _me.tabMenuConfig.unsavedChangesOnCloseMessage && (_me.tabMenuConfig.unsavedChangesOnCloseMessage != '')) {
+      if (_me.tabMenuConfig && _me.tabMenuConfig.unsavedChangesOnCloseMessage
+        && (_me.tabMenuConfig.unsavedChangesOnCloseMessage != '')) {
         return _me.tabMenuConfig.unsavedChangesOnCloseMessage;
       }
       return "WARNING: You have currently unsafed changes. Those changes will be lost if you click OK.";
@@ -441,6 +442,9 @@ TE.prototype = {
             _me.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
           } else {
             _me.celFire('tabedit:successfulSaved', { 'jsonResponses' : jsonResponses });
+            if (window.celEditorWindow) {
+              window.celEditorWindow.sendAfterUpdate();
+            }
           }
         } catch (exp) {
           console.error('Saved-listener failed.', exp);

@@ -21,55 +21,58 @@
 (function(window, undefined) {
   "use strict";
 
-  var checkReorderModeBrowseAway = function(theLink) {
-    var parentDiv = theLink.up('ul').up();
-    var isInReorderMode = parentDiv.hasClassName('reorderMode');
+  const checkReorderModeBrowseAway = function(theLink) {
+    const parentDiv = theLink.up('ul').up();
+    const isInReorderMode = parentDiv.hasClassName('reorderMode');
     return (!isInReorderMode || confirm('Sie sind am neu ordnen der Knoten.'
       + ' Nicht gespeicherte Änderungen gehen verloren.'));
   };
 
-  var checkIsCreateTrans = function(theLink) {
-    var langName = theLink.innerHTML;
+  const checkIsCreateTrans = function(theLink) {
+    const langName = theLink.innerHTML;
     return (!theLink.hasClassName('transNotExists')
       || confirm('Möchten Sie wirklich eine Übersetzung für \'' + langName
         + '\' erstellen?'));
   };
 
-  var pageLinkClickHandler = function(event) {
+  const pageLinkClickHandler = function(event) {
     event.stop();
-    var theLink = this;
-    var linkUrl = theLink.href;
+    const theLink = this;
+    let linkUrl = theLink.href;
     if (!theLink.up('.docLangs')) {
       window.open(linkUrl);
     } else if (checkIsCreateTrans(theLink) && checkReorderModeBrowseAway(theLink)) {
-      var xredirect = 'xredirect=' + encodeURIComponent(
+      const xredirect = 'xredirect=' + encodeURIComponent(
         window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
       if (!linkUrl.match(/\?/)) {
         linkUrl += '?' + xredirect;
       } else {
         linkUrl += '&' + xredirect;
       }
-      window.location.href = linkUrl;
+      if (theLink.getAttribute('target') === '_blank') {
+        window.open(linkUrl);
+      } else {
+        window.location.href = linkUrl;
+      }
     }
   };
 
-  var registerOnSiteEditLinks = function() {
+  const registerOnSiteEditLinks = () => {
     $$('.presentation_order_edit ul li a').each(function(pageLink) {
       pageLink.observe('click', pageLinkClickHandler);
     });
   };
 
-  $j(document).ready(registerOnSiteEditLinks);
+  document.addEventListener('DOMContentLoaded', () => registerOnSiteEditLinks());
 
   /****
    * Space selector
    */
-  var spaceSelectorChangeHandler = function(event) {
+  const spaceSelectorChangeHandler = function(event) {
     window.location.href = this.value;
   };
 
-  $j(document).ready(function() {
-    $('spaceSelector').observe('change', spaceSelectorChangeHandler);
-  });
+  document.addEventListener('DOMContentLoaded', () => 
+    $('spaceSelector').observe('change', spaceSelectorChangeHandler));
 
 })(window);
