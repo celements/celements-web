@@ -241,12 +241,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>6.6</version>
+      <version>6.7-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.14</version>
+      <version>6.15-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -271,12 +271,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-security</artifactId>
-      <version>6.1</version>
+      <version>6.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-keycloak</artifactId>
-      <version>6.1</version>
+      <version>6.2-SNAPSHOT</version>
     </dependency>
 
 
