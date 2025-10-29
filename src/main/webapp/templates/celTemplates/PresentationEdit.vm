@@ -71,8 +71,8 @@ $structNav.setMenuSpace($navObj.getProperty('menu_space').getValue())
 $structNav.addUlCSSClass("cel_presentation_reorder")
 $structNav.setCMcssClass("cel_cm_presentationeditor_nodes")
 $structNav.includeNavigation()
-    </div>#presentation_order_edit
-  </div>#editblock
+    </div>##presentation_order_edit
+  </div>##editblock
   <div class="cel_presentation_addslide editblock">
     #set($href = $doc.getURL('view', 'xpage=overlay&conf=AddPage'))
     #set($href = "$!{href}&space=$!{menuSpace}&language=$!{default_language}")
