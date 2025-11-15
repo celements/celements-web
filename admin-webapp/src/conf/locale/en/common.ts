@@ -1,0 +1,31 @@
+export default {
+  greeting: 'Welcome',
+  welcome: 'It’s great that you’re remaining part of  ',
+  welcome_highlight: '#TeamHelvetia',
+  work_in_progress:
+    'This page is currently under construction. New content is being added regularly – stay tuned!',
+  slogan: 'Once #TeamHelvetia, always #TeamHelvetia.',
+  intro_greeting: 'Dear Alumni',
+  intro1:
+    'Even if your active role at Helvetia is now behind you, we greatly look forward to staying in touch with you in future. This platform enables you to engage at both a professional and a social level.',
+  intro2:
+    'You’ll receive exclusive offers, relevant insights and special actions tailored to you. At the same time, you can extend your network, stay in touch with other alumni and exchange ideas.',
+  intro3: 'Enjoy exploring!',
+  intro_goodbye: 'Best regards,',
+  intro_names: 'Michèle and Rahel',
+  home: 'Alumni',
+  news: 'News',
+  events: 'Events',
+  benefits: 'Benefits',
+  career: 'Career',
+  contact: 'Contact',
+  archive: 'Archive',
+  profile_menu: 'Profile',
+  profile: 'Your profile',
+  logout: 'Log out',
+  registration: 'Registration',
+  searchPlaceholder: 'Search',
+  search: 'Search',
+  search_no_results: 'No results found',
+  search_results: '{count} search results',
+};
