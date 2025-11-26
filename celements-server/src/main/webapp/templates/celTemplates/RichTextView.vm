@@ -1,0 +1,43 @@
+##
+#if("$!celldoc" != '')
+#set($contentDoc = $celldoc.getTranslatedDocument())
+#else	
+#set($contentDoc = $tdoc)
+#end
+#if("$request.xpage" != 'rdf')
+#set($theDoc = $contentDoc)
+#parse('celMacros/getContentDblClick.vm')
+#set($theDoc = '')
+##
+#set($additionalCSS = '')
+#if($celementsweb.isEmptyRTEDocument($contentDoc.documentReference))
+#set($additionalCSS = "$!additionalCSS celRTEempty")
+#end
+#set($currentPageType = $services.pageType.getPageTypeRef($doc.documentReference).getConfigName())
+#if("$!currentPageType" == 'Redirect')
+  #set($red_objRT = $doc.getObject("Celements2.Redirect"))
+  #set($origRedURLRT = "$!red_objRT.getProperty('redirect').getValue()")
+  #set($insideRedirectIncludedView = $services.celementsweb.getGlobalContextValue("insideRedirectIncludedView"))
+#end
+#if(($contentDoc.documentReference == $doc.documentReference) || $insideRedirectIncludedView)
+#set($currentPagePart = 'currentPage:')
+#else
+#set($currentPagePart = '')
+#end
+<div id="rteContent$!{contentDoc.getName()}:$!{currentPagePart}$!{contentDoc.getFullName()}"##
+ class="rteContent cel_cm_rte_content$!{additionalCSS}" $!dblClick>
+#end
+#if(($celementsweb.getPageType($contentDoc.fullName).hasPageTitle()) && ("$!contentDoc.getTitle()" != ''))
+<h1 class="pageTitle">$contentDoc.getTitle()<!--iE6.0--></h1>
+#end
+## because RichText is still the default PageType we need to allow velocity code
+#set($rteContent = $services.celementsweb.renderDocument($!contentDoc.documentReference, $context.language))
+#set($imgUseMaps = $services.celementsweb.getImageUseMaps($rteContent))
+$rteContent
+<div class="rteEndClear"><!-- IE6 --></div>
+#foreach($configName in $imgUseMaps)
+$services.celementsweb.addImageMapConfig($configName)
+#end
+#if("$request.xpage" != 'rdf')
+<!-- IE6 --></div>
+#end
