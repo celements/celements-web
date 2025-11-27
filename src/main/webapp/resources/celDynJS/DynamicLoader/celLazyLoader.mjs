@@ -253,63 +253,90 @@ if (!customElements.get('cel-lazy-load-css')) {
  * CelLazyLoader loads the html-response of src attribute
  *********************************************************/
 class CelLazyLoader extends HTMLElement {
-    
+  #abortController;
+
   constructor () {
     super();
-    this._lazyLoadUtils = new CelLazyLoaderUtils();
-    this.classList.add('celLoadLazyLoading');
-    this._fetchResponse = this.src ? fetch(this.src) : null;
-    this.attachShadow({ 'mode' : 'open' });
-    this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
-    this._showLoadingIndicator();
+    this.#abortController = new AbortController();
   }
 
   get src() {
     return this.getAttribute('src');
   }
 
-  _parseHTML(html) {
+  get loaderSize() {
+    return parseInt(this.getAttribute('loader-size')) || parseInt(this.getAttribute('size'));
+  }
+
+  #parseHTML(html) {
     const template = document.createElement('template');
     template.insertAdjacentHTML('afterbegin', html);
     return [...template.childNodes];
   }
 
-  _updateContent(newChildNodes) {
-    console.debug('_updateContent: ', newChildNodes);
+  #updateContent(newChildNodes) {
+    console.debug('updateContent: ', newChildNodes);
     const parent = this.parentNode;
-    const fragment = new DocumentFragment();
-    fragment.replaceChildren(...newChildNodes);
-    parent.replaceChild(fragment, this);
+    if (!parent) {
+      console.debug('cel-lazy-load: no parent when updating, aborting');
+      return;
+    }
     try {
-      this._lazyLoadUtils.fireEvent(parent, 'celements:contentChanged', {
-        'htmlElem': parent
-      });
+      const fragment = new DocumentFragment();
+      fragment.replaceChildren(...newChildNodes);
+      parent.replaceChild(fragment, this);
+      new CelLazyLoaderUtils().fireEvent(parent, 'celements:contentChanged', { 'htmlElem': parent });
     } catch (exp) {
-      console.error('contentChanged failed on ', parent, exp);
+      console.error('updateContent failed on', parent, exp);
     }
   }
 
-  _showLoadingIndicator() {
-    const loaderSize = parseInt(this.getAttribute('size')) || 64;
-    const loaderimg = this._loadingIndicator.getLoadingIndicator(loaderSize);
-    loaderimg.style.display = 'block';
-    loaderimg.style.marginLeft = 'auto';
-    loaderimg.style.marginRight = 'auto';
-    this.shadowRoot.appendChild(loaderimg);
+  #attachLoadingIndicator() {
+    if (!window.CELEMENTS?.LoadingIndicator || !this.loaderSize) return;
+    try {
+      const celLoadingIndicator = new window.CELEMENTS.LoadingIndicator();
+      const loaderImg = celLoadingIndicator.getLoadingIndicator(this.loaderSize);
+      loaderImg.style.display = 'block';
+      loaderImg.style.marginLeft = 'auto';
+      loaderImg.style.marginRight = 'auto';
+      if (!this.shadowRoot) {
+        this.attachShadow({ 'mode' : 'open' });
+      }
+      this.shadowRoot.appendChild(loaderImg);
+    } catch (exp) {
+      console.error('attachLoadingIndicator failed', exp);
+    }
+  }
+
+  async fetchHtml() {
+    if (!this.src) return;
+    try {
+      const response = await fetch(this.src, { signal: this.#abortController.signal });
+      if (response.ok) {
+        return await response.text();
+      } else {
+        console.error('fetchHtml failed', response);
+      }
+    } catch (exp) {
+      if (exp.name === 'AbortError') {
+        console.debug('fetch aborted for cel-lazy-load', this);
+      } else {
+        console.error('fetch error', exp);
+      }
+    }
   }
 
   async connectedCallback() {
-    console.debug('connectedCallback', this, this._fetchResponse);
-    let nodes = [];
-    if (this._fetchResponse) {
-      const response = await this._fetchResponse;
-      if (response.ok) {
-        nodes = this._parseHTML(await response.text());
-      } else {
-        console.error('fetch failed', response);
-      }
-    }
-    this._updateContent(nodes);
+    console.debug('connectedCallback', this);
+    this.#attachLoadingIndicator();
+    this.classList.add('celLoadLazyLoading');
+    const html = await this.fetchHtml();
+    const nodes = this.#parseHTML(html ?? '');
+    this.#updateContent(nodes);
+  }
+
+  disconnectedCallback() {
+    this.#abortController.abort();
   }
 }
 
