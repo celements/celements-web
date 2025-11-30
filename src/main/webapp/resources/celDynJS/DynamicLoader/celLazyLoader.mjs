@@ -275,12 +275,8 @@ class CelLazyLoader extends HTMLElement {
   }
 
   #updateContent(newChildNodes) {
-    console.debug('updateContent: ', newChildNodes);
     const parent = this.parentNode;
-    if (!parent) {
-      console.debug('cel-lazy-load: no parent when updating, aborting');
-      return;
-    }
+    if (!parent) return; // element is detached
     try {
       const fragment = new DocumentFragment();
       fragment.replaceChildren(...newChildNodes);
@@ -315,19 +311,14 @@ class CelLazyLoader extends HTMLElement {
       if (response.ok) {
         return await response.text();
       } else {
-        console.error('fetchHtml failed', response);
+        console.error('fetch failed', response);
       }
     } catch (exp) {
-      if (exp.name === 'AbortError') {
-        console.debug('fetch aborted for cel-lazy-load', this);
-      } else {
-        console.error('fetch error', exp);
-      }
+      if (exp.name !== 'AbortError') console.error('fetch error', exp);
     }
   }
 
   async connectedCallback() {
-    console.debug('connectedCallback', this);
     this.#attachLoadingIndicator();
     this.classList.add('celLoadLazyLoading');
     const html = await this.fetchHtml();
