@@ -253,6 +253,11 @@ if (!customElements.get('cel-lazy-load-css')) {
  * CelLazyLoader loads the html-response of src attribute
  *********************************************************/
 class CelLazyLoader extends HTMLElement {
+  static CSS_CLASSES = Object.freeze({
+    LOADING: 'cel-lazy-loading',
+    REMOVING: 'cel-lazy-removing',
+  });
+
   #abortController;
 
   constructor () {
@@ -268,15 +273,24 @@ class CelLazyLoader extends HTMLElement {
     return parseInt(this.getAttribute('loader-size')) || parseInt(this.getAttribute('size'));
   }
 
+  async connectedCallback() {
+    this.#attachLoadingIndicator();
+    const html = await this.fetchHtml();
+    const nodes = this.#parseHTML(html ?? '');
+    await this.#updateContent(nodes);
+  }
+
   #parseHTML(html) {
     const template = document.createElement('template');
     template.insertAdjacentHTML('afterbegin', html);
     return [...template.childNodes];
   }
 
-  #updateContent(newChildNodes) {
-    const parent = this.parentNode;
-    if (!parent) return; // element is detached
+  async #updateContent(newChildNodes) {
+    if (!this.parentNode) return; // element still attached ?
+    await this.#animateRemoval();
+      const parent = this.parentNode;
+    if (!parent) return; // element still attached ?
     try {
       const fragment = new DocumentFragment();
       fragment.replaceChildren(...newChildNodes);
@@ -286,6 +300,17 @@ class CelLazyLoader extends HTMLElement {
       console.error('updateContent failed on', parent, exp);
     }
   }
+
+  async #animateRemoval() {
+    if (!this.getAnimations) return;
+    this.classList.add(CelLazyLoader.CSS_CLASSES.REMOVING);
+    try {
+      const animations = this.getAnimations().map((animation) => animation.finished);
+      return await Promise.all(animations);
+    } finally {
+      this.classList.remove(CelLazyLoader.CSS_CLASSES.REMOVING);
+    }
+  } 
 
   #attachLoadingIndicator() {
     if (!window.CELEMENTS?.LoadingIndicator || !this.loaderSize) return;
@@ -307,6 +332,7 @@ class CelLazyLoader extends HTMLElement {
   async fetchHtml() {
     if (!this.src) return;
     try {
+      this.classList.add(CelLazyLoader.CSS_CLASSES.LOADING);
       const response = await fetch(this.src, { signal: this.#abortController.signal });
       if (response.ok) {
         return await response.text();
@@ -315,15 +341,9 @@ class CelLazyLoader extends HTMLElement {
       }
     } catch (exp) {
       if (exp.name !== 'AbortError') console.error('fetch error', exp);
+    } finally {
+      this.classList.remove(CelLazyLoader.CSS_CLASSES.LOADING);
     }
-  }
-
-  async connectedCallback() {
-    this.#attachLoadingIndicator();
-    this.classList.add('celLoadLazyLoading');
-    const html = await this.fetchHtml();
-    const nodes = this.#parseHTML(html ?? '');
-    this.#updateContent(nodes);
   }
 
   disconnectedCallback() {
