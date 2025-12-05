@@ -22,12 +22,14 @@
  *
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <url>https://github.com/celements/celements-web</url>
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>6.2</version>
+    <version>6.3-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
@@ -146,7 +148,7 @@
       <type>war</type>
     </dependency>
     <dependency>
-       <groupId>com.celements</groupId>
+      <groupId>com.celements</groupId>
       <artifactId>tinymce-langs</artifactId>
       <version>3.4.3.2-celRTE</version>
       <type>war</type>
@@ -325,17 +327,17 @@
       <artifactId>jersey-common</artifactId>
     </dependency>
     <dependency>
-        <groupId>javax.ws.rs</groupId>
-        <artifactId>javax.ws.rs-api</artifactId>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
     </dependency>
-      <dependency>
-        <groupId>jakarta.ws.rs</groupId>
-        <artifactId>jakarta.ws.rs-api</artifactId>
+    <dependency>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
     </dependency>
     <!--  hibernate annotations needed for org.hibernate.type.EnumType -->
     <dependency>
-       <groupId>org.hibernate</groupId>
-       <artifactId>hibernate-annotations</artifactId>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
     </dependency>
     <dependency>
       <groupId>org.reflections</groupId>
@@ -367,16 +369,16 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-  
+
       <!-- Align ALL Jackson 2.x artifacts (core, databind, annotations, dataformats, datatype-*) -->
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
-        <version>2.16.0</version>
+        <version>${jackson.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-  
+
       <!-- Force the newer JTA for old Hibernate transitive -->
       <dependency>
         <groupId>javax.transaction</groupId>
@@ -429,6 +431,10 @@
             </overlay>
           </overlays>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>com.jarslab.maven</groupId>
