@@ -14,7 +14,8 @@ export default defineConfig({
         entryFileNames: '[name].[hash].mjs',
         chunkFileNames: '[name].[hash].mjs',
       }
-    }
+    },
+    sourcemap: true,
   },
   resolve: {
     alias: {
