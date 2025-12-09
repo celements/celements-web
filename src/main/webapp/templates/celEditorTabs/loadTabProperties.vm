@@ -1,6 +1,11 @@
 <div class="cel_pagepropertiesTab">
-<form id="propertiesEdit" method="post" action="$doc.getURL('save')">
-<div id="pro_pagetypeEdit" class="editblock" onfocus="setFocus('pro_pagetypeEdit');" onblur="removeFocus('pro_pagetypeEdit');">
+<form id="propertiesEdit" method="post" action="?">
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="template" value="$!request.template" />
+<input type="hidden" name="createIfNotExists" value="true" />
+
+<div id="pro_pagetypeEdit" class="editblock">
 	$adminMsg.get('cel_tm_page_type'):
 	#set($cel_pageTypeObj = $doc.getObject('Celements2.PageType'))
 	#if(("$!cel_pageTypeObj" == ''))
@@ -10,45 +15,45 @@
         $doc.save()
 #end
 	#end
-    #set($selectedFound = false)
-    #set($pageTypeCat = "$!celementsweb.getPageType($doc.fullName).getCategoryString()")
-    #if("$!pageTypeCat" == 'celltype')
-      #set($pageTypeList = $services.pageType.getAvailableCellTypes())
-    #else
-      #set($pageTypeList = $services.pageType.getAvailablePageTypes())
+    #set($pageTypeCats = $!services.pageType.getPageTypeRef($doc.documentReference).getCategories())
+    <!-- pageTypeCats: $pageTypeCats -->
+    #set($pageTypeRefList = $services.pageType.getPageTypeRefsForCategories($pageTypeCats, true))
+    #set($treeMap = $util.getTreeMap())
+    #foreach($item in $pageTypeRefList)
+      #set($ptConfig = $services.pageType.getPageTypeConfig($item.configName))
+      #set($!devNull = $treeMap.put($!ptConfig.getPrettyName(), $item.configName))
     #end
     <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_type" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_type">
-      #foreach($item in $pageTypeList)
-        #set($pt_doc = $xwiki.getDocument($item))
-         #set($page_type_properties_obj = '')
-         #set($page_type_properties_obj = $pt_doc.getObject('Celements2.PageTypeProperties'))
-        #if(("$!page_type_properties_obj" == '') || ("$!page_type_properties_obj.getProperty('visible').getValue()" == '1'))
-         #if("$!page_type_properties_obj" != '')
-          #set($pretty_name = $!page_type_properties_obj.getProperty('type_name').getValue())
-        #else
-          #set($pretty_name = $pt_doc.getName())
-        #end        
-        <option value="$pt_doc.getName()" #if("$!pt_doc.getName()" == "$!page_type") selected="selected" #set($selectedFound = true)#end label="$!pretty_name">$!pretty_name</option>
+      #set($curSelectFound = false)
+      #foreach($item in $treeMap.values())
+        <!-- page-pageType: $item -->
+        #set($ptConfig = $services.pageType.getPageTypeConfig($item))
+        #if($ptConfig.isVisible())
+        <option value="$!{ptConfig.getName()}"##
+          #if("$!{ptConfig.getName()}" == "$!page_type")##
+            selected="selected"##
+            #set($curSelectFound = true)##
+          #end##
+          label="$!ptConfig.getPrettyName()">$!ptConfig.getPrettyName()</option>
         #end
       #end
-      #if(!$selectedFound)
-        <option value="$page_type" selected="selected" label="Unknown PageType">Unknown PageType</option>
+      #if(!$curSelectFound)
+        <option value="$page_type" selected="selected" label="Unknown Type">Unknown Type ($page_type)</option>
       #end
       </select>
 </div>
-<div id="pro_pagemasterEdit" class="editblock" onfocus="setFocus('pro_pagemasterEdit');" onblur="removeFocus('pro_pagemasterEdit');">
-    $adminMsg.get('cel_tm_page_master'):
-    #set($cel_pageLayouts = $celementsweb.getActivePageLayouts())
-    #set($cel_defaultLayout = "$adminMsg.get('cel_default_pagelayout')")
-    #set($cel_currentPageLayout = "$!cel_pageTypeObj.getProperty('page_layout').getValue()")
-    <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_layout" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_layout">
-        <option #if("$!cel_currentPageLayout" == '') selected="selected" #end value="" label="$cel_defaultLayout">$cel_defaultLayout</option>
-    #foreach($cel_pageLayoutKey in $cel_pageLayouts.keySet())
-        <option #if("$!cel_currentPageLayout" == "$!cel_pageLayoutKey") selected="selected" #end value="$cel_pageLayoutKey" label="$cel_pageLayouts.get($cel_pageLayoutKey)">$cel_pageLayouts.get($cel_pageLayoutKey)</option>
-    #end
-    </select>
+<div id="pro_pagemasterEdit" class="editblock">
+  $adminMsg.get('cel_tm_page_master'):
+  #set($cel_currentPageLayout = "$!cel_pageTypeObj.getProperty('page_layout').getValue()")
+  <select id="Celements2.PageType_${cel_pageTypeObj.number}_page_layout" size="1" name="Celements2.PageType_${cel_pageTypeObj.number}_page_layout">
+    <option #if("$!cel_currentPageLayout" == '')selected="selected"#end value="">$adminMsg.cel_default_pagelayout</option>
+  #foreach($cel_pageLayout in $services.layout.getActiveLayouts())
+    #set($cel_pageLayoutKey = $cel_pageLayout.spaceRef.name)
+    <option #if($cel_currentPageLayout == $cel_pageLayoutKey)selected="selected"#end value="$!cel_pageLayoutKey">$!cel_pageLayout.prettyName</option>
+  #end
+  </select>
 </div>
-#if($isSuperAdmin)
+#if($isAdmin)
 #set($cel_editobj_dict_prefix = 'cel_pro_metaTag_' )
 #set($cel_editobj_externalForm = true)  
 #set($cel_embedded_editobj = true)
@@ -58,8 +63,8 @@
 #set($cel_editobj_hasObjAddLink = true)
 #set($cel_editobj_properties = "key,lang,value")
 #set($cel_editobj_xredirect_params = 'tab=tb4')
-<div id="pro_metaTagEdit" class="editblock" onfocus="setFocus('pro_metaTagEdit');" onblur="removeFocus('pro_metaTagEdit');">
-  $xwiki.includeForm('celements2web:Templates.ObjectEdit',false)
+<div id="pro_metaTagEdit" class="editblock">
+  #parse("celTemplates/ObjectEdit.vm")
 </div>
 #end
 </form>

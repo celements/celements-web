@@ -1,0 +1,10 @@
+#if(("$!elemId" != '') && $xwiki.exists($services.model.resolveDocument($elemId)))
+#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
+#set($xredirect = $doc.getURL('view'))
+#if("$!xredirect" == '')
+#set($xredirect = '/')
+#end
+#set($l = "$!menuItemDoc.getURL('edit')")
+#set($cmenu_pageLink = "${l}?xredirect=$util.encodeURI(${xredirect})")
+window.location.href=&quot;${cmenu_pageLink}&quot;##
+#end

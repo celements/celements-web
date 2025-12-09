@@ -1,0 +1,8 @@
+#if("$!elemId" != '')
+#set($elemDocRef = $services.model.resolveDocument($elemId))##
+#if($services.modelAccess.exists($elemDocRef))
+#set($xredirect = $services.url.getURL($doc.documentReference, 'view'))##
+#set($editUrl = $services.url.getURL($elemDocRef, 'edit', "xredirect=$!{xredirect}"))##
+window.location.href=&quot;$!{editUrl}&quot;##
+#end
+#end

@@ -1,0 +1,1 @@
+import baseIsEqualDeep from"./_baseIsEqualDeep.js";import isObjectLike from"./isObjectLike.js";function baseIsEqual(e,s,a,i,l){return e===s||(null==e||null==s||!isObjectLike(e)&&!isObjectLike(s)?e!=e&&s!=s:baseIsEqualDeep(e,s,a,i,baseIsEqual,l))}export default baseIsEqual;

@@ -6,12 +6,14 @@
 #set($passwdRecoveryHTML2DocRef = $services.model.resolveDocument('celements2web:Tools.PasswordRecoverMailHtmlContent'))
 #set($passwdRecoveryTextDocRef = $services.model.resolveDocument('Tools.PasswordRecoverMailTextContent'))
 #set($passwdRecoveryText2DocRef = $services.model.resolveDocument('celements2web:Tools.PasswordRecoverMailTextContent'))
-#if(!$celementsweb.isEmptyRTEDocument($passwdRecoveryHTMLDocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryHTML2DocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryTextDocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryText2DocRef) || !$xwiki.celementsweb.isEmptyRTEString("$!celMailsPasswordRecoveryContent"))
+#if(!$celementsweb.isEmptyRTEDocument($passwdRecoveryHTMLDocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryHTML2DocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryTextDocRef) || !$celementsweb.isEmptyRTEDocument($passwdRecoveryText2DocRef) || !$services.rteconfig.isEmptyRTEString("$!celMailsPasswordRecoveryContent"))
   <a href="?xpage=overlay&conf=PwdRetreival&xredirect=$!red">$msg.get('cel_login_forgotpassword')</a>
 #end
 #end ##end macro passRecoveryLink
 ##
-## start login script
+#if($services.authentication.isLoginDisabled())
+  #parse('celInlineTemplates/loginDisabledMessage.vm')
+#else ## start login script
 #if("$!request.get('ac')" != '')
   #parse("activateaccount.vm")
 #end
@@ -27,7 +29,7 @@
 #end
   #set($url = "$!request.xredirect")
   #if("$!url" == '')
-  #set($url = "/")
+  #set($url = "$!services.authentication.getLoginRedirectURL()")
   #end
   #set($loginUser = $celementsweb.checkAuth("$request.get('j_username')", "$request.get('j_password')", $rememberme, "$celUserDataFieldLogin"))
   #if("$!loginUser.getUser()" != '')
@@ -35,7 +37,7 @@
   #end
 #end
 <div class="loginscreen">
-#if(!$celementsweb.useXWikiLoginLayout() && (("$!context.getRequest().get('j_username')" != "") || ("$!request.get('redir')" == '1')))
+#if(!$services.layout.useXWikiLoginLayout() && (("$!context.getRequest().get('j_username')" != "") || ("$!request.get('redir')" == '1')))
 <div class="cel_oldstyle_login_error" style="font-weight:bold;color:#ff0000">Login Error! Invalid Username/Password</div>
 #end
 #set($formaction = "$xwiki.getURL('XWiki.XWikiLogin','loginsubmit')")
@@ -61,7 +63,7 @@
     #set($red = "$xwiki.getURL($redDoc.getObject('Celements2.Redirect').getProperty('redirect').getValue(),'view')")
 #end
 #if("$!red" == '')
-    #set($red = $celementsweb.getLoginRedirectURL())
+    #set($red = $services.authentication.getLoginRedirectURL())
 #end
 <input type="hidden" name="xredirect" value="$red" />
 ##
@@ -75,7 +77,7 @@
 #xwikimessageboxend()
 <br/>
 #end
-#if($celementsweb.useXWikiLoginLayout())
+#if($services.layout.useXWikiLoginLayout())
 #xwikimessageboxstart($msg.get("login") "")
 #set($message = $msg.get($xwiki.parseMessage()))
 #if($message)
@@ -117,7 +119,7 @@ $msg.get('cel_login_password')<br/>
 #else
 ## already logged in --> show details and logout link
 #if("$!redLogout" == '')
-#set($redLogout = $celementsweb.getLogoutRedirectURL())
+#set($redLogout = $services.authentication.getLogoutRedirectURL())
 #end
 #set($username = $xwiki.getUserName($context.user))
 #foreach($str in $username.split("[<>]"))
@@ -128,3 +130,4 @@ $msg.get('cel_login_password')<br/>
 <div class="logoutlabel">$adminMsg.get('cel_login_loggedinas', ["$username"])</div><!--titel-->
 <a class="logoutbutton" href="$xwiki.getURL('XWiki.XWikiLogout','logout', "logout=1&xredirect=$!redLogout")" class="red">$adminMsg.get('cel_login_logoutbutton', ["$username"])</a>
 #end
+#end ##isLoginDisabled

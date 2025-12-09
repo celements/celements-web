@@ -1,0 +1,1 @@
+import baseDifference from"./_baseDifference.js";import baseRest from"./_baseRest.js";import isArrayLikeObject from"./isArrayLikeObject.js";var without=baseRest((function(e,r){return isArrayLikeObject(e)?baseDifference(e,r):[]}));export default without;

@@ -1,0 +1,1 @@
+import baseIsNative from"./_baseIsNative.js";import getValue from"./_getValue.js";function getNative(e,t){var a=getValue(e,t);return baseIsNative(a)?a:void 0}export default getNative;

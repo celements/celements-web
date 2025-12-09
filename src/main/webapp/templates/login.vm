@@ -11,6 +11,7 @@
     #set($overwriteRenderDocument = 'celInlineTemplates/login.vm')
     #set($hasLocalOverwrite = false)
   #end
+  $services.metatag.addMetaTagToCollector('NAME', 'ROBOTS', "NOINDEX, NOFOLLOW")
   $xwiki.parseTemplate("frameheader.vm")
   #if("$!overwriteRenderDocument" != '')
   	#if($hasLocalOverwrite)

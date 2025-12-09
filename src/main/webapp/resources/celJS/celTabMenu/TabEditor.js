@@ -22,46 +22,69 @@
 *
 *
 **/
-if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
-if(typeof CELEMENTS.widget=="undefined"){CELEMENTS.widget={};};
-CELEMENTS.widget.TabEditor = function() {
-};
+(function(window, undefined) {
+  "use strict";
 
-var TE = CELEMENTS.widget.TabEditor;
+  if(typeof window.CELEMENTS=="undefined"){window.CELEMENTS={};};
+  if(typeof window.CELEMENTS.widget=="undefined"){window.CELEMENTS.widget={};};
+
+  window.CELEMENTS.widget.TabEditor = function() {
+    // constructor
+    this._init();
+  };
+
+var TE = window.CELEMENTS.widget.TabEditor;
 
 TE.prototype = {
-  tmd : null,
+  tmd : undefined,
+  tabMenuConfig : undefined,
+  scriptLoading : undefined,
+  CSSLoading : undefined,
+  scriptQueue : undefined,
+  CSSQueue : undefined,
+  tabButtons : undefined,
+  actionButtons : undefined,
+  dirtyFlag : undefined,
+  editorFormsInitialValues : undefined,
+  modalDialog : undefined,
+  initDone : undefined,
+  _tabsInitalized : undefined,
+  _isEditorDirtyOnLoad : undefined,
+  afterInitListeners : undefined,
+  _editorReadyDisplayNowBind : undefined,
+  _tabReadyDisplayNowBind : undefined,
+  _log : undefined,
+  _tabLoaderElem : undefined,
+  _loadingTabId : undefined,
+  _urlParams : undefined,
 
-  tabMenuConfig : null,
-
-  scriptLoading : false,
-  
-  CSSLoading : false,
-
-  scriptQueue : new Array(),
-  
-  CSSQueue : new Array(),
-
-  tabButtons : new Hash(),
-  
-  actionButtons : new Hash(),
-
-  dirtyFlag : new Hash(),
-
-  editorFormsInitialValues : new Hash(),
-
-  modalDialog : null,
-
-  initDone : false,
-
-  _isEditorDirtyOnLoad : false,
-
-  afterInitListeners : new Array(),
-
-  _log : new CELEMENTS.mobile.Dimensions(),
+  _init : function() {
+    Object.assign(this, window.CELEMENTS.mixins.Observable);
+    const _me = this;
+    _me.tmd = null;
+    _me.tabMenuConfig = null;
+    _me.scriptLoading = false;
+    _me.CSSLoading = false;
+    _me.scriptQueue = new Array();
+    _me.CSSQueue = new Array();
+    _me.tabButtons = new Hash();
+    _me.actionButtons = new Hash();
+    _me.dirtyFlag = new Hash();
+    _me.editorFormsInitialValues = new Map();
+    _me.modalDialog = null;
+    _me.initDone = false;
+    _me._isEditorDirtyOnLoad = false;
+    _me.afterInitListeners = new Array();
+    _me._tabsInitalized = new Array();
+    _me._log = new CELEMENTS.mobile.Dimensions();
+    _me._loading = new CELEMENTS.LoadingIndicator();
+    _me._editorReadyDisplayNowBind = _me._editorReadyDisplayNow.bind(_me);
+    _me._tabReadyDisplayNowBind = _me._tabReadyDisplayNow.bind(_me);
+    _me._urlParams = new URLSearchParams(window.location.search);
+  },
 
   isValidFormId : function(formId) {
-  return (typeof formId == 'string') && (formId != '') && $(formId)
+    return (typeof formId == 'string') && (formId != '') && $(formId)
       && (typeof $(formId).action != 'undefined') && ($(formId).action != '');
   },
 
@@ -73,56 +96,34 @@ TE.prototype = {
     }
   },
 
-  /**
-   * @deprecated
-   */
-  retrieveInitalValues :  function(formId) {
-    if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-      console.log('deprecated call for "retrieveInitalValues" instead'
-          + ' use "retrieveInitialValues".');
-      if ((typeof console.trace != 'undefined')) {
-        console.trace();
-      }
-    }
-    retrieveInitialValues(formId);
-  },
-
   retrieveInitialValues : function(formId) {
-    var _me = this;
-    if (_me.isValidFormId(formId)) {
-      var elementsValues = new Hash();
-      _me.updateTinyMCETextAreas(formId);
-      $(formId).getElements().each(function(elem) {
-        if (_me._isSubmittableField(elem) && (!elementsValues.get(elem.name)
-            || (elementsValues.get(elem.name) == ''))) {
-          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-            console.log('initValue for: ' + elem.name, elem.value);
-          }
-          var isInputElem = (elem.tagName.toLowerCase() == 'input');
-          var elemValue = elem.value;
-          if (isInputElem && (elem.type.toLowerCase() == 'radio')) {
-            elemValue = elem.getValue() || elementsValues.get(elem.name) || null;
-          } else if (isInputElem && (elem.type.toLowerCase() == 'checkbox')) {
-            elemValue = elem.checked;
-          }
-          elementsValues.set(elem.name, elemValue);
-        }
+    console.debug('retrieveInitialValues: ', formId);
+    if (this.isValidFormId(formId)) {
+      this.updateTinyMCETextAreas(formId);
+      const formdata = new FormData(document.getElementById(formId));
+      const newInitialValues = {};
+      [...formdata.keys()].forEach(key => {
+        newInitialValues[key] = new Set(formdata.getAll(key));
       });
-      _me.editorFormsInitialValues.set(formId, elementsValues);
+      console.debug('retrieveInitialValues: before add newInitialValues',
+        formId, newInitialValues);
+      this.editorFormsInitialValues.set(formId, Object.freeze(
+        newInitialValues));
     }
+    console.debug('retrieveInitialValues: end');
   },
 
   _insertLoadingIndicator : function() {
-    var loaderimg = new Element('img', {
-      'src': '/file/resources/celRes/ajax-loader.gif'
-    }).setStyle({
+    const _me = this;
+    var loaderimg = _me._loading.getLoadingIndicator().setStyle({
       'display' : 'block',
       'marginLeft' : 'auto',
       'marginRight' : 'auto'
     });
     var tabMenuPanelWidth = $('tabMenuPanel').getWidth();
     var loadingElem = new Element('div', {
-      'id' : 'celementsLoadingIndicator'
+      'id' : 'celementsLoadingIndicator',
+      'class' : 'celementsLoadingIndicator'
     }).update(loaderimg).setStyle({
       'width' : tabMenuPanelWidth + 'px'
     });
@@ -145,9 +146,9 @@ TE.prototype = {
   },
 
   initTabMenu : function() {
-    var tabEditor = this;
+    const _me = this;
     if (!$('tabMenuPanel').down('.xwikimessage')) {
-      tabEditor._insertLoadingIndicator();
+      _me._insertLoadingIndicator();
       new Ajax.Request(getTMCelHost(), {
         method: 'post',
         parameters: {
@@ -157,22 +158,26 @@ TE.prototype = {
         },
         onSuccess: function(transport) {
           if (transport.responseText.isJSON()) {
-            tabEditor.tabMenuSetup(transport.responseText.evalJSON());
-          } else if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
+            console.log('initTabMenu: before tabMenuSetup ');
+            _me.tabMenuSetup(transport.responseText.evalJSON());
+          } else  {
             console.log('failed to get CelTabMenu config: no valid JSON!', transport);
-          } else {
-            alert('Failed to load editor. Please try to reload the page and if it happens '
-               + 'again, contact support. ');
           }
+          $$('body')[0].observe('scroll', function(event) {
+            event.target.scrollTop = 0; //FF and IE fix
+          });
+          Event.observe(window, 'scroll', function() {
+            $j(window).scrollTop(0); //webkit
+          });
         }
       });
     }
   },
 
   tabMenuSetup : function(tabMenuConf) {
-    var _me = this;
+    const _me = this;
+    console.log('tabMenuSetup start');
     _me.tabMenuConfig = tabMenuConf;
-    
     var starttabId = '';
     var celstartab = '';
     if ($('cel_startab')) {
@@ -185,6 +190,7 @@ TE.prototype = {
       if (elemId && $(elemId + '-button')) {
         _me.getTab(elemId);
         event.stop();
+        console.log('tabClickHandler finish.');
       }
     };
     // set html and body overflow to hidden
@@ -207,79 +213,131 @@ TE.prototype = {
         && (_me.tabMenuConfig.isDirtyOnLoad == true));
     _me.tmd = new YAHOO.widget.Panel("tabMenuPanel", _me.tabMenuConfig.tabMenuPanelConfig);
     _me.tmd.render();
+    console.log('tabMenuSetup after render');
 
     if (starttabId == '') {
       var starttablist = $$('.celements3_tabMenu .starttab');
-      if (starttablist.size() > 0) {
+      if (starttablist.length > 0) {
         starttabId = starttablist[0].id.substring(0, starttablist[0].id.length - 4);
         starttablist[0].select('form').each(function(formelem) {
           _me.retrieveInitialValues(formelem.id);
         });
-      } else if(_me.tabMenuConfig.tabMenuPanelData.size() > 0) {
+      } else if(_me.tabMenuConfig.tabMenuPanelData.length > 0) {
         starttabId = _me.tabMenuConfig.tabMenuPanelData[0]['id'];
       }
     }
+    console.log('editorReadyDisplayNow register');
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
     if(starttabId != null) {
+      console.log('tabMenuSetup before showTabMenu');
       _me.showTabMenu(starttabId);
     }
-    
-    if($$('.container-close').size() > 0) {
+    console.log('tabMenuSetup after showTabMenu');
+
+    if($$('.container-close').length > 0) {
       _me.initDefaultCloseButton();
       _me._addClearButtons();
     }
+    console.log('tabMenuSetup before initCloseButton');
     if(_me.tabMenuConfig.initCloseButton) {
       _me.initCloseButton();
     }
+    console.log('tabMenuSetup before initSaveButton');
     if(_me.tabMenuConfig.initSaveButton) {
       _me.initSaveButton();
     }
-    if(typeof(resize) != 'undefined') {
-      resize();
-    }
+    console.log('tabMenuSetup before con_titblock');
     if (!$('con_titblock')) {
       var titlediv = new Element('div', { 'id': 'con_titblock', 'class': 'titleblock' });
       titlediv.update(_me.tabMenuConfig.tabMenuPanelConfig.title);
       $('tabMenuPanel').down('.bd').insert({ top: titlediv });
     }
-    window.onbeforeunload = _me.checkBeforeUnload;
+    console.log('tabMenuSetup activating browse away check');
+    window.onbeforeunload = _me.checkBeforeUnload.bind(_me);
     _me.initDone = true;
+    console.log('tabMenuSetup before afterInitListeners');
     _me.afterInitListeners.each(_me._execOneListener);
+    console.log('tabMenuSetup end');
+  },
+
+  _editorReadyDisplayNow : function() {
+    const _me = this;
+    console.log('editorReadyDisplayNow start');
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
+    _me._displayNowEffect('tabMenuPanel','celementsLoadingIndicator');
+    console.log('editorReadyDisplayNow finish');
+  },
+  
+  _tabReadyDisplayNow : function() {
+    const _me = this;
+    console.log('_tabReadyDisplayNow start', _me._loadingTabId);
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+    _me._displayNowEffect(_me._getTabBodyId(_me._loadingTabId), _me._getTabLoaderElement());
+    console.log('_tabReadyDisplayNow finish');
+  },
+
+  _displayNowEffect : function(appearElem, fadeElem) {
+    const _me = this;
+    var tabBodyId = _me._getTabBodyId(_me._loadingTabId);
+    console.log('_displayNowEffect start ', _me._loadingTabId);
     var displayNowEffect = new Effect.Parallel([
-       new Effect.Appear('tabMenuPanel', {
-         afterFinish: function() {
-           //afterFinish for parallel effect is not working!
-           $('tabMenuPanel').fire('tabedit:afterDisplayNow');
-         },
-         sync: true
-       }), 
-       new Effect.Fade('celementsLoadingIndicator', { sync: true }) 
-    ], { 
+      new Effect.Appear(appearElem, {
+        afterFinish: function() {
+          //afterFinish for parallel effect is not working! Instead placed on first effect is working.
+          console.log("afterFinish: in appear start");
+          if (_me._loadingTabId) {
+            console.log("afterFinish: in appear before _fireTabChange");
+            _me._fireTabChange(_me._loadingTabId);
+          }
+          console.log("afterFinish: in appear fire 'tabedit:afterDisplayNow'");
+          $('tabMenuPanel').fire('tabedit:afterDisplayNow');
+        },
+        sync: true
+      }),
+      new Effect.Fade(fadeElem, { sync: true })
+    ], {
        duration: 0.5,
        sync: true
     });
-    var defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow',
-        displayNowEffect);
-    if (!defaultShowEvent.stopped) {
-      displayNowEffect.start();
-    } else {
-      $('tabMenuPanel').fire('tabedit:afterDisplayNow');
-    }
+    console.log('_displayNowEffect: fire tabedit:finishedLoadingDisplayNow');
+    const beforeDisplayEvent = this.celFire('tabedit:beforeDisplaying', {
+      'beforePromises' : [],
+      'tabBodyId' : tabBodyId
+    });
+    Promise.all(beforeDisplayEvent.memo.beforePromises).then(() => {
+      const defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
+        'effect' : displayNowEffect,
+        'tabBodyId' : tabBodyId
+      });
+      if (!defaultShowEvent.stopped) {
+        console.debug('displayNow event not stopped -> displaying instantly');
+        displayNowEffect.start();
+      } else {
+        console.warn('displayNow stopped. This usage is deprecated. Instead use beforeDisplaying '
+        + 'and promises');
+      }
+      console.debug('beforeDisplaying finish');
+    }).catch((err) => {
+      console.error('preparing tab failed. Displaying will not happen.', err);
+      //TODO show error message to user instead.
+    });
+    console.debug('_displayNowEffect finish');
   },
 
   _execOneListener : function(listener) {
     try {
       listener();
     } catch (exept) {
-      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('listener failed: ', listener);
-      }
+      console.log('listener failed: ', listener);
     }
   },
 
   checkBeforeUnload : function() {
-  var _me = getCelementsTabEditor();
+  const _me = this;
     if (_me.isDirty() && !_me.tabMenuConfig.supressBeforeUnload) {
-      if (_me.tabMenuConfig && _me.tabMenuConfig.unsavedChangesOnCloseMessage && (_me.tabMenuConfig.unsavedChangesOnCloseMessage != '')) {
+      if (_me.tabMenuConfig && _me.tabMenuConfig.unsavedChangesOnCloseMessage
+        && (_me.tabMenuConfig.unsavedChangesOnCloseMessage != '')) {
         return _me.tabMenuConfig.unsavedChangesOnCloseMessage;
       }
       return "WARNING: You have currently unsafed changes. Those changes will be lost if you click OK.";
@@ -293,7 +351,7 @@ TE.prototype = {
   },
 
   initDefaultCloseButton : function() {
-    var _me = this;
+    const _me = this;
     /* close button functions */
     $$('.container-close')[0].innerHTML = _me.tabMenuConfig.tabEditorSaveAndClose;
     $$('.container-close')[0].onclick = function() {
@@ -310,7 +368,7 @@ TE.prototype = {
   },
 
   addActionButton : function(buttonLabel, clickHandler) {
-    var _me = this;
+    const _me = this;
     var tabData = [];
     tabData['label'] = buttonLabel;
     tabData['container'] = 'ActionButtonSpan' + _me.actionButtons.size();
@@ -334,32 +392,36 @@ TE.prototype = {
   },
 
   _deleteParamsFromURL : function() {
-    var newURL = "";
-    var standardWhiteList = ["xredirect", "xcontinue", "language"];
+    var newUrlParams = [];
+    var standardWhiteList = ["language", "xredirect", "xcontinue"];
     var additionalWhiteList = [];
-    $j("input[name=white_list_url]").each(function( index, value ) {
-      additionalWhiteList.add(value.value);
+    $j("input[name=white_list_url]").each(function( index, inputElem ) {
+      additionalWhiteList.add(inputElem.value);
     });
     standardWhiteList = standardWhiteList.concat(additionalWhiteList);
     for (var index = 0; index < standardWhiteList.length; index++) {
       var regEx = new RegExp("^.*(" + standardWhiteList[index] + "=[^&]*).*$", "g");
       var regExArray = regEx.exec(window.location.search);
       if (regExArray != null) {
-        newURL += regExArray.slice(1).join("&");
+        newUrlParams = newUrlParams.concat(regExArray.slice(1));
       }
-    } 
-    return newURL;
+    }
+    return newUrlParams.join('&');
   },
 
   initSaveButton : function() {
-    var _me = this;
-    var saveClickHandler = function() {
-      _me.saveAndContinue(function(transport, jsonResponses, failed) {
+    const _me = this;
+    const saveClickHandler = function() {
+      _me.saveAndContinue(function(_, jsonResponses, failed) {
         if (!failed) {
           //remove template in url query after creating document in inline mode
-          if (window.location.search.match(/\&?template=[^\&]+/)) {
-            window.onbeforeunload = null;
-            window.location.search = _deleteParamsFromURL();
+          try {
+            if (window.location.search.match(/\&?template=[^\&]+/)) {
+              window.onbeforeunload = null;
+              window.location.search = _me._deleteParamsFromURL();
+            }
+          } catch (err) {
+            console.error('initSaveButton: error in saveAndContinue callback ', err);
           }
           $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
         } else {
@@ -367,34 +429,56 @@ TE.prototype = {
         }
       });
     };
-    var buttonLabel = _me.tabMenuConfig.saveButtonLabel || 'Save';
+    const buttonLabel = _me.tabMenuConfig.saveButtonLabel || 'Save';
     _me.addActionButton(buttonLabel, saveClickHandler);
   },
 
   initCloseButton : function() {
-    var _me = this;
-    var closeClickHandler = function() {
-      _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
+    const _me = this;
+    const closeClickHandler = () => {
+      _me.checkUnsavedChanges(function(_, jsonResponses, failed) {
+        try {
+          if (failed) {
+            _me.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
+          } else {
+            _me.celFire('tabedit:successfulSaved', { 'jsonResponses' : jsonResponses });
+            if (window.celEditorWindow) {
+              window.celEditorWindow.sendAfterUpdate();
+            }
+          }
+        } catch (exp) {
+          console.error('Saved-listener failed.', exp);
+        }
         if (!failed) {
-          //TODO call async 'cancel' to release editor-lock
           window.onbeforeunload = null;
-          window.location.href = _me._getRedirectValue();
+          if (_me._isWindowCloseOnClose()) {
+            window.close();
+          } else {
+            window.location.href = _me._getCancelURL();
+          }
+        } else {
+          console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
         }
       });
     };
-    var buttonLabel = _me.tabMenuConfig.closeButtonLabel || 'Close';
+    const buttonLabel = _me.tabMenuConfig.closeButtonLabel || 'Close';
     _me.addActionButton(buttonLabel, closeClickHandler);
   },
 
-  _getRedirectValue : function() {
-    var _me = this;
-    var redirectValue = '';
-    if ($$('input.celEditorRedirect').size() > 0) {
-      redirectValue = $F($$('input.celEditorRedirect')[0]);
+  _isWindowCloseOnClose : function() {
+    return this._urlParams.has('windowClose', 'true');
+  },
+
+  _getCancelURL : function() {
+    const _me = this;
+    let redirectValue = '';
+    const editorRedirectInput = document.querySelector('input.celEditorRedirect');
+    if (editorRedirectInput) {
+      redirectValue = $F(editorRedirectInput);
     } else {
-      var firstFormName = _me.getFirstFormWithId() || 0;
-      var firstForm = document.forms[firstFormName];
-      if (firstForm && firstForm['xredirect']) { 
+      const firstFormName = _me.getFirstFormWithId() || 0;
+      const firstForm = document.forms[firstFormName];
+      if (firstForm && firstForm['xredirect']) {
         if (firstForm['xredirect'][0]) {
           redirectValue = $F(firstForm['xredirect'][0]);
         } else {
@@ -402,17 +486,18 @@ TE.prototype = {
         }
       }
     }
-    if (redirectValue == '')  {
-      redirectValue = window.location.pathname.replace(/\/edit\/|\/inline\//, '/view/');
-    }
+    const redirectBaseValue = window.location.pathname.replace(/\/edit\/|\/inline\//,
+        '/cancel/');
+    redirectValue = redirectBaseValue + '?xredirect=' + redirectValue;
+    console.log('_getCancelURL: return redirectValue ', redirectValue);
     return redirectValue;
   },
 
   showTabMenu : function(tabId) {
-    var _me = this;
+    const _me = this;
     $('cel_overlay').setStyle({'display' : "block"});
     _me.getTab(tabId);
-    var tabBodyId = tabId + '-tab';
+    var tabBodyId = _me._getTabBodyId(tabId);
     $(tabBodyId).fire('tabedit:before-tabshow', {
       'newTabId' : tabBodyId
     });
@@ -420,104 +505,212 @@ TE.prototype = {
     $(tabBodyId).fire('tabedit:after-tabshow', {
       'newTabId' : tabBodyId
     });
+    console.log('showTabMenu done.');
+  },
+
+  _getTabLoaderElement : function() {
+    const _me = this;
+    console.log('_getTabLoaderElement: start');
+    if (!_me._tabLoaderElem) {
+      console.log('_getTabLoaderElement: create tabLoader');
+      var loaderimg = _me._loading.getLoadingIndicator().setStyle({
+        'display' : 'block',
+        'marginLeft' : 'auto',
+        'marginRight' : 'auto'
+      });
+      var loaderDiv = new Element('div').update(loaderimg).setStyle({
+        'width' : _me.tabMenuConfig.tabMenuPanelConfig.width,
+        'min-height' : '50px',
+        'padding-top' : '100px',
+        'padding-bottom' : '100px'
+      });
+      var textLoading = new Element('p').update('loading ...');
+      loaderDiv.insert(textLoading);
+      //.menuTab needed for resize!
+      _me._tabLoaderElem = new Element('div', {
+        'class': 'menuTab celementsLoadingIndicator',
+        'id': 'tabLoaderContainer'
+      }).update(loaderDiv);
+      $('tabMenuPanel').down('.bd').appendChild(_me._tabLoaderElem);
+    }
+    console.log('_getTabLoaderElement: end ', _me._tabLoaderElem);
+    return _me._tabLoaderElem;
+  },
+
+  _getOrCreateTabBody : function(tabBodyId) {
+    const _me = this;
+    console.log('_getOrCreateTabBody: start ', tabBodyId);
+    var tabBodyElem = $(tabBodyId);
+    if (!tabBodyElem) {
+      console.log('_getOrCreateTabBody: creating ', tabBodyId);
+      tabBodyElem = new Element('div', {
+        'class': 'menuTab ' + tabBodyId,
+        'id': tabBodyId
+      }).setStyle({
+        'width' : _me.tabMenuConfig.tabMenuPanelConfig.width
+      });
+      $('tabMenuPanel').down('.bd').appendChild(tabBodyElem);
+    }
+    return tabBodyElem;
   },
 
   getTab : function(tabId, reload) {
-    var _me = this;
+    const _me = this;
     $$('.menuTab').each(function(tab) { tab.hide(); });
     // create tab if it does not exist
-    var tabBodyId = tabId + '-tab';
-    var div = $(tabBodyId);
-    var asyncLoading = false;
-    if ((div == null) || ((reload != 'undefined') && reload)) {
-      if (div == null) {
-        var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
-        div = new Element('div', {
-          'class': 'menuTab ' + tabBodyId,
-          'id': tabBodyId,
-          'style': 'width: ' + width
-        });
-      }
-      var loaderspan = new Element('span', { 'class': 'tabloader' });
-      div.update(loaderspan);
-      var loaderimg = new Element('img', {
-        'src': '/file/resources/celRes/ajax-loader.gif'
+    var tabBodyId = _me._getTabBodyId(tabId);
+    var tabBodyElem = $(tabBodyId);
+    var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
+    var scriptLoadedHandler = function() {
+      console.log('scriptLoadedHandler: start');
+      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
+      console.log('TabEditor: async loading tab firing celements:contentChanged');
+      $(tabBodyId).fire('celements:contentChanged', {
+        'htmlElem' : $(tabBodyId)
       });
-      loaderspan.update(loaderimg);
-      $('tabMenuPanel').down('.bd').appendChild(div);
-      var lang = '';
-      if($$('.celTabLanguage') && $$('.celTabLanguage').size() > 0) {
-        lang = $$('.celTabLanguage')[0].value;
-      }
-      var loadTabParams = {
-          xpage : 'celements_ajax',
-          ajax_mode : 'CelTabContent',
-          id : tabId,
-          language : lang
-       };
-      if (window.location.search.match(/\&?template=[^\&]+/)) {
-        loadTabParams["template"] = window.location.search.replace(
-            /.*\&?template=([^\&]+).*/, '$1');
-      }
-      if (window.location.search.match(/\&?language=[^\&]+/)) {
-        loadTabParams["language"] = window.location.search.replace(
-            /.*\&?language=([^\&]+).*/, '$1');
-      }
-      // load tab content
-      asyncLoading = true;
-      new Ajax.Request(getTMCelHost(), {
-         method: 'post',
-         parameters: loadTabParams,
-         onSuccess: function(transport) {
-           div.update(transport.responseText);
-           _me.lazyLoadJS(div);
-           _me.lazyLoadCSS(div);
-           //TODO on first loading: JS loading initiated by lazyLoadJS will be executed async.
-           //TODO tabchange event listener registered in lazyLoadedJS will therefore miss the
-           //TODO following fired event. -> Workaround: execute registered method once after registration.
-           $(tabBodyId).fire('tabedit:tabchange', {
-             'newTabId' : tabBodyId
-           });
-           $(tabBodyId).select('form').each(function(formelem) {
-             if (formelem && formelem.id) {
-               _me.retrieveInitialValues(formelem.id);
-             }
-           });
-         }
+      $(tabBodyId).fire('tabedit:tabLoadingFinished', {
+        'newTabBodyId' : tabBodyId,
+        'newTabButtonId' : tabId
       });
+      console.log('getTab.scriptLoadedHandler: after async tab load before tabedit:tabchange event',
+          tabId);
+      console.log('scriptLoadedHandler: finish');
+    };
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', scriptLoadedHandler);
+    console.log('getTab: ', tabBodyId, tabBodyElem, reload);
+    _me._hideTabShowLoadingIndicator(tabId);
+    if (!tabBodyElem || ((reload !== 'undefined') && reload)) {
+      _me._loadTabAsync(tabId);
+    } else if (_me._tabsInitalized.indexOf(tabBodyId) <= -1 ) {
+      console.log('getTab: static loaded ; start initialize ', tabBodyId, $(tabBodyId));
+      _me._initializeLoadedTab(tabBodyId);
+      console.log('getTab: finish static loaded', tabId);
     } else {
-      $(tabBodyId).select('form').each(function(formelem) {
-        if (formelem && formelem.id && !_me.editorFormsInitialValues.get(formelem.id)) {
-          if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-            console.log('tab already loaded: ', tabBodyId, $(tabBodyId),
-                ' but is new retrieveInitialValues.');
-          }
-          _me.retrieveInitialValues(formelem.id);
-        }
-      });
+      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
+      _me._getTabLoaderElement().hide();
+      $(tabBodyId).show();
+      _me._fireTabChange(tabId);
     }
-    $(tabBodyId).show();
-    if (!asyncLoading) {
-      $(tabBodyId).fire('tabedit:tabchange', {
-        'newTabId' : tabBodyId
-      });
-    }
+    //fix celements3_tabMenu width
+    $(tabBodyId).up('.celements3_tabMenu').setStyle({
+      'width' : width
+    });
     _me.setButtonActive(tabId);
+    console.log('getTab finish');
   },
 
- lazyLoadJS : function(parentEle) {
-  var _me = this;
+  _getTabBodyId : function(tabId) {
+    return tabId + '-tab';
+  },
+
+  _fireTabChange : function(tabId) {
+    const _me = this;
+    var tabBodyId = _me._getTabBodyId(tabId);
+    console.log('_fireTabChange: fire tabedit:tabchange event for', tabId, tabBodyId);
+    $(tabBodyId).fire('tabedit:tabchange', {
+      'newTabId' : tabBodyId,
+      'newTabBodyId' : tabBodyId,
+      'newTabButtonId' : tabId
+    });
+  },
+
+  _hideTabShowLoadingIndicator : function(tabId) {
+    const _me = this;
+    console.log('_hideTabShowLoadingIndicator: start ', tabId);
+    _me._getTabLoaderElement().show();
+    var tabBodyId = _me._getTabBodyId(tabId);
+    var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+    tabBodyElem.hide();
+    _me._loadingTabId = tabId;
+    $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+    $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+    console.log('_hideTabShowLoadingIndicator: finish ', tabId);
+  },
+
+  _initializeLoadedTab : function(tabBodyId) {
+    const _me = this;
+    console.log('_initializeLoadedTab: before LazyLoadJS ', tabBodyId);
+    var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
+    _me.lazyLoadJS(tabBodyElem);
+    _me.lazyLoadCSS(tabBodyElem);
+    $(tabBodyId).select('form').each(function(formelem) {
+      console.log('_initializeLoadedTab: before retrieveInitialValues ', tabBodyId, formelem);
+      if (formelem && formelem.id) {
+        _me.retrieveInitialValues(formelem.id);
+      }
+    });
+    _me._tabsInitalized.push(tabBodyId);
+    console.log('_initializeLoadedTab: finish ', tabBodyId);
+  },
+
+  _loadTabAsync : function(tabId) {
+    const _me = this;
+    console.log('_loadTabAsync: start loading async ', tabId);
+    var lang = '';
+    if($$('.celTabLanguage') && $$('.celTabLanguage').length > 0) {
+      lang = $$('.celTabLanguage')[0].value;
+    }
+    console.log('_loadTabAsync: celTabLanguage? ', lang);
+    var loadTabParams = {
+        xpage : 'celements_ajax',
+        ajax_mode : 'CelTabContent',
+        id : tabId,
+        language : lang
+     };
+    if (window.location.search.match(/\&?template=[^\&]+/)) {
+      loadTabParams["template"] = window.location.search.replace(
+          /.*\&?template=([^\&]+).*/, '$1');
+    }
+    console.log('_loadTabAsync: template in URL? ', loadTabParams["template"]);
+    if (window.location.search.match(/\&?language=[^\&]+/)) {
+      loadTabParams["language"] = window.location.search.replace(
+          /.*\&?language=([^\&]+).*/, '$1');
+    }
+    console.log('_loadTabAsync: overwrite language from URL ? ', loadTabParams["language"]);
+    $A(decodeURI(window.location.search).match(/(\&|\?)data-[^=\&]+=[^\&]+/g)).each(function(elem) {
+      var elemArray = elem.split('=');
+      var key = elemArray[0].substr(1);
+      var value = elemArray[1];
+      loadTabParams[key] = value;
+    });
+    console.log('_loadTabAsync: start Ajax call to load content ', loadTabParams);
+    new Ajax.Request(getTMCelHost(), {
+       method: 'post',
+       parameters: loadTabParams,
+       onSuccess: function(transport) {
+         console.log('_loadTabAsync.Ajax: onSuccess', tabId);
+         var tabBodyId = _me._getTabBodyId(tabId);
+         console.log('_loadTabAsync.Ajax: before update', tabId);
+         _me._getOrCreateTabBody(tabBodyId).update(transport.responseText);
+         console.log('_loadTabAsync.Ajax: before _initializeLoadedTab', tabId);
+         _me._initializeLoadedTab(tabBodyId);
+         console.log('_loadTabAsync.Ajax: finish', tabId);
+       }
+    });
+    console.log('_loadTabAsync: finish', tabId);
+  },
+
+  lazyLoadJS : function(parentEle, syncLoadOnly) {
+  const _me = this;
+  syncLoadOnly = syncLoadOnly || false;
   var scripts = [];
-  parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec').each(
-      function(scriptEle) {
-    if(scriptEle.hasClassName('cel_lazyloadJS')) {
+  var scriptElems = parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec');
+  console.log('lazyLoadJS: start ', parentEle, syncLoadOnly, scriptElems);
+  scriptElems.each(function(scriptEle) {
+    if (scriptEle.hasClassName('cel_lazyloadJS')) {
       var scriptPath = scriptEle.innerHTML;
       var scriptPathObj = "";
+      var scriptURL = "";
+      var loadScript = !syncLoadOnly;
+      console.log('lazyLoadJS: scriptPath isJSON ', scriptPath, scriptPath.isJSON());
       if (scriptPath.isJSON()) {
         scriptPathObj = scriptPath.evalJSON();
         scriptPath = scriptPathObj.url;
+        scriptURL = scriptPathObj.fullURL;
+        loadScript = !syncLoadOnly || (scriptPathObj.initLoad);
       }
-      if(scriptPath != '') {
+      console.log('lazyLoadJS: scriptPath after isJSON ', scriptPath, scriptURL);
+      if ((typeof scriptPath !== 'undefined') && (scriptPath != '')) {
         if (scriptPath.indexOf('?') > 0) {
           scriptPath += '&';
         } else {
@@ -529,23 +722,35 @@ TE.prototype = {
         } else {
           scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
         }
-        if(!_me.scriptIsLoaded(scriptPath)) {
-          scripts.push( { isUrl: true, value: scriptPath } );
-//          var newEle = new Element('script', { type: 'text/javascript', src: scriptPath });
-//          $$('head')[0].insert(newEle);
-        }
+        scriptURL = scriptPath;
       }
-    } else if(scriptEle.hasClassName('cel_lazyloadJS_exec')) {
+      console.log('lazyLoadJS: before check load script ', loadScript, scriptURL);
+      if (loadScript && scriptURL && (scriptURL !== '')
+          && !_me.scriptIsLoaded(scriptURL)) {
+        console.log('lazyLoadJS: add ', scriptURL);
+        scripts.push( { isUrl: true, value: scriptURL } );
+//          var newEle = new Element('script', { type: 'text/javascript', src: scriptURL });
+//          $$('head')[0].insert(newEle);
+      }
+    } else if (scriptEle.hasClassName('cel_lazyloadJS_exec')) {
+      console.log('lazyLoadJS: elsif is URL false add ', scriptEle.innerHTML);
       scripts.push( { isUrl: false, value: scriptEle.innerHTML } );
 //      eval(scriptEle.innerHTML);
     }
   });
-  if(scripts.length > 0) { _me.loadScripts(scripts); }
+  if(scripts.length > 0) {
+    console.log('lazyLoadJS scripts ', scripts);
+    _me.loadScripts(scripts);
+  } else {
+    console.log('TabEditor: lazyLoadJS NO scripts to add -> firing tabedit:scriptsLoaded');
+    $('tabMenuPanel').fire('tabedit:scriptsLoaded');
+  }
+  console.log('lazyLoadJS: end');
  },
 
  lazyLoadCSS : function(parentEle) {
-  var _me = this;
-  var scripts = [];
+  const _me = this;
+  const scripts = [];
   parentEle.select('span.cel_lazyloadCSS').each(function(scriptEle) {
     var scriptPath = scriptEle.innerHTML;
     var scriptPathObj = "";
@@ -574,16 +779,16 @@ TE.prototype = {
  },
 
  loadCSSScripts : function(scripts) {
-  var _me = this;
+  const _me = this;
   var CSSLoaded = function() {
     _me.CSSLoading = false;
     _me.loadCSSScripts();
   };
-  if(!_me.CSSLoading && (_me.CSSQueue.size() > 0)) {
+  if(!_me.CSSLoading && (_me.CSSQueue.length > 0)) {
     var loadScript = _me.CSSQueue.first();
     _me.CSSQueue = _me.CSSQueue.slice(1); // remove first element
     if(loadScript.isUrl) {
-      var newEle = new Element('link', { 
+      var newEle = new Element('link', {
           'rel': 'stylesheet',
           'href': loadScript.value,
           'type': 'text/css',
@@ -605,7 +810,7 @@ TE.prototype = {
       eval(loadScript.value);
       _me.loadScripts();
     }
-  } else if((scripts != undefined) && (scripts.size() > 0)) {
+  } else if((scripts != undefined) && (scripts.length > 0)) {
     $A(scripts).each( function(ele) {
       _me.CSSQueue.push(ele);
     });
@@ -614,17 +819,17 @@ TE.prototype = {
  },
 
  loadScripts : function(scripts) {
-  var _me = this;
+  const _me = this;
   var scriptLoaded = function() {
     _me.scriptLoading = false;
     _me.loadScripts();
   };
-  if(!_me.scriptLoading && (_me.scriptQueue.size() > 0)) {
+  if(!_me.scriptLoading && (_me.scriptQueue.length > 0)) {
     var loadScript = _me.scriptQueue.first();
     _me.scriptQueue = _me.scriptQueue.slice(1); // remove first element
     if(loadScript.isUrl) {
       var newEle = new Element('script', { type: 'text/javascript', src: loadScript.value });
-    if(Prototype.Browser.IE) {
+      if(Prototype.Browser.IE) {
         newEle.onreadystatechange = function () {
           if (this.readyState === 'loaded' || this.readyState === 'complete') {
             scriptLoaded();
@@ -635,32 +840,47 @@ TE.prototype = {
         newEle.onerror = scriptLoaded;
       }
       _me.scriptLoading = true;
+      console.log('loadScripts insert ', newEle);
       $$('head')[0].insert(newEle);
     } else {
       eval(loadScript.value);
       _me.loadScripts();
     }
-  } else if((scripts != undefined) && (scripts.size() > 0)) {
+  } else if((scripts != undefined) && (scripts.length > 0)) {
     $A(scripts).each( function(ele) {
       _me.scriptQueue.push(ele);
     });
     _me.loadScripts();
   }
-},
+  _me._loadScriptsCheckFinished();
+ },
 
- scriptIsLoaded : function(script) {
-  var _me = this;
+ _loadScriptsCheckFinished : function() {
+   const _me = this;
+   if (!_me.scriptLoading && _me.scriptQueue.length <= 0) {
+     console.log('TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded');
+     $('tabMenuPanel').fire('tabedit:scriptsLoaded');
+   }
+   console.log('_loadScriptsCheckFinished: finish');
+ },
+
+ scriptIsLoaded : function(scriptURL) {
+  const _me = this;
   var isLoaded = false;
   $$('script').each(function(loadedScript) {
-    if(loadedScript.src === _me.getTMCelDomain() + script) {
+    //as long as new URL() is not available in IE use a-Element
+    var scriptNewURLLink = new Element('a', { 'href' : scriptURL});
+    console.log('scriptIsLoaded: ', loadedScript.src, scriptNewURLLink);
+    if(loadedScript.src === scriptNewURLLink.href) {
       isLoaded = true;
     }
   });
+  console.log('scriptIsLoaded: return ', isLoaded, scriptURL);
   return isLoaded;
 },
 
  cssIsLoaded : function(script) {
-  var _me = this;
+  const _me = this;
   var isLoaded = false;
   $$('link[rel="stylesheet"]').each(function(loadedScript) {
     if(loadedScript.href === _me.getTMCelDomain() + script) {
@@ -671,7 +891,7 @@ TE.prototype = {
  },
 
  setButtonActive : function(id) {
-  var _me = this;
+  const _me = this;
   // set all buttons: inactive
   $$('.tabButton .cel-button-active').each(function(button) {
     button.removeClassName('cel-button-active');
@@ -704,7 +924,7 @@ TE.prototype = {
  },
 
  saveAndClose : function(formName) {
-  var _me = this;
+  const _me = this;
   if(!formName) {
     formName = _me.getFirstFormWithId();
   }
@@ -713,23 +933,22 @@ TE.prototype = {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
-    _me.saveAllFormsAjax(function(transport) {
+    _me.saveAllFormsAjax(function() {
       window.onbeforeunload = null;
-//      _me._log.logDimAndAgent('saveAndClose: before synchronous submit for form |'
-//          + oldSaveFormName + '|');
       document.forms[oldSaveFormName].submit();
     }, oldSaveFormName);
   } else {
     alert("Error: No 'edit' form!");
   }
  },
- 
+
  getFirstFormWithId : function() {
+   var formName = '';
    if(document.forms['edit']) {
      formName = 'edit';
    } else {
      $A(document.forms).each(function(form) {
-       if(form.id != '') {
+       if (form.id != '') {
          formName = form.id;
          throw $break;
        }
@@ -739,50 +958,54 @@ TE.prototype = {
  },
 
  saveAndContinue : function(execCallback) {
-  var _me = this;
+  const _me = this;
   //TODO add possibility to add JS-listener which can do additional 'isDirty' checks
-  if (this.isDirty()) {
+  if (_me.isDirty()) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
-    var savingDialog = this._getModalDialog();
-    savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader); 
-    savingDialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+    const savingDialog = _me._getModalDialog();
+    savingDialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
+    savingDialog.setBody(_me._loading.getLoadingIndicator(true));
     savingDialog.cfg.queueProperty("buttons", null);
     savingDialog.render();
     savingDialog.show();
     //TODO add possibility to add JS-listener which can execute alternative save actions
     _me.saveAllFormsAjax(function(transport, jsonResponses) {
       savingDialog.hide();
-      var failed = _me.showErrorMessages(jsonResponses);
-      if ((typeof(execCallback) != 'undefined') && execCallback) {
-        execCallback(transport, jsonResponses, failed);
+      const failed = _me.showErrorMessages(jsonResponses);
+      try {
         if (failed) {
+          _me.celFire('tabedit:failingSaved', { 'jsonResponses' : jsonResponses });
           $('tabMenuPanel').fire('tabedit:failingSaved', jsonResponses);
         } else {
+          _me.celFire('tabedit:successfulSaved', { 'jsonResponses' : jsonResponses });
           $('tabMenuPanel').fire('tabedit:successfulSaved', jsonResponses);
         }
+      } catch (exp) {
+        console.error('Saved-listener failed.', exp);
       }
+      execCallback && execCallback(transport, jsonResponses, failed);
     });
   }
  },
 
+ /**
+  * showErrorMessages display errors in jsonResponses to the user
+  *
+  * @param jsonResponses
+  * @returns true if errors have been displayed
+  *          false if no errors have been displayed
+  */
  showErrorMessages : function(jsonResponses) {
-   var _me = this;
-   var errorMessages = new Array();
-   jsonResponses.each(function(response) {
-//     var formId = response.key;
-     var formSaveResponse = response.value;
-     if (!formSaveResponse.successful) {
-       errorMessages.push(formSaveResponse.errorMessages);
-       errorMessages = errorMessages.flatten();
-     }
-   });
+   const errorMessages = jsonResponses.values()
+     .filter(response => response && !response.successful)
+     .flatMap(response => response.errorMessages || []);
    if (errorMessages.length > 0) {
-     var errorMesgDialog = _me._getModalDialog();
-     errorMesgDialog.setHeader('Saving failed!'); 
+     const errorMesgDialog = this._getModalDialog();
+     errorMesgDialog.setHeader('Saving failed!');
      errorMesgDialog.setBody("saving failed for the following reasons:<ul><li>"
-         + errorMessages.join('</li><li>').replace(new RegExp('<li>$'),'') + "</ul>"); 
+         + errorMessages.join('</li><li>').replace(new RegExp('<li>$'),'') + "</ul>");
      errorMesgDialog.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
      errorMesgDialog.cfg.queueProperty("buttons",
        [ { text: "OK", handler:function() {
@@ -797,18 +1020,13 @@ TE.prototype = {
  },
 
  saveAndContinueAjax : function(formName, handler) {
-//   var _me = this;
-//  _me._log.logDimAndAgent('saveAndContinueAjax: start |' + formName + '|');
   if(!formName) { formName = 'edit'; }
   if(document.forms[formName]) {
     if(typeof(doBeforeEditSubmit) != 'undefined') {
       doBeforeEditSubmit();
     }
     document.forms[formName].select('textarea.mceEditor').each(function(formfield) {
-      if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-        console.log('textarea save tinymce: ', formfield.name, tinyMCE.get(formfield.id).save());
-      }
-      formfield.value = tinyMCE.get(formfield.id).save();
+      formfield.value = tinymce.get(formfield.id).save();
     });
     $(formName).request(handler);
   } else {
@@ -818,8 +1036,8 @@ TE.prototype = {
 
  showProgressDialog : function(headerTxt) {
    var savingDialog = this._getModalDialog();
-   savingDialog.setHeader(headerTxt); 
-   savingDialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+   savingDialog.setHeader(headerTxt);
+   savingDialog.setBody(_me._loading.getLoadingIndicator(true));
    savingDialog.cfg.queueProperty("buttons", null);
    savingDialog.render();
    savingDialog.show();
@@ -832,29 +1050,42 @@ TE.prototype = {
  },
 
  isDirty : function() {
-   var _me = this;
-   var isDirty = (_me.getDirtyFormIds().size() > 0) || _me._isEditorDirtyOnLoad;
-   if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-     console.log('isDirty: ', isDirty, ' , isEditorDirtyOnLoad: ',
-         _me._isEditorDirtyOnLoad);
-   }
+   const _me = this;
+   const isDirty = (_me.getDirtyFormIds().length > 0) || _me._isEditorDirtyOnLoad;
+   console.debug('isDirty: ', isDirty, ' , isEditorDirtyOnLoad: ', _me._isEditorDirtyOnLoad);
    return isDirty;
  },
 
- updateTinyMCETextAreas : function(formId) {
-   document.forms[formId].select('textarea.mceEditor').each(function(formfield) {
-   if (tinyMCE && tinyMCE.get(formfield.id)) {
-       if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-         console.log('updateTinyMCETextAreas: ', formfield.name,
-             tinyMCE.get(formfield.id).getContent());
-       }
-       formfield.value = tinyMCE.get(formfield.id).getContent();
+ updateOneTinyMCETextArea : function(ed) {
+   const formfield = document.getElementById(ed.id);
+   console.debug('updateOneTinyMCETextArea: updating field value', formfield.id);
+   try {
+     if (typeof ed.serializer !== 'undefined') {
+       formfield.value = ed.getContent();
+       console.log('updateOneTinyMCETextArea: for field ', formfield.id, formfield.value);
+     } else {
+       console.warn('updateOneTinyMCETextArea: no serializer -> skip', ed.id);
+     }
+   } catch (exp) {
+     console.error('updateOneTinyMCETextArea: failed with exception', formfield.id,
+         ed.serializer, exp);
    }
+ },
+
+ updateTinyMCETextAreas : function(formId) {
+   const _me = this;
+   const mceFields = document.forms[formId].select('textarea.mceEditor');
+   console.log('updateTinyMCETextAreas: for ', formId, mceFields);
+   mceFields.each(function(formfield) {
+     if ((typeof tinymce !== 'undefined') && tinymce.get(formfield.id)) {
+       _me.updateOneTinyMCETextArea(tinymce.get(formfield.id));
+     }
    });
+   console.debug('updateTinyMCETextAreas: end ', formId);
  },
 
  /**
-  * submittable fields must have a name attribute and maynot be disabled  
+  * submittable fields must have a name attribute and maynot be disabled
   * @param fieldElem
   * @returns {Boolean}
   */
@@ -864,82 +1095,71 @@ TE.prototype = {
 
  /**
   * isDirtyField and needs saving
-  * 
+  *
   * @param fieldElem
-  * @param optElementsValues optional hash with initial values of all elements in the form
   * @return
   */
- isDirtyField : function(fieldElem, optElementsValues) {
-   var _me = this;
-   if (fieldElem.hasClassName('celDirtyOnLoad')) {
-     return true;
-   }
-   var formId = fieldElem.up('form').id;
-   var elementsValues = optElementsValues || _me.editorFormsInitialValues.get(formId);
-   if (fieldElem.hasClassName('mceEditor') && tinyMCE && tinyMCE.get(fieldElem.id)) {
-     //FIXME sometimes isDirty from tinyMCE is wrong... thus we compare the .getContent
-     //FIXME with the editorFormsInitialValues instead.
-//     return tinyMCE.get(fieldElem.id).isDirty();
-     return (elementsValues.get(fieldElem.name) != tinyMCE.get(fieldElem.id).getContent());
-   } else if (!fieldElem.hasClassName('celIgnoreDirty')) {
-     var isInputElem = (fieldElem.tagName.toLowerCase() == 'input');
-     var elemValue = fieldElem.value;
-     if (isInputElem && (fieldElem.type.toLowerCase() == 'radio')) {
-       if (fieldElem.checked) {
-         elemValue = fieldElem.getValue();
-       } else {
-         return false;
-       }
-     } else if (isInputElem && (fieldElem.type.toLowerCase() == 'checkbox')) {
-       elemValue = fieldElem.checked;
-     }
-     return (elementsValues.get(fieldElem.name) != elemValue);
-   }
-   return false;
- },
+  isDirtyField : function(fieldElem) {
+    if (fieldElem.hasClassName('celDirtyOnLoad')) {
+      return true;
+    }
+    const formElem = fieldElem.closest('form');
+    const formdata = new FormData(formElem);
+    const formElements = formElem.elements;
+    const elementsValues = this.editorFormsInitialValues.get(formElem.id);
+    const dirtyFields = [...formdata.keys()].filter(key => 
+      !this._isIgnoreDirty(formElements, key)
+      && !this._equalsParamValues(formdata.getAll(key), elementsValues[key]));
+    console.debug('isDirtyField: dirtyFields found', dirtyFields);
+    return dirtyFields.length > 0;
+  },
+
+  _isIgnoreDirty : function(formElements, key) {
+    return formElements[key].classList
+      && formElements[key].classList.contains('celIgnoreDirty');
+  },
+
+  _equalsParamValues : function(currentValueArr, initValueSet = new Set()) {
+    return (new Set(currentValueArr).size === initValueSet.size)
+      && currentValueArr.every(val => initValueSet.has(val));
+  },
 
  _formDirtyOnLoad : function(formId) {
-   var _me = this;
+   const _me = this;
    return _me._isEditorDirtyOnLoad ||
      (typeof($(formId).celFormDirtyOnLoad) !== 'undefined')
        && ($(formId).celFormDirtyOnLoad.value == 'true');
  },
 
  getDirtyFormIds : function() {
-   var _me = this;
-   var dirtyFormIds = new Array();
-   _me.editorFormsInitialValues.each(function(entry) {
-     var formId = entry.key;
-     if (_me.isValidFormId(formId)) {
-       if (_me._formDirtyOnLoad(formId)) {
-         if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-           console.log('getDirtyFormIds formDirtyOnLoad found. ');
-         }
+   const dirtyFormIds = [];
+   for(let entry of this.editorFormsInitialValues) {
+     let formId = entry[0];
+     if (this.isValidFormId(formId)) {
+       if (this._formDirtyOnLoad(formId)) {
+         console.debug('getDirtyFormIds formDirtyOnLoad found. ');
          dirtyFormIds.push(formId);
        } else {
-         var elementsValues = entry.value;
-         _me.updateTinyMCETextAreas(formId);
-         $(formId).getElements().each(function(elem) {
-           if (_me._isSubmittableField(elem) && _me.isDirtyField(elem, elementsValues)) {
-             if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-               console.log('getDirtyFormIds first found dirty field: ', elem.name);
-             }
+         this.updateTinyMCETextAreas(formId);
+         for(let elem of document.getElementById(formId).elements) {
+           if (this._isSubmittableField(elem) && this.isDirtyField(elem)) {
+             console.debug('getDirtyFormIds first found dirty field: ', elem.name);
              dirtyFormIds.push(formId);
-             throw $break;  //prototype each -> break
+             break;
            }
-         });
+         }
        }
-     } else if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
+     } else {
        console.warn('getDirtyFormIds: form with id [' + formId
-    		   + '] disappeared since loading the editor.');
+         + '] disappeared since loading the editor.');
      }
-   });
+   }
    return dirtyFormIds;
  },
 
  changeEditLanguage : function(newEditLanguage, execCancelCallback) {
-   var _me = this;
-   _me.checkUnsavedChanges(function(transport, jsonResponses, failed) {
+   const _me = this;
+   _me.checkUnsavedChanges(function(_, jsonResponses, failed) {
      var successful = (typeof failed === 'undefined') || !failed;
      if (successful) {
        window.location.href = '?language=' + newEditLanguage + '&'
@@ -951,15 +1171,15 @@ TE.prototype = {
  },
 
  checkUnsavedChanges : function(execCallback, execCancelCallback) {
-   var _me = this;
+   const _me = this;
    execCallback = execCallback || function() {};
    execCancelCallback = execCancelCallback || function() {};
    if (_me.isDirty()) {
-   var saveBeforeCloseQuestion = _me._getModalDialog();
-     saveBeforeCloseQuestion.setHeader(_me.tabMenuConfig.savingDialogWarningHeader); 
-     saveBeforeCloseQuestion.setBody(_me.tabMenuConfig.savingDialogMessage); 
-     saveBeforeCloseQuestion.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
-     saveBeforeCloseQuestion.cfg.queueProperty("buttons",
+     const saveBeforeCloseQuestion = _me._getModalDialog();
+       saveBeforeCloseQuestion.setHeader(_me.tabMenuConfig.savingDialogWarningHeader);
+       saveBeforeCloseQuestion.setBody(_me.tabMenuConfig.savingDialogMessage);
+       saveBeforeCloseQuestion.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
+       saveBeforeCloseQuestion.cfg.queueProperty("buttons",
          [ { text: _me.tabMenuConfig.savingDialogButtonDoNotSave, handler:function() {
              window.onbeforeunload = null;
              this.hide();
@@ -973,56 +1193,44 @@ TE.prototype = {
                  var _dialog = this;
                  _me.saveAllFormsAjax(function(transport, jsonResponses) {
                    _dialog.hide();
-                   var failed = _me.showErrorMessages(jsonResponses);
-                   if ((typeof console != 'undefined')
-                       && (typeof console.log != 'undefined')) {
-                     console.log('saveAllFormsAjax returning: ', failed, jsonResponses,
-                         execCallback);
-                   }
+                   const failed = _me.showErrorMessages(jsonResponses);
+                   console.log('saveAllFormsAjax returning: ', failed, jsonResponses, execCallback);
              execCallback(transport, jsonResponses, failed);
            });
                  _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
                  _dialog.cfg.queueProperty("buttons", null);
-                 _dialog.setBody('<img style="margin-left: auto; margin-right:auto;" src="/skin/resources/celRes/ajax-loader-small.gif" />'); 
+                 _dialog.setBody(_me._loading.getLoadingIndicator(true));
                  _dialog.render();
                }, isDefault:true }
              ]);
-     saveBeforeCloseQuestion.render();
-     saveBeforeCloseQuestion.show();
+       saveBeforeCloseQuestion.render();
+       saveBeforeCloseQuestion.show();
    } else {
-     execCallback();
+     try {
+       execCallback();
+     } catch (exp) {
+       console.error('checkUnsavedChanges execCallback failed', exp);
+     }
    }
  },
 
  saveAllFormsAjax : function(execCallback, doNotSaveFormId) {
-   var _me = this;
-//   _me._log.logDimAndAgent('saveAllFormsAjax: start |' + doNotSaveFormId + '|');
+   const _me = this;
    var dirtyFormIds = _me.getDirtyFormIds();
    var jsonResponses = new Hash();
    var saveAllForms = function(allDirtyFormIds) {
      var formId = allDirtyFormIds.pop();
      var remainingDirtyFormIds = allDirtyFormIds;
-//     _me._log.logDimAndAgent('saveAllFormsAjax: before saveAndContinueAjax in '
-//         + 'saveAllForms for formId |' + formId + '|, remainingDirtyFormIds: '
-//         + Object.toJSON(remainingDirtyFormIds));
      _me.saveAndContinueAjax(formId, { onSuccess : function(transport) {
        if (_me._handleSaveAjaxResponse(formId, transport, jsonResponses)) {
-//         _me._log.logDimAndAgent('saveAllFormsAjax: received json Response |'
-//             + Object.toJSON(jsonResponses) + '|');
          _me._isEditorDirtyOnLoad = false;
          _me.retrieveInitialValues(formId);
        }
-       if (remainingDirtyFormIds.size() > 0) {
-         if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-           console.log('next saveAllForms with: ', remainingDirtyFormIds);
-         }
-//         _me._log.logDimAndAgent('saveAllFormsAjax: in success before recursive saveAllForms with remainingDirtyFormIds |'
-//             + Object.toJSON(remainingDirtyFormIds) + '|');
+       if (remainingDirtyFormIds.length > 0) {
+         console.log('next saveAllForms with: ', remainingDirtyFormIds);
          saveAllForms(remainingDirtyFormIds);
          } else {
-           if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-             console.log('save done.');
-           }
+           console.log('save done.');
            execCallback(transport, jsonResponses);
          }
      }});
@@ -1030,7 +1238,7 @@ TE.prototype = {
    if (doNotSaveFormId && (doNotSaveFormId != '')) {
      dirtyFormIds = dirtyFormIds.without(doNotSaveFormId);
    }
-   if (dirtyFormIds.size() > 0) {
+   if (dirtyFormIds.length > 0) {
      saveAllForms(dirtyFormIds);
    } else {
      execCallback();
@@ -1039,18 +1247,13 @@ TE.prototype = {
 
  _handleSaveAjaxResponse : function(formId, transport, jsonResponses) {
    if (transport.responseText.isJSON()) {
-     if ((typeof console != 'undefined') && (typeof console.log != 'undefined')) {
-       console.log('_handleSaveAjaxResponse with json result: ', transport.responseText);
-     }
-     var jsonResult = transport.responseText.evalJSON();
+     console.debug('_handleSaveAjaxResponse with json result: ', transport.responseText);
+     const jsonResult = transport.responseText.evalJSON();
      jsonResponses.set(formId, jsonResult);
      if (jsonResult.successful) {
        return true;
      } else {
-       if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-         console.warn('_handleSaveAjaxResponse: save failed for [' + formId + ']: ',
-             jsonResult);
-       }
+       console.warn('_handleSaveAjaxResponse: save failed for [' + formId + ']: ', jsonResult);
      }
    } else {
      return true;
@@ -1066,9 +1269,7 @@ TE.prototype = {
     url = url+"&pagefullname=" + pageFullName;
     url = url+"&lang=" + lang;
     url = url+"&"+queryString;
-    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-      console.warn('DEPRECATED saveWithAjax on TabEditor: ', pageFullName, queryString);
-    }
+    console.warn('DEPRECATED saveWithAjax on TabEditor: ', pageFullName, queryString);
     new Ajax.Request(url, {method: 'get'});
   },
 
@@ -1080,10 +1281,8 @@ TE.prototype = {
         ajax : 'save',
         pagefullname : pageFullName,
         lang : lang
-     }).merge(paramsHash); 
-    if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-      console.warn('DEPRECATED saveWithAjaxPOST on TabEditor: ', pageFullName, queryString);
-    }
+     }).merge(paramsHash);
+    console.warn('DEPRECATED saveWithAjaxPOST on TabEditor: ', pageFullName, queryString);
     new Ajax.Request(getTMCelHost(), {
       method: 'post',
       parameters: ajaxParams,
@@ -1098,15 +1297,15 @@ TE.prototype = {
   _getModalDialog : function() {
     if(!this.modalDialog) {
       this.modalDialog = new YAHOO.widget.SimpleDialog("modal dialog", {
-          width: "auto", 
-          fixedcenter: true, 
-          visible: false, 
-          draggable: false, 
-          close: false, 
-          zindex:4, 
+          width: "auto",
+          fixedcenter: true,
+          visible: false,
+          draggable: false,
+          close: false,
+          zindex:4,
           modal:true,
           monitorresize:false,
-          icon: YAHOO.widget.SimpleDialog.ICON_HELP, 
+          icon: YAHOO.widget.SimpleDialog.ICON_HELP,
           constraintoviewport: true
           } );
     }
@@ -1118,7 +1317,8 @@ TE.prototype = {
   }
 };
 
-YAHOO.register("tabeditor", CELEMENTS.widget.TabEditor, {version: "2.6", build: "7"});
+})(window);
+//YAHOO.register("tabeditor", CELEMENTS.widget.TabEditor, {version: "2.6", build: "7"});
 
 var getTMCelHost = function() {
   var celHost = document.location.href + '?';

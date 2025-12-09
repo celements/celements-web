@@ -1,0 +1,1 @@
+import baseIndexOf from"./_baseIndexOf.js";import toInteger from"./toInteger.js";var nativeMax=Math.max;function indexOf(e,n,t){var r=null==e?0:e.length;if(!r)return-1;var a=null==t?0:toInteger(t);return a<0&&(a=nativeMax(r+a,0)),baseIndexOf(e,n,a)}export default indexOf;

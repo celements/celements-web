@@ -1,0 +1,1 @@
+import isSymbol from"./isSymbol.js";var NAN=NaN;function baseToNumber(o){return"number"==typeof o?o:isSymbol(o)?NAN:+o}export default baseToNumber;

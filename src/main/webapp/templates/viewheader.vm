@@ -43,10 +43,6 @@
         #set($editaction = "inline")
       #else
         #set($editaction = "edit")
-## Check WYSISYG editing option
-        #if($xwiki.getUserPreference("editor")=="Wysiwyg")
-          #set($editparams="xpage=wysiwyg")
-        #end
       #end
 ## Check language option
       #if (($xwiki.isMultiLingual()==true)&&($tdoc.realLanguage!=""))
@@ -97,10 +93,8 @@
           #if (($xwiki.isMultiLingual()==true) && !$isReadOnly)
             #if ($tdoc.realLanguage!="")
               #xwikiitem($doc.getURL("edit","language=${tdoc.realLanguage}") "editcontent")
-              #xwikiitem($doc.getURL("edit","language=${tdoc.realLanguage}&xpage=wysiwyg") "edithtmlcontent")
             #else
               #xwikiitem($doc.getURL("edit") "editcontent")
-              #xwikiitem($doc.getURL("edit","xpage=wysiwyg") "edithtmlcontent")
             #end
             <span class="xwikimoreactionitem">
               <a href="$doc.getURL("edit", "language=en")">$msg.get("edit") En</a>
@@ -113,7 +107,6 @@
           #else
             #if (!$isReadOnly)
               #xwikiitem($doc.getURL("edit") "editcontent")
-              #xwikiitem($doc.getURL("edit","xpage=wysiwyg") "edithtmlcontent")
             #end
           #end
           #if (!$isReadOnly)

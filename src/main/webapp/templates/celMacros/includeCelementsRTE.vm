@@ -1,4 +1,12 @@
-$celementsweb.addExtJSfileOnce("${xwiki.getSkinFile('celRTE/tiny_mce_src.js', true)}?version=${xwiki.celementsweb.getLastStartupTimeStamp()}")
-<span class='cel_lazyloadJS' style='display: none;'>celRTE/tiny_mce_src.js</span>
-$celementsweb.addExtJSfileOnce(":celJS/celTabMenu/loadTinyMCE-async.js")
-<span class='cel_lazyloadJS' style='display: none;'>celJS/celTabMenu/loadTinyMCE-async.js</span>
+#if("$!lazyAdd" == '')
+  #set($lazyAdd = true)
+#end
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+#set($extJsParam = $extJsParam.setLazyLoad($lazyAdd))
+#if($xwiki.getXWikiPreferenceAsInt("cel_activate_jsdefer", 0) == 1)
+  #set($extJsParam = $extJsParam.setLoadMode($jsService.getJsLoadMode('DEFER')))
+#end
+#foreach($jsFile in $services.rteconfig.rteImplementation.javaScriptFiles)
+  $!jsService.includeExtJsFile($extJsParam.setJsFile($jsFile))
+#end

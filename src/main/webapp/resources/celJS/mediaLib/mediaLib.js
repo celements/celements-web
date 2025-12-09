@@ -95,7 +95,8 @@ CELEMENTS.widget.MediaLibTable.prototype.handleDomReady = function(event){
 
 CELEMENTS.widget.MediaLibTable.prototype.requestData = function(){
   var loaderEle = new Element('div', { 'id' : this.getId() + '_ml_loader' });
-  loaderEle.innerHTML = "<img src='/skin/resources/celRes/ajax-loader.gif'>";
+  loaderEle.innerHTML = "<img src='" + window.CELEMENTS.getUtils().getPathPrefix()
+    + "/file/resources/celRes/ajax-loader.gif'>";
   $(this.getId()).setStyle( { display : 'none' } );
   $(this.getId()).parentNode.appendChild(loaderEle);
   

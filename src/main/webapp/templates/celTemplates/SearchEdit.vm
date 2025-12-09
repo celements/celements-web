@@ -1,0 +1,33 @@
+<div id="cel_websearch_config_editor" class="c3_scrollable">
+
+<form id="webSearchConfigForm" method="post" action="?">
+<input type="hidden" name="xpage" value="celements_ajax" />
+<input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+<input type="hidden" name="createIfNotExists" value="true" />
+<input type="hidden" name="xredirect" value="$!request.get('xredirect')" />
+
+#set($cel_editobj_dict_prefix = 'cel_search_edit_' )
+#set($cel_editobj_externalForm = true)  
+#set($cel_embedded_editobj = true)
+
+#set($cel_editobj_classname = 'Celements2.WebSearchConfigClass')
+#set($obj = $doc.getObject($cel_editobj_classname))
+#set($cel_editobj_nb = $obj.getNumber())
+#set($cel_editobj_hasObjAddLink = ("$!obj" == ''))
+#set($cel_editobj_hasObjRemoveLink = ("$!obj" != ''))
+#set($cel_editobj_properties = "packages,linkedDocsOnly,fuzzySearch,docs,docsBlackList")
+#set($cel_editobj_properties = "$cel_editobj_properties,spaces,spacesBlackList")
+#set($cel_editobj_properties = "$cel_editobj_properties,pageTypes,pageTypesBlackList")
+#set($cel_editobj_properties = "$cel_editobj_properties,sortFields,resultItemRenderScript")
+#parse("celTemplates/ObjectEdit.vm")
+
+#set($cel_editobj_classname = 'Celements2.WebAttachmentSearchConfigClass')
+#set($obj = $doc.getObject($cel_editobj_classname))
+#set($cel_editobj_nb = $obj.getNumber())
+#set($cel_editobj_hasObjAddLink = ("$!obj" == ''))
+#set($cel_editobj_hasObjRemoveLink = ("$!obj" != ''))
+#set($cel_editobj_properties = "mimeTypes,mimeTypesBlackList,fileNamePrefixes")
+#parse("celTemplates/ObjectEdit.vm")
+
+</form>
+</div>

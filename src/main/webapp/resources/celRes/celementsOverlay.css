@@ -1,8 +1,11 @@
+html, body {
+  height: 100%;  
+}
 .generalOverlay {
   height:100%;
   width:100%;
-  z-index: 99;
-  position: absolute;
+  z-index: 99; /** only needed for old celements yui overlay **/
+  position: fixed;
   top: 0px;
   left: 0px;
 }
@@ -222,9 +225,13 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay .layoutsubsection #cel_overlaybody {
   position: relative;
   width: 100%;
+  overflow : auto;
 }
 .generalOverlay .layoutsubsection,
-.generalOverlay .layoutsubsection p {
+.generalOverlay .layoutsubsection p,
+.generalOverlay .layoutsubsection td,
+.generalOverlay .layoutsubsection th,
+.generalOverlay .layoutsubsection li {
   font-size: 12px;
   line-height: 16px;
   font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
@@ -370,12 +377,52 @@ form#newsletter_send span#testResultBoxSpan {
 
 /* fix for password change form in baseskin */
 .generalOverlay .changePassword dl {
-  margin: 0;
+  margin: 0px;
 }
 .generalOverlay .changePassword dl dd input {
-  margin: 0;
+  margin: 0px;
 }
 .generalOverlay .changePassword dl dd input#xwikipassword {
-  margin: 0;
+  margin: 0px;
 }
 
+#cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
+}
+
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description form,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description button,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description input,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description select,
+.generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description textarea {
+	margin: 5px;
+}
+
+/* MOBILE LANDSCAPE */
+
+@media only screen and (max-width: 800px) { 
+	
+	.main.layoutsubsection {
+		position:relative;
+		width:75%;
+	}
+	
+	#cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
+	}
+}
+
+
+/* MOBILE PORTRAIT 
+
+@media only screen and (max-width: 560px) { 
+	
+	.main.layoutsubsection {
+		position:relative;
+		width:75%;
+	}
+	
+	#cel_pwdrecovery_process_description {
+		padding: 0 0 20px;
+	}
+}*/

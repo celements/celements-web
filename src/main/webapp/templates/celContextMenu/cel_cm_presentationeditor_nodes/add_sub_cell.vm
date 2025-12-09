@@ -1,0 +1,19 @@
+#if("$!elemId" != '')
+#set($menuItemDocRef = $services.model.resolveDocument($!elemId))
+#set($docParentsList = $services.webUtils.getDocumentParentsDocRefList($menuItemDocRef, true))
+#if($services.treeNode.getMaxConfiguredNavigationLevel() > $docParentsList.size())
+#set($overwriteWeb = '')
+#if($elemParams.size() > 1)
+#set($overwriteWeb = $elemParams.get(1))
+#end
+#if("$!overwriteWeb" == '')
+#set($overwriteWeb = "$!menuItemDocRef.getLastSpaceReference().getName()")
+#end
+#set($overwriteWeb = "${overwriteWeb}-$!menuItemDocRef.getName()")
+#set($l = 'xpage=overlay&conf=AddPage')
+#set($l = "${l}&space=${overwriteWeb}&doc_parent=${elemId}")
+#set($l = "${l}&language=${default_language}&redirmode=newpageedit")
+#set($l = "${l}&xredirect=$escapetool.url($services.url.getURL($doc.documentReference, 'view'))")
+#set($cmenu_pageLink = $services.url.getURL($doc.documentReference, 'view', "${l}"))
+window.location.href=&quot;${cmenu_pageLink}&quot;##
+#end#end

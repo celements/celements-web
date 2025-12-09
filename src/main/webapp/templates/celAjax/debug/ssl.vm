@@ -1,0 +1,6 @@
+#if(($request.scheme == 'https') && $request.isSecure())
+  true
+#else
+  false
+  $response.setStatus(400)
+#end

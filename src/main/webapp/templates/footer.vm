@@ -3,18 +3,19 @@
 <div class="minwidth"></div>
 <hr/>
   <div id="xwikilicence">$!copyright</div>
-  #set ($version = $xwiki.getSpacePreference("version"))
-  #if ("$!version" == "")
-    #set ($version = $xwiki.getXWikiPreference("version"))
-  #end
-  #if ("$!version" != "")
-    #set ($version = $xwiki.parseContent($version))
+  <div id="celementsplatformversion">celements platfom-$services.celementsweb.getVersion("celements-web")</div>
+  #set($appName = $services.celementsweb.getCelementsMainAppName())
+  #if("$!appName" != '')
+    #set($appVersion = $!services.celementsweb.getVersion($appName))
+    #if("$!appVersion" != '')
+      #set($appVersion = "$!appName : $appVersion")
+    #end
   #else
-    #set ($version = $!xwiki.version)
+    #set($appVersion = $!{services.celementsweb.getCelementsWebCoreVersion()})
   #end
-  <div id="xwikiplatformversion">$version</div>
-  <div id="celementsplatformversion">celements platfom-$!{celementsweb.getCelementsWebCoreVersion()}</div>
+  #if("$!appVersion" != '')
+  <div id="appversion">$appVersion</div>
+  #end
 <hr/>
 </div>
 #end
-### TODO: Format the footer for pdf output

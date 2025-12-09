@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import basePullAt from"./_basePullAt.js";function remove(e,r){var t=[];if(!e||!e.length)return t;var a=-1,s=[],l=e.length;for(r=baseIteratee(r,3);++a<l;){var o=e[a];r(o,a,e)&&(t.push(o),s.push(a))}return basePullAt(e,s),t}export default remove;

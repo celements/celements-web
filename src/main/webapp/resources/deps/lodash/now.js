@@ -1,0 +1,1 @@
+import root from"./_root.js";var now=function(){return root.Date.now()};export default now;

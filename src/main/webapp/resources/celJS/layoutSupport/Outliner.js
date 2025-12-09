@@ -86,20 +86,22 @@ if(typeof CELEMENTS.layout=="undefined"){CELEMENTS.layout={};};
       outlineElementAddClass : function(cssClass, element) {
         var _me = this;
         element = $(element);
-        var elemRightBorderLeft = element.cumulativeOffset().left + element.getWidth()
+        //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
+        //counting margin-auto offsets. Thus we need to use jquery.offset
+        var elemRightBorderLeft = $j(element).offset().left + element.getWidth()
             - _me._outline_Width;
-        _me._addOutlineElement(element.id, '-RightBorder', element.cumulativeOffset().top,
+        _me._addOutlineElement(element.id, '-RightBorder', $j(element).offset().top,
             elemRightBorderLeft, _me._outline_Width, element.getHeight(), cssClass);
-        var elemBottomBorderTop = element.cumulativeOffset().top + element.getHeight()
+        var elemBottomBorderTop = $j(element).offset().top + element.getHeight()
             - _me._outline_Width;
         _me._addOutlineElement(element.id, '-BottomBorder', elemBottomBorderTop,
-            element.cumulativeOffset().left, element.getWidth(), _me._outline_Width,
+            $j(element).offset().left, element.getWidth(), _me._outline_Width,
             cssClass);
-        _me._addOutlineElement(element.id, '-LeftBorder', element.cumulativeOffset().top,
-            element.cumulativeOffset().left, _me._outline_Width, element.getHeight(),
+        _me._addOutlineElement(element.id, '-LeftBorder', $j(element).offset().top,
+            $j(element).offset().left, _me._outline_Width, element.getHeight(),
             cssClass);
-        _me._addOutlineElement(element.id, '-TopBorder', element.cumulativeOffset().top,
-            element.cumulativeOffset().left, element.getWidth(), _me._outline_Width,
+        _me._addOutlineElement(element.id, '-TopBorder', $j(element).offset().top,
+            $j(element).offset().left, element.getWidth(), _me._outline_Width,
             cssClass);
       },
 

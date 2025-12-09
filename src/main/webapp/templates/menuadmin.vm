@@ -1,0 +1,7 @@
+<div id="actionmenu" class="layoutsubsection">
+<div class="centered">
+<div class="editinfo">
+$adminMsg.get("administrating"): $xwiki.parseMessage("admining${editor}")
+</div>
+</div>
+</div>

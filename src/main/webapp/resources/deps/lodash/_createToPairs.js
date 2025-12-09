@@ -1,0 +1,1 @@
+import baseToPairs from"./_baseToPairs.js";import getTag from"./_getTag.js";import mapToArray from"./_mapToArray.js";import setToPairs from"./_setToPairs.js";var mapTag="[object Map]",setTag="[object Set]";function createToPairs(a){return function(r){var o=getTag(r);return o==mapTag?mapToArray(r):o==setTag?setToPairs(r):baseToPairs(r,a(r))}}export default createToPairs;

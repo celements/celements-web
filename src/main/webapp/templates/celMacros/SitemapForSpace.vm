@@ -52,9 +52,11 @@
 <div id="spaceNavigation">
 	<label for="spaceSelect">Bereich wechseln zu:</label>
 	<select id="spaceSelector" name="spaceSelect">
-#foreach($spaceName in $spaceList)
-	#getDefaultParams($spaceName)
-		<option label="$spaceName" value="$doc.getURL('view', $defaultParams)">$spaceName</option>
+#foreach($spaceNameSelect in $spaceList)
+  #getDefaultParams($spaceNameSelect)
+    <option label="$spaceNameSelect" value="$services.url.getURL($doc.documentReference, 'view', $defaultParams)"##
+#if("$!spaceName" == "$!spaceNameSelect") selected #end>$spaceNameSelect</option>
+
 #end
 	</select>
 </div>
@@ -89,6 +91,7 @@ $celementsweb.addExtJSfileOnce(':celJS/yui/animation/animation-min.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/navigation/reorderMenuItems.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/celpresentation/reorder.js', 'file')
 $celementsweb.addExtJSfileOnce(':celJS/celpresentation/sitemap.js', 'file')
+<cel-lazy-load-js load-mode="defer" src="$!services.celementsweb.getSkinFile(':celDynJS/cel-editor/editor-window-helper.mjs', 'file')"></cel-lazy-load-js>
 #set($structNav = $celementsweb.createNavigation())
 $structNav.setMenuPart("")
 $structNav.setShowAll(true)
@@ -118,7 +121,7 @@ $structNav.includeNavigation()
 #end
 #end
 #foreach($parentRef in $spaceParentRefs)
-#if($celementsweb.getSubNodesForParentRef($parentRef).size() > 0)
+#if($services.treeNode.getSubNodesForParentRef($parentRef).size() > 0)
 <h2>Unterknoten f&uuml;r $services.model.serialize($parentRef,'local')</h2>
 $structNav.includeNavigation($parentRef)
 #end
@@ -134,9 +137,9 @@ $structNav.includeNavigation($parentRef)
 #foreach($docFN in $theQuery.execute())
   #if("$!docFN" != '')
     #set($outsideDocRef = $services.model.resolveDocument($docFN))
-    #if(!$celementsweb.isTreeNode($outsideDocRef))
+    #if(!$services.treeNode.isTreeNode($outsideDocRef))
       #set($outsideDoc = $xwiki.getDocument($outsideDocRef))
-      #set($hasChildren = ($celementsweb.getSubNodesForParentRef($outsideDocRef).size() > 0))
+      #set($hasChildren = ($services.treeNode.getSubNodesForParentRef($outsideDocRef).size() > 0))
       #if("$!outsideOddEven" == 'cel_nav_odd')
         #set($outsideOddEven = 'cel_nav_even')
       #else

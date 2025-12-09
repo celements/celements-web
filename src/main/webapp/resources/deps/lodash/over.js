@@ -1,0 +1,1 @@
+import arrayMap from"./_arrayMap.js";import createOver from"./_createOver.js";var over=createOver(arrayMap);export default over;

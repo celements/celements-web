@@ -1,0 +1,1 @@
+var objectProto=Object.prototype;function isPrototype(t){var o=t&&t.constructor;return t===("function"==typeof o&&o.prototype||objectProto)}export default isPrototype;

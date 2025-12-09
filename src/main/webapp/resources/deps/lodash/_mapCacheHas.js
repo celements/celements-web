@@ -1,0 +1,1 @@
+import getMapData from"./_getMapData.js";function mapCacheHas(a){return getMapData(this,a).has(a)}export default mapCacheHas;

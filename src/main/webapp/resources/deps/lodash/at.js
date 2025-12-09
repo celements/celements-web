@@ -1,0 +1,1 @@
+import baseAt from"./_baseAt.js";import flatRest from"./_flatRest.js";var at=flatRest(baseAt);export default at;

@@ -17,7 +17,7 @@ body #cel_layout_editor #cel_skin_editor_reorder_tree ul {
   padding-bottom: 2px;
 }
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul li{
-  list-style-image: url("/file/resources/celRes/document.gif");
+  list-style-image: url("../../celRes/document.gif");
   list-style-position: inside;
   margin: 0px;
   padding: 0px;
@@ -94,22 +94,22 @@ body #cel_layout_editor #cel_skin_editor_reorder_tree.reorderMode ul li{
 	width:90%;
 }
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.PageContentCell{
-	list-style-image:url("/file/resources/celRes/PageContentCell.gif");
+	list-style-image:url("../../celRes/PageContentCell.gif");
 }
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.BannerCell{
-	list-style-image:url("/file/resources/celRes/BannerCell.gif")
+	list-style-image:url("../../celRes/BannerCell.gif")
 }
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.NavigationCell{
-	list-style-image:url("/file/resources/celRes/NavigationCell.gif")
+	list-style-image:url("../../celRes/NavigationCell.gif")
 }
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.RichTextCell{
-	list-style-image:url("/file/resources/celRes/RichTextCell.gif")
+	list-style-image:url("../../celRes/RichTextCell.gif")
 }
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.SlideshowCell{
-	list-style-image:url("/file/resources/celRes/SlideShowCell.gif")
+	list-style-image:url("../../celRes/SlideShowCell.gif")
 }
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.GroupCell{
-	list-style-image:url("/file/resources/celRes/GroupCell.gif")
+	list-style-image:url("../../celRes/GroupCell.gif")
 }
 #cel_layout_editor{
 	font-family:Tahoma,Geneva,Helvetica,Arial,sans-serif;

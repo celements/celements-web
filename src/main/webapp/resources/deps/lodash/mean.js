@@ -1,0 +1,1 @@
+import baseMean from"./_baseMean.js";import identity from"./identity.js";function mean(e){return baseMean(e,identity)}export default mean;

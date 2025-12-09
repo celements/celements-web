@@ -1,0 +1,1 @@
+import createCompounder from"./_createCompounder.js";var kebabCase=createCompounder((function(e,r,o){return e+(o?"-":"")+r.toLowerCase()}));export default kebabCase;

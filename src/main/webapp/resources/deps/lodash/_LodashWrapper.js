@@ -1,0 +1,1 @@
+import baseCreate from"./_baseCreate.js";import baseLodash from"./_baseLodash.js";function LodashWrapper(a,e){this.__wrapped__=a,this.__actions__=[],this.__chain__=!!e,this.__index__=0,this.__values__=void 0}LodashWrapper.prototype=baseCreate(baseLodash.prototype),LodashWrapper.prototype.constructor=LodashWrapper;export default LodashWrapper;

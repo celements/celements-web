@@ -1,7 +1,7 @@
 #set($isAjaxCall = ("$!request.ajax" == '1'))
 #if($doc.fullName != "Templates.RedirectView")
 #set($red_obj = $doc.getObject("Celements2.Redirect"))
-#set($redURL = "$!red_obj.getProperty('redirect').getValue()")
+#set($origRedURL = "$!red_obj.getProperty('redirect').getValue()")
 #set($showIncluded = $!red_obj.getProperty("show_included").getValue())
 #set($redirectedParams = "$!red_obj.getProperty('querystr').getValue()")
 #foreach($param in $request.getParameterNames())
@@ -10,18 +10,22 @@
   #end
   #set($redirectedParams = "${redirectedParams}${param}=$!{request.get($param)}")
 #end
-#if(!$redURL.startsWith('http://') && !$redURL.startsWith('https://'))
-  #set($redExternalURL = $xwiki.getURL($redURL, "view", "${redirectedParams}"))
-  #set($redFN = $!redURL)
+#if(!$origRedURL.startsWith('http://') && !$origRedURL.startsWith('https://'))
+  #set($redDocRef = $services.model.resolveDocument($origRedURL))
+  #set($redExternalURL = $services.url.getURL($redDocRef, "view", "$!{redirectedParams}"))
+  #set($redFN = $services.reference.serialize($redDocRef))
+  #set($redURL = $services.url.getURL($redDocRef, "view"))
   #set($showIFrame = false)
 #else
+  #set($redDocRef = $null)
   #set($redFN = '')
-  #set($redExternalURL = "$!{redURL}?$!red_obj.get('querystr')")
+  #set($redURL = $origRedURL)
+  #set($redExternalURL = "$!{origRedURL}?$!red_obj.get('querystr')")
   #set($redExternalURL = "$!redExternalURL.replaceAll('\?$','')")
   #set($showIFrame = true)
 #end
 #if("$context.action" == 'view')
-#if(("$!red_obj" == '') || ("$!redURL" == '') || (!$xwiki.exists($redURL) && !$redURL.startsWith('http://') && !$redURL.startsWith('https://')))
+#if(!$isAjaxCall && ("$!red_obj" == '') || ("$!origRedURL" == '') || ($redDocRef && !$services.modelAccess.exists($redDocRef)))
 #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
 #set($overwriteRenderDocument = 'celInlineTemplates/RedirectDoesNotExistView.vm')
 $xwiki.parseTemplate("frameheader.vm")
@@ -30,9 +34,9 @@ $xwiki.parseTemplate("frameheader.vm")
 ##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
 ## or  $xwiki.includeForm($overwriteRenderDocument, false)
       #parse($overwriteRenderDocument)
-#end
+#end ## if("$!overwriteRenderDocument" != '')
 #set($show_frame = true)
-#end
+#end ## if(!$contextIsFinished && !$isCellSkin)
 #elseif($isAjaxCall)
 #set($jsonBuilder = $services.celementsweb.getNewJSONBuilder())
 $jsonBuilder.openDictionary()
@@ -48,33 +52,36 @@ $jsonStr
 #else ## render view
   #if("$!showIncluded" == '1')
     #set($overwriteRenderDocument = 'celInlineTemplates/RedirectIncludedView.vm')
-#if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
-    $xwiki.parseTemplate("frameheader.vm")
-    #if("$!overwriteRenderDocument" != '')
-## redirectedParams get lost in calling:
-##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
-## or  $xwiki.includeForm($overwriteRenderDocument, false)
-      #parse($overwriteRenderDocument)
+    #if(!$show_frame)
+        $xwiki.parseTemplate("frameheader.vm")
     #end
-#set($show_frame = true)
-#end
+    #if(!$contextIsFinished && !$isCellSkin) ## prevent endless recursion
+      #if("$!overwriteRenderDocument" != '')
+        ## redirectedParams get lost in calling:
+        ##      $xwiki.celementsweb.renderCelementsDocument($overwriteRenderDocument)
+        ## or  $xwiki.includeForm($overwriteRenderDocument, false)
+        #parse($overwriteRenderDocument)
+      #end
+    #end
+    #set($show_frame = false)
+    $xwiki.parseTemplate("framefooter.vm")
   #else
-#if("$!redExternalURL" == '')
-  ## sendRedirect on an empty URL leads to a server crash!
-  #set($redExternalURL = '/')
-#end
-## ensure content is not empty (otherwise reset throws an IllegalStateException)
-Redirect to $redExternalURL
-## call reset to clear HTTP-HeaderData (otherwise sendRedirect throws an IllegalStateException)
-$response.reset()
-## set context to finish to prevent that not empty content is written to the Body
-$context.setFinished(true)
-#set($contextIsFinished = true)
-## set redirect HTTP-Header
-$response.sendRedirect($redExternalURL)
+    #if("$!redExternalURL" == '')
+      ## sendRedirect on an empty URL leads to a server crash!
+      #set($redExternalURL = '/')
+    #end
+    ## ensure content is not empty (otherwise reset throws an IllegalStateException)
+    Redirect to $redExternalURL
+    ## call reset to clear HTTP-HeaderData (otherwise sendRedirect throws an IllegalStateException)
+    $response.reset()
+    ## set context to finish to prevent that not empty content is written to the Body
+    $context.setFinished(true)
+    #set($contextIsFinished = true)
+    ## set redirect HTTP-Header
+    $response.sendRedirect($redExternalURL)
   #end
 #end
 #end
 #else
-<p>Do not redirect on Template page.</p>
+  <p>Do not redirect on Template page.</p>
 #end

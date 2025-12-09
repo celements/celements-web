@@ -1,0 +1,68 @@
+// ------------------------------------------------------------------
+// NOTICE file containing copyrights,
+// in this case for XWiki Products - Enterprise - Web
+// ------------------------------------------------------------------
+
+XWiki Products - Enterprise - Web
+Copyright 2004-2011 XWiki
+
+This product includes/uses software developed by 'an unknown organization'
+  - metadata extractor (http://www.drewnoakes.com/code/exif/)
+  - Boilerpipe -- Boilerplate Removal and Fulltext Extraction from HTML pages (http://code.google.com/p/boilerpipe/)
+  - The NetCDF-Java Library (http://www.unidata.ucar.edu/software/netcdf-java/)
+  - AspectJ runtime (http://www.aspectj.org)
+  - Bouncy Castle CMS and S/MIME API (http://www.bouncycastle.org/java.html)
+  - Bouncy Castle Provider (http://www.bouncycastle.org/java.html)
+  - TagSoup (http://home.ccil.org/~cowan/XML/tagsoup/)
+  - Unnamed - org.opensymphony.quartz:quartz:jar:1.6.5 (http://www.opensymphony.com/quartz)
+
+This product includes/uses software developed by 'Apache Software Foundation' (http://jakarta.apache.org/)
+  - HttpClient (http://jakarta.apache.org/httpcomponents/httpclient-3.x/)
+
+This product includes/uses software developed by 'Apache Software Foundation' (http://www.apache.org)
+  - Apache Log4j (http://logging.apache.org/log4j/1.2/)
+  - Streaming API for XML (STAX API 1.0) (http://geronimo.apache.org/specs/geronimo-stax-api_1.0_spec)
+
+This product includes/uses software developed by 'Apache Software Foundation' (http://www.apache.org/)
+  - Apache POI (http://poi.apache.org/)
+  - Apache POI (http://poi.apache.org/)
+  - Apache POI (http://poi.apache.org/)
+  - Apache POI (http://poi.apache.org/)
+
+This product includes/uses software developed by 'Joda.org' (http://www.joda.org)
+  - Joda time (http://joda-time.sourceforge.net)
+
+This product includes/uses software developed by 'MetaStuff Ltd.' (http://sourceforge.net/projects/dom4j)
+  - dom4j (http://dom4j.org)
+
+This product includes/uses software developed by 'QOS.ch' (http://www.qos.ch)
+  - SLF4J API Module (http://www.slf4j.org)
+
+This product includes/uses software developed by 'The Apache Software Foundation' (http://www.apache.org/)
+  - Commons Codec (http://commons.apache.org/codec/)
+  - Commons Collections (http://commons.apache.org/collections/)
+  - Commons Lang (http://commons.apache.org/lang/)
+  - Commons Logging (http://commons.apache.org/logging)
+  - Commons Compress (http://commons.apache.org/compress/)
+  - Lucene Core (http://lucene.apache.org/java/lucene-core)
+  - Apache FontBox (http://pdfbox.apache.org/)
+  - Apache JempBox (http://www.apache.org/pdfbox-parent/jempbox)
+  - Apache PDFBox (http://www.apache.org/pdfbox-parent/pdfbox)
+  - Apache Tika core (http://tika.apache.org/)
+  - Apache Tika parsers (http://tika.apache.org/)
+
+This product includes/uses software developed by 'XmlBeans' (http://xmlbeans.apache.org/)
+  - XmlBeans (http://xmlbeans.apache.org)
+
+This product includes/uses software developed by 'XWiki' (http://xwiki.org/)
+  - XWiki Platform - Plugins - Activity Stream (http://xwiki.org/xwiki-plugins/xwiki-plugin-activitystream)
+  - XWiki Platform - Plugins - Joda Time (http://xwiki.org/xwiki-plugins/xwiki-plugin-jodatime)
+  - XWiki Platform - Plugins - Lucene search (http://xwiki.org/xwiki-plugins/xwiki-plugin-lucene)
+  - XWiki Platform - Plugins - Mail Sender (http://xwiki.org/xwiki-plugins/xwiki-plugin-mailsender)
+  - XWiki Platform - Plugins - Scheduler (http://xwiki.org/xwiki-plugins/xwiki-plugin-scheduler)
+  - XWiki Platform - Plugins - Skin Extensions (http://xwiki.org/xwiki-plugins/xwiki-plugin-skinx)
+  - XWiki Platform - Plugins - WatchList Manager (http://xwiki.org/xwiki-plugins/xwiki-plugin-watchlist)
+  - XWiki Platform - Tag - API (http://xwiki.org/xwiki-core-parent/xwiki-platform-tag/xwiki-platform-tag-api)
+  - XWiki Platform - Web - Standard (http://xwiki.org/xwiki-core-parent/xwiki-platform-web/xwiki-web-standard)
+
+

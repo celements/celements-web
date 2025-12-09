@@ -1,0 +1,1 @@
+import getTag from"./_getTag.js";import isObjectLike from"./isObjectLike.js";var weakMapTag="[object WeakMap]";function isWeakMap(e){return isObjectLike(e)&&getTag(e)==weakMapTag}export default isWeakMap;

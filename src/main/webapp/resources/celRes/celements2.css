@@ -1,5 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Terminal+Dosis:400,200,300,500,600,700,800);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+@import url(google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
+@import url(google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
 /* Floating Windows Classes */
 .sheet {
 	position: absolute;
@@ -92,7 +92,7 @@ div#celements2_menu_bar{
 	height:28px;
   color:#CCCCCC !important;
   background-color: rgb(51,51,51);
-  border-bottom: 1px solid #4F4F2F; 
+  border-bottom: 1px solid #4F4F2F;
 	text-align:left;
 	z-index:100;
 }
@@ -121,7 +121,7 @@ body > div#celements2_menu_bar {
   word-spacing: 2px;
 	color: #CCCCCC;
 	display:block;
-	float:left;	
+	float:left;
 	/*width:92px;*/
 	width:auto;
 	cursor:pointer;
@@ -161,7 +161,7 @@ body > div#celements2_menu_bar {
 	overflow:hidden;
 	display:block;
 	cursor: pointer;
-	color:#CCCCCC !important;	
+	color:#CCCCCC !important;
 	background: rgb(51,51,51) !important;
 	background: rgba(51,51,51, 0.92) !important;
 	text-decoration:none !important;
@@ -203,7 +203,7 @@ body > div#celements2_menu_bar {
   border-left: 1px solid #5e5e5e;
   border-right: 1px solid #5e5e5e;
 }
-.contextMenuCorner{
+.contextMenuCorner {
 	position:absolute;
 	top: 0px;
 	left: 0px;
@@ -231,7 +231,7 @@ body > div#celements2_menu_bar {
 	padding:0px 3px 0px 3px;
 	margin-bottom:2px;
 }
-.contextMenuItem{
+.contextMenuItem {
   border-top: 1px solid #5e5e5e;
  	position:relative;
   background: rgb(51,51,51);
@@ -240,7 +240,7 @@ body > div#celements2_menu_bar {
 	height:auto;
 	overflow:hidden;
 }
-.contextMenuIcon{
+.contextMenuIcon {
 	display:none;
 }
 .contextMenuLink {
@@ -264,7 +264,7 @@ body > div#celements2_menu_bar {
 	overflow:hidden;
 	text-align:left;
 }
-.contextMenuLinkOver{
+.contextMenuLinkOver {
 	position: static;
 	top:0px;
 	left:0px;
@@ -280,11 +280,14 @@ body > div#celements2_menu_bar {
   letter-spacing: 0;
   word-spacing: 2px;
 	text-transform:none;
-	text-decoration:none;	
+	text-decoration:none;
 	cursor:pointer;
   padding:5px 3px 5px 12px;
 	overflow:hidden;
 	text-align:left;
+}
+.cel_outline {
+  z-index: 99;
 }
 
 /* Form Validation Classes */
@@ -294,6 +297,10 @@ body > div#celements2_menu_bar {
 	font-weight:bold;
 	background-color:red;
 	padding:2px;
+}
+/** force show validation advices in celements overlays */
+#cel_overlaybody .celements2box form {
+	display: block;
 }
 /* General Classes */
 .celements2_error{
@@ -385,11 +392,11 @@ table.celements2_table td,
 	background-color:#AAAAAA;
 	color:#f9f9f9;
 	font:600 13px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	margin:10px 0px 10px 0px;	
+	margin:10px 0px 10px 0px;
 }
 .celements2_help_text{
 	font: 600 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	margin-bottom:10px;	
+	margin-bottom:10px;
 }
 .celements2_line{
 	border-bottom:1px solid #000000;
@@ -449,7 +456,7 @@ div.mask {
 
 .cel_newsletterImport th {
 	color: black;
-	background-color:auto;    
+	background-color:auto;
   font-weight: auto;
   line-height: auto;
   margin: auto;
@@ -591,8 +598,8 @@ body > .cel_reorderNodes_proxy {
 	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
 	font-style: normal;
 	color: black;
-	
-	list-style-image: url("/file/resources/celRes/document.gif");
+
+	list-style-image: url("document.gif");
 	list-style-position: inside;
 	border-left: 1px dotted gray;
 }
@@ -679,6 +686,13 @@ body > .cel_reorderNodes_proxy .docLangs,
 	background-color: #ccc;
 }
 
+.generalOverlay #cel_overlaybody .cel_presentation_addslide a,
+.yui-panel-container .cel_contentTab .cel_presentation_addslide a {
+	display: flex;
+	width: fit-content;
+	gap: 5px;
+}
+
 body div.mask {
 	z-index: 100 !important;
 }
@@ -690,7 +704,10 @@ body #sitecontainer .cel_content_part {
 body #sitecontainer .cel_content_part,
 body #sitecontainer .cel_content_part p,
 body #sitecontainer .cel_content_part span,
-body #sitecontainer .cel_content_part a {
+body #sitecontainer .cel_content_part a,
+body #sitecontainer .cel_content_part table th,
+body #sitecontainer .cel_content_part table td,
+body #sitecontainer .cel_content_part li {
 	font-size: 12px;
 	line-height: 14px;
 	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
@@ -781,3 +798,63 @@ iframe.apn-toolbar + body #celements2_menu_bar {
   bottom: 0px !important;
 }
 
+/**
+ * Fluid design auto resize images
+ **/
+img.cel_fluidresizeWidth {
+  width: 100%;
+  height: auto;
+}
+
+img.cel_fluidresizeHeight {
+  width: auto;
+  height: 100%;
+}
+
+/**
+ * Box layouting / Flex support
+ **/
+.cel_displayflex {
+  display: box; /** old browsers **/
+  display: flexbox; /** for IE10 **/
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-flex-wrap: wrap; /** for IE10 **/
+  -webkit-flex-wrap: wrap; /** Safari 6.1+ **/
+  flex-wrap: wrap;
+}
+/**
+ * Presentation module
+ **/
+div.presentationList {
+  position: relative;
+  overflow: hidden; /** needed to bind clear both **/
+}
+div.presentationList > ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+div.presentationList > ul > li {
+  display: block;
+  float: left;
+  margin: 0px;
+  padding: 0px;
+}
+div.presentationList > div.navigation-clear {
+  clear: both;
+}
+#sitecontainer .cel_nav_restricted_rights {
+  background: #ff9999;
+}
+#sitecontainer li.cel_nav_restricted_rights > div {
+  opacity: 0.75;
+  filter: alpha(opacity = 75);
+}
+
+.cel_template {
+	display: none;
+}

@@ -1,0 +1,1 @@
+import asciiToArray from"./_asciiToArray.js";import hasUnicode from"./_hasUnicode.js";import unicodeToArray from"./_unicodeToArray.js";function stringToArray(r){return hasUnicode(r)?unicodeToArray(r):asciiToArray(r)}export default stringToArray;

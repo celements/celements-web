@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
          xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 #set($mainSpaceRef = $services.model.createDocumentReference('', 'Content', 'WebHome'))
-#set($mainTreeNodes = $celementsweb.getSubNodesForParentRef($mainSpaceRef.lastSpaceReference))
+#set($mainTreeNodes = $services.treeNode.getSubNodesForParentRef($mainSpaceRef.lastSpaceReference))
 #set($externalURLPart = "$!doc.getExternalURL().replaceAll('([^/]+//[^/]+).*', '$1')")
 #foreach($treeNode in $mainTreeNodes)
    <url>

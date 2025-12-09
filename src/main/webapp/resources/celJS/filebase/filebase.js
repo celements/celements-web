@@ -17,15 +17,15 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+(function(window, undefined) {
+  "use strict";
 
 /**
  * Celements filebase
  * This is the Celements filebase-ui javascript controller.
  */
-if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
-if(typeof CELEMENTS.filebase=="undefined"){CELEMENTS.filebase={};};
-
-(function() {
+  if(typeof window.CELEMENTS=="undefined"){window.CELEMENTS={};};
+  if(typeof window.CELEMENTS.filebase=="undefined"){window.CELEMENTS.filebase={};};
 
   var filebaseController = undefined;
 
@@ -34,16 +34,15 @@ if(typeof CELEMENTS.filebase=="undefined"){CELEMENTS.filebase={};};
       filebaseController = new CELEMENTS.filebase.UiController();
     }
   });
-//////////////////////////////////////////////////////////////////////////////
-// Celements filebase ui controller
-//////////////////////////////////////////////////////////////////////////////
-CELEMENTS.filebase.UiController = function() {
-  // constructor
-  this._init();
-};
+  //////////////////////////////////////////////////////////////////////////////
+  // Celements filebase ui controller
+  //////////////////////////////////////////////////////////////////////////////
+  window.CELEMENTS.filebase.UiController = function() {
+    // constructor
+    this._init();
+  };
 
-(function() {
-  CELEMENTS.filebase.UiController.prototype = {
+  window.CELEMENTS.filebase.UiController.prototype = {
       _fileUploadElem : undefined,
 
       _init : function() {
@@ -177,6 +176,30 @@ CELEMENTS.filebase.UiController = function() {
 
   };
 
-})();
+  /**
+   * old filebase code
+   **/
+  var fbp = undefined;
+  var initFileBasePanel = function() {
+    fbp = new YAHOO.widget.Panel("fileBasePanel", {
+        width: "auto",
+        draggable:false,
+        close:false});
+    fbp.render();
+  };
 
-})();
+  var filebaseAfterLoadHandler = function() {
+    /**
+     * needed to prevent IE from showing scrollbars and hiding half of the filebase by doing so.
+     */
+    if($('cel_overlaybody')) {
+      $('cel_overlaybody').setStyle({ 'overflow' : 'hidden' });
+    }
+
+    initFileBasePanel();
+    fbp.show();
+    $(document.body).fire('cel_filebase:loaded');
+  };
+
+  $j(document.body).ready(filebaseAfterLoadHandler);
+})(window);

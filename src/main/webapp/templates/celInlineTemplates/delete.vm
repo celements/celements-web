@@ -23,6 +23,8 @@
     #end
     #set($translanguagelist = "$translanguagelist.replaceFirst(',','')")
     #set($fullmsg="${fullmsg}<p class=${quote}xwikimessage${quote}>$adminMsg.get('cel_delete_doc_confirm_warn_translations', [$translanguagelist])</p>")
+  #else
+    #set($fullmsg="${fullmsg}<p class=${quote}xwikimessage${quote}>$adminMsg.get('cel_delete_doc_confirm_no_translations')</p>")
   #end
 #else
   #set($fullmsg="${fullmsg}<p class=${quote}xwikimessage${quote}>$adminMsg.get('cel_delete_translation_confirm', [$tdoc.realLanguage, $doc.fullName])</p>")
@@ -31,7 +33,7 @@
   #set($tmpmsg = "</p><ul style=${quote}text-align: left;${quote}>")
   #foreach($docname in $links)
     #set($rdoc = $xwiki.getDocument($docname).getTranslatedDocument())
-    #set($tmpmsg = "${tmpmsg}<li><a href=${quote}${rdoc.getURL('view')}${quote}>${rdoc.displayTitle}</a></li>")
+    #set($tmpmsg = "${tmpmsg}<li><a href=${quote}${rdoc.getURL('delete')}${quote}>${rdoc.displayTitle}</a></li>")
   #end
   #set($tmpmsg = "${tmpmsg}</ul><p class=${quote}xwikimessage${quote}>")
   #set($tmpmsg = $adminMsg.get("core.delete.backlinksWarning", [$tmpmsg]))
@@ -42,7 +44,7 @@
   #set($tmpmsg ="</p><ul style=${quote}text-align: left;${quote}>")
   #foreach($docname in $orphans)
     #set($rdoc = $xwiki.getDocument($docname).getTranslatedDocument())
-    #set($tmpmsg = "${tmpmsg}<li><a href=${quote}${rdoc.getURL('view')}${quote}>${rdoc.displayTitle}</a></li>")
+    #set($tmpmsg = "${tmpmsg}<li><a href=${quote}${rdoc.getURL('delete')}${quote}>${rdoc.displayTitle}</a></li>")
   #end
   #set($tmpmsg = "${tmpmsg}</ul><p class=${quote}xwikimessage${quote}>")
   #set($tmpmsg = $adminMsg.get("core.delete.orphansWarning", [$tmpmsg]))
@@ -62,4 +64,9 @@
     #set($fullmsg = "${fullmsg}$adminMsg.get('core.delete.confirm')")
   #end
 #end
-#xwikimessagebox($adminMsg.get("core.delete") $fullmsg $doc.getURL("delete", "confirm=1$!{redirectparam}&amp;$languageparams") $doc.getURL("view") $adminMsg.get("yes") $adminMsg.get("no"))
+#if($request.xcancel != '')
+  #set($cancelUrl = $request.xcancel)
+#else
+  #set($cancelUrl = $doc.getURL("view"))
+#end
+#xwikimessagebox($adminMsg.get("core.delete") $fullmsg $doc.getURL("delete", "confirm=1$!{redirectparam}&amp;$languageparams") $cancelUrl $adminMsg.get("yes") $adminMsg.get("no"))

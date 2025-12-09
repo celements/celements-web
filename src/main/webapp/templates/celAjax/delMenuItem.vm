@@ -25,7 +25,11 @@ $jsonBuilder.closeDictionary()
 #if(("$!request.ajax" == '1') || ("$!request.ajax" == 'true'))
 $jsonBuilder.getJSON()
 #else
-  #set($red = $xwiki.getURL($services.model.resolveDocument($parentDocName)))
+  #if("$!request.get('red')" != '')
+    #set($red = "$!request.get('red')")
+  #else
+    #set($red = $xwiki.getURL($services.model.resolveDocument($parentDocName)))
+  #end
   $context.getResponse().sendRedirect($red)
 #end
 #else

@@ -1,0 +1,1 @@
+import toString from"./toString.js";import unescapeHtmlChar from"./_unescapeHtmlChar.js";var reEscapedHtml=/&(?:amp|lt|gt|quot|#39);/g,reHasEscapedHtml=RegExp(reEscapedHtml.source);function unescape(e){return(e=toString(e))&&reHasEscapedHtml.test(e)?e.replace(reEscapedHtml,unescapeHtmlChar):e}export default unescape;

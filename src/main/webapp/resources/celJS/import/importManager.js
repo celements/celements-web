@@ -18,7 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-var startObserversNewUniqueName = function(){
+const startObserversNewUniqueName = function(){
   updateObservers();
   Event.observe(window, 'resize', resizeTab);
   $$('.c3_import_box')[0].observe('filepicker:changed', updateObservers);
@@ -47,7 +47,7 @@ function updateObservers() {
   resizeTab();
 }
 
-var clickObserve = function(event) {
+const clickObserve = function(event) {
   if (typeof preimport !== 'undefined') {
     if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
       console.warn('deprecated usage of direct "preimport" global function call.');
@@ -58,7 +58,7 @@ var clickObserve = function(event) {
   showTab($$('.c3_import_middle')[0]);
 };
 
-var sortObserve = function(event) {
+const sortObserve = function(event) {
   if((typeof($("c2_ml_content")) != undefined) && ($("c2_ml_content") != null)) {
     $("c2_ml_content").fire("filepicker:changed");
   } else {
@@ -73,17 +73,17 @@ var sortObserve = function(event) {
  * @return
  */
 function resizeTab(){
-  var tabtitlesheight = 0;
+  let tabtitlesheight = 0;
   $$('.c3_import_title').each(function(titleElem){
     tabtitlesheight += titleElem.getHeight();
     tabtitlesheight += parseInt(titleElem.getStyle('margin-top'));
     tabtitlesheight += parseInt(titleElem.getStyle('margin-bottom'));
   });   
-  var mainpadding = parseInt($$('.main')[0].getStyle('padding-top'));
-  var mainmargin = parseInt($$('.main')[0].getStyle('margin-top'));
-  var mainborders = 2 * (mainpadding + mainmargin);
+  const mainpadding = parseInt($$('.main')[0].getStyle('padding-top'));
+  const mainmargin = parseInt($$('.main')[0].getStyle('margin-top'));
+  const mainborders = 2 * (mainpadding + mainmargin);
   
-  var winHeight = 0;
+  let winHeight = 0;
   if(typeof(window.innerWidth) == 'number') {
     winHeight = window.innerHeight;
   } else if(document.documentElement && document.documentElement.clientHeight) {
@@ -93,29 +93,30 @@ function resizeTab(){
   }
   
   var tabboxsize = winHeight - tabtitlesheight - mainborders;
-//  consoleMsg('tabboxsize: ' + tabboxsize + ' = ' + document.body.clientHeight + ' - ' + tabtitlesheight + ' - ' + mainborders);
   $$('.c3_import_tabbox').each(function(box){
-//    consoleMsg('box cum-offset: ' + box.cumulativeOffset());
-    var scrollbox = box.down('.c3_import_scrollable');
+    const scrollbox = box.down('.c3_import_scrollable');
     if(scrollbox){
-//      consoleMsg('scrollable cum-offset: ' + scrollbox.cumulativeOffset());
-      var offsetBefore = (scrollbox.cumulativeOffset().top - box.cumulativeOffset().top);
-      var ele = scrollbox;
-      var lastElemBottom = scrollbox.cumulativeOffset().top + scrollbox.getHeight();
+      const scrollboxOffset = $j(scrollbox).offset();
+      const scrollboxTop = scrollboxOffset ? scrollboxOffset.top : 0;
+      //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
+      //counting margin-auto offsets. Thus we need to use jquery.offset
+      const offsetBefore = ((typeof(scrollboxOffset) !== 'undefined') 
+              && (typeof($j(box).offset()) !== 'undefined')) 
+          ? (scrollboxTop - $j(box).offset().top) : 0;
+      let ele = scrollbox;
+      let lastElemBottom = scrollboxTop + scrollbox.getHeight();
       while(ele && (!ele.hasClassName('c3_import_tabbox'))){
         ele.siblings().each(function(sibl){
-          if(sibl.getStyle('position') != 'absolute') {
-        	// use offsetHeight instead of getHeight() which is wrong for script and link elements
-        	  lastElemBottom = Math.max(lastElemBottom, sibl.cumulativeOffset().top + sibl.offsetHeight);
-//            consoleMsg('lastElemBottom after [' + sibl.inspect() + ']: ' + lastElemBottom);
+          const siblOffset = $j(sibl).offset();
+          if((typeof(siblOffset) !== 'undefined') && (sibl.getStyle('position') != 'absolute')) {
+        	// use offsetHeight instead of getHeight() which is wrong for script and link elements}
+            lastElemBottom = Math.max(lastElemBottom, siblOffset.top + sibl.offsetHeight);
           }
         });
         ele = ele.up();
       }
-      var offsetAfter = lastElemBottom - (scrollbox.cumulativeOffset().top + scrollbox.getHeight());
-      var newScrollableHeight = tabboxsize - offsetAfter - offsetBefore;
-//      consoleMsg('offsetAfter [' + scrollbox.inspect() + ']: ' + offsetAfter);
-//      consoleMsg('scrollbox [' + scrollbox.inspect() + '] new height: ' + newScrollableHeight);
+      const offsetAfter = lastElemBottom - (scrollboxTop + scrollbox.getHeight());
+      const newScrollableHeight = tabboxsize - offsetAfter - offsetBefore;
       scrollbox.setStyle({ height: Math.max(50, newScrollableHeight) + "px" });
     }
     box.setStyle({ height: Math.max(50, tabboxsize) + "px" });
@@ -129,10 +130,8 @@ function changeTabEvent(event) {
 function showTab(tab) {
   if (tab) {
     $$('.c3_import_box').each(function(elemTab) {
-         //consoleMsg('hide tab ' + elemTab.className);
          hideDisplay(elemTab.down('.c3_import_tabbox'));
       });
-    //consoleMsg('show tab ' + tab.className);
     showDisplay(tab.down('.c3_import_tabbox'));
     //needs two resizes!
     resizeTab();
@@ -149,18 +148,12 @@ function hideDisplay(tab){
 }
 
 function getProgressBar(title){
-  var titlediv = $('c3_import_box').down('.c3_import_title');
+  const titlediv = $('c3_import_box').down('.c3_import_title');
   titlediv.innerHTML = title;
   $('c3_import_box').down('.c3_import_tabbox').setStyle({display: 'none'});
-  var bardiv = "<div class='c3_import_tabbox'><img src='/skin/skins/albatross/icons/ajax%2Dloader.gif'></div>";
+  const bardiv = "<div class='c3_import_tabbox'><img src='/skin/skins/albatross/icons/ajax%2Dloader.gif'></div>";
   titlediv.insert( {'after': bardiv} );
   resizeTab();
-}
-
-function consoleMsg(msg){
-//  if ((typeof console != 'undefined') && (typeof console.debug != 'undefined')) {
-//    console.debug(msg);
-//  }
 }
 
 Event.observe(window, 'load', startObserversNewUniqueName);

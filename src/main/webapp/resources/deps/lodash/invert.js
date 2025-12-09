@@ -1,0 +1,1 @@
+import constant from"./constant.js";import createInverter from"./_createInverter.js";import identity from"./identity.js";var objectProto=Object.prototype,nativeObjectToString=objectProto.toString,invert=createInverter((function(t,e,r){null!=e&&"function"!=typeof e.toString&&(e=nativeObjectToString.call(e)),t[e]=r}),constant(identity));export default invert;

@@ -1,0 +1,17 @@
+#if(("$!elemId" != '') && $xwiki.exists($services.model.resolveDocument($elemId)))
+#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
+#set($menuItemObj = $menuItemDoc.getObject('Celements2.MenuItem'))
+#if("$!menuItemObj" != '')
+#if("$!helpNav" == '')
+#set($helpNav = $xwiki.celementsweb.createNavigation())
+#end
+#set($prevMenuItemFullName = $helpNav.getPrevMenuItemFullName($menuItemObj))
+#if(("$prevMenuItemFullName" != '') && $xwiki.exists("$prevMenuItemFullName"))
+ #set($prevItemName = $xwiki.getDocument("$prevMenuItemFullName").getName())
+ #set($l = $xwiki.getURL($elemId,'view', "xpage=celements_ajax&ajax_mode=switchMenuItemPos"))
+ #set($l = "${l}&space=${menuItemDoc.space}&item1=${menuItemDoc.name}")
+ #set($cmenu_pageLink = "${l}&item2=${prevItemName}&xredirect=${doc.fullName}")
+window.location.href=&quot;${cmenu_pageLink}&quot;##
+#end
+#end
+#end

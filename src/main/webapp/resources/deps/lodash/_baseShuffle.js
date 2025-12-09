@@ -1,0 +1,1 @@
+import shuffleSelf from"./_shuffleSelf.js";import values from"./values.js";function baseShuffle(f){return shuffleSelf(values(f))}export default baseShuffle;

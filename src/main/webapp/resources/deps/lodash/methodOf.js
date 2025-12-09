@@ -1,0 +1,1 @@
+import baseInvoke from"./_baseInvoke.js";import baseRest from"./_baseRest.js";var methodOf=baseRest((function(e,t){return function(o){return baseInvoke(e,o,t)}}));export default methodOf;

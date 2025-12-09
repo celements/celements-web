@@ -1,0 +1,1 @@
+import arrayLikeKeys from"./_arrayLikeKeys.js";import baseKeysIn from"./_baseKeysIn.js";import isArrayLike from"./isArrayLike.js";function keysIn(r){return isArrayLike(r)?arrayLikeKeys(r,!0):baseKeysIn(r)}export default keysIn;

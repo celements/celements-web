@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import baseSortedIndexBy from"./_baseSortedIndexBy.js";function sortedIndexBy(e,t,r){return baseSortedIndexBy(e,t,baseIteratee(r,2))}export default sortedIndexBy;

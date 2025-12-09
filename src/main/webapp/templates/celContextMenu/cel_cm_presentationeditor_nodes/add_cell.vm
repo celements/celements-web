@@ -1,0 +1,18 @@
+#if("$!elemId" != '')
+#set($menuItemDoc = $services.modelAccess.getDocument($services.model.resolveDocument($elemId)))
+#set($overwriteWeb = $menuItemDoc.getSpace())
+#set($menuItemObj = $menuItemDoc.getObject('Celements2.MenuItem'))
+#set($menuItem_parentDoc =  $menuItemDoc.getParent())
+#set($menuPart = $menuItemObj.getProperty('part_name').getValue())
+#else
+#if("$!overwriteWeb" == '')
+#set($overwriteWeb = $doc.getSpace())
+#end
+#set($menuPart = $elemParams.get(1))
+#end
+#set($l = 'xpage=overlay&conf=AddPage')
+#set($l = "${l}&space=${overwriteWeb}&doc_parent=$!{menuItem_parentDoc}")
+#set($l = "${l}&menuPart=$!{menuPart}&pageTypeCat=celltype")
+#set($l = "${l}&menu_position=&language=${default_language}&redirmode=editMenu")
+#set($cmenu_pageLink = $services.url.getURL($doc.documentReference, 'view', "${l}"))
+window.location.href=&quot;${cmenu_pageLink}&quot;

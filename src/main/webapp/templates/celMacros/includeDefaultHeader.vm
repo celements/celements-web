@@ -1,71 +1,98 @@
 ## includeDefaultHeader
 ## include standard title- and meta-tags for the HTML header.
-## INPUT (optional): $charEncoding 
-## OUTPUT: 
+## INPUT (optional): $charEncoding
+## OUTPUT:
 ##
-<title>##
-$xwiki.celementsweb.getDocHeaderTitle($doc.documentReference)##
-</title>
-$!xwiki.getSpacePreference("meta")
-#if("$!charEncoding" == '')
-  #set($charEncoding = "$xwiki.encoding")
+#if("$!charEncoding" == '')##
+  #set($charEncoding = "$xwiki.encoding")##
 #end
-<meta http-equiv="Content-Type" content="text/html; charset=$!charEncoding" />
-#set($webprefDoc = $xwiki.getDocument("${doc.space}.WebPreferences"))
-#set($wikiprefDoc = $xwiki.getDocument("XWiki.XWikiPreferences"))
-#if("$!webprefDoc.getAttachment('favicon.ico')" != '')
-<link rel="shortcut icon" href="$webprefDoc.getAttachmentURL('favicon.ico','skin')" type="image/x-icon"/>
-#elseif("$!wikiprefDoc.getAttachment('favicon.ico')" != '')
-<link rel="shortcut icon" href="$wikiprefDoc.getAttachmentURL('favicon.ico','skin')" type="image/x-icon"/>
-#elseif("$!skin_doc.getAttachment('favicon.ico')" != '')
-<link rel="shortcut icon" href="$skin_doc.getAttachmentURL('favicon.ico','skin')" type="image/x-icon"/>
-#elseif($xwiki.getSkinFile('skinRes/favicon.ico', true).contains('/resources/'))
+#set($layoutApi = $services.layout.getPageLayoutApiForDocRef($doc.getDocumentReference()))##
+#if(("$!layoutApi" != '') && ("$!layoutApi.getHTMLType().name()" == 'HTML5'))##
+$!services.metatag.getCharsetMetaTag("$!charEncoding").display()
+#else
+$services.metatag.addMetaTagToCollector('http-equiv', 'Content-Type', "text/html; charset=$!charEncoding")
+#end
+$!xwiki.getSpacePreference("meta")
+#if($services.celementsweb.hasGoogleAnalytics())
+  $services.metatag.addMetaTagToCollector('name', 'cel-GAA-Num', "$services.celementsweb.getGoogleAnalytics()")
+#end
+$!services.metatag.displayCollectedMetaTags()## cel-GAA-Num is needed in initCelements.min.js while loading
+<title>##
+$services.celementsweb.getDocHeaderTitle($doc.documentReference)##
+</title>
+#set($layoutName = $services.layout.getPageLayoutForDoc($doc.documentReference))##
+#set($layoutWebHomeDoc = '')##
+#if("$!layoutName" != '')##
+#set($layoutWebHomeRef = $services.model.createDocumentReference('', $layoutName, 'WebHome'))##
+#set($layoutWebHomeDoc = $services.modelAccess.getDocument($layoutWebHomeRef))##
+#end
+#set($webprefDocRef = $services.model.createDocumentReference('', "${doc.space}", "WebPreferences"))##
+#set($webprefDoc = $services.modelAccess.getDocument($webprefDocRef))##
+#set($xwikiprefDocRef = $services.model.createDocumentReference('', "XWiki", "XWikiPreferences"))##
+#set($wikiprefDoc = $services.modelAccess.getDocument($xwikiprefDocRef))##
+#if(("$!layoutWebHomeDoc" != '') && ("$!layoutWebHomeDoc.getAttachment('favicon.ico')" != ''))##
+<link rel="shortcut icon" href="$layoutWebHomeDoc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
+#elseif("$!webprefDoc.getAttachment('favicon.ico')" != '')##
+<link rel="shortcut icon" href="$webprefDoc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
+#elseif("$!wikiprefDoc.getAttachment('favicon.ico')" != '')##
+<link rel="shortcut icon" href="$wikiprefDoc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
+#elseif("$!skin_doc.getAttachment('favicon.ico')" != '')##
+<link rel="shortcut icon" href="$skin_doc.getAttachmentURL('favicon.ico','file')" type="image/x-icon"/>
+#elseif($xwiki.getSkinFile('skinRes/favicon.ico', true).contains('/resources/'))##
 <link rel="shortcut icon" href="$xwiki.getSkinFile('skinRes/favicon.ico', true)" type="image/x-icon"/>
 #end
 ##TODO add reset CSS
 ## always load celements.css to prevent unequal behaviour if logged in or not
-$celementsweb.includeCSSPage(':celRes/celements2.css')
-$celementsweb.includeCSSPage(':celRes/login.css')
-$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
-$celementsweb.addExtJSfileOnce(':celJS/jquery.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/jquery-noconflict.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/initCelements.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
-$celementsweb.addExtJSfileOnce(':celJS/validation.js')
-$celementsweb.addExtJSfileOnce(':celJS/SWFObject-2.2/swfobject.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/mobile/MobileSupport.js', 'file')
-#if($celementsweb.useImageAnimations())
-$celementsweb.addExtJSfileOnce(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js')
-$celementsweb.addExtJSfileOnce(':celJS/highslide/highslide-full.min.js')
-$celementsweb.addExtJSfileOnce(':celJS/celanim/overlaySlide.js')
-$celementsweb.addExtJSfileOnce(':celJS/celanim/slideshow.js')
-$celementsweb.includeCSSAfterSkin(':celJS/highslide/highslide.css')
-$celementsweb.includeCSSAfterSkin(':celRes/celanim/slideshow.css')
-$celementsweb.includeCSSAfterSkin(':celRes/celanim/overlay.css')
-#if($xwiki.getSpacePreferenceAsInt('celNewImageGallery', 0) == 1)
-##new image gallery slideshow
-$!celementsweb.addExtJSfileOnce(':celJS/yui/element/element-min.js', 'file')
-$!celementsweb.addExtJSfileOnce(':celJS/yui/button/button-min.js', 'file')
-$!celementsweb.addExtJSfileOnce(':celJS/yui/container/container-min.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/celpresentation/celYuiOverlay.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/celpresentation/CelementsSlideShow.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/images/galleryClass.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/images/SlideShowAnimation.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/images/imageSlideShow.js', 'file')
-$celementsweb.includeCSSAfterSkin(':celJS/yui/container/assets/skins/sam/container.css')
-$celementsweb.includeCSSAfterSkin(':celJS/yui/button/assets/skins/sam/button.css')
-$celementsweb.includeCSSAfterSkin(':celRes/galleryYuiOverlay.css')
+$services.css.includeCSSPage(':celRes/celements2.css')##
+$services.css.includeCSSPage(':celRes/login.css')##
+#set($jsService = $services.javascript)
+#set($extJsParamSync = $!jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/prototype.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/initCelements.min.js'))##
+## FIXME [CELDEV-904] validation.js cannot be loaded defer before fixing this issue.
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/validation.js'))##
+#if($xwiki.getXWikiPreferenceAsInt("cel_activate_jsdefer", 0) == 1)##
+  #set($jsLoadModeDefer = $jsService.getJsLoadMode('DEFER'))
+  #set($extJsParam = $jsService.createExtJSParam().setAction('file').setLoadMode($jsLoadModeDefer))
+#else
+  #set($extJsParam = $extJsParamSync)  
 #end
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/mobile/MobileSupport.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/scriptaculous/effects.js'))##
+##
+$services.css.includeCSSPage(':celJS/bootstrap/bootstrap-multiselect.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/bootstrap/bootstrap.min.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/bootstrap/bootstrap-multiselect.js'))##
+##
+$services.css.includeCSSPage(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.min.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery-datetimepicker/2.5/jquery.datetimepicker.full.min.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/dateTimePicker/generateDateTimePicker.js'))##
+##
+#if($services.celementsphoto.useImageAnimations())##
+  $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/yui/yahoo-dom-event/yahoo-dom-event.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/highslide/highslide-full.min.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/celanim/overlaySlide.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/celanim/slideshow.js'))##
+  $services.css.includeCSSAfterPreferences(':celJS/highslide/highslide.css')##
+  $services.css.includeCSSAfterPreferences(':celRes/images/slideshow.css')##
+  $services.css.includeCSSAfterPreferences(':celRes/celanim/overlay.css')##
+  #if($xwiki.getSpacePreferenceAsInt('celNewImageGallery', 0) == 1)##
+    ##new image gallery slideshow
+    $!services.javascript.includeExtJsFile($extJsParam.setJsFile(':celJS/yui/element/element-min.js'))##
+    $!services.javascript.includeExtJsFile($extJsParam.setJsFile(':celJS/yui/button/button-min.js'))##
+    $!services.javascript.includeExtJsFile($extJsParam.setJsFile(':celJS/yui/container/container-min.js'))##
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/celpresentation/celYuiOverlay.js'))##
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/celpresentation/CelementsSlideShow.js'))##
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/images/galleryClass.js'))##
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/images/SlideShowAnimation.js'))##
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/images/imageSlideShow.js'))##
+    $services.css.includeCSSAfterPreferences(':celJS/yui/container/assets/skins/sam/container.css')##
+    $services.css.includeCSSAfterPreferences(':celJS/yui/button/assets/skins/sam/button.css')##
+    $services.css.includeCSSAfterPreferences(':celRes/galleryYuiOverlay.css')##
+  #end
 #end
-$!celementsweb.getAllExternalJavaScriptFiles()
-#if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)
-  $celementsweb.addExtJSfileOnce(':celJS/adminUi/overlayResize.js')
+#if(("$!celementsLoadInOverlay" != '') && $overlayWithResize)##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/adminUi/overlayResize.js'))##
 #end
-##
-## Hooks for inserting JavaScript skin extensions
-##
-## - Skin file extension hook. Placed first since skin extensions might need to have xwiki or external libraries included first to be able to work properly
-<!-- com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin -->
-## - Skin extension hook
-<!-- com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin -->
-##

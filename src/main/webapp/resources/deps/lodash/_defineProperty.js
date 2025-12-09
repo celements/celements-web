@@ -1,0 +1,1 @@
+import getNative from"./_getNative.js";var defineProperty=function(){try{var e=getNative(Object,"defineProperty");return e({},"",{}),e}catch(e){}}();export default defineProperty;

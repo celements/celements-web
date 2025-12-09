@@ -1,6 +1,10 @@
 @charset "UTF-8";
 /* CSS Document */
 
+/**
+DEPRECATED since 2.80 instead use images/slideshow.css in image-web module
+**/
+
 .celanim_slideshow_wrapper { 
   display: inline-block; 
   position: relative; 
@@ -77,9 +81,14 @@
   background-position: -41px -44px !important; 
   background-repeat: no-repeat; 
   z-index : 2;
+  cursor: pointer;
 }
 
 #yuiOverlayContainer .slideshowButton:hover,
 .celimage_slideshow_wrapper .slideshowButton:hover { 
   background-image: url(buttons500-hover.png);
+}
+
+.celimage_overlay {
+  cursor: pointer;
 }

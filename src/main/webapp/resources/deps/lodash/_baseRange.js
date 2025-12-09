@@ -1,0 +1,1 @@
+var nativeCeil=Math.ceil,nativeMax=Math.max;function baseRange(a,e,t,n){for(var i=-1,r=nativeMax(nativeCeil((e-a)/(t||1)),0),v=Array(r);r--;)v[n?r:++i]=a,a+=t;return v}export default baseRange;

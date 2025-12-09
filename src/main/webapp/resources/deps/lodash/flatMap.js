@@ -1,0 +1,1 @@
+import baseFlatten from"./_baseFlatten.js";import map from"./map.js";function flatMap(a,t){return baseFlatten(map(a,t),1)}export default flatMap;

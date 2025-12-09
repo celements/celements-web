@@ -1,0 +1,1 @@
+import toString from"./toString.js";function replace(){var r=arguments,t=toString(r[0]);return r.length<3?t:t.replace(r[1],r[2])}export default replace;

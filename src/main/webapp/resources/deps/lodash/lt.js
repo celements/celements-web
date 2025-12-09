@@ -1,0 +1,1 @@
+import baseLt from"./_baseLt.js";import createRelationalOperation from"./_createRelationalOperation.js";var lt=createRelationalOperation(baseLt);export default lt;

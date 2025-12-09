@@ -1,0 +1,1 @@
+import baseEach from"./_baseEach.js";function baseEvery(e,a){var r=!0;return baseEach(e,(function(e,t,n){return r=!!a(e,t,n)})),r}export default baseEvery;

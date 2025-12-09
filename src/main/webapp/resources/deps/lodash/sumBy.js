@@ -1,0 +1,1 @@
+import baseIteratee from"./_baseIteratee.js";import baseSum from"./_baseSum.js";function sumBy(e,t){return e&&e.length?baseSum(e,baseIteratee(t,2)):0}export default sumBy;

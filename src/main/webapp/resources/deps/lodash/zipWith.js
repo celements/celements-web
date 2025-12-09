@@ -1,0 +1,1 @@
+import baseRest from"./_baseRest.js";import unzipWith from"./unzipWith.js";var zipWith=baseRest((function(t){var i=t.length,e=i>1?t[i-1]:void 0;return e="function"==typeof e?(t.pop(),e):void 0,unzipWith(t,e)}));export default zipWith;

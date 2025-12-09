@@ -1,0 +1,1 @@
+import baseUnset from"./_baseUnset.js";import isIndex from"./_isIndex.js";var arrayProto=Array.prototype,splice=arrayProto.splice;function basePullAt(r,e){for(var a=r?e.length:0,s=a-1;a--;){var t=e[a];if(a==s||t!==o){var o=t;isIndex(t)?splice.call(r,t,1):baseUnset(r,t)}}return r}export default basePullAt;

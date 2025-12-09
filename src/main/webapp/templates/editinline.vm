@@ -47,6 +47,5 @@ $cdoc.getRenderedContent()
 <div class="bottombuttons">#template("editactions.vm")</div>
 </div> ## form
 </form>
-#template("textarea_wysiwyg.vm")
 #end ## can edit
 </div> ## main

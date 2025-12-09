@@ -1,5 +1,7 @@
+<cel-lazy-load-js load-mode="defer" src="$!services.celementsweb.getSkinFile(':celDynJS/cel-editor/editor-window-helper.mjs', 'file')"></cel-lazy-load-js>
 #if("$!rteHasTitle" == '')
-  #set($rteHasTitle = $celementsweb.getPageType($doc.fullName).hasPageTitle())
+  #set($pageTypeRef = $services.pageType.getPageTypeRef($doc.documentReference))
+  #set($rteHasTitle = $services.pageType.getPageTypeConfig($pageTypeRef).hasPageTitle())
 #end
 #if("$!tinyMCE_height" == '')
   #set($tinyMCE_height = 500)
@@ -18,95 +20,6 @@
 #end
 #set($contextPath = ${request.contextPath})
 #parse("celMacros/includeCelementsRTE.vm")
-<script type="text/javascript">
-##
-var cd = null;
-var rte_cancel_option = "$rte_cancel_option";
-##
-function cancelAndClose(ed,h) {
-	// if no changes were made, close right away
-	if (!ed.isDirty() || rte_cancel_option == 'quit') {
-		if(document.forms.edit){
-	    		document.forms.edit.action = "$cel_tiny_cancel";
-			    if(doBeforeCancelSubmit) {
-			      doBeforeCancelSubmit();
-			    }
-	    		document.forms.edit.submit();
-	 	} else {
-	   		alert("Error: No edit form!");
-	  	}
-	} else if (rte_cancel_option == 'ask') {
-		document.getElementById('cancelDialog').style.height = "auto";
-		if (cd == null) {
-			// initialize dialog object
-			var handleQuit = function() {
-				if (this.getData().save_option) {
-					rte_cancel_option = 'quit';
-					var url = "$xwiki.getDocument('Macros.Ajax').getURL()?ajax=save&rteco=quit&skin=celements2web:Skins.HTMLSkin";
-					new Ajax.Request(url, {method: 'get', onSuccess: function(){
-						if (document.forms.edit){
-				    		document.forms.edit.action = "$cel_tiny_cancel";
-						    if(doBeforeCancelSubmit) {
-						      doBeforeCancelSubmit();
-						    }
-				    		document.forms.edit.submit();
-				 		} else {
-				   			alert("Error: No edit form!");
-				  		}
-				  		this.cancel();
-					}});
-					document.getElementById("rte_save_option").checked = false;
-				} else {
-					if (document.forms.edit){
-				    	document.forms.edit.action = "$cel_tiny_cancel";
-					    if(doBeforeCancelSubmit) {
-					      doBeforeCancelSubmit();
-					    }
-				    	document.forms.edit.submit();
-				 	} else {
-				   		alert("Error: No edit form!");
-				  	}
-					this.cancel();
-				}
-		  	} 
-			var handleCancel = function() { 
-				if (this.getData().save_option) {
-					rte_cancel_option = 'cancel';
-					var url = "$xwiki.getDocument('Macros.Ajax').getURL()?ajax=save&rteco=cancel&skin=celements2web:Skins.HTMLSkin";
-					new Ajax.Request(url, {method: 'get'});
-					document.getElementById("rte_save_option").checked = false;				
-				}
-				ed.setContent(h);
-				ed.undoManager.clear();
-				ed.nodeChanged();
-				this.hide();
-			}
-			var handleResume = function() { 
-				document.getElementById("rte_save_option").checked = false;
-				this.hide(); 
-			} 
-			var cancelDialogButtons = [ { text:'$adminMsg.get("cel_rte_quit_wo_saving")', handler:handleQuit }, 
-							  { text:'$adminMsg.get("cel_rte_cancel_all_changes")', handler:handleCancel }, 
-							  { text:'$adminMsg.get("cel_rte_resume_editing")', handler:handleResume, isDefault:true } ]; 
-		
-			cd = new YAHOO.widget.Dialog("cancelDialog");
-			cd.cfg.queueProperty("buttons", cancelDialogButtons);
-			cd.cfg.queueProperty("fixedcenter", true);
-			cd.render();
-			cd.show();
-		} else {
-			// show dialog instance
-			cd.show();
-		}
-	} else if (rte_cancel_option == 'cancel') {
-		ed.setContent(h);
-		ed.undoManager.clear();
-		ed.nodeChanged();
-	} else {
-		alert("something's wrong here");
-	}
-}
-</script>
 
 <div id="con_titblock" class="titleblock">
 #if($doc.isNew())
@@ -114,23 +27,34 @@ $adminMsg.get('cel_tm_rte_create')
 #else
 $adminMsg.get('cel_tm_rte_edit')
 #end
-</div><!-- IE6 -->
+</div>
 
 #parse("celMacros/includeRTELanguageSelect.vm")
 
-	<form id="edit" method="post" action="$doc.getURL("save")">
+#set($celNewButtons = $services.celementsweb.useNewButtons())
+#if($celNewButtons)
+  <form id="contentEdit" method="post" action="?">
+    <input type="hidden" name="xpage" value="celements_ajax" />
+    <input type="hidden" name="ajax_mode" value="saveDocumentWithValidation" />
+    ##TODO if translation or document does not exist, ask user if it should be created.
+    <input type="hidden" name="createIfNotExists" value="true" />
+#else
+  <form id="contentEdit" method="post" action="$doc.getURL("save")">
+#end
+    <input type="hidden" name="update" value="1" />
+    <input type="hidden" name="tab" value="tb1" />
 ##	    <input type="hidden" name="template" value="$!doc.getTemplate()" />
-        <input type="hidden" name="template" value="$!request.template" />
+      <input type="hidden" name="template" value="$!request.template" />
 	    <input type="hidden" id="formeditxred" name="xredirect" value="$!cel_tiny_xredirect" />
 	    <input type="hidden" name="language" value="$!language" />
 <!-- FIX? : $tdoc.fullName , $tdoc.language -->
 #if($rteHasTitle)
 <div id="con_titleEdit" class="editblock">$adminMsg.get('cel_tm_title'):
-    <input id="pagetitle" name="title" class="fullwidth" value="$!xwiki.getFormEncoded($!tdoc.getTitle())" type="text"  onfocus="setFocus('con_titleEdit');" onblur="removeFocus('con_titleEdit');">
+    <input id="pagetitle" name="title" class="fullwidth" value="$!escapetool.xml($!tdoc.getTitle())" type="text">
 </div>
 #end
 <div id="con_contentEdit" class="editblock">
-		<textarea class="mceEditor" name="content" onfocus="setFocus('con_contentEdit');" onblur="removeFocus('con_contentEdit');">$xwiki.getXMLEncoded($tdoc.content)</textarea>
+		<textarea class="mceEditor" name="content">$escapetool.xml($tdoc.content)</textarea>
 </div>
 	</form>
 

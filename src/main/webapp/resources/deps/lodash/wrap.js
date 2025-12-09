@@ -1,0 +1,1 @@
+import castFunction from"./_castFunction.js";import partial from"./partial.js";function wrap(t,a){return partial(castFunction(a),t)}export default wrap;

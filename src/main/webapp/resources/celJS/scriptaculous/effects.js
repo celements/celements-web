@@ -150,7 +150,7 @@ var Effect = {
   toggle: function(element, effect, options) {
     element = $(element);
     effect  = (effect || 'appear').toLowerCase();
-    
+
     return Effect[ Effect.PAIRS[ effect ][ element.visible() ? 1 : 0 ] ](element, Object.extend({
       queue: { position:'end', scope:(element.id || 'global'), limit: 1 }
     }, options || {}));
@@ -681,7 +681,10 @@ Effect.Shake = function(element) {
 Effect.SlideDown = function(element) {
   element = $(element).cleanWhitespace();
   // SlideDown need to have the content of the element wrapped in a container element with fixed height!
-  var oldInnerBottom = element.down().getStyle('bottom');
+  var oldInnerBottomArray = [];
+  element.childElements().each(function(elem){
+    oldInnerBottomArray.push(elem.getStyle('bottom'));
+  });
   var elementDimensions = element.getDimensions();
   return new Effect.Scale(element, 100, Object.extend({
     scaleContent: false,
@@ -691,24 +694,31 @@ Effect.SlideDown = function(element) {
     restoreAfterFinish: true,
     afterSetup: function(effect) {
       effect.element.makePositioned();
-      effect.element.down().makePositioned();
+      effect.element.childElements().each(Element.makePositioned);
       if (window.opera) effect.element.setStyle({top: ''});
       effect.element.makeClipping().setStyle({height: '0px'}).show();
     },
     afterUpdateInternal: function(effect) {
-      effect.element.down().setStyle({bottom:
-        (effect.dims[0] - effect.element.clientHeight) + 'px' });
+      effect.element.childElements().each(function(elem){
+        elem.setStyle({bottom: (effect.dims[0] - effect.element.clientHeight) + 'px' });
+      });
     },
     afterFinishInternal: function(effect) {
       effect.element.undoClipping().undoPositioned();
-      effect.element.down().undoPositioned().setStyle({bottom: oldInnerBottom}); }
-    }, arguments[1] || { })
+      effect.element.childElements().each(function(elem, idx){
+        elem.undoPositioned().setStyle({bottom: oldInnerBottomArray[idx]});
+      });
+    }
+   }, arguments[1] || { })
   );
 };
 
 Effect.SlideUp = function(element) {
   element = $(element).cleanWhitespace();
-  var oldInnerBottom = element.down().getStyle('bottom');
+  var oldInnerBottomArray = [];
+  element.childElements().each(function(elem){
+    oldInnerBottomArray.push(elem.getStyle('bottom'));
+  });
   var elementDimensions = element.getDimensions();
   return new Effect.Scale(element, window.opera ? 0 : 1,
    Object.extend({ scaleContent: false,
@@ -719,17 +729,20 @@ Effect.SlideUp = function(element) {
     restoreAfterFinish: true,
     afterSetup: function(effect) {
       effect.element.makePositioned();
-      effect.element.down().makePositioned();
+      effect.element.childElements().each(Element.makePositioned);
       if (window.opera) effect.element.setStyle({top: ''});
       effect.element.makeClipping().show();
     },
     afterUpdateInternal: function(effect) {
-      effect.element.down().setStyle({bottom:
-        (effect.dims[0] - effect.element.clientHeight) + 'px' });
+      effect.element.childElements().each(function(elem){
+        elem.setStyle({bottom: (effect.dims[0] - effect.element.clientHeight) + 'px' });
+      });
     },
     afterFinishInternal: function(effect) {
       effect.element.hide().undoClipping().undoPositioned();
-      effect.element.down().undoPositioned().setStyle({bottom: oldInnerBottom});
+      effect.element.childElements().each(function(elem, idx){
+        elem.undoPositioned().setStyle({bottom: oldInnerBottomArray[idx]});
+      });
     }
    }, arguments[1] || { })
   );

@@ -1,12 +1,14 @@
 #if("$!renderDocument" == '')
   #set($renderDocument = $doc)
 #end
+#set($renderDocumentRecursionHistory = $services.celementsweb.getGlobalContextValue("renderDocumentRecursionHistory"))
 #if("$!renderDocumentRecursionHistory" == '')
   #set($renderDocumentRecursionHistory = '  ')
 #end
 #set($noRecursionFound = (${renderDocumentRecursionHistory.indexOf(" $!renderDocument.fullName ")} < 0))
 #if($noRecursionFound)
- $services.celementsweb.renderCelementsDocument($renderDocument.getDocumentReference())
  #set($renderDocumentRecursionHistory = "${renderDocumentRecursionHistory}$!{renderDocument.fullName} ")
+ $services.celementsweb.setGlobalContextValue("renderDocumentRecursionHistory", $renderDocumentRecursionHistory)
+ $services.celementsweb.renderCelementsDocument($renderDocument.getDocumentReference())
 #end
 ##

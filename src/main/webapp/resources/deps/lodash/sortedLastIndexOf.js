@@ -1,0 +1,1 @@
+import baseSortedIndex from"./_baseSortedIndex.js";import eq from"./eq.js";function sortedLastIndexOf(e,r){if(null==e?0:e.length){var t=baseSortedIndex(e,r,!0)-1;if(eq(e[t],r))return t}return-1}export default sortedLastIndexOf;

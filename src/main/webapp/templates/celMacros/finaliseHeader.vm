@@ -3,28 +3,36 @@
 ## and therefor need to be addded last.
 ##
 ## INPUT(optional) : $stylesheet_space (default: $doc.space)
-## INPUT(optional) : $after_skin_cssdoc (default: '')
 ##
 #if(!$finaliseHeaderRUN) ## prevent from being run twice and allow lacy calls.
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
+$!services.javascript.getAllExternalJavaScriptFiles()
+##
+## Hooks for inserting JavaScript skin extensions
+##
+## - Skin file extension hook. Placed first since skin extensions might need to have xwiki or external libraries included first to be able to work properly
+<!-- com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin -->
+## - Skin extension hook
+<!-- com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin -->
+##
 ## Hook for inserting CSS skin extensions
 <!-- com.xpn.xwiki.plugin.skinx.CssSkinExtensionPlugin -->
 <!-- com.xpn.xwiki.plugin.skinx.CssSkinFileExtensionPlugin -->
-$xwiki.celementsweb.displayAllCSS()
-## get DocumentSpecific Meta-Tag
+$services.css.displayAllCSS()
+## get DocumentSpecific Meta-Tag - as of yet refresh can not be handled by BaseObjectMetaTagProvider because of different attribute name.
 #set($metaTags = $celementsweb.getDocMetaTags($language, $default_language))
 #foreach($metaTagKey in $metaTags.keySet())
 #if("$metaTagKey" == 'refresh')
 #set($attributName = 'http-equiv')
-#else
-#set($attributName = 'name')
+#set($propertyNameVal = '')
+<meta $!{propertyNameVal}$attributName="$metaTagKey" content="$metaTags.get($metaTagKey)" />
 #end
-<meta $attributName="$metaTagKey" content="$metaTags.get($metaTagKey)" />
 #end
-<!-- 
-    This website is powered by celements.web - inspiring people to share!
-    celements.web is a free open source Content Management System based on the popular xwiki platform and licensed under LGPL.
-    celements.web is copyright 2005-2014 of synventis gmbh. Extensions are copyright of their respective owners.
-    Information and contribution at http://celements.ch/ and http://synventis.com/
+<!--
+    This website is powered by open-celements - inspiring people to share!
+    open-celements is a free open source Content Management System based on the popular xwiki platform and licensed under LGPL.
+    open-celements is copyright 2005-$!{services.date.nowAtZone.year} of synventis gmbh. Extensions are copyright of their respective owners.
+    Information and contribution at http://www.open-celements.org/
 -->
 <meta name="generator" content="celements.web" />
 #set($finaliseHeaderRUN = true)

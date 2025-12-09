@@ -1,0 +1,1 @@
+import baseClone from"./_baseClone.js";import baseIteratee from"./_baseIteratee.js";var CLONE_DEEP_FLAG=1;function iteratee(e){return baseIteratee("function"==typeof e?e:baseClone(e,CLONE_DEEP_FLAG))}export default iteratee;

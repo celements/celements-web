@@ -1,0 +1,1 @@
+import arrayEvery from"./_arrayEvery.js";import createOver from"./_createOver.js";var overEvery=createOver(arrayEvery);export default overEvery;

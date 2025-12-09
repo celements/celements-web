@@ -1,0 +1,7 @@
+#if("$!elemId" != '')
+#set($elemDocRef = $services.model.resolveDocument($elemId))##
+#if($services.modelAccess.exists($elemDocRef))
+#set($propertiesUrl = $services.url.getURL($elemDocRef, 'edit', 'tab=tb4'))##
+window.location.href=&quot;$!{propertiesUrl}&quot;##
+#end
+#end

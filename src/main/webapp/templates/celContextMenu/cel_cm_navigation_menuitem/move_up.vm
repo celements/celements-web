@@ -1,0 +1,13 @@
+#if("$!elemId" != '')
+#set($elemDocRef = $services.model.resolveDocument($elemId))##
+#if($services.modelAccess.exists($elemDocRef))
+#set($prevTreeNode = $services.treeNode.getPrevMenuItem($elemDocRef))##
+#if($services.modelAccess.exists($prevTreeNode.documentReference))
+ #set($prevMenuItemFullName = $services.model.serialize($prevTreeNode.documentReference, 'local'))##
+ #set($l = $services.url.getURL($elemDocRef, 'view', "xpage=celements_ajax&ajax_mode=switchMenuItemPos"))##
+ #set($l = "$!{l}&space=${elemDocRef.lastSpaceReference.name}&item1=$!{elemId}")##
+ #set($cmenu_pageLink = "$!{l}&item2=$!{prevMenuItemFullName}&xredirect=$!{doc.fullName}")##
+window.location.href=&quot;$!{cmenu_pageLink}&quot;##
+#end
+#end
+#end

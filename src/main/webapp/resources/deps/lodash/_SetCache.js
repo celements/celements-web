@@ -1,0 +1,1 @@
+import MapCache from"./_MapCache.js";import setCacheAdd from"./_setCacheAdd.js";import setCacheHas from"./_setCacheHas.js";function SetCache(e){var a=-1,t=null==e?0:e.length;for(this.__data__=new MapCache;++a<t;)this.add(e[a])}SetCache.prototype.add=SetCache.prototype.push=setCacheAdd,SetCache.prototype.has=setCacheHas;export default SetCache;

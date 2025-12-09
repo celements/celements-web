@@ -53,7 +53,9 @@ function resize(){
       });
     }
     
-    siblingHeight += (scrollBox.cumulativeOffset().top - innerBox.cumulativeOffset().top);
+    //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
+    //counting margin-auto offsets. Thus we need to use jquery.offset
+    siblingHeight += ($j(scrollBox).offset().top - $j(innerBox).offset().top);
     
     var winHeight = 0;
     if(typeof(window.innerWidth) == 'number') {

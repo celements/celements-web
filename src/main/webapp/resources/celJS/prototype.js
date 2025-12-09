@@ -1,5 +1,7 @@
 /*  Prototype JavaScript framework, version 1.7.3
  *  (c) 2005-2010 Sam Stephenson
+ *  2022 start new forkt to transition to vanilla js
+ *  (c) 2022-2023 Synventis
  *
  *  Prototype is freely distributable under the terms of an MIT-style license.
  *  For details, see the Prototype web site: http://www.prototypejs.org/
@@ -1104,15 +1106,11 @@ function $A(iterable) {
   return results;
 }
 
-
 function $w(string) {
   if (!Object.isString(string)) return [];
   string = string.strip();
   return string ? string.split(/\s+/) : [];
 }
-
-Array.from = $A;
-
 
 (function() {
   var arrayProto = Array.prototype,
@@ -2170,11 +2168,10 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
     show:    show
   });
 
-
+  const origRemoveFunc = Element.prototype.remove;
   function remove(element) {
-    element = $(element);
-    element.parentNode.removeChild(element);
-    return element;
+    origRemoveFunc.call(element);
+    return $(element);
   }
 
   var SELECT_ELEMENT_INNERHTML_BUGGY = (function(){

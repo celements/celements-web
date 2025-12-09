@@ -1,15 +1,15 @@
-#if($xwiki.hasAdminRights())
+#if($services.rightsAccess.isAdmin())
   #set($listTitle = "RTE Config Types")
-  #set($rteConfigsList = $celementsweb.getRTEConfigsList())
+  #set($rteConfigsList = $services.rteconfig.getRTEConfigsList())
   <div id="rteConfigsList">
     <h1>$listTitle</h1>
     <p>click to edit</p>
     <table>
   #foreach($rteConfigRef in $rteConfigsList)
     <tr>
-      #set($rteConfigDoc = $xwiki.getDocument($rteConfigRef))
-      #set($editLink = $rteConfigDoc.getURL('edit', "editor=object&xredirect=$!{doc.getURL('view')}"))
-      <td><a href="$editLink">$!rteConfigRef.getName()</a></td>
+      #set($xredirect = $escapetool.url("$!{doc.getURL('view')}"))
+      #set($editLink = $services.url.getURL($rteConfigRef, 'edit', "editor=object&xredirect=$!xredirect"))
+      <td><a href="$editLink">$services.model.serialize($rteConfigRef, 'local')</a></td>
     </tr>
   #end
     </table>
