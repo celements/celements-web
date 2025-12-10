@@ -2,23 +2,16 @@
   "name": "celements-web",
   "author": "Synventis GmbH",
   "license": "LGPL-2.1",
-  "devDependencies": {
-    "@babel/cli": "^7.18.10",
-    "@babel/core": "^7.18.10",
-    "@babel/preset-env": "^7.18.10",
-    "babel-minify": "^0.5.2"
-  },
-  "browserslist": [
-    "supports es6-module"
-  ],
-  "config": {
-    "src": "src/main/webapp/resources/celDynJS",
-    "dist": "src/main/webapp/dist"
-  },
+  "private": true,
+  "type": "module",
   "scripts": {
-    "babel": "babel $npm_package_config_dist -d $npm_package_config_dist --keep-file-extension --presets minify",
-    "prebuild": "npm run clean && cp -r $npm_package_config_src $npm_package_config_dist",
-    "build": "npm run babel",
-    "clean": "rm -rf $npm_package_config_dist"
+    "dev": "vite build --watch",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "@babel/standalone": "^7.0.0",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^7.0.0"
   }
 }
