@@ -1,0 +1,176 @@
+##INPUT $additionalMailReceivers = comma separated list of receivers
+##TODO: because we are using text/html check with Spamfilters and spamability!
+#set($nl = $xwiki.getNl())
+#if("$!formDoc" == '')
+  #set($formDoc = $doc)
+#end
+#set($errMsg = '')
+#set($formMail_obj = $!adoc.getObject('Celements2.FormMailClass'))
+#if(("$!formMail_obj" != '') && ("$!formMail_obj.getProperty('emailFrom').getValue()" != ''))
+#set($email_receivers = [])
+#set($ccReceivers = '')
+#set($bccReceivers = '')
+## get receivers attached to the form document
+#foreach($receiver_obj in $formDoc.getObjects('Celements2.ReceiverEMail'))
+  ##is_active != 0 so default is active
+  #if(($!receiver_obj.getProperty('email').getValue() != "") && ("$!receiver_obj.getProperty('is_active').getValue()" != '0'))
+    #if("$!receiver_obj.getProperty('address_type').getValue()" == 'cc')
+      #if("$!ccReceivers" != "") #set($ccReceivers = "$!{ccReceivers},") #end
+      #set($ccReceivers = "$!{ccReceivers}$receiver_obj.getProperty('email').getValue()")
+    #elseif("$!receiver_obj.getProperty('address_type').getValue()" == 'bcc')
+      #if("$!bccReceivers" != "") #set($bccReceivers = "$!{bccReceivers},") #end
+      #set($bccReceivers = "$!{bccReceivers}$receiver_obj.getProperty('email').getValue()")
+    #else
+      #set($!res=$!email_receivers.add($receiver_obj.getProperty('email').getValue()))
+    #end
+  #end
+#end
+## get receivers attached to the Action (Mail message) document
+#foreach($receiver_obj in $adoc.getObjects('Celements2.ReceiverEMail'))
+  ##is_active != 0 so default is active
+  #if(($!receiver_obj.getProperty('email').getValue() != "") && ("$!receiver_obj.getProperty('is_active').getValue()" != '0'))
+    #if("$!receiver_obj.getProperty('address_type').getValue()" == 'cc')
+      #if("$!ccReceivers" != "") #set($ccReceivers = "$!{ccReceivers},") #end
+      #set($ccReceivers = "$!{ccReceivers}$receiver_obj.getProperty('email').getValue()")
+    #elseif("$!receiver_obj.getProperty('address_type').getValue()" == 'bcc')
+      #if("$!bccReceivers" != "") #set($bccReceivers = "$!{bccReceivers},") #end
+      #set($bccReceivers = "$!{bccReceivers}$receiver_obj.getProperty('email').getValue()")
+    #else
+      #set($!res=$!email_receivers.add($receiver_obj.getProperty('email').getValue()))
+    #end
+  #end
+#end
+## attachments
+#if("$!formMail_obj.getProperty('attachmentsSource').getValue()" != "")
+  #set($attachmentsSource = "$!formMail_obj.getProperty('attachmentsSource').getValue()")
+  #set($attachmentsSource = ["$!xwiki.renderText($!attachmentsSource, $formDoc)"])
+  #set($attachmentList = $celementsweb.getAttachmentsForDocs($!attachmentsSource))
+#end
+## get receivers from given form fields
+#macro(addEmailToList $mail)
+  #if(("$!mail" != "") && $!mail.matches('\S{1,}@[\w\-]{1,}([.]([\w\-]{1,})){1,3}'))
+    #if($hasedit && $debug)
+      sending mail to formfield $receiverParamName with value $mail.<br/>
+    #end
+    #set($!res=$!email_receivers.add($mail))
+  #else
+    #if($hasedit && $debug)
+      sending NO mail to formfield $receiverParamName with value $mail.<br/>
+    #end
+  #end
+#end
+#if("$!{formMail_obj.getProperty('userEmailFields')}" != '')
+  #set($receiversParameters = "$!{formMail_obj.getProperty('userEmailFields').getValue()}")
+  #foreach($receiverParamName in $receiversParameters.split(','))
+    #set($userAccount = "$!request.get($receiverParamName)")
+    #if("$!userAccount" != "")
+      #if($userAccount.indexOf('.') < 0)
+        #set($userAccount = "XWiki.$userAccount")
+      #end
+      #if($xwiki.exists("$!userAccount"))
+        #set($recUser = $xwiki.getDocument("$!userAccount"))
+        #set($recObj = $recUser.getObject('XWiki.XWikiUsers'))
+        #if("$!recObj" != '')
+          #set($emailAddress = "$!recObj.getProperty('email').getValue()")
+          #addEmailToList($emailAddress)
+        #end
+      #end
+    #end
+  #end
+#end
+#if("$!{formMail_obj.getProperty('emailFields')}" != '')
+  #set($receiversParameters = "$!{formMail_obj.getProperty('emailFields').getValue()}")
+  #foreach($receiverParamName in $receiversParameters.split(','))
+    #set($emailAddress = "$!request.get($receiverParamName)")
+    #addEmailToList($emailAddress)
+  #end
+#end ## if emailFields != ''
+#if("$!additionalMailReceivers" != '')
+  #foreach($receiverParamName in $additionalMailReceivers.split(','))
+    #set($emailAddress = "$!receiverParamName")
+    #addEmailToList($emailAddress)
+  #end
+#end
+#if($hasedit && $debug)
+Form Document: $formDoc.fullName<br/>
+Action Document: $adoc.fullName<br/>
+Action Template Document: $atdoc.fullName<br/>
+email_receivers (list): $email_receivers<br/>
+receivers (string): $receivers<br />
+#end
+#if(($email_receivers.size() > 0) || ("$!{receivers.trim()}" != ''))
+  #foreach($receiver in $email_receivers)
+    #if($!receiver != "")
+      #if("$!receivers" != "")
+        #set($receivers = "$!{receivers},")
+      #end
+      #set($receivers = "$!{receivers}$!{receiver}")
+    #end
+  #end
+      ##TODO: get language for subject from receiver object and use getTranslatedContent($lang)
+      #set($subject_raw = "$!adoc.title")
+      #if("$!subject_raw" == '')
+        #set($subject_raw = "$!{adoc.fullName}: no title given")
+      #end
+      #set($subject = $!xwiki.renderText("$!subject_raw",$adoc))
+      #set($nl = $xwiki.getNl())
+      #*
+      #set($msg_header = "MIME-Version: 1.0${nl}")
+      #set($msg_header = "$!{msg_header}Content-Type: text/html; charset=${charEncoding}${nl}")
+      #set($msg_header = "$!{msg_header}Content-Transfer-Encoding: quoted-printable${nl}")
+      #set($msg_header = "$!{msg_header}To: ${receiver}${nl}")
+      ##TODO: encoding for umlaute(iso....) (z.B. Gmail makes troubles)
+      #set($msg_header = "$!{msg_header}Subject: ${subject}${nl}")
+      #if("$!request.get('email')" != '')
+        #set($msg_header = "$!{msg_header}Reply-To: $!request.get('email')${nl}")
+      #end
+      ## end email header with a separate empty line
+      #set($msg_header = "$!{msg_header}${nl}")
+      
+      $xwiki.sendMessage($mailSender, $receiver, "$!{msg_header}$!{message}")
+      *#
+      
+      #set($mailSender = "$!formMail_obj.getProperty('emailFrom').getValue()")
+      #set($replyTo = "")
+      #if("$!request.get('email')" != '')
+        #set($replyTo = "$!request.get('email')")
+      #end
+      ##TODO: get language for Content from receiver object and use getTranslatedContent($lang)
+      #set($message = $!xwiki.renderText("$!adoc.getTranslatedContent()",$adoc))
+      #set($nl = $xwiki.getNl())
+      #if("$!ccReceivers.trim()" == '')
+        #set($ccReceivers = ${xwiki.null})
+      #end
+      #if("$!bccReceivers.trim()" == '')
+        #set($bccReceivers = ${xwiki.null})
+      #end
+      #if("$!formMail_obj.getProperty('contentIsLatin1').getValue()" == '1')
+        #set($successfulSend = $!services.celmail.sendLatin1Mail($mailSender, $replyTo, "$!receivers",$ccReceivers,$bccReceivers,"$!subject","$!message","",$attachmentList, $xwiki.null))
+      #else
+        #set($successfulSend = $!services.celmail.sendMail($mailSender, $replyTo, "$!receivers",$ccReceivers,$bccReceivers,"$!subject","$!message","",$attachmentList, $xwiki.null))
+      #end
+      #set($receivers = "")
+  ##TODO: get this Message from some multilingual Crumbs.
+  #if($successfulSend < 0)
+    #set($errMsg = 'Error: Failed to send Message!')
+  #else
+<p>Message has been successfully sent. Thank you for your Message.</p>
+  #end
+#else
+  ##TODO: get this Message from some multilingual Crumbs.
+  #if($hasedit && $debug)
+    #set($errMsg = 'Error: no receivers found!')
+  #else
+    #set($errMsg = 'Error: Message cannot be sent!')
+  #end
+#end
+#elseif("$!formMail_obj" == '')
+    #set($errMsg = "Error: no Celements2.FormMailClass object found on document $adoc.fullName!")
+#elseif("$!formMail_obj.getProperty('emailFrom').getValue()" == '')
+    #set($errMsg = "Error: no valid email-from found on document $adoc.fullName!")
+#else
+    #set($errMsg = "Error: unkown error!")
+#end
+#if("$!errMsg" != '')
+  <p><strong>$errMsg</strong></p>
+#end
