@@ -1,0 +1,9 @@
+#if("$!{request.get('emailadresse')}" != '')
+  #set($subsDocName = ${xwiki.celementsblog.subscribeNewsletter()})
+  <br />subsDocName: $subsDocName && exists: $xwiki.exists($subsDocName)<br />
+  #if(("$!subsDocName" != '') && $xwiki.exists($subsDocName))
+    #set($savedContact = ${xwiki.celcontact.saveAllContact($subsDocName)})
+  #end
+#else
+  No email to register.
+#end
