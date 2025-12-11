@@ -1,31 +1,3 @@
 export default {
   greeting: 'Herzlich willkommen',
-  welcome: 'Schön, bist du weiter ein Teil von ',
-  welcome_highlight: '#TeamHelvetia',
-  work_in_progress:
-    'Aktuell ist diese Seite im Aufbau. Sie wird laufend mit neuen Inhalten ergänzt – bleib gespannt.',
-  slogan: 'Einmal #TeamHelvetia, immer #TeamHelvetia.',
-  intro_greeting: 'Liebe Alumni',
-  intro1:
-    'Auch wenn deine aktive Zeit bei Helvetia bereits hinter dir liegt, freuen wir uns sehr darauf, weiterhin mit dir in Kontakt zu bleiben. Diese Plattform bietet dir die Möglichkeit, dich sowohl beruflich als auch sozial auszutauschen.',
-  intro2:
-    'Du erhältst exklusive Angebote, relevante Insights und speziell für dich zusammengestellte Sonderaktionen. Gleichzeitig kannst du dein Netzwerk erweitern, mit anderen Alumni in Kontakt bleiben und Ideen austauschen.',
-  intro3: 'Viel Spass beim Entdecken!',
-  intro_goodbye: 'Liebe Grüsse',
-  intro_names: 'Michèle und Rahel',
-  home: 'Alumni',
-  news: 'News',
-  events: 'Events',
-  benefits: 'Benefits',
-  career: 'Karriere',
-  contact: 'Kontakt',
-  archive: 'Archiv',
-  profile_menu: 'Profil',
-  profile: 'Dein Profil',
-  logout: 'Abmelden',
-  registration: 'Registrierung',
-  searchPlaceholder: 'Suche',
-  search: 'Suche',
-  search_no_results: 'Keine Ergebnisse gefunden',
-  search_results: '{count} Suchergebnisse',
 };

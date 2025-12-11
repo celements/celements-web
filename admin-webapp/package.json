@@ -34,6 +34,7 @@
     "vue-matomo": "^4.2.0",
     "vue-router": "^4.4.5",
     "vue3-spinners": "^1.2.2",
+    "vuefinder": "^4.0.27",
     "zod": "^3.24.1"
   },
   "devDependencies": {
