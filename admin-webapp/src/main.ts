@@ -8,6 +8,8 @@ import Store from '@/plugins/plugin.pinia';
 import Router from '@/plugins/plugin.router';
 import { useLogger } from '@/utils/logger';
 import { createApp } from 'vue';
+import VueFinder from 'vuefinder';
+import 'vuefinder/dist/style.css';
 
 const logger = useLogger('Celements-Admin');
 
@@ -27,6 +29,7 @@ const locale = import.meta.env.VITE_DEFAULT_LOCALE;
 app.use(Router);
 app.use(createI18n({ locale }));
 app.use(Auth);
+app.use(VueFinder);
 
 const localDev = (import.meta.env.VITE_ENABLE_LOCAL_DEVELOPMENT ?? 'true') === 'true';
 app.provide('localDev', localDev);

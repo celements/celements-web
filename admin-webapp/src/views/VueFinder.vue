@@ -1,4 +1,5 @@
 <template>
+  <p>loading vue-finder...</p>
   <vue-finder
     id="basic_example"
     :driver="driver"

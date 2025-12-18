@@ -9,7 +9,7 @@ const routes: RouteRecordRaw[] = [
     component: Home,
     meta: {
       title: 'Willkommen',
-      requiresAuth: true,
+//      requiresAuth: true,
     },
   },
   {
@@ -17,7 +17,7 @@ const routes: RouteRecordRaw[] = [
     name: 'VueFinder',
     component: VueFinder,
     meta: {
-      requiresAuth: true,
+//      requiresAuth: true,
     }
   }
 ];
