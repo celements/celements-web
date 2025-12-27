@@ -253,63 +253,101 @@ if (!customElements.get('cel-lazy-load-css')) {
  * CelLazyLoader loads the html-response of src attribute
  *********************************************************/
 class CelLazyLoader extends HTMLElement {
-    
+  static CSS_CLASSES = Object.freeze({
+    LOADING: 'cel-lazy-loading',
+    REMOVING: 'cel-lazy-removing',
+  });
+
+  #abortController;
+
   constructor () {
     super();
-    this._lazyLoadUtils = new CelLazyLoaderUtils();
-    this.classList.add('celLoadLazyLoading');
-    this._fetchResponse = this.src ? fetch(this.src) : null;
-    this.attachShadow({ 'mode' : 'open' });
-    this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
-    this._showLoadingIndicator();
+    this.#abortController = new AbortController();
   }
 
   get src() {
     return this.getAttribute('src');
   }
 
-  _parseHTML(html) {
+  get loaderSize() {
+    return parseInt(this.getAttribute('loader-size')) || parseInt(this.getAttribute('size'));
+  }
+
+  async connectedCallback() {
+    this.#attachLoadingIndicator();
+    const html = await this.fetchHtml();
+    const nodes = this.#parseHTML(html ?? '');
+    await this.#updateContent(nodes);
+  }
+
+  #parseHTML(html) {
     const template = document.createElement('template');
     template.insertAdjacentHTML('afterbegin', html);
     return [...template.childNodes];
   }
 
-  _updateContent(newChildNodes) {
-    console.debug('_updateContent: ', newChildNodes);
-    const parent = this.parentNode;
-    const fragment = new DocumentFragment();
-    fragment.replaceChildren(...newChildNodes);
-    parent.replaceChild(fragment, this);
+  async #updateContent(newChildNodes) {
+    if (!this.parentNode) return; // element still attached ?
+    await this.#animateRemoval();
+      const parent = this.parentNode;
+    if (!parent) return; // element still attached ?
     try {
-      this._lazyLoadUtils.fireEvent(parent, 'celements:contentChanged', {
-        'htmlElem': parent
-      });
+      const fragment = new DocumentFragment();
+      fragment.replaceChildren(...newChildNodes);
+      parent.replaceChild(fragment, this);
+      new CelLazyLoaderUtils().fireEvent(parent, 'celements:contentChanged', { 'htmlElem': parent });
     } catch (exp) {
-      console.error('contentChanged failed on ', parent, exp);
+      console.error('updateContent failed on', parent, exp);
     }
   }
 
-  _showLoadingIndicator() {
-    const loaderSize = parseInt(this.getAttribute('size')) || 64;
-    const loaderimg = this._loadingIndicator.getLoadingIndicator(loaderSize);
-    loaderimg.style.display = 'block';
-    loaderimg.style.marginLeft = 'auto';
-    loaderimg.style.marginRight = 'auto';
-    this.shadowRoot.appendChild(loaderimg);
+  async #animateRemoval() {
+    if (!this.getAnimations) return;
+    this.classList.add(CelLazyLoader.CSS_CLASSES.REMOVING);
+    try {
+      const animations = this.getAnimations().map((animation) => animation.finished);
+      return await Promise.all(animations);
+    } finally {
+      this.classList.remove(CelLazyLoader.CSS_CLASSES.REMOVING);
+    }
+  } 
+
+  #attachLoadingIndicator() {
+    if (!window.CELEMENTS?.LoadingIndicator || !this.loaderSize) return;
+    try {
+      const celLoadingIndicator = new window.CELEMENTS.LoadingIndicator();
+      const loaderImg = celLoadingIndicator.getLoadingIndicator(this.loaderSize);
+      loaderImg.style.display = 'block';
+      loaderImg.style.marginLeft = 'auto';
+      loaderImg.style.marginRight = 'auto';
+      if (!this.shadowRoot) {
+        this.attachShadow({ 'mode' : 'open' });
+      }
+      this.shadowRoot.appendChild(loaderImg);
+    } catch (exp) {
+      console.error('attachLoadingIndicator failed', exp);
+    }
   }
 
-  async connectedCallback() {
-    console.debug('connectedCallback', this, this._fetchResponse);
-    let nodes = [];
-    if (this._fetchResponse) {
-      const response = await this._fetchResponse;
+  async fetchHtml() {
+    if (!this.src) return;
+    try {
+      this.classList.add(CelLazyLoader.CSS_CLASSES.LOADING);
+      const response = await fetch(this.src, { signal: this.#abortController.signal });
       if (response.ok) {
-        nodes = this._parseHTML(await response.text());
+        return await response.text();
       } else {
         console.error('fetch failed', response);
       }
+    } catch (exp) {
+      if (exp.name !== 'AbortError') console.error('fetch error', exp);
+    } finally {
+      this.classList.remove(CelLazyLoader.CSS_CLASSES.LOADING);
     }
-    this._updateContent(nodes);
+  }
+
+  disconnectedCallback() {
+    this.#abortController.abort();
   }
 }
 

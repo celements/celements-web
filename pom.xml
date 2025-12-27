@@ -22,17 +22,19 @@
  *
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <url>https://github.com/celements/celements-web</url>
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>6.1</version>
+    <version>6.3-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>6.9-SNAPSHOT</version>
+  <version>6.10-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -101,7 +103,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-scheduler</artifactId>
-      <version>6.1</version>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -119,10 +121,6 @@
     <!-- END xwiki-enterprise-web war -->
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-application-manager</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-wiki-manager</artifactId>
     </dependency>
     <dependency>
@@ -135,23 +133,23 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>6.4</version>
+      <version>6.6</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>6.1</version>
+      <version>6.2</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>6.4</version>
+      <version>6.5</version>
       <type>war</type>
     </dependency>
     <dependency>
-       <groupId>com.celements</groupId>
+      <groupId>com.celements</groupId>
       <artifactId>tinymce-langs</artifactId>
       <version>3.4.3.2-celRTE</version>
       <type>war</type>
@@ -171,25 +169,29 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-richtext-web</artifactId>
-      <version>6.2</version>
+      <version>6.4</version>
       <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-application-manager</artifactId>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-wiki-manager-web</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-user-manager-web</artifactId>
-      <version>6.2</version>
+      <version>6.3</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-layout-web</artifactId>
-      <version>6.3</version>
+      <version>6.4</version>
       <type>war</type>
     </dependency>
 
@@ -197,12 +199,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-commons</artifactId>
-      <version>6.1</version>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>6.7-SNAPSHOT</version>
+      <version>6.11-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -212,7 +214,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-component</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -232,27 +234,27 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>6.1</version>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>6.1</version>
+      <version>6.2</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>6.5-SNAPSHOT</version>
+      <version>6.8-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.13</version>
+      <version>6.17-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>6.2</version>
+      <version>6.5-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -267,15 +269,33 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-mvc</artifactId>
-      <version>6.2</version>
+      <version>6.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-spring-security</artifactId>
+      <version>6.3-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-keycloak</artifactId>
-      <version>6.0</version>
+      <version>6.2</version>
     </dependency>
 
 
+    <!-- Spring -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+    </dependency>
     <!-- other dependencies -->
     <dependency>
       <groupId>xalan</groupId>
@@ -308,17 +328,17 @@
       <artifactId>jersey-common</artifactId>
     </dependency>
     <dependency>
-        <groupId>javax.ws.rs</groupId>
-        <artifactId>javax.ws.rs-api</artifactId>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>javax.ws.rs-api</artifactId>
     </dependency>
-      <dependency>
-        <groupId>jakarta.ws.rs</groupId>
-        <artifactId>jakarta.ws.rs-api</artifactId>
+    <dependency>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
     </dependency>
     <!--  hibernate annotations needed for org.hibernate.type.EnumType -->
     <dependency>
-       <groupId>org.hibernate</groupId>
-       <artifactId>hibernate-annotations</artifactId>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
     </dependency>
     <dependency>
       <groupId>org.reflections</groupId>
@@ -340,6 +360,34 @@
     </dependency>
 
   </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <!-- Align ALL Spring 5.3.x artifacts -->
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>${spring.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- Align ALL Jackson 2.x artifacts (core, databind, annotations, dataformats, datatype-*) -->
+      <dependency>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>${jackson.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- Force the newer JTA for old Hibernate transitive -->
+      <dependency>
+        <groupId>javax.transaction</groupId>
+        <artifactId>jta</artifactId>
+        <version>1.1</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <build>
     <finalName>celements-web</finalName>
     <plugins>
@@ -386,8 +434,31 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
         <groupId>com.jarslab.maven</groupId>
         <artifactId>babel-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.4.1</version>
+        <executions>
+          <execution>
+            <id>enforce-dependency-convergence</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <DependencyConvergence />
+              </rules>
+              <fail>true</fail>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

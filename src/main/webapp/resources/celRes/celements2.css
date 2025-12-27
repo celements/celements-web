@@ -686,6 +686,13 @@ body > .cel_reorderNodes_proxy .docLangs,
 	background-color: #ccc;
 }
 
+.generalOverlay #cel_overlaybody .cel_presentation_addslide a,
+.yui-panel-container .cel_contentTab .cel_presentation_addslide a {
+	display: flex;
+	width: fit-content;
+	gap: 5px;
+}
+
 body div.mask {
 	z-index: 100 !important;
 }

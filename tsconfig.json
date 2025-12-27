@@ -1,0 +1,33 @@
+{
+  "include": ["src/main/frontend/**/*.ts"],
+  "exclude": ["node_modules", "src/main/webapp/**"],  
+  "compilerOptions": {
+    /* --- Build & Emit --- */
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler", // optimized for bundlers like Vite
+    "noEmit": true, // vite builds the JS; tsc just checks types
+    "isolatedModules": true,  // required because Vite (esbuild) compiles files individually
+    /* --- Strictness & Code Quality --- */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    /* --- Libraries & Environment --- */
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+    /* --- JS Interop --- */
+    "allowJs": true,
+    "checkJs": false, // don't error on your legacy JS files if they are imported
+    /* --- Paths & Resolution --- */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/main/frontend/*"]
+    },
+    /* --- Advanced/Formatting --- */
+    "allowImportingTsExtensions": false,
+    "useDefineForClassFields": true,
+  }
+}
