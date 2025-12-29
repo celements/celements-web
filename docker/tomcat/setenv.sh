@@ -14,9 +14,3 @@ CATALINA_OPTS="${CATALINA_OPTS}\
  -Djava.net.preferIPv4Stack=true\
  -Djava.net.preferIPv4Addresses\
 "
-
-if [ -n "$IP_ADDR" ]; then
-CATALINA_OPTS="${CATALINA_OPTS}\
- -Djgroups.bind_addr=${IP_ADDR}\
-"
-fi
