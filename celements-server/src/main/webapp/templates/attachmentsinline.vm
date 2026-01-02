@@ -1,1 +1,1 @@
-#parse('celTemplates/attachmentsinline.vm')
+#parse('celInlineTemplates/attachmentsinline.vm')
