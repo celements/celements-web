@@ -29,7 +29,14 @@ const locale = import.meta.env.VITE_DEFAULT_LOCALE;
 app.use(Router);
 app.use(createI18n({ locale }));
 app.use(Auth);
-app.use(VueFinder);
+app.use(VueFinder, {
+  i18n: {
+    en: async () => await import('vuefinder/dist/locales/en.js'),
+    de: async () => await import('vuefinder/dist/locales/de.js'),
+    fr: async () => await import('vuefinder/dist/locales/fr.js'),
+    it: async () => await import('vuefinder/dist/locales/it.js'),
+  },
+});
 
 const localDev = (import.meta.env.VITE_ENABLE_LOCAL_DEVELOPMENT ?? 'true') === 'true';
 app.provide('localDev', localDev);

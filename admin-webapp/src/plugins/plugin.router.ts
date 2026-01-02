@@ -28,7 +28,7 @@ const router = createRouter({
 });
 router.beforeEach((to) => {
   document.title =
-    typeof to.meta?.title === 'function' ? to.meta.title() : (to.meta?.title ?? 'Helvetia Alumni');
+    typeof to.meta?.title === 'function' ? to.meta.title() : (to.meta?.title ?? 'Open-Celements Admin');
 });
 
 export default router;
