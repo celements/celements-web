@@ -72,7 +72,7 @@ export function createCelementsAdminApp(
     mount: (el: Element | string) => {
       const target = typeof el === 'string' ? document.querySelector(el) : el;
       if (!target) {
-        logger.warn(`mount target not found: ${String(el)}`);
+        logger.warn(`mount target not found: ${JSON.stringify(el)}`);
         return;
       }
 
