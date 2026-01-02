@@ -19,6 +19,9 @@ export const getViteConfig = (mode: string) => {
         }
       }),
     ],
+    build: {
+      manifest: true,
+    },
     server: {
       proxy: {
         '^/download': {

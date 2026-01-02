@@ -1,50 +1,7 @@
-import '@/assets/main.css';
+import { createCelementsAdminApp } from '@/bootstrap';
 
-import App from '@/App.vue';
-import { useAuthStore } from '@/core/stores/auth';
-import { createI18n } from '@/plugins/i18n';
-import { createAuthPlugin } from '@/plugins/plugin.auth';
-import Store from '@/plugins/plugin.pinia';
-import Router from '@/plugins/plugin.router';
-import { useLogger } from '@/utils/logger';
-import { createApp } from 'vue';
-import VueFinder from 'vuefinder';
-import 'vuefinder/dist/style.css';
-
-const logger = useLogger('Celements-Admin');
-
-const app = createApp(App);
-app.config.errorHandler = (err, instance, info) => {
-  logger.error(err as string, instance, info);
-};
-
-app.use(Store);
-
-// register auth plugin with router and store
-const authStore = useAuthStore();
-const Auth = createAuthPlugin(Router, authStore);
-
-const locale = import.meta.env.VITE_DEFAULT_LOCALE;
-
-app.use(Router);
-app.use(createI18n({ locale }));
-app.use(Auth);
-app.use(VueFinder, {
-  i18n: {
-    en: async () => await import('vuefinder/dist/locales/en.js'),
-    de: async () => await import('vuefinder/dist/locales/de.js'),
-    fr: async () => await import('vuefinder/dist/locales/fr.js'),
-    it: async () => await import('vuefinder/dist/locales/it.js'),
-  },
-});
-
-const localDev = (import.meta.env.VITE_ENABLE_LOCAL_DEVELOPMENT ?? 'true') === 'true';
-app.provide('localDev', localDev);
-if (localDev) {
-  logger.info('local development enabled');
+const el = document.getElementById('app');
+const options = {};
+if (el) {
+  createCelementsAdminApp(options).mount(el);
 }
-
-logger.debug('mounting app...');
-app.mount('#app');
-
-logger.info('main ready');

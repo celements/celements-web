@@ -13,8 +13,8 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/VueFinder',
-    name: 'VueFinder',
+    path: '/MediaLib',
+    name: 'MediaLib',
     component: VueFinder,
     meta: {
 //      requiresAuth: true,
