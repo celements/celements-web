@@ -2,104 +2,106 @@
 @import url(google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
 /* Floating Windows Classes */
 .sheet {
-	position: absolute;
+  position: absolute;
 }
 .wmwindow {
-	position: absolute;
-	padding-top: 14px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	margin: 0px;
-	border: 0px;
-	cursor:move;
+  position: absolute;
+  padding-top: 14px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  margin: 0px;
+  border: 0px;
+  cursor:move;
 }
 
 .wmwindow_selected {
-	position: absolute;
-	padding-top: 14px;
-	padding-right: 0px;
-	padding-bottom: 0px;
-	padding-left: 0px;
-	margin: 0px;
-	border: 0px;
-	cursor:move;
+  position: absolute;
+  padding-top: 14px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  margin: 0px;
+  border: 0px;
+  cursor:move;
 }
 
 .close {
-	position:absolute;
-	font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  position:absolute;
+  font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
-	background-color:#B0B0B0;
-	color: #CCCCCC;
-	border: 1px solid #CCCCCC;
-	margin: 0px;
-	cursor:pointer;
+  background-color:#B0B0B0;
+  color: #CCCCCC;
+  border: 1px solid #CCCCCC;
+  margin: 0px;
+  cursor:pointer;
 }
 
 .resize {
-	position:absolute;
-	border: 0px;
-	margin: 0px;
-	font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  position:absolute;
+  border: 0px;
+  margin: 0px;
+  font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
-	cursor:nw-resize;
-	background-color:#B0B0B0;
+  cursor:nw-resize;
+  background-color:#B0B0B0;
 }
 .content_background {
-	position:absolute;
-	padding:3px;
-	border: 1px solid #CCCCCC;
-	background-color:#B0B0B0;
-	overflow: auto;
-	font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  position:absolute;
+  padding:3px;
+  border: 1px solid #CCCCCC;
+  background-color:#B0B0B0;
+  overflow: auto;
+  font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
-	text-align: left;
-	color: #CCCCCC;
-	cursor:default;
+  text-align: left;
+  color: #CCCCCC;
+  cursor:default;
 }
 .content {
-	position:absolute;
-	padding:3px;
-	border: 2px solid #CCCCCC;
-	overflow: auto;
-	font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  position:absolute;
+  padding:3px;
+  border: 2px solid #CCCCCC;
+  overflow: auto;
+  font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
-	text-align: left;
-	color: #CCCCCC;
-	cursor:default;
+  text-align: left;
+  color: #CCCCCC;
+  cursor:default;
 }
 .title {
-	position:absolute;
-	border: 1px solid #CCCCCC;
-	margin: 0px;
-	padding-left:5px;
-	background-color:#B0B0B0;
-	white-space:nowrap;
-	overflow: hidden;
-	font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  position:absolute;
+  border: 1px solid #CCCCCC;
+  margin: 0px;
+  padding-left:5px;
+  background-color:#B0B0B0;
+  white-space:nowrap;
+  overflow: hidden;
+  font: bold 10px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-style: normal;
-	text-align: left;
-	color: #CCCCCC;
+  text-align: left;
+  color: #CCCCCC;
 }
+
 /* Menu Bar Classes */
 div#celements2_menu_bar{
-	position:absolute;
-	top:0;
-	left:0;
-	overflow:auto;
-	width:100%;
-	height:28px;
+  position:absolute;
+  top:0;
+  left:0;
+  overflow:auto;
+  width:100%;
+  height:28px;
   display: flex;
   justify-content: space-between;
+  gap: 10px;
   color:#CCCCCC !important;
   background-color: rgb(51,51,51);
   border-bottom: 1px solid #4F4F2F;
-	text-align:left;
-	z-index:100;
+  text-align:left;
+  z-index:100;
 }
 body > div#celements2_menu_bar {
-	position: fixed;
+  position: fixed;
 }
 #celements2_logo {
   margin-left: 25px;
@@ -107,11 +109,13 @@ body > div#celements2_menu_bar {
 #celements2_admin_info {
   font-size: 13px;
   display: flex;
-  align-items: end;
-  padding-bottom: 4px;
+  align-items: center;
 }
 #celements2_menu_bar_header {
   margin-right: 25px;
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 #celements2_menu_bar .celements2_menu_bar_header_item {
   font-family: "Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
@@ -121,35 +125,39 @@ body > div#celements2_menu_bar {
   font-style: normal;
   letter-spacing: 0;
   word-spacing: 2px;
-	color: #CCCCCC;
-	display:block;
-	float:left;
-	/*width:92px;*/
-	width:auto;
-	cursor:pointer;
-	height:20px;
-  padding: 6px 10px 2px 6px;
-	position: relative;
+  color: #CCCCCC;
+  cursor: pointer;
+  display: flex;
+  width: auto;
+  height: 100%;
+  padding-left: 8px;
+  padding-right: 8px;
+  position: relative;
+  & > *:first-child {
+    height: 100%;
+    display:flex;
+    align-items: center;
+  }
 }
 #celements2_menu_bar .celements2_menu_bar_header_item.active {
   background-color: #ff9900;
   color:#333333;
 }
 #celements2_menu_bar .celements2_menu_bar_submenu {
-	z-index: 2;
+  z-index: 2;
 }
 #celements2_menu_bar .celements2_menu_bar_submenu {
-	display:none;
-	position:absolute;
-	left: 0px;
-	padding-top:2px;
+  display: none;
+  position: absolute;
+  left: 0px;
+  top: 100%;
 }
-#celements2_menu_bar a.celements2_menu_bar_sub_item{
-	margin-top:0px;
-	border-top:1px solid #5e5e5e;
-	padding: 6px 18px 2px 6px;
-	height:auto;
-	width:182px;
+#celements2_menu_bar a.celements2_menu_bar_sub_item {
+  margin-top:0px;
+  border-top:1px solid #5e5e5e;
+  padding: 6px 18px 2px 6px;
+  height:auto;
+  width:182px;
   font-family: "Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-size: 14px;
   line-height: 20px;
@@ -157,20 +165,20 @@ body > div#celements2_menu_bar {
   font-style: normal;
   letter-spacing: 0;
   word-spacing: 2px;
-	overflow:hidden;
-	display:block;
-	cursor: pointer;
-	color:#CCCCCC !important;
-	background: rgb(51,51,51) !important;
-	background: rgba(51,51,51, 0.92) !important;
-	text-decoration:none !important;
-	white-space:nowrap;
+  overflow:hidden;
+  display:block;
+  cursor: pointer;
+  color:#CCCCCC !important;
+  background: rgb(51,51,51) !important;
+  background: rgba(51,51,51, 0.92) !important;
+  text-decoration:none !important;
+  white-space:nowrap;
 }
 #celements2_menu_bar a.celements2_menu_bar_sub_item:hover{
-	border-top:1px solid #5e5e5e;
-	padding: 6px 18px 2px 6px;
-	height:auto;
-	width:182px;
+  border-top:1px solid #5e5e5e;
+  padding: 6px 18px 2px 6px;
+  height:auto;
+  width:182px;
   font-family: "Open Sans",Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-size: 14px;
   line-height: 20px;
@@ -178,99 +186,99 @@ body > div#celements2_menu_bar {
   font-style: normal;
   letter-spacing: 0;
   word-spacing: 2px;
-	overflow:hidden;
-	display:block;
-	cursor: pointer;
-	color:#333333 !important;
-	background-color: #ff9900 !important;
-	text-decoration:none !important;
-	white-space:nowrap;
+  overflow:hidden;
+  display:block;
+  cursor: pointer;
+  color:#333333 !important;
+  background-color: #ff9900 !important;
+  text-decoration:none !important;
+  white-space:nowrap;
 }
 
 /* Context Menu Classes */
 .contextMenu {
-	position:absolute;
-	top:10px;
-	left:10px;
-	width:196px;
-	height:auto;
-	padding:0px;
-	margin:0px;
-	text-align:left;
-	z-index:200;
+  position:absolute;
+  top:10px;
+  left:10px;
+  width:196px;
+  height:auto;
+  padding:0px;
+  margin:0px;
+  text-align:left;
+  z-index:200;
   border-bottom: 1px solid #5e5e5e;
   border-left: 1px solid #5e5e5e;
   border-right: 1px solid #5e5e5e;
 }
 .contextMenuCorner {
-	position:absolute;
-	top: 0px;
-	left: 0px;
-	width: 5px;
-	height: 5px;
-	background-color: rgb(51,51,51);
-	line-height:5px;
-	overflow:hidden;
+  position:absolute;
+  top: 0px;
+  left: 0px;
+  width: 5px;
+  height: 5px;
+  background-color: rgb(51,51,51);
+  line-height:5px;
+  overflow:hidden;
 }
 .contextMenuHeader {
-	position: relative;
-	top:6px;
-	left:6px;
-	background-color:#080808;
-	width:186px;
-	height:12px;
-	overflow:hidden;
-	font: 400 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  position: relative;
+  top:6px;
+  left:6px;
+  background-color:#080808;
+  width:186px;
+  height:12px;
+  overflow:hidden;
+  font: 400 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   letter-spacing: 0;
   word-spacing: 2px;
   font-style: normal;
   text-transform:uppercase;
-	color: #CCCCCC;
-	text-decoration:none;
-	padding:0px 3px 0px 3px;
-	margin-bottom:2px;
+  color: #CCCCCC;
+  text-decoration:none;
+  padding:0px 3px 0px 3px;
+  margin-bottom:2px;
 }
 .contextMenuItem {
   border-top: 1px solid #5e5e5e;
- 	position:relative;
+   position:relative;
   background: rgb(51,51,51);
- 	background: rgba(51,51,51, 0.92);
-	width:196px;
-	height:auto;
-	overflow:hidden;
+   background: rgba(51,51,51, 0.92);
+  width:196px;
+  height:auto;
+  overflow:hidden;
 }
 .contextMenuIcon {
-	display:none;
+  display:none;
 }
 .contextMenuLink {
-	position: static;
-	top:0px;
-	left:0px;
-	width:181px;
-	height:auto;
-	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	font-weight: 400;
-	font-size: 13px;
-	line-height: 16px;
+  position: static;
+  top:0px;
+  left:0px;
+  width:181px;
+  height:auto;
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
   letter-spacing: 0;
   font-style: normal;
   word-spacing: 2px;
-	text-transform:none;
+  text-transform:none;
   color:#CCCCCC !important;
-	text-decoration:none;
-	cursor:pointer;
-	padding:5px 3px 5px 12px;
-	overflow:hidden;
-	text-align:left;
+  text-decoration:none;
+  cursor:pointer;
+  padding:5px 3px 5px 12px;
+  overflow:hidden;
+  text-align:left;
 }
 .contextMenuLinkOver {
-	position: static;
-	top:0px;
-	left:0px;
+  position: static;
+  top:0px;
+  left:0px;
   color:#333333 !important;
   background-color: #ff9900 !important;
-	width:181px;
-	height:auto;
+  width:181px;
+  height:auto;
   font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -278,12 +286,12 @@ body > div#celements2_menu_bar {
   line-height: 16px;
   letter-spacing: 0;
   word-spacing: 2px;
-	text-transform:none;
-	text-decoration:none;
-	cursor:pointer;
+  text-transform:none;
+  text-decoration:none;
+  cursor:pointer;
   padding:5px 3px 5px 12px;
-	overflow:hidden;
-	text-align:left;
+  overflow:hidden;
+  text-align:left;
 }
 .cel_outline {
   z-index: 99;
@@ -291,43 +299,43 @@ body > div#celements2_menu_bar {
 
 /* Form Validation Classes */
 .validation-advice{
-	width:152px;
-	color:#CCCCCC;
-	font-weight:bold;
-	background-color:red;
-	padding:2px;
+  width:152px;
+  color:#CCCCCC;
+  font-weight:bold;
+  background-color:red;
+  padding:2px;
 }
 /** force show validation advices in celements overlays */
 #cel_overlaybody .celements2box form {
-	display: block;
+  display: block;
 }
 /* General Classes */
 .celements2_error{
-	font-weight:bold;
-	color:#ff0000;
-	margin-bottom:10px;
+  font-weight:bold;
+  color:#ff0000;
+  margin-bottom:10px;
 }
 
 table.celements2_table,
 .celements3_tabMenu .tabMenuPanel .bd .menuTab table {
-	width:100%;
-	border:0px;
-	margin-top:20px;
-	margin-bottom:20px;
-	vertical-align:top;
+  width:100%;
+  border:0px;
+  margin-top:20px;
+  margin-bottom:20px;
+  vertical-align:top;
 }
 table.celements2_table th,
 .celements3_tabMenu .tabMenuPanel .bd .menuTab table th {
-	font-weight:bold;
-	padding-top:5px;
-	padding-bottom:5px;
-	vertical-align:top;
+  font-weight:bold;
+  padding-top:5px;
+  padding-bottom:5px;
+  vertical-align:top;
 }
 table.celements2_table td,
 .celements3_tabMenu .tabMenuPanel .bd .menuTab table td {
-	padding-top:5px;
-	padding-bottom:5px;
-	vertical-align:top;
+  padding-top:5px;
+  padding-bottom:5px;
+  vertical-align:top;
 }
 #celements_attach table.celements2_table td.filename a {
   display:block;
@@ -341,32 +349,32 @@ table.celements2_table td,
 }
 #celements_attach table.celements2_table th.filename,
 #celements_attach table.celements2_table td.filename {
-	padding-right: 5px;
+  padding-right: 5px;
 }
 .celements2_input_mandatory{
-	font-weight:bold;
+  font-weight:bold;
 }
 .celements2_input{
-	font:normal 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	width:150px;
-	border:1px solid #000000;
-	padding:2px;
+  font:normal 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  width:150px;
+  border:1px solid #000000;
+  padding:2px;
 }
 .celements2_input_button{
-	font:bold 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	cursor:pointer;
+  font:bold 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  cursor:pointer;
 }
 .celements2_align_right{
-	text-align:right;
+  text-align:right;
 }
 .celements2_page_title{
-	font:600 18px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	color:#999999;
+  font:600 18px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  color:#999999;
 }
 .celements2_box{
-	background-color:#B0B0B0;
-	border: 1px dashed #999999;
-	padding:5px;
+  background-color:#B0B0B0;
+  border: 1px dashed #999999;
+  padding:5px;
 }
 /* remove editGallery_box to give the auto resize a chance to work. :-) FP;14.8.2013
 .editGallery_box {
@@ -378,31 +386,31 @@ table.celements2_table td,
   overflow: auto;
 }*/
 .celements2_box_title{
-	width:100%;
-	height:20px;
-	background-color:#666666;
-	color:#f9f9f9;
-	font:600 15px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	margin-bottom:10px;
+  width:100%;
+  height:20px;
+  background-color:#666666;
+  color:#f9f9f9;
+  font:600 15px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  margin-bottom:10px;
 }
 .celements2_box_subtitle{
-	width:100%;
-	height:15px;
-	background-color:#AAAAAA;
-	color:#f9f9f9;
-	font:600 13px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	margin:10px 0px 10px 0px;
+  width:100%;
+  height:15px;
+  background-color:#AAAAAA;
+  color:#f9f9f9;
+  font:600 13px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  margin:10px 0px 10px 0px;
 }
 .celements2_help_text{
-	font: 600 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	margin-bottom:10px;
+  font: 600 12px "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  margin-bottom:10px;
 }
 .celements2_line{
-	border-bottom:1px solid #000000;
+  border-bottom:1px solid #000000;
 }
 
 div.menuTab .editblock ul.column_config_options {
-	text-transform: none;
+  text-transform: none;
 }
 
 div.menuTab .editblock ul.column_config_options li {
@@ -412,32 +420,32 @@ div.menuTab .editblock ul.column_config_options li {
 
 div.menuTab .editblock.cel_cal_overview_column_config input,
 div.menuTab .editblock.cel_cal_event_column_config input {
-	width: 400px;
+  width: 400px;
 }
 
 .UserAdminInfos table.block td{
-	position:relative;
+  position:relative;
 }
 .UserAdminInfos .validation-advice{
-	display:inline;
-	left:0px;
-	position:relative;
+  display:inline;
+  left:0px;
+  position:relative;
 }
 div.mask {
-	background-color:black;
-	position:absolute;
-	height:100%;
-	width:100%;
-	opacity:0.5;
-	filter:alpha(opacity=50);
-	display:none;
-	top:0px;
-	left:0px;
-	z-index: 99;
+  background-color:black;
+  position:absolute;
+  height:100%;
+  width:100%;
+  opacity:0.5;
+  filter:alpha(opacity=50);
+  display:none;
+  top:0px;
+  left:0px;
+  z-index: 99;
 }
 
 .cel_newsletterImport h1 {
-	color: black;
+  color: black;
     font-size: 16px;
     font-weight: auto;
     line-height: auto;
@@ -448,37 +456,37 @@ div.mask {
 }
 
 .cel_newsletterImport h2 {
-	color: black;
+  color: black;
     font-size: 12px;
     font-weight: auto;
 }
 
 .cel_newsletterImport th {
-	color: black;
-	background-color:auto;
+  color: black;
+  background-color:auto;
   font-weight: auto;
   line-height: auto;
   margin: auto;
   padding: auto;
 }
 .cel_cm_blog_article .future{
-	background-color:#FF9999;
+  background-color:#FF9999;
 }
 
 .celements3_tabMenu .cel_rightsTab table.cel_rightsTable{
-	table-layout:fixed;
-	border-collapse:collapse;
+  table-layout:fixed;
+  border-collapse:collapse;
 }
 .celements3_tabMenu .cel_rightsTab table.cel_rightsTable th{
-	border-bottom:1px solid #333;
-	text-align:left;
-	font-weight:bold;
-	padding-bottom:10px;
+  border-bottom:1px solid #333;
+  text-align:left;
+  font-weight:bold;
+  padding-bottom:10px;
 }
 .celements3_tabMenu .cel_rightsTab table.cel_rightsTable td{
-	padding-right:15px;
-	padding-top:4px;
-	padding-bottom:4px;
+  padding-right:15px;
+  padding-top:4px;
+  padding-bottom:4px;
 }
 body.celementsmenubarvisible div.cel_cm_pagedependent_content,
 body.celementsmenubarvisible div.cel_cm_rte_content {
@@ -577,7 +585,7 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder {
-	width: 550px;
+  width: 550px;
 }
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul ul,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder ul,
@@ -590,17 +598,17 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li,
 body > .cel_reorderNodes_proxy {
-	position: relative;
-	padding: 2px 0px;
-	font-size: 12px;
-	line-height: 15px;
-	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	font-style: normal;
-	color: black;
+  position: relative;
+  padding: 2px 0px;
+  font-size: 12px;
+  line-height: 15px;
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+  color: black;
 
-	list-style-image: url("document.gif");
-	list-style-position: inside;
-	border-left: 1px dotted gray;
+  list-style-image: url("document.gif");
+  list-style-position: inside;
+  border-left: 1px dotted gray;
 }
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li.cel_nav_even,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_even,
@@ -623,10 +631,10 @@ body > .cel_reorderNodes_proxy {
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs,
 .celements3_tabMenu #con_langBar .docLangs {
-	text-align: right;
-	position: absolute;
-	top: 1px;
-	right: 0px;
+  text-align: right;
+  position: absolute;
+  top: 1px;
+  right: 0px;
 }
 .celements3_tabMenu #con_langBar .docLangs {
   top: 14px;
@@ -635,7 +643,7 @@ body > .cel_reorderNodes_proxy {
 body > .cel_reorderNodes_proxy .docLangs,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs {
-	display: none;
+  display: none;
 }
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a,
@@ -643,22 +651,22 @@ body > .cel_reorderNodes_proxy .docLangs,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a,
 .celements3_tabMenu #con_langBar .docLangs a,
 .celements3_tabMenu #con_langBar .docLangs span {
-	display: block;
-	float: left;
-	width: 20px;
-	padding-top: 1px;
-	color: white;
-	text-align: center;
-	border: 1px solid black;
-	text-decoration: none;
-	background-color: #555;
+  display: block;
+  float: left;
+  width: 20px;
+  padding-top: 1px;
+  color: white;
+  text-align: center;
+  border: 1px solid black;
+  text-decoration: none;
+  background-color: #555;
 }
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a + a,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a + a,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a + a,
 .celements3_tabMenu #con_langBar .docLangs a + a,
 .celements3_tabMenu #con_langBar .docLangs span + span {
-	margin-left: 1px;
+  margin-left: 1px;
 }
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.defaultLanguage,
@@ -666,7 +674,7 @@ body > .cel_reorderNodes_proxy .docLangs,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.defaultLanguage,
 .celements3_tabMenu #con_langBar .docLangs a.defaultLanguage,
 .celements3_tabMenu #con_langBar .docLangs span.defaultLanguage {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.transNotExists,
@@ -674,31 +682,31 @@ body > .cel_reorderNodes_proxy .docLangs,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.transNotExists,
 .celements3_tabMenu #con_langBar .docLangs a.transNotExists,
 .celements3_tabMenu #con_langBar .docLangs span.transNotExists {
-	background-color: white;
-	color: black;
+  background-color: white;
+  color: black;
 }
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a:hover,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a:hover,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a:hover,
 .celements3_tabMenu #con_langBar .docLangs a:hover {
-	background-color: #ccc;
+  background-color: #ccc;
 }
 
 .generalOverlay #cel_overlaybody .cel_presentation_addslide a,
 .yui-panel-container .cel_contentTab .cel_presentation_addslide a {
-	display: flex;
-	width: fit-content;
-	gap: 5px;
+  display: flex;
+  width: fit-content;
+  gap: 5px;
 }
 
 body div.mask {
-	z-index: 100 !important;
+  z-index: 100 !important;
 }
 
 /** CSS for .cel_content_part **/
 body #sitecontainer .cel_content_part {
-	background: white;
+  background: white;
 }
 body #sitecontainer .cel_content_part,
 body #sitecontainer .cel_content_part p,
@@ -707,19 +715,19 @@ body #sitecontainer .cel_content_part a,
 body #sitecontainer .cel_content_part table th,
 body #sitecontainer .cel_content_part table td,
 body #sitecontainer .cel_content_part li {
-	font-size: 12px;
-	line-height: 14px;
-	font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
-	font-style: normal;
-	color: black;
-	margin: 10px 0px;
+  font-size: 12px;
+  line-height: 14px;
+  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-style: normal;
+  color: black;
+  margin: 10px 0px;
 }
 body #sitecontainer .cel_content_part a:hover {
-	color: grey;
+  color: grey;
 }
 body #sitecontainer .cel_content_part table th,
 body #sitecontainer .cel_content_part table td {
-	text-align: left;
+  text-align: left;
 }
 
 /* Import Manager */
@@ -727,7 +735,7 @@ body #sitecontainer .cel_content_part table td {
 #cel_overlaybody #check_none,
 #cel_overlaybody #check_all,
 #cel_overlaybody #c3_import_button {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 /* Search results */
@@ -855,5 +863,5 @@ div.presentationList > div.navigation-clear {
 }
 
 .cel_template {
-	display: none;
+  display: none;
 }
