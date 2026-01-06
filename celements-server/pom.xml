@@ -244,7 +244,7 @@
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
       <version>6.8-SNAPSHOT</version>
-    </dependency>
+    </dependency>    
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
@@ -279,6 +279,11 @@
       <groupId>com.celements</groupId>
       <artifactId>celements-keycloak</artifactId>
       <version>6.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-filebase</artifactId>
+      <version>6.0-SNAPSHOT</version>
     </dependency>
 
     <!-- Spring -->
