@@ -60,7 +60,7 @@
         #set($tagObj = $tagDoc.newObject("Classes.FilebaseTag"))
       #end
       <!-- afterif: $tagObj, "$tagObj.getNumber()" -->
-      #set($att_name = $xwiki.celementsweb.clearFileName("$att_name"))
+      #set($att_name = $!services.filebase.clearFileName("$att_name"))
       <!-- 'attachment', "${att_doc}/${att_name}" -->
       $tagObj.set('attachment', "${att_doc}/${att_name}")
     #else
