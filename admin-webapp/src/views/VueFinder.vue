@@ -7,6 +7,30 @@
         initialPath: 'local://public',
         persist: true,
       }"
+      :features="{
+        search: true,
+        preview: true,
+        rename: true,
+        upload: true,
+        delete: true,
+        download: true,
+
+        // disable creation
+        newfolder: false,
+        newfile: false,
+
+        // optionally disable other advanced operations
+        move: false,
+        copy: false,
+        archive: false,
+        unarchive: false,
+        edit: false,
+        fullscreen: false,
+        language: false,
+        history: false,
+        theme: false,
+        pinned: false,
+      }"
     />
   </div>
 </template>
