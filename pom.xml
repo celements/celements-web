@@ -228,7 +228,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-servlet</artifactId>
-      <version>6.2</version>
+      <version>6.3-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
