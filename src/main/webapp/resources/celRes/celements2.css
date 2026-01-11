@@ -152,6 +152,11 @@ body > div#celements2_menu_bar {
   left: 0px;
   top: 100%;
 }
+/* Keep the rightmost dropdowns within the viewport by opening them to the left. */
+#celements2_menu_bar .celements2_menu_bar_header_item:nth-last-child(-n+3) .celements2_menu_bar_submenu {
+  left: auto;
+  right: 0px;
+}
 #celements2_menu_bar a.celements2_menu_bar_sub_item {
   margin-top:0px;
   border-top:1px solid #5e5e5e;
