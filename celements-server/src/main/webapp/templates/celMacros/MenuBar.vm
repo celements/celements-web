@@ -30,9 +30,12 @@
   #set($celementsLogoUrl = "$xwiki.getSkinFile('celRes/Img/logo-grey.gif', true)")
 #end
 <div id="celements2_logo">
-##<img src="$celementsLogoUrl" alt="CELEMENTS WEB" /><br />
 <span class="celements_web_logo"><a target="_blank" href="http://www.celements.ch"><span class="celementsname">Celements</span><span class="websuffix">Web</span></a></span>
 </div>
+## Admin Info
+#if($isSuperAdmin)
+<div id="celements2_admin_info">$!services.celementsweb.nodeName</div>
+#end
 ## Menu
 <div id="celements2_menu_bar_header">
 #set($id = 0)
