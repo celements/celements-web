@@ -370,7 +370,7 @@
   </dependencies>
   <dependencyManagement>
     <dependencies>
-      <!-- Align ALL Spring artifacts -->
+      <!-- Align Spring artifacts -->
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-framework-bom</artifactId>
@@ -378,7 +378,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- Align ALL Jackson artifacts -->
+      <!-- Align Jackson artifacts -->
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
@@ -386,21 +386,20 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- Force the newer JTA for old Hibernate transitive -->
+      <!-- internal conflict between hibernate:jar:3.2.6.ga and hibernate-core:jar:3.3.2.GA -->
       <dependency>
         <groupId>javax.transaction</groupId>
         <artifactId>jta</artifactId>
         <version>1.1</version>
       </dependency>
+      <!--
+        aws-sdk internal conflict because they don't enforce dependency convergence, see
+        https://github.com/aws/aws-sdk-java-v2/issues/2669
+      -->
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpcore</artifactId>
         <version>4.4.16</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-logging</groupId>
-        <artifactId>commons-logging</artifactId>
-        <version>1.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
