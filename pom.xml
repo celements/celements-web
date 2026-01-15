@@ -271,7 +271,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-security</artifactId>
-      <version>6.3</version>
+      <version>6.4</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
