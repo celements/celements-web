@@ -5,11 +5,12 @@
 #  \___\___|_|\___|_| |_| |_|\___|_| |_|\__|___/ #
 #                                                #
 
-FROM tomcat:9-jdk11-temurin
+FROM tomcat:10-jdk21-temurin
 
 # environment variables, may be overridden from the .env file
 # celements
 ENV CELEMENTS_DATA=/usr/local/celements
+ENV CONF_DIR=/usr/local/conf
 # tomcat
 ENV CATALINA_XMX="2g"
 # tomcat jpda debugging
@@ -17,13 +18,15 @@ ENV JPDA_ADDRESS="8000"
 ENV JPDA_TRANSPORT="dt_socket"
 
 # copy configurations / scripts
-COPY docker/tomcat /usr/local/config
+COPY docker/tomcat ${CONF_DIR}
 
 # installs and setup
 RUN mkdir -p \
-${CELEMENTS_DATA} \
-${CATALINA_HOME}/temp \
-&& cp /usr/local/config/setenv.sh ${CATALINA_HOME}/bin/
+    ${CELEMENTS_DATA} \
+    ${CATALINA_HOME}/temp \
+    ${CATALINA_HOME}/conf/Catalina/localhost \
+  && cp ${CONF_DIR}/setenv.sh ${CATALINA_HOME}/bin/ \
+  && cp ${CONF_DIR}/jakarta.converter.xml ${CATALINA_HOME}/conf/Catalina/localhost/ROOT.xml
 
 # define custom command (with remote debugging)
 CMD ["catalina.sh", "jpda", "run"]
