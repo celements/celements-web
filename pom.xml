@@ -212,6 +212,16 @@
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
+      <artifactId>celements-xwiki-velocity</artifactId>
+      <version>7.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-xwiki-rendering-api</artifactId>
+      <version>7.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
       <artifactId>celements-global-redirect</artifactId>
       <version>7.0-SNAPSHOT</version>
     </dependency>
