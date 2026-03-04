@@ -6,25 +6,6 @@ $xwiki.ssx.use('Panels.DocumentInformation')##
 #if(($tdoc.language=="")&&($xwiki.isMultiLingual()))
 <dt><label for="xwikidoclanguageinput2">$adminMsg.get("panels.documentInformation.defaultLanguage")</label></dt> <dd><input type="text" id="xwikidoclanguageinput2" name="defaultLanguage" value="$!tdoc.defaultLanguage" size="30"/></dd>
 #end
-##--------------------------------------------------------------------------
-## Display wiki syntax combo box if there's more than one configured syntax.
-##--------------------------------------------------------------------------
-$xwiki.jsx.use($paneldoc.fullName)##
-#if($xwiki.getConfiguredSyntaxes().size() > 1)
-<dt><label for="xwikidocsyntaxinput2">$adminMsg.get('panels.documentInformation.syntax')</label></dt>
-<dd>
-<select name="syntaxId" id="xwikidocsyntaxinput2">
-<option value="xwiki/1.0"#if($tdoc.getSyntaxId().equalsIgnoreCase('xwiki/1.0')) selected="selected"#end>XWiki 1.0</option>
-#set($configuredSyntaxes = $xwiki.getConfiguredSyntaxes())
-#foreach($syntax in $syntaxFactory.getAvailableSyntaxes())
-  #if($configuredSyntaxes.contains($syntax.toIdString()) && !$syntax.toIdString().equalsIgnoreCase('xwiki/1.0'))
-    <option value="$syntax.toIdString()"#if($tdoc.getSyntaxId().equalsIgnoreCase($syntax.toIdString())) selected="selected"#end>$syntax.toString()</option>
-  #end  
-#end
-</select>
-</dd>
-#end
-##--------------------------------------------------------------------------
 #if($pages.size() != 0)
   #if($pages.size() == 1)
     <dt>$adminMsg.get("panels.documentInformation.includesOne", [$pages.size()])</dt>
