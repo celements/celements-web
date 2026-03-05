@@ -1,6 +1,5 @@
 #set($jsService = $services.javascript)
 #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
-#set($extJsParam = $extJsParam.setLazyLoad(true))
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/actionbuttons/actionButtons.js'))##
 #template("startpage.vm")

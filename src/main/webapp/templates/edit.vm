@@ -13,7 +13,6 @@ $xcontext.dropPermissions()
 ##
 #set($jsService = $services.javascript)
 #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
-#set($extJsParam = $extJsParam.setLazyLoad(false))
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
 #if("$!editor" == '')
   ## Normally no special characters should exist in the editor parameter, so this is just a protection measure.
