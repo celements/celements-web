@@ -419,7 +419,7 @@ var XWiki = (function(XWiki){
 
             spaceItemContainer.insert(spaceBox);
             
-            var expandImage = new Element("i", {'class': 'fa fa-caret-right' });
+            var expandImage = new Element("i", {'class':'fa fa-caret-right' });
             spaceItemContainer.insert(expandImage);
 
             var spaceName = new Element("div", {'class':'spacename'}).update(space)
@@ -427,9 +427,13 @@ var XWiki = (function(XWiki){
 
             var onToggle = function(event){
                 event.element().up("li").down("div.pages").toggleClassName("hidden");
-                event.element().up("li").down("i").class =
+                try{
+                event.element().up("li").down("i").className =
                     event.element().up("li").down("div.pages").hasClassName("hidden") ?
                     'fa fa-caret-right' : 'fa fa-caret-down';
+                 }catch(e) {
+                  console.log("problem with change");
+                 }
             };
 
             expandImage.observe("click", onToggle);
