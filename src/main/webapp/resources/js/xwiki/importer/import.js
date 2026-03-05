@@ -2,7 +2,7 @@ var XWiki = (function (XWiki) {
 
     var importer = XWiki.importer = XWiki.importer || {};
 
-    let translations = celadminimport;
+    let translations = {};
     if (window.celExecOnceAfterMessagesLoaded) {
         window.celExecOnceAfterMessagesLoaded(
             celMessages => translations = celMessages.celAdminImport);
@@ -397,8 +397,8 @@ var XWiki = (function (XWiki) {
             spaceBox.observe("custom:click", this.spaceCheckboxClicked.bind(this));
 
             spaceItemContainer.insert(spaceBox);
-            
-            var expandImage = new Element("i", {'class':'fa fa-caret-right' });
+
+            var expandImage = new Element("i", { 'class': 'fa fa-caret-right' });
             spaceItemContainer.insert(expandImage);
 
             var spaceName = new Element("div", { 'class': 'spacename' }).update(space)
@@ -406,13 +406,13 @@ var XWiki = (function (XWiki) {
 
             var onToggle = function (event) {
                 event.element().up("li").down("div.pages").toggleClassName("hidden");
-                try{
-                event.element().up("li").down("i").className =
-                    event.element().up("li").down("div.pages").hasClassName("hidden") ?
-                    'fa fa-caret-right' : 'fa fa-caret-down';
-                 }catch(e) {
-                  console.log("problem with change");
-                 }
+                try {
+                    event.element().up("li").down("i").className =
+                        event.element().up("li").down("div.pages").hasClassName("hidden") ?
+                            'fa fa-caret-right' : 'fa fa-caret-down';
+                } catch (e) {
+                    console.log("problem with change");
+                }
             };
 
             expandImage.observe("click", onToggle);
