@@ -23,10 +23,6 @@ var XWiki = (function(XWiki){
                               "none" : "$msg.get('core.importer.selectNone')"
     };
 
-    // FIXME: we should have those images outside SmartClient library to lessen the dependency towards the library
-    var expandFolderImagePath = "$xwiki.getSkinFile('js/smartclient/skins/Enterprise/images/TreeGrid/opener_closed.png', true)";
-    var collapseFolderImagePath = "$xwiki.getSkinFile('js/smartclient/skins/Enterprise/images/TreeGrid/opener_opened.png', true)";
-
     /**
      * Initialization hook for the rich UI.
      * We hijack clicks on package names links, to display the rich importer UI since javascript is available.
@@ -423,7 +419,7 @@ var XWiki = (function(XWiki){
 
             spaceItemContainer.insert(spaceBox);
             
-            var expandImage = new Element("img", {'src': expandFolderImagePath });
+            var expandImage = new Element("i", {'class':'fa fa-caret-right' });
             spaceItemContainer.insert(expandImage);
 
             var spaceName = new Element("div", {'class':'spacename'}).update(space)
@@ -431,10 +427,13 @@ var XWiki = (function(XWiki){
 
             var onToggle = function(event){
                 event.element().up("li").down("div.pages").toggleClassName("hidden");
-                event.element().up("li").down("img").src =
+                try{
+                event.element().up("li").down("i").className =
                     event.element().up("li").down("div.pages").hasClassName("hidden") ?
-                    expandFolderImagePath :
-                    collapseFolderImagePath
+                    'fa fa-caret-right' : 'fa fa-caret-down';
+                 }catch(e) {
+                  console.log("problem with change");
+                 }
             };
 
             expandImage.observe("click", onToggle);
