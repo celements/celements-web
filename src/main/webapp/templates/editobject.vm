@@ -75,14 +75,14 @@
 #if("$!request.xpage" == 'editobject')
   $response.sendRedirect($doc.getURL('edit', "editor=object$!{xredPram}"))
 #else
-  $services.css.includeCSSPage(':js/xwiki/editors/dataeditors.css')##
+  <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/editors/dataeditors.css', 'file')" /> 
   #set($jsService = $services.javascript)
   #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
   #set($extJsParam = $extJsParam.setLazyLoad(true))
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/editors/dataeditors.js'))##
   ## Insert JS and CSS needed for the fullscreen edit feature
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/editors/fullScreenEdit.js'))##
-  $services.css.includeCSSPage(':js/xwiki/editors/fullScreenEdit.css')##
+  <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/editors/fullScreenEdit.css', 'file')" /> 
   #set($formname = 'update')
   #set($saveaction = 'save')
   #set($hasCustomClass = ("$!{request.classname.trim()}" != ''))

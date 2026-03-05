@@ -29,7 +29,7 @@ $xwiki.getTextArea($tdoc.content)
 #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
 #set($extJsParam = $extJsParam.setLazyLoad(true))
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/editors/fullScreenEdit.js'))##
-$services.css.includeCSSPage(':js/xwiki/editors/fullScreenEdit.css')##
+<link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/editors/fullScreenEdit.css', 'file')" /> 
 ## Autosave feature
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/editors/autosave.js'))##
-$services.css.includeCSSPage(':js/xwiki/editors/autosave.css')##
+<link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/editors/autosave.css', 'file')" /> 

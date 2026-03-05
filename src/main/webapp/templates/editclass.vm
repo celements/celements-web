@@ -2,7 +2,7 @@
 #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
 #set($extJsParam = $extJsParam.setLazyLoad(true))
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
-$services.css.includeCSSPage(':js/xwiki/editors/dataeditors.css')##
+<link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/editors/dataeditors.css', 'file')" /> 
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/editors/dataeditors.js'))##
 #if("$!request.xpage" == 'editclass')
   $response.sendRedirect($doc.getURL('edit', 'editor=class'))

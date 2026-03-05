@@ -34,12 +34,12 @@ $xcontext.dropPermissions()
     #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
     #set($extJsParam = $extJsParam.setLazyLoad(true))
     $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/viewers/comments.js'))##
-    $services.css.includeCSSPage(':uicomponents/viewers/comments.css')##
+    <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':uicomponents/viewers/comments.css', 'file')" /> 
     #set ($discard = $docextras.add(["Comments", "comments", $msg.get("docextra.comments"), $doc.getObjects("XWiki.XWikiComments").size(), "commentsinline.vm", $msg.get("core.shortcuts.view.comments")]))
   #end
   #if ($showattachments)
     $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/viewers/attachments.js'))##
-    $services.css.includeCSSPage(':js/xwiki/viewers/attachments.css')##
+    <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/viewers/attachments.css', 'file')" /> ##
     #set ($discard = $docextras.add(["Attachments", "attachments", $msg.get("docextra.attachments"), $doc.getAttachmentList().size(), "attachmentsinline.vm",$msg.get("core.shortcuts.view.attachments")]))
   #end
   #if ($showhistory)

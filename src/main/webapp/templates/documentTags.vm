@@ -88,7 +88,7 @@
 #elseif($xaction == 'add')
   #addTag($request.tag)
 #else ## display
-  $services.css.includeCSSPage(':resources/uicomponents/viewers/tags.css')##
+  <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':resources/uicomponents/viewers/tags.css', 'file')" /> 
   #set($jsService = $services.javascript)
   #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
   #set($extJsParam = $extJsParam.setLazyLoad(true))

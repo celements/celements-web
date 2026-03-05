@@ -5,7 +5,7 @@
   #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
   #set($extJsParam = $extJsParam.setLazyLoad(true))
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/actionbuttons/actionButtons.js'))##
-  $services.css.includeCSSPage(':js/xwiki/actionbuttons/actionButtons.css')##
+  <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/actionbuttons/actionButtons.css', 'file')" /> 
   ## This allows the preview form to redirect back to the correct editor when pressing "Back to edit":
   <div class="meta-versionSummary metamodifs">
   <input type="hidden" name="xeditaction" value="$!xcontext.action" />

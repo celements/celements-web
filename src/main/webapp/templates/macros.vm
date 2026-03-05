@@ -1573,7 +1573,7 @@ ${Msz}Mb##
   #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
   #set($extJsParam = $extJsParam.setLazyLoad(true))
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/table/livetable.js'))##
-  $services.css.includeCSSPage(':js/xwiki/table/livetable.css')##
+  <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/table/livetable.css', 'file')" /> 
   ##
   ## Options / defaults
   ##
@@ -1995,7 +1995,7 @@ function (row, i, table) {
  * </dl>
  *#
 #macro(pagination $parameters)
-  $services.css.includeCSSPage(':uicomponents/pagination/pagination.css')##
+  <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':uicomponents/pagination/pagination.css', 'file')" /> ##
   #if("$!{parameters.url}" == '')
     #set($parameters.url = $doc.getURL('view'))
   #end
