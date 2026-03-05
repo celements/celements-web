@@ -3,7 +3,7 @@
 #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
 #set($extJsParam = $extJsParam.setLazyLoad(true))
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/editors/fullScreenEdit.js'))##
-$services.css.includeCSSPage(':js/xwiki/editors/fullScreenEdit.css')##
+<link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/editors/fullScreenEdit.css', 'file')" /> 
 #set($formname = "inline")
 #set($saveaction = "save")
 #set($previewenabled = true)

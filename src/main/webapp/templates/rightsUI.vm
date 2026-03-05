@@ -13,9 +13,9 @@
     #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
     #set($extJsParam = $extJsParam.setLazyLoad(true))
     $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/usersandgroups/usersandgroups.js'))##
-    $services.css.includeCSSPage(':js/xwiki/usersandgroups/usersandgroups.css')##
+<link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/usersandgroups/usersandgroups.css', 'file')" /> 
     $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/table/livetable.js'))##
-    $services.css.includeCSSPage(':js/xwiki/table/livetable.css')##
+<link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/table/livetable.css', 'file')" /> 
     #set($interface = $xwiki.rightsmanager.defaultUi)
     #set($rightsLevels = {"view":0, "comment":1, "edit":2, "delete": 3, "admin": 4, "register": 5, "programming": 6})
     #set($levelsRights = $util.hashMap)

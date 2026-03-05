@@ -7,7 +7,7 @@
 #set($extJsParam = $extJsParam.setLazyLoad(true))
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/viewers/code.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/fullScreen.js'))##
-$services.css.includeCSSPage(':uicomponents/widgets/fullScreen.css')##
+<link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':uicomponents/widgets/fullScreen.css', 'file')" /> 
 <div id="document-title"><h1>$msg.get('core.viewers.code.title', [$escapetool.xml($doc.getPlainTitle()), $doc.getURL()])</h1></div>
 ## ----------------------------
 ## Display the shortcuts

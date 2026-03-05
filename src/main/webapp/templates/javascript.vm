@@ -11,7 +11,6 @@
 ##
 #set($jsService = $services.javascript)
 #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
-#set($extJsParam = $extJsParam.setLazyLoad(true))
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
 $services.css.includeCSSPage(':js/xwiki/widgets/modalPopup.css')##
