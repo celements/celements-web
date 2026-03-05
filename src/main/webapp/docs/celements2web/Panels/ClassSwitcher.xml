@@ -105,7 +105,7 @@
 </property>
 <property>
 <content>#largepanelheader('Class Switcher')
-$xwiki.jsx.use('Panels.ClassSwitcher')##
+##$xwiki.jsx.use('Panels.ClassSwitcher')##
 &lt;div&gt;
 &lt;form id="changeclass" method="post" action="$doc.getURL("redirect")"&gt;
 &lt;div&gt;

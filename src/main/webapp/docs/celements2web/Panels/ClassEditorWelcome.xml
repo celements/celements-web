@@ -105,7 +105,7 @@
 </property>
 <property>
 <content>#largepanelheader($msg.get("classEditorIntro"))
-$xwiki.jsx.use('Panels.ClassSwitcher')##
+##$xwiki.jsx.use('Panels.ClassSwitcher')##
 &lt;p&gt;$msg.get("xe.panels.classedit.youare") &lt;strong&gt;${doc.fullName}&lt;/strong&gt;. $msg.get("xe.panels.classedit.chooseproperty")&lt;/p&gt;
 &lt;div&gt;
 &lt;form id="changeclass" method="post" action="$doc.getURL("redirect")"&gt;

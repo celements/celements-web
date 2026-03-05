@@ -9,18 +9,21 @@
 ##
 ## JS Libraries.
 ##
-$xwiki.jsfx.use('js/scriptaculous/effects.js', true)
-$xwiki.jsfx.use('js/xwiki/widgets/modalPopup.js', true)
-$xwiki.ssfx.use('js/xwiki/widgets/modalPopup.css', true)
-$xwiki.jsfx.use('js/xwiki/widgets/jumpToPage.js', true)
-$xwiki.ssfx.use('js/xwiki/widgets/jumpToPage.css', {'forceSkinAction' : true, 'language' : $context.language})
-$xwiki.jsfx.use('uicomponents/widgets/confirmationBox.js', true)
-$xwiki.ssfx.use('uicomponents/widgets/confirmationBox.css', true)
-$xwiki.jsfx.use('uicomponents/widgets/confirmedAjaxRequest.js', true)
-$xwiki.jsfx.use('uicomponents/widgets/notification.js', true)
-$xwiki.ssfx.use('uicomponents/widgets/notification.css', true)
-$xwiki.jsfx.use('uicomponents/widgets/list/xlist.js', true)
-$xwiki.jsfx.use('uicomponents/suggest/suggest.js', true)
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+#set($extJsParam = $extJsParam.setLazyLoad(true))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
+$services.css.includeCSSPage(':js/xwiki/widgets/modalPopup.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/jumpToPage.js'))##
+##$xwiki.ssfx.use('js/xwiki/widgets/jumpToPage.css', {'forceSkinAction' : true, 'language' : $context.language})
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmationBox.js'))##
+$services.css.includeCSSPage(':uicomponents/widgets/confirmationBox.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmedAjaxRequest.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notification.js'))##
+$services.css.includeCSSPage(':uicomponents/widgets/notification.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/suggest.js'))##
 #if($xwiki.exists('XWiki.SearchSuggestConfig'))
   ## Hook to request the search suggest script if search suggest configuration is present.
   ## We can't just have it as a always-use SSX yet since we compute a hash to be sure to refresh
@@ -36,11 +39,8 @@ $xwiki.jsfx.use('uicomponents/suggest/suggest.js', true)
        #set($searchSuggestConfigHash = "${searchSuggestConfigHash}|${sourceId}")
      #end
    #end
-   $xwiki.jsfx.use('uicomponents/search/searchSuggest.js', {
-    'forceSkinAction' : true,  
-    'h' : $searchSuggestConfigHash.hashCode()  
-   })
-   $xwiki.ssfx.use('uicomponents/search/searchSuggest.css', true)
+   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/search/searchSuggest.js'))##
+   $services.css.includeCSSPage(':uicomponents/search/searchSuggest.css')##
   #end
 #end
 <script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/prototype.js')"></script>

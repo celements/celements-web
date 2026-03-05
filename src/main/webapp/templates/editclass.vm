@@ -1,6 +1,9 @@
-$xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)##
-$xwiki.ssfx.use('js/xwiki/editors/dataeditors.css', true)##
-$xwiki.jsfx.use('js/xwiki/editors/dataeditors.js', true)##
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+#set($extJsParam = $extJsParam.setLazyLoad(true))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
+$services.css.includeCSSPage(':js/xwiki/editors/dataeditors.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/editors/dataeditors.js'))##
 #if("$!request.xpage" == 'editclass')
   $response.sendRedirect($doc.getURL('edit', 'editor=class'))
 #else

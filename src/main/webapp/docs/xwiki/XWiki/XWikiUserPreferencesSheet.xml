@@ -28,7 +28,7 @@
 {{info}}$msg.get('xe.admin.users.applyonusers'){{/info}}##
 #else
 $doc.use($obj)
-$xwiki.ssx.use('XWiki.XWikiUserSheet')##
+##$xwiki.ssx.use('XWiki.XWikiUserSheet')##
 {{html wiki="true"}}
   &lt;div class="#if($context.action == 'view')half #{else}full #{end}column"&gt;
     &lt;div class="userPreferences"&gt;

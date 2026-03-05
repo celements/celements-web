@@ -1569,8 +1569,11 @@ ${Msz}Mb##
   ##
   ## SX deps.
   ##
-  #set($ok = $xwiki.jsfx.use('js/xwiki/table/livetable.js', true))
-  #set($ok = $xwiki.ssfx.use('js/xwiki/table/livetable.css', true))
+  #set($jsService = $services.javascript)
+  #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+  #set($extJsParam = $extJsParam.setLazyLoad(true))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/table/livetable.js'))##
+  $services.css.includeCSSPage(':js/xwiki/table/livetable.css')##
   ##
   ## Options / defaults
   ##
@@ -1634,7 +1637,7 @@ ${Msz}Mb##
   </div>
   #end
   #if($tagcloud)
-    #set($discard = $xwiki.ssx.use('XWiki.TagCloud'))
+##    #set($discard = $xwiki.ssx.use('XWiki.TagCloud'))
     <div id="${divid}-tagcloud" class="xwiki-livetable-tagcloud-tip hidden #if($hasTopFilters)splitted#end">
       <div>
         <div class="xwiki-livetable-tagcloud-container">
@@ -1992,7 +1995,7 @@ function (row, i, table) {
  * </dl>
  *#
 #macro(pagination $parameters)
-  $xwiki.ssfx.use('uicomponents/pagination/pagination.css', true)##
+  $services.css.includeCSSPage(':uicomponents/pagination/pagination.css')##
   #if("$!{parameters.url}" == '')
     #set($parameters.url = $doc.getURL('view'))
   #end

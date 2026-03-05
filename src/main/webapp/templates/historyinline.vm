@@ -37,7 +37,7 @@
   #end
 ##
 ## Pagination style
-$xwiki.ssfx.use('uicomponents/pagination/pagination.css', true)##
+$services.css.includeCSSPage(':uicomponents/pagination/pagination.css')##
 ##
 ## Preamble, output some HTML.
 ##

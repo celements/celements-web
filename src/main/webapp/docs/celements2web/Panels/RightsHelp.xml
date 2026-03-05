@@ -134,8 +134,11 @@ $msg.get("xe.panels.rights.allowdenyexplanation")
 &lt;/div&gt;
 #panelfooter()
 &lt;/div&gt;
-$xwiki.jsfx.use("js/scriptaculous/scriptaculous.js")
-$xwiki.jsfx.use("js/xwiki/accordion/accordion.js")
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+#set($extJsParam = $extJsParam.setLazyLoad(true))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/accordion/accordion.js'))##
 &lt;script type="text/javascript"&gt;
 var obj = {div:'xwikirightshelp',no:0,height:512};
 var acc = createAccordion(obj);

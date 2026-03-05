@@ -49,10 +49,13 @@
 </object>
 <content>{{velocity output="false"}}
 #set($mainwk = $xcontext.isMainWiki())
-$xwiki.jsfx.use('js/xwiki/usersandgroups/usersandgroups.js', true)
-$xwiki.ssfx.use('js/xwiki/usersandgroups/usersandgroups.css')
-$xwiki.jsfx.use('js/xwiki/table/livetable.js', true)
-$xwiki.ssfx.use('js/xwiki/table/livetable.css', true)
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+#set($extJsParam = $extJsParam.setLazyLoad(true))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/usersandgroups/usersandgroups.js'))##
+$services.css.includeCSSPage(':js/xwiki/usersandgroups/usersandgroups.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/table/livetable.js'))##
+$services.css.includeCSSPage(':js/xwiki/table/livetable.css')##
 #set($groupDoc = $doc)
 #if($doc.fullName == 'Main.UserDirectory')
   #set($groupDoc = $xwiki.getDocument('XWiki.XWikiAllGroup'))

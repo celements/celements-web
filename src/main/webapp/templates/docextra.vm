@@ -30,13 +30,16 @@ $xcontext.dropPermissions()
 #if (!$docextras)
   #set($docextras = $util.arrayList)
   #if ($showcomments)
-    $xwiki.jsfx.use('uicomponents/viewers/comments.js', {'forceSkinAction': true, 'language': ${xcontext.language}})
-    $xwiki.ssfx.use('uicomponents/viewers/comments.css', true)
+    #set($jsService = $services.javascript)
+    #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+    #set($extJsParam = $extJsParam.setLazyLoad(true))
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/viewers/comments.js'))##
+    $services.css.includeCSSPage(':uicomponents/viewers/comments.css')##
     #set ($discard = $docextras.add(["Comments", "comments", $msg.get("docextra.comments"), $doc.getObjects("XWiki.XWikiComments").size(), "commentsinline.vm", $msg.get("core.shortcuts.view.comments")]))
   #end
   #if ($showattachments)
-    $xwiki.jsfx.use('js/xwiki/viewers/attachments.js', {'forceSkinAction': true, 'language': ${xcontext.language}})
-    $xwiki.ssfx.use('js/xwiki/viewers/attachments.css', true)
+    $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/viewers/attachments.js'))##
+    $services.css.includeCSSPage(':js/xwiki/viewers/attachments.css')##
     #set ($discard = $docextras.add(["Attachments", "attachments", $msg.get("docextra.attachments"), $doc.getAttachmentList().size(), "attachmentsinline.vm",$msg.get("core.shortcuts.view.attachments")]))
   #end
   #if ($showhistory)

@@ -88,8 +88,11 @@
 #elseif($xaction == 'add')
   #addTag($request.tag)
 #else ## display
-  $xwiki.ssfx.use('resources/uicomponents/viewers/tags.css', true)##
-  $xwiki.jsfx.use('resources/uicomponents/viewers/tags.js', true)##
+  $services.css.includeCSSPage(':resources/uicomponents/viewers/tags.css')##
+  #set($jsService = $services.javascript)
+  #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+  #set($extJsParam = $extJsParam.setLazyLoad(true))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':resources/uicomponents/viewers/tags.js'))##
   <div class="doc-tags" id="${tagsId}">
   #if($xwiki.tag)
     #set($hasTagsPlugin = true)

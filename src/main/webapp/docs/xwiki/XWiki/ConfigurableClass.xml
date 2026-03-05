@@ -374,7 +374,10 @@ iKAtTBe0AQfYWgXdAG9qCi1fA5wQWwLgSdydYgcsNRLABafWgzPNB4DsfrNE6VJz6VvXltr/A+kB
 #set($nameOfThisDocument = 'XWiki.ConfigurableClass')
 ##
 ## Form submission depends on this.
-$xwiki.jsfx.use('js/xwiki/actionbuttons/actionButtons.js', true)
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+#set($extJsParam = $extJsParam.setLazyLoad(true))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/actionbuttons/actionButtons.js'))##
 ##
 #if(!$section)
   #set($section = $request.getParameter('section'))
@@ -574,7 +577,7 @@ $xwiki.jsfx.use('js/xwiki/actionbuttons/actionButtons.js', true)
                     ##
                     ## Merge save buttons, remove headings from subsections, and make information links into popups.
                     ## This is not done if there is only a custom defined form.
-                    $xwiki.jsx.use($nameOfThisDocument)
+##                    $xwiki.jsx.use($nameOfThisDocument)
                     ##
                     ## We don't begin the form until we have content for it so that a configurable can specify a 
                     ## custom form in codeToExecute and if that configurable object is the first of it's kind in that

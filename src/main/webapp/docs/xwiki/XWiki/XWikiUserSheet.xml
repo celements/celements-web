@@ -364,8 +364,8 @@ span#avatarUpload {
 ##
 ## Extensions and vars
 ##
-$xwiki.ssx.use("XWiki.XWikiUserSheet")##
-$xwiki.jsx.use("XWiki.XWikiUserSheet")##
+##$xwiki.ssx.use("XWiki.XWikiUserSheet")##
+##$xwiki.jsx.use("XWiki.XWikiUserSheet")##
 #set($obj = $doc.getObject("XWiki.XWikiUsers"))
 ##
 ## Categories

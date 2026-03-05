@@ -32,7 +32,10 @@ resetting programming rights for celements2web: $celementsweb.resetProgrammingRi
 ##---------------------------------------------------------------------------
 #else
   #set($baseQueryString = "editor=$!{request.editor}&amp;section=$!{request.section}")
-  #set($ok = $xwiki.jsfx.use('js/xwiki/xwiki.js', true))
+  #set($jsService = $services.javascript)
+  #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+  #set($extJsParam = $extJsParam.setLazyLoad(true))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
 #**
 <script type="text/javascript">
 // <![CDATA[
@@ -60,14 +63,14 @@ window.docgeturl = "/get/XWiki/Import";
 </script>
 <script type='text/javascript' src='/skin/skins/albatross/uicomponents/suggest/suggest.js' defer='defer'></script>
 **#
-  #set($ok = $xwiki.jsfx.use('js/xwiki/widgets/modalPopup.js', true))
-  #set($ok = $xwiki.jsfx.use('js/xwiki/widgets/jumpToPage.js', true))
-  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/confirmationBox.js', true))
-  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/confirmedAjaxRequest.js', true))
-  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/notification.js', true))
-  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/list/xlist.js', true))
-  #set($ok = $xwiki.jsfx.use('js/xwiki/importer/import.js', true))
-  #set($ok = $xwiki.ssfx.use('js/xwiki/importer/import.css', true))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/jumpToPage.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmationBox.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmedAjaxRequest.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notification.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/importer/import.js'))##
+  $services.css.includeCSSPage(':js/xwiki/importer/import.css')##
   #set($attachments = $sorttool.sort($doc.attachmentList, ['date:desc']))
   <div id="import">
     <div id="packagelist">
