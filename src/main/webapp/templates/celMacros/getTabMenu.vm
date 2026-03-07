@@ -8,7 +8,7 @@
 #if(("$!menuPanelWidth" == '') || ($menuPanelWidth < 630))
     #set($menuPanelWidth = 630)
 #end
-$celementsweb.addExtJSfileOnce(":celJS/editResize.js")
+$services.javascript.addExtJSfileOnce(":celJS/editResize.js")
 <div id="cel_overlay" style="display:block"></div>
 <div class="celements3_tabMenu" style="width:${menuPanelWidth}px">
 ##

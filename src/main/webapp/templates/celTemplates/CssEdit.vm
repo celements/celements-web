@@ -4,11 +4,11 @@
 #end
 <link rel="stylesheet" href="$services.celementsweb.getSkinFile(':celJS/codemirror/lib/codemirror.css', 'file')">
 <span class='cel_lazyloadJS' style='display: none;'>celJS/codemirror/lib/codemirror.js</span>
-$celementsweb.addExtJSfileOnce(':celJS/codemirror/lib/codemirror.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/codemirror/lib/codemirror.js', 'file')
 <span class='cel_lazyloadJS' style='display: none;'>celJS/codemirror/addon/edit/closebrackets.js</span>
-$celementsweb.addExtJSfileOnce(':celJS/codemirror/addon/edit/closebrackets.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/codemirror/addon/edit/closebrackets.js', 'file')
 <span class='cel_lazyloadJS' style='display: none;'>celJS/codemirror/mode/css/css.js</span>
-$celementsweb.addExtJSfileOnce(':celJS/codemirror/mode/css/css.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/codemirror/mode/css/css.js', 'file')
 
 <form id="edit" method="post" action="$doc.getURL("save")">
     <input type="hidden" name="template" value="$!doc.getTemplate()" />

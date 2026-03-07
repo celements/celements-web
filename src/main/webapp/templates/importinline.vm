@@ -25,7 +25,7 @@
 #if("$!{request.action}" == 'import')
 <p class="legend">$msg.get('import') #if("$!{request.withversions}" == '1')$msg.get('export_addhistory')#end</p>
 #elseif(("$!{request.action}" == "resetprogrammingrights") && $context.getUser().startsWith('xwiki:'))
-resetting programming rights for celements2web: $celementsweb.resetProgrammingRights()
+resetting programming rights for celements2web: $services.celementsweb.resetProgrammingRights()
 ##---------------------------------------------------------------------------
 ## Browse the XARs and let the user select a XAR and the list of documents
 ## to import from that XAR.

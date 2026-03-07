@@ -183,13 +183,14 @@
 #end
 #foreach($prop in $properties)
 #set($classRef = $services.model.resolveDocument($class.getName()))
-#if($celementsweb.getSuggestBaseClass($classRef, "$!prop.getName()").isPicker())
-$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
-$celementsweb.addExtJSfileOnce(':js/xwiki/xwiki.js', 'file')
-$celementsweb.addExtJSfileOnce(':uicomponents/widgets/list/xlist.js', 'file')
-$celementsweb.addExtJSfileOnce(':js/xwiki/suggest/ajaxSuggest.js', 'file')
-$celementsweb.addExtJSfileOnce(':js/scriptaculous/effects.js', 'file')
-$celementsweb.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
+#if($services.editorsupport.getSuggestBaseClass($classRef, "$!prop.getName()").isPicker())
+$services.javascript.addExtJSfileOnce(':celJS/prototype.js')
+$services.javascript.addExtJSfileOnce(':js/xwiki/xwiki.js', 'file')
+$services.javascript.addExtJSfileOnce(':uicomponents/widgets/list/xlist.js', 'file')
+<-- ajaxSuggest loaded ?? -->
+$services.javascript.addExtJSfileOnce(':js/xwiki/suggest/ajaxSuggest.js', 'file')
+$services.javascript.addExtJSfileOnce(':js/scriptaculous/effects.js', 'file')
+$services.javascript.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
 #end
 #if($cel_embedded_editobj)
 #set($cel_editobj_validationClass = '')

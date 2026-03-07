@@ -1,5 +1,5 @@
 #if($isSuperAdmin)
-  $celementsweb.addExtJSfileOnce(':celJS/adminUi/sendNewsletterInjectedReceivers.js', 'file') 
+  $services.javascript.addExtJSfileOnce(':celJS/adminUi/sendNewsletterInjectedReceivers.js', 'file') 
   #set($obj = $doc.getObject('Classes.NewsletterConfigClass'))
   <h1>Send to injected newsletter receivers (super admin only)</h1>
   <p>

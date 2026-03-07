@@ -14,9 +14,9 @@
 #set($overlayScriptDocRef = $services.model.resolveDocument("Overlay.$!{overlayConfName}"))
 #set($overlayScript2DocRef = $services.model.resolveDocument("celements2web:Overlay.$!{overlayConfName}"))
 #end
-#if(("$!overlayScriptDocRef" != '') && $xwiki.exists($overlayScriptDocRef) && !$celementsweb.isEmptyRTEDocument($overlayScriptDocRef))
+#if(("$!overlayScriptDocRef" != '') && $services.modelAccess.exists($overlayScriptDocRef) && !$services.emptycheck.isEmptyRTEDocument($overlayScriptDocRef))
   $xwiki.includeForm("Overlay.$!overlayConfName", false)
-#elseif(("$!overlayScript2DocRef" != '') && $xwiki.exists($overlayScript2DocRef) && !$celementsweb.isEmptyRTEDocument($overlayScript2DocRef))
+#elseif(("$!overlayScript2DocRef" != '') && $services.modelAccess.exists($overlayScript2DocRef) && !$services.emptycheck.isEmptyRTEDocument($overlayScript2DocRef))
 ## DEPRECATED !!! PLEASE PUT IN celements-web celOverlay FOLDER ON DISK
   $xwiki.includeForm("celements2web:Overlay.$!overlayConfName", false)
 #else
