@@ -24,7 +24,3 @@
     #end
   #end
 #end
-#set($jsService = $services.javascript)
-#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
-$!services.javascript.getAllExternalJavaScriptFiles()

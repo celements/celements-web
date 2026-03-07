@@ -3,14 +3,12 @@
 ##
 <link href="$xwiki.getSkinFile("uicomponents/suggest/suggest.css", true)" rel="stylesheet" type="text/css" />
 <link href="$xwiki.getSkinFile("js/xwiki/lightbox/lightbox.css", true)" rel="stylesheet" type="text/css" />
-<!--[if IE]>
-  <link href="$xwiki.getSkinFile("js/xwiki/lightbox/lightboxIE.css", true)" rel="stylesheet" type="text/css" />
-<![endif]-->
 ##
 ## JS Libraries.
 ##
 #set($jsService = $services.javascript)
 #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/prototype.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
 $services.css.includeCSSPage(':js/xwiki/widgets/modalPopup.css')##
@@ -42,10 +40,10 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/sugges
    $services.css.includeCSSPage(':uicomponents/search/searchSuggest.css')##
   #end
 #end
-<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/prototype.js')"></script>
-<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/jquery.min.js', 'file')"></script>
-<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/jquery-noconflict.js', 'file')"></script>
-<script type="text/javascript" src="$services.celementsweb.getSkinFile(':js/xwiki/xwiki.js')"></script>
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/prototype.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':js/xwiki/xwiki.js'))##
 <script type="text/javascript">
 // <![CDATA[
 XWiki.webapppath = "${xwiki.webAppPath}";
@@ -71,7 +69,7 @@ window.docgeturl = "${doc.getURL('get')}";
 // ]]>
 </script>
 #if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
-$xwiki.get('jsfx').use('uicomponents/widgets/validation/livevalidation_prototype.js', true)
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
 $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', true)
 <script type="text/javascript">
 // <![CDATA[
@@ -127,14 +125,8 @@ $j(document).ready(prepareCancelEdit);
 </script>
 #end
 ##
-## Hooks for inserting JavaScript skin extensions
-##
-## - Skin file extension hook. Placed first since skin extensions might need to have xwiki or external libraries included first to be able to work properly
-<!-- com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin -->
-## - Skin extension hook
-<!-- com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin -->
-##
-## Compatibility "aspect" file for deprecated code.
-## Placed at the very end of the stream so that skin file extensions code can be deprecated easily as well.
-##
 <script type="text/javascript" src="$xwiki.getSkinFile("js/xwiki/compatibility.js", true)" defer="defer"></script>
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
+$!services.javascript.getAllExternalJavaScriptFiles()

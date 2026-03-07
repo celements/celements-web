@@ -11,6 +11,10 @@ $!xwiki.getSpacePreference("meta")
 <link href="$xwiki.getSkinFile("chwSkin.css", true)" rel="stylesheet" type="text/css"/>
 #template("stylesheets.vm")
 <script type="text/javascript" src="$xwiki.getSkinFile("chwScripts.js", true)"></script>
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
+$!services.javascript.getAllExternalJavaScriptFiles()
 </head>
 <body onload='window.wizard.initialize("$xwiki.getSkinFile("", true)", "$msg.get("chwshow")", "$msg.get("chwhide")");'>
 #template("header.vm")

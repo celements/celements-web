@@ -11,6 +11,10 @@ $!xwiki.getSpacePreference("meta")
 <link href="$xwiki.getSkinFile("js/xwiki/chartwizard/tdwSkin.css", true)" rel="stylesheet" type="text/css"/>
 #template("stylesheets.vm")
 <script type="text/javascript" src="$xwiki.getSkinFile("js/xwiki/chartwizard/tdwScripts.js", true)"></script>
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
+$!services.javascript.getAllExternalJavaScriptFiles()
 </head>
 #set($saveAddress = $xwiki.getURL("Main.WebHome", "objectadd"))
 #set($saveAddress = $saveAddress.substring(0, $saveAddress.indexOf("Main/WebHome")))
