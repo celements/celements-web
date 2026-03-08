@@ -210,11 +210,16 @@ ul.pages li.xitem,
 ul.package li.xitem {
   list-style-type: none;
 
-  div.xitemcontainer {
+  >div.xitemcontainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     align-items: center;
+
+    >i {
+      width: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
   }
 
   div.pages {
