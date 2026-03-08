@@ -188,7 +188,7 @@ ul.package li.xitem div.xitemcontainer div.spacename {
 
 ul.package li.xitem div.xitemcontainer div.selection {
   color: $theme.textSecondaryColor;
-  float: right;
+  margin-left: auto;
   font-size: .8em;
   line-height: 1.7em;
   margin-right: .2em;
@@ -214,6 +214,10 @@ ul.package li.xitem {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  div.clearfloats {
+    display: none;
   }
 }
 
