@@ -8,7 +8,10 @@
 ##
 #set($jsService = $services.javascript)
 #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
-$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/prototype.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/prototype.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery.min.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery-noconflict.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
 $services.css.includeCSSPage(':js/xwiki/widgets/modalPopup.css')##
@@ -40,10 +43,6 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/sugges
    $services.css.includeCSSPage(':uicomponents/search/searchSuggest.css')##
   #end
 #end
-$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/prototype.js'))##
-$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery.min.js'))##
-$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/jquery-noconflict.js'))##
-$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':js/xwiki/xwiki.js'))##
 <script type="text/javascript">
 // <![CDATA[
 XWiki.webapppath = "${xwiki.webAppPath}";
@@ -69,8 +68,12 @@ window.docgeturl = "${doc.getURL('get')}";
 // ]]>
 </script>
 #if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
-$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
 $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', true)
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/compatibility.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
+$!services.javascript.getAllExternalJavaScriptFiles()
+##
 <script type="text/javascript">
 // <![CDATA[
 var cancelEditNextOnunload;
@@ -125,8 +128,3 @@ $j(document).ready(prepareCancelEdit);
 </script>
 #end
 ##
-<script type="text/javascript" src="$xwiki.getSkinFile("js/xwiki/compatibility.js", true)" defer="defer"></script>
-#set($jsService = $services.javascript)
-#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
-$!services.javascript.getAllExternalJavaScriptFiles()

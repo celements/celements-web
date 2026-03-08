@@ -4,12 +4,16 @@
  * All usage of deprecated code should log warnings in the console to help developers
  * moving to new code.
  */
-(function () {
+(function (window, undefined) {
+  "use strict";
+
+  var XWiki = window.XWiki ?? {};
+  var widgets = XWiki.widgets ?? {};
 
   /**
-   * If possible, log a warning message to the console.
-   * If not, does nothing.
-   */
+    * If possible, log a warning message to the console.
+    * If not, does nothing.
+    */
   function warn(message) {
     if (typeof console != "undefined" && typeof console.warn == "function") {
       console.warn(message);
@@ -46,7 +50,7 @@
   /**
    * Deprecated since 2.6RC1
    */
-  if (typeof XWiki?.widgets?.Suggest !== 'undefined') {
+  if (typeof XWiki.widgets.Suggest !== 'undefined') {
     _xwk.ajaxSuggest = Class.create(XWiki.widgets.Suggest, {
       initialize: function ($super) {
         warn("ajaxSuggest is deprecated since XWiki 2.6RC1. Use XWiki.widgets.Suggest instead.");
@@ -191,4 +195,4 @@
     }
   );
 
-})();
+})(window);
