@@ -25,14 +25,17 @@
 #if("$!{request.action}" == 'import')
 <p class="legend">$msg.get('import') #if("$!{request.withversions}" == '1')$msg.get('export_addhistory')#end</p>
 #elseif(("$!{request.action}" == "resetprogrammingrights") && $context.getUser().startsWith('xwiki:'))
-resetting programming rights for celements2web: $celementsweb.resetProgrammingRights()
+resetting programming rights for celements2web: $services.celementsweb.resetProgrammingRights()
 ##---------------------------------------------------------------------------
 ## Browse the XARs and let the user select a XAR and the list of documents
 ## to import from that XAR.
 ##---------------------------------------------------------------------------
 #else
   #set($baseQueryString = "editor=$!{request.editor}&amp;section=$!{request.section}")
-  #set($ok = $xwiki.jsfx.use('js/xwiki/xwiki.js', true))
+  #set($jsService = $services.javascript)
+  #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+  #set($extJsParam = $extJsParam.setLazyLoad(true))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
 #**
 <script type="text/javascript">
 // <![CDATA[
@@ -60,14 +63,17 @@ window.docgeturl = "/get/XWiki/Import";
 </script>
 <script type='text/javascript' src='/skin/skins/albatross/uicomponents/suggest/suggest.js' defer='defer'></script>
 **#
-  #set($ok = $xwiki.jsfx.use('js/xwiki/widgets/modalPopup.js', true))
-  #set($ok = $xwiki.jsfx.use('js/xwiki/widgets/jumpToPage.js', true))
-  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/confirmationBox.js', true))
-  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/confirmedAjaxRequest.js', true))
-  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/notification.js', true))
-  #set($ok = $xwiki.jsfx.use('uicomponents/widgets/list/xlist.js', true))
-  #set($ok = $xwiki.jsfx.use('js/xwiki/importer/import.js', true))
-  #set($ok = $xwiki.ssfx.use('js/xwiki/importer/import.css', true))
+
+<link rel="stylesheet" media="all" type="text/css" href="$services.celementsweb.getSkinFile(':js/xwiki/importer/import.css', 'file')" />
+<link rel="stylesheet" media="all" type="text/css" href="$services.celementsweb.getSkinFile(':celRes/font-awesome-v6/css/all.css', 'file')" />
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/jumpToPage.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmationBox.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmedAjaxRequest.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notification.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/importer/import.js'))##
+
   #set($attachments = $sorttool.sort($doc.attachmentList, ['date:desc']))
   <div id="import">
     <div id="packagelist">

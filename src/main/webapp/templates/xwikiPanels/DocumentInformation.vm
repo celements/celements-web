@@ -1,4 +1,4 @@
-$xwiki.ssx.use('Panels.DocumentInformation')##
+##$xwiki.ssx.use('Panels.DocumentInformation')##
 #set($pages = $tdoc.includedPages)
 #largepanelheader($adminMsg.get("panels.documentInformation.title"))
 <dl>

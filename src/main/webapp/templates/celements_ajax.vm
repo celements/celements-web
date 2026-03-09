@@ -3,7 +3,7 @@ $response.setStatus(404)
 Unknown ajax_mode [$!{request.ajax_mode}]!
 #end
 ## init Celements variables
-#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
+#if($services.modelAccess.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #end
 #if("$!request.ajax_mode" == 'CelTabEditAjax')
@@ -11,9 +11,9 @@ $xwiki.includeForm("celements2web:Macros.Ajax", false)
 #elseif("$!request.ajax_mode" != '')
 #set($ajaxScriptDocRef = $services.model.resolveDocument("Ajax.${request.ajax_mode}"))
 #set($ajaxScript2DocRef = $services.model.resolveDocument("celements2web:Ajax.${request.ajax_mode}"))
-#if($xwiki.exists($ajaxScriptDocRef) && !$celementsweb.isEmptyRTEDocument($ajaxScriptDocRef))
+#if($services.modelAccess.exists($ajaxScriptDocRef) && !$services.emptycheck.isEmptyRTEDocument($ajaxScriptDocRef))
 $xwiki.includeForm("Ajax.${request.ajax_mode}", false)
-#elseif($xwiki.exists($ajaxScript2DocRef) && !$celementsweb.isEmptyRTEDocument($ajaxScript2DocRef))
+#elseif($services.modelAccess.exists($ajaxScript2DocRef) && !$services.emptycheck.isEmptyRTEDocument($ajaxScript2DocRef))
 ## DEPRECATED !!! PLEASE PUT IN celements-web celAjax FOLDER ON DISK
 $xwiki.includeForm("celements2web:Ajax.${request.ajax_mode}", false)
 #else

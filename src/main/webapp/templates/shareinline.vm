@@ -56,7 +56,7 @@
   #end
   <a href='$doc.getURL()' class='share-backlink'>$msg.get('core.viewers.share.send.back', ["<em>${doc.displayTitle}</em>"])</a>
 #else ## Form not sent, display the UI
-$xwiki.jsx.use('XWiki.SharePage')
+##$xwiki.jsx.use('XWiki.SharePage')
 <form class="xform" action="$doc.getURL('view', 'viewer=share')" method="post">
   <div class="hidden">
     <input type="hidden" name="form_token" value="$services.csrf.token" />

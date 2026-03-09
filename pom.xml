@@ -110,10 +110,6 @@
       <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-skinx</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-tag-api</artifactId>
     </dependency>
@@ -205,11 +201,6 @@
       <artifactId>celements-xwiki-core</artifactId>
       <version>7.0-SNAPSHOT</version>
     </dependency>
-     <dependency>
-      <groupId>com.celements</groupId>
-      <artifactId>celements-xwiki-velocity</artifactId>
-      <version>7.0-SNAPSHOT</version>
-    </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-velocity</artifactId>
@@ -218,6 +209,11 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-rendering-api</artifactId>
+      <version>7.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-xwiki-xml</artifactId>
       <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>

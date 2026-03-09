@@ -33,7 +33,7 @@
 #set($complete = ($request_menu_link != ""))
 #set($newDocFN = "${space}.$request_menu_link")
 #set($newDocRef = $services.reference.resolveDocRef($newDocFN))
-#set($exists = $xwiki.exists($newDocRef))
+#set($exists = $services.modelAccess.exists($newDocRef))
 ## check for valid Document Name
 #set($valid = ($request_menu_link == $xwiki.getFormEncoded($request_menu_link)))
 #set($addPage_isMovable = true)

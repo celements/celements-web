@@ -3,24 +3,27 @@
 ##
 <link href="$xwiki.getSkinFile("uicomponents/suggest/suggest.css", true)" rel="stylesheet" type="text/css" />
 <link href="$xwiki.getSkinFile("js/xwiki/lightbox/lightbox.css", true)" rel="stylesheet" type="text/css" />
-<!--[if IE]>
-  <link href="$xwiki.getSkinFile("js/xwiki/lightbox/lightboxIE.css", true)" rel="stylesheet" type="text/css" />
-<![endif]-->
 ##
 ## JS Libraries.
 ##
-$xwiki.jsfx.use('js/scriptaculous/effects.js', true)
-$xwiki.jsfx.use('js/xwiki/widgets/modalPopup.js', true)
-$xwiki.ssfx.use('js/xwiki/widgets/modalPopup.css', true)
-$xwiki.jsfx.use('js/xwiki/widgets/jumpToPage.js', true)
-$xwiki.ssfx.use('js/xwiki/widgets/jumpToPage.css', {'forceSkinAction' : true, 'language' : $context.language})
-$xwiki.jsfx.use('uicomponents/widgets/confirmationBox.js', true)
-$xwiki.ssfx.use('uicomponents/widgets/confirmationBox.css', true)
-$xwiki.jsfx.use('uicomponents/widgets/confirmedAjaxRequest.js', true)
-$xwiki.jsfx.use('uicomponents/widgets/notification.js', true)
-$xwiki.ssfx.use('uicomponents/widgets/notification.css', true)
-$xwiki.jsfx.use('uicomponents/widgets/list/xlist.js', true)
-$xwiki.jsfx.use('uicomponents/suggest/suggest.js', true)
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/prototype.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery.min.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery-noconflict.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
+$services.css.includeCSSPage(':js/xwiki/widgets/modalPopup.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/jumpToPage.js'))##
+##$xwiki.ssfx.use('js/xwiki/widgets/jumpToPage.css', {'forceSkinAction' : true, 'language' : $context.language})
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmationBox.js'))##
+$services.css.includeCSSPage(':uicomponents/widgets/confirmationBox.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmedAjaxRequest.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notification.js'))##
+$services.css.includeCSSPage(':uicomponents/widgets/notification.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/suggest.js'))##
 #if($xwiki.exists('XWiki.SearchSuggestConfig'))
   ## Hook to request the search suggest script if search suggest configuration is present.
   ## We can't just have it as a always-use SSX yet since we compute a hash to be sure to refresh
@@ -36,17 +39,10 @@ $xwiki.jsfx.use('uicomponents/suggest/suggest.js', true)
        #set($searchSuggestConfigHash = "${searchSuggestConfigHash}|${sourceId}")
      #end
    #end
-   $xwiki.jsfx.use('uicomponents/search/searchSuggest.js', {
-    'forceSkinAction' : true,  
-    'h' : $searchSuggestConfigHash.hashCode()  
-   })
-   $xwiki.ssfx.use('uicomponents/search/searchSuggest.css', true)
+   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/search/searchSuggest.js'))##
+   $services.css.includeCSSPage(':uicomponents/search/searchSuggest.css')##
   #end
 #end
-<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/prototype.js')"></script>
-<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/jquery.min.js', 'file')"></script>
-<script type="text/javascript" src="$services.celementsweb.getSkinFile(':celJS/jquery-noconflict.js', 'file')"></script>
-<script type="text/javascript" src="$services.celementsweb.getSkinFile(':js/xwiki/xwiki.js')"></script>
 <script type="text/javascript">
 // <![CDATA[
 XWiki.webapppath = "${xwiki.webAppPath}";
@@ -72,8 +68,12 @@ window.docgeturl = "${doc.getURL('get')}";
 // ]]>
 </script>
 #if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
-$xwiki.get('jsfx').use('uicomponents/widgets/validation/livevalidation_prototype.js', true)
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
 $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', true)
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/compatibility.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
+$!services.javascript.getAllExternalJavaScriptFiles()
+##
 <script type="text/javascript">
 // <![CDATA[
 var cancelEditNextOnunload;
@@ -128,14 +128,3 @@ $j(document).ready(prepareCancelEdit);
 </script>
 #end
 ##
-## Hooks for inserting JavaScript skin extensions
-##
-## - Skin file extension hook. Placed first since skin extensions might need to have xwiki or external libraries included first to be able to work properly
-<!-- com.xpn.xwiki.plugin.skinx.JsSkinFileExtensionPlugin -->
-## - Skin extension hook
-<!-- com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin -->
-##
-## Compatibility "aspect" file for deprecated code.
-## Placed at the very end of the stream so that skin file extensions code can be deprecated easily as well.
-##
-<script type="text/javascript" src="$xwiki.getSkinFile("js/xwiki/compatibility.js", true)" defer="defer"></script>

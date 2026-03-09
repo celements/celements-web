@@ -1,5 +1,7 @@
-$xwiki.jsfx.use('js/scriptaculous/scriptaculous.js', true)
-$xwiki.jsfx.use('js/xwiki/actionbuttons/actionButtons.js', true)
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/actionbuttons/actionButtons.js'))##
 #template("startpage.vm")
 <div class="main layoutsubsection">
 <div class="topbuttons">#template("previewactions.vm")</div>
