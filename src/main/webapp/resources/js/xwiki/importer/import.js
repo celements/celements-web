@@ -406,13 +406,9 @@ var XWiki = (function (XWiki) {
 
             var onToggle = function (event) {
                 event.element().up("li").down("div.pages").toggleClassName("hidden");
-                try {
-                    event.element().up("li").down("i").className =
-                        event.element().up("li").down("div.pages").hasClassName("hidden") ?
-                            'fa fa-caret-right' : 'fa fa-caret-down';
-                } catch (e) {
-                    console.log("problem with change");
-                }
+                event.element().up("li").down("i").className =
+                    event.element().up("li").down("div.pages").hasClassName("hidden") ?
+                        'fa fa-caret-right' : 'fa fa-caret-down';
             };
 
             expandImage.observe("click", onToggle);
