@@ -1,4 +1,3 @@
-<!-- javascript.vm: start -->
 ##
 ## CSS files related to JS libraries.
 ##
@@ -85,58 +84,58 @@ window.docgeturl = "${doc.getURL('get')}";
 // ]]>
 </script>
 ##
-<script type="text/javascript">
-// <![CDATA[
-var cancelEditNextOnunload;
-var cancelCancelEditFlag = true;
-var lockEditFlag = false;
+#if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
+  <script type="text/javascript">
+  // <![CDATA[
+  var cancelEditNextOnunload;
+  var cancelCancelEditFlag = true;
+  var lockEditFlag = false;
 
-function cancelEditResponse() {
-}
+  function cancelEditResponse() {
+  }
 
-function cancelEdit() {
-  if (cancelCancelEditFlag) {
-    var surl = "$doc.getExternalURL('cancel', 'ajax=1')";
-    var myAjax = new Ajax.Request(surl, {
-      method: 'get',
-      parameters: "",
-      asynchronous: true,
-      discardResponse: true
-    });
+  function cancelEdit() {
+    if (cancelCancelEditFlag) {
+      var surl = "$doc.getExternalURL('cancel', 'ajax=1')";
+      var myAjax = new Ajax.Request(surl, {
+        method: 'get',
+        parameters: "",
+        asynchronous: true,
+        discardResponse: true
+      });
+      cancelCancelEditFlag = false;
+    }
+    if (cancelEditNextOnunload) {
+      cancelEditNextOnunload();
+    }
+  }
+
+  function lockEdit() {
+    if (!lockEditFlag) {
+  #if ($xcontext.action == 'inline')
+      var surl = "$doc.getExternalURL('lock', "action=inline&ajax=1&${docvariant.replace('&amp;', '&')}")";
+  #else
+      var surl = "$doc.getExternalURL('lock', "ajax=1&${docvariant.replace('&amp;', '&')}")";
+  #end
+      var myAjax = new Ajax.Request(surl, {
+        method: 'get',
+        parameters: "",
+        asynchronous: true
+      });
+      lockEditFlag = false;
+    }
+  }
+
+  function prepareCancelEdit() {
+    lockEdit();
+  }
+  function cancelCancelEdit() {
     cancelCancelEditFlag = false;
   }
-  if (cancelEditNextOnunload) {
-    cancelEditNextOnunload();
-  }
-}
-
-function lockEdit() {
-  if (!lockEditFlag) {
-#if ($xcontext.action == 'inline')
-    var surl = "$doc.getExternalURL('lock', "action=inline&ajax=1&${docvariant.replace('&amp;', '&')}")";
-#else
-    var surl = "$doc.getExternalURL('lock', "ajax=1&${docvariant.replace('&amp;', '&')}")";
-#end
-    var myAjax = new Ajax.Request(surl, {
-      method: 'get',
-      parameters: "",
-      asynchronous: true
-    });
-    lockEditFlag = false;
-  }
-}
-
-function prepareCancelEdit() {
-  lockEdit();
-}
-function cancelCancelEdit() {
-  cancelCancelEditFlag = false;
-}
-Event.observe(window, "unload", cancelEdit);
-Event.observe(window, "pagehide", cancelEdit);
-$j(document).ready(prepareCancelEdit);
-// ]]>
-</script>
+  Event.observe(window, "unload", cancelEdit);
+  Event.observe(window, "pagehide", cancelEdit);
+  $j(document).ready(prepareCancelEdit);
+  // ]]>
+  </script>
 #end
 ##
-<!-- javascript.vm: end -->
