@@ -52,6 +52,12 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki-misc.js'))##
    $services.css.includeCSSPage(':uicomponents/search/searchSuggest.css')##
   #end
 #end
+#if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
+$xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', true)
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/compatibility.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
+$!services.javascript.getAllExternalJavaScriptFiles()
 <script type="text/javascript">
 // <![CDATA[
 XWiki.webapppath = "${xwiki.webAppPath}";
@@ -76,12 +82,6 @@ window.docsaveurl = "${doc.getURL('save')}";
 window.docgeturl = "${doc.getURL('get')}";
 // ]]>
 </script>
-#if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
-$xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', true)
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/compatibility.js'))##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
-$!services.javascript.getAllExternalJavaScriptFiles()
 ##
 <script type="text/javascript">
 // <![CDATA[

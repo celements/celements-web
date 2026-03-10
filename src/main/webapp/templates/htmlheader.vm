@@ -79,10 +79,9 @@
     ## ---------------------------------------------------------------------------------------------------------------
     ## Hook for inserting Link extensions. This will be replaced with the pulled link references.
     ## ---------------------------------------------------------------------------------------------------------------
-    <!-- com.xpn.xwiki.plugin.skinx.LinkExtensionPlugin -->
-    #template("stylesheets.vm")
     #template("analytics.vm")
-    #template("javascript.vm")
+    #template("javascript.vm") ## needs to be before stylesheets.vm because of additional includes of css-Files
+    #template("stylesheets.vm")
   </head>
   #set($bodyTagName = 'body')
 ## TODO: fix this from css
