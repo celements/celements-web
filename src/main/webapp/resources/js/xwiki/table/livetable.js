@@ -1,8 +1,17 @@
-(function () {
-  /**
-   * XWiki namespace
-   */
-  if (typeof XWiki == "undefined") {
+(function(){
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.livetable
+    );
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
+
+/**
+ * XWiki namespace
+ */
+if (typeof XWiki == "undefined") {
     XWiki = new Object();
   }
 
@@ -314,28 +323,22 @@
       }
     },
 
-    /**
-     * Displays already fetched rows. Calls {@link #handler} for creating the XHTML elements, and
-     * inserts them in {@link domNode}.
-     * @param offset Starting offset; the index of the first row that should be displayed.
-     * @param limit Maximum number of rows to display.
-     */
-    displayRows: function (offset, limit) {
-      var f = offset + limit - 1;
-      if (f > this.totalRows) f = this.totalRows;
-      var off = this.totalRows > 0 ? offset : 0;
-      var msg =
-        "<strong>" +
-        off +
-        "</strong> - <strong>" +
-        f +
-        "</strong> $msg.get('xe.pagination.results.of') <strong>" +
-        this.totalRows +
-        "</strong>";
-      msg = msg.toLowerCase();
+  /**
+    * Displays already fetched rows. Calls {@link #handler} for creating the XHTML elements, and
+    * inserts them in {@link domNode}.
+    * @param offset Starting offset; the index of the first row that should be displayed.
+    * @param limit Maximum number of rows to display.
+    */
+  displayRows: function(offset, limit)
+  { 
+    var f = offset + limit - 1;
+    if (f > this.totalRows) f = this.totalRows;
+    var off = (this.totalRows > 0) ? offset : 0;
+    var msg = "<strong>" + off + "</strong> - <strong>" + f + "</strong> " + translations.resultsOf + " <strong>" + this.totalRows + "</strong>";
+    msg = msg.toLowerCase();
 
-      this.limitsDisplay.innerHTML = "$msg.get('xe.pagination.results') " + msg;
-      this.clearDisplay();
+    this.limitsDisplay.innerHTML = translations.results + " " + msg;
+    this.clearDisplay();
 
       for (var i = off; i <= f; i++) {
         if (this.fetchedRows[i]) {
