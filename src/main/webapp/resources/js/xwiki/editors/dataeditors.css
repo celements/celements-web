@@ -1,29 +1,30 @@
-#template('colorThemeInit.vm') #xwikiobjects,
+@import "/file/resources/celRes/theme/defaultColors.css";
+#xwikiobjects,
 #xwikiclassproperties {
-    padding: 0 8px;
-    overflow: auto;
-    border: none !important;
+  padding: 0 8px;
+  overflow: auto;
+  border: none !important;
 }
 
 #body #xwikiobjects label,
 #body #xwikiclassproperties label {
-    display: inline;
-    text-transform: none;
-    font-variant: normal;
-    color: $theme.textPrimaryColor;
+  display: inline;
+  text-transform: none;
+  font-variant: normal;
+  color: var(--textPrimaryColor);
 }
 
 #xwikiobjects input,
 #xwikiobjects textarea,
 #xwikiclassproperties input,
 #xwikiclassproperties textarea {
-    border: 1px solid $theme.borderColor;
-    width: 90%;
+  border: 1px solid var(--borderColor);
+  width: 90%;
 }
 
 .boolean-property input {
-    width: auto !important;
-    border: none !important;
+  width: auto !important;
+  border: none !important;
 }
 
 #xwikiobjects input:hover,
@@ -34,281 +35,284 @@
 #xwikiclassproperties textarea:hover,
 #xwikiclassproperties input:focus,
 #xwikiclassproperties textarea:focus {
-    border: 1px solid $theme.textPrimaryColor;
+  border: 1px solid var(--textPrimaryColor);
 }
 
 #xwikiobjects input:focus,
 #xwikiobjects textarea:focus,
 #xwikiclassproperties input:focus,
 #xwikiclassproperties textarea:focus {
-    background-color: $theme.highlightColor;
+  background-color: var(--highlightColor);
 }
 
 .more-actions {
-    padding: 8px 2px;
+  padding: 8px 2px;
 }
 
 .more-actions .edit-all {
-    display: block;
-    padding: 2px 18px;
-    background: transparent url($xwiki.getSkinFile('icons/silk/pencil.gif', true)) left top no-repeat;
+  display: block;
+  padding: 2px 18px;
+  background: transparent url(/skin/resources/icons/silk/pencil.gif) left top
+    no-repeat;
 }
 
 .xclass-title {
-    margin: 16px 0 2px;
+  margin: 16px 0 2px;
 }
 
 .xclass-title h2,
 xproperty-title h2 {
-    border: none;
-    font-weight: bold;
-    font-size: 100%;
-    margin: 0;
-    padding: 0;
+  border: none;
+  font-weight: bold;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .xclass-content {
-    padding: 0 0 0 16px;
-    margin: 0 0 10px 0;
+  padding: 0 0 0 16px;
+  margin: 0 0 10px 0;
 }
 
 .xobject-title {
-    position: relative;
-    border: none;
-    cursor: default;
-    background: transparent;
+  position: relative;
+  border: none;
+  cursor: default;
+  background: transparent;
 }
 
 .xobject:hover .xobject-title,
 .xproperty:hover .xproperty-title {
-    background-color: $theme.highlightColor;
-    color: $theme.textPrimaryColor;
+  background-color: var(--highlightColor);
+  color: var(--textPrimaryColor);
 }
 
 .xobject-title h3 {
-    border: none;
-    font-size: 100%;
-    font-weight: 100;
-    margin: 0;
-    padding: 4px 4px 4px 10px;
-    border: none;
+  border: none;
+  font-size: 100%;
+  font-weight: 100;
+  margin: 0;
+  padding: 4px 4px 4px 10px;
+  border: none;
 }
 
 .xobject-content {
-    padding: 4px 14px 8px;
-    border: none;
-    margin-bottom: 2px;
+  padding: 4px 14px 8px;
+  border: none;
+  margin-bottom: 2px;
 }
 
 .xobject dl,
 .xproperty dl {
-    margin: 0;
+  margin: 0;
 }
 
 .xobject-content dt,
 .xproperty-content dt {
-    font-size: 75%;
-    font-weight: bold;
+  font-size: 75%;
+  font-weight: bold;
 }
 
 #body .xobject-title h3,
 #body .xclass-title {
-    padding-left: 14px;
+  padding-left: 14px;
 }
 
 .xobject-title:hover,
 .xclass-title:hover,
 .xproperty-title:hover {
-    cursor: default;
+  cursor: default;
 }
 
 .xobject-action {
-    display: block;
-    overflow: hidden;
-    position: absolute;
-    top: 2px;
-    width: 16px;
-    height: 16px;
-    text-indent: 30px;
-    line-height: 30px;
-    background: transparent left top no-repeat;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  text-indent: 30px;
+  line-height: 30px;
+  background: transparent left top no-repeat;
 }
 
 .xobject-title .delete {
-    right: 0;
-    background-image: url('/file/resources/icons/silk/cross.gif');
+  right: 0;
+  background-image: url("/file/resources/icons/silk/cross.gif");
 }
 
 .xobject-title .edit {
-    right: 16px;
-    background-image: url('/file/resources/icons/silk/pencil.gif');
+  right: 16px;
+  background-image: url("/file/resources/icons/silk/pencil.gif");
 }
 
 .xproperty {
-    border: none;
+  border: none;
 }
 
 .xproperty-content {
-    padding: 4px 16px 8px 16px;
-    margin-bottom: 2px;
+  padding: 4px 16px 8px 16px;
+  margin-bottom: 2px;
 }
 
 .xproperty-content dl {
-    margin: 0;
-    padding-left: 16px;
+  margin: 0;
+  padding-left: 16px;
 }
 
 .xproperty-title {
-    cursor: default;
-    padding: 0;
-    overflow: hidden;
+  cursor: default;
+  padding: 0;
+  overflow: hidden;
 }
 
 .xproperty-title .xproperty-property {
-    float: left;
-    margin-right: 8px;
+  float: left;
+  margin-right: 8px;
 }
 
 .xproperty_number_input input {
-    width: 2em;
+  width: 2em;
 }
 
 .xproperty-title h2 {
-    display: block;
-    padding: 2px;
-    padding-left: 32px;
-    margin: 0;
-    font-size: 1em;
-    font-weight: 100;
-    background: transparent url($xwiki.getSkinFile('icons/datamodel/propertyType-Generic.png', true)) 14px center no-repeat;
-    min-height: 16px;
+  display: block;
+  padding: 2px;
+  padding-left: 32px;
+  margin: 0;
+  font-size: 1em;
+  font-weight: 100;
+  background: transparent
+    url(/skin/resources/icons/datamodel/propertyType-Generic.png) 14px center
+    no-repeat;
+  min-height: 16px;
 }
 
 .xproperty-title label {
-    font-size: 60%;
-    line-height: 1em;
+  font-size: 60%;
+  line-height: 1em;
 }
 
 .xproperty-content {
-    clear: both;
+  clear: both;
 }
 
 .xproperty-title .xproperty-prettyName {
-    float: none;
-    clear: both;
+  float: none;
+  clear: both;
 }
 
 .xobject-content dt,
 .xproperty-content dt {
-    font-size: 75%;
-    font-weight: bold;
+  font-size: 75%;
+  font-weight: bold;
 }
 
 .xobject-content dd,
 .xproperty-content dd {
-    margin: 0 0 4px;
+  margin: 0 0 4px;
 }
 
 #body .collapsable .xobject-title h3,
 #body .collapsable .xclass-title,
 #body .collapsable .xproperty-title {
-    background-image: url($xwiki.getSkinFile('icons/silk/bullet_toggle_minus.gif', true));
-    background-position: 0 center;
-    background-repeat: no-repeat;
+  background-image: url(/skin/resources/icons/silk/bullet_toggle_minus.gif);
+  background-position: 0 center;
+  background-repeat: no-repeat;
 }
 
 #body .collapsed .xobject-title h3,
 #body .collapsed .xclass-title,
 #body .collapsed .xproperty-title {
-    background-image: url($xwiki.getSkinFile('icons/silk/bullet_toggle_plus.gif', true));
+  background-image: url(/skin/resources/icons/silk/bullet_toggle_plus.gif);
 }
 
 .xclass.collapsed .xclass-content,
 .xobject.collapsed .xobject-content,
 .xproperty.collapsed .xproperty-content {
-    display: none;
+  display: none;
 }
 
 .collapsable dt .collapser {
-    background-image: url($xwiki.getSkinFile('icons/silk/bullet_toggle_minus.gif', true));
-    background-position: -4px center;
-    background-repeat: no-repeat;
-    cursor: default;
-    width: 10px;
-    height: 10px;
-    padding-left: 10px;
+  background-image: url(/skin/resources/icons/silk/bullet_toggle_minus.gif);
+  background-position: -4px center;
+  background-repeat: no-repeat;
+  cursor: default;
+  width: 10px;
+  height: 10px;
+  padding-left: 10px;
 }
 
 #xwikiobjects .collapsable dd {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 #xwikiclassproperties .collapsable dt {
-    margin-left: -10px;
+  margin-left: -10px;
 }
 
 .collapsable dt .collapsed {
-    background-image: url($xwiki.getSkinFile('icons/silk/bullet_toggle_plus.gif', true));
+  background-image: url(/skin/resources/icons/silk/bullet_toggle_plus.gif);
 }
 
 .xproperty-title .move {
-    display: block;
-    overflow: hidden;
-    position: absolute;
-    right: 0;
-    top: 2px;
-    padding: 2px;
-    cursor: move;
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 2px;
+  padding: 2px;
+  cursor: move;
 }
 
 .dragged .xproperty-title {
-    border: 1px solid $theme.borderColor;
+  border: 1px solid var(--borderColor);
 }
 
 .StringClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/string.png', true));
+  background-image: url(/skin/resources/icons/datamodel/string.png);
 }
 
 .DateClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/calendar.png', true));
+  background-image: url(/skin/resources/icons/datamodel/calendar.png);
 }
 
 .TextAreaClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/textarea.png', true));
+  background-image: url(/skin/resources/icons/datamodel/textarea.png);
 }
 
 .NumberClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/number.png', true));
+  background-image: url(/skin/resources/icons/datamodel/number.png);
 }
 
 .BooleanClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/boolean.png, true'));
+  background-image: url(/skin/resources/icons/datamodel/boolean.png);
 }
 
 .StaticListClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/staticlist.png, true'));
+  background-image: url(/skin/resources/icons/datamodel/staticlist.png);
 }
 
 .GroupsClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/groups.png, true'));
+  background-image: url(/skin/resources/icons/datamodel/groups.png);
 }
 
 .UsersClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/users.png', true));
+  background-image: url(/skin/resources/icons/datamodel/users.png);
 }
 
 .LevelsClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/rights.png', true));
+  background-image: url(/skin/resources/icons/datamodel/rights.png);
 }
 
 .DBListClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/database.png', true));
+  background-image: url(/skin/resources/icons/datamodel/database.png);
 }
 
 .DBTreeListClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/tree.png', true));
+  background-image: url(/skin/resources/icons/datamodel/tree.png);
 }
 
 .PasswordClass h2 {
-    background-image: url($xwiki.getSkinFile('icons/datamodel/password.png', true));
+  background-image: url(/skin/resources/icons/datamodel/password.png);
 }

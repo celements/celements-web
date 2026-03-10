@@ -1,4 +1,4 @@
-#template('colorThemeInit.vm')
+@import "/file/resources/celRes/theme/defaultColors.css";
 
 .xhover {
 	background:red;
@@ -14,7 +14,7 @@ body {
 
 div.suggestItems {
   position:absolute;
-  border: 1px solid $theme.borderColor;
+  border: 1px solid var(--borderColor);
   border-top: none;
   background: white; /* theme color ? */
   z-index: 100013;
@@ -34,12 +34,12 @@ div.suggestItems li {
 ul.suggestList {
   margin:0px !important;
   text-transform:none;
-  color:$theme.textColor;
+  color:var(--textColor);
   font-weight:normal;
 }
 
 ul.suggestList .xhighlight {
-    background-color: $theme.highlightColor;
+    background-color: var(--highlightColor);
 }
 
 div.suggestItemName {
@@ -59,7 +59,7 @@ div.suggestItemInfo {
 }
 
 .highlight {
-  background-color: $theme.highlightColor;
+  background-color: var(--highlightColor);
   font-weight:bold;
   text-decoration: inherit;
 }

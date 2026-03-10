@@ -1,4 +1,4 @@
-#template('colorThemeInit.vm')
+@import "/file/resources/celRes/theme/defaultColors.css";
 /* Overriding skins */
 
 #import ul.xlist li.xitem div.xitemcontainer {
@@ -49,7 +49,7 @@ div.loading {
 }
 
 #packagelist fieldset {
-  background-color: $theme.backgroundSecondaryColor;
+  background-color: var(--backgroundSecondaryColor);
   padding: 5px;
 }
 
@@ -74,7 +74,7 @@ div.loading {
 }
 
 #packagelist .active {
-  border: 0px solid $theme.borderColor;
+  border: 0px solid var(--borderColor);
   background-color: #FCFCFC;
 }
 
@@ -83,7 +83,7 @@ div.loading {
 }
 
 #packagelistcontainer .size {
-  color: $theme.textSecondaryColor;
+  color: var(--textSecondaryColor);
 }
 
 #packagelistcontainer .xwikibuttonlinks {
@@ -109,7 +109,7 @@ div.loading {
 
 #packageDescription {
   background-color: #FCFCFC;
-  border: 0px solid $theme.borderColor;
+  border: 0px solid var(--borderColor);
   overflow: hidden;
   padding: 10px;
   margin-bottom: 1px;
@@ -130,12 +130,12 @@ div.loading {
 }
 
 #packagecontainer .packageinfos span {
-  color: $theme.textSecondaryColor;
+  color: var(--textSecondaryColor);
   margin: 0 5px 0;
 }
 
 #packagecontainer .packageinfos span.label {
-  color: $theme.textColor;
+  color: var(--textColor);
   font-size: .85em;
   font-weight: 700;
   text-transform: uppercase;
@@ -148,7 +148,7 @@ div.loading {
 }
 
 .selectLinks span {
-  color: $theme.linkColor;
+  color: var(--linkColor);
   cursor: pointer;
   margin-left: .2em;
 }
@@ -158,8 +158,8 @@ div#package div.importOption {
 }
 
 div#package ul.package {
-  background-color: $theme.pageContentBackgroundColor;
-  border: 0px solid $theme.borderColor;
+  background-color: var(--pageContentBackgroundColor);
+  border: 0px solid var(--borderColor);
   margin: 0 0 1em 0 !important;
   padding: 3px !important;
   width: 98%;
@@ -187,7 +187,7 @@ ul.package li.xitem div.xitemcontainer div.spacename {
 }
 
 ul.package li.xitem div.xitemcontainer div.selection {
-  color: $theme.textSecondaryColor;
+  color: var(--textSecondaryColor);
   margin-left: auto;
   font-size: .8em;
   line-height: 1.7em;
