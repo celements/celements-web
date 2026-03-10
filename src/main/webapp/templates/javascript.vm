@@ -84,13 +84,6 @@ window.docgeturl = "${doc.getURL('get')}";
 // ]]>
 </script>
 ##
-#if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
-$services.css.includeCSSPage(':uicomponents/widgets/validation/livevalidation.css')##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/compatibility.js'))##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
-$!services.javascript.getAllExternalJavaScriptFiles()
-##
 <script type="text/javascript">
 // <![CDATA[
 var cancelEditNextOnunload;
