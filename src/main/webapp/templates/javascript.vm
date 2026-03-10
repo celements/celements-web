@@ -25,7 +25,7 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notifi
 $services.css.includeCSSPage(':uicomponents/widgets/notification.css')##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/suggest.js'))##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki-misc.js
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki-misc.js'))##
 #if($xwiki.exists('XWiki.SearchSuggestConfig'))
   ## Hook to request the search suggest script if search suggest configuration is present.
   ## We can't just have it as a always-use SSX yet since we compute a hash to be sure to refresh
