@@ -188,10 +188,10 @@ Space header, footer
   margin-left: 4px;
 }
 .edit-meta-tools a.edit-parent {
-  background-image: url("$xwiki.getSkinFile('icons/xwiki/parent_edit.gif')");
+  background-image: url(/skin/resources/icons/xwiki/parent_edit.gif);
 }
 .edit-meta-tools a.hide-edit-parent {
-  background-image: url("$xwiki.getSkinFile('icons/silk/chart_organisation.gif')");
+  background-image: url(/skin/resources/icons/silk/chart_organisation.gif);
 }
 
 /* Parent editing area */
