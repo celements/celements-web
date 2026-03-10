@@ -104,45 +104,8 @@
       <category>Information</category>
     </property>
     <property>
-      <content>#largepanelheader($msg.get("classEditorIntro"))
-        &lt;p&gt;$msg.get("xe.panels.classedit.youare") &lt;strong&gt;${doc.fullName}&lt;/strong&gt;.
-        $msg.get("xe.panels.classedit.chooseproperty")&lt;/p&gt;
-        &lt;div&gt;
-        &lt;form id="changeclass" method="post" action="$doc.getURL("redirect")"&gt;
-        &lt;div&gt;
-        &lt;select id="classname" name="xredirect" size="1"&gt;
-        &lt;option value="-"&gt;Edit another class&lt;/option&gt;
-        ##
-        ## Existing classes are enumerated, grouped by space name.
-        ## The list is already sorted alphabetically
-        ##
-        #set($prevSpace = "")
-        #set($optGroupOpen = false)
-        #foreach ($classname in $xwiki.classList)
-        #if($!xwiki.hasAccessLevel("edit", $classname))
-        #set($classdoc = $xwiki.getDocument($classname))
-        #if($classdoc.space != $prevSpace)
-        #if($optGroupOpen)
-        &lt;/optgroup&gt;
-        #else
-        #set($optGroupOpen = true)
-        #end
-        &lt;optgroup label="$classdoc.space"&gt;
-        #set($prevSpace = $classdoc.space)
-        #end
-        &lt;option value="$classdoc.getURL("edit", "editor=class")"&gt;$classdoc.name&lt;/option&gt;
-        #end
-        #end
-        #if($optGroupOpen)
-        &lt;/optgroup&gt;
-        #end
-        &lt;/select&gt;
-        &lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit"
-        value="$msg.get("changeclass")"/&gt;&lt;/span&gt;&lt;/div&gt;
-        #warning($msg.get('xe.panels.classedit.unsavedchanges'))
-        &lt;/form&gt;
-        &lt;/div&gt;
-        #panelfooter()</content>
+      <content>#largepanelheader($msg.get("classEditorIntro")) <p>$msg.get("xe.panels.classedit.youare") <strong>
+        ${doc.fullName}</strong>. $msg.get("xe.panels.classedit.chooseproperty")</p> #panelfooter()</content>
     </property>
     <property>
       <description>Class Editor welcome and brief information message.</description>
