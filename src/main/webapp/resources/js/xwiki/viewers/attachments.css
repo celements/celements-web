@@ -10,16 +10,13 @@
 .add-file-input {
   margin-left: 10px;
   background-position: 2px top;
-  background-image: url($xwiki.getSkinFile(
-    "icons/silk/textfield_add.gif",
-    true
-  ));
+  background-image: url(/file/resources/icons/silk/textfield_add.gif);
 }
 .add-file-input:hover {
   color: #070;
 }
 .remove-file-input {
-  background-image: url($xwiki.getSkinFile("icons/silk/cross.gif", true));
+  background-image: url(/file/resources/icons/silk/cross.gif);
   width: 16px;
   text-indent: 30px;
 }
@@ -42,10 +39,10 @@
   margin: 0 0 0 4px;
 }
 .attachment .xwikibuttonlinks a.deletelink {
-  background-image: url($xwiki.getSkinFile("icons/silk/cross.gif", true));
+  background-image: url(/file/resources/icons/silk/cross.gif);
 }
 .attachment .xwikibuttonlinks a.editlink {
-  background-image: url($xwiki.getSkinFile("icons/silk/pencil.gif", true));
+  background-image: url(/file/resources/icons/silk/pencil.gif);
 }
 #AddAttachment {
   border-top: 1px solid #ddd;

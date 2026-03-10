@@ -17,15 +17,14 @@
   display: inline-block;
   width: 82%;
   padding-left: 20px;
-  background: transparent
-    url($xwiki.getSkinFile("icons/silk/page_white_text.gif", true)) no-repeat
-    left top;
+  background: transparent url(/file/resources/icons/silk/page_white_text.gif)
+    no-repeat left top;
 }
 .resultItem .type-comment {
-  background-image: url($xwiki.getSkinFile("icons/silk/comment.gif", true));
+  background-image: url(/file/resources/icons/silk/comment.gif);
 }
 .resultItem .type-attachment {
-  background-image: url($xwiki.getSkinFile("icons/silk/attach.gif", true));
+  background-image: url(/file/resources/icons/silk/attach.gif);
 }
 .itemDescription a,
 .itemDescription a:hover {
@@ -82,10 +81,10 @@
   padding-right: 16px;
 }
 .itemOthers .itemComments a {
-  background-image: url($xwiki.getSkinFile("icons/silk/comment.gif", true));
+  background-image: url(/file/resources/icons/silk/comment.gif);
 }
 .itemOthers .itemAttachments a {
-  background-image: url($xwiki.getSkinFile("icons/silk/attach.gif", true));
+  background-image: url(/file/resources/icons/silk/attach.gif);
 }
 .itemRating {
   position: relative;
@@ -95,7 +94,7 @@
   margin: 1px 0 0 0 !important;
   padding: 0 !important;
   background-position: left top;
-  background-image: url($xwiki.getSkinFile("icons/xwiki/rating.png", true));
+  background-image: url(/file/resources/icons/xwiki/rating.png);
 }
 .relevance .currentRelevance,
 .itemRating .currentRating {
@@ -111,7 +110,7 @@
 .itemRating .currentRating {
   height: 11px;
   line-height: 11px;
-  background-image: url($xwiki.getSkinFile("icons/xwiki/rating.png", true));
+  background-image: url(/file/resources/icons/xwiki/rating.png);
   background-position: left center;
 }
 .itemRelevance {
@@ -129,13 +128,13 @@
   margin: 5px 0 0 0 !important;
   padding: 0 !important;
   background-position: left bottom;
-  background-image: url($xwiki.getSkinFile("icons/xwiki/relevance.png", true));
+  background-image: url(/file/resources/icons/xwiki/relevance.png);
   float: right;
 }
 .relevance .currentRelevance {
   height: 8px;
   line-height: 8px;
-  background-image: url($xwiki.getSkinFile("icons/xwiki/relevance.png", true));
+  background-image: url(/file/resources/icons/xwiki/relevance.png);
   background-position: left top;
 }
 .relevanceText {
@@ -161,22 +160,16 @@
   background: transparent no-repeat center center;
 }
 .itemActions .copy {
-  background-image: url($xwiki.getSkinFile(
-    "icons/silk/page_white_copy.gif",
-    true
-  ));
+  background-image: url(/file/resources/icons/silk/page_white_copy.gif);
 }
 .itemActions .delete {
-  background-image: url($xwiki.getSkinFile("icons/silk/cross.gif", true));
+  background-image: url(/file/resources/icons/silk/cross.gif);
 }
 .itemActions .rename {
-  background-image: url($xwiki.getSkinFile(
-    "icons/silk/textfield_rename.gif",
-    true
-  ));
+  background-image: url(/file/resources/icons/silk/textfield_rename.gif);
 }
 .itemActions .rights {
-  background-image: url($xwiki.getSkinFile("icons/silk/lock_edit.gif", true));
+  background-image: url(/file/resources/icons/silk/lock_edit.gif);
 }
 #searchBar {
   margin-bottom: 1em;
@@ -189,9 +182,8 @@
   font-size: 1.1em;
 }
 #searchBar .searchQuery {
-  background: transparent
-    url($xwiki.getSkinFile("icons/xwiki/search.png", true)) left center
-    no-repeat;
+  background: transparent url(/file/resources/icons/xwiki/search.png) left
+    center no-repeat;
   display: inline-block;
   padding-left: 18px;
   border: 2px solid #ccc;

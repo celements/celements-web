@@ -87,7 +87,7 @@
   margin: 0 1px;
 }
 #lb-bg {
-  background-image: url("$xwiki.getSkinFile("js/xwiki/lightbox/back.png", true)");
+  background-image: url(/file/resources/js/xwiki/lightbox/back.png);
   background-repeat: repeat;
   height: 100%;
   width: 100%;
@@ -189,6 +189,6 @@
   margin-right: 10px;
   width: 30px;
   cursor: pointer;
-  background-image: url("$xwiki.getSkinFile("js/xwiki/lightbox/btnClose.png", true)");
+  background-image: url(/file/resources/js/xwiki/lightbox/btnClose.png);
   background-repeat: no-repeat;
 }
