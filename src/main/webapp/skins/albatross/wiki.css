@@ -401,7 +401,7 @@ span.wikicreatelink a {
 /* Used to signify a rendering error in the rendered page. Valid only with new rendering */
 .xwikirenderingerror {
   background-color: #eee; 
-  background-image: url($xwiki.getSkinFile("icons/silk/exclamation.gif", true));
+  background-image: url(/skin/resources/icons/silk/exclamation.gif);
   background-position: 2px 50%;
   background-repeat: no-repeat;
   color: #e14726;
