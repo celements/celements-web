@@ -1,4 +1,4 @@
-#template("colorThemeInit.vm")
+@import "/file/resources/celRes/theme/defaultColors.css";
 .doc-tags {
   float: left;
   width: 48%;
@@ -13,33 +13,33 @@
   word-wrap: break-word;
 }
 a.tag-delete, a.tag-delete:visited {
-  color: $theme.pageContentBackgroundColor;
+  color: var(--pageContentBackgroundColor);
   font-size: 70%;
   font-weight: bold;
   text-decoration: none !important;
   vertical-align: super;
 }
 .tag-wrapper:hover a.tag-delete {
-  color: $theme.textPrimaryColor;
+  color: var(--textPrimaryColor);
 }
 .tag-wrapper a.tag-delete:hover {
   color: #C00;
 }
 .tag-add {
-  color: $theme.textPrimaryColor;
+  color: var(--textPrimaryColor);
   display: inline;
 }
 .tag-add a, .tag-add a:visited {
-  color: $theme.textPrimaryColor;
+  color: var(--textPrimaryColor);
   font-size: 80%;
   text-decoration: none;
 }
 .tag-add a:hover {
-  color: $theme.linkColor;
+  color: var(--linkColor);
 }
 
 .tag-add-form {
-  border: 1px outset $theme.borderColor;
+  border: 1px outset var(--borderColor);
   position: absolute;
   vertical-align: top !important;
   z-index: 1000;
@@ -48,13 +48,13 @@ a.tag-delete, a.tag-delete:visited {
   width: 190px;
 }
 .tag-add-form div {
-  background: $theme.backgroundSecondaryColor;
+  background: var(--backgroundSecondaryColor);
   overflow: hidden;
   padding: 4px 8px;
 }
 
 .tag-add-form label {
-  color: $theme.textColor;
+  color: var(--textColor);
   font-size: 80%;
   margin: 2px 0;
 }

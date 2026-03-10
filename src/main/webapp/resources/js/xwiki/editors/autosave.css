@@ -1,4 +1,4 @@
-#template('colorThemeInit.vm')
+@import "/file/resources/celRes/theme/defaultColors.css";
 #autosaveControl {
   display: inline;
 }
