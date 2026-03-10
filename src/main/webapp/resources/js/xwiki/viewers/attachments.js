@@ -1,4 +1,12 @@
 var XWiki = (function (XWiki) {
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.attachments
+    );
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
 // Start XWiki augmentation.
 var viewers = XWiki.viewers = XWiki.viewers || {};
 /**
@@ -55,10 +63,10 @@ viewers.Attachments = Class.create({
             },
             /* Interaction parameters */
             {
-               confirmationText: "$msg.get('core.viewers.attachments.delete.confirm')",
-               progressMessageText : "$msg.get('core.viewers.attachments.delete.inProgress')",
-               successMessageText : "$msg.get('core.viewers.attachments.delete.done')",
-               failureMessageText : "$msg.get('core.viewers.attachments.delete.failed')"
+               confirmationText: translations.deleteConfirm,
+               progressMessageText : translations.deleteInProgress,
+               successMessageText : translations.deleteDone,
+               failureMessageText : translations.deleteFailed
             }
           );
         }
@@ -67,10 +75,10 @@ viewers.Attachments = Class.create({
   },
   updateCount : function() {
     if ($("Attachmentstab") && $("Attachmentstab").down(".itemCount")) {
-      $("Attachmentstab").down(".itemCount").update("$msg.get('docextra.extranb', ['__number__'])".replace("__number__", $("Attachmentspane").select(".attachment").size()));
+      $("Attachmentstab").down(".itemCount").update(translations.extranb.replace("__number__", $("Attachmentspane").select(".attachment").size()));
     }
     if ($("attachmentsshortcut") && $("attachmentsshortcut").down(".itemCount")) {
-      $("attachmentsshortcut").down(".itemCount").update("$msg.get('docextra.extranb', ['__number__'])".replace("__number__", $("Attachmentspane").select(".attachment").size()));
+      $("attachmentsshortcut").down(".itemCount").update(translations.extranb.replace("__number__", $("Attachmentspane").select(".attachment").size()));
     }
   },
   /** Enhance the upload form with JS behaviors. */
@@ -94,7 +102,7 @@ viewers.Attachments = Class.create({
   addAddButton : function() {
     var addButton = new Element("input", {
       type: "button",
-      value: "$msg.get('core.viewers.attachments.upload.addFileInput')",
+      value: translations.addFileInput,
       className: "attachmentActionButton add-file-input"
     });
     this.addDiv = new Element("div");
@@ -137,8 +145,8 @@ viewers.Attachments = Class.create({
   createRemoveButton : function() {
     var removeButton = new Element("input", {
       type: "button",
-      value: "$msg.get('core.viewers.attachments.upload.removeFileInput')",
-      title: "$msg.get('core.viewers.attachments.upload.removeFileInput.title')",
+      value: translations.removeFileInput,
+      title: translations.removeFileInputTitle,
       className: "attachmentActionButton remove-file-input"
     });
     Event.observe(removeButton, "click", this.removeField.bindAsEventListener(this));

@@ -1,3 +1,12 @@
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.usersandgroups
+    );
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
+
 /* this represent a triple state checkbox */
 MSCheckbox = Class.create({
   /**
@@ -91,9 +100,9 @@ MSCheckbox = Class.create({
       // 1. The current user is clearing / denying himself any right.
       if (self.currentUorG == window.currentUser) {
         if (nxtst == 2) {
-          var denymessage = "$msg.get('rightsmanager.denyrightforcurrentuser').replaceAll('"', '\\"')".replace('__right__', self.right);
+          var denymessage = translations.denyrightforcurrentuser.replaceAll('"', '\\"').replace('__right__', self.right);
           if (!confirm(denymessage)) {
-            var clearmessage = "$msg.get('rightsmanager.clearrightforcurrentuserinstead').replaceAll('"', '\\"')".replace('__right__', self.right);
+            var clearmessage = translations.clearrightforcurrentuserinstead.replaceAll('"', '\\"').replace('__right__', self.right);
             if (confirm(clearmessage)) {
               action = "clear";
               self.state = 2;
@@ -103,7 +112,7 @@ MSCheckbox = Class.create({
             }
           }
         } else if (nxtst == 0) {
-          var clearmessage = "$msg.get('rightsmanager.clearrightforcurrentuser').replaceAll('"', '\\"')".replace('__right__', self.right);
+          var clearmessage = translations.clearrightforcurrentuser.replaceAll('"', '\\"').replace('__right__', self.right);
           if (!confirm(clearmessage)) {
             return;
           }
@@ -112,10 +121,10 @@ MSCheckbox = Class.create({
       // 2. The current user is clearing / denying any rights for a group he belongs to.
       else if (self.isUserInGroup || (window.currentUser == "XWiki.XWikiGuest" && self.currentUorG == "XWiki.XWikiAllGroup")) {
         if (nxtst == 2) {
-          var denymessage = "$msg.get('rightsmanager.denyrightforgroup').replaceAll('"', '\\"')".replace(/__right__/g, self.right);
+          var denymessage = translations.denyrightforgroup.replaceAll('"', '\\"').replace(/__right__/g, self.right);
           denymessage = denymessage.replace('__name__', self.currentUorG);
           if (!confirm(denymessage)) {
-            var clearmessage = "$msg.get('rightsmanager.clearrightforgroupinstead').replaceAll('"', '\\"')".replace(/__right__/g, self.right);
+            var clearmessage = translations.clearrightforgroupinstead.replaceAll('"', '\\"').replace(/__right__/g, self.right);
             clearmessage = clearmessage.replace('__name__', self.currentUorG);
             if (confirm(clearmessage)) {
               action = "clear";
@@ -126,7 +135,7 @@ MSCheckbox = Class.create({
             }
           }
         } else if (nxtst == 0) {
-          var clearmessage = "$msg.get('rightsmanager.clearrightforgroup').replaceAll('"', '\\"')".replace(/__right__/g, self.right);
+          var clearmessage = translations.clearrightforgroup.replaceAll('"', '\\"').replace(/__right__/g, self.right);
           clearmessage = clearmessage.replace('__name__', self.currentUorG);
           if (!confirm(clearmessage)) {
             return;
@@ -136,13 +145,13 @@ MSCheckbox = Class.create({
       // 3. The current user is is clearing / denying admin right for any user / group.
       else if (self.right == "admin") {
         if (nxtst == 2) {
-          var denymessage = "$msg.get('rightsmanager.denyrightforuorg').replaceAll('"', '\\"')".replace('__right__', self.right);
+          var denymessage = translations.denyrightforuorg.replaceAll('"', '\\"').replace('__right__', self.right);
           denymessage = denymessage.replace('__name__', self.currentUorG);
           if (!confirm(denymessage)) {
             return;
           }
         } else if (nxtst == 0) {
-          var clearmessage = "$msg.get('rightsmanager.clearrightforuorg').replaceAll('"', '\\"')".replace('__right__', self.right);
+          var clearmessage = translations.clearrightforuorg.replaceAll('"', '\\"').replace('__right__', self.right);
           clearmessage = clearmessage.replace('__name__', self.currentUorG);
           if (!confirm(clearmessage)) {
             return;
@@ -172,13 +181,13 @@ MSCheckbox = Class.create({
             //if an error occurred while trying to save a right rule, display an alert
             // and refresh the page, since probably the user does not have the right to perform
             // that action
-            alert("$msg.get('platform.core.rightsManagement.saveFailure')");
+            alert(translations.saveFailure);
             var rURL = unescape(window.location.pathname);
             window.location.href = rURL;
           }
         },
         onFailure: function() {
-          alert("$msg.get('platform.core.rightsManagement.ajaxFailure')");
+          alert(translations.ajaxFailure);
         },
         onComplete: function() {
           delete self.req;
@@ -233,7 +242,7 @@ function displayUsers(row, i, table)
     //edit user
     var edit = document.createElement('img');
     edit.src = '$xwiki.getSkinFile("js/xwiki/usersandgroups/img/edit.png",true)';
-    edit.title = "$msg.get('edit')";
+    edit.title = translations.edit;
     Event.observe(edit, 'click', editUserOrGroup(userinlineurl, usersaveurl, docurl));
     edit.className = 'icon-manage';
     manage.appendChild(edit);
@@ -249,7 +258,7 @@ function displayUsers(row, i, table)
       Event.observe(del, 'click', deleteUserOrGroup(i, table, row.fullname, "user"));
       del.className = 'icon-manage';
     }
-    del.title = "$msg.get('delete')";
+    del.title = translations.delete;
     manage.appendChild(del);
   }
 
@@ -295,14 +304,14 @@ function displayGroups(row, i, table)
     //delete group
     var del = document.createElement('img');
     del.src = '$xwiki.getSkinFile("js/xwiki/usersandgroups/img/clear.png",true)';
-    del.title = "$msg.get('delete')";
+    del.title = translations.delete;
     Event.observe(del, 'click', deleteUserOrGroup(i, table, row.fullname, "group"));
     del.className = 'icon-manage';
 
     //edit user
     var edit = document.createElement('img');
     edit.src = '$xwiki.getSkinFile("js/xwiki/usersandgroups/img/edit.png",true)';
-    edit.title = "$msg.get('edit')";
+    edit.title = translations.edit;
     Event.observe(edit, 'click', editUserOrGroup(userinlineurl, usersaveurl, docurl));
     edit.className = 'icon-manage';
 
@@ -348,7 +357,7 @@ function displayMembers(row, i, table)
       Event.observe(del, 'click', deleteMember(i, table, row.fullname, row.docurl));
       del.className = 'icon-manage';
     }
-    del.title = "$msg.get('delete')";
+    del.title = translations.delete;
     membermanage.appendChild(del);
     tr.appendChild(membermanage);
   }
@@ -418,7 +427,7 @@ function deleteUserOrGroup(i, table, docname, uorg)
   return function() {
     var url = "?xpage=deleteuorg&docname=" + docname;
     if (uorg == "user") {
-      if (confirm("$msg.get('rightsmanager.confirmdeleteuser').replaceAll('"', '\\"')".replace('__name__', docname))) {
+      if (confirm(translations.confirmdeleteuser.replaceAll('"', '\\"').replace('__name__', docname))) {
         new Ajax.Request(url, {
           method: 'get',
           onSuccess: function(transport) {
@@ -427,7 +436,7 @@ function deleteUserOrGroup(i, table, docname, uorg)
         });
       }
     } else {
-      if (confirm("$msg.get('rightsmanager.confirmdeletegroup').replaceAll('"', '\\"')".replace('__name__', docname))) {
+      if (confirm(translations.confirmdeletegroup.replaceAll('"', '\\"').replace('__name__', docname))) {
         new Ajax.Request(url, {
           method: 'get',
           onSuccess: function(transport) {
@@ -444,7 +453,7 @@ function deleteMember(i, table, docname, docurl)
 {
   return function() {
     var url = docurl + "?xpage=deletegroupmember&fullname=" + docname;
-    if (confirm("$msg.get('rightsmanager.confirmdeletemember').replaceAll('"', '\\"')")) {
+    if (confirm(translations.confirmdeletemember.replaceAll('"', '\\"'))) {
       new Ajax.Request(url, {
         method: 'get',
         onSuccess: function(transport) {
