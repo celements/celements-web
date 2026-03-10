@@ -1,3 +1,4 @@
+<!-- javascript.vm: start -->
 ##
 ## CSS files related to JS libraries.
 ##
@@ -130,3 +131,4 @@ $j(document).ready(prepareCancelEdit);
 </script>
 #end
 ##
+<!-- javascript.vm: end -->

@@ -1,3 +1,4 @@
+<!-- startpage.vm: start -->
 #template("xwikivars.vm")
 #template("layoutvars.vm")
 #template("htmlheader.vm")
@@ -15,3 +16,4 @@
 #else
   <div id="contentcolumn"> ## class="content#if($showLeftPanels == "0")hideleft#end#if($showRightPanels == "0")hideright#end">
 #end
+<!-- startpage.vm: end -->

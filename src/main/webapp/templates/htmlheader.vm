@@ -1,3 +1,4 @@
+<!-- htmlheader.vm: start -->
 ## -------------------------------------------------------------------------------------------------------------------
 ## In non-Servlet mode (in Portlet mode for example) we don't display the <HTML>, <HEAD> and <BODY>
 ## elements.
@@ -90,3 +91,4 @@
 <$bodyTagName id="body" class="wiki-${xcontext.database} space-${escapetool.xml($doc.space.replaceAll(' ', '_'))} ${bodyAction}body #if($showLeftPanels == "0")hideleft#end#if($showRightPanels == "0")hideright#end#if($hidecolumns && ($!hidecolumns == 1))hidelefthideright#end">
 <div id="xwikimaincontainer">
 <div id="xwikimaincontainerinner">
+<!-- htmlheader.vm: end -->
