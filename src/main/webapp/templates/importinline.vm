@@ -36,6 +36,7 @@ resetting programming rights for celements2web: $services.celementsweb.resetProg
   #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
   #set($extJsParam = $extJsParam.setLazyLoad(true))
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki-misc.js'))##
 #**
 <script type="text/javascript">
 // <![CDATA[
