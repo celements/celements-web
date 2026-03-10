@@ -1,4 +1,5 @@
-#template('colorThemeInit.vm') #xwikiobjects,
+@import "/file/resources/celRes/theme/defaultColors.css";
+#xwikiobjects,
 #xwikiclassproperties {
   padding: 0 8px;
   overflow: auto;
@@ -10,14 +11,14 @@
   display: inline;
   text-transform: none;
   font-variant: normal;
-  color: $theme.textPrimaryColor;
+  color: var(--textPrimaryColor);
 }
 
 #xwikiobjects input,
 #xwikiobjects textarea,
 #xwikiclassproperties input,
 #xwikiclassproperties textarea {
-  border: 1px solid $theme.borderColor;
+  border: 1px solid var(--borderColor);
   width: 90%;
 }
 
@@ -34,14 +35,14 @@
 #xwikiclassproperties textarea:hover,
 #xwikiclassproperties input:focus,
 #xwikiclassproperties textarea:focus {
-  border: 1px solid $theme.textPrimaryColor;
+  border: 1px solid var(--textPrimaryColor);
 }
 
 #xwikiobjects input:focus,
 #xwikiobjects textarea:focus,
 #xwikiclassproperties input:focus,
 #xwikiclassproperties textarea:focus {
-  background-color: $theme.highlightColor;
+  background-color: var(--highlightColor);
 }
 
 .more-actions {
@@ -82,8 +83,8 @@ xproperty-title h2 {
 
 .xobject:hover .xobject-title,
 .xproperty:hover .xproperty-title {
-  background-color: $theme.highlightColor;
-  color: $theme.textPrimaryColor;
+  background-color: var(--highlightColor);
+  color: var(--textPrimaryColor);
 }
 
 .xobject-title h3 {
@@ -265,7 +266,7 @@ xproperty-title h2 {
 }
 
 .dragged .xproperty-title {
-  border: 1px solid $theme.borderColor;
+  border: 1px solid var(--borderColor);
 }
 
 .StringClass h2 {
