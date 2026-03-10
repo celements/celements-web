@@ -1,6 +1,6 @@
 ## Define variables containing the list of edit panels for the Albatross skin
-#set($editorPanelsWiki = "Panels.DocumentInformation,Panels.EditTranslations,Panels.SyntaxHelp")
-#set($editorPanelsWysiwyg = "Panels.DocumentInformation,Panels.EditTranslations,Panels.SyntaxHelp")
+#set($editorPanelsWiki = "Panels.DocumentInformation,Panels.EditTranslations")
+#set($editorPanelsWysiwyg = "Panels.DocumentInformation,Panels.EditTranslations")
 #set($editorPanelsObjects = "Panels.ObjectEditorWelcome,Panels.AddObject")
 #set($editorPanelsClass = "Panels.ClassEditorWelcome,Panels.AddClassProperty,Panels.ClassSwitcher")
 #set($editorPanelsRights = "Panels.RightsEditorWelcome,Panels.RightsTips")
