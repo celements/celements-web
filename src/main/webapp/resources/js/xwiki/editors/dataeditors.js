@@ -1,4 +1,13 @@
 // this is minified code reformatted
+
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.dataeditors);
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
+
 $j(document).ready(function () {
   $$("#xwikiobjects a.delete").each(function (B) {
     B.observe(
@@ -26,13 +35,10 @@ $j(document).ready(function () {
               },
             },
             {
-              confirmationText:
-                "$msg.get('core.editors.object.delete.confirm')",
-              progressMessageText:
-                "$msg.get('core.editors.object.delete.inProgress')",
-              successMessageText: "$msg.get('core.editors.object.delete.done')",
-              failureMessageText:
-                "$msg.get('core.editors.object.delete.failed')",
+              confirmationText: translations.confirmationText,
+              progressMessageText: translations.progressMessageText,
+              successMessageText: translations.successMessageText,
+              failureMessageText: translations.failureMessageText,
             },
           );
         }

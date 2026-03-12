@@ -5,12 +5,20 @@ if(typeof(XWiki) == "undefined" || typeof(XWiki.widgets) == "undefined" || typeo
   }
 } else {
 
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.confirmationBox);
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
+
 XWiki.widgets.ConfirmationBox = Class.create(XWiki.widgets.ModalPopup, {
   /** Default displayed texts */
   defaultInteractionParameters : {
-    confirmationText: "$msg.get('core.widgets.confirmationBox.defaultQuestion')",
-    yesButtonText: "$msg.get('core.widgets.confirmationBox.button.yes')",
-    noButtonText: "$msg.get('core.widgets.confirmationBox.button.no')"
+    confirmationText: translations.defaultQuestion,
+    yesButtonText: translations.yes,
+    noButtonText: translations.no
   },
   /** Constructor. Registers the key listener that pops up the dialog. */
   initialize : function($super, behavior, interactionParameters) {
