@@ -1,3 +1,12 @@
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.jumpToPage
+    );
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
+
 // Make sure the XWiki 'namespace' and the ModalPopup class exist.
 if(typeof(XWiki) == "undefined" || typeof(XWiki.widgets) == "undefined" || typeof(XWiki.widgets.ModalPopup) == "undefined") {
   if (typeof console != "undefined" && typeof console.warn == "function") {
@@ -17,11 +26,11 @@ XWiki.widgets.JumpToPage = Class.create(XWiki.widgets.ModalPopup, {
     this.input = new Element("input", {
       "type" : "text",
       "id" : "jmp_target",
-      "title" : "$msg.get('core.viewers.jump.dialog.input.tooltip')"
+      "title" : translations.inputTooltip
     });
     content.appendChild(this.input);
-    this.viewButton = this.createButton("button", "$msg.get('core.viewers.jump.dialog.actions.view')", "$msg.get('core.viewers.jump.dialog.actions.view.tooltip')", "jmp_view");
-    this.editButton = this.createButton("button", "$msg.get('core.viewers.jump.dialog.actions.edit')", "$msg.get('core.viewers.jump.dialog.actions.edit.tooltip')", "jmp_edit");
+    this.viewButton = this.createButton("button", translations.viewAction, translations.viewTooltip, "jmp_view");
+    this.editButton = this.createButton("button", translations.editAction, translations.editTooltip, "jmp_edit");
     var buttonContainer = new Element("div", {"class" : "buttons"});
     buttonContainer.appendChild(this.viewButton);
     buttonContainer.appendChild(this.editButton);
@@ -29,12 +38,12 @@ XWiki.widgets.JumpToPage = Class.create(XWiki.widgets.ModalPopup, {
     $super(
       content,
       {
-        "show" : { method : this.showDialog, keys : [$msg.get('core.viewers.jump.shortcuts')] },
-        "view" : { method : this.openDocument, keys : [$msg.get('core.viewers.jump.dialog.actions.view.shortcuts')] },
-        "edit" : { method : this.openDocument, keys : [$msg.get('core.viewers.jump.dialog.actions.edit.shortcuts')] }
+        "show" : { method : this.showDialog, keys : [translations.shortcuts] },
+        "view" : { method : this.openDocument, keys : [translations.viewShortcuts] },
+        "edit" : { method : this.openDocument, keys : [translations.editShortcuts] }
       },
       {
-        title : "$msg.get('core.viewers.jump.dialog.content')",
+        title : translations.dialogTitle,
         verticalPosition : "top"
       }
     );
@@ -56,7 +65,7 @@ XWiki.widgets.JumpToPage = Class.create(XWiki.widgets.ModalPopup, {
         script: "${request.contextPath}/rest/wikis/${context.database}/search?scope=name&number=10&media=json&",
         // Prefixed with & since the current (as of 1.7) Suggest code does not automatically append it.
         varname: "q",
-        noresults: "$msg.get('core.viewers.jump.suggest.noResults')",
+        noresults: translations.noResults,
         icon: "${xwiki.getSkinFile('icons/silk/page_white_text.gif')}",
         json: true,
         resultsParameter : "searchResults",
@@ -93,7 +102,7 @@ XWiki.widgets.JumpToPage = Class.create(XWiki.widgets.ModalPopup, {
   addQuickLinksEntry : function() {
     $$(".panel.QuickLinks .xwikipanelcontents").each(function(item) {
       var jumpToPageActivator = new Element('span', {'class': "jmp-activator"});
-      jumpToPageActivator.update("$msg.get('core.viewers.jump.quickLinksText')");
+      jumpToPageActivator.update(translations.quickLinksText);
       Event.observe(jumpToPageActivator, "click", function(event) {
         this.showDialog(event);
       }.bindAsEventListener(this));

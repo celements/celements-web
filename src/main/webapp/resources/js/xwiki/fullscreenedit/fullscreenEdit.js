@@ -1,4 +1,12 @@
 (function(){
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.fullscreenEdit
+    );
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
 
     //function to get a style property of an element
     //////////////////////////////////////////////
@@ -76,7 +84,7 @@
             var showBtn = document.createElement("div");
             showBtn.setAttribute("id", "show-dialog-btn");
             Event.observe(showBtn, "click", activator, true);
-            showBtn.setAttribute("title", "$msg.get('fullScreenTooltip')");
+            showBtn.setAttribute("title", translations.fullScreenTooltip);
             var textdiv = document.getElementById("xwikieditcontent");
             textdiv.insertBefore(showBtn, textdiv.firstChild);
             

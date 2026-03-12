@@ -1,4 +1,12 @@
 var XWiki = (function (XWiki) {
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.xwiki
+    );
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
   /**
    * XWiki namespace.
    * TODO: move everything in it.
@@ -321,7 +329,7 @@ var XWiki = (function (XWiki) {
       $(content).select(".xwikirenderingerror").each(function (error) {
         if (error.next().innerHTML !== "" && error.next().hasClassName("xwikirenderingerrordescription")) {
           error.style.cursor = "pointer";
-          error.title = "$msg.get('platform.core.rendering.error.readTechnicalInformation')";
+          error.title = translations.readTechnicalInformation;
           Event.observe(error, "click", function (event) {
             event.element().next().toggleClassName("hidden");
           });
@@ -395,7 +403,7 @@ var XWiki = (function (XWiki) {
 
             editlink.href = window.docediturl + "?section=" + sectioncount;
             editlink.style.textDecoration = "none";
-            editlink.innerHTML = "$msg.get('edit')";
+            editlink.innerHTML = translations.edit;
             editspan.className = "edit_section";
 
             editspan.appendChild(editlink);
@@ -447,7 +455,7 @@ var XWiki = (function (XWiki) {
                 }
               },
               onFailure: function () {
-                new XWiki.widgets.Notification("$msg.get('core.create.ajax.error')", 'error', { inactive: true }).show();
+                new XWiki.widgets.Notification(translations.createAjaxError, 'error', { inactive: true }).show();
               }
             });
             event.stop();
