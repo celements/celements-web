@@ -1,12 +1,3 @@
-let translations = {};
-if (window.celExecOnceAfterMessagesLoaded) {
-    window.celExecOnceAfterMessagesLoaded(
-        celMessages => translations = celMessages.jumpToPage
-    );
-} else {
-    console.warn('celExecOnceAfterMessagesLoaded not available!');
-}
-
 // Make sure the XWiki 'namespace' and the ModalPopup class exist.
 if(typeof(XWiki) == "undefined" || typeof(XWiki.widgets) == "undefined" || typeof(XWiki.widgets.ModalPopup) == "undefined") {
   if (typeof console != "undefined" && typeof console.warn == "function") {
@@ -18,19 +9,26 @@ if(typeof(XWiki) == "undefined" || typeof(XWiki.widgets) == "undefined" || typeo
  * pressing enter. It also enables a Suggest behavior on the document name selector, for easier selection.
  */
 XWiki.widgets.JumpToPage = Class.create(XWiki.widgets.ModalPopup, {
+  translations: {},
   /** The template of the XWiki URL. */
   urlTemplate : "$xwiki.getURL('__space__.__document__', '__action__')",
   /** Constructor. Registers the key listener that pops up the dialog. */
   initialize : function($super) {
+    if (window.celExecOnceAfterMessagesLoaded) {
+      window.celExecOnceAfterMessagesLoaded(
+        celMessages => this.translations = celMessages.jumpToPage);
+    } else {
+      console.warn('celExecOnceAfterMessagesLoaded not available!');
+    }
     var content = new Element("div");
     this.input = new Element("input", {
       "type" : "text",
       "id" : "jmp_target",
-      "title" : translations.inputTooltip
+      "title" : this.translations.inputTooltip
     });
     content.appendChild(this.input);
-    this.viewButton = this.createButton("button", translations.viewAction, translations.viewTooltip, "jmp_view");
-    this.editButton = this.createButton("button", translations.editAction, translations.editTooltip, "jmp_edit");
+    this.viewButton = this.createButton("button", this.translations.viewAction, this.translations.viewTooltip, "jmp_view");
+    this.editButton = this.createButton("button", this.translations.editAction, this.translations.editTooltip, "jmp_edit");
     var buttonContainer = new Element("div", {"class" : "buttons"});
     buttonContainer.appendChild(this.viewButton);
     buttonContainer.appendChild(this.editButton);
@@ -38,12 +36,12 @@ XWiki.widgets.JumpToPage = Class.create(XWiki.widgets.ModalPopup, {
     $super(
       content,
       {
-        "show" : { method : this.showDialog, keys : [translations.shortcuts] },
-        "view" : { method : this.openDocument, keys : [translations.viewShortcuts] },
-        "edit" : { method : this.openDocument, keys : [translations.editShortcuts] }
+        "show" : { method : this.showDialog, keys : [this.translations.shortcuts] },
+        "view" : { method : this.openDocument, keys : [this.translations.viewShortcuts] },
+        "edit" : { method : this.openDocument, keys : [this.translations.editShortcuts] }
       },
       {
-        title : translations.dialogTitle,
+        title : this.translations.dialogTitle,
         verticalPosition : "top"
       }
     );
@@ -65,7 +63,7 @@ XWiki.widgets.JumpToPage = Class.create(XWiki.widgets.ModalPopup, {
         script: "${request.contextPath}/rest/wikis/${context.database}/search?scope=name&number=10&media=json&",
         // Prefixed with & since the current (as of 1.7) Suggest code does not automatically append it.
         varname: "q",
-        noresults: translations.noResults,
+        noresults: this.translations.noResults,
         icon: "${xwiki.getSkinFile('icons/silk/page_white_text.gif')}",
         json: true,
         resultsParameter : "searchResults",
@@ -102,7 +100,7 @@ XWiki.widgets.JumpToPage = Class.create(XWiki.widgets.ModalPopup, {
   addQuickLinksEntry : function() {
     $$(".panel.QuickLinks .xwikipanelcontents").each(function(item) {
       var jumpToPageActivator = new Element('span', {'class': "jmp-activator"});
-      jumpToPageActivator.update(translations.quickLinksText);
+      jumpToPageActivator.update(this.translations.quickLinksText);
       Event.observe(jumpToPageActivator, "click", function(event) {
         this.showDialog(event);
       }.bindAsEventListener(this));
