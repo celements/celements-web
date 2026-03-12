@@ -1,13 +1,12 @@
-let translations = {};
-if (window.celExecOnceAfterMessagesLoaded) {
-  window.celExecOnceAfterMessagesLoaded(
-    (celMessages) => (translations = celMessages.dataeditors),
-  );
-} else {
-  console.warn("celExecOnceAfterMessagesLoaded not available!");
-}
-
+// this is minified code reformatted
 $j(document).ready(function () {
+  let translations = {};
+  if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+      celMessages => translations = celMessages.dataeditors);
+  } else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+  }
   $$("#xwikiobjects a.delete").each(function (B) {
     B.observe(
       "click",

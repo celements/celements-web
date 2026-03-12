@@ -1,12 +1,12 @@
 var XWiki = (function (XWiki) {
-let translations = {};
-if (window.celExecOnceAfterMessagesLoaded) {
+  let translations = {};
+  if (window.celExecOnceAfterMessagesLoaded) {
     window.celExecOnceAfterMessagesLoaded(
-        celMessages => translations = celMessages.xwiki
+      (celMessages) => (translations = celMessages.xwiki),
     );
-} else {
-    console.warn('celExecOnceAfterMessagesLoaded not available!');
-}
+  } else {
+    console.warn("celExecOnceAfterMessagesLoaded not available!");
+  }
   /**
    * XWiki namespace.
    * TODO: move everything in it.
@@ -367,15 +367,20 @@ if (window.celExecOnceAfterMessagesLoaded) {
       if (typeof content == "undefined") {
         content = document.body;
       }
-      $(content).select(".xwikirenderingerror").each(function (error) {
-        if (error.next().innerHTML !== "" && error.next().hasClassName("xwikirenderingerrordescription")) {
-          error.style.cursor = "pointer";
-          error.title = translations.readTechnicalInformation;
-          Event.observe(error, "click", function (event) {
-            event.element().next().toggleClassName("hidden");
-          });
-        }
-      });
+      $(content)
+        .select(".xwikirenderingerror")
+        .each(function (error) {
+          if (
+            error.next().innerHTML !== "" &&
+            error.next().hasClassName("xwikirenderingerrordescription")
+          ) {
+            error.style.cursor = "pointer";
+            error.title = translations.readTechnicalInformation;
+            Event.observe(error, "click", function (event) {
+              event.element().next().toggleClassName("hidden");
+            });
+          }
+        });
     },
 
     /**
@@ -495,21 +500,30 @@ if (window.celExecOnceAfterMessagesLoaded) {
 
         var spans = document.body.select("span.wikicreatelink");
         for (var i = 0; i < spans.length; i++) {
-          spans[i].down('a').observe('click', function (event) {
-            new Ajax.Request(event.findElement('a').href + '&xpage=createinline&ajax=1', {
-              method: 'get',
-              onSuccess: function (transport) {
-                var redirect = transport.getHeader('redirect');
-                if (redirect) {
-                  window.location = redirect;
-                } else {
-                  new XWiki.widgets.CreatePagePopup({ content: transport.responseText });
-                }
+          spans[i].down("a").observe("click", function (event) {
+            new Ajax.Request(
+              event.findElement("a").href + "&xpage=createinline&ajax=1",
+              {
+                method: "get",
+                onSuccess: function (transport) {
+                  var redirect = transport.getHeader("redirect");
+                  if (redirect) {
+                    window.location = redirect;
+                  } else {
+                    new XWiki.widgets.CreatePagePopup({
+                      content: transport.responseText,
+                    });
+                  }
+                },
+                onFailure: function () {
+                  new XWiki.widgets.Notification(
+                    translations.createAjaxError,
+                    "error",
+                    { inactive: true },
+                  ).show();
+                },
               },
-              onFailure: function () {
-                new XWiki.widgets.Notification(translations.createAjaxError, 'error', { inactive: true }).show();
-              }
-            });
+            );
             event.stop();
           });
         }
