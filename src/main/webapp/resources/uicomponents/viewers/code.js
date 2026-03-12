@@ -7,6 +7,15 @@ if (typeof XWiki.viewers == "undefined") {
   XWiki.viewers = new Object();
 }
 
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+  window.celExecOnceAfterMessagesLoaded(
+    (celMessages) => (translations = celMessages.code),
+  );
+} else {
+  console.warn("celExecOnceAfterMessagesLoaded not available!");
+}
+
 /**
  * JavaScript snippet that toggles line numbers on code view.
  */
@@ -14,8 +23,8 @@ XWiki.viewers.Code = Class.create({
   initialize: function (initialShowLineNumbers) {
     this.showingLineNumbers = initialShowLineNumbers;
     this.toggleLink = $("toggleLineNumbers");
-    this.showText = "$msg.get('core.viewers.code.showLineNumbers')";
-    this.hideText = "$msg.get('core.viewers.code.hideLineNumbers')";
+    this.showText = translations.showLineNumbers;
+    this.hideText = translations.hideLineNumbers;
     if (this.toggleLink) {
       this.textarea = this.toggleLink.up().down("textarea");
       if (this.textarea) {
