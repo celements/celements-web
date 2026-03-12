@@ -4,14 +4,6 @@ if(typeof(XWiki) == "undefined" || typeof(XWiki.widgets) == "undefined" || typeo
     console.warn("[MessageBox widget] Required class missing: XWiki.widgets.ModalPopup");
   }
 } else {
-
-let translations = {};
-if (window.celExecOnceAfterMessagesLoaded) {
-    window.celExecOnceAfterMessagesLoaded(
-        celMessages => translations = celMessages.confirmedAjaxRequest);
-} else {
-    console.warn('celExecOnceAfterMessagesLoaded not available!');
-}
 /**
  * An AJAX request performed only if the user confirms the action in a modal dialog. It also forwards IE specific status
  * codes for 204 responses to the correct onSuccess function, and it displays (if configured) notification messages for
@@ -52,14 +44,20 @@ XWiki.widgets.ConfirmedAjaxRequest = Class.create(XWiki.widgets.ConfirmationBox,
   },
   /** Constructor. Registers the key listener that pops up the dialog. */
   initialize : function($super, requestUrl, ajaxRequestParameters, interactionParameters) {
-    this.interactionParameters = Object.extend({
-      displayProgressMessage: true,
-      progressMessageText : translations.notificationInProgress,
-      displaySuccessMessage: true,
-      successMessageText : translations.notificationDone,
-      displayFailureMessage: true,
-      failureMessageText : translations.notificationFailed
-    }, interactionParameters || {});
+    if (window.celExecOnceAfterMessagesLoaded) {
+      window.celExecOnceAfterMessagesLoaded(
+        celMessages => this.interactionParameters = Object.extend({
+          displayProgressMessage: true,
+          progressMessageText : celMessages.confirmedAjaxRequest.notificationInProgress,
+          displaySuccessMessage: true,
+          successMessageText : celMessages.confirmedAjaxRequest.notificationDone,
+          displayFailureMessage: true,
+          failureMessageText : celMessages.confirmedAjaxRequest.notificationFailed
+        }, interactionParameters || {})
+      );
+    } else {
+        console.warn('celExecOnceAfterMessagesLoaded not available!');
+    }
     this.requestUrl = requestUrl;
     this.ajaxRequestParameters = Object.extend(Object.clone(this.defaultAjaxRequestParameters), ajaxRequestParameters || {});
     Object.extend(this.ajaxRequestParameters, {

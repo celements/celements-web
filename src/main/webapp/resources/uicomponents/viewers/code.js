@@ -7,23 +7,22 @@ if(typeof(XWiki.viewers) == 'undefined') {
   XWiki.viewers = new Object();
 }
 
-let translations = {};
-if (window.celExecOnceAfterMessagesLoaded) {
-    window.celExecOnceAfterMessagesLoaded(
-        celMessages => translations = celMessages.code);
-} else {
-    console.warn('celExecOnceAfterMessagesLoaded not available!');
-}
-
 /**
  * JavaScript snippet that toggles line numbers on code view.
  */
 XWiki.viewers.Code = Class.create({
+  translations : translations,
   initialize : function (initialShowLineNumbers) {
+    if (window.celExecOnceAfterMessagesLoaded) {
+      window.celExecOnceAfterMessagesLoaded(
+        celMessages => this.translations = celMessages.code);
+    } else {
+        console.warn('celExecOnceAfterMessagesLoaded not available!');
+    }
     this.showingLineNumbers = initialShowLineNumbers;
     this.toggleLink = $('toggleLineNumbers');
-    this.showText = translations.showLineNumbers;
-    this.hideText = translations.hideLineNumbers;
+    this.showText = this.translations.showLineNumbers;
+    this.hideText = this.translations.hideLineNumbers;
     if (this.toggleLink) {
       this.textarea = this.toggleLink.up().down('textarea');
       if (this.textarea) {

@@ -2,15 +2,6 @@
 // Form buttons: shortcuts, AJAX improvements and form validation
 // To be completed.
 
-let translations = {};
-if (window.celExecOnceAfterMessagesLoaded) {
-    window.celExecOnceAfterMessagesLoaded(
-        celMessages => translations = celMessages.actionButtons
-    );
-} else {
-    console.warn('celExecOnceAfterMessagesLoaded not available!');
-}
-
 // Make sure the XWiki 'namespace' exists.
 if (typeof(XWiki) == 'undefined') {
   XWiki = new Object();
@@ -21,7 +12,15 @@ if (typeof(XWiki.actionButtons) == 'undefined') {
 }
 
 XWiki.actionButtons.EditActions = Class.create({
+  translations : {},
+
   initialize : function() {
+    if (window.celExecOnceAfterMessagesLoaded) {
+      window.celExecOnceAfterMessagesLoaded(
+        celMessages => this.translations = celMessages.actionButtons);
+    } else {
+      console.warn('celExecOnceAfterMessagesLoaded not available!');
+    }
     this.addListeners();
     this.addShortcuts();
     this.addValidators();
@@ -42,14 +41,14 @@ XWiki.actionButtons.EditActions = Class.create({
   },
   addShortcuts : function() {
     var shortcuts = {
-      'action_cancel' : translations.cancel,
-      'action_preview' : translations.preview,
+      'action_cancel' : this.translations.cancel,
+      'action_preview' : this.translations.preview,
       // The following 2 are both "Back to edit" in the preview mode, depending on the used editor
-      'action_edit' : translations.backtoedit,
-      'action_inline' : translations.backtoedit,
-      'action_save' : translations.saveandview,
-      'action_propupdate' : translations.saveAndView,
-      'action_saveandcontinue' : translations.saveandcontinue
+      'action_edit' : this.translations.backtoedit,
+      'action_inline' : this.translations.backtoedit,
+      'action_save' : this.translations.saveandview,
+      'action_propupdate' : this.translations.saveAndView,
+      'action_saveandcontinue' : this.translations.saveandcontinue
     }
     for (var key in shortcuts) {
       var targetButtons = $$("input[name=" + key + "]");
@@ -68,7 +67,7 @@ XWiki.actionButtons.EditActions = Class.create({
       var input = inputs[i];
       var validator = new LiveValidation(input, { validMessage: "" });
       validator.add(Validate.Presence, {
-        failureMessage: translations.mandatoryField
+        failureMessage: this.translations.mandatoryField
       });
       validator.validate();
       this.validators.push(validator);
@@ -80,25 +79,6 @@ XWiki.actionButtons.EditActions = Class.create({
         return false;
       }
     }
-    #if($xwiki.isEditCommentMandatory())
-      var commentField = form.comment
-      while (commentField.value == "") {
-        var response = prompt(translations.commentPrompt);
-        if (response === null) {
-          return false;
-        }
-        commentField.value = response;
-      }
-    #elseif($xwiki.isEditCommentSuggested())
-      var commentField = form.comment
-      if (commentField.value == "") {
-        var response = prompt(translations.commentPrompt);
-        if (response === null) {
-          return false;
-        }
-        commentField.value = response;
-      }
-    #end
     return true;
   },
   onCancel : function(event) {
