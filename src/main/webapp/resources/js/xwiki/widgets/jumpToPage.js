@@ -11,7 +11,7 @@ if(typeof(XWiki) == "undefined" || typeof(XWiki.widgets) == "undefined" || typeo
 XWiki.widgets.JumpToPage = Class.create(XWiki.widgets.ModalPopup, {
   translations: {},
   /** The template of the XWiki URL. */
-  urlTemplate : "$xwiki.getURL('__space__.__document__', '__action__')",
+  urlTemplate :  "/__action__/__space__/__page__",
   /** Constructor. Registers the key listener that pops up the dialog. */
   initialize : function($super) {
     if (window.celExecOnceAfterMessagesLoaded) {

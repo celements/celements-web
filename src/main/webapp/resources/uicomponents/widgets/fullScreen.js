@@ -254,7 +254,7 @@ XWiki.widgets.FullScreen = Class.create({
       class: "fullScreenEditButton",
       title: this.translations.editFullScreen,
       alt: this.translations.editFullScreen,
-      src: "$xwiki.getSkinFile('icons/silk/arrow_out.gif')",
+      src: "/skin/resources/icons/silk/arrow_out.gif",
     });
     // Add functionality
     fullScreenActivator.observe(
@@ -302,7 +302,7 @@ XWiki.widgets.FullScreen = Class.create({
       class: "fullScreenCloseButton",
       title: this.translations.exitFullScreen,
       alt: this.translations.exitFullScreen,
-      src: "$xwiki.getSkinFile('icons/silk/arrow_in.gif')",
+      src: "/skin/resources/icons/silk/arrow_in.gif",
     });
     // Add functionality
     this.closeButton.observe("click", this.closeFullScreen.bind(this));

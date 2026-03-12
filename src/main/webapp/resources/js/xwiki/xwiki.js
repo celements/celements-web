@@ -419,55 +419,6 @@ var XWiki = (function (XWiki) {
     },
 
     /**
-     * Insert a link for editing sections.
-     */
-    insertSectionEditLinks: function () {
-      // Insert links only in view mode and for xwiki/2.0 documents.
-      if (
-        XWiki.docsyntax == "xwiki/2.0" &&
-        XWiki.contextaction == "view" &&
-        XWiki.hasEdit
-      ) {
-        // Section count starts at one, not zero.
-        var sectioncount = 1;
-
-        // We can't use element.select() since it does not keep the order of the elements in the flow.
-        var nodes = $("xwikicontent");
-        if (!nodes) {
-          return;
-        }
-        nodes = nodes.childNodes;
-
-        // Only allow section editing for the specified depth level (2 by default)
-        var headerPattern = new RegExp(
-          "H[1-" + $xwiki.getSectionEditingDepth() + "]",
-        );
-
-        // For all non-generated headers, add a SPAN and A element in order to be able to edit the section.
-        for (var i = 0; i < nodes.length; i++) {
-          var node = $(nodes[i]);
-
-          if (
-            headerPattern.test(node.nodeName) &&
-            node.className.include("wikigeneratedheader") == false
-          ) {
-            var editspan = document.createElement("SPAN");
-            var editlink = document.createElement("A");
-
-            editlink.href = window.docediturl + "?section=" + sectioncount;
-            editlink.style.textDecoration = "none";
-            editlink.innerHTML = translations.edit;
-            editspan.className = "edit_section";
-
-            editspan.appendChild(editlink);
-            node.insert({ after: editspan });
-            sectioncount++;
-          }
-        }
-      }
-    },
-
-    /**
      * Display a modal box allowing to create the new document from a template when clicking on broken links.
      */
     insertCreatePageFromTemplateModalBoxes: function () {
@@ -693,7 +644,6 @@ var XWiki = (function (XWiki) {
 
         this.makeRenderingErrorsExpandable();
         this.fixLinksTargetAttribute();
-        this.insertSectionEditLinks();
         this.insertCreatePageFromTemplateModalBoxes();
         this.watchlist.initialize();
 
@@ -1462,13 +1412,14 @@ document.observe("xwiki:dom:loading", function () {
       ? $$("meta[name=page]")[0].content
       : "WebHome";
   XWiki.Document.URLTemplate =
-    "$xwiki.getURL('__space__.__page__', '__action__')";
+    "/__action__/__space__/__page__";
+  const contextPath = new URL(window.location.href).searchParams.get("contextPath") ?? "";
   XWiki.Document.RestURLTemplate =
-    "${request.contextPath}/rest/wikis/__wiki__/spaces/__space__/pages/__page__";
+    contextPath + "/rest/wikis/__wiki__/spaces/__space__/pages/__page__";
   XWiki.Document.WikiSearchURLStub =
-    "${request.contextPath}/rest/wikis/__wiki__/search";
+    contextPath + "/rest/wikis/__wiki__/search";
   XWiki.Document.SpaceSearchURLStub =
-    "${request.contextPath}/rest/wikis/__wiki__/spaces/__space__/search";
+    contextPath + "/rest/wikis/__wiki__/spaces/__space__/search";
   XWiki.Document.getRestSearchURL = function (queryString, space, wiki) {
     wiki = wiki || XWiki.Document.currentWiki;
     var url;

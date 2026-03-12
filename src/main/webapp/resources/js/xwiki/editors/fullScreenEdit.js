@@ -189,7 +189,7 @@ XWiki.editors.FullScreenEditing = Class.create({
       class: "fullScreenEditButton",
       title: this.translations.editFullScreen,
       alt: this.translations.editFullScreen,
-      src: "$xwiki.getSkinFile('icons/silk/arrow_out.gif', true)",
+      src: "/skin/resources/icons/silk/arrow_out.gif",
     });
     A.observe("click", this.makeFullScreen.bind(this, B));
     A.observe("mousedown", this.preventDrag.bindAsEventListener(this));
@@ -215,7 +215,7 @@ XWiki.editors.FullScreenEditing = Class.create({
       class: "fullScreenCloseButton",
       title: this.translations.exitFullScreen,
       alt: this.translations.exitFullScreen,
-      src: "$xwiki.getSkinFile('icons/silk/arrow_in.gif', true)",
+      src: "/skin/resources/icons/silk/arrow_in.gif",
     });
     this.closeButton.observe("click", this.closeFullScreen.bind(this));
     this.closeButton.observe(
