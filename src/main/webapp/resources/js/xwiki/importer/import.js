@@ -1,20 +1,13 @@
 var XWiki = (function (XWiki) {
   var importer = (XWiki.importer = XWiki.importer || {});
 
-  let translations = {};
-  if (window.celExecOnceAfterMessagesLoaded) {
-    window.celExecOnceAfterMessagesLoaded(
-      (celMessages) => (translations = celMessages.celAdminImport),
-    );
-  } else {
-    console.warn("celExecOnceAfterMessagesLoaded not available!");
-  }
-
-  // FIXME: we should have those images outside SmartClient library to lessen the dependency towards the library
-  var expandFolderImagePath =
-    "$xwiki.getSkinFile('js/smartclient/skins/Enterprise/images/TreeGrid/opener_closed.png', true)";
-  var collapseFolderImagePath =
-    "$xwiki.getSkinFile('js/smartclient/skins/Enterprise/images/TreeGrid/opener_opened.png', true)";
+    let translations = {};
+    if (window.celExecOnceAfterMessagesLoaded) {
+        window.celExecOnceAfterMessagesLoaded(
+            celMessages => translations = celMessages.celAdminImport);
+    } else {
+        console.warn('celExecOnceAfterMessagesLoaded not available!');
+    }
 
   /**
    * Initialization hook for the rich UI.
