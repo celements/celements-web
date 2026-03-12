@@ -120,7 +120,6 @@ $jsonBuilder.addStringProperty('deleteConfirm', "$!adminMsg.get('core.viewers.at
 $jsonBuilder.addStringProperty('deleteInProgress', "$!adminMsg.get('core.viewers.attachments.delete.inProgress')")
 $jsonBuilder.addStringProperty('deleteDone', "$!adminMsg.get('core.viewers.attachments.delete.done')")
 $jsonBuilder.addStringProperty('deleteFailed', "$!adminMsg.get('core.viewers.attachments.delete.failed')")
-$jsonBuilder.addStringProperty('extranb', "$!adminMsg.get('docextra.extranb')")
 $jsonBuilder.addStringProperty('addFileInput', "$!adminMsg.get('core.viewers.attachments.upload.addFileInput')")
 $jsonBuilder.addStringProperty('removeFileInput', "$!adminMsg.get('core.viewers.attachments.upload.removeFileInput')")
 $jsonBuilder.addStringProperty('removeFileInputTitle', "$!adminMsg.get('core.viewers.attachments.upload.removeFileInput.title')")
