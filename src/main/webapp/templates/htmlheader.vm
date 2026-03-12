@@ -89,7 +89,16 @@
 #if($xcontext.action == "admin" || $xcontext.action == "import" || $xcontext.action == "export")
   #set($bodyAction = "view")
 #end
-#set($HTMLBodyCSSClasses = "wiki-${xcontext.database} space-${escapetool.xml($doc.space.replaceAll(' ', '_'))} ${bodyAction}body #if($showLeftPanels == "0")hideleft#end#if($showRightPanels == "0")hideright#end#if($hidecolumns && ($!hidecolumns == 1))hidelefthideright#end")
+#set($HTMLBodyCSSClasses = "wiki-${xcontext.database} space-${escapetool.xml($doc.space.replaceAll(' ', '_'))} ${bodyAction}body ")
+#if($showLeftPanels == "0")
+  #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} hideleft")
+#end
+#if($showRightPanels == "0")
+  #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} hideright")
+#end
+#if($hide columns && ($!hidecolumns == 1))
+  #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} hidelefthideright")
+#end
 #if($cel_loadAdminMenuBar)
   #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celementsmenubarvisible")
 #end
