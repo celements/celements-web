@@ -147,27 +147,6 @@ Global header
   /*pour éviter pb dans IE -- a regler*/
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 ---------------------------------------
 Space header, footer
@@ -320,8 +299,6 @@ Content
   overflow: hidden;
   padding-bottom: 20px;
 }
-
-#actionmenu {}
 
 #xwikieditcontent textarea#content {
   width: 100%;
