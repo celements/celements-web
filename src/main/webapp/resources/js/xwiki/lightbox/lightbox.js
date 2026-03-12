@@ -97,8 +97,7 @@ Lightbox = Class.create({
     this.nextURL = A;
   },
   getWaiting: function () {
-    var A = "$xwiki.getSkinFile('icons/ajax-loader.gif', true)";
-    return '<div style="padding: 30px;"><img src="' + A + '"/></div>';
+    return '<div style="padding: 30px;"><img src="/skin/resources/icons/ajax-loader.gif"/></div>';
   },
   lbcustominit: function (B, A, E, C) {
     if (!$("lb")) {
