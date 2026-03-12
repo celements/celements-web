@@ -394,10 +394,10 @@ viewers.Comments = Class.create({
   },
   updateCount : function() {
     if ($("Commentstab") && $("Commentstab").down(".itemCount")) {
-      $("Commentstab").down(".itemCount").update("$msg.get('docextra.extranb', ['__number__'])".replace("__number__", $$(this.xcommentSelector).size()));
+      $("Commentstab").down(".itemCount").update(translations["extranb"].replace("__number__", $$(this.xcommentSelector).size()));
     }
     if ($("commentsshortcut") && $("commentsshortcut").down(".itemCount")) {
-      $("commentsshortcut").down(".itemCount").update("$msg.get('docextra.extranb', ['__number__'])".replace("__number__", $$(this.xcommentSelector).size()));
+      $("commentsshortcut").down(".itemCount").update(translations["extranb"].replace("__number__", $$(this.xcommentSelector).size()));
     }
   },
   /**
