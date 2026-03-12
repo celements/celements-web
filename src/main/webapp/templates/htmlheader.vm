@@ -97,7 +97,7 @@
 #if($showRightPanels == "0")
   #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} hideright")
 #end
-#if($hide columns && ($!hidecolumns == 1))
+#if($hidecolumns && ($!hidecolumns == 1))
   #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} hidelefthideright")
 #end
 #if($cel_loadAdminMenuBar)
