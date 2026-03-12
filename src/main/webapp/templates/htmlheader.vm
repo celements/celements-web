@@ -8,6 +8,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 #end
+#set($cel_isEditMode = (("$context.action" == 'edit') || ("$context.action" == 'inline')))
+#set($cel_loadAdminMenuBar = (!$cel_isEditMode && ("$!request.picker" != '1')))
+#set($cel_loadAdminMenuBar = $cel_loadAdminMenuBar && ($isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0)))
 <html xmlns="http://www.w3.org/1999/xhtml" lang="$xcontext.language" xml:lang="$xcontext.language">
   <head>
     ## ---------------------------------------------------------------------------------------------------------------
@@ -89,5 +92,8 @@
 #end
 ## These elements will be closed in the htmlfooter.vm file
 <$bodyTagName id="body" class="wiki-${xcontext.database} space-${escapetool.xml($doc.space.replaceAll(' ', '_'))} ${bodyAction}body #if($showLeftPanels == "0")hideleft#end#if($showRightPanels == "0")hideright#end#if($hidecolumns && ($!hidecolumns == 1))hidelefthideright#end">
+#if($cel_loadAdminMenuBar)
+#parse('celMacros/MenuBar.vm')
+#end
 <div id="xwikimaincontainer">
 <div id="xwikimaincontainerinner">
