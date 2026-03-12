@@ -11,7 +11,7 @@ if (typeof XWiki.viewers == "undefined") {
  * JavaScript snippet that toggles line numbers on code view.
  */
 XWiki.viewers.Code = Class.create({
-  translations : translations,
+  translations : {},
   initialize : function (initialShowLineNumbers) {
     if (window.celExecOnceAfterMessagesLoaded) {
       window.celExecOnceAfterMessagesLoaded(
