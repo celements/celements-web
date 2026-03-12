@@ -1,6 +1,7 @@
 #template("xwikivars.vm")
 #template("layoutvars.vm")
 #template("htmlheader.vm")
+#set($displayMainMenu = "$request.get('xwikiMenu')" == 'true')
 #if($displayMainMenu)
   <div id="menuview">
     #template("menuview.vm")
