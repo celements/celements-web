@@ -112,6 +112,7 @@ $jsonBuilder.addStringProperty('backtoedit', "$!adminMsg.get('core.shortcuts.edi
 $jsonBuilder.addStringProperty('saveandview', "$!adminMsg.get('core.shortcuts.edit.saveandview')")
 $jsonBuilder.addStringProperty('saveandcontinue', "$!adminMsg.get('core.shortcuts.edit.saveandcontinue')")
 $jsonBuilder.addStringProperty('mandatoryField', "$!adminMsg.get('core.editors.validation.mandatoryField')")
+$jsonBuilder.addStringProperty('commentPrompt', "$!adminMsg.get('core.comment.prompt')")
 $jsonBuilder.closeDictionary()
 ## attachments.js
 $jsonBuilder.openProperty('attachments')
