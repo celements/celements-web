@@ -388,7 +388,7 @@ var XWiki = (function (XWiki) {
       if (!form) {
         return;
       }
-      var previewURL = "$xwiki.getURL('__space__.__page__', 'preview')"
+      var previewURL =  "/preview/__space__/__page__"
         .replace(
           "__space__",
           encodeURIComponent($$("meta[name=space]")[0].content),
