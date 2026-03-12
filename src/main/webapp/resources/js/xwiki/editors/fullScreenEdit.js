@@ -1,4 +1,13 @@
 // this is minified code reformatted
+
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.fullscreenEdit);
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
+
 if (typeof XWiki == "undefined") {
   XWiki = new Object();
 }
@@ -180,8 +189,8 @@ XWiki.editors.FullScreenEditing = Class.create({
   createOpenButton: function (B) {
     var A = new Element("img", {
       class: "fullScreenEditButton",
-      title: "$msg.get('core.editors.fullscreen.editFullScreen')",
-      alt: "$msg.get('core.editors.fullscreen.editFullScreen')",
+      title: translations.editFullScreen,
+      alt: translations.editFullScreen,
       src: "$xwiki.getSkinFile('icons/silk/arrow_out.gif', true)",
     });
     A.observe("click", this.makeFullScreen.bind(this, B));
@@ -194,9 +203,9 @@ XWiki.editors.FullScreenEditing = Class.create({
     var C = new Element("div", { class: "fullScreenEditLinkContainer" });
     var A = new Element("a", {
       class: "fullScreenEditLink",
-      title: "$msg.get('core.editors.fullscreen.editFullScreen')",
+      title: translations.editFullScreen,
     });
-    A.update("${msg.get('core.editors.fullscreen.editFullScreen')} &raquo;");
+    A.update(translations.editFullScreen + " »");
     A.observe("click", this.makeFullScreen.bind(this, B));
     C.update(A);
     B._x_fullScreenActivator = A;
@@ -206,8 +215,8 @@ XWiki.editors.FullScreenEditing = Class.create({
   createCloseButtons: function () {
     this.closeButton = new Element("img", {
       class: "fullScreenCloseButton",
-      title: "$msg.get('core.editors.fullscreen.exitFullScreen')",
-      alt: "$msg.get('core.editors.fullscreen.exitFullScreen')",
+      title: translations.exitFullScreen,
+      alt: translations.exitFullScreen,
       src: "$xwiki.getSkinFile('icons/silk/arrow_in.gif', true)",
     });
     this.closeButton.observe("click", this.closeFullScreen.bind(this));
@@ -219,7 +228,7 @@ XWiki.editors.FullScreenEditing = Class.create({
     this.actionCloseButton = new Element("input", {
       type: "button",
       class: "button",
-      value: "$msg.get('core.editors.fullscreen.exitFullScreen')",
+      value: translations.exitFullScreen,
     });
     this.actionCloseButtonWrapper = new Element("span", {
       class: "buttonwrapper",

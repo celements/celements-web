@@ -1,4 +1,13 @@
 // this is minified code reformatted
+
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.xwikiexplorer);
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
+
 if (typeof XWiki == "undefined") {
   alert("ERROR: xwikiexplorer.js depends on xwiki.js");
 }
@@ -13,9 +22,9 @@ isc.ClassFactory.defineClass("XWEResultTree", isc.ResultTree);
 isc.XWEResultTree.addClassProperties({
   constants: {
     addNodeSuffix: "..new",
-    attachmentsTitle: "$msg.get('xwikiexplorer.attachments.title')",
-    addPageTitle: "$msg.get('xwikiexplorer.addpage.title')",
-    addAttachmentTitle: "$msg.get('xwikiexplorer.addattachment.title')",
+    attachmentsTitle: translations.attachmentsTitle,
+    addPageTitle: translations.addPageTitle,
+    addAttachmentTitle: translations.addAttachmentTitle,
   },
 });
 isc.XWEResultTree.addProperties({

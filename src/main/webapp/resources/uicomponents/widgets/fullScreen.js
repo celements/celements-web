@@ -10,6 +10,14 @@ if (typeof(XWiki.widgets) == 'undefined') {
   XWiki.widgets = new Object();
 }
 
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.fullScreen);
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
+
 /**
  * Full screen editing for textareas or maximizable elements.
  *
@@ -208,8 +216,8 @@ XWiki.widgets.FullScreen = Class.create({
     // Create HTML element
     var fullScreenActivator = new Element('img', {
       'class': 'fullScreenEditButton',
-      title: "$msg.get('core.editors.fullscreen.editFullScreen')",
-      alt: "$msg.get('core.editors.fullscreen.editFullScreen')",
+      title: translations.editFullScreen,
+      alt: translations.editFullScreen,
       src: "$xwiki.getSkinFile('icons/silk/arrow_out.gif')"
     });
     // Add functionality
@@ -227,9 +235,9 @@ XWiki.widgets.FullScreen = Class.create({
     });
     var fullScreenActivator = new Element('a', {
       'class': 'fullScreenEditLink',
-      title: "$msg.get('core.editors.fullscreen.editFullScreen')"
+      title: translations.editFullScreen
     });
-    fullScreenActivator.update("${msg.get('core.editors.fullscreen.editFullScreen')} &raquo;")
+    fullScreenActivator.update(translations.editFullScreen + " »")
     // Add functionality
     fullScreenActivator.observe('click', this.makeFullScreen.bind(this, targetElement));
     // Add it to the container
@@ -247,8 +255,8 @@ XWiki.widgets.FullScreen = Class.create({
     // Create HTML element
     this.closeButton = new Element('img', {
       'class': 'fullScreenCloseButton',
-      title: "$msg.get('core.editors.fullscreen.exitFullScreen')",
-      alt: "$msg.get('core.editors.fullscreen.exitFullScreen')",
+      title: translations.exitFullScreen,
+      alt: translations.exitFullScreen,
       src: "$xwiki.getSkinFile('icons/silk/arrow_in.gif')"
     });
     // Add functionality
@@ -262,7 +270,7 @@ XWiki.widgets.FullScreen = Class.create({
     this.actionCloseButton = new Element('input', {
       "type" : "button",
       'class': 'button',
-      value: "$msg.get('core.editors.fullscreen.exitFullScreen')"
+      value: translations.exitFullScreen
     });
     this.actionCloseButtonWrapper = new Element('span', {
       'class': 'buttonwrapper'

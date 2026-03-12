@@ -4,6 +4,14 @@ if(typeof(XWiki) == "undefined" || typeof(XWiki.widgets) == "undefined" || typeo
     console.warn("[MessageBox widget] Required class missing: XWiki.widgets.ModalPopup");
   }
 } else {
+
+let translations = {};
+if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+        celMessages => translations = celMessages.confirmedAjaxRequest);
+} else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+}
 /**
  * An AJAX request performed only if the user confirms the action in a modal dialog. It also forwards IE specific status
  * codes for 204 responses to the correct onSuccess function, and it displays (if configured) notification messages for
@@ -46,11 +54,11 @@ XWiki.widgets.ConfirmedAjaxRequest = Class.create(XWiki.widgets.ConfirmationBox,
   initialize : function($super, requestUrl, ajaxRequestParameters, interactionParameters) {
     this.interactionParameters = Object.extend({
       displayProgressMessage: true,
-      progressMessageText : "$msg.get('core.widgets.confirmationBox.notification.inProgress')",
+      progressMessageText : translations.notificationInProgress,
       displaySuccessMessage: true,
-      successMessageText : "$msg.get('core.widgets.confirmationBox.notification.done')",
+      successMessageText : translations.notificationDone,
       displayFailureMessage: true,
-      failureMessageText : "$msg.get('core.widgets.confirmationBox.notification.failed')"
+      failureMessageText : translations.notificationFailed
     }, interactionParameters || {});
     this.requestUrl = requestUrl;
     this.ajaxRequestParameters = Object.extend(Object.clone(this.defaultAjaxRequestParameters), ajaxRequestParameters || {});
