@@ -123,6 +123,7 @@ $jsonBuilder.addStringProperty('deleteFailed', "$!adminMsg.get('core.viewers.att
 $jsonBuilder.addStringProperty('addFileInput', "$!adminMsg.get('core.viewers.attachments.upload.addFileInput')")
 $jsonBuilder.addStringProperty('removeFileInput', "$!adminMsg.get('core.viewers.attachments.upload.removeFileInput')")
 $jsonBuilder.addStringProperty('removeFileInputTitle', "$!adminMsg.get('core.viewers.attachments.upload.removeFileInput.title')")
+$jsonBuilder.addStringProperty('extranb', "$!adminMsg.get('docextra.extranb', ['__number__'])")
 $jsonBuilder.closeDictionary()
 ## code.js
 $jsonBuilder.openProperty('code')
@@ -147,6 +148,7 @@ $jsonBuilder.addStringProperty('previewButtonPreview', "$!adminMsg.get('core.vie
 $jsonBuilder.addStringProperty('previewInProgress', "$!adminMsg.get('core.viewers.comments.preview.inProgress')")
 $jsonBuilder.addStringProperty('previewFailed', "$!adminMsg.get('core.viewers.comments.preview.failed')")
 $jsonBuilder.addStringProperty('previewButtonBack', "$!adminMsg.get('core.viewers.comments.preview.button.back')")
+$jsonBuilder.addStringProperty('extranb', "$!adminMsg.get('docextra.extranb', ['__number__'])")
 $jsonBuilder.closeDictionary()
 ## confirmationBox.js
 $jsonBuilder.openProperty('confirmationBox')
