@@ -75,9 +75,9 @@ viewers.Attachments = Class.create({
   },
   updateCount : function() {
     if ($("Attachmentstab") && $("Attachmentstab").down(".itemCount")) {
-      $("Attachmentstab").down(".itemCount").update("$msg.get('docextra.extranb', ['__number__'])".replace("__number__", $("Attachmentspane").select(".attachment").size()));    }
+      $("Attachmentstab").down(".itemCount").update(translations["extranb"].replace("__number__", $("Attachmentspane").select(".attachment").size()));    }
     if ($("attachmentsshortcut") && $("attachmentsshortcut").down(".itemCount")) {
-      $("attachmentsshortcut").down(".itemCount").update("$msg.get('docextra.extranb', ['__number__'])".replace("__number__", $("Attachmentspane").select(".attachment").size()));
+      $("attachmentsshortcut").down(".itemCount").update(translations["extranb"].replace("__number__", $("Attachmentspane").select(".attachment").size()));
     }
   },
   /** Enhance the upload form with JS behaviors. */
