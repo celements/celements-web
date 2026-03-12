@@ -26,6 +26,9 @@ $services.css.includeCSSPage(':uicomponents/widgets/notification.css')##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/suggest.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki-misc.js'))##
+#if($hasedit || $isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/adminUi/menubar.js'))
+#end
 #if($xwiki.exists('XWiki.SearchSuggestConfig'))
   ## Hook to request the search suggest script if search suggest configuration is present.
   ## We can't just have it as a always-use SSX yet since we compute a hash to be sure to refresh
