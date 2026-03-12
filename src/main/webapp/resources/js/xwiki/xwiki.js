@@ -1,8 +1,12 @@
 var XWiki = (function (XWiki) {
   let translations = {};
+  let celMeta = {};
   if (window.celExecOnceAfterMessagesLoaded) {
     window.celExecOnceAfterMessagesLoaded(
-      (celMessages) => (translations = celMessages.xwiki),
+      (celMessages) => {
+        translations = celMessages.xwiki;
+        celMeta = celMessages.celmeta;
+      },
     );
   } else {
     console.warn("celExecOnceAfterMessagesLoaded not available!");
@@ -90,7 +94,7 @@ var XWiki = (function (XWiki) {
           if (
             name.include(XWiki.constants.pageAttachmentSeparator) &&
             name.indexOf(XWiki.constants.spacePageSeparator) >
-              name.indexOf(XWiki.constants.pageAttachmentSeparator)
+            name.indexOf(XWiki.constants.pageAttachmentSeparator)
           ) {
             return null;
           }
@@ -1245,12 +1249,12 @@ function BrowserDetect() {
   this.isNS = this.isGecko
     ? ua.indexOf("netscape") != -1
     : ua.indexOf("mozilla") != -1 &&
-      !this.isOpera &&
-      !this.isSafari &&
-      ua.indexOf("spoofer") == -1 &&
-      ua.indexOf("compatible") == -1 &&
-      ua.indexOf("webtv") == -1 &&
-      ua.indexOf("hotjava") == -1;
+    !this.isOpera &&
+    !this.isSafari &&
+    ua.indexOf("spoofer") == -1 &&
+    ua.indexOf("compatible") == -1 &&
+    ua.indexOf("webtv") == -1 &&
+    ua.indexOf("hotjava") == -1;
 
   // spoofing and compatible browsers
   this.isIECompatible = ua.indexOf("msie") != -1 && !this.isIE;
@@ -1413,13 +1417,12 @@ document.observe("xwiki:dom:loading", function () {
       : "WebHome";
   XWiki.Document.URLTemplate =
     "/__action__/__space__/__page__";
-  const contextPath = new URL(window.location.href).searchParams.get("contextPath") ?? "";
   XWiki.Document.RestURLTemplate =
-    contextPath + "/rest/wikis/__wiki__/spaces/__space__/pages/__page__";
+    celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/pages/__page__";
   XWiki.Document.WikiSearchURLStub =
-    contextPath + "/rest/wikis/__wiki__/search";
+    celMeta.contextPath + "/rest/wikis/__wiki__/search";
   XWiki.Document.SpaceSearchURLStub =
-    contextPath + "/rest/wikis/__wiki__/spaces/__space__/search";
+    celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/search";
   XWiki.Document.getRestSearchURL = function (queryString, space, wiki) {
     wiki = wiki || XWiki.Document.currentWiki;
     var url;
