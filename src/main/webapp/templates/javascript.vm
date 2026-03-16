@@ -1,7 +1,6 @@
 ##
 ## CSS files related to JS libraries.
 ##
-<link href="$xwiki.getSkinFile("uicomponents/suggest/suggest.css", true)" rel="stylesheet" type="text/css" />
 <link href="$xwiki.getSkinFile("js/xwiki/lightbox/lightbox.css", true)" rel="stylesheet" type="text/css" />
 ##
 ## JS Libraries.
@@ -48,8 +47,6 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki-misc.js'))##
        #set($searchSuggestConfigHash = "${searchSuggestConfigHash}|${sourceId}")
      #end
    #end
-   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/search/searchSuggest.js'))##
-   $services.css.includeCSSPage(':uicomponents/search/searchSuggest.css')##
   #end
 #end
 #if (($xcontext.action=="inline") || ($xcontext.action=="edit") || ($xcontext.action=="admin"))
