@@ -371,7 +371,7 @@ var XWiki = (function (XWiki) {
             error.next().hasClassName("xwikirenderingerrordescription")
           ) {
             error.style.cursor = "pointer";
-            error.title = this.translations.readTechnicalInformation;
+            error.title = this.messages.translations.readTechnicalInformation;
             Event.observe(error, "click", function (event) {
               event.element().next().toggleClassName("hidden");
             });
@@ -464,7 +464,7 @@ var XWiki = (function (XWiki) {
                 },
                 onFailure: function () {
                   new XWiki.widgets.Notification(
-                    this.translations.createAjaxError,
+                    this.messages.translations.createAjaxError,
                     "error",
                     { inactive: true },
                   ).show();
@@ -639,8 +639,8 @@ var XWiki = (function (XWiki) {
         if (window.celExecOnceAfterMessagesLoaded) {
           window.celExecOnceAfterMessagesLoaded(
             (celMessages) => {
-              this.translations = celMessages.xwiki;
-              this.celMeta = celMessages.celmeta;
+              this.messages.translations = celMessages.xwiki;
+              this.messages.celMeta = celMessages.celmeta;
             },
           );
         } else {
@@ -1420,11 +1420,11 @@ document.observe("xwiki:dom:loading", function () {
   XWiki.Document.URLTemplate =
     "/__action__/__space__/__page__";
   XWiki.Document.RestURLTemplate =
-    XWiki.celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/pages/__page__";
+    XWiki.messages.celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/pages/__page__";
   XWiki.Document.WikiSearchURLStub =
-    XWiki.celMeta.contextPath + "/rest/wikis/__wiki__/search";
+    XWiki.messages.celMeta.contextPath + "/rest/wikis/__wiki__/search";
   XWiki.Document.SpaceSearchURLStub =
-    XWiki.celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/search";
+    XWiki.messages.celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/search";
   XWiki.Document.getRestSearchURL = function (queryString, space, wiki) {
     wiki = wiki || XWiki.Document.currentWiki;
     var url;
