@@ -67,7 +67,6 @@ window.docgeturl = "/get/XWiki/Import";
 <link rel="stylesheet" media="all" type="text/css" href="$services.celementsweb.getSkinFile(':js/xwiki/importer/import.css', 'file')" />
 <link rel="stylesheet" media="all" type="text/css" href="$services.celementsweb.getSkinFile(':celRes/font-awesome-v6/css/all.css', 'file')" />
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
-  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/jumpToPage.js'))##
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmationBox.js'))##
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmedAjaxRequest.js'))##
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notification.js'))##

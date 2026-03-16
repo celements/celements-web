@@ -15,8 +15,6 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
 $services.css.includeCSSPage(':js/xwiki/widgets/modalPopup.css')##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/jumpToPage.js'))##
-##$xwiki.ssfx.use('js/xwiki/widgets/jumpToPage.css', {'forceSkinAction' : true, 'language' : $context.language})
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmationBox.js'))##
 $services.css.includeCSSPage(':uicomponents/widgets/confirmationBox.css')##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmedAjaxRequest.js'))##
