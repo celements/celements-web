@@ -1,16 +1,4 @@
 var XWiki = (function (XWiki) {
-  let translations = {};
-  let celMeta = {};
-  if (window.celExecOnceAfterMessagesLoaded) {
-    window.celExecOnceAfterMessagesLoaded(
-      (celMessages) => {
-        translations = celMessages.xwiki;
-        celMeta = celMessages.celmeta;
-      },
-    );
-  } else {
-    console.warn("celExecOnceAfterMessagesLoaded not available!");
-  }
   /**
    * XWiki namespace.
    * TODO: move everything in it.
@@ -19,6 +7,10 @@ var XWiki = (function (XWiki) {
    */
 
   Object.extend(XWiki, {
+    messages: {
+      translations: {},
+      celMeta: {},
+    },
     constants: {
       /**
        * Character that separates wiki from space in a page fullName (example: xwiki:Main.WebHome).
@@ -379,7 +371,7 @@ var XWiki = (function (XWiki) {
             error.next().hasClassName("xwikirenderingerrordescription")
           ) {
             error.style.cursor = "pointer";
-            error.title = translations.readTechnicalInformation;
+            error.title = this.translations.readTechnicalInformation;
             Event.observe(error, "click", function (event) {
               event.element().next().toggleClassName("hidden");
             });
@@ -472,7 +464,7 @@ var XWiki = (function (XWiki) {
                 },
                 onFailure: function () {
                   new XWiki.widgets.Notification(
-                    translations.createAjaxError,
+                    this.translations.createAjaxError,
                     "error",
                     { inactive: true },
                   ).show();
@@ -644,6 +636,16 @@ var XWiki = (function (XWiki) {
         this.isInitialized == false
       ) {
         this.isInitialized = true;
+        if (window.celExecOnceAfterMessagesLoaded) {
+          window.celExecOnceAfterMessagesLoaded(
+            (celMessages) => {
+              this.translations = celMessages.xwiki;
+              this.celMeta = celMessages.celmeta;
+            },
+          );
+        } else {
+          console.warn("celExecOnceAfterMessagesLoaded not available!");
+        }
         document.fire("xwiki:dom:loading");
 
         this.makeRenderingErrorsExpandable();
@@ -1418,11 +1420,11 @@ document.observe("xwiki:dom:loading", function () {
   XWiki.Document.URLTemplate =
     "/__action__/__space__/__page__";
   XWiki.Document.RestURLTemplate =
-    celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/pages/__page__";
+    XWiki.celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/pages/__page__";
   XWiki.Document.WikiSearchURLStub =
-    celMeta.contextPath + "/rest/wikis/__wiki__/search";
+    XWiki.celMeta.contextPath + "/rest/wikis/__wiki__/search";
   XWiki.Document.SpaceSearchURLStub =
-    celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/search";
+    XWiki.celMeta.contextPath + "/rest/wikis/__wiki__/spaces/__space__/search";
   XWiki.Document.getRestSearchURL = function (queryString, space, wiki) {
     wiki = wiki || XWiki.Document.currentWiki;
     var url;
