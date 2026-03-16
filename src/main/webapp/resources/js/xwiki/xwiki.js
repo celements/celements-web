@@ -641,19 +641,17 @@ var XWiki = (function (XWiki) {
             (celMessages) => {
               this.messages.translations = celMessages.xwiki;
               this.messages.celMeta = celMessages.celmeta;
+              document.fire("xwiki:dom:loading");
+              this.makeRenderingErrorsExpandable();
+              this.fixLinksTargetAttribute();
+              this.insertCreatePageFromTemplateModalBoxes();
+              this.watchlist.initialize();
+              document.fire("xwiki:dom:loaded");
             },
           );
         } else {
           console.warn("celExecOnceAfterMessagesLoaded not available!");
         }
-        document.fire("xwiki:dom:loading");
-
-        this.makeRenderingErrorsExpandable();
-        this.fixLinksTargetAttribute();
-        this.insertCreatePageFromTemplateModalBoxes();
-        this.watchlist.initialize();
-
-        document.fire("xwiki:dom:loaded");
       }
     },
   });
