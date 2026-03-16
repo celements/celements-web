@@ -23,7 +23,6 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confir
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notification.js'))##
 $services.css.includeCSSPage(':uicomponents/widgets/notification.css')##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js'))##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/suggest.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki-misc.js'))##
 #if($hasedit || $isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0))
   $!services.css.includeCSSPage(':celRes/celements2.css')##
