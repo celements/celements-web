@@ -80,9 +80,6 @@
   #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
   #set($extJsParam = $extJsParam.setLazyLoad(true))
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/editors/dataeditors.js'))##
-  ## Insert JS and CSS needed for the fullscreen edit feature
-  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/editors/fullScreenEdit.js'))##
-  <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/editors/fullScreenEdit.css', 'file')" /> 
   #set($formname = 'update')
   #set($saveaction = 'save')
   #set($hasCustomClass = ("$!{request.classname.trim()}" != ''))
