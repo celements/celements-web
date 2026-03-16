@@ -17,7 +17,6 @@
 <div id="xwikitext">
 <div id="xwikieditcontent">
 <div id="xwikieditcontentinner">
-#template("simpleedittoolbar.vm")
 $xwiki.getTextArea($tdoc.content)
 </div></div> ## xwikieditcontent
 </div> ## xwikitext
