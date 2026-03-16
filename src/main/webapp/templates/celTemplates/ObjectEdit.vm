@@ -190,9 +190,7 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/prototype.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/initCelements.min.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js', 'file'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js', 'file'))##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/suggest/ajaxSuggest.js', 'file'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js', 'file'))##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/addSuggest.js', 'file'))##
 #end
 #if($cel_embedded_editobj)
 #set($cel_editobj_validationClass = '')
