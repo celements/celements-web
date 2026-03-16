@@ -62,7 +62,6 @@ window.docsaveurl = "/save/XWiki/Import";
 window.docgeturl = "/get/XWiki/Import";
 // ]]>
 </script>
-<script type='text/javascript' src='/skin/skins/albatross/uicomponents/suggest/suggest.js' defer='defer'></script>
 **#
 
 <link rel="stylesheet" media="all" type="text/css" href="$services.celementsweb.getSkinFile(':js/xwiki/importer/import.css', 'file')" />
