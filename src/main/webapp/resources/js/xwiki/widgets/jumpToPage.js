@@ -62,24 +62,6 @@ if (typeof (XWiki) == "undefined" || typeof (XWiki.widgets) == "undefined" || ty
       Event.observe(this.viewButton, 'click', this.openDocument.bindAsEventListener(this, "view"));
       Event.observe(this.editButton, 'click', this.openDocument.bindAsEventListener(this, "edit"));
       $super(event);
-      if (typeof (XWiki.widgets.Suggest) != "undefined") {
-        // Create the Suggest.
-        new XWiki.widgets.Suggest(this.input, {
-          // This document also provides the suggestions.
-          script: this.contextPath + "/rest/wikis/" + this.database + "/search?scope=name&number=10&media=json&",
-          // Prefixed with & since the current (as of 1.7) Suggest code does not automatically append it.
-          varname: "q",
-          noresults: this.translations.noResults,
-          icon: this.contextPath + "/file/resources/icons/silk/page_white_text.gif",
-          json: true,
-          resultsParameter: "searchResults",
-          resultId: "id",
-          resultValue: "pageFullName",
-          resultInfo: "pageFullName",
-          timeout: 30000,
-          parentContainer: this.dialog
-        });
-      }
     },
     /** Called when the dialog is displayed. Enables the key listeners and gives focus to the (cleared) input. */
     showDialog: function ($super) {
