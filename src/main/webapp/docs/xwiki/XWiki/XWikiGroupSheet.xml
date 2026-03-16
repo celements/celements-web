@@ -155,20 +155,6 @@ $services.css.includeCSSPage(':js/xwiki/table/livetable.css')##
               $('addNewGroup').observe('click', this.addNewMember.bind(this, 'group', $('groupSuggest')));
             }
           },
-          createSuggest: function(input, uorg, suggestObj) {
-            // Clear the errors
-            $('errMsg').innerHTML = "";
-            suggesturl = "${doc.getURL('view', 'xpage=uorgsuggest&amp;classname=XWiki.XWikiUsers&amp;wiki=local')}";
-
-            if (uorg == "user") {
-              suggesturl += "&amp;uorg=user&amp;";
-              icon = "$xwiki.getSkinFile('icons/silk/user.gif')";
-            } else {
-              suggesturl += "&amp;uorg=group&amp;";
-              icon = "$xwiki.getSkinFile('icons/silk/group.gif')";
-            }
-            return new XWiki.widgets.Suggest(input, { script: suggesturl, varname:'input', icon:icon });
-          },
           addNewMember: function(uorg, input) {
             if (input) {
               var url = "${doc.getURL()}?xpage=adduorg&amp;uorg=" + uorg + "&amp;name=" + input.value;
