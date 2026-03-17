@@ -5,7 +5,6 @@
 $xcontext.dropPermissions()
 ##
 <div id="xdocFooter">
-  #template("documentTags.vm")
   <div id="xdocAuthors">
     <div class="xdocCreation"> ## Creation
       $msg.get('core.footer.creation', [$xwiki.getUserName($doc.creator), $xwiki.formatDate($doc.creationDate)])<br/>
