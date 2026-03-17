@@ -152,7 +152,7 @@ XWiki.editors.XPropertyOrdering = Class.create({
     }
     $$(".xproperty-title").each(function (B) {
       var A = new Element("img", {
-        src: "/skin/resources/icons/datamodel/move.png",
+        src: "/file/resources/icons/datamodel/move.png",
         class: "move",
         alt: "move",
         title: "Drag and drop to change the order",

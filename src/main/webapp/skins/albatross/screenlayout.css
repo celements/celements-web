@@ -206,11 +206,11 @@ Space header, footer
 }
 
 .edit-meta-tools a.edit-parent {
-  background-image: url(/skin/resources/icons/xwiki/parent_edit.gif);
+  background-image: url(/file/resources/icons/xwiki/parent_edit.gif);
 }
 
 .edit-meta-tools a.hide-edit-parent {
-  background-image: url(/skin/resources/icons/silk/chart_organisation.gif);
+  background-image: url(/file/resources/icons/silk/chart_organisation.gif);
 }
 
 /* Parent editing area */

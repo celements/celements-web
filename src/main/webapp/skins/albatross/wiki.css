@@ -25,10 +25,12 @@ h1 {
   padding-top: 0.85em;
   border-bottom: 0px solid;
 }
+
 #document-title h1 {
   font-size: 3.06em;
   letter-spacing: -1px;
 }
+
 h2 {
   font-size: 2.01em;
   margin: 0 0 15px 0;
@@ -49,12 +51,14 @@ h4 {
   margin: -1em 0 0 0;
   padding-top: 1.6em;
 }
+
 h5 {
   font-size: 1.32em;
   color: #404040;
   margin: -1.8em 0 0;
   padding-top: 1.85em;
 }
+
 h6 {
   font-size: 1.15em;
 }
@@ -89,6 +93,7 @@ blockquote {
   width: 70%;
   overflow: auto;
 }
+
 .code {
   font-family:
     courier,
@@ -163,11 +168,9 @@ span.code {
   background-color: #fff;
 }
 
-.wiki-table .table-even {
-}
+.wiki-table .table-even {}
 
-.list {
-}
+.list {}
 
 .list-title {
   font-weight: bold;
@@ -257,14 +260,17 @@ span.wikicreatelink a {
 * html .wiki-calendar-table div {
   font-size: 80%;
 }
+
 .wiki-calendar-table {
   border: 4px solid #c0d4e7;
   font-size: 100%;
   margin: auto;
 }
+
 .wiki-calendar-table td {
   vertical-align: top;
 }
+
 .wiki-calendar-table th {
   background-color: #fff;
 }
@@ -287,6 +293,7 @@ span.wikicreatelink a {
   background-color: #d9e0e7;
   color: #bbbbbb;
 }
+
 .wiki-calendar-daynamerow {
   background-color: #c0d4e7 !important;
 }
@@ -296,18 +303,22 @@ span.wikicreatelink a {
   font-weight: 900;
   height: 1.8em;
 }
+
 .wiki-calendar-daytitle {
   background-color: #e8eef7;
   font-size: 75% !important;
   padding: 0px 5px;
   margin: 0px !important;
 }
+
 .wiki-calendar-daynotinmonth .wiki-calendar-daytitle {
   background-color: transparent !important;
 }
+
 .wiki-calendar-today-notinmonth .wiki-calendar-daytitle {
   background-color: transparent !important;
 }
+
 .wiki-calendar-today .wiki-calendar-daytitle {
   background-color: transparent !important;
 }
@@ -316,6 +327,7 @@ span.wikicreatelink a {
 .wiki-calendar-daynotinmonth a {
   color: #bbb !important;
 }
+
 .wiki-calendar-monthyearrow {
   font-size: 140%;
   font-weight: 100;
@@ -356,6 +368,7 @@ span.wikicreatelink a {
 .workshop {
   background-color: #fed;
 }
+
 .event .username {
   font-size: 80%;
 }
@@ -388,6 +401,7 @@ span.wikicreatelink a {
   border-top: 1px solid #888;
   padding: 1em;
 }
+
 .footnotes li {
   padding: 0 4px;
   margin: 0;
@@ -437,6 +451,7 @@ span.wikicreatelink a {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
+
 .xwikirenderingerrordescription {
   background-color: #eee;
   clear: both;
