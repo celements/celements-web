@@ -1,9 +1,11 @@
 .xdialog-box-confirmation {
   border-color: #28c !important;
 }
+
 .xdialog-box-confirmation .xdialog-close {
   color: #28c !important;
 }
+
 .xdialog-box-confirmation .question {
   background: transparent url(/file/resources/icons/silk/help.gif) left 2px
     no-repeat;
