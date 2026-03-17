@@ -1,25 +1,25 @@
 #template('colorThemeInit.vm')
-
 /* Overriding skins */
 
 #import ul.xlist li.xitem div.xitemcontainer {
-    text-indent: 0;
+  text-indent: 0;
 }
 
 div.legend {
-	margin-bottom:10px;
-	font-size:1.33em;
-	border-bottom:0px solid #D6E1E7;
-	color:#005A83;
-	display:block;
-	font-weight:400;
-	line-height:1.2em;
-	margin:20px 0;
-	overflow:hidden;
+  margin-bottom: 10px;
+  font-size: 1.33em;
+  border-bottom: 0px solid #D6E1E7;
+  color: #005A83;
+  display: block;
+  font-weight: 400;
+  line-height: 1.2em;
+  margin: 20px 0;
+  overflow: hidden;
 }
 
 .clearfloats {
-  font-size: 0; /* toucan IE6 */
+  font-size: 0;
+  /* toucan IE6 */
   margin: -1px 50px 0;
   background-color: #fff;
   clear: both;
@@ -39,7 +39,7 @@ ul.xlist li.xunderline {
 }
 
 div.loading {
-  min-height:200px;
+  min-height: 200px;
 }
 
 /* Package List  styles */
@@ -48,13 +48,13 @@ div.loading {
   width: 51%;
 }
 
-#packagelist  fieldset {
+#packagelist fieldset {
   background-color: $theme.backgroundSecondaryColor;
   padding: 5px;
 }
 
 .package-upload {
-  background: transparent url($xwiki.getSkinFile('icons/silk/package_add.gif', true)) no-repeat scroll 0 5px;
+  background: transparent url('/file/resources/icons/silk/package_add.gif') no-repeat scroll 0 5px;
   padding-left: 20px;
   min-height: 16px;
 }
@@ -62,11 +62,11 @@ div.loading {
 #packagelist ul.xlist {
   margin: 0 !important;
   list-style: none;
-	padding: 0px;
+  padding: 0px;
 }
 
 #packagelist .xitemcontainer {
-  background: transparent url($xwiki.getSkinFile('icons/silk/package.gif', true)) no-repeat scroll 5px 0.5em;
+  background: transparent url('/file/resources/icons/silk/package.gif') no-repeat scroll 5px 0.5em;
   font-size: .85em;
   margin-bottom: .2em;
   padding: .3em 0 .3em 1em;
@@ -86,14 +86,15 @@ div.loading {
   color: $theme.textSecondaryColor;
 }
 
-#packagelistcontainer .xwikibuttonlinks{
+#packagelistcontainer .xwikibuttonlinks {
   float: right;
   padding-right: .2em;
-  *margin-top: -2em; /* IE7 */
+  *margin-top: -2em;
+  /* IE7 */
 }
 
 #packagelistcontainer .deletelink {
-  background: url($xwiki.getSkinFile('icons/silk/cross.gif', true)) no-repeat left 0.2em;
+  background: url('/file/resources/icons/silk/cross.gif') no-repeat left 0.2em;
   display: block;
   height: 1.4em;
   width: 16px;
@@ -108,7 +109,7 @@ div.loading {
 
 #packageDescription {
   background-color: #FCFCFC;
-  border: 0px solid $theme.borderColor;        
+  border: 0px solid $theme.borderColor;
   overflow: hidden;
   padding: 10px;
   margin-bottom: 1px;
@@ -124,11 +125,11 @@ div.loading {
   display: table-row;
 }
 
-#packagecontainer .packageinfos .filename { 
+#packagecontainer .packageinfos .filename {
   font-weight: 700;
 }
 
-#packagecontainer .packageinfos span{
+#packagecontainer .packageinfos span {
   color: $theme.textSecondaryColor;
   margin: 0 5px 0;
 }
@@ -153,7 +154,7 @@ div.loading {
 }
 
 div#package div.importOption {
-  margin-bottom:5px;
+  margin-bottom: 5px;
 }
 
 div#package ul.package {
@@ -178,13 +179,8 @@ ul.package li.xitem div.xitemcontainer span.checkbox {
   width: auto;
 }
 
-ul.package li.xitem div.xitemcontainer div.spacename,
-ul.package li.xitem div.xitemcontainer img {
-  float: left;	
-}
-
 ul.package li.xitem div.xitemcontainer div.spacename {
-  background: transparent url($xwiki.getSkinFile('icons/silk/folder.gif', true)) no-repeat scroll 0 .1em ;
+  background: transparent url('/file/resources/icons/silk/folder.gif') no-repeat scroll 0 .1em;
   cursor: pointer;
   font-weight: bold;
   padding-left: 30px;
@@ -192,7 +188,7 @@ ul.package li.xitem div.xitemcontainer div.spacename {
 
 ul.package li.xitem div.xitemcontainer div.selection {
   color: $theme.textSecondaryColor;
-  float: right;
+  margin-left: auto;
   font-size: .8em;
   line-height: 1.7em;
   margin-right: .2em;
@@ -213,10 +209,30 @@ ul.pages li.xitem {
 ul.pages li.xitem,
 ul.package li.xitem {
   list-style-type: none;
+
+  >div.xitemcontainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    >i {
+      width: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+
+  div.pages {
+    width: 100%;
+  }
+
+  div.clearfloats {
+    display: none;
+  }
 }
 
-.documentName{
-  background: transparent url($xwiki.getSkinFile('icons/silk/page_white_text.gif', true)) no-repeat scroll 0 0;
+.documentName {
+  background: transparent url('/file/resources/icons/silk/page_white_text.gif') no-repeat scroll 0 0;
   padding-left: 20px;
 }
 

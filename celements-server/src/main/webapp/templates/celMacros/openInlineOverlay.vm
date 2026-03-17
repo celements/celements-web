@@ -43,7 +43,7 @@
 #end
 ## TODO look for better solution. closebutton disapears with supersleight
 ##<!--[if lte IE 6]>
-##$celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('supersleight-min.js', 'skin'))
+##$services.javascript.addExtJSfileOnce($celSkin_doc.getAttachmentURL('supersleight-min.js', 'skin'))
 ##<![endif]-->
 #set($closeButtonClass = "cel_closebutton")
 #if("$!exitOnClose" == "")

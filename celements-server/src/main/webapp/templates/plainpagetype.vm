@@ -1,11 +1,11 @@
 ##only include if legacy celements2web.xar is installed
-#if($xwiki.exists($services.model.resolveDocument('celements2web:Macros.initCelements')))
+#if($services.modelAccess($services.model.resolveDocument('celements2web:Macros.initCelements')))
 $xwiki.includeForm("celements2web:Macros.initCelements", false)
 #end
 ## start a Celements Document
 $xwiki.parseTemplate("celMacros/startCelementsDocument.vm")
 ## start the celements body (and lacily finalise the header)
 $xwiki.parseTemplate("celMacros/startCelementsBody.vm")
-$xwiki.celementsweb.renderCelementsDocument($doc.documentReference)
+$services.celementsweb.renderCelementsDocument($doc.documentReference)
 ##
 #parse('celMacros/finaliseCelementsDocument.vm')

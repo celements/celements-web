@@ -1,4 +1,4 @@
-#if(("$!elemId" != '') && $xwiki.exists($services.model.resolveDocument($elemId)))
+#if(("$!elemId" != '') && $services.modelAccess.exists($services.model.resolveDocument($elemId)))
 #set($menuItemDocRef = $services.model.resolveDocument($elemId))
 #set($xredirect = $doc.getURL('view'))
 #if("$!xredirect" == '')

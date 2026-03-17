@@ -42,7 +42,7 @@ $doc.use($obj)
   &lt;div class="vcard"&gt;
   &lt;span class="fn hidden"&gt;$username&lt;/span&gt;
 #end
-$xwiki.ssx.use("XWiki.XWikiUserSheet")##
+##$xwiki.ssx.use("XWiki.XWikiUserSheet")##
   &lt;div class="#if($context.action == 'view')half #{else}full #{end}column"&gt;
     &lt;div class="userInfo"&gt;
       #if($xcontext.action == 'view' &amp;&amp; $hasEdit)

@@ -6,7 +6,7 @@ $response.setContentType("text/xml")
 #set($secCol = "$!{request.get('secCol')}")
 #set($templatename = $classname + 'Template')
 #set($classref = $services.model.resolveDocument($classname))
-#set($p = $celementsweb.getSuggestBaseClass($classref, $fieldname))
+#set($p = $services.editorsupport.getSuggestBaseClass($classref, $fieldname))
 #set($hibquery = "$!p.getSql()")
 ##
 ## Determine what was the input. If the property accepts multiple values and has separators, then
@@ -24,7 +24,7 @@ $response.setContentType("text/xml")
 #end
 
 ##TODO use extended api with secCol and other fields
-#set($results = $celementsweb.getSuggestList($classref, $fieldname, "%${input}%"))
+#set($results = $services.editorsupport.getSuggestList($classref, $fieldname, "%${input}%"))
 ##
 ######################### User hibernate query
 #if("$!hibquery" != "")

@@ -2782,9 +2782,12 @@ p.legend {
   ##-------------------------------------
   ## determine the displayed sections
   ##-------------------------------------
-  $xwiki.jsfx.use('js/scriptaculous/scriptaculous.js')##
-  $xwiki.jsx.use('XWiki.AdminSheet')##
-  $xwiki.ssx.use('XWiki.AdminSheet')##
+  #set($jsService = $services.javascript)
+  #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+  #set($extJsParam = $extJsParam.setLazyLoad(true))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
+##  $xwiki.jsx.use('XWiki.AdminSheet')##
+##  $xwiki.ssx.use('XWiki.AdminSheet')##
   #if($editor == 'globaladmin')
     #set($currentDoc = 'XWiki.XWikiPreferences')
     #set($sections = ['General', 'Presentation', 'Registration', 'Programming', 'Rights', 'Users', 'Groups', 'Import', 'Export', 'Templates'])

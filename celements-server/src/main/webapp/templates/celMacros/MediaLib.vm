@@ -15,20 +15,20 @@ $xwiki.parseTemplate("celMacros/DarkBox.vm")
   <span class='cel_lazyloadJS'>celJS/mediaLib/mediaLib-upload.js</span>
 </div>
 #else
-  $celementsweb.addExtJSfileOnce(':celJS/prototype.js')
-  $celementsweb.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
-  $celementsweb.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
-  $celementsweb.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
-  $celementsweb.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
-  $celementsweb.addExtJSfileOnce(':celJS/yui/json/json-min.js')
-  $celementsweb.addExtJSfileOnce(':celJS/mediaLib/mediaLib.js')
-  $celementsweb.addExtJSfileOnce(':celJS/mediaLib/mediaLib-upload.js')
+  $services.javascript.addExtJSfileOnce(':celJS/prototype.js')
+  $services.javascript.addExtJSfileOnce(':celJS/yui/utilities/utilities.js')
+  $services.javascript.addExtJSfileOnce(':celJS/yui/datasource/datasource-min.js')
+  $services.javascript.addExtJSfileOnce(':celJS/yui/datatable/datatable-min.js')
+  $services.javascript.addExtJSfileOnce(':celJS/yui/dragdrop/dragdrop-min.js')
+  $services.javascript.addExtJSfileOnce(':celJS/yui/json/json-min.js')
+  $services.javascript.addExtJSfileOnce(':celJS/mediaLib/mediaLib.js')
+  $services.javascript.addExtJSfileOnce(':celJS/mediaLib/mediaLib-upload.js')
 #end
 #if("$!mediaLibId" == "")
 #set($mediaLibId = "c2_ml_content")
 #end
 #if("$!request.xpage" == 'overlay')
-  $celementsweb.addExtJSfileOnce(':celJS/mediaLib/resize.js')
+  $services.javascript.addExtJSfileOnce(':celJS/mediaLib/resize.js')
 #end
 ## colmn
 #if(("$!initColumns" == '') || ("$!request.get('columns')" != ''))

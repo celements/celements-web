@@ -1,8 +1,11 @@
 ### Buttons displayed in the preview interface: cancel, back to edit, save and continue, save and view.
 ###
 #if("$!showactions" != '0')
-  $xwiki.jsfx.use('js/xwiki/actionbuttons/actionButtons.js', true)
-  $xwiki.ssfx.use('js/xwiki/actionbuttons/actionButtons.css', true)
+  #set($jsService = $services.javascript)
+  #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+  #set($extJsParam = $extJsParam.setLazyLoad(true))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/actionbuttons/actionButtons.js'))##
+  <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':js/xwiki/actionbuttons/actionButtons.css', 'file')" /> 
   #set($backToEditAction = "$!{request.xeditaction}")
   #if($backToEditAction == '')
     #set($backToEditAction = 'edit')

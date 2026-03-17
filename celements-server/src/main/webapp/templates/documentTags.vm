@@ -88,8 +88,11 @@
 #elseif($xaction == 'add')
   #addTag($request.tag)
 #else ## display
-  $xwiki.ssfx.use('resources/uicomponents/viewers/tags.css', true)##
-  $xwiki.jsfx.use('resources/uicomponents/viewers/tags.js', true)##
+  <link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':resources/uicomponents/viewers/tags.css', 'file')" /> 
+  #set($jsService = $services.javascript)
+  #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+  #set($extJsParam = $extJsParam.setLazyLoad(true))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':resources/uicomponents/viewers/tags.js'))##
   <div class="doc-tags" id="${tagsId}">
   #if($xwiki.tag)
     #set($hasTagsPlugin = true)

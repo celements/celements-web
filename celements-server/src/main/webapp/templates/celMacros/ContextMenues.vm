@@ -6,10 +6,10 @@
   #foreach($item in $services.contextMenu.getAllCMcssClasses())
     <tr>
     #set($cmDocRef = $services.model.resolvDocument("CelementsContextMenu.$!item"))
-    #set($cm_doc = $xwiki.getDocument($cmDocRef))
+    #set($cm_doc = $services.modelAccess.getDocument($cmDocRef))
     #set($editLink = $cm_doc.getURL('edit', "editor=object&xredirect=$!{doc.getURL('view')}"))
     <td>
-      #if($xwiki.exists($cmDocRef))
+      #if($services.modelAccess.exists($cmDocRef))
         <a href="$editLink">$!item</a>
       #end
     </td>

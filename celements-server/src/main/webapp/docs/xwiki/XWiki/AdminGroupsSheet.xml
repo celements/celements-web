@@ -29,11 +29,14 @@
 ##
 ## Inject needed JS and CSS files
 ##
-#set($ok = $xwiki.jsfx.use("js/xwiki/lightbox/lightbox.js", true))
-#set($ok = $xwiki.jsfx.use("js/xwiki/usersandgroups/usersandgroups.js", true))
-#set($ok = $xwiki.ssfx.use("js/xwiki/usersandgroups/usersandgroups.css", true))
-#set($ok = $xwiki.jsfx.use("js/xwiki/table/livetable.js", true))
-#set($ok = $xwiki.ssfx.use("js/xwiki/table/livetable.css", true))
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
+#set($extJsParam = $extJsParam.setLazyLoad(true))
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/lightbox/lightbox.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/usersandgroups/usersandgroups.js'))##
+$services.css.includeCSSPage(':js/xwiki/usersandgroups/usersandgroups.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/table/livetable.js'))##
+$services.css.includeCSSPage(':js/xwiki/table/livetable.css')##
 ##
 ## url to get the groups for displaying them in the ajax-based table
 ##

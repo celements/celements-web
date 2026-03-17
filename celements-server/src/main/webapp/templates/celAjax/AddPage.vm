@@ -14,7 +14,7 @@
     #end
   #end
   #set($newDocRef = $services.model.resolveDocument($newDocFN))
-  #if(!$xwiki.exists($newDocRef))
+  #if(!$services.modelAccess.exists($newDocRef))
   	#if("$!request.get('pageType')" != '')
       #set($newDoc = $services.celementsweb.createDocument($newDocRef, $request.get('pageType')))
   	#else

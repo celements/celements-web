@@ -1,5 +1,5 @@
-#if(("$!elemId" != '') && $xwiki.exists($services.model.resolveDocument($elemId)))
-#set($menuItemDoc = $xwiki.getDocument($services.model.resolveDocument($elemId)))
+#if(("$!elemId" != '') && $services.modelAccess.exists($services.model.resolveDocument($elemId)))
+#set($menuItemDoc = $services.modelAccess.getDocument($services.model.resolveDocument($elemId)))
 #set($menuItemObj = $menuItemDoc.getObject('Celements2.MenuItem'))
 #if("$!menuItemObj" != '')
 #if("$!helpNav" == '')

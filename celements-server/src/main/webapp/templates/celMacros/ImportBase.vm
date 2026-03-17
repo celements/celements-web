@@ -3,11 +3,11 @@
 ##FIXME in import mode?
 <link rel="stylesheet" media="all" type="text/css" href="$xwiki.getSkinFile('celRes/import/ImportManager.css', true)" />
 <link rel="stylesheet" media="all" type="text/css" href="$xwiki.getSkinFile('celRes/import/GalleryImport.css', true)" />
-$celementsweb.addExtJSfileOnce(':celJS/import/importManager.js')
+$services.javascript.addExtJSfileOnce(':celJS/import/importManager.js')
 ## ATTENTION - Includes for old servers - 
 #*<link rel="stylesheet" media="all" type="text/css" href="$celSkin_doc.getAttachmentURL('ImportManager.css', 'skin')" />
 <link rel="stylesheet" media="all" type="text/css" href="$celSkin_doc.getAttachmentURL('GalleryImport.css', 'skin')" />
-$celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('importManager.js', 'skin'))*#
+$services.javascript.addExtJSfileOnce($celSkin_doc.getAttachmentURL('importManager.js', 'skin'))*#
 #set($space = "$!request.get('space')")
 #if("$!space" == '')
   #set($space = $doc.getSpace())
@@ -44,7 +44,7 @@ $celementsweb.addExtJSfileOnce($celSkin_doc.getAttachmentURL('importManager.js',
   #set($allowedExtentions = "zip")
   #set($action = "")
   #set($preimportLink = "$!{doc.getURL()}?xpage=celements_ajax&ajax_mode=ImportPhoto&gallery=$!{doc.getFullName()}")
-  $celementsweb.addExtJSfileOnce(':celJS/import/import-photo.js')
+  $services.javascript.addExtJSfileOnce(':celJS/import/import-photo.js')
   #set($initFilters = "tag1")
 #end
 #if($preimportLink.length() > 0)

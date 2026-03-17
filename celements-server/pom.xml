@@ -29,12 +29,12 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celementsweb</artifactId>
-    <version>6.3-SNAPSHOT</version>
+    <version>7.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>6.10-SNAPSHOT</version>
+  <version>7.0-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -102,16 +102,12 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-scheduler</artifactId>
-      <version>6.2</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-mailsender</artifactId>
-      <version>6.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.xpn.xwiki.platform.plugins</groupId>
-      <artifactId>xwiki-plugin-skinx</artifactId>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -132,19 +128,19 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>6.6</version>
+      <version>7.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>6.2</version>
+      <version>7.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>6.5</version>
+      <version>7.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -162,13 +158,13 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tinymce-langs-v6</artifactId>
-      <version>6.8.3-CEL6</version>
+      <version>6.8.6-CEL7.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-richtext-web</artifactId>
-      <version>6.4</version>
+      <version>7.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -178,19 +174,19 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-wiki-manager-web</artifactId>
-      <version>6.1</version>
+      <version>7.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-user-manager-web</artifactId>
-      <version>6.3</version>
+      <version>7.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-layout-web</artifactId>
-      <version>6.4</version>
+      <version>7.0-SNAPSHOT</version>
       <type>war</type>
     </dependency>
 
@@ -198,92 +194,107 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-commons</artifactId>
-      <version>6.2</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>6.11-SNAPSHOT</version>
+      <version>7.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-xwiki-velocity</artifactId>
+      <version>7.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-xwiki-rendering-api</artifactId>
+      <version>7.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-xwiki-xml</artifactId>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-global-redirect</artifactId>
-      <version>6.0</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-component</artifactId>
-      <version>6.1</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-reference</artifactId>
-      <version>6.0</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-observation</artifactId>
-      <version>6.2-SNAPSHOT</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-servlet</artifactId>
-      <version>6.2</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>6.2</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>6.2</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>6.8-SNAPSHOT</version>
-    </dependency>    
+      <version>7.0-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>6.17-SNAPSHOT</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>6.5-SNAPSHOT</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-captcha</artifactId>
-      <version>6.0</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-subsystem-migration-manager</artifactId>
-      <version>6.0</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-mvc</artifactId>
-      <version>6.3</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-security</artifactId>
-      <version>6.3-SNAPSHOT</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-keycloak</artifactId>
-      <version>6.2</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-filebase</artifactId>
-      <version>6.0-SNAPSHOT</version>
+      <version>7.0-SNAPSHOT</version>
     </dependency>
 
     <!-- Spring -->
@@ -452,7 +463,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.4.1</version>
+        <version>3.6.2</version>
         <executions>
           <execution>
             <id>enforce-dependency-convergence</id>

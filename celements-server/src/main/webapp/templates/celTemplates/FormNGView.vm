@@ -109,9 +109,9 @@ $actionScriptOutput
 #else
 ## display form from the page content
 ##TODO: make this configurable: withJSvalidation
-$celementsweb.addExtJSfileOnce(':celJS/prototype.js')
-$celementsweb.addExtJSfileOnce(':celJS/validation.js')
-$celementsweb.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
+$services.javascript.addExtJSfileOnce(':celJS/prototype.js')
+$services.javascript.addExtJSfileOnce(':celJS/validation.js')
+$services.javascript.addExtJSfileOnce(':celJS/scriptaculous/effects.js')
 #if($hasedit && $debug)
 execStr: $execStr<br/>
 complete: $complete<br/>

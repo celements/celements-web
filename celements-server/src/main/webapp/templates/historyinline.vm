@@ -37,7 +37,7 @@
   #end
 ##
 ## Pagination style
-$xwiki.ssfx.use('uicomponents/pagination/pagination.css', true)##
+<link rel="stylesheet" media="all" type="text/css" href="$!services.celementsweb.getSkinFile(':uicomponents/pagination/pagination.css', 'file')" /> 
 ##
 ## Preamble, output some HTML.
 ##
