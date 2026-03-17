@@ -476,7 +476,7 @@
           console.log('initCelements.js: finished getting dictionary messages.');
           newMessages.isLoaded = true;
           window.celMessages = newMessages;
-          celMessagesCbFnArray.each(function (callbackFn) {
+          celMessagesCbFnArray.forEach(function (callbackFn) {
             try {
               callbackFn(newMessages);
             } catch (exp) {
