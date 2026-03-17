@@ -1,41 +1,51 @@
 .commentthread {
   margin: 0 0 0 32px;
 }
+
 .commentthread fieldset {
   margin: 0 !important;
   padding: 0 0 8px 0;
   border: none;
 }
+
 ul.commentreplies,
 li.reply {
   margin: 0;
   padding: 0;
   text-indent: 0;
 }
+
 li.reply {
   list-style-type: none;
 }
+
 * html .reply {
   border-top: 1px solid #fff;
 }
+
 .xwikicomment {
   padding: 0 0 8px;
   border: none;
 }
+
 .commentheader {
   border-bottom: 1px solid #ddd;
   margin: 0;
   padding: 2px 0;
 }
+
 .commentheader:hover {
   background-color: #ffd;
 }
+
 .commentauthor {
   font-size: 120%;
 }
+
 .commentdate {
   font-size: 80%;
 }
+
 .commentcontent {
   border: none;
   padding: 0 36px 0 32px;
@@ -44,11 +54,13 @@ li.reply {
   font-style: italic;
   text-align: justify;
 }
+
 .commenttools {
   display: block;
   float: right;
   margin-top: -1.2em;
 }
+
 .commenttool a {
   width: 16px;
   height: 16px;
@@ -60,29 +72,36 @@ li.reply {
   float: left;
   margin: 0 0 0 4px;
 }
+
 .commentdelete a {
-  background-image: url(/skin/resources/icons/silk/cross.gif);
+  background-image: url(/file/resources/icons/silk/cross.gif);
 }
+
 .commentreply a {
-  background-image: url(/skin/resources/icons/silk/comments_add.gif);
+  background-image: url(/file/resources/icons/silk/comments_add.gif);
 }
+
 #AddComment {
   border-top: 1px solid #ddd;
 }
+
 .commentthread #AddComment legend {
   display: none;
 }
+
 .commentthread #AddComment {
   border-top: none;
 }
+
 #xwikidata #AddComment {
   width: auto;
 }
+
 #AddComment .commentcontainer {
   padding: 4px 32px;
-  background: transparent url(/skin/resources/icons/xwiki/rquo.gif) right 4px
-    no-repeat;
+  background: transparent url(/file/resources/icons/xwiki/rquo.gif) right 4px no-repeat;
 }
+
 #AddComment .commentcontainer label {
   width: 24px;
   height: 24px;
@@ -90,22 +109,25 @@ li.reply {
   font-size: 1px;
   line-height: 120px;
   overflow: hidden;
-  background: transparent url(/skin/resources/icons/xwiki/lquo.gif) left top
-    no-repeat;
+  background: transparent url(/file/resources/icons/xwiki/lquo.gif) left top no-repeat;
   display: inline;
   float: left;
   margin-left: -32px;
 }
+
 #AddComment .commentcontainer textarea {
   border: 1px solid #ddd;
   width: 100%;
 }
+
 * html #AddComment .commentcontainer textarea {
   width: 98%;
 }
+
 #AddComment label {
   font-weight: bold;
 }
+
 div.notification {
   background-color: #ffd;
   padding: 2px 32px;
@@ -114,6 +136,7 @@ div.notification {
   font-style: italic;
   margin: 4px 0;
 }
+
 #xwikidata #commentscontent {
   background: transparent;
 }

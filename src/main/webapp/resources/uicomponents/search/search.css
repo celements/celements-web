@@ -3,68 +3,82 @@
   display: table;
   width: 100%;
 }
+
 .resultItem {
   display: block;
   clear: both;
   padding-top: 1em;
 }
+
 .resultContainer {
   clear: both;
   width: 100%;
 }
+
 .itemDescription {
   float: left;
   display: inline-block;
   width: 82%;
   padding-left: 20px;
-  background: transparent url(/skin/resources/icons/silk/page_white_text.gif)
-    no-repeat left top;
+  background: transparent url(/file/resources/icons/silk/page_white_text.gif) no-repeat left top;
 }
+
 .resultItem .type-comment {
-  background-image: url(/skin/resources/icons/silk/comment.gif);
+  background-image: url(/file/resources/icons/silk/comment.gif);
 }
+
 .resultItem .type-attachment {
-  background-image: url(/skin/resources/icons/silk/attach.gif);
+  background-image: url(/file/resources/icons/silk/attach.gif);
 }
+
 .itemDescription a,
 .itemDescription a:hover {
   color: #39397f;
 }
+
 .itemDescription a:focus {
   outline: dotted 1px #000;
 }
+
 .itemTitle {
   color: #4d4d4d;
   font-weight: bold;
   font-size: 1em;
 }
+
 .itemTitle span {
   margin: 0;
   border: none;
 }
+
 .itemTitle a,
 .itemTitle a:hover {
   color: #4d4d4d;
   font-weight: bold;
   font-size: 130%;
 }
+
 .itemTitle a:focus,
 .itemAuthor:focus {
   outline: dotted 1px #000;
 }
+
 .itemLocation,
 .itemModified {
   color: #888;
   font-size: 90%;
 }
+
 .itemContext em {
   background-color: #fffacd;
   padding: 0;
   margin: 0;
 }
+
 .itemOthers {
   font-size: 80%;
 }
+
 .itemOthers .itemComments,
 .itemOthers .itemAttachments,
 .itemOthers .itemRating {
@@ -74,18 +88,22 @@
   float: left;
   padding-right: 5px;
 }
+
 .itemOthers .itemComments a,
 .itemOthers .itemAttachments a {
   background: transparent no-repeat right center;
   display: inline-block;
   padding-right: 16px;
 }
+
 .itemOthers .itemComments a {
-  background-image: url(/skin/resources/icons/silk/comment.gif);
+  background-image: url(/file/resources/icons/silk/comment.gif);
 }
+
 .itemOthers .itemAttachments a {
-  background-image: url(/skin/resources/icons/silk/attach.gif);
+  background-image: url(/file/resources/icons/silk/attach.gif);
 }
+
 .itemRating {
   position: relative;
   width: 55px;
@@ -94,8 +112,9 @@
   margin: 1px 0 0 0 !important;
   padding: 0 !important;
   background-position: left top;
-  background-image: url(/skin/resources/icons/xwiki/rating.png);
+  background-image: url(/file/resources/icons/xwiki/rating.png);
 }
+
 .relevance .currentRelevance,
 .itemRating .currentRating {
   position: absolute;
@@ -107,18 +126,21 @@
   border: none;
   z-index: 1;
 }
+
 .itemRating .currentRating {
   height: 11px;
   line-height: 11px;
-  background-image: url(/skin/resources/icons/xwiki/rating.png);
+  background-image: url(/file/resources/icons/xwiki/rating.png);
   background-position: left center;
 }
+
 .itemRelevance {
   float: left;
   display: inline-block;
   width: 15%;
   text-align: right;
 }
+
 .relevance {
   position: relative;
   width: 48px;
@@ -128,20 +150,23 @@
   margin: 5px 0 0 0 !important;
   padding: 0 !important;
   background-position: left bottom;
-  background-image: url(/skin/resources/icons/xwiki/relevance.png);
+  background-image: url(/file/resources/icons/xwiki/relevance.png);
   float: right;
 }
+
 .relevance .currentRelevance {
   height: 8px;
   line-height: 8px;
-  background-image: url(/skin/resources/icons/xwiki/relevance.png);
+  background-image: url(/file/resources/icons/xwiki/relevance.png);
   background-position: left top;
 }
+
 .relevanceText {
   float: right;
   margin-right: 5px;
   font-size: 80%;
 }
+
 .itemActions {
   color: #888;
   font-size: 90%;
@@ -149,6 +174,7 @@
   clear: both;
   padding-left: 20px;
 }
+
 .itemActions .tool {
   width: 16px;
   height: 16px;
@@ -159,31 +185,37 @@
   overflow: hidden;
   background: transparent no-repeat center center;
 }
+
 .itemActions .copy {
-  background-image: url(/skin/resources/icons/silk/page_white_copy.gif);
+  background-image: url(/file/resources/icons/silk/page_white_copy.gif);
 }
+
 .itemActions .delete {
-  background-image: url(/skin/resources/icons/silk/cross.gif);
+  background-image: url(/file/resources/icons/silk/cross.gif);
 }
+
 .itemActions .rename {
-  background-image: url(/skin/resources/icons/silk/textfield_rename.gif);
+  background-image: url(/file/resources/icons/silk/textfield_rename.gif);
 }
+
 .itemActions .rights {
-  background-image: url(/skin/resources/icons/silk/lock_edit.gif);
+  background-image: url(/file/resources/icons/silk/lock_edit.gif);
 }
+
 #searchBar {
   margin-bottom: 1em;
   padding-left: 5px;
   clear: both;
 }
+
 #searchBar select {
   border: 2px solid #ccc;
   color: #4d4d4d;
   font-size: 1.1em;
 }
+
 #searchBar .searchQuery {
-  background: transparent url(/skin/resources/icons/xwiki/search.png) left
-    center no-repeat;
+  background: transparent url(/file/resources/icons/xwiki/search.png) left center no-repeat;
   display: inline-block;
   padding-left: 18px;
   border: 2px solid #ccc;
@@ -191,6 +223,7 @@
   font-size: 1.1em;
   width: 400px;
 }
+
 #searchBar .searchButton {
   background-color: #b3b3b3;
   border: 2px solid #b3b3b3;
@@ -201,6 +234,7 @@
   height: 2em;
   line-height: 1em;
 }
+
 .searchHelp {
   font-size: 80%;
   color: #808080;

@@ -5,31 +5,39 @@
   overflow: hidden;
   line-height: 22px;
 }
+
 .resultsNo {
   float: left;
 }
+
 .resultsNo .currentResultsNo,
 .resultsNo .totalResultsNo {
   color: #4d4d4d;
   font-weight: bold;
 }
+
 .pagination {
   float: right;
   margin-right: 10px;
 }
+
 .pagination a {
   color: #888;
 }
+
 .pagination a:hover {
   color: #4d4d4d;
 }
+
 .pagination .currentPage {
   color: #4d4d4d;
   font-weight: bold;
 }
+
 .pagination a:focus {
   outline: dotted 1px #000;
 }
+
 .controlPagination {
   position: relative;
   width: 42px;
@@ -39,6 +47,7 @@
   padding: 0 !important;
   float: right;
 }
+
 .controlPagination a,
 .controlPagination span {
   position: absolute;
@@ -49,20 +58,24 @@
   outline: none;
   overflow: hidden;
   border: none;
-  background-image: url(/skin/resources/icons/xwiki/pagination-controls.png);
+  background-image: url(/file/resources/icons/xwiki/pagination-controls.png);
   width: 21px;
   height: 22px;
 }
+
 .controlPagination .prevPagination {
   background-position: left top;
 }
+
 .controlPagination .noPrevPagination {
   background-position: left bottom;
 }
+
 .controlPagination .nextPagination {
   background-position: right top;
   left: 21px;
 }
+
 .controlPagination .noNextPagination {
   background-position: right bottom;
   left: 21px;

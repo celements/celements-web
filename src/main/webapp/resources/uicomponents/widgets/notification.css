@@ -1,5 +1,5 @@
 .xnotification-container {
-  position : fixed;
+  position: fixed;
   bottom: 0;
   left: 0%;
   width: 100%;
@@ -7,9 +7,11 @@
   z-index: 1200;
   display: block !important;
 }
+
 .xnotification-wrapper {
   padding-top: 1px;
 }
+
 .xnotification {
   cursor: pointer;
   display: inline;
@@ -20,30 +22,35 @@
   font-weight: bold;
   line-height: 20px;
 }
+
 .xnotification-info {
   background-color: #268;
-  color:  #fff;
-  border-color:  #fff;
+  color: #fff;
+  border-color: #fff;
 }
+
 .xnotification-warning {
   background-color: #fd8;
-  color:  #330;
-  border-color:  #330;
+  color: #330;
+  border-color: #330;
 }
+
 .xnotification-error {
   background-color: #a00;
-  color:  #fff;
-  border-color:  #fff;
+  color: #fff;
+  border-color: #fff;
 }
+
 .xnotification-inprogress {
   background-color: #333;
-  color:  #fff;
-  border-color:  #fff;
-  background-image: url(/skin/resources/icons/xwiki/spinner%2Dwhite.gif);
+  color: #fff;
+  border-color: #fff;
+  background-image: url(/file/resources/icons/xwiki/spinner%2Dwhite.gif);
   padding-left: 22px;
 }
+
 .xnotification-done {
   background-color: #160;
-  color:  #fff;
-  border-color:  #fff;
+  color: #fff;
+  border-color: #fff;
 }

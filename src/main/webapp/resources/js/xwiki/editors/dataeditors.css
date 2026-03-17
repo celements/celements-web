@@ -1,4 +1,5 @@
 @import "/file/resources/celRes/theme/defaultColors.css";
+
 #xwikiobjects,
 #xwikiclassproperties {
   padding: 0 8px;
@@ -52,8 +53,7 @@
 .more-actions .edit-all {
   display: block;
   padding: 2px 18px;
-  background: transparent url(/skin/resources/icons/silk/pencil.gif) left top
-    no-repeat;
+  background: transparent url(/file/resources/icons/silk/pencil.gif) left top no-repeat;
 }
 
 .xclass-title {
@@ -182,9 +182,7 @@ xproperty-title h2 {
   margin: 0;
   font-size: 1em;
   font-weight: 100;
-  background: transparent
-    url(/skin/resources/icons/datamodel/propertyType-Generic.png) 14px center
-    no-repeat;
+  background: transparent url(/file/resources/icons/datamodel/propertyType-Generic.png) 14px center no-repeat;
   min-height: 16px;
 }
 
@@ -216,7 +214,7 @@ xproperty-title h2 {
 #body .collapsable .xobject-title h3,
 #body .collapsable .xclass-title,
 #body .collapsable .xproperty-title {
-  background-image: url(/skin/resources/icons/silk/bullet_toggle_minus.gif);
+  background-image: url(/file/resources/icons/silk/bullet_toggle_minus.gif);
   background-position: 0 center;
   background-repeat: no-repeat;
 }
@@ -224,7 +222,7 @@ xproperty-title h2 {
 #body .collapsed .xobject-title h3,
 #body .collapsed .xclass-title,
 #body .collapsed .xproperty-title {
-  background-image: url(/skin/resources/icons/silk/bullet_toggle_plus.gif);
+  background-image: url(/file/resources/icons/silk/bullet_toggle_plus.gif);
 }
 
 .xclass.collapsed .xclass-content,
@@ -234,7 +232,7 @@ xproperty-title h2 {
 }
 
 .collapsable dt .collapser {
-  background-image: url(/skin/resources/icons/silk/bullet_toggle_minus.gif);
+  background-image: url(/file/resources/icons/silk/bullet_toggle_minus.gif);
   background-position: -4px center;
   background-repeat: no-repeat;
   cursor: default;
@@ -252,7 +250,7 @@ xproperty-title h2 {
 }
 
 .collapsable dt .collapsed {
-  background-image: url(/skin/resources/icons/silk/bullet_toggle_plus.gif);
+  background-image: url(/file/resources/icons/silk/bullet_toggle_plus.gif);
 }
 
 .xproperty-title .move {
@@ -270,49 +268,49 @@ xproperty-title h2 {
 }
 
 .StringClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/string.png);
+  background-image: url(/file/resources/icons/datamodel/string.png);
 }
 
 .DateClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/calendar.png);
+  background-image: url(/file/resources/icons/datamodel/calendar.png);
 }
 
 .TextAreaClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/textarea.png);
+  background-image: url(/file/resources/icons/datamodel/textarea.png);
 }
 
 .NumberClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/number.png);
+  background-image: url(/file/resources/icons/datamodel/number.png);
 }
 
 .BooleanClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/boolean.png);
+  background-image: url(/file/resources/icons/datamodel/boolean.png);
 }
 
 .StaticListClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/staticlist.png);
+  background-image: url(/file/resources/icons/datamodel/staticlist.png);
 }
 
 .GroupsClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/groups.png);
+  background-image: url(/file/resources/icons/datamodel/groups.png);
 }
 
 .UsersClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/users.png);
+  background-image: url(/file/resources/icons/datamodel/users.png);
 }
 
 .LevelsClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/rights.png);
+  background-image: url(/file/resources/icons/datamodel/rights.png);
 }
 
 .DBListClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/database.png);
+  background-image: url(/file/resources/icons/datamodel/database.png);
 }
 
 .DBTreeListClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/tree.png);
+  background-image: url(/file/resources/icons/datamodel/tree.png);
 }
 
 .PasswordClass h2 {
-  background-image: url(/skin/resources/icons/datamodel/password.png);
+  background-image: url(/file/resources/icons/datamodel/password.png);
 }

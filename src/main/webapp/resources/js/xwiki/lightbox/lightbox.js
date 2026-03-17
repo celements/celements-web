@@ -97,7 +97,7 @@ Lightbox = Class.create({
     this.nextURL = A;
   },
   getWaiting: function () {
-    return '<div style="padding: 30px;"><img src="/skin/resources/icons/ajax-loader.gif"/></div>';
+    return '<div style="padding: 30px;"><img src="/file/resources/icons/ajax-loader.gif"/></div>';
   },
   lbcustominit: function (B, A, E, C) {
     if (!$("lb")) {
