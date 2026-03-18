@@ -1,67 +1,78 @@
 #body {
-	background-color: #4C5661;
+  background-color: #4c5661;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: #000;
 }
 
-#companylogo img {}/* supprimé : logo transparent*/
+#companylogo img {
+} /* supprimé : logo transparent*/
 
-#xwikimaincontainer{
-	background-color: #fff;
-	border: 2px solid #474f57;
+#xwikimaincontainer {
+  background-color: #fff;
+  border: 2px solid #474f57;
 }
 
-
-#xwikimaincontainerinner{
-	background-color: transparent;
-	border: 1px solid #444B53;
+#xwikimaincontainerinner {
+  background-color: transparent;
+  border: 1px solid #444b53;
 }
 
-
-#body #contentcontainer, #headerglobal, #xwikieditor{
-  border-color: #676D73; /* couleur de fond de la sidebar*/
+#body #contentcontainer,
+#headerglobal,
+#xwikieditor {
+  border-color: #676d73; /* couleur de fond de la sidebar*/
 }
 
-
-
-#headerglobal{
-	background-color: transparent;
-	background-image: url("header-bg.jpg");
-	background-position: right bottom;
-	background-repeat: no-repeat;
+#headerglobal {
+  background-color: transparent;
+  background-image: url("header-bg.jpg");
+  background-position: right bottom;
+  background-repeat: no-repeat;
 }
 #globallinks {
   background-image: url("headerperso-bg.jpg");
   background-position: bottom left;
 }
-#globallinks a,#globallinks a:link,#globallinks a:visited,#globallinks a:active {
-	color: #000;}
+#globallinks a,
+#globallinks a:link,
+#globallinks a:visited,
+#globallinks a:active {
+  color: #000;
+}
 #globallinks a:hover {
-	color: #0066FF;
+  color: #0066ff;
 }
 
-#headeruser, #headeradmin, #headerlogin, #headerlogout, #headerlanguages, #headerregister{
+#headeruser,
+#headeradmin,
+#headerlogin,
+#headerlogout,
+#headerlanguages,
+#headerregister {
   padding-right: 20px;
   background: transparent right center no-repeat;
 }
-#headeruser{
+#headeruser {
   background-image: url("icons/black-budy.png");
 }
-#headeradmin{
+#headeradmin {
   background-image: url("icons/black-admin.png");
 }
-#headerlogin{
+#headerlogin {
   background-image: url("icons/black-budy.png");
 }
-#headerregister{
+#headerregister {
   background-image: url("icons/black-register.png");
 }
-#headerlogout{
+#headerlogout {
   background-image: url("icons/black-logout.png");
 }
-#headerlanguages{
+#headerlanguages {
   background-image: url("icons/black-lang.png");
 }
 
@@ -70,33 +81,40 @@ h1, h2, h3, h4 {
 Space header, footer
 ---------------------------------------
 */
-#headerspace, #footerglobal {
-	background-color: #384554;
-	color: #fff;
+#headerspace,
+#footerglobal {
+  background-color: #384554;
+  color: #fff;
 }
-#headerspace a, #headerspace alink, #headerspace a:visited,#headerspace a:active {
-	color:  #fff;
-	text-decoration: none;
+#headerspace a,
+#headerspace alink,
+#headerspace a:visited,
+#headerspace a:active {
+  color: #fff;
+  text-decoration: none;
 }
 #breadcrumbs a:hover {
-  color: #D70;
+  color: #d70;
 }
 /*
 ---------------------------------------
 Content
 ---------------------------------------
 */
-.content #contentcolumn, .contenthideleft #contentcolumn, #editcolumn{
+.content #contentcolumn,
+.contenthideleft #contentcolumn,
+#editcolumn {
   background-image: url("icons/content-bg-r.png");
   background-position: right top;
   background-repeat: no-repeat;
 }
-.content #contentcontainerinner, .contenthideright #contentcontainerinner{
+.content #contentcontainerinner,
+.contenthideright #contentcontainerinner {
   background-image: url("icons/content-bg-l.png");
   background-position: left top;
   background-repeat: no-repeat;
 }
-.main{
+.main {
   background-color: transparent;
 }
 
@@ -105,42 +123,45 @@ Content
 Zone for Comments, attachments, History...
 ---------------------------------------
 */
-ul.xwikiintra{
-  border-bottom-color: #DDD;
-  background-color: #EEE;
+ul.xwikiintra {
+  border-bottom-color: #ddd;
+  background-color: #eee;
 }
 
-.xwikiintra li{
-  background-color: #BBB;
-  border-color: #CCC;
-  border-right-color: #AAA;
+.xwikiintra li {
+  background-color: #bbb;
+  border-color: #ccc;
+  border-right-color: #aaa;
 }
 
-.xwikiintra li a, .xwikiintra li.active a{
+.xwikiintra li a,
+.xwikiintra li.active a {
   color: #000;
 }
 
-.xwikiintra li.active{
-  background-color: #FFF !important;
-  border-bottom-color: #FFF;
-  border-top-color: #DDD;
+.xwikiintra li.active {
+  background-color: #fff !important;
+  border-bottom-color: #fff;
+  border-top-color: #ddd;
 }
 
-table.xwikidatatable, table.xwikidatatable th{
-  border-color: #DDD;
+table.xwikidatatable,
+table.xwikidatatable th {
+  border-color: #ddd;
 }
-table.xwikidatatable th{
+table.xwikidatatable th {
   color: #000;
   background-color: transparent;
-  border-color: #CCC;
+  border-color: #ccc;
   border: none;
 }
 
-.xwikiintracontent legend, .xwikiintracontent fieldset{
+.xwikiintracontent legend,
+.xwikiintracontent fieldset {
   border-color: #ddd;
 }
 
-.xwikiintracontent fieldset.collapsed legend{
+.xwikiintracontent fieldset.collapsed legend {
   background-color: transparent;
 }
 
@@ -150,110 +171,122 @@ Menu
 ---------------------------------------
 */
 #actionmenu {
-  background-color: #EEE;
+  background-color: #eee;
   background-image: url("actionbar-bg.png");
   background-repeat: repeat-x;
-  border-color:  #333;
+  border-color: #333;
 }
-.rightmenu a, .rightmenu a:link.rightmenu a:visited,.rightmenu a:active{
-	  border-color: #333;
-	  background:transparent;
-	  color:#333;
+.rightmenu a,
+.rightmenu a:link.rightmenu a:visited,
+.rightmenu a:active {
+  border-color: #333;
+  background: transparent;
+  color: #333;
 }
-.topmenuentry{
-   border-color: #333;
-   background: transparent right top no-repeat;
+.topmenuentry {
+  border-color: #333;
+  background: transparent right top no-repeat;
 }
-.tme{
+.tme {
   background: transparent url("icons/black-arrow-ab.png") right center no-repeat;
 }
-.topmenuentry a, .topmenuentry a:link, .topmenuentry a:visited, .topmenuentry a:active, .rightmenu a, .rightmenu a:hover {
-	color:#333;
+.topmenuentry a,
+.topmenuentry a:link,
+.topmenuentry a:visited,
+.topmenuentry a:active,
+.rightmenu a,
+.rightmenu a:hover {
+  color: #333;
 }
-.topmenuentry:hover, .rightmenu:hover {
+.topmenuentry:hover,
+.rightmenu:hover {
   background-image: url("actionbar-bg2.png") !important;
   background-repeat: repeat-x;
 }
-.rightmenu{
+.rightmenu {
   z-index: 100;
 }
-.topmenuentry a strong, .rightmenu a strong{
-  background:transparent left center no-repeat;
+.topmenuentry a strong,
+.rightmenu a strong {
+  background: transparent left center no-repeat;
   padding: 0px 20px;
   color: #333 !important;
 }
-#tmCreate a strong{
+#tmCreate a strong {
   background-image: url(icons/black-create-ab.png);
 }
 
-#tmFile a strong{
+#tmFile a strong {
   background-image: url(icons/black-file2.png);
 }
 
-#tmEdit a strong{
+#tmEdit a strong {
   background-image: url(icons/black-edit-ab.png);
 }
-#tmShow a strong{
+#tmShow a strong {
   background-image: url(icons/black-view-ab.png);
 }
-#tmPrint a strong{
+#tmPrint a strong {
   background-image: url(icons/black-print-ab.png);
 }
-#tmWatch a strong{
+#tmWatch a strong {
   background-image: url(icons/black-fav-ab.png);
 }
-#tmWatched a strong{
+#tmWatched a strong {
   background-image: url(icons/black-fav-ab3.png);
 }
-#tmDoc strong{
+#tmDoc strong {
   background-image: url(icons/black-doc-ab.png);
 }
-#tmDoc:hover strong{
+#tmDoc:hover strong {
   background-image: url(icons/black-doc-ab2.png);
 }
-#tmDelete a strong{
+#tmDelete a strong {
   background-image: url(icons/black-delete.png);
 }
-#tmRename a strong{
+#tmRename a strong {
   background-image: url(icons/black-rename-ab.png);
 }
-#tmCreate a:hover strong{
+#tmCreate a:hover strong {
   background-image: url(icons/black-create-ab2.png);
 }
-#tmEdit a:hover strong{
+#tmEdit a:hover strong {
   background-image: url(icons/black-edit-ab2.png);
 }
-#tmShow a:hover strong{
+#tmShow a:hover strong {
   background-image: url(icons/black-view-ab2.png);
 }
-#tmPrint a:hover strong{
+#tmPrint a:hover strong {
   background-image: url(icons/black-print-ab2.png);
 }
-#tmWatch a:hover strong{
+#tmWatch a:hover strong {
   background-image: url(icons/black-fav-ab2.png);
 }
-#tmDelete a:hover strong{
+#tmDelete a:hover strong {
   background-image: url(icons/black-delete2.png);
 }
-#tmRename a:hover strong{
+#tmRename a:hover strong {
   background-image: url(icons/black-rename-ab2.png);
 }
 
-.submenu{
+.submenu {
   border: 2px solid #000;
-  background-color: #E8F1FF;
+  background-color: #e8f1ff;
 }
-.submenu .submenuitem{
+.submenu .submenuitem {
   border-color: #000;
 }
-.submenuitem a, .submenuitem a:link, .submenuitem a:visited, .submenuitem a:active  {
-color:#333;
+.submenuitem a,
+.submenuitem a:link,
+.submenuitem a:visited,
+.submenuitem a:active {
+  color: #333;
 }
 
 .submenuitem a:hover {
-background-image: none;
-background-color: #BFE4FF;
-background-repeat: repeat-x;
+  background-image: none;
+  background-color: #bfe4ff;
+  background-repeat: repeat-x;
 }
 
 /*
@@ -261,33 +294,37 @@ background-repeat: repeat-x;
 "Message Boxes"
 ---------------------------------------------
 */
-fieldset.xwikimessage{
-  border-color: #BBB;
-  background-color: #F5F5F5;
+fieldset.xwikimessage {
+  border-color: #bbb;
+  background-color: #f5f5f5;
 }
 
-fieldset.xwikimessage legend{
-  background-color: #BBB;
-  color: #FFF;
+fieldset.xwikimessage legend {
+  background-color: #bbb;
+  color: #fff;
 }
 
-input.button, button.button{
-  background-color: #EEE;
+input.button,
+button.button {
+  background-color: #eee;
 }
-input.button:hover, button.button:hover{
+input.button:hover,
+button.button:hover {
   color: #369;
 }
-#body .buttonwrapper *{
+#body .buttonwrapper * {
   background-color: transparent;
-  background: transparent url("icons/black-button24r.png") right center no-repeat;
-  color: #FFF;
+  background: transparent url("icons/black-button24r.png") right center
+    no-repeat;
+  color: #fff;
   padding: 4px 8px;
   border: none;
 }
-#body .buttonwrapper *:hover{
-  background-image: url("icons/black-button24r-hover.png")
+#body .buttonwrapper *:hover {
+  background-image: url("icons/black-button24r-hover.png");
 }
-.topbuttons, .bottombuttons{
+.topbuttons,
+.bottombuttons {
   float: right;
 }
 /*
@@ -296,31 +333,31 @@ Editors
 ---------------------------------------
 */
 
-.xwikitabbar li{
-  background-color: #CDF;
-  border-color: #ACF;
-  border-bottom-color: #CCC;
-  border-left-color: #DDF;
-  border-top-color: #DDF;
+.xwikitabbar li {
+  background-color: #cdf;
+  border-color: #acf;
+  border-bottom-color: #ccc;
+  border-left-color: #ddf;
+  border-top-color: #ddf;
 }
 
-.xwikitabbar li a{
-  color: #FFF !important;
+.xwikitabbar li a {
+  color: #fff !important;
 }
-.xwikitabbar li.active a{
-  color: #FFF !important;
+.xwikitabbar li.active a {
+  color: #fff !important;
 }
 
-.xwikitabbar li.active{
-  background-color: #FFF !important;
-  border-color: #DDD;
-  border-bottom-color: #FFF;
+.xwikitabbar li.active {
+  background-color: #fff !important;
+  border-color: #ddd;
+  border-bottom-color: #fff;
 }
 
 /*
 --
 */
-#xwikicontentedit{
+#xwikicontentedit {
   border-color: #ddd;
 }
 
@@ -329,42 +366,44 @@ Editors
 Panels
 ---------------------------------------
 */
-#leftPanels, #rightPanels, #editPanels{
+#leftPanels,
+#rightPanels,
+#editPanels {
   border-top: 20px solid #384554;
-  background-color: #676D73;
+  background-color: #676d73;
   color: #fff;
 }
-.globalsearch input.button{
-background-color: #384554;}
-
-
-.fakepanel{
-  background-color: #EEE;
-  border-color: #E5E5E5;
+.globalsearch input.button {
+  background-color: #384554;
 }
 
-.panel{
-  border-color: #DDD;
+.fakepanel {
+  background-color: #eee;
+  border-color: #e5e5e5;
+}
+
+.panel {
+  border-color: #ddd;
   background-color: #384554;
   background-color: transparent;
 }
-.xwikipanelcontents{
+.xwikipanelcontents {
   background-color: #384554;
 }
-.expanded .xwikipaneltitle{
+.expanded .xwikipaneltitle {
   background-color: #fff;
   color: #000;
 }
-.collapsed .xwikipaneltitle{
+.collapsed .xwikipaneltitle {
   background-color: #384554;
   color: #fff;
 }
 
-.expanded .xwikipaneltitle:hover{
-  color: #006ACC;
+.expanded .xwikipaneltitle:hover {
+  color: #006acc;
 }
-.collapsed .xwikipaneltitle:hover{
-  color: #C0D4E7;
+.collapsed .xwikipaneltitle:hover {
+  color: #c0d4e7;
 }
 
 /*
@@ -372,16 +411,16 @@ background-color: #384554;}
 Rico Acordeon -- Sintax Help Panel
 ----------------------------------
 */
-.accordionTabContentBox table th{
-  background-color: #FFF;
-  border-bottom-color: #DDD;
+.accordionTabContentBox table th {
+  background-color: #fff;
+  border-bottom-color: #ddd;
 }
 
-.accordionTabTitleBar{
-  border-color: #FFF;
-  border-bottom-color: #DDD;
-  border-right-color: #DDD;
-  background-color: #EEE;
+.accordionTabTitleBar {
+  border-color: #fff;
+  border-bottom-color: #ddd;
+  border-right-color: #ddd;
+  background-color: #eee;
 }
 
 /*
@@ -390,82 +429,85 @@ Misc
 ----------------------------------
 */
 
-td.label{
+td.label {
   color: #777;
 }
 
-#xwikiclassproperties, #xwikiobjects{
-  border-color: #DDD !important;
+#xwikiclassproperties,
+#xwikiobjects {
+  border-color: #ddd !important;
 }
 
-#xwikihelpsyntax{
-  border-top-color: #DDD;
+#xwikihelpsyntax {
+  border-top-color: #ddd;
 }
 
-.editactions a{
-  background-color: #EEE;
+.editactions a {
+  background-color: #eee;
   color: #000;
-  border-color: #DCDCDC;
+  border-color: #dcdcdc;
 }
 
-.editactions a:hover{
-  background-color: #FFD;
+.editactions a:hover {
+  background-color: #ffd;
 }
 /*
 ---------------------------------------------
 "Message Boxes"
 ---------------------------------------------
 */
-fieldset.xwikimessage{
-  border-color:#658BB2;
+fieldset.xwikimessage {
+  border-color: #658bb2;
 }
 
-fieldset.xwikimessage legend{
-  background-color: #658BB2;
-  color: #FFF;
+fieldset.xwikimessage legend {
+  background-color: #658bb2;
+  color: #fff;
 }
 
+tr.row.odd,
+.odd {
+  background-color: #eee;
+}
+tr.row.even,
+.even {
+  background-color: #fff;
+}
+tr th {
+  background-color: #eee;
+}
+body#body {
+}
 
-
-tr.row.odd, .odd{
-  background-color: #EEE;
-}
-tr.row.even, .even{
-  background-color: #FFF;
-}
-tr th{
-  background-color: #EEE;
-}
-body#body{
-}
-
-a:link{
+a:link {
   color: #369;
 }
-a:visited{
+a:visited {
   color: #777;
 }
 
-tr.row.odd, .odd{
-  background-color: #FFF;
+tr.row.odd,
+.odd {
+  background-color: #fff;
 }
-tr.row.even, .even{
-  background-color: #E4F6FF;
+tr.row.even,
+.even {
+  background-color: #e4f6ff;
 }
-th{
-  background-color: #CDF;
+th {
+  background-color: #cdf;
 }
 
-.xwikibuttonlink a{
+.xwikibuttonlink a {
   background-color: #369;
   color: #fff;
 }
-.xwikibuttonlink a:hover{
-  background-color: #CDF;
+.xwikibuttonlink a:hover {
+  background-color: #cdf;
   color: #369;
 }
 
-.xwikitabbar li{
+.xwikitabbar li {
   text-align: center;
   display: block;
   float: left;
@@ -473,22 +515,24 @@ th{
   background: transparent url(icons/black-tabedit.png) top center no-repeat;
   border: none;
 }
-.xwikitabbar li.active{
-  background: transparent url(icons/black-tabedit-current.png) top center no-repeat;
+.xwikitabbar li.active {
+  background: transparent url(icons/black-tabedit-current.png) top center
+    no-repeat;
   border: none;
 }
 
-#xwikirightstable{
-  border-color: #DDD;
+#xwikirightstable {
+  border-color: #ddd;
 }
-#xwikirightstable th{
-  border-top-color: #DDF;
-  border-right-color: #ACF;
-  border-bottom-color: #CCC;
-  border-left-color: #DDF;
+#xwikirightstable th {
+  border-top-color: #ddf;
+  border-right-color: #acf;
+  border-bottom-color: #ccc;
+  border-left-color: #ddf;
 }
-#xwikirightstable td, #xwikirightstable tr{
-  border-color: #DDD;
+#xwikirightstable td,
+#xwikirightstable tr {
+  border-color: #ddd;
 }
 
 .article_footer {
@@ -497,22 +541,22 @@ th{
 }
 
 .xwikiuserblog .rssfeed {
-  border-top-color: #DDD;
-  border-left-color: #DDD;
-  border-bottom-color: #EEE;
-  border-right-color: #EEE;
+  border-top-color: #ddd;
+  border-left-color: #ddd;
+  border-bottom-color: #eee;
+  border-right-color: #eee;
 }
-.rsschanneltitle{
+.rsschanneltitle {
   background-color: transparent;
 }
 
-.panel a{
-  color: #FFF;
+.panel a {
+  color: #fff;
   text-decoration: none;
   font-weight: bold;
 }
 
-.panel .accordionTabTitleBar{
+.panel .accordionTabTitleBar {
   background-color: #384554 !important;
   border: none !important;
   padding: 0px 0px 0px 0px;
@@ -522,9 +566,10 @@ th{
 }
 
 /* Note that h6 styling is provided in order to ensure backward compatibility after XSALBATROSS-71 */
-.panel .accordionTabTitleBar h1, .panel .accordionTabTitleBar h6 {
+.panel .accordionTabTitleBar h1,
+.panel .accordionTabTitleBar h6 {
   margin: 0px;
-  color: #FFF !important;
+  color: #fff !important;
   font-style: normal !important;
   font-weight: 900 !important;
   font-size: 100% !important;
@@ -535,79 +580,80 @@ th{
 }
 
 /* Note that h6 styling is provided in order to ensure backward compatibility after XSALBATROSS-71 */
-.panel .accordionTabTitleBar h1:hover, .panel .accordionTabTitleBar h6:hover {
+.panel .accordionTabTitleBar h1:hover,
+.panel .accordionTabTitleBar h6:hover {
   background: transparent url("icons/black-more-3.png") right center no-repeat !important;
 }
 
-.panel .accordionTabContentBox{
-  background-color: #C0D4E7 !important;
-  border: 1px solid #C0D4E7 !important;
+.panel .accordionTabContentBox {
+  background-color: #c0d4e7 !important;
+  border: 1px solid #c0d4e7 !important;
   margin: 0px;
   padding: 0px;
   overflow: auto !important;
 }
-.panel .accordionTabContentBox ul{
+.panel .accordionTabContentBox ul {
   margin: 4px;
   padding-left: 2em;
 }
-.panel .accordionTabContentBox ul{
+.panel .accordionTabContentBox ul {
   list-style-type: disc;
 }
-.accordionTabContentBox{
+.accordionTabContentBox {
   color: #384554 !important;
   border-width: 1px !important;
 }
-.panel .accordionTabContentBox a{
-  color: #2E5A87 !important;
+.panel .accordionTabContentBox a {
+  color: #2e5a87 !important;
 }
-.panel .accordionTabContentBox a:hover{
-  color: #D70 !important;
+.panel .accordionTabContentBox a:hover {
+  color: #d70 !important;
 }
 
-#body .panel .tbexpanded{
-  background-color: #FFF !important;
-  border-top: 1px solid #D6D6D6 !important;
+#body .panel .tbexpanded {
+  background-color: #fff !important;
+  border-top: 1px solid #d6d6d6 !important;
   border-bottom: 1px solid #384554 !important;
 }
 
-#body .panel .tbexpanded h6{
+#body .panel .tbexpanded h6 {
   color: #384554 !important;
-  border-bottom: 2px solid #DFE5E4 !important;
-  border-top: 1px solid #DFE5E4;
+  border-bottom: 2px solid #dfe5e4 !important;
+  border-top: 1px solid #dfe5e4;
 }
-.panel .tbexpanded h6:hover{
+.panel .tbexpanded h6:hover {
   background-image: none !important;
 }
 
-.placeholder{
+.placeholder {
   background-color: #555;
-  border: 1px dotted #CCC;
+  border: 1px dotted #ccc;
 }
 
-#dragbox{
+#dragbox {
   background-color: #c82 !important;
   border: 1px dotted #fff !important;
 }
 
-.dropTarget .accordionTabContentBox{
+.dropTarget .accordionTabContentBox {
   background-color: #777 !important;
 }
 
-input.button{
-  background-color: #3381CC;
-  border: solid 0px #3381CC;
+input.button {
+  background-color: #3381cc;
+  border: solid 0px #3381cc;
   color: #fff;
   font-weight: bold;
   padding: 2px;
 }
 
-input.button:hover{
-  background-color: #98BFE6;
+input.button:hover {
+  background-color: #98bfe6;
 }
 
-input[type=submit]{
-  background-color: #3381CC;
-  border: solid 0px #3381CC;
+input[type="submit"] {
+  background-color: #3381cc;
+  border: solid 0px #3381cc;
   color: #fff;
   font-weight: bold;
   padding: 2px;
@@ -631,13 +677,18 @@ textarea[disabled] {
   padding: 2px;
 }
 
-input[type=text], input[type=password], input[type=checkbox], input[type=file], select{
+input[type="text"],
+input[type="password"],
+input[type="checkbox"],
+input[type="file"],
+select {
   background: #e6eaee url("black-textareabg.png") 0px 0px no-repeat;
   border: 1px solid #000;
   padding: 2px;
 }
 
-input[disabled], select[disabled]  {
+input[disabled],
+select[disabled] {
   background: #e4e4e4 url("black-textareabg-disabled.png") 0px 0px no-repeat;
   border: 1px solid #000;
   padding: 2px;
@@ -648,13 +699,14 @@ input[type="radio"][disabled] {
 }
 
 /*ie nescessite de passer par une classe ou un selecteur sinon il pose des problemes*/
-input.ie{
+input.ie {
   background: #e6eaee url("black-textareabg.png") 0px 0px no-repeat;
   border: 1px solid #000;
   padding: 2px;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   background-image: url("black-textareabg1.png");
 }
 
@@ -667,37 +719,38 @@ form input {
   margin-top: 3px;
 }
 
-input[type=checkbox], input[type=radio]{
+input[type="checkbox"],
+input[type="radio"] {
   /*float: left;*/
   margin-right: 0.75em;
 }
 
-.buttonwrapper{
+.buttonwrapper {
   background: transparent url("icons/black-button24l.png") left center no-repeat;
   min-height: 24px !important;
   float: left;
   display: block;
   margin: 10px 0px 10px 10px;
 }
-.buttonwrapper:hover{
+.buttonwrapper:hover {
   background-image: url("icons/black-button24l-hover.png");
 }
-.buttonwrapper *{
+.buttonwrapper * {
   min-height: 24px !important;
   margin: 0px !important;
   display: block;
   line-height: 1.6em !important;
 }
 
-.important{
-  color: #C82 !important;
+.important {
+  color: #c82 !important;
 }
 
-#xwikidataindex{
+#xwikidataindex {
   display: none;
 }
 
-#commentscontent{
+#commentscontent {
 }
 /*
 .commentsno{
@@ -705,68 +758,66 @@ input[type=checkbox], input[type=radio]{
 }
 */
 
-#body #attachmentscontent{
-  background-color: #E4F6FF;
+#body #attachmentscontent {
+  background-color: #e4f6ff;
 }
-#xwikidata form{
+#xwikidata form {
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
-#comments, #attachments{
+#comments,
+#attachments {
   padding-bottom: 10px;
   padding-top: 10px;
 }
 
-#xwikidata form{
+#xwikidata form {
   width: 90%;
   margin: auto;
 }
-* html #attachments form{
+* html #attachments form {
   width: 100%;
   margin-left: 5%;
   margin-right: 5%;
-
 }
-.xwikiintratitle{
+.xwikiintratitle {
   display: block !important;
 }
 
-a.deletelink{
+a.deletelink {
   padding-left: 20px;
   background: transparent url(icons/black-delete.png) left center no-repeat;
   text-decoration: none;
 }
 
-
-a.deletelink:hover{
+a.deletelink:hover {
   color: #900;
   text-decoration: underline;
 }
 
-
-
 /*-----------------------------*/
 
-.about, #footerglobal{
+.about,
+#footerglobal {
   font-variant: small-caps;
   font-size: 90%;
 }
-.about{
+.about {
   color: #888;
 }
-.about a{
+.about a {
   color: #333;
   text-decoration: none;
 }
-#footerglobal a{
-  color: #CDE;
+#footerglobal a {
+  color: #cde;
   text-decoration: none;
 }
-#footerglobal a:hover{
-  color: #D70;
+#footerglobal a:hover {
+  color: #d70;
 }
 
-a:hover{
-  color: #C82;
-  color: #D70;
+a:hover {
+  color: #c82;
+  color: #d70;
 }

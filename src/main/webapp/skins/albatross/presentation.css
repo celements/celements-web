@@ -14,10 +14,10 @@
 .dom-tree code {
   font-weight: bold;
 }
-.dom-tree ul ul ul  {
+.dom-tree ul ul ul {
   list-style: disc;
 }
-.dom-tree ul ul ul ul  {
+.dom-tree ul ul ul ul {
   list-style: circle;
 }
 .dom-tree ul ul ul ul ul {
@@ -35,16 +35,6 @@
   font-style: italic;
 }
 
-
-
-
-
-
-
-
-
-
-
 /*
 ---------------------------------------
 Global header
@@ -59,48 +49,56 @@ Global header
   border: none;
 }
 
-.breadcrumbspace{
+.breadcrumbspace {
   font-weight: bold;
   font-variant: small-caps;
 }
 
-input[type=submit], input[type=reset], input[type=button]{
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
   font-family: Helvetica;
   font-weight: bold;
   padding: 1px 16px;
   width: auto;
   overflow: visible;
 }
-.button{
+.button {
   font-family: Helvetica;
   font-weight: bold;
   padding: 1px 16px;
   width: auto;
   overflow: visible;
 }
-input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover, .button:hover{
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:hover {
   cursor: pointer;
 }
-.button:hover{
+.button:hover {
   cursor: pointer;
 }
-.xwikiintra li:hover, .xwikitabbar li:hover, .xwikiintracontent legend:hover, .xwikiintracontent fieldset.collapsed legend:hover{
-  background-color: #FFD;
+.xwikiintra li:hover,
+.xwikitabbar li:hover,
+.xwikiintracontent legend:hover,
+.xwikiintracontent fieldset.collapsed legend:hover {
+  background-color: #ffd;
 }
-.xwikiintracontent h4{
+.xwikiintracontent h4 {
   font-size: 110%;
   text-align: left;
   text-transform: none;
   margin: 0px;
 }
-#xwikihistorylist li{
+#xwikihistorylist li {
   list-style-type: none;
 }
-table.xwikidatatable th{
+table.xwikidatatable th {
   text-align: center;
   border: 1px solid;
 }
-table.xwikidatatable td{
+table.xwikidatatable td {
   padding: 2px 8px;
   vertical-align: middle;
 }
@@ -110,22 +108,21 @@ table.xwikidatatable td{
 Menu
 ---------------------------------------
 */
-.rightmenu a{
+.rightmenu a {
   font-weight: bold;
   text-decoration: none;
   font-size: 110%;
 }
-.leftmenu{
+.leftmenu {
   padding-right: 2em;
 }
-
 
 /*
 ---------------------------------------
 Panels
 ---------------------------------------
 */
-.xwikipaneltitle{
+.xwikipaneltitle {
   padding: 0px 4px;
   margin: 0px;
   font-size: 0.9em;
@@ -133,56 +130,58 @@ Panels
   cursor: pointer;
 }
 
-.collapsed .xwikipaneltitle{
-  background-image: url("icons/black-more-3.png") 
+.collapsed .xwikipaneltitle {
+  background-image: url("icons/black-more-3.png");
 }
-.xwikipaneltitle:hover{
+.xwikipaneltitle:hover {
   cursor: pointer;
 }
-.collapsed .xwikipaneltitle:hover{
-  background-image: url("icons/black-more-3.png") 
+.collapsed .xwikipaneltitle:hover {
+  background-image: url("icons/black-more-3.png");
 }
-.xwikipanelcontents{
+.xwikipanelcontents {
   padding: 4px;
 }
 
-.xwikilogintable{
+.xwikilogintable {
   margin: auto;
 }
-.xwikilogintable th{
+.xwikilogintable th {
   text-align: right;
   background-color: transparent;
 }
-.xwikilogintable td{
+.xwikilogintable td {
   text-align: left;
 }
 
-
-.xwikitabbar li.active{
+.xwikitabbar li.active {
   border: 1px solid;
   border-bottom: 3px solid;
 }
 
-#xwikirightstable{
+#xwikirightstable {
   width: 624px;
   margin: 5px 0px;
   border: 1px solid;
 }
-#xwikirightstable th{
+#xwikirightstable th {
   text-align: center;
   border: 1px solid;
 }
-#xwikirightstable td, #xwikirightstable tr{
+#xwikirightstable td,
+#xwikirightstable tr {
   border: 1px solid;
   text-align: center;
 }
-.panel input.panelinput, .panel select{
+.panel input.panelinput,
+.panel select {
   width: 135px;
 }
-#editPanels .panel input.panelinput, #editPanels .panel select{
+#editPanels .panel input.panelinput,
+#editPanels .panel select {
   width: 200px;
 }
-#xwikiincludeddocuments .xwikibuttonlink a{
+#xwikiincludeddocuments .xwikibuttonlink a {
   padding: 2px 8px;
   margin-left: 8px;
 }
@@ -193,23 +192,23 @@ Articles
 ---------------------------------------
 */
 .article_title {
- font-size: 120%;
- border-bottom: 1px;
+  font-size: 120%;
+  border-bottom: 1px;
 }
 
 .article_content {
- padding: 10px;
+  padding: 10px;
 }
 
 .article_date {
- font-size: 120%;
- border-bottom: 1px solid;
+  font-size: 120%;
+  border-bottom: 1px solid;
 }
 
 .article_footer {
- border-top: 1px solid;
- font-size: 75%; 
- font-weight: bold; 
+  border-top: 1px solid;
+  font-size: 75%;
+  font-weight: bold;
 }
 
 /*
@@ -217,47 +216,53 @@ Articles
 Messages
 ---------------------------------------
 */
-.error{
-  color: #F00;
+.error {
+  color: #f00;
 }
 
-.fatalerror{
-  background-color: #F00;
-  color: #FFF;
+.fatalerror {
+  background-color: #f00;
+  color: #fff;
   font-weight: bold;
   font-size: 120%;
 }
 
-.warning{
+.warning {
   color: #c82;
 }
 
-.errormessage, .warningmessage, .infomessage, .plainmessage{
+.errormessage,
+.warningmessage,
+.infomessage,
+.plainmessage {
   margin: 4px 0px 4px;
-  border: 1px solid #DDD;
+  border: 1px solid #ddd;
   padding: 8px 8px 8px 28px;
-  background: #F5F5F5 url(icons/msg.png) 8px 8px no-repeat;
+  background: #f5f5f5 url(icons/msg.png) 8px 8px no-repeat;
   text-align: left;
 }
 
-.infomessage{
+.infomessage {
   background-image: url(icons/msginfo.png);
   color: #369;
 }
-.plainmessage{
+.plainmessage {
   background-image: none;
   color: #369;
 }
-.warningmessage{
+.warningmessage {
   background-image: url(icons/msgwarning.png);
   color: #c82;
 }
-.errormessage{
+.errormessage {
   background-image: url(icons/msgerror.png);
-  color: #F00;
+  color: #f00;
 }
 
-span.errormessage, span.warningmessage, span.infomessage, span.plainmessage {
+span.errormessage,
+span.warningmessage,
+span.infomessage,
+span.plainmessage {
   background-position: 2px center;
   overflow: visible;
   padding: 0 2px 0 22px;
@@ -265,15 +270,16 @@ span.errormessage, span.warningmessage, span.infomessage, span.plainmessage {
   font-size: 100%;
 }
 
-span.messagetype{
+span.messagetype {
   display: none;
 }
 
-div.floatinginfobox, fieldset.floatinginfobox{
+div.floatinginfobox,
+fieldset.floatinginfobox {
   width: 200px;
   float: right;
   border: 1px solid #333;
-  background-color: #EEE;
+  background-color: #eee;
   padding: 4px;
   margin: 4px;
 }
@@ -284,21 +290,21 @@ Images
 ---------------------------------------
 */
 
-.imgfloatleft{
+.imgfloatleft {
   float: left;
   margin-right: 8px;
 }
-.imgfloatright{
-  float:right;
+.imgfloatright {
+  float: right;
   margin-left: 8px;
 }
-.imgleft{
+.imgleft {
   text-align: left;
 }
-.imgcenter{
+.imgcenter {
   text-align: center;
 }
-.imgright{
+.imgright {
   text-align: right;
 }
 /*
@@ -306,46 +312,47 @@ Images
 Misc
 ---------------------------------------
 */
-.specialmenu{
+.specialmenu {
   float: right;
-  border: 1px solid #CCC;
-  background-color: #E5E5E5;
+  border: 1px solid #ccc;
+  background-color: #e5e5e5;
   padding: 8px;
 }
 
-.specialmenu ul{
+.specialmenu ul {
   padding: 0px;
   margin: 0px;
 }
-.specialmenu li{
+.specialmenu li {
   list-style-type: none;
   padding: 4px 0px;
   margin: 0px;
   text-indent: 0px;
 }
-.specialmenu img{
+.specialmenu img {
   vertical-align: middle;
   width: 32px;
 }
 
-#body .specialmenu a{
+#body .specialmenu a {
   color: #000;
 }
-#body .specialmenu a:hover{
-  color: #C82;
+#body .specialmenu a:hover {
+  color: #c82;
 }
 
-.currentspace a{
+.currentspace a {
   text-decoration: none !important;
   padding: 2px;
 }
 
-span.floatleft{
+span.floatleft {
   display: block;
   float: left;
 }
 
-a#adduser, a#modifygroup{
+a#adduser,
+a#modifygroup {
   background: transparent url(icons/black-register.png) center no-repeat;
   display: block;
   height: 20px;
@@ -355,23 +362,23 @@ a#adduser, a#modifygroup{
   margin-left: 8px;
 }
 
-a#modifygroup{
+a#modifygroup {
   background-image: url(icons/black-edit.png);
   border: none;
 }
 
-.small{
+.small {
   font-size: 75%;
 }
 
-.smaller{
+.smaller {
   font-size: 60%;
 }
-.smallest{
+.smallest {
   font-size: 50%;
 }
 
-.pagingLinks{
+.pagingLinks {
   font-variant: small-caps;
   font-size: 90%;
   margin: 5px 30px;
@@ -379,10 +386,10 @@ a#modifygroup{
   overflow: hidden;
   padding: 2px 10px;
 }
-.pagingLinks .prevPage{
+.pagingLinks .prevPage {
   float: left;
 }
-.pagingLinks .nextPage{
+.pagingLinks .nextPage {
   float: right;
 }
 
@@ -392,12 +399,12 @@ Diffs
 ---------------------------------
 */
 
-.diffbefore{
-  border-left: 8px solid #F00;
+.diffbefore {
+  border-left: 8px solid #f00;
   font-size: x-small;
 }
-.diffafter{
-  border-left: 8px solid #0F0;
+.diffafter {
+  border-left: 8px solid #0f0;
   font-size: x-small;
 }
 /*

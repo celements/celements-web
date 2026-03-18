@@ -1,0 +1,84 @@
+# Exclude reset.css
+src/main/webapp/resources/celRes/resetCSS/
+
+# Exclude jquery
+src/main/webapp/resources/celJS/jquery-noconflict.js
+src/main/webapp/resources/celJS/jquery.js
+src/main/webapp/resources/celJS/jcrop/jquery.Jcrop.css
+
+# Exclude the jquery-* directory
+src/main/webapp/resources/celJS/jquery-*/
+
+# Exclude the prototype.js
+src/main/webapp/resources/celJS/prototype.js
+
+# Exclude the deps directory
+src/main/webapp/resources/deps/
+
+# Exclude the yui3 directory
+src/main/webapp/resources/celJS/yui3/
+
+# Exclude the yui directory
+src/main/webapp/resources/celJS/yui/
+
+# Exclude the scriptaculous directory
+src/main/webapp/resources/celJS/scriptaculous/
+
+# Exclude the swiper-* directory
+src/main/webapp/resources/celJS/swiper-*/
+
+# Exclude the history.js directory
+src/main/webapp/resources/celJS/history.js/
+
+# Exclude the balupton-history directory
+src/main/webapp/resources/celJS/balupton-history/
+
+# Exclude the bootstrap directory
+src/main/webapp/resources/celJS/bootstrap/
+
+# Exclude the bootstrap-* directory
+src/main/webapp/resources/celJS/bootstrap-*/
+
+# Exclude the codemirror directory
+src/main/webapp/resources/celJS/codemirror/
+
+# Exclude the highslide directory
+src/main/webapp/resources/celJS/highslide/
+
+# Exclude the jshashtable directory
+src/main/webapp/resources/celJS/jshashtable/
+
+# Exclude the lytebox5 directory
+src/main/webapp/resources/celJS/lytebox5/
+
+# Exclude the font-awesome-v6 directory
+src/main/webapp/resources/celRes/font-awesome-v6/
+src/main/webapp/resources/celRes/font-awesome/
+
+# Exclude the glyphicons-halflings directory
+src/main/webapp/resources/celRes/images/glyphicons-halflings/
+
+# Exclude the google-fonts directory
+src/main/webapp/resources/celRes/google-fonts/
+
+# Exclude the moofx directory
+src/main/webapp/resources/celJS/moofx/
+
+# Exclude the supportLink directory
+src/main/webapp/resources/celJS/supportLink/
+
+# Exclude the SWFObject-2.2 directory
+src/main/webapp/resources/celJS/SWFObject-2.2/
+
+# Exclude the xwiki scriptaculous directory
+src/main/webapp/resources/js/scriptaculous/
+
+# Exclude the xwiki yui directory
+src/main/webapp/resources/js/yui/
+
+# Exclude all node_modules (usually ignored by default)
+node_modules/
+
+# Exclude minified files
+**/*.min.js
+**/*.min.css

@@ -22,18 +22,18 @@ body {
                    );
 }
 */
-* html #xwikidatacontents{
+* html #xwikidatacontents {
   position: relative;
   top: 1px;
   z-index: -1;
 }
-* html #xwikieditor{
+* html #xwikieditor {
 }
-* html #editPanels.panels{
+* html #editPanels.panels {
   float: none;
   margin-top: 0px;
 }
-* html ul.xwikitabbar{
+* html ul.xwikitabbar {
   margin: 0px -3px;
 }
 
