@@ -403,8 +403,6 @@
 
       return buff;
     },
-      return buff;
-    },
 
     /**
       * Delete a row from the fetch cache, shifting the remaining rows accordingly.
