@@ -12,6 +12,7 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery.min.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery-noconflict.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/initCelements.min.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
 $services.css.includeCSSPage(':js/xwiki/widgets/modalPopup.css')##

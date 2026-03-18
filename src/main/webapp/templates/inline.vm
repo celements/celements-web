@@ -1,15 +1,14 @@
 #set($contextIsFinished = false)
 #if(("$!request.viewer" != '') || ("$!request.skin" != '') || (($xwiki.getSkin().indexOf('.') < 0) && ("$xwiki.getSkin()" != 'cellskin')))
-	#set($jsService = $services.javascript)
-	#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
-	$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
-	$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/actionbuttons/actionButtons.js'))##
 	#if((!$request.editor) || ($request.editor.trim() == ""))
 	  #set($editor = "inline")
 	#else
 	  #set($editor = $request.editor)
 	#end
+	#set($jsService = $services.javascript)
+	#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
 	#template("startpage.vm")
+	$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/actionbuttons/actionButtons.js'))##
 	#template("edit${editor}.vm")
 	#template("endpage.vm")
 #else

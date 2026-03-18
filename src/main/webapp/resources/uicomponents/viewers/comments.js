@@ -104,7 +104,9 @@ var XWiki = (function (XWiki) {
                       }
                       // Replace the comment with a "deleted comment" placeholder
                       comment.replace(
-                        this.createNotification(this.translations.commentDeleted),
+                        this.createNotification(
+                          this.translations.commentDeleted,
+                        ),
                       );
                       this.updateCount();
                     }.bind(this),
@@ -388,7 +390,7 @@ var XWiki = (function (XWiki) {
       if (!form) {
         return;
       }
-      var previewURL =  "/preview/__space__/__page__"
+      var previewURL = "/preview/__space__/__page__"
         .replace(
           "__space__",
           encodeURIComponent($$("meta[name=space]")[0].content),
@@ -479,7 +481,8 @@ var XWiki = (function (XWiki) {
       form.previewContent.update(content);
       form.previewContent.show();
       form.commentElt.hide();
-      form.previewButton.down("input").value = this.translations.previewButtonBack;
+      form.previewButton.down("input").value =
+        this.translations.previewButtonBack;
     },
     /**
      * Display the comment textarea instead of the comment preview.
@@ -560,7 +563,6 @@ var XWiki = (function (XWiki) {
 })(XWiki || {});
 // ======================================
 // Comment actions enhancements
-document.observe("xwiki:dom:loaded", function () {
 document.observe("xwiki:dom:loaded", function () {
   new XWiki.viewers.Comments();
 });
