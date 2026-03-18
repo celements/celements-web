@@ -84,7 +84,7 @@ window.docgeturl = "${doc.getURL('get')}";
 // ]]>
 </script>
 ##
-#if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
+#if (($xcontext.action=="inline") || ($xcontext.action=="edit") || ($xcontext.action=="admin"))
 <script type="text/javascript">
 // <![CDATA[
 var cancelEditNextOnunload;
