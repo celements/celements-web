@@ -27,7 +27,7 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/x
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/suggest.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki-misc.js'))##
 #if($hasedit || $isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0))
-  $services.css.includeCSSPage(':celRes/celements2.css')##
+  $!services.css.includeCSSPage(':celRes/celements2.css')##
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/moofx/moo.fx.js'))
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/moofx/moo.fx.utils.js'))
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/adminUi/admininterface.js'))
