@@ -1,19 +1,26 @@
 function computeBounds() {
-  leftPanelsLeft   = getX(leftPanels);
-  leftPanelsRight  = leftPanelsLeft  + leftPanels.offsetWidth;
-  rightPanelsLeft  = getX(rightPanels);
+  leftPanelsLeft = getX(leftPanels);
+  leftPanelsRight = leftPanelsLeft + leftPanels.offsetWidth;
+  rightPanelsLeft = getX(rightPanels);
   rightPanelsRight = rightPanelsLeft + rightPanels.offsetWidth;
-  allpanelsLeft    = getX(allPanels);
-  allpanelsTop     = getY(allPanels);
+  allpanelsLeft = getX(allPanels);
+  allpanelsTop = getY(allPanels);
 }
 
 function debugwrite(sometext) {
-  document.getElementById("headerglobal").appendChild(document.createTextNode(sometext));
+  document
+    .getElementById("headerglobal")
+    .appendChild(document.createTextNode(sometext));
 }
 
 function isPanel(el) {
-  if (el.className && ((el.className == "panel") || (el.className.indexOf("panel ") >=0) || (el.className.indexOf(" panel") >=0))) {
-     return true;
+  if (
+    el.className &&
+    (el.className == "panel" ||
+      el.className.indexOf("panel ") >= 0 ||
+      el.className.indexOf(" panel") >= 0)
+  ) {
+    return true;
   }
   return false;
 }
@@ -23,7 +30,11 @@ function getX(el) {
     if (window.ActiveXObject) {
       return el.offsetLeft + getX(el.offsetParent) + el.clientLeft;
     } else {
-      return el.offsetLeft + getX(el.offsetParent) + (el.scrollWidth - el.clientWidth);
+      return (
+        el.offsetLeft +
+        getX(el.offsetParent) +
+        (el.scrollWidth - el.clientWidth)
+      );
     }
   } else {
     if (el.x) {
@@ -39,7 +50,11 @@ function getY(el) {
     if (window.ActiveXObject) {
       return el.offsetTop + getY(el.offsetParent) + el.clientTop;
     } else {
-      return el.offsetTop + getY(el.offsetParent) + (el.scrollHeight - el.clientHeight);
+      return (
+        el.offsetTop +
+        getY(el.offsetParent) +
+        (el.scrollHeight - el.clientHeight)
+      );
     }
   } else {
     if (el.y) {
@@ -70,13 +85,12 @@ function getDragBoxPos(list, y) {
     return 0;
   }
   for (var i = 0; i < nb; ++i) {
-    if (list[i] == dragel)
-      return i;
+    if (list[i] == dragel) return i;
   }
   return -1;
 }
 
-function getAllPanels(el){
+function getAllPanels(el) {
   var list = [];
   var divs = el.getElementsByTagName("div");
   var j = 0;
@@ -90,10 +104,18 @@ function getAllPanels(el){
 }
 
 function getClosestDropTarget(x, y, w, h) {
-  if (window.showLeftColumn == 1 && (x <= leftPanelsRight && (x + w) >= leftPanelsLeft)) {
+  if (
+    window.showLeftColumn == 1 &&
+    x <= leftPanelsRight &&
+    x + w >= leftPanelsLeft
+  ) {
     return leftPanels;
   }
-  if (window.showRightColumn == 1 && ((x + w) >= rightPanelsLeft &&  x <= rightPanelsRight )) {
+  if (
+    window.showRightColumn == 1 &&
+    x + w >= rightPanelsLeft &&
+    x <= rightPanelsRight
+  ) {
     return rightPanels;
   }
   return allPanels;
@@ -105,35 +127,42 @@ function onDragStart(el, x, y) {
   }
   hideTip();
   window.isDraggingPanel = true;
-  if (enabletip==true) {
+  if (enabletip == true) {
     hideTip();
   }
   realParent = el.parentNode;
   parentNode = el.parentNode;
-  var isAdded = (realParent != leftPanels && realParent != rightPanels);
+  var isAdded = realParent != leftPanels && realParent != rightPanels;
   var coords = Position.cumulativeOffset(el);
   var coords2 = Position.realOffset(el);
   var x = coords[0];
-  var y = coords[1] - coords2[1] + (document.documentElement.scrollTop - 0 + document.body.scrollTop - 0);
+  var y =
+    coords[1] -
+    coords2[1] +
+    (document.documentElement.scrollTop - 0 + document.body.scrollTop - 0);
   if (window.ActiveXObject) {
-    dragel.style.height = (el.offsetHeight ? (el.offsetHeight) : el.displayHeight) + "px";
+    dragel.style.height =
+      (el.offsetHeight ? el.offsetHeight : el.displayHeight) + "px";
   } else {
-    dragel.style.height = (el.offsetHeight ? (el.offsetHeight-2) : el.displayHeight) + "px";
+    dragel.style.height =
+      (el.offsetHeight ? el.offsetHeight - 2 : el.displayHeight) + "px";
   }
   dragel.style.display = "block";
   // Make the current absolute
   el.style.left = x + "px";
-  el.style.top =  y + "px";
+  el.style.top = y + "px";
   el.style.zIndex = "10";
 
   if (isAdded) {
     parentNode = allPanels;
     el.placeholder = document.createElement("div");
-    el.placeholder.className="placeholder";
+    el.placeholder.className = "placeholder";
     if (window.ActiveXObject) {
-      el.placeholder.style.height = (el.offsetHeight ? (el.offsetHeight) : el.displayHeight) + "px";
+      el.placeholder.style.height =
+        (el.offsetHeight ? el.offsetHeight : el.displayHeight) + "px";
     } else {
-      el.placeholder.style.height = (el.offsetHeight ? (el.offsetHeight-2) : el.displayHeight) + "px";
+      el.placeholder.style.height =
+        (el.offsetHeight ? el.offsetHeight - 2 : el.displayHeight) + "px";
     }
     realParent.replaceChild(el.placeholder, el);
     el.placeholder.style.display = "block";
@@ -149,10 +178,10 @@ function onDragStart(el, x, y) {
 }
 
 function onDrag(el, x, y) {
-  if (enabletip==true) {
+  if (enabletip == true) {
     hideTip();
   }
-  parentNode = getClosestDropTarget(x,y, el.offsetWidth, el.offsetHeight);
+  parentNode = getClosestDropTarget(x, y, el.offsetWidth, el.offsetHeight);
   if (parentNode != prevcolumn) {
     if (prevcolumn != allPanels) {
       prevcolumn.removeChild(dragel);
@@ -160,7 +189,7 @@ function onDrag(el, x, y) {
     if (parentNode != allPanels) {
       parentNode.appendChild(dragel);
       rmClass(allPanels, "dropTarget");
-    } else{
+    } else {
       addClass(allPanels, "dropTarget");
     }
   }
@@ -174,14 +203,14 @@ function onDrag(el, x, y) {
     if (parentNode != allPanels) {
       parentNode.appendChild(dragel);
     }
-  } else if (pos != 0 && y <= getY(list[pos-1])) {
-    parentNode.insertBefore(dragel, list[pos-1]);
-  } else if (pos != (list.length-1) && y >= getY(list[pos+1])) {
-    if (list[pos+2]) {
-      parentNode.insertBefore(dragel, list[pos+2]);
+  } else if (pos != 0 && y <= getY(list[pos - 1])) {
+    parentNode.insertBefore(dragel, list[pos - 1]);
+  } else if (pos != list.length - 1 && y >= getY(list[pos + 1])) {
+    if (list[pos + 2]) {
+      parentNode.insertBefore(dragel, list[pos + 2]);
     } else {
       if (parentNode != allPanels) {
-        parentNode.appendChild( dragel);
+        parentNode.appendChild(dragel);
       } else {
         dragel.parentNode.removeChild(dragel);
       }
@@ -197,7 +226,7 @@ function onDragEnd(el, x, y) {
     el.placeholder.parentNode.replaceChild(el, el.placeholder);
     el.placeholder = undefined;
     rmClass(allPanels, "dropTarget");
-  } else{
+  } else {
     parentNode.replaceChild(el, dragel);
   }
   dragel.style.display = "none";
@@ -216,10 +245,17 @@ function executeCommand(url, callback) {
         if (ajaxCallback) {
           ajaxCallback(ajaxRequest.responseText);
         } else {
-          alert('no callback defined');
+          alert("no callback defined");
         }
       } else {
-        alert("There was a problem retrieving the xml data:\n" + ajaxRequest.status + ":\t" + ajaxRequest.statusText + "\n" + ajaxRequest.responseText);
+        alert(
+          "There was a problem retrieving the xml data:\n" +
+            ajaxRequest.status +
+            ":\t" +
+            ajaxRequest.statusText +
+            "\n" +
+            ajaxRequest.responseText,
+        );
       }
     }
   }
@@ -241,11 +277,11 @@ function executeCommand(url, callback) {
       ajaxRequest.onreadystatechange = ajaxBindCallback;
       ajaxRequest.open("GET", url, true);
       ajaxRequest.send();
-    } else{
-      alert("your browser does not support xmlhttprequest" )
+    } else {
+      alert("your browser does not support xmlhttprequest");
     }
-  } else{
-    alert("your browser does not support xmlhttprequest" )
+  } else {
+    alert("your browser does not support xmlhttprequest");
   }
 }
 
@@ -268,8 +304,8 @@ function start1() {
   window.panelsOnRight = getBlocList(rightPanels);
   //
   var el;
-  for (i = 0; i < panelsInList.length; ++i){
-    pos = window.allPanelsPlace[i]['left'];
+  for (i = 0; i < panelsInList.length; ++i) {
+    pos = window.allPanelsPlace[i]["left"];
     if (pos != -1) {
       el = panelsOnLeft[pos];
       if (el) {
@@ -277,16 +313,19 @@ function start1() {
         el.placeholder = document.createElement("div");
         el.placeholder.className = "placeholder";
         if (window.ActiveXObject) {
-          el.displayHeight = (el.offsetHeight ? (el.offsetHeight) : 0);
+          el.displayHeight = el.offsetHeight ? el.offsetHeight : 0;
         } else {
-          el.displayHeight = (el.offsetHeight ? (el.offsetHeight-2) : 0);
+          el.displayHeight = el.offsetHeight ? el.offsetHeight - 2 : 0;
         }
-        el.placeholder.style.height = (el.displayHeight) +"px";
+        el.placeholder.style.height = el.displayHeight + "px";
         el.placeholder.style.display = "block";
-        panelsInList[i].parentNode.replaceChild(el.placeholder, panelsInList[i]);
+        panelsInList[i].parentNode.replaceChild(
+          el.placeholder,
+          panelsInList[i],
+        );
       }
     }
-    pos = window.allPanelsPlace[i]['right'];
+    pos = window.allPanelsPlace[i]["right"];
     if (pos != -1) {
       el = panelsOnRight[pos];
       if (el) {
@@ -294,18 +333,21 @@ function start1() {
         el.placeholder = document.createElement("div");
         el.placeholder.className = "placeholder";
         if (window.ActiveXObject) {
-          el.displayHeight = (el.offsetHeight ? (el.offsetHeight) : 0);
+          el.displayHeight = el.offsetHeight ? el.offsetHeight : 0;
         } else {
-          el.displayHeight = (el.offsetHeight ? (el.offsetHeight-2) : 0);
+          el.displayHeight = el.offsetHeight ? el.offsetHeight - 2 : 0;
         }
-        el.placeholder.style.height = (el.displayHeight) +"px";
+        el.placeholder.style.height = el.displayHeight + "px";
         el.placeholder.style.display = "block";
         if (panelsInList[i].parentNode) {
-          panelsInList[i].parentNode.replaceChild(el.placeholder, panelsInList[i]);
+          panelsInList[i].parentNode.replaceChild(
+            el.placeholder,
+            panelsInList[i],
+          );
         }
       }
     }
-    panelsInList[i].fullname=window.allPanelsPlace[i].fullname;
+    panelsInList[i].fullname = window.allPanelsPlace[i].fullname;
   }
   //this is for the "revert" button:
   leftPanels.savedPanelList = getBlocList(leftPanels);
@@ -319,7 +361,9 @@ function start1() {
     rightPanels.panels = getBlocList(rightPanels);
   }
   //
-  var layoutMaquettesTD = document.getElementById("PageLayoutSection").getElementsByTagName("td");
+  var layoutMaquettesTD = document
+    .getElementById("PageLayoutSection")
+    .getElementsByTagName("td");
   layoutMaquettes = new Object();
   for (i = 0; i < layoutMaquettesTD.length; i++) {
     for (j = 0; j < layoutMaquettesTD[i].childNodes.length; ++j) {
@@ -330,26 +374,26 @@ function start1() {
     }
   }
   window.activeWizardPage = document.getElementById("PanelListSection");
-  window.activeWizardTab  = document.getElementById("firstwtab");
+  window.activeWizardTab = document.getElementById("firstwtab");
   document.getElementById("PageLayoutSection").style.display = "none";
 }
 
 function attachDragHandler(el) {
-  el.ondblclick = function(ev) {};
-  Drag.init(el,el);
-  el.onDragStart = function (x,y) {
-    onDragStart(this,x,y);
+  el.ondblclick = function (ev) {};
+  Drag.init(el, el);
+  el.onDragStart = function (x, y) {
+    onDragStart(this, x, y);
   };
-  el.onDrag = function (x,y) {
-    onDrag(this,x,y);
+  el.onDrag = function (x, y) {
+    onDrag(this, x, y);
   };
-  el.onDragEnd = function (x,y) {
-    onDragEnd(this,x,y);
+  el.onDragEnd = function (x, y) {
+    onDragEnd(this, x, y);
   };
   var titlebar = el.getElementsByTagName("h5").item(0);
-  if (titlebar){
-    titlebar.onclick = function(ev) {};
-    titlebar.onClick = function(ev) {};
+  if (titlebar) {
+    titlebar.onclick = function (ev) {};
+    titlebar.onClick = function (ev) {};
   }
 }
 
@@ -382,16 +426,16 @@ function save() {
 }
 
 function saveResult(html) {
-  if (html=="SUCCESS") {
-    alert(window.panelsavesuccess)
+  if (html == "SUCCESS") {
+    alert(window.panelsavesuccess);
     // this is for the "revert" button:
     leftPanels.savedPanelList = getBlocList(leftPanels);
     rightPanels.savedPanelList = getBlocList(rightPanels);
     leftPanels.isVisible = window.showLeftColumn;
     rightPanels.isVisible = window.showRightColumn;
   } else {
-    alert(window.panelsaveerror)
-    alert(html)
+    alert(window.panelsaveerror);
+    alert(html);
   }
 }
 
@@ -427,9 +471,9 @@ function restorePanel(el, column) {
   el.placeholder = document.createElement("div");
   el.placeholder.className = "placeholder";
   if (window.ActiveXObject) {
-    el.placeholder.style.height = (el.offsetHeight ? (el.offsetHeight) : 0);
+    el.placeholder.style.height = el.offsetHeight ? el.offsetHeight : 0;
   } else {
-    el.placeholder.style.height = (el.offsetHeight ? (el.offsetHeight-2) : 0);
+    el.placeholder.style.height = el.offsetHeight ? el.offsetHeight - 2 : 0;
   }
   el.placeholder.style.display = "block";
   el.parentNode.replaceChild(el.placeholder, el);
@@ -513,7 +557,7 @@ function revert() {
   revertPanels(rightPanels);
   var layoutCode = 0;
   if (leftPanels.isVisible) {
-    layoutCode  += 1;
+    layoutCode += 1;
   }
   if (rightPanels.isVisible) {
     layoutCode += 2;
@@ -528,7 +572,7 @@ function switchToWizardPage(el, toShowID) {
   window.activeWizardTab.className = "";
   window.activeWizardTab = el;
   window.activeWizardTab.className = "active";
-  window.activeWizardPage = document.getElementById(toShowID)
+  window.activeWizardPage = document.getElementById(toShowID);
   window.activeWizardPage.style.display = "block";
   el.blur();
 }
@@ -540,7 +584,7 @@ function panelEditorInit() {
 
   parentNode = null;
   realParent = null;
-  dragel = new Element("div", {'id' : 'dragbox', 'class' : 'panel'});
+  dragel = new Element("div", { id: "dragbox", class: "panel" });
   dragWidth = 0;
   nb = 0;
 
@@ -551,16 +595,16 @@ function panelEditorInit() {
   mainContent = $("contentcolumn");
   // mainContainer = document.getElementById("contentcontainer");
   mainContainer = $("body");
-  leftPanelsLeft   = getX(leftPanels);
-  leftPanelsRight  = leftPanelsLeft  + leftPanels.offsetWidth;
-  rightPanelsLeft  = getX(rightPanels);
+  leftPanelsLeft = getX(leftPanels);
+  leftPanelsRight = leftPanelsLeft + leftPanels.offsetWidth;
+  rightPanelsLeft = getX(rightPanels);
   rightPanelsRight = rightPanelsLeft + rightPanels.offsetWidth;
-  allpanelsLeft    = getX(allPanels);
-  allpanelsTop     = getY(allPanels);
+  allpanelsLeft = getX(allPanels);
+  allpanelsTop = getY(allPanels);
 
   prevcolumn = allPanels;
 
   start1();
 }
 
-document.observe('xwiki:dom:loading', panelEditorInit);
+document.observe("xwiki:dom:loading", panelEditorInit);

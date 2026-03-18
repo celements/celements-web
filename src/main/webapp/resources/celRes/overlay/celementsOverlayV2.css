@@ -1,5 +1,6 @@
 @charset "UTF-8";
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -49,10 +50,10 @@ html, body {
   margin: 0 auto;
   margin-top: 2%;
   margin-bottom: 1%;
-  padding:30px;
+  padding: 30px;
   background: white;
   position: relative;
-  width:800px;
+  width: 800px;
   height: calc(100vh - 115px);
 }
 
@@ -64,8 +65,8 @@ body.celementsmenubarvisible .main.layoutsubsection {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow-y : auto;
-  overflow-x : hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .generalOverlay .cel_overlaybody h1,
@@ -91,10 +92,10 @@ body.celementsmenubarvisible .main.layoutsubsection {
 }
 /* MOBILE LANDSCAPE */
 
-@media only screen and (max-width: 800px) { 
+@media only screen and (max-width: 800px) {
   .main.layoutsubsection {
-    position:relative;
-    width:75%;
+    position: relative;
+    width: 75%;
     margin-top: 4%;
   }
 }

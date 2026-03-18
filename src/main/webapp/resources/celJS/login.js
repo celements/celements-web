@@ -18,11 +18,10 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-(function(window, undefined) {
-  var focuseOnUsernameField = function() {
+(function (window, undefined) {
+  var focuseOnUsernameField = function () {
     document.forms.loginForm.j_username.focus();
   };
 
   celAddOnBeforeLoadListener(focuseOnUsernameField);
-
 })(window);

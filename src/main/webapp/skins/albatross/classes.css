@@ -1,25 +1,28 @@
-.xwikisep, .xwikisep2 {
-   display: none;
+.xwikisep,
+.xwikisep2 {
+  display: none;
 }
-.clear, .clearfloats {
+.clear,
+.clearfloats {
   clear: both;
 }
-.none, .hidden {
+.none,
+.hidden {
   display: none !important;
 }
 .invisible {
-	visibility: hidden !important;
+  visibility: hidden !important;
 }
 .loading {
-    background-image: url(icons/spinner.gif);
-    background-position: center center;
-    background-repeat: no-repeat;
+  background-image: url(icons/spinner.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
 }
-.currentspace{
+.currentspace {
   font-weight: 900;
   margin-top: 2px;
 }
-.extern{
+.extern {
   background-image: url("corner.png");
   background-repeat: no-repeat;
   background-position: right top;
@@ -28,7 +31,7 @@
   margin: auto;
   text-align: center;
 }
-.xwikipanelarrow{
+.xwikipanelarrow {
   position: absolute;
   top: 0px;
   right: 0px;

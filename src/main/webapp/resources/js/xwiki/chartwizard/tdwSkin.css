@@ -1,95 +1,100 @@
 /*
    Wizard skin
  */
-#tableWizard{
+#tableWizard {
   margin: auto;
   text-align: center;
   width: 700px;
   height: 470px;
 }
-#tdwWizard{
+#tdwWizard {
   width: 700px;
-	height: 470px;
-  border: #DDD 0px solid;
-	border-collapse: collapse;
-	border-spacing: 0;
-	margin: 5px;
+  height: 470px;
+  border: #ddd 0px solid;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 5px;
   margin: auto;
   text-align: left;
 }
-#tdwNavigation{
+#tdwNavigation {
   height: 20px;
   margin: 0;
   padding: 0;
   border-style: hidden;
 }
-#tdwNavigationButtons{
+#tdwNavigationButtons {
   height: 20px;
-  background-color: #B6C5F2;
+  background-color: #b6c5f2;
   border: black 1px solid;
-  border-color: #FFF #FFF #5368A6 #FFF;
+  border-color: #fff #fff #5368a6 #fff;
   margin: 0px 0px 0px 0px;
   padding-left: 4px;
 }
-#tdwOptions{
+#tdwOptions {
   width: 700px;
   height: 400px;
   overflow: auto;
   vertical-align: top;
 }
-fieldset.tdwLargeFieldset, fieldset.tdwSmallFieldset{
-  border: #5368A6 1px solid;
+fieldset.tdwLargeFieldset,
+fieldset.tdwSmallFieldset {
+  border: #5368a6 1px solid;
   margin: 8px;
   padding: 6px;
   padding-bottom: 16px;
 }
-fieldset.tdwSmallFieldset{
-  border: #BBB 1px solid;
+fieldset.tdwSmallFieldset {
+  border: #bbb 1px solid;
 }
 
-legend.tdwLargeLegend, legend.tdwSmallLegend{
-  color: #5368A6;
-  background-color: #B6C5F2;
-  background-color: #FFF;
+legend.tdwLargeLegend,
+legend.tdwSmallLegend {
+  color: #5368a6;
+  background-color: #b6c5f2;
+  background-color: #fff;
   font-size: 16px;
   font-weight: 900;
   padding: 2px 4px 2px 4px;
   cursor: default;
 }
-legend.tdwLargeLegend{
-  border: #5368A6 1px solid;
+legend.tdwLargeLegend {
+  border: #5368a6 1px solid;
 }
 
-legend.tdwSmallLegend{
+legend.tdwSmallLegend {
   font-size: 12px;
   font-weight: 600;
 }
 
-img.tdwNavigationImage, img.tdwNavigationImageDisabled{
-	margin: 3px 4px 2px 3px;
-	height: 16px;
+img.tdwNavigationImage,
+img.tdwNavigationImageDisabled {
+  margin: 3px 4px 2px 3px;
+  height: 16px;
   vertical-align: middle;
 }
 
-img.tdwNavigationImage{
+img.tdwNavigationImage {
   cursor: pointer;
 }
 
-.tdwButton, .tdwButtonDisabled{
-	text-decoration: none;
-	color: #FFF !important;
-	padding: 2px 15px 2px 15px;
-	margin: 5px 5px 5px 5px;
+.tdwButton,
+.tdwButtonDisabled {
+  text-decoration: none;
+  color: #fff !important;
+  padding: 2px 15px 2px 15px;
+  margin: 5px 5px 5px 5px;
 }
-.tdwButton{
-  background-color: #5368A6;
+.tdwButton {
+  background-color: #5368a6;
 }
-.tdwButtonDisabled{
+.tdwButtonDisabled {
   background-color: #888;
   cursor: default;
 }
 
-.tdwActivePage, .tdwInactivePage{
+.tdwActivePage,
+.tdwInactivePage {
   overflow: auto;
   margin: auto;
   width: 700px;
@@ -97,23 +102,25 @@ img.tdwNavigationImage{
   padding: 0px;
   border: 0px solid red;
 }
-.tdwActivePage, .tdwVisible{
+.tdwActivePage,
+.tdwVisible {
   display: block;
 }
-.tdwHidden{
+.tdwHidden {
   display: none;
 }
-.tdwInactivePage{
+.tdwInactivePage {
   display: none;
 }
 
-.tdwListbox{
+.tdwListbox {
   display: block;
 }
-.tdwMessage, .tdwErrorMessage{
+.tdwMessage,
+.tdwErrorMessage {
   display: block;
 }
-.tdwErrorMessage{
+.tdwErrorMessage {
   font-size: larger;
   color: #900;
 }
@@ -121,51 +128,54 @@ img.tdwNavigationImage{
 /*
   Tables skin
  */
-.tdwTables table{
+.tdwTables table {
   border: outset 2px;
   border-spacing: 1px;
   margin: 5px;
   -moz-user-select: none;
 }
-.tdwTables tbody{
+.tdwTables tbody {
   cursor: crosshair;
 }
-.tdwTables th{
+.tdwTables th {
   border: outset 2px;
-  border-color: #B6C5F2;
-  background: #B6C5F2;
-  color: #5368A6;
+  border-color: #b6c5f2;
+  background: #b6c5f2;
+  color: #5368a6;
 }
-.tdwTables td{
+.tdwTables td {
   border: inset 1px;
   cursor: crosshair;
   empty-cells: show;
 }
 
-tbody.tdwUnselectedTable{
+tbody.tdwUnselectedTable {
   background-color: transparent;
 }
-tbody.tdwSelectedTable{
-  background-color: #F7F0D2;
+tbody.tdwSelectedTable {
+  background-color: #f7f0d2;
 }
 
-tbody.tdwSelectedTable th, tr.tdwSelectedRow th, th.tdwSelectedCell{
-  background-color: #C82;
-  color: #FFF;
+tbody.tdwSelectedTable th,
+tr.tdwSelectedRow th,
+th.tdwSelectedCell {
+  background-color: #c82;
+  color: #fff;
 }
 
-tr.tdwUnselectedRow, col.tdwUnselectedColumn{
+tr.tdwUnselectedRow,
+col.tdwUnselectedColumn {
   background-color: transparent;
 }
 
-col.tdwSelectedColumn{
-  background: #F7F0D2;
+col.tdwSelectedColumn {
+  background: #f7f0d2;
 }
 
-tr.tdwSelectedRow{
-  background-color: #F7F0D2;
+tr.tdwSelectedRow {
+  background-color: #f7f0d2;
 }
 
-td.tdwSelectedCell{
-  background: #F7F0D2;
+td.tdwSelectedCell {
+  background: #f7f0d2;
 }

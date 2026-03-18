@@ -1,15 +1,23 @@
 body {
   font-size: 100% !important;
 }
-a:link, a:active, a:visited {
+a:link,
+a:active,
+a:visited {
   text-decoration: underline;
 }
-.xwikitabbar li a, .xwikitabbar li a:visited, .xwikitabbar li a:active{
+.xwikitabbar li a,
+.xwikitabbar li a:visited,
+.xwikitabbar li a:active {
   text-decoration: none;
 }
-.actionmenu a:link, .actionmenu a:visited  {
+.actionmenu a:link,
+.actionmenu a:visited {
   text-decoration: none;
 }
-input.button, .buttonwrapper a:visited, .buttonwrapper a:link, .buttonwrapper a:active {
+input.button,
+.buttonwrapper a:visited,
+.buttonwrapper a:link,
+.buttonwrapper a:active {
   text-decoration: none;
 }

@@ -71,11 +71,11 @@ body div.mask.celmultimedia_inoverlay {
   height: 0px;
 }
 .celmultimedia_inoverlay .yui-panel,
-.celmultimedia_inoverlay .yui-panel .hd, 
-.celmultimedia_inoverlay .yui-panel .bd, 
+.celmultimedia_inoverlay .yui-panel .hd,
+.celmultimedia_inoverlay .yui-panel .bd,
 .celmultimedia_inoverlay .yui-panel .ft {
   background: black;
-  color: #EDEDED;
+  color: #ededed;
   border: 0px solid black;
 }
 .celmultimedia_inoverlay .container-close {
@@ -85,13 +85,13 @@ body div.mask.celmultimedia_inoverlay {
   right: -15px;
   width: 30px;
   height: 30px;
-  background-image:url('../close.png');
+  background-image: url("../close.png");
   background-repeat: no-repeat;
   background-position: top right;
   cursor: pointer;
 }
 .celmultimedia_inoverlay .container-close:hover {
-  background-image:url('../close-hover.png');
+  background-image: url("../close-hover.png");
 }
 .celmultimedia_inoverlay .container-close:focus {
   border: 0px solid black;
@@ -107,7 +107,7 @@ body div.mask.celmultimedia_inoverlay {
   padding: 10px;
 }
 .celmultimedia_inoverlay .yui-panel .ft {
-  display:none;
+  display: none;
 }
 .celmultimedia_inoverlay .yui-panel-container {
   padding: 0px;

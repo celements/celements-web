@@ -1,5 +1,4 @@
-#template('colorThemeInit.vm')
-.xdialog-modal-container {
+#template('colorThemeInit.vm') .xdialog-modal-container {
   position: fixed;
   top: 0px;
   bottom: 0px;
@@ -41,7 +40,7 @@
   margin: -8px -8px 8px 5px;
   width: 12px;
   height: 12px;
-  text-align : center; 
+  text-align: center;
   font-weight: bold;
   font-size: 13px;
   text-transform: lowercase;
