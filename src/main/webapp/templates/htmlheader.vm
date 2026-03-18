@@ -103,7 +103,7 @@
   #set($HTMLBodyCSSClasses = "$!{HTMLBodyCSSClasses} celementsmenubarvisible")
 #end
 ## These elements will be closed in the htmlfooter.vm file
-<$bodyTagName id="body" class="$HTMLBodyCSSClasses.trim()">
+<$!bodyTagName id="body" class="$!HTMLBodyCSSClasses.trim()">
 #if($cel_loadAdminMenuBar)
 #parse('celMacros/MenuBar.vm')
 #end
