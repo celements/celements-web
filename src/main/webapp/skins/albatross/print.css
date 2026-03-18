@@ -1,6 +1,9 @@
-#body, #xwikimaincontainer, #xwikimaincontainerinner, #xwikicontent {
+#body,
+#xwikimaincontainer,
+#xwikimaincontainerinner,
+#xwikicontent {
   background-image: none !important;
-  background-color: #FFF !important;
+  background-color: #fff !important;
   float: none !important;
   border: none !important;
   width: auto !important;
@@ -8,25 +11,27 @@
   padding: 10px !important;
   overflow: visible !important;
 }
-.edit_section{
+.edit_section {
   display: none !important;
 }
 #printcontainer {
-	overflow: visible !important; 
-	border: none; 
-	padding: 10px; 
-	text-align: justify;
-	float: none !important;
+  overflow: visible !important;
+  border: none;
+  padding: 10px;
+  text-align: justify;
+  float: none !important;
 }
-#rightPanels, #leftPanels, #actionmenu {
-    display: none;
+#rightPanels,
+#leftPanels,
+#actionmenu {
+  display: none;
 }
 #globallinks {
-    display: none;
+  display: none;
 }
 #headerspace {
-    margin:0 !important;
+  margin: 0 !important;
 }
 #contentcolumn .main {
-    margin:0 !important;
+  margin: 0 !important;
 }

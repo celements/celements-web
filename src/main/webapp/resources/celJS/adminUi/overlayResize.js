@@ -20,17 +20,20 @@
 
 Event.observe(window, 'load', startResizeObservers);
 
-function startResizeObservers(event){
+function startResizeObservers(event) {
   Event.observe(window, 'resize', resize);
-  if($('cel_overlaybody')){
+  if ($('cel_overlaybody')) {
     $('cel_overlaybody').observe('celoverlay:resize', resize);
   }
   resize();
 }
 
-function resize(){
-//alert(($$('.cel_overlay_outerBox').size() > 0) + " - " + ($$('.cel_overlay_innerBox').size() > 0));
-  if(($$('.cel_overlay_outerBox').size() > 0) && ($$('.cel_overlay_innerBox').size() > 0)) {
+function resize() {
+  //alert(($$('.cel_overlay_outerBox').size() > 0) + " - " + ($$('.cel_overlay_innerBox').size() > 0));
+  if (
+    $$('.cel_overlay_outerBox').size() > 0 &&
+    $$('.cel_overlay_innerBox').size() > 0
+  ) {
     var outerBox = $$('.cel_overlay_outerBox')[0];
     var innerBox = $$('.cel_overlay_innerBox')[0];
     var scrollBox = innerBox.down('.cel_overlay_scrollable');
@@ -39,39 +42,45 @@ function resize(){
     var innerBox = $('cel_overlaybody');
     var scrollBox = $('cel_overlaybody');
   }
-  if(outerBox && innerBox) { 
+  if (outerBox && innerBox) {
     var mainPadding = parseInt($$('.main')[0].getStyle('padding-top'));
     var mainMargin = parseInt($$('.main')[0].getStyle('margin-top'));
     var mainBorders = 2 * (mainPadding + mainMargin);
     var siblingHeight = 0;
-    if(scrollBox){
-      scrollBox.siblings().each(function(sibl){
+    if (scrollBox) {
+      scrollBox.siblings().each(function (sibl) {
         //excluding 'style' needed for IE7 since style tags in IE7 have a heigth ... sometimes ...
-        if((sibl.getStyle('position') != 'absolute') && (sibl.tagName.toLowerCase() != 'style')){
+        if (
+          sibl.getStyle('position') != 'absolute' &&
+          sibl.tagName.toLowerCase() != 'style'
+        ) {
           siblingHeight += sibl.offsetHeight;
         }
       });
     }
-    
+
     //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
     //counting margin-auto offsets. Thus we need to use jquery.offset
-    siblingHeight += ($j(scrollBox).offset().top - $j(innerBox).offset().top);
-    
+    siblingHeight += $j(scrollBox).offset().top - $j(innerBox).offset().top;
+
     var winHeight = 0;
-    if(typeof(window.innerWidth) == 'number') {
+    if (typeof window.innerWidth == 'number') {
       winHeight = window.innerHeight;
-    } else if(document.documentElement && document.documentElement.clientHeight) {
+    } else if (
+      document.documentElement &&
+      document.documentElement.clientHeight
+    ) {
       winHeight = document.documentElement.clientHeight;
-    } else if(document.body && document.body.clientHeight) {
+    } else if (document.body && document.body.clientHeight) {
       winHeight = document.body.clientHeight;
     }
-    
+
     var outerBoxSize = winHeight - mainBorders;
     var innerSize = outerBoxSize;
     var scrollableSize = innerSize - siblingHeight;
-    
-    outerBox.setStyle({ height: Math.max(50, outerBoxSize) + "px" });
-    innerBox.setStyle({ height: Math.max(50, innerSize) + "px" });
-    scrollBox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
+
+    outerBox.setStyle({ height: Math.max(50, outerBoxSize) + 'px' });
+    innerBox.setStyle({ height: Math.max(50, innerSize) + 'px' });
+    scrollBox.setStyle({ height: Math.max(50, scrollableSize) + 'px' });
   }
 }

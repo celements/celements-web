@@ -8,8 +8,8 @@
 div.legend {
   margin-bottom: 10px;
   font-size: 1.33em;
-  border-bottom: 0px solid #D6E1E7;
-  color: #005A83;
+  border-bottom: 0px solid #d6e1e7;
+  color: #005a83;
   display: block;
   font-weight: 400;
   line-height: 1.2em;
@@ -54,7 +54,8 @@ div.loading {
 }
 
 .package-upload {
-  background: transparent url('/file/resources/icons/silk/package_add.gif') no-repeat scroll 0 5px;
+  background: transparent url('/file/resources/icons/silk/package_add.gif')
+    no-repeat scroll 0 5px;
   padding-left: 20px;
   min-height: 16px;
 }
@@ -66,16 +67,17 @@ div.loading {
 }
 
 #packagelist .xitemcontainer {
-  background: transparent url('/file/resources/icons/silk/package.gif') no-repeat scroll 5px 0.5em;
-  font-size: .85em;
-  margin-bottom: .2em;
-  padding: .3em 0 .3em 1em;
+  background: transparent url('/file/resources/icons/silk/package.gif')
+    no-repeat scroll 5px 0.5em;
+  font-size: 0.85em;
+  margin-bottom: 0.2em;
+  padding: 0.3em 0 0.3em 1em;
   padding-left: 30px;
 }
 
 #packagelist .active {
   border: 0px solid $theme.borderColor;
-  background-color: #FCFCFC;
+  background-color: #fcfcfc;
 }
 
 #packagelistcontainer .name a {
@@ -88,7 +90,7 @@ div.loading {
 
 #packagelistcontainer .xwikibuttonlinks {
   float: right;
-  padding-right: .2em;
+  padding-right: 0.2em;
   *margin-top: -2em;
   /* IE7 */
 }
@@ -108,7 +110,7 @@ div.loading {
 }
 
 #packageDescription {
-  background-color: #FCFCFC;
+  background-color: #fcfcfc;
   border: 0px solid $theme.borderColor;
   overflow: hidden;
   padding: 10px;
@@ -117,8 +119,8 @@ div.loading {
 }
 
 #packagecontainer .packageinfos {
-  font-size: .9em;
-  margin-bottom: .5em;
+  font-size: 0.9em;
+  margin-bottom: 0.5em;
 }
 
 .packageinfos div {
@@ -136,21 +138,21 @@ div.loading {
 
 #packagecontainer .packageinfos span.label {
   color: $theme.textColor;
-  font-size: .85em;
+  font-size: 0.85em;
   font-weight: 700;
   text-transform: uppercase;
 }
 
 .selectLinks {
-  font-size: .8em;
-  margin-right: .5em;
+  font-size: 0.8em;
+  margin-right: 0.5em;
   text-align: right;
 }
 
 .selectLinks span {
   color: $theme.linkColor;
   cursor: pointer;
-  margin-left: .2em;
+  margin-left: 0.2em;
 }
 
 div#package div.importOption {
@@ -180,7 +182,8 @@ ul.package li.xitem div.xitemcontainer span.checkbox {
 }
 
 ul.package li.xitem div.xitemcontainer div.spacename {
-  background: transparent url('/file/resources/icons/silk/folder.gif') no-repeat scroll 0 .1em;
+  background: transparent url('/file/resources/icons/silk/folder.gif') no-repeat
+    scroll 0 0.1em;
   cursor: pointer;
   font-weight: bold;
   padding-left: 30px;
@@ -189,9 +192,9 @@ ul.package li.xitem div.xitemcontainer div.spacename {
 ul.package li.xitem div.xitemcontainer div.selection {
   color: $theme.textSecondaryColor;
   margin-left: auto;
-  font-size: .8em;
+  font-size: 0.8em;
   line-height: 1.7em;
-  margin-right: .2em;
+  margin-right: 0.2em;
 }
 
 div#package .hidden {
@@ -210,12 +213,12 @@ ul.pages li.xitem,
 ul.package li.xitem {
   list-style-type: none;
 
-  >div.xitemcontainer {
+  > div.xitemcontainer {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 
-    >i {
+    > i {
       width: 10px;
       margin-left: 5px;
       margin-right: 5px;
@@ -232,7 +235,8 @@ ul.package li.xitem {
 }
 
 .documentName {
-  background: transparent url('/file/resources/icons/silk/page_white_text.gif') no-repeat scroll 0 0;
+  background: transparent url('/file/resources/icons/silk/page_white_text.gif')
+    no-repeat scroll 0 0;
   padding-left: 20px;
 }
 
@@ -241,14 +245,14 @@ ul.package ul.pages li.xitem div.xpagecontainer input {
 }
 
 .historyStrategyOption {
-  font-size: .9em;
+  font-size: 0.9em;
   line-height: 1.2em;
   margin-bottom: 0;
 }
 
 #packagecontainer .buttonwrapper {
   display: block;
-  margin-top: .5em;
+  margin-top: 0.5em;
 }
 
 .generalOverlay .main.layoutsubsection {

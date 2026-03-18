@@ -49,31 +49,34 @@ external js-files
  * Don't use setBody("...") on overlay dialog, instead set content of 
  * div with id="yuiOverlayContainer".
  */
-if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
-if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
+if (typeof CELEMENTS == 'undefined') {
+  var CELEMENTS = {};
+}
+if (typeof CELEMENTS.cookie == 'undefined') {
+  CELEMENTS.cookie = {};
+}
 
-(function() {
-
-//////////////////////////////////////////////////////////////////////////////
-// Celements check third party cookies enabled class
-//////////////////////////////////////////////////////////////////////////////
-  CELEMENTS.cookie.CookiesEnabled = function(configObj) {
+(function () {
+  //////////////////////////////////////////////////////////////////////////////
+  // Celements check third party cookies enabled class
+  //////////////////////////////////////////////////////////////////////////////
+  CELEMENTS.cookie.CookiesEnabled = function (configObj) {
     // constructor
     configObj = configObj || {};
     this._init(configObj);
   };
 
-(function() {
-  var CCE = CELEMENTS.cookie.CookiesEnabled;
+  (function () {
+    var CCE = CELEMENTS.cookie.CookiesEnabled;
 
-  CELEMENTS.cookie.CookiesEnabled.prototype = {
-      _frameId : undefined,
-      _thirdPartyURL : undefined,
-      _cookiesDisabledMessageURL : undefined,
-      _cookiesEnabledMessageURL : undefined,
-      _callbackFunction : undefined,
-      
-      _init : function(configObj) {
+    CELEMENTS.cookie.CookiesEnabled.prototype = {
+      _frameId: undefined,
+      _thirdPartyURL: undefined,
+      _cookiesDisabledMessageURL: undefined,
+      _cookiesEnabledMessageURL: undefined,
+      _callbackFunction: undefined,
+
+      _init: function (configObj) {
         var _me = this;
         configObj = configObj || {};
         _me._frameId = configObj.frameId || 'cel_checkThirdPartyCookiesEnabled';
@@ -82,44 +85,54 @@ if(typeof CELEMENTS.cookie=="undefined"){CELEMENTS.cookie={};};
         _me._cookiesEnabledMessageURL = configObj.cookiesEnabledMessageURL;
         _me._callbackFunction = configObj.callback;
       },
-      
-      _defaultCallback : function(response) {
+
+      _defaultCallback: function (response) {
         var _me = this;
-        var cookiesEnabled = ('true' == response.data.replace(/thirdPartyCookiesEnabled=/g, ''));
+        var cookiesEnabled =
+          'true' == response.data.replace(/thirdPartyCookiesEnabled=/g, '');
         $(_me._frameId).remove();
         var overlayConf = {
-            fixedcenter: true,
-            close: true,
-            additionalCssClass: 'testclass'
+          fixedcenter: true,
+          close: true,
+          additionalCssClass: 'testclass',
         };
-        if(cookiesEnabled && _me._cookiesEnabledMessageURL) {
+        if (cookiesEnabled && _me._cookiesEnabledMessageURL) {
           overlayConf.overlayURL = _me._cookiesEnabledMessageURL;
-        } else if(!cookiesEnabled && _me._cookiesDisabledMessageURL) {
+        } else if (!cookiesEnabled && _me._cookiesDisabledMessageURL) {
           overlayConf.overlayURL = _me._cookiesDisabledMessageURL;
         }
-        if(overlayConf.overlayURL) {
+        if (overlayConf.overlayURL) {
           var overlay = new CELEMENTS.presentation.Overlay();
           overlay.openCelPageInOverlay(overlayConf);
         }
       },
-      
-      checkIsThirdPartyCookiesEnabled : function(callback) {
+
+      checkIsThirdPartyCookiesEnabled: function (callback) {
         var _me = this;
         callback = callback || _me._callbackFunction || _me._defaultCallback;
-        if(_me._thirdPartyURL) {
-          if(!window.location.origin) { // IE Fix
-            window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+        if (_me._thirdPartyURL) {
+          if (!window.location.origin) {
+            // IE Fix
+            window.location.origin =
+              window.location.protocol +
+              '//' +
+              window.location.hostname +
+              (window.location.port ? ':' + window.location.port : '');
           }
           var url = _me._thirdPartyURL + '&domain=' + window.location.origin;
-          var checkFrame = new Element('iframe', { id : _me._frameId, src : url });
+          var checkFrame = new Element('iframe', {
+            id: _me._frameId,
+            src: url,
+          });
           checkFrame.hide();
           $(document.body).insert(checkFrame);
           Event.observe(window, 'message', callback.bind(_me));
         } else {
-          console.log('No external URL to check third party cookies configured.');
+          console.log(
+            'No external URL to check third party cookies configured.',
+          );
         }
-      }
-  };
-})();
-
+      },
+    };
+  })();
 })();

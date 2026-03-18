@@ -1,16 +1,19 @@
-body#body{
-  background-color: #FFF;
+body#body {
+  background-color: #fff;
   color: #000;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: #000;
 }
 
 #companylogo img {
- background-image: url("xwlogoblack.png");
- height: 91px;
- width: 136px;
+  background-image: url('xwlogoblack.png');
+  height: 91px;
+  width: 136px;
 }
 
 /*
@@ -19,7 +22,8 @@ Space header, footer
 ---------------------------------------
 */
 
-#headerspace hr, #footerglobal hr{
+#headerspace hr,
+#footerglobal hr {
   background-color: #000;
 }
 /*
@@ -28,29 +32,33 @@ Content
 ---------------------------------------
 */
 
-#xwikieditor.layoutsection, .layoutsubsection, #xwikidatacontents{
-  border-color: #DDD;
+#xwikieditor.layoutsection,
+.layoutsubsection,
+#xwikidatacontents {
+  border-color: #ddd;
 }
 /*
 ---------------------------------------
 Zone for Comments, attachments, History... 
 ---------------------------------------
 */
-table.xwikidatatable, table.xwikidatatable th{
-  border-color: #DDD;
+table.xwikidatatable,
+table.xwikidatatable th {
+  border-color: #ddd;
 }
-table.xwikidatatable th{
+table.xwikidatatable th {
   color: #000;
-  background-color: #CCC;
-  border-color: #DDD;
+  background-color: #ccc;
+  border-color: #ddd;
 }
 
-.xwikiintracontent legend, .xwikiintracontent fieldset{
-  border-color: #DDD;
+.xwikiintracontent legend,
+.xwikiintracontent fieldset {
+  border-color: #ddd;
 }
 
-.xwikiintracontent fieldset.collapsed legend{
-  background-color: #CCC;
+.xwikiintracontent fieldset.collapsed legend {
+  background-color: #ccc;
 }
 
 /*
@@ -58,10 +66,10 @@ table.xwikidatatable th{
 Menu
 ---------------------------------------
 */
-.submenu{
-  background-color: #FFF;
-  border-color: #DDD;
-  border-top-color: #FFF;
+.submenu {
+  background-color: #fff;
+  border-color: #ddd;
+  border-top-color: #fff;
 }
 
 /*
@@ -69,14 +77,14 @@ Menu
 "Message Boxes"
 ---------------------------------------------
 */
-fieldset.xwikimessage{
+fieldset.xwikimessage {
   border-color: #000;
-  background-color: #EEE;
+  background-color: #eee;
 }
 
-fieldset.xwikimessage legend{
+fieldset.xwikimessage legend {
   background-color: #000;
-  color: #FFF;
+  color: #fff;
 }
 
 /*
@@ -84,8 +92,8 @@ fieldset.xwikimessage legend{
 Editors
 ---------------------------------------
 */
-#xwikicontentedit{
-  border-color: #DDD;
+#xwikicontentedit {
+  border-color: #ddd;
 }
 
 /*
@@ -93,20 +101,20 @@ Editors
 Tabs
 ---------------------------------------
 */
-.xwikitabbar li{
-  background-color: #CCC;
-  border-right-color: #BBB;
-  border-left-color: #DDD;
-  border-top-color: #DDD;
+.xwikitabbar li {
+  background-color: #ccc;
+  border-right-color: #bbb;
+  border-left-color: #ddd;
+  border-top-color: #ddd;
 }
 
-.xwikitabbar li a{
+.xwikitabbar li a {
   color: #000 !important;
 }
-.xwikitabbar li.active{
-  background-color: #FFF !important;
-  border-color: #DDD;
-  border-bottom-color: #FFF;
+.xwikitabbar li.active {
+  background-color: #fff !important;
+  border-color: #ddd;
+  border-bottom-color: #fff;
 }
 
 /*
@@ -114,16 +122,16 @@ Tabs
 Panels
 ---------------------------------------
 */
-.fakepanel{
-  background-color: #EEE;
-  border-color: #DDD;
+.fakepanel {
+  background-color: #eee;
+  border-color: #ddd;
 }
 
-.panel{
-  border-color: #DDD;
+.panel {
+  border-color: #ddd;
 }
-.xwikipaneltitle{
-  background-color: #CCC;
+.xwikipaneltitle {
+  background-color: #ccc;
 }
 
 /*
@@ -131,19 +139,19 @@ Panels
 Rico Acordeon -- Sintax Help Panel
 ----------------------------------
 */
-.accordion{
-  border-color: #DDD !important;
+.accordion {
+  border-color: #ddd !important;
 }
-.accordionTabContentBox table th{
-  background-color: #FFF;
-  border-bottom-color: #DDD;
+.accordionTabContentBox table th {
+  background-color: #fff;
+  border-bottom-color: #ddd;
 }
 
-.accordionTabTitleBar{
-  border-color: #FFF;
-  border-bottom-color: #DDD;
-  border-right-color: #DDD;
-  background-color: #EEE;
+.accordionTabTitleBar {
+  border-color: #fff;
+  border-bottom-color: #ddd;
+  border-right-color: #ddd;
+  background-color: #eee;
 }
 
 /*
@@ -152,36 +160,41 @@ Misc
 ----------------------------------
 */
 
-#xwikihelpsyntax{
-  border-top-color: #DDD;
+#xwikihelpsyntax {
+  border-top-color: #ddd;
 }
 
-tr.row.odd{
-  background-color: #EEE;
+tr.row.odd {
+  background-color: #eee;
 }
-tr.row.even{
-  background-color: #FFF;
+tr.row.even {
+  background-color: #fff;
 }
-tr th{
-  background-color: #EEE;
+tr th {
+  background-color: #eee;
 }
-a:link{
+a:link {
   color: #000;
 }
-a:visited{
+a:visited {
   color: #000;
 }
 
-.button, .xwikibuttonlink a{
-  background-color: #CCC;
+.button,
+.xwikibuttonlink a {
+  background-color: #ccc;
   color: #000;
 }
-.button:hover, .xwikibuttonlink a:hover{
-  background-color: #FFD;
+.button:hover,
+.xwikibuttonlink a:hover {
+  background-color: #ffd;
 }
 
-#xwikirightstable, #xwikirightstable th, #xwikirightstable td, #xwikirightstable tr{
-  border-color: #DDD;
+#xwikirightstable,
+#xwikirightstable th,
+#xwikirightstable td,
+#xwikirightstable tr {
+  border-color: #ddd;
 }
 
 .article_footer {
@@ -190,15 +203,15 @@ a:visited{
 }
 
 .xwikiuserblog .rssfeed {
-  border-top-color: #DDD;
-  border-left-color: #DDD;
-  border-bottom-color: #EEE;
-  border-right-color: #EEE;
+  border-top-color: #ddd;
+  border-left-color: #ddd;
+  border-bottom-color: #eee;
+  border-right-color: #eee;
 }
-.rsschanneltitle{
+.rsschanneltitle {
   background-color: transparent;
 }
-.currentspace a{
+.currentspace a {
   color: #000 !important;
-  background-color: #CCC;
+  background-color: #ccc;
 }

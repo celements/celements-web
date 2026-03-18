@@ -1,9 +1,10 @@
-html, body {
-  height: 100%;  
+html,
+body {
+  height: 100%;
 }
 .generalOverlay {
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
   z-index: 99; /** only needed for old celements yui overlay **/
   position: fixed;
   top: 0px;
@@ -12,7 +13,7 @@ html, body {
 .OverlayBack {
   background-color: black;
   opacity: 0.5;
-  filter:alpha(opacity=50);
+  filter: alpha(opacity=50);
 }
 #cel_langbar {
   margin-bottom: 13px;
@@ -21,211 +22,224 @@ html, body {
   margin-right: 13px;
 }
 .main.layoutsubsection {
-  margin:50px auto auto;
-  padding:30px;
+  margin: 50px auto auto;
+  padding: 30px;
   background: white;
   position: relative;
 }
 #closebutton {
-  background-image:url(close.png);
-  background-position:left top;
-  background-repeat:no-repeat;
-  height:30px;
-  position:absolute;
-  right:-15px;
-  top:-15px;
-  width:30px;
+  background-image: url(close.png);
+  background-position: left top;
+  background-repeat: no-repeat;
+  height: 30px;
+  position: absolute;
+  right: -15px;
+  top: -15px;
+  width: 30px;
 }
 #closebutton:hover {
-background-image:url("close-hover.png");
-background-position:left top;
-background-repeat:no-repeat;
-height:30px;
-position:absolute;
-right:-15px;
-top:-15px;
-width:30px;
+  background-image: url('close-hover.png');
+  background-position: left top;
+  background-repeat: no-repeat;
+  height: 30px;
+  position: absolute;
+  right: -15px;
+  top: -15px;
+  width: 30px;
 }
-.main.layoutsubsection{
-	position:relative;
-	width:800px;
+.main.layoutsubsection {
+  position: relative;
+  width: 800px;
 }
 
 /* Newsletter */
 
-.NewsletterAddressList .main.layoutsubsection{
-  position:relative;
+.NewsletterAddressList .main.layoutsubsection {
+  position: relative;
   width: 1050px;
 }
-newsletter_send_answer{
-	overflow-x:hidden;
-	overflow-y:auto;
+newsletter_send_answer {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
-#newsletter_send_answer .cel_newsletter_info_title{
-	font-size:16px;
-	line-height:20px;
-	margin-bottom:5px;
-	margin-top:5px;
-	text-decoration:underline;
+#newsletter_send_answer .cel_newsletter_info_title {
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  text-decoration: underline;
 }
 
-#newsletter_send_answer .cel_newsletter_receivers_groups{
-	width:370px;
-	height:100px;
-	margin-bottom:15px;
-	float:left;
-	display:block;
+#newsletter_send_answer .cel_newsletter_receivers_groups {
+  width: 370px;
+  height: 100px;
+  margin-bottom: 15px;
+  float: left;
+  display: block;
 }
-#newsletter_send_answer .cel_newsletter_receivers_groups ul{
-	height:80px;
-	margin-top:5px;
-	overflow-x:hidden;
-	overflow-y:auto;
-	border:1px solid black;
+#newsletter_send_answer .cel_newsletter_receivers_groups ul {
+  height: 80px;
+  margin-top: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid black;
 }
-#newsletter_send_answer .cel_newsletter_receivers_groups ul li.cel_newsletter_row_uneven{
-	padding-left:5px;
-	background-color:#F0F0F0;
+#newsletter_send_answer
+  .cel_newsletter_receivers_groups
+  ul
+  li.cel_newsletter_row_uneven {
+  padding-left: 5px;
+  background-color: #f0f0f0;
 }
-#newsletter_send_answer .cel_newsletter_receivers_groups ul li.cel_newsletter_row_even{
-	padding-left:5px;
-	background-color:#CCCCCC;
+#newsletter_send_answer
+  .cel_newsletter_receivers_groups
+  ul
+  li.cel_newsletter_row_even {
+  padding-left: 5px;
+  background-color: #cccccc;
 }
-#newsletter_send_answer .cel_newsletter_receivers_single_users{
-	width:370px;
-	height:100px;
-	margin-bottom:15px;
-	float:right;
-	display:block;
+#newsletter_send_answer .cel_newsletter_receivers_single_users {
+  width: 370px;
+  height: 100px;
+  margin-bottom: 15px;
+  float: right;
+  display: block;
 }
-#newsletter_send_answer .cel_newsletter_receivers_single_users ul{
-	height:80px;
-	margin-top:5px;
-	overflow-x:hidden;
-	overflow-y:auto;
-	border:1px solid black;
+#newsletter_send_answer .cel_newsletter_receivers_single_users ul {
+  height: 80px;
+  margin-top: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid black;
 }
-#newsletter_send_answer .cel_newsletter_receivers_single_users ul li.cel_newsletter_row_uneven{
-	padding-left:5px;
-	background-color:#F0F0F0;
+#newsletter_send_answer
+  .cel_newsletter_receivers_single_users
+  ul
+  li.cel_newsletter_row_uneven {
+  padding-left: 5px;
+  background-color: #f0f0f0;
 }
-#newsletter_send_answer .cel_newsletter_receivers_single_users ul li.cel_newsletter_row_even{
-	padding-left:5px;
-	background-color:#CCCCCC;
+#newsletter_send_answer
+  .cel_newsletter_receivers_single_users
+  ul
+  li.cel_newsletter_row_even {
+  padding-left: 5px;
+  background-color: #cccccc;
 }
-#newsletter_send_answer .cel_newsletter_receivers_form{
-	clear:both;
+#newsletter_send_answer .cel_newsletter_receivers_form {
+  clear: both;
 }
-#newsletter_send_answer .cel_newsletter_form_description{
-	font-size:16px;
-	line-height:20px;
-	text-decoration:underline;
+#newsletter_send_answer .cel_newsletter_form_description {
+  font-size: 16px;
+  line-height: 20px;
+  text-decoration: underline;
 }
-#newsletter_send_answer #newsletter_send input{
-	margin-top:10px;
-	margin-bottom:5px;
-	width:250px;
-	display:block;
+#newsletter_send_answer #newsletter_send input {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 250px;
+  display: block;
 }
-#newsletter_send_answer #newsletter_send .cel_newsletter_form_input_subject{
-	width:794px;
+#newsletter_send_answer #newsletter_send .cel_newsletter_form_input_subject {
+  width: 794px;
 }
 form#newsletter_send input#newsletterSubmitButton {
-	margin-top: 20px;
+  margin-top: 20px;
   float: left;
 }
 form#newsletter_send input#newsletterTestSubmitButton,
 form#newsletter_send span#testResultBoxSpan {
-	display: block;
-	margin-left: 545px;
-	margin-top: 25px;
+  display: block;
+  margin-left: 545px;
+  margin-top: 25px;
 }
 
 /* User admin */
 
-.UserAdminSheet form#update{
-	background-color:#B0B0B0;
-  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+.UserAdminSheet form#update {
+  background-color: #b0b0b0;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
-	font-size:12px;
-	line-height:19px;
+  font-size: 12px;
+  line-height: 19px;
 }
-.UserAdminSheet form#update table.block{
-	border-collapse:collapse;
-	table-layout:fixed;
+.UserAdminSheet form#update table.block {
+  border-collapse: collapse;
+  table-layout: fixed;
 }
-.UserAdminSheet .UserAdminInfos .xwikieditcontent{
-	position:relative;
+.UserAdminSheet .UserAdminInfos .xwikieditcontent {
+  position: relative;
 }
-.UserAdminSheet .UserAdminInfos table{
-	width:500px;
+.UserAdminSheet .UserAdminInfos table {
+  width: 500px;
 }
-.UserAdminSheet form#update #xwikieditcontent{
-	width:auto;
+.UserAdminSheet form#update #xwikieditcontent {
+  width: auto;
 }
-.UserAdminSheet form#update .UserAdminInfos{
-	position:relative;
-	display:block;
-	float:left;
-	width:500px;
+.UserAdminSheet form#update .UserAdminInfos {
+  position: relative;
+  display: block;
+  float: left;
+  width: 500px;
 }
-.UserAdminSheet form#update .UserAdminGroupdata{
-	position:relative;
-	width:250px;
-	display:block;
-	float:left;
+.UserAdminSheet form#update .UserAdminGroupdata {
+  position: relative;
+  width: 250px;
+  display: block;
+  float: left;
 }
-.UserAdminSheet form#update #xwikieditcontent .editblock{
-	position:relative;
-	padding-bottom:2px;
+.UserAdminSheet form#update #xwikieditcontent .editblock {
+  position: relative;
+  padding-bottom: 2px;
 }
-.UserAdminSheet form#update #xwikieditcontent .editblock dd select{
-	height:20px;
+.UserAdminSheet form#update #xwikieditcontent .editblock dd select {
+  height: 20px;
 }
-.UserAdminSheet form#update td.AdminUserName{
-	width:212px;
-	border:none;
+.UserAdminSheet form#update td.AdminUserName {
+  width: 212px;
+  border: none;
 }
-.UserAdminSheet form#update td.AdminUserName input{
-	border:none;
+.UserAdminSheet form#update td.AdminUserName input {
+  border: none;
 }
-.UserAdminSheet form#update td.td_loginname{
-	padding-right:10px;
-	text-align:left;
+.UserAdminSheet form#update td.td_loginname {
+  padding-right: 10px;
+  text-align: left;
 }
-.UserAdminSheet form#update .UserAdminInfos .editblock{
-	position:relative;
+.UserAdminSheet form#update .UserAdminInfos .editblock {
+  position: relative;
 }
-.UserAdminSheet form#update .editblock label{
-	float:none;
-	width:auto;
-	text-align:right;
-	padding-right:10px;
-	padding-top:1px;
-	width:190px;
-	display:block;
+.UserAdminSheet form#update .editblock label {
+  float: none;
+  width: auto;
+  text-align: right;
+  padding-right: 10px;
+  padding-top: 1px;
+  width: 190px;
+  display: block;
 }
 
-.UserAdminSheet form#update .editblock dl{
-	margin:0px;
+.UserAdminSheet form#update .editblock dl {
+  margin: 0px;
 }
-.UserAdminSheet form#update .editblock dd{
-	position:absolute;
-	top:0px;
-	left:200px;
-	margin:0px;
+.UserAdminSheet form#update .editblock dd {
+  position: absolute;
+  top: 0px;
+  left: 200px;
+  margin: 0px;
 }
-.UserAdminSheet form#update .clear{
-	clear:both;
+.UserAdminSheet form#update .clear {
+  clear: both;
 }
-.UserAdminSheet form#update table, .UserAdminSheet form#update table td{
-	font-size:12px;
-	line-height:19px;
+.UserAdminSheet form#update table,
+.UserAdminSheet form#update table td {
+  font-size: 12px;
+  line-height: 19px;
 }
 .generalOverlay .layoutsubsection #cel_overlaybody {
   position: relative;
   width: 100%;
-  overflow : auto;
+  overflow: auto;
 }
 .generalOverlay .layoutsubsection,
 .generalOverlay .layoutsubsection p,
@@ -234,7 +248,7 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay .layoutsubsection li {
   font-size: 12px;
   line-height: 16px;
-  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
   color: black;
 }
@@ -248,7 +262,7 @@ form#newsletter_send span#testResultBoxSpan {
   line-height: 21px;
   margin-left: 0;
   margin-bottom: 25px;
-  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
   color: black;
 }
@@ -265,15 +279,15 @@ form#newsletter_send span#testResultBoxSpan {
   font-size: 15px;
   line-height: 18px;
   margin-bottom: 25px;
-  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
   color: black;
 }
 .generalOverlay .layoutsubsection #cel_overlaybody .changePassword dl dd {
-  margin-left:160px;
-  position:relative;
-  top:-16px;
-  font-family: "Open Sans", Tahoma,Geneva,Helvetica,Arial,sans-serif;
+  margin-left: 160px;
+  position: relative;
+  top: -16px;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
   color: black;
 }
@@ -283,9 +297,9 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #recylceBinList table,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table {
-	width: 785px;
-	border-collapse: collapse;
-	table-layout: fixed;
+  width: 785px;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 .generalOverlay #cel_overlaybody #AttachmentHistory table th,
 .generalOverlay #cel_overlaybody #AttachmentHistory table td,
@@ -295,84 +309,104 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table td,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table th,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table td {
-	padding: 4px;
+  padding: 4px;
 }
 .generalOverlay #cel_overlaybody #AttachmentHistory tabl th,
 .generalOverlay #cel_overlaybody #recylceBinList table th,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table th,
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table th {
-	padding: 2px;
-	text-align: left;
-	border-bottom: 2px solid black;
+  padding: 2px;
+  text-align: left;
+  border-bottom: 2px solid black;
 }
 .generalOverlay #cel_overlaybody #AttachmentHistory table .tr_odd td,
 .generalOverlay #cel_overlaybody #recylceBinList table .tr_odd td,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .tr_odd td,
-.generalOverlay #cel_overlaybody table.cel_whatsnew_table .tr_odd td { 
-	background-color: #E1E1E1;
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table .tr_odd td {
+  background-color: #e1e1e1;
 }
 .generalOverlay #cel_overlaybody #AttachmentHistory table tr:hover td,
 .generalOverlay #cel_overlaybody #recylceBinList table tr:hover td,
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table tr:hover td,
-.generalOverlay #cel_overlaybody table.cel_whatsnew_table tr:hover td { 
-	background-color: #EEEEEE;
+.generalOverlay #cel_overlaybody table.cel_whatsnew_table tr:hover td {
+  background-color: #eeeeee;
 }
 
 /* WIDTH for Attachment History */
 .generalOverlay #cel_overlaybody #AttachmentHistory table .column_image {
-	width: 90px;
+  width: 90px;
 }
 .generalOverlay #cel_overlaybody #AttachmentHistory table .column_version {
-	width: 135px;
+  width: 135px;
 }
 .generalOverlay #cel_overlaybody #AttachmentHistory table .column_size {
-	width: 160px;
+  width: 160px;
 }
 .generalOverlay #cel_overlaybody #AttachmentHistory table .column_author {
-	width: 200px;
+  width: 200px;
 }
 .generalOverlay #cel_overlaybody #AttachmentHistory table .column_date {
-	width: 200px;
+  width: 200px;
 }
 
 /* WIDTH for Attachment Recycle Bin */
 .FullAttRecylceBin .main.layoutsubsection {
-	width: 900px;
+  width: 900px;
 }
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table {
-	width: 885px;
+  width: 885px;
 }
-.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_filename {
-	width:295px;
-	overflow: hidden;
-	word-wrap: break-word;
+.generalOverlay
+  #cel_overlaybody
+  #recylceBinAttachmentList
+  table
+  .column_filename {
+  width: 295px;
+  overflow: hidden;
+  word-wrap: break-word;
 }
-.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_docName {
-	width: 200px;
+.generalOverlay
+  #cel_overlaybody
+  #recylceBinAttachmentList
+  table
+  .column_docName {
+  width: 200px;
 }
-.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_deldate {
-	width: 140px;
+.generalOverlay
+  #cel_overlaybody
+  #recylceBinAttachmentList
+  table
+  .column_deldate {
+  width: 140px;
 }
-.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_deleter {
-	width: 130px;
+.generalOverlay
+  #cel_overlaybody
+  #recylceBinAttachmentList
+  table
+  .column_deleter {
+  width: 130px;
 }
-.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_actions {
-	width: 120px;
+.generalOverlay
+  #cel_overlaybody
+  #recylceBinAttachmentList
+  table
+  .column_actions {
+  width: 120px;
 }
 
 /* WIDTH for Document Recycle Bin */
 .generalOverlay #cel_overlaybody #recylceBinList table .column_docName {
-	width: 220px;
+  width: 220px;
 }
 .generalOverlay #cel_overlaybody #recylceBinList table .column_numDelVersions {
-	width: 130px;
+  width: 130px;
 }
 .generalOverlay #cel_overlaybody #recylceBinList table .column_deleter,
 .generalOverlay #cel_overlaybody #recylceBinList table .column_deldate {
-	width: 110px;
+  width: 110px;
 }
 .generalOverlay #cel_overlaybody #recylceBinList table .column_actions {
-	width: 215px;
+  width: 215px;
 }
 
 /* fix for password change form in baseskin */
@@ -387,7 +421,7 @@ form#newsletter_send span#testResultBoxSpan {
 }
 
 #cel_pwdrecovery_process_description {
-		padding: 0 0 20px;
+  padding: 0 0 20px;
 }
 
 .generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description form,
@@ -395,23 +429,21 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description input,
 .generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description select,
 .generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description textarea {
-	margin: 5px;
+  margin: 5px;
 }
 
 /* MOBILE LANDSCAPE */
 
-@media only screen and (max-width: 800px) { 
-	
-	.main.layoutsubsection {
-		position:relative;
-		width:75%;
-	}
-	
-	#cel_pwdrecovery_process_description {
-		padding: 0 0 20px;
-	}
-}
+@media only screen and (max-width: 800px) {
+  .main.layoutsubsection {
+    position: relative;
+    width: 75%;
+  }
 
+  #cel_pwdrecovery_process_description {
+    padding: 0 0 20px;
+  }
+}
 
 /* MOBILE PORTRAIT 
 

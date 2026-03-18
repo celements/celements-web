@@ -1,4 +1,4 @@
-@CHARSET "UTF-8";
+@charset "UTF-8";
 
 /** yui overlay **/
 body div.mask.cel-YuiOverlay {
@@ -19,8 +19,8 @@ body div.mask.cel-YuiOverlay {
   height: 0px;
 }
 .cel-YuiOverlay .yui-panel,
-.cel-YuiOverlay .yui-panel .hd, 
-.cel-YuiOverlay .yui-panel .bd, 
+.cel-YuiOverlay .yui-panel .hd,
+.cel-YuiOverlay .yui-panel .bd,
 .cel-YuiOverlay .yui-panel .ft {
   background: white;
   color: #333;
@@ -33,13 +33,13 @@ body div.mask.cel-YuiOverlay {
   right: -15px;
   width: 30px;
   height: 30px;
-  background-image:url('close.png');
+  background-image: url('close.png');
   background-repeat: no-repeat;
   background-position: top right;
   cursor: pointer;
 }
 .cel-YuiOverlay .container-close:hover {
-  background-image:url('close-hover.png');
+  background-image: url('close-hover.png');
 }
 .cel-YuiOverlay .container-close:focus {
   border: 0px solid black;
@@ -53,7 +53,7 @@ body div.mask.cel-YuiOverlay {
 }
 .cel-YuiOverlay .yui-panel .hd,
 .cel-YuiOverlay .yui-panel .ft {
-  display:none;
+  display: none;
 }
 .cel-YuiOverlay .yui-panel-container {
   padding: 0px;

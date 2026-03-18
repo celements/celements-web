@@ -22,63 +22,71 @@
  * Celements navigation hover collapse class
  * This is the Celements navigation hover class. It collapses second navigation levels
  * and shows them on hover over first level navigation items.
- * 
+ *
  */
-if(typeof CELEMENTS=="undefined"){var CELEMENTS={};};
-if(typeof CELEMENTS.navigation=="undefined"){CELEMENTS.navigation={};};
+if (typeof CELEMENTS == 'undefined') {
+  var CELEMENTS = {};
+}
+if (typeof CELEMENTS.navigation == 'undefined') {
+  CELEMENTS.navigation = {};
+}
 
-(function(window, undefined) {
-
+(function (window, undefined) {
   var isMobile = {
-      Android: function() {
-        return navigator.userAgent.match(/Android/i);
-      },
-      BlackBerry: function() {
-        return navigator.userAgent.match(/BlackBerry/i);
-      },
-      iOS: function() {
-        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-      },
-      iPhone: function() {
-        return navigator.userAgent.match(/iPhone/i);
-      },
-      iPod: function() {
-        return navigator.userAgent.match(/iPod/i);
-      },
-      iPad: function() {
-        return navigator.userAgent.match(/iPad/i);
-      },
-      Opera: function() {
-        return navigator.userAgent.match(/Opera Mini/i);
-      },
-      Windows: function() {
-        return navigator.userAgent.match(/IEMobile/i);
-      },
-      Simulator: function() {
-        // http://iphone4simulator.com/ maybe
-        return (window.top != window);
-      },
-      any: function() {
-        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() 
-            || isMobile.Opera() || isMobile.Windows());
-      }
-    };
+    Android: function () {
+      return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function () {
+      return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function () {
+      return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    iPhone: function () {
+      return navigator.userAgent.match(/iPhone/i);
+    },
+    iPod: function () {
+      return navigator.userAgent.match(/iPod/i);
+    },
+    iPad: function () {
+      return navigator.userAgent.match(/iPad/i);
+    },
+    Opera: function () {
+      return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function () {
+      return navigator.userAgent.match(/IEMobile/i);
+    },
+    Simulator: function () {
+      // http://iphone4simulator.com/ maybe
+      return window.top != window;
+    },
+    any: function () {
+      return (
+        isMobile.Android() ||
+        isMobile.BlackBerry() ||
+        isMobile.iOS() ||
+        isMobile.Opera() ||
+        isMobile.Windows()
+      );
+    },
+  };
 
-//////////////////////////////////////////////////////////////////////////////
-// Celements navigation NavOpenOnHover
-//////////////////////////////////////////////////////////////////////////////
-CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
-  // constructor
-  this._init(secondMenuLevelCssSelector);
-};
+  //////////////////////////////////////////////////////////////////////////////
+  // Celements navigation NavOpenOnHover
+  //////////////////////////////////////////////////////////////////////////////
+  CELEMENTS.navigation.NavOpenOnHover = function (secondMenuLevelCssSelector) {
+    // constructor
+    this._init(secondMenuLevelCssSelector);
+  };
 
-(function() {
-  CELEMENTS.navigation.NavOpenOnHover.prototype = {
-      _secondMenuLevelCssSelector : undefined,
-      _scheduledHide : new Hash(),
-      _mainNavMouseOverBind : undefined,
+  (function () {
+    CELEMENTS.navigation.NavOpenOnHover.prototype = {
+      _secondMenuLevelCssSelector: undefined,
+      _scheduledHide: new Hash(),
+      _mainNavMouseOverBind: undefined,
 
-      _init : function(secondMenuLevelCssSelector) {
+      _init: function (secondMenuLevelCssSelector) {
         var _me = this;
         _me._secondMenuLevelCssSelector = secondMenuLevelCssSelector;
         _me._mainNavMouseOverBind = _me._mainNavMouseOver.curry(_me);
@@ -87,20 +95,23 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
         _me._registerNavigationHover();
       },
 
-      _hideAllNotActiveSubNavigations : function(skipSubNav) {
+      _hideAllNotActiveSubNavigations: function (skipSubNav) {
         var _me = this;
-        $$(_me._secondMenuLevelCssSelector).each(function(subNav) {
+        $$(_me._secondMenuLevelCssSelector).each(function (subNav) {
           var mainLi = subNav.up('li');
-          if (!mainLi.hasClassName('active') && (!skipSubNav || (skipSubNav != subNav))) {
+          if (
+            !mainLi.hasClassName('active') &&
+            (!skipSubNav || skipSubNav != subNav)
+          ) {
             _me._cancelDelayedHide(subNav);
             subNav.hide();
           }
         });
       },
-  
-      _registerNavigationHover : function() {
+
+      _registerNavigationHover: function () {
         var _me = this;
-        $$(_me._secondMenuLevelCssSelector).each(function(subNav) {
+        $$(_me._secondMenuLevelCssSelector).each(function (subNav) {
           var mainLi = subNav.up('li');
           if (!mainLi.hasClassName('active')) {
             mainLi.observe('mouseover', _me._mainNavMouseOverBind);
@@ -108,14 +119,14 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
         });
       },
 
-      _mainNavMouseOver : function(myself, event) {
+      _mainNavMouseOver: function (myself, event) {
         var _me = myself;
         var mainLi = this;
         var subNav = mainLi.down('ul');
         _me._cancelDelayedHide(subNav);
         _me._hideAllNotActiveSubNavigations(subNav);
         if (subNav.visible()) {
-          subNav.setStyle({ 'opacity' : '1' });
+          subNav.setStyle({ opacity: '1' });
         } else {
           subNav.addClassName('navHover');
           subNav.appear({ duration: 0.2 });
@@ -123,8 +134,8 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
         mainLi.stopObserving('mouseout', _me._mainNavMouseOutBind);
         mainLi.observe('mouseout', _me._mainNavMouseOutBind);
       },
-      
-      _mainNavMouseOut : function(myself, event) {
+
+      _mainNavMouseOut: function (myself, event) {
         var _me = myself;
         var mainLi = this;
         var relTarg = event.relatedTarget || event.toElement;
@@ -132,32 +143,34 @@ CELEMENTS.navigation.NavOpenOnHover = function(secondMenuLevelCssSelector) {
         var insideMainLi = menuElem.up('li');
         if (!(insideMainLi === mainLi)) {
           var subNav = mainLi.down('ul');
-          _me._scheduledHide.set(subNav.id, _me._delayedHide.delay(0.5, myself, subNav));
-          subNav.setStyle({ 'opacity' : '0.8' });
+          _me._scheduledHide.set(
+            subNav.id,
+            _me._delayedHide.delay(0.5, myself, subNav),
+          );
+          subNav.setStyle({ opacity: '0.8' });
           mainLi.stopObserving('mouseout', _me._mainNavMouseOutBind);
         }
       },
-      
-      _delayedHide : function(myself, subNav) {
+
+      _delayedHide: function (myself, subNav) {
         var _me = myself;
         _me._scheduledHide.unset(subNav.id);
         subNav.fade({
-          'duration' : 0.2,
-          'afterFinish' : function() {
+          duration: 0.2,
+          afterFinish: function () {
             subNav.removeClassName('navHover');
-          }
+          },
         });
       },
-      
-      _cancelDelayedHide : function(subNav) {
+
+      _cancelDelayedHide: function (subNav) {
         var _me = this;
         var delayId = _me._scheduledHide.get(subNav.id);
         if (delayId) {
           window.clearTimeout(delayId);
           _me._scheduledHide.unset(subNav.id);
         }
-      }
-  };
-})();
-
+      },
+    };
+  })();
 })(window);
