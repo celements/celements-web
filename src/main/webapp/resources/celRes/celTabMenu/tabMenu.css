@@ -10,13 +10,12 @@ body div.celements3_tabMenu {
   margin-right: auto;
   margin-left: auto;
   position: relative;
-  z-index: 99;
-  /** needed because cel_overlay is on z-index: 99; **/
+  z-index: 99; /** needed because cel_overlay is on z-index: 99; **/
 }
 
 body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
 .celements3_tabMenu .celementsLoadingIndicator {
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-size: 12px;
   line-height: 17px;
   font-weight: 400;
@@ -66,7 +65,7 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   border-right: 1px solid #929292;
   border-bottom: 1px solid #929292;
   color: #cccccc;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-size: 12px;
   line-height: 13px;
   font-weight: 400;
@@ -92,7 +91,7 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
 }
 
 .yui-skin-sam .yui-dialog .ft span.default button {
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   background-color: #ff9900;
   color: #333333 !important;
 }
@@ -110,7 +109,7 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   border-right: 1px solid #929292;
   border-bottom: 1px solid #929292;
   color: #333333 !important;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-size: 10px;
   line-height: 10px;
   font-weight: 400;
@@ -123,14 +122,14 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
 }
 
 .celements3_tabMenu .saveButton .cel-button-active button {
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   background-color: #f0f0f0;
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
 
 .celements3_tabMenu .saveButton .cel-button-focus button {
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   background: none;
   background-color: #f0f0f0;
   border-bottom: 1px solid #f0f0f0;
@@ -192,7 +191,7 @@ body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
 .celements3_tabMenu input,
 .celements3_tabMenu select,
 .celements3_tabMenu textarea {
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-weight: 400;
   border: 1px solid #c5c5c5;
   font-size: 11px;
@@ -267,7 +266,7 @@ div.mask {
   line-height: 14px;
   color: #333333 !important;
   font-weight: 400;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
 }
 
 .celements3_tabMenu #tabMenuPanel .hd .actionButton,
@@ -280,7 +279,7 @@ div.mask {
   border-right: 1px solid #929292;
   border-bottom: 1px solid #929292;
   color: #333333 !important;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 14px;
   text-indent: 0px;

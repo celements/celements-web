@@ -30,11 +30,17 @@
 
 .close {
   position: absolute;
-  font: bold 10px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    bold 10px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-style: normal;
-  background-color: #B0B0B0;
-  color: #CCCCCC;
-  border: 1px solid #CCCCCC;
+  background-color: #b0b0b0;
+  color: #cccccc;
+  border: 1px solid #cccccc;
   margin: 0px;
   cursor: pointer;
 }
@@ -43,46 +49,70 @@
   position: absolute;
   border: 0px;
   margin: 0px;
-  font: bold 10px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    bold 10px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-style: normal;
   cursor: nw-resize;
-  background-color: #B0B0B0;
+  background-color: #b0b0b0;
 }
 
 .content_background {
   position: absolute;
   padding: 3px;
-  border: 1px solid #CCCCCC;
-  background-color: #B0B0B0;
+  border: 1px solid #cccccc;
+  background-color: #b0b0b0;
   overflow: auto;
-  font: bold 10px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    bold 10px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-style: normal;
   text-align: left;
-  color: #CCCCCC;
+  color: #cccccc;
   cursor: default;
 }
 
 .content {
   position: absolute;
   padding: 3px;
-  border: 2px solid #CCCCCC;
+  border: 2px solid #cccccc;
   overflow: auto;
-  font: bold 10px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    bold 10px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-style: normal;
   text-align: left;
-  color: #CCCCCC;
+  color: #cccccc;
   cursor: default;
 }
 
 .title {
   position: absolute;
-  border: 1px solid #CCCCCC;
+  border: 1px solid #cccccc;
   margin: 0px;
   padding-left: 5px;
-  background-color: #B0B0B0;
+  background-color: #b0b0b0;
   white-space: nowrap;
   overflow: hidden;
-  font: bold 10px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    bold 10px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-style: normal;
   text-align: left;
   color: #cccccc;
@@ -99,14 +129,14 @@ div#celements2_menu_bar {
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  color: #CCCCCC !important;
+  color: #cccccc !important;
   background-color: rgb(51, 51, 51);
-  border-bottom: 1px solid #4F4F2F;
+  border-bottom: 1px solid #4f4f2f;
   text-align: left;
   z-index: 100;
 }
 
-body>div#celements2_menu_bar {
+body > div#celements2_menu_bar {
   position: fixed;
 }
 
@@ -128,7 +158,7 @@ body>div#celements2_menu_bar {
 }
 
 #celements2_menu_bar .celements2_menu_bar_header_item {
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -144,7 +174,7 @@ body>div#celements2_menu_bar {
   padding-right: 8px;
   position: relative;
 
-  &>*:first-child {
+  & > *:first-child {
     height: 100%;
     display: flex;
     align-items: center;
@@ -181,7 +211,7 @@ body>div#celements2_menu_bar {
   padding: 6px 18px 2px 6px;
   height: auto;
   width: 182px;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -191,7 +221,7 @@ body>div#celements2_menu_bar {
   overflow: hidden;
   display: block;
   cursor: pointer;
-  color: #CCCCCC !important;
+  color: #cccccc !important;
   background: rgb(51, 51, 51) !important;
   background: rgba(51, 51, 51, 0.92) !important;
   text-decoration: none !important;
@@ -203,7 +233,7 @@ body>div#celements2_menu_bar {
   padding: 6px 18px 2px 6px;
   height: auto;
   width: 182px;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -254,12 +284,18 @@ body>div#celements2_menu_bar {
   width: 186px;
   height: 12px;
   overflow: hidden;
-  font: 400 12px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    400 12px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   letter-spacing: 0;
   word-spacing: 2px;
   font-style: normal;
   text-transform: uppercase;
-  color: #CCCCCC;
+  color: #cccccc;
   text-decoration: none;
   padding: 0px 3px 0px 3px;
   margin-bottom: 2px;
@@ -285,7 +321,7 @@ body>div#celements2_menu_bar {
   left: 0px;
   width: 181px;
   height: auto;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
@@ -293,7 +329,7 @@ body>div#celements2_menu_bar {
   font-style: normal;
   word-spacing: 2px;
   text-transform: none;
-  color: #CCCCCC !important;
+  color: #cccccc !important;
   text-decoration: none;
   cursor: pointer;
   padding: 5px 3px 5px 12px;
@@ -309,7 +345,7 @@ body>div#celements2_menu_bar {
   background-color: #ff9900 !important;
   width: 181px;
   height: auto;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-style: normal;
   font-size: 13px;
@@ -331,7 +367,7 @@ body>div#celements2_menu_bar {
 /* Form Validation Classes */
 .validation-advice {
   width: 152px;
-  color: #CCCCCC;
+  color: #cccccc;
   font-weight: bold;
   background-color: red;
   padding: 2px;
@@ -395,14 +431,26 @@ table.celements2_table td,
 }
 
 .celements2_input {
-  font: normal 12px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    normal 12px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   width: 150px;
   border: 1px solid #000000;
   padding: 2px;
 }
 
 .celements2_input_button {
-  font: bold 12px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    bold 12px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   cursor: pointer;
 }
 
@@ -411,12 +459,18 @@ table.celements2_table td,
 }
 
 .celements2_page_title {
-  font: 600 18px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    600 18px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   color: #999999;
 }
 
 .celements2_box {
-  background-color: #B0B0B0;
+  background-color: #b0b0b0;
   border: 1px dashed #999999;
   padding: 5px;
 }
@@ -435,21 +489,39 @@ table.celements2_table td,
   height: 20px;
   background-color: #666666;
   color: #f9f9f9;
-  font: 600 15px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    600 15px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   margin-bottom: 10px;
 }
 
 .celements2_box_subtitle {
   width: 100%;
   height: 15px;
-  background-color: #AAAAAA;
+  background-color: #aaaaaa;
   color: #f9f9f9;
-  font: 600 13px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    600 13px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   margin: 10px 0px 10px 0px;
 }
 
 .celements2_help_text {
-  font: 600 12px "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font:
+    600 12px 'Open Sans',
+    Tahoma,
+    Geneva,
+    Helvetica,
+    Arial,
+    sans-serif;
   margin-bottom: 10px;
 }
 
@@ -521,7 +593,7 @@ div.mask {
 }
 
 .cel_cm_blog_article .future {
-  background-color: #FF9999;
+  background-color: #ff9999;
 }
 
 .celements3_tabMenu .cel_rightsTab table.cel_rightsTable {
@@ -548,7 +620,7 @@ body.celementsmenubarvisible div.cel_cm_rte_content {
 }
 
 div#celements2_menu_bar div#celements2_logo {
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-size: 12px;
   line-height: 18px;
   font-weight: 400;
@@ -562,7 +634,7 @@ div#celements2_menu_bar div#celements2_logo {
 }
 
 div#celements2_menu_bar div#celements2_logo a {
-  color: #CCCCCC !important;
+  color: #cccccc !important;
   text-decoration: none !important;
 }
 
@@ -592,7 +664,7 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 ***********************************/
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker,
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker p {
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-size: 12px;
   line-height: 13px;
   font-weight: 400;
@@ -661,16 +733,16 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li,
-body>.cel_reorderNodes_proxy {
+body > .cel_reorderNodes_proxy {
   position: relative;
   padding: 2px 0px;
   font-size: 12px;
   line-height: 15px;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
   color: black;
 
-  list-style-image: url("document.gif");
+  list-style-image: url('document.gif');
   list-style-position: inside;
   border-left: 1px dotted gray;
 }
@@ -693,10 +765,26 @@ body>.cel_reorderNodes_proxy {
   background-color: white;
 }
 
-.generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
-.yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
-.generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_odd,
-.yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_odd {
+.generalOverlay
+  #cel_overlaybody
+  .reorderMode
+  ul.cel_presentation_reorder
+  li.cel_nav_even,
+.yui-panel-container
+  .cel_contentTab
+  .reorderMode
+  ul.cel_presentation_reorder
+  li.cel_nav_even,
+.generalOverlay
+  #cel_overlaybody
+  .reorderMode
+  ul.cel_presentation_reorder
+  li.cel_nav_odd,
+.yui-panel-container
+  .cel_contentTab
+  .reorderMode
+  ul.cel_presentation_reorder
+  li.cel_nav_odd {
   background-color: transparent;
 }
 
@@ -715,9 +803,17 @@ body>.cel_reorderNodes_proxy {
   right: 13px;
 }
 
-body>.cel_reorderNodes_proxy .docLangs,
-.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs,
-.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs {
+body > .cel_reorderNodes_proxy .docLangs,
+.generalOverlay
+  #cel_overlaybody
+  ul.cel_presentation_reorder
+  li.cel_reorderNodes_placeholder
+  .docLangs,
+.yui-panel-container
+  .cel_contentTab
+  ul.cel_presentation_reorder
+  li.cel_reorderNodes_placeholder
+  .docLangs {
   display: none;
 }
 
@@ -737,11 +833,16 @@ body>.cel_reorderNodes_proxy .docLangs,
   background-color: #555;
 }
 
-.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a+a,
-.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a+a,
-.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a+a,
-.celements3_tabMenu #con_langBar .docLangs a+a,
-.celements3_tabMenu #con_langBar .docLangs span+span {
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a + a,
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a + a,
+.yui-panel-container
+  .cel_contentTab
+  ul.cel_presentation_reorder
+  .docLangs
+  a
+  + a,
+.celements3_tabMenu #con_langBar .docLangs a + a,
+.celements3_tabMenu #con_langBar .docLangs span + span {
   margin-left: 1px;
 }
 
@@ -824,7 +925,7 @@ body #sitecontainer .cel_content_part table td,
 body #sitecontainer .cel_content_part li {
   font-size: 12px;
   line-height: 14px;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
   color: black;
   margin: 10px 0px;
@@ -840,7 +941,7 @@ body #sitecontainer .cel_content_part table td {
 }
 
 /* Import Manager */
-.cel_contentTab .editGallery_box input[type="submit"],
+.cel_contentTab .editGallery_box input[type='submit'],
 #cel_overlaybody #check_none,
 #cel_overlaybody #check_all,
 #cel_overlaybody #c3_import_button {
@@ -916,11 +1017,11 @@ iframe.apn-toolbar {
   display: none !important;
 }
 
-iframe.apn-toolbar+body #celements2_menu_bar {
+iframe.apn-toolbar + body #celements2_menu_bar {
   top: 0px !important;
 }
 
-[data-apn-myc3-v7c-toolbar_set="bottom"] {
+[data-apn-myc3-v7c-toolbar_set='bottom'] {
   bottom: 0px !important;
 }
 
@@ -941,19 +1042,15 @@ img.cel_fluidresizeHeight {
  * Box layouting / Flex support
  **/
 .cel_displayflex {
-  display: box;
-  /** old browsers **/
-  display: flexbox;
-  /** for IE10 **/
+  display: box;  /** old browsers **/
+  display: flexbox;  /** for IE10 **/
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -ms-flex-wrap: wrap;
-  /** for IE10 **/
-  -webkit-flex-wrap: wrap;
-  /** Safari 6.1+ **/
+  -ms-flex-wrap: wrap; /** for IE10 **/
+  -webkit-flex-wrap: wrap; /** Safari 6.1+ **/
   flex-wrap: wrap;
 }
 
@@ -962,24 +1059,23 @@ img.cel_fluidresizeHeight {
  **/
 div.presentationList {
   position: relative;
-  overflow: hidden;
-  /** needed to bind clear both **/
+  overflow: hidden; /** needed to bind clear both **/
 }
 
-div.presentationList>ul {
+div.presentationList > ul {
   list-style: none;
   margin: 0px;
   padding: 0px;
 }
 
-div.presentationList>ul>li {
+div.presentationList > ul > li {
   display: block;
   float: left;
   margin: 0px;
   padding: 0px;
 }
 
-div.presentationList>div.navigation-clear {
+div.presentationList > div.navigation-clear {
   clear: both;
 }
 
@@ -987,7 +1083,7 @@ div.presentationList>div.navigation-clear {
   background: #ff9999;
 }
 
-#sitecontainer li.cel_nav_restricted_rights>div {
+#sitecontainer li.cel_nav_restricted_rights > div {
   opacity: 0.75;
   filter: alpha(opacity=75);
 }
