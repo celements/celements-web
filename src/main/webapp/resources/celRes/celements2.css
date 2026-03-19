@@ -183,9 +183,7 @@ body > div#celements2_menu_bar {
   top: 100%;
 }
 /* Keep the rightmost dropdowns within the viewport by opening them to the left. */
-#celements2_menu_bar
-  .celements2_menu_bar_header_item:nth-last-child(-n + 3)
-  .celements2_menu_bar_submenu {
+#celements2_menu_bar .celements2_menu_bar_header_item:nth-last-child(-n + 3) .celements2_menu_bar_submenu {
   left: auto;
   right: 0px;
 }
@@ -720,16 +718,8 @@ body > .cel_reorderNodes_proxy {
   right: 13px;
 }
 body > .cel_reorderNodes_proxy .docLangs,
-.generalOverlay
-  #cel_overlaybody
-  ul.cel_presentation_reorder
-  li.cel_reorderNodes_placeholder
-  .docLangs,
-.yui-panel-container
-  .cel_contentTab
-  ul.cel_presentation_reorder
-  li.cel_reorderNodes_placeholder
-  .docLangs {
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs {
   display: none;
 }
 

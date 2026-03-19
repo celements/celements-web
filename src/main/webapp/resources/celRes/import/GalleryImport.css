@@ -74,11 +74,7 @@
   padding: 0px;
   z-index: 10;
 }
-#c3_import_preimport_result
-  .c3_import_list
-  .c3_import_row
-  .c3_import_checkbox
-  .c3_import_checkbox_element {
+#c3_import_preimport_result .c3_import_list .c3_import_row .c3_import_checkbox .c3_import_checkbox_element {
   margin-top: 14px;
   margin-left: 24px;
 }

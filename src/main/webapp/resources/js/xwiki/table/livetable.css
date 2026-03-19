@@ -129,12 +129,10 @@ thead.xwiki-livetable-display-header th.sortable {
   cursor: pointer;
 }
 thead.xwiki-livetable-display-header th.desc {
-  background: #ddd url("$xwiki.getSkinFile('icons/silk/bullet_arrow_down.gif', true)") no-repeat
-    scroll right center;
+  background: #ddd url("$xwiki.getSkinFile('icons/silk/bullet_arrow_down.gif', true)") no-repeat scroll right center;
 }
 thead.xwiki-livetable-display-header th.asc {
-  background: #ddd url("$xwiki.getSkinFile('icons/silk/bullet_arrow_up.gif', true)") no-repeat
-    scroll right center;
+  background: #ddd url("$xwiki.getSkinFile('icons/silk/bullet_arrow_up.gif', true)") no-repeat scroll right center;
 }
 thead.xwiki-livetable-display-header th.selected {
   color: #4d4d4d;
@@ -181,14 +179,12 @@ tbody.xwiki-livetable-display-body td.editableCellHover.linkeditor a {
   cursor: pointer;
 }
 tbody.xwiki-livetable-display-body td:hover.linkeditor {
-  background: lemonChiffon url("$xwiki.getSkinFile('pencil.gif', true)") no-repeat scroll right
-    center;
+  background: lemonChiffon url("$xwiki.getSkinFile('pencil.gif', true)") no-repeat scroll right center;
   cursor: pointer;
 }
 tbody.xwiki-livetable-display-body td.linkeditor a.editableCellHover {
   display: block;
-  background: lemonChiffon url("$xwiki.getSkinFile('pencil.gif', true)") no-repeat scroll right
-    center;
+  background: lemonChiffon url("$xwiki.getSkinFile('pencil.gif', true)") no-repeat scroll right center;
   cursor: pointer;
   color: #4d4d4d;
   padding-right: 16px;
@@ -258,22 +254,14 @@ div.xwikigwt-editfield tr.dialogMiddle td.dialogMiddleCenter div.xwikigwt-editfi
   margin-top: 10px;
   width: 75%;
 }
-div.xwikigwt-editfield
-  tr.dialogMiddle
-  td.dialogMiddleCenter
-  div.xwikigwt-editfield-actions
-  .xwikigwt-cancel {
+div.xwikigwt-editfield tr.dialogMiddle td.dialogMiddleCenter div.xwikigwt-editfield-actions .xwikigwt-cancel {
   background-color: #fff;
   color: #00007e;
   padding: 0;
   border: 0;
   float: right;
 }
-div.xwikigwt-editfield
-  tr.dialogMiddle
-  td.dialogMiddleCenter
-  div.xwikigwt-editfield-actions
-  .xwikigwt-next {
+div.xwikigwt-editfield tr.dialogMiddle td.dialogMiddleCenter div.xwikigwt-editfield-actions .xwikigwt-next {
   background-color: #ddd;
   color: #000;
 }

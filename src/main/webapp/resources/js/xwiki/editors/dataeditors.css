@@ -152,8 +152,7 @@ xproperty-title h2 {
   margin: 0;
   font-size: 1em;
   font-weight: 100;
-  background: transparent url($xwiki.getSkinFile('icons/datamodel/propertyType-Generic.png', true))
-    14px center no-repeat;
+  background: transparent url($xwiki.getSkinFile('icons/datamodel/propertyType-Generic.png', true)) 14px center no-repeat;
   min-height: 16px;
 }
 .xproperty-title label {

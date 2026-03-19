@@ -17,8 +17,7 @@
   display: inline-block;
   width: 82%;
   padding-left: 20px;
-  background: transparent url($xwiki.getSkinFile('icons/silk/page_white_text.gif', true)) no-repeat
-    left top;
+  background: transparent url($xwiki.getSkinFile('icons/silk/page_white_text.gif', true)) no-repeat left top;
 }
 .resultItem .type-comment {
   background-image: url($xwiki.getSkinFile('icons/silk/comment.gif', true));
@@ -182,8 +181,7 @@
   font-size: 1.1em;
 }
 #searchBar .searchQuery {
-  background: transparent url($xwiki.getSkinFile('icons/xwiki/search.png', true)) left center
-    no-repeat;
+  background: transparent url($xwiki.getSkinFile('icons/xwiki/search.png', true)) left center no-repeat;
   display: inline-block;
   padding-left: 18px;
   border: 2px solid #ccc;
