@@ -1,601 +1,600 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xwikidoc>
-  <web>CelementsContextMenu</web>
-  <name>cel_cm_navigation_menuitem</name>
-  <language></language>
-  <defaultLanguage>en</defaultLanguage>
-  <translation>0</translation>
-  <parent></parent>
-  <creator>xwiki:XWiki.fpichler</creator>
-  <author>xwiki:XWiki.fpichler</author>
-  <customClass></customClass>
-  <contentAuthor>xwiki:XWiki.fpichler</contentAuthor>
-  <creationDate>1233642881000</creationDate>
-  <date>1549312352000</date>
-  <contentUpdateDate>1549312352000</contentUpdateDate>
-  <version>1.8</version>
-  <title></title>
-  <template></template>
-  <defaultTemplate></defaultTemplate>
-  <validationScript></validationScript>
-  <comment></comment>
-  <minorEdit>true</minorEdit>
-  <syntaxId>xwiki/1.0</syntaxId>
-  <hidden>false</hidden>
-  <object>
-    <class>
-      <name>Celements2.ContextMenuItemClass</name>
-      <customClass></customClass>
-      <customMapping></customMapping>
-      <defaultViewSheet></defaultViewSheet>
-      <defaultEditSheet></defaultEditSheet>
-      <defaultWeb></defaultWeb>
-      <nameField></nameField>
-      <validationScript></validationScript>
-      <cmi_icon>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_icon</name>
-        <number>3</number>
-        <picker>0</picker>
-        <prettyName>cmi_icon</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_icon>
-      <cmi_link>
-        <contenttype>FullyRenderedText</contenttype>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <editor>---</editor>
-        <name>cmi_link</name>
-        <number>1</number>
-        <picker>0</picker>
-        <prettyName>cmi_link</prettyName>
-        <rows>20</rows>
-        <size>80</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </cmi_link>
-      <cmi_shortcut>
-        <disabled>0</disabled>
-        <name>cmi_shortcut</name>
-        <number>4</number>
-        <prettyName>optional shortcut definition</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_shortcut>
-      <cmi_text>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_text</name>
-        <number>2</number>
-        <picker>0</picker>
-        <prettyName>cmi_text</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_text>
-    </class>
-    <name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
-    <number>0</number>
-    <className>Celements2.ContextMenuItemClass</className>
-    <guid>0a7d186a-971a-41c7-8646-57673b64a164</guid>
-    <property>
-      <cmi_icon></cmi_icon>
-    </property>
-    <property>
-      <cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/edit_page.vm')</cmi_link>
-    </property>
-    <property>
-      <cmi_shortcut></cmi_shortcut>
-    </property>
-    <property>
-      <cmi_text>$adminMsg.get('cel_ctm_edit_page')</cmi_text>
-    </property>
-  </object>
-  <object>
-    <class>
-      <name>Celements2.ContextMenuItemClass</name>
-      <customClass></customClass>
-      <customMapping></customMapping>
-      <defaultViewSheet></defaultViewSheet>
-      <defaultEditSheet></defaultEditSheet>
-      <defaultWeb></defaultWeb>
-      <nameField></nameField>
-      <validationScript></validationScript>
-      <cmi_icon>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_icon</name>
-        <number>3</number>
-        <picker>0</picker>
-        <prettyName>cmi_icon</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_icon>
-      <cmi_link>
-        <contenttype>FullyRenderedText</contenttype>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <editor>---</editor>
-        <name>cmi_link</name>
-        <number>1</number>
-        <picker>0</picker>
-        <prettyName>cmi_link</prettyName>
-        <rows>20</rows>
-        <size>80</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </cmi_link>
-      <cmi_shortcut>
-        <disabled>0</disabled>
-        <name>cmi_shortcut</name>
-        <number>4</number>
-        <prettyName>optional shortcut definition</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_shortcut>
-      <cmi_text>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_text</name>
-        <number>2</number>
-        <picker>0</picker>
-        <prettyName>cmi_text</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_text>
-    </class>
-    <name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
-    <number>1</number>
-    <className>Celements2.ContextMenuItemClass</className>
-    <guid>9384be60-17ff-4c72-bd5a-75ba656d39cd</guid>
-    <property>
-      <cmi_icon></cmi_icon>
-    </property>
-    <property>
-      <cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/add_page.vm')</cmi_link>
-    </property>
-    <property>
-      <cmi_shortcut></cmi_shortcut>
-    </property>
-    <property>
-      <cmi_text>$adminMsg.get('cel_ctm_addpage')</cmi_text>
-    </property>
-  </object>
-  <object>
-    <class>
-      <name>Celements2.ContextMenuItemClass</name>
-      <customClass></customClass>
-      <customMapping></customMapping>
-      <defaultViewSheet></defaultViewSheet>
-      <defaultEditSheet></defaultEditSheet>
-      <defaultWeb></defaultWeb>
-      <nameField></nameField>
-      <validationScript></validationScript>
-      <cmi_icon>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_icon</name>
-        <number>3</number>
-        <picker>0</picker>
-        <prettyName>cmi_icon</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_icon>
-      <cmi_link>
-        <contenttype>FullyRenderedText</contenttype>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <editor>---</editor>
-        <name>cmi_link</name>
-        <number>1</number>
-        <picker>0</picker>
-        <prettyName>cmi_link</prettyName>
-        <rows>20</rows>
-        <size>80</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </cmi_link>
-      <cmi_shortcut>
-        <disabled>0</disabled>
-        <name>cmi_shortcut</name>
-        <number>4</number>
-        <prettyName>optional shortcut definition</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_shortcut>
-      <cmi_text>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_text</name>
-        <number>2</number>
-        <picker>0</picker>
-        <prettyName>cmi_text</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_text>
-    </class>
-    <name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
-    <number>2</number>
-    <className>Celements2.ContextMenuItemClass</className>
-    <guid>ce0f3237-42fd-496c-9692-782a38f02aae</guid>
-    <property>
-      <cmi_icon></cmi_icon>
-    </property>
-    <property>
-      <cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/add_sub_page.vm')</cmi_link>
-    </property>
-    <property>
-      <cmi_shortcut></cmi_shortcut>
-    </property>
-    <property>
-      <cmi_text>$adminMsg.get('cel_ctm_add_subpage')</cmi_text>
-    </property>
-  </object>
-  <object>
-    <class>
-      <name>Celements2.ContextMenuItemClass</name>
-      <customClass></customClass>
-      <customMapping></customMapping>
-      <defaultViewSheet></defaultViewSheet>
-      <defaultEditSheet></defaultEditSheet>
-      <defaultWeb></defaultWeb>
-      <nameField></nameField>
-      <validationScript></validationScript>
-      <cmi_icon>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_icon</name>
-        <number>3</number>
-        <picker>0</picker>
-        <prettyName>cmi_icon</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_icon>
-      <cmi_link>
-        <contenttype>FullyRenderedText</contenttype>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <editor>---</editor>
-        <name>cmi_link</name>
-        <number>1</number>
-        <picker>0</picker>
-        <prettyName>cmi_link</prettyName>
-        <rows>20</rows>
-        <size>80</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </cmi_link>
-      <cmi_shortcut>
-        <disabled>0</disabled>
-        <name>cmi_shortcut</name>
-        <number>4</number>
-        <prettyName>optional shortcut definition</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_shortcut>
-      <cmi_text>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_text</name>
-        <number>2</number>
-        <picker>0</picker>
-        <prettyName>cmi_text</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_text>
-    </class>
-    <name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
-    <number>3</number>
-    <className>Celements2.ContextMenuItemClass</className>
-    <guid>3a273687-665f-4c79-8cc4-a4414a1368c3</guid>
-    <property>
-      <cmi_icon></cmi_icon>
-    </property>
-    <property>
-      <cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/move_up.vm')</cmi_link>
-    </property>
-    <property>
-      <cmi_shortcut></cmi_shortcut>
-    </property>
-    <property>
-      <cmi_text>$adminMsg.get('cel_ctm_move_up')</cmi_text>
-    </property>
-  </object>
-  <object>
-    <class>
-      <name>Celements2.ContextMenuItemClass</name>
-      <customClass></customClass>
-      <customMapping></customMapping>
-      <defaultViewSheet></defaultViewSheet>
-      <defaultEditSheet></defaultEditSheet>
-      <defaultWeb></defaultWeb>
-      <nameField></nameField>
-      <validationScript></validationScript>
-      <cmi_icon>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_icon</name>
-        <number>3</number>
-        <picker>0</picker>
-        <prettyName>cmi_icon</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_icon>
-      <cmi_link>
-        <contenttype>FullyRenderedText</contenttype>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <editor>---</editor>
-        <name>cmi_link</name>
-        <number>1</number>
-        <picker>0</picker>
-        <prettyName>cmi_link</prettyName>
-        <rows>20</rows>
-        <size>80</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </cmi_link>
-      <cmi_shortcut>
-        <disabled>0</disabled>
-        <name>cmi_shortcut</name>
-        <number>4</number>
-        <prettyName>optional shortcut definition</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_shortcut>
-      <cmi_text>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_text</name>
-        <number>2</number>
-        <picker>0</picker>
-        <prettyName>cmi_text</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_text>
-    </class>
-    <name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
-    <number>4</number>
-    <className>Celements2.ContextMenuItemClass</className>
-    <guid>ef102d7e-3fd1-4eec-8464-f7833c49b5d6</guid>
-    <property>
-      <cmi_icon></cmi_icon>
-    </property>
-    <property>
-      <cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/move_down.vm')</cmi_link>
-    </property>
-    <property>
-      <cmi_shortcut></cmi_shortcut>
-    </property>
-    <property>
-      <cmi_text>$adminMsg.get('cel_ctm_move_down')</cmi_text>
-    </property>
-  </object>
-  <object>
-    <class>
-      <name>Celements2.ContextMenuItemClass</name>
-      <customClass></customClass>
-      <customMapping></customMapping>
-      <defaultViewSheet></defaultViewSheet>
-      <defaultEditSheet></defaultEditSheet>
-      <defaultWeb></defaultWeb>
-      <nameField></nameField>
-      <validationScript></validationScript>
-      <cmi_icon>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_icon</name>
-        <number>3</number>
-        <picker>0</picker>
-        <prettyName>cmi_icon</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_icon>
-      <cmi_link>
-        <contenttype>FullyRenderedText</contenttype>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <editor>---</editor>
-        <name>cmi_link</name>
-        <number>1</number>
-        <picker>0</picker>
-        <prettyName>cmi_link</prettyName>
-        <rows>20</rows>
-        <size>80</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </cmi_link>
-      <cmi_shortcut>
-        <disabled>0</disabled>
-        <name>cmi_shortcut</name>
-        <number>4</number>
-        <prettyName>optional shortcut definition</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_shortcut>
-      <cmi_text>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_text</name>
-        <number>2</number>
-        <picker>0</picker>
-        <prettyName>cmi_text</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_text>
-    </class>
-    <name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
-    <number>5</number>
-    <className>Celements2.ContextMenuItemClass</className>
-    <guid>974c2f7d-3098-43ef-ac6f-62d72da0767b</guid>
-    <property>
-      <cmi_icon></cmi_icon>
-    </property>
-    <property>
-      <cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/del_menu_item.vm')</cmi_link>
-    </property>
-    <property>
-      <cmi_shortcut></cmi_shortcut>
-    </property>
-    <property>
-      <cmi_text>$adminMsg.get('cel_ctm_del_menu_item')</cmi_text>
-    </property>
-  </object>
-  <object>
-    <class>
-      <name>Celements2.ContextMenuItemClass</name>
-      <customClass></customClass>
-      <customMapping></customMapping>
-      <defaultViewSheet></defaultViewSheet>
-      <defaultEditSheet></defaultEditSheet>
-      <defaultWeb></defaultWeb>
-      <nameField></nameField>
-      <validationScript></validationScript>
-      <cmi_icon>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_icon</name>
-        <number>3</number>
-        <picker>0</picker>
-        <prettyName>cmi_icon</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_icon>
-      <cmi_link>
-        <contenttype>FullyRenderedText</contenttype>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <editor>---</editor>
-        <name>cmi_link</name>
-        <number>1</number>
-        <picker>0</picker>
-        <prettyName>cmi_link</prettyName>
-        <rows>20</rows>
-        <size>80</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </cmi_link>
-      <cmi_shortcut>
-        <disabled>0</disabled>
-        <name>cmi_shortcut</name>
-        <number>4</number>
-        <prettyName>optional shortcut definition</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_shortcut>
-      <cmi_text>
-        <customDisplay></customDisplay>
-        <disabled>0</disabled>
-        <name>cmi_text</name>
-        <number>2</number>
-        <picker>0</picker>
-        <prettyName>cmi_text</prettyName>
-        <size>30</size>
-        <tooltip></tooltip>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage></validationMessage>
-        <validationRegExp></validationRegExp>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </cmi_text>
-    </class>
-    <name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
-    <number>6</number>
-    <className>Celements2.ContextMenuItemClass</className>
-    <guid>d1423249-74da-44e3-8ba4-7534e3f6ad96</guid>
-    <property>
-      <cmi_icon></cmi_icon>
-    </property>
-    <property>
-      <cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/properties_default.vm')</cmi_link>
-    </property>
-    <property>
-      <cmi_shortcut></cmi_shortcut>
-    </property>
-    <property>
-      <cmi_text>$adminMsg.get('cel_cm_properties_name', ["$adminMsg.get('cel_cm_properties_default')"])</cmi_text>
-    </property>
-  </object>
-  <content>
-  </content>
-</xwikidoc>
+<web>CelementsContextMenu</web>
+<name>cel_cm_navigation_menuitem</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>xwiki:XWiki.fpichler</creator>
+<author>xwiki:XWiki.fpichler</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.fpichler</contentAuthor>
+<creationDate>1233642881000</creationDate>
+<date>1549312352000</date>
+<contentUpdateDate>1549312352000</contentUpdateDate>
+<version>1.8</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>true</minorEdit>
+<syntaxId>xwiki/1.0</syntaxId>
+<hidden>false</hidden>
+<object>
+<class>
+<name>Celements2.ContextMenuItemClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<cmi_icon>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_icon</name>
+<number>3</number>
+<picker>0</picker>
+<prettyName>cmi_icon</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_icon>
+<cmi_link>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<editor>---</editor>
+<name>cmi_link</name>
+<number>1</number>
+<picker>0</picker>
+<prettyName>cmi_link</prettyName>
+<rows>20</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</cmi_link>
+<cmi_shortcut>
+<disabled>0</disabled>
+<name>cmi_shortcut</name>
+<number>4</number>
+<prettyName>optional shortcut definition</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_shortcut>
+<cmi_text>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_text</name>
+<number>2</number>
+<picker>0</picker>
+<prettyName>cmi_text</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_text>
+</class>
+<name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
+<number>0</number>
+<className>Celements2.ContextMenuItemClass</className>
+<guid>0a7d186a-971a-41c7-8646-57673b64a164</guid>
+<property>
+<cmi_icon></cmi_icon>
+</property>
+<property>
+<cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/edit_page.vm')</cmi_link>
+</property>
+<property>
+<cmi_shortcut></cmi_shortcut>
+</property>
+<property>
+<cmi_text>$adminMsg.get('cel_ctm_edit_page')</cmi_text>
+</property>
+</object>
+<object>
+<class>
+<name>Celements2.ContextMenuItemClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<cmi_icon>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_icon</name>
+<number>3</number>
+<picker>0</picker>
+<prettyName>cmi_icon</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_icon>
+<cmi_link>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<editor>---</editor>
+<name>cmi_link</name>
+<number>1</number>
+<picker>0</picker>
+<prettyName>cmi_link</prettyName>
+<rows>20</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</cmi_link>
+<cmi_shortcut>
+<disabled>0</disabled>
+<name>cmi_shortcut</name>
+<number>4</number>
+<prettyName>optional shortcut definition</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_shortcut>
+<cmi_text>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_text</name>
+<number>2</number>
+<picker>0</picker>
+<prettyName>cmi_text</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_text>
+</class>
+<name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
+<number>1</number>
+<className>Celements2.ContextMenuItemClass</className>
+<guid>9384be60-17ff-4c72-bd5a-75ba656d39cd</guid>
+<property>
+<cmi_icon></cmi_icon>
+</property>
+<property>
+<cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/add_page.vm')</cmi_link>
+</property>
+<property>
+<cmi_shortcut></cmi_shortcut>
+</property>
+<property>
+<cmi_text>$adminMsg.get('cel_ctm_addpage')</cmi_text>
+</property>
+</object>
+<object>
+<class>
+<name>Celements2.ContextMenuItemClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<cmi_icon>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_icon</name>
+<number>3</number>
+<picker>0</picker>
+<prettyName>cmi_icon</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_icon>
+<cmi_link>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<editor>---</editor>
+<name>cmi_link</name>
+<number>1</number>
+<picker>0</picker>
+<prettyName>cmi_link</prettyName>
+<rows>20</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</cmi_link>
+<cmi_shortcut>
+<disabled>0</disabled>
+<name>cmi_shortcut</name>
+<number>4</number>
+<prettyName>optional shortcut definition</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_shortcut>
+<cmi_text>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_text</name>
+<number>2</number>
+<picker>0</picker>
+<prettyName>cmi_text</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_text>
+</class>
+<name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
+<number>2</number>
+<className>Celements2.ContextMenuItemClass</className>
+<guid>ce0f3237-42fd-496c-9692-782a38f02aae</guid>
+<property>
+<cmi_icon></cmi_icon>
+</property>
+<property>
+<cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/add_sub_page.vm')</cmi_link>
+</property>
+<property>
+<cmi_shortcut></cmi_shortcut>
+</property>
+<property>
+<cmi_text>$adminMsg.get('cel_ctm_add_subpage')</cmi_text>
+</property>
+</object>
+<object>
+<class>
+<name>Celements2.ContextMenuItemClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<cmi_icon>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_icon</name>
+<number>3</number>
+<picker>0</picker>
+<prettyName>cmi_icon</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_icon>
+<cmi_link>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<editor>---</editor>
+<name>cmi_link</name>
+<number>1</number>
+<picker>0</picker>
+<prettyName>cmi_link</prettyName>
+<rows>20</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</cmi_link>
+<cmi_shortcut>
+<disabled>0</disabled>
+<name>cmi_shortcut</name>
+<number>4</number>
+<prettyName>optional shortcut definition</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_shortcut>
+<cmi_text>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_text</name>
+<number>2</number>
+<picker>0</picker>
+<prettyName>cmi_text</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_text>
+</class>
+<name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
+<number>3</number>
+<className>Celements2.ContextMenuItemClass</className>
+<guid>3a273687-665f-4c79-8cc4-a4414a1368c3</guid>
+<property>
+<cmi_icon></cmi_icon>
+</property>
+<property>
+<cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/move_up.vm')</cmi_link>
+</property>
+<property>
+<cmi_shortcut></cmi_shortcut>
+</property>
+<property>
+<cmi_text>$adminMsg.get('cel_ctm_move_up')</cmi_text>
+</property>
+</object>
+<object>
+<class>
+<name>Celements2.ContextMenuItemClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<cmi_icon>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_icon</name>
+<number>3</number>
+<picker>0</picker>
+<prettyName>cmi_icon</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_icon>
+<cmi_link>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<editor>---</editor>
+<name>cmi_link</name>
+<number>1</number>
+<picker>0</picker>
+<prettyName>cmi_link</prettyName>
+<rows>20</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</cmi_link>
+<cmi_shortcut>
+<disabled>0</disabled>
+<name>cmi_shortcut</name>
+<number>4</number>
+<prettyName>optional shortcut definition</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_shortcut>
+<cmi_text>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_text</name>
+<number>2</number>
+<picker>0</picker>
+<prettyName>cmi_text</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_text>
+</class>
+<name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
+<number>4</number>
+<className>Celements2.ContextMenuItemClass</className>
+<guid>ef102d7e-3fd1-4eec-8464-f7833c49b5d6</guid>
+<property>
+<cmi_icon></cmi_icon>
+</property>
+<property>
+<cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/move_down.vm')</cmi_link>
+</property>
+<property>
+<cmi_shortcut></cmi_shortcut>
+</property>
+<property>
+<cmi_text>$adminMsg.get('cel_ctm_move_down')</cmi_text>
+</property>
+</object>
+<object>
+<class>
+<name>Celements2.ContextMenuItemClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<cmi_icon>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_icon</name>
+<number>3</number>
+<picker>0</picker>
+<prettyName>cmi_icon</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_icon>
+<cmi_link>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<editor>---</editor>
+<name>cmi_link</name>
+<number>1</number>
+<picker>0</picker>
+<prettyName>cmi_link</prettyName>
+<rows>20</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</cmi_link>
+<cmi_shortcut>
+<disabled>0</disabled>
+<name>cmi_shortcut</name>
+<number>4</number>
+<prettyName>optional shortcut definition</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_shortcut>
+<cmi_text>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_text</name>
+<number>2</number>
+<picker>0</picker>
+<prettyName>cmi_text</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_text>
+</class>
+<name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
+<number>5</number>
+<className>Celements2.ContextMenuItemClass</className>
+<guid>974c2f7d-3098-43ef-ac6f-62d72da0767b</guid>
+<property>
+<cmi_icon></cmi_icon>
+</property>
+<property>
+<cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/del_menu_item.vm')</cmi_link>
+</property>
+<property>
+<cmi_shortcut></cmi_shortcut>
+</property>
+<property>
+<cmi_text>$adminMsg.get('cel_ctm_del_menu_item')</cmi_text>
+</property>
+</object>
+<object>
+<class>
+<name>Celements2.ContextMenuItemClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<cmi_icon>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_icon</name>
+<number>3</number>
+<picker>0</picker>
+<prettyName>cmi_icon</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_icon>
+<cmi_link>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<editor>---</editor>
+<name>cmi_link</name>
+<number>1</number>
+<picker>0</picker>
+<prettyName>cmi_link</prettyName>
+<rows>20</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</cmi_link>
+<cmi_shortcut>
+<disabled>0</disabled>
+<name>cmi_shortcut</name>
+<number>4</number>
+<prettyName>optional shortcut definition</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_shortcut>
+<cmi_text>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<name>cmi_text</name>
+<number>2</number>
+<picker>0</picker>
+<prettyName>cmi_text</prettyName>
+<size>30</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</cmi_text>
+</class>
+<name>CelementsContextMenu.cel_cm_navigation_menuitem</name>
+<number>6</number>
+<className>Celements2.ContextMenuItemClass</className>
+<guid>d1423249-74da-44e3-8ba4-7534e3f6ad96</guid>
+<property>
+<cmi_icon></cmi_icon>
+</property>
+<property>
+<cmi_link>#parse('celContextMenu/cel_cm_navigation_menuitem/properties_default.vm')</cmi_link>
+</property>
+<property>
+<cmi_shortcut></cmi_shortcut>
+</property>
+<property>
+<cmi_text>$adminMsg.get('cel_cm_properties_name', ["$adminMsg.get('cel_cm_properties_default')"])</cmi_text>
+</property>
+</object>
+<content>
+</content></xwikidoc>

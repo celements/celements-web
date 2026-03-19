@@ -1,186 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xwikidoc>
-  <web>PageTypes</web>
-  <name>NoEdit</name>
-  <language></language>
-  <defaultLanguage>en</defaultLanguage>
-  <translation>0</translation>
-  <parent></parent>
-  <creator></creator>
-  <author>xwiki:XWiki.msladek</author>
-  <customClass></customClass>
-  <contentAuthor>xwiki:XWiki.msladek</contentAuthor>
-  <creationDate>1153841690000</creationDate>
-  <date>1539796449000</date>
-  <contentUpdateDate>1539796449000</contentUpdateDate>
-  <version>1.1</version>
-  <title></title>
-  <template></template>
-  <defaultTemplate></defaultTemplate>
-  <validationScript></validationScript>
-  <comment>Imported from XAR</comment>
-  <minorEdit>false</minorEdit>
-  <syntaxId>xwiki/1.0</syntaxId>
-  <hidden>false</hidden>
-  <object>
-    <class>
-      <name>Celements2.PageTypeProperties</name>
-      <customClass></customClass>
-      <customMapping></customMapping>
-      <defaultViewSheet></defaultViewSheet>
-      <defaultEditSheet></defaultEditSheet>
-      <defaultWeb></defaultWeb>
-      <nameField></nameField>
-      <validationScript></validationScript>
-      <category>
-        <disabled>0</disabled>
-        <name>category</name>
-        <number>2</number>
-        <prettyName>Category</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </category>
-      <haspagetitle>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>haspagetitle</name>
-        <number>10</number>
-        <prettyName>Has Page Title</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </haspagetitle>
-      <inline_editor>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>inline_editor</name>
-        <number>13</number>
-        <prettyName>Use Inline Editor Mode</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </inline_editor>
-      <load_richtext>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>load_richtext</name>
-        <number>7</number>
-        <prettyName>Load Richtext Editor</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </load_richtext>
-      <page_edit>
-        <disabled>0</disabled>
-        <name>page_edit</name>
-        <number>3</number>
-        <prettyName>Type Edit Template</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </page_edit>
-      <page_view>
-        <disabled>0</disabled>
-        <name>page_view</name>
-        <number>4</number>
-        <prettyName>Type View Template</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </page_view>
-      <rte_height>
-        <disabled>0</disabled>
-        <name>rte_height</name>
-        <number>9</number>
-        <numberType>integer</numberType>
-        <prettyName>Richtext Editor Height</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-      </rte_height>
-      <rte_width>
-        <disabled>0</disabled>
-        <name>rte_width</name>
-        <number>8</number>
-        <numberType>integer</numberType>
-        <prettyName>Richtext Editor Width</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-      </rte_width>
-      <show_frame>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>show_frame</name>
-        <number>6</number>
-        <prettyName>Show Frame</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </show_frame>
-      <tag_name>
-        <disabled>0</disabled>
-        <name>tag_name</name>
-        <number>12</number>
-        <prettyName>Tag Name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </tag_name>
-      <type_name>
-        <disabled>0</disabled>
-        <name>type_name</name>
-        <number>1</number>
-        <prettyName>Type Pretty Name</prettyName>
-        <size>30</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-      </type_name>
-      <unconnected_parent>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>unconnected_parent</name>
-        <number>11</number>
-        <prettyName>Is Unconnected Parent</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </unconnected_parent>
-      <visible>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>yesno</displayType>
-        <name>visible</name>
-        <number>5</number>
-        <prettyName>Visible</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </visible>
-    </class>
-    <name>PageTypes.NoEdit</name>
-    <number>0</number>
-    <className>Celements2.PageTypeProperties</className>
-    <guid>e21f596f-d4fb-4597-83f2-b148d11a4175</guid>
-    <property>
-      <load_richtext>0</load_richtext>
-    </property>
-    <property>
-      <page_edit>no</page_edit>
-    </property>
-    <property>
-      <page_view></page_view>
-    </property>
-    <property>
-      <show_frame>1</show_frame>
-    </property>
-    <property>
-      <type_name>Not Editable</type_name>
-    </property>
-    <property>
-      <visible>1</visible>
-    </property>
-  </object>
-  <content>
-  </content>
-</xwikidoc>
+<web>PageTypes</web>
+<name>NoEdit</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator></creator>
+<author>xwiki:XWiki.msladek</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.msladek</contentAuthor>
+<creationDate>1153841690000</creationDate>
+<date>1539796449000</date>
+<contentUpdateDate>1539796449000</contentUpdateDate>
+<version>1.1</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment>Imported from XAR</comment>
+<minorEdit>false</minorEdit>
+<syntaxId>xwiki/1.0</syntaxId>
+<hidden>false</hidden>
+<object>
+<class>
+<name>Celements2.PageTypeProperties</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<category>
+<disabled>0</disabled>
+<name>category</name>
+<number>2</number>
+<prettyName>Category</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</category>
+<haspagetitle>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>haspagetitle</name>
+<number>10</number>
+<prettyName>Has Page Title</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</haspagetitle>
+<inline_editor>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>inline_editor</name>
+<number>13</number>
+<prettyName>Use Inline Editor Mode</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</inline_editor>
+<load_richtext>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>load_richtext</name>
+<number>7</number>
+<prettyName>Load Richtext Editor</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</load_richtext>
+<page_edit>
+<disabled>0</disabled>
+<name>page_edit</name>
+<number>3</number>
+<prettyName>Type Edit Template</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</page_edit>
+<page_view>
+<disabled>0</disabled>
+<name>page_view</name>
+<number>4</number>
+<prettyName>Type View Template</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</page_view>
+<rte_height>
+<disabled>0</disabled>
+<name>rte_height</name>
+<number>9</number>
+<numberType>integer</numberType>
+<prettyName>Richtext Editor Height</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+</rte_height>
+<rte_width>
+<disabled>0</disabled>
+<name>rte_width</name>
+<number>8</number>
+<numberType>integer</numberType>
+<prettyName>Richtext Editor Width</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+</rte_width>
+<show_frame>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>show_frame</name>
+<number>6</number>
+<prettyName>Show Frame</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</show_frame>
+<tag_name>
+<disabled>0</disabled>
+<name>tag_name</name>
+<number>12</number>
+<prettyName>Tag Name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</tag_name>
+<type_name>
+<disabled>0</disabled>
+<name>type_name</name>
+<number>1</number>
+<prettyName>Type Pretty Name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</type_name>
+<unconnected_parent>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>unconnected_parent</name>
+<number>11</number>
+<prettyName>Is Unconnected Parent</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</unconnected_parent>
+<visible>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>visible</name>
+<number>5</number>
+<prettyName>Visible</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</visible>
+</class>
+<name>PageTypes.NoEdit</name>
+<number>0</number>
+<className>Celements2.PageTypeProperties</className>
+<guid>e21f596f-d4fb-4597-83f2-b148d11a4175</guid>
+<property>
+<load_richtext>0</load_richtext>
+</property>
+<property>
+<page_edit>no</page_edit>
+</property>
+<property>
+<page_view></page_view>
+</property>
+<property>
+<show_frame>1</show_frame>
+</property>
+<property>
+<type_name>Not Editable</type_name>
+</property>
+<property>
+<visible>1</visible>
+</property>
+</object>
+<content>
+</content></xwikidoc>

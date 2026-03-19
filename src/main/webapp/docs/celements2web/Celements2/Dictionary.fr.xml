@@ -1,851 +1,729 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xwikidoc>
-  <web>Celements2</web>
-  <name>Dictionary</name>
-  <language>fr</language>
-  <defaultLanguage>en</defaultLanguage>
-  <translation>1</translation>
-  <parent></parent>
-  <creator>xwiki:XWiki.fpichler</creator>
-  <author>xwiki:XWiki.cpichler</author>
-  <customClass></customClass>
-  <contentAuthor>xwiki:XWiki.cpichler</contentAuthor>
-  <creationDate>1205674364000</creationDate>
-  <date>1720776215000</date>
-  <contentUpdateDate>1720776215000</contentUpdateDate>
-  <version>1.14</version>
-  <title></title>
-  <template></template>
-  <defaultTemplate></defaultTemplate>
-  <validationScript></validationScript>
-  <comment></comment>
-  <minorEdit>true</minorEdit>
-  <syntaxId>xwiki/1.0</syntaxId>
-  <hidden>false</hidden>
-  <content>## Languages
-    cel_de=Allemand
-    cel_fr=Français
-    cel_en=Anglais
-    cel_it=Italien
-    cel_es=Espagnol
-    cel_de_de=Deutsch
-    cel_en_en=English
-    cel_fr_fr=Français
-    cel_it_it=Italiano
-    cel_es_es=Español
-    ## General terms
-    cel_filename=Nom du fichier
-    cel_size=Dimension
-    cel_delete=Supprimer
-    cel_version=Version
-    cel_upload=Téléversement
-    cel_save=Sauver
-    cel_submit=Submit
-    cel_cancel=Annuler
-    cel_save_and_close=enregistrer et fermer
-    cel_close=fermer
-    cel_save_and_continue=enregistrer
-    cel_back=Retour
-    cel_create_page=Créer page
-    cel_edit_page=Editer la page
-    cel_name=Nom
-    cel_email=E-Mail
-    cel_invalideActivationCode=Ce code d'activation n'est plus ou pas valable.
-    cel_forcedPasswordChange=Votre mot de
-    passe est expiré. Renouvelez votre mot de passe.
-    no_menuitems=no menuitems found
-    cel_AccountSuccessfulActivated=Votre
-    compte a été activé avec succès . Entrez votre nouveau mot de passe s'il vous plaît.
-    cel_PasswordSuccessfulChanged=Votre mot de passe a été changé avec succès
-    cel_loginDisabledMessage=Le login est
-    actuellement indisponible. Veuillez réessayer plus tard.
-    cel_youcandoubleclicktoedit=Doubleclick to edit it.
-    sgr_aerzteverzeichnis_titel=Index des médecins
-    ## RTE terms
-    cel_rte_howto_proceed=Comment aimez-vous procéder?
-    cel_rte_quit_wo_saving=Quitter sans changements
-    cel_rte_cancel_all_changes=Annuler tous les changements
-    cel_rte_resume_editing=Continuer à éditer
-    cel_rte_always_perform_option=Toujours exécuter cette option
-    cel_rte_editable_in_user_prefs=Editable dans la région de gestion d&amp;lsquo;utilisateur
-    cel_rte_always_ask=Demander toujours
-    cel_rte_pref_title=Représentation du Rich Text Editor
-    cel_rte_filename=Nom du
-    fichier
-    cel_rte_version=Version
-    cel_rte_author=Auteur
-    cel_rte_choosetargetfilename=Choisissez le nom final du fichier
-    cel_rte_choosefiletoupload=Choisissez le fichier à télécharger
-    cel_rte_attachthisfile=Ajouter ce fichier
-    cel_rte_style_titel=Titre
-    cel_rte_style_untertitel=Sous-titre
-    cel_rte_style_text=Texte
-    ## page dependend cells
-    cel_ctm_edit_pdCell=Edit content
-    cel_ctm_edit_pdCellProperties=Edit properties
-    cel_ctm_add_pdCell=Add content
-    cel_ctm_delete_pdCell=Delete content
-    cel_ctm_restore_pdCell=Restore content
-    cel_ctm_edit_pdSpaceDefaultCell=Edit
-    default (space)
-    cel_ctm_edit_pdWikiDefaultCell=Edit default (site)
-    ## ImageBase
-    cel_import_photo_unimported_preimport=Attention, un aperçu n'a pas été importé. La sélection vas être perdu!
-    cel_import_photo_importing=Importation en progress...
-    cel_import_photo_imported=Importation terminée
-    cel_import_error_missing_preimport=Aucune fonctionne d'import défini
-    cel_import_allowed_extentions=Fichiers de ce
-    type ne peut pas être importés. Types de fichier supportés sont {0}
-    gallery_import_link=Gestionnaire d'importation
-    cel_photo_all=Tous
-    cel_photo_none=Aucun
-    cel_photo_skip=ignorer
-    cel_photo_overwrite=écraser
-    cel_photo_add=ajouter
-    cel_photo_import_selected_now=Importer la sélection
-    cel_photo_import=Sélection
-    cel_photo_filename=Nom du fichier
-    cel_photo_action=action
-    cel_photo_preview=Aperçu
-    cel_import_alert_images_empty=Aucun photo choisi
-    cel_import_alert_images_overwrite=Attention, quelques photos seront replacés
-    ## Filebase terms
-    cel_media_library=Médiathèque
-    cel_ml_filename=Nom de fichier
-    cel_ml_attached_to=joint à
-    cel_ml_revision=Révision
-    cel_ml_date=Date
-    cel_ml_all_docs=Tous les documents
-    cel_ml_mime_type=type de fichier
-    cel_ml_add_tag=Adjoindre un filtre
-    cel_ml_edit_tag=Adapter le filtre
-    cel_ml_delete_tag=Supprimer le filtre
-    cel_ml_delete_att=supprimer le fichier
-    cel_ml_delete=supprimer
-    cel_ml_delete_msg=Êtes-vous sûr que vous voulez supprimer le filtre suivant ?
-    cel_ml_delete_successful=supprimer avec succès
-    cel_ml_no_tags_available=Il n'existe pas de filtes
-    cel_ml_delete_confirmation=Supprimer {0}?
-    ## TabMenu
-    cel_tm_content=Contenu
-    cel_tm_navigation=Navigation
-    cel_tm_attachments=Fichier joint
-    cel_tm_properties=Caractéristiques
-    cel_tm_history=Histoire
-    cel_tm_rls=RLS
-    cel_tm_edit_translation=Vous éditez la traduction suivante
-    cel_tm_title=Titre
-    cel_tm_menu_name=Nom de menu
-    cel_tm_menu_image=Fond d'écran
-    cel_tm_menu_removeimage=supprimer image
-    cel_tm_redirect=Redirection
-    cel_tm_target=Cible
-    cel_tm_no_attachments=Aucun joint
-    cel_tm_upload_attachment=Téléversement du joint
-    cel_tm_save_first=Sauvez le document
-    avant télécharger, s'il vous plaît
-    cel_tm_page_type=Typ de page
-    cel_tm_page_master=Page matrice
-    cel_tm_view_translation_history=Histoire de la traduction
-    cel_tm_document_history=Histoire du document
-    cel_tm_compare=Comparer
-    cel_tm_all_changes=Tous les changements
-    cel_tm_cannotreaddocumentversion=Ne peut pas lire la
-    version de document
-    cel_tm_edited_by=édité par
-    cel_tm_on=sur
-    cel_tm_page_title=Nom de page
-    cel_tm_document_name=Nom du
-    document
-    cel_tm_move_page=Déplacer page
-    cel_tm_warning_doc_exists_already=Attention: Le document {0} existe déjà.
-    Voulez-vous le déplacer?
-    cel_tm_error_doc_exists_already=Erreur: Le document {0} existe déjà.
-    cel_tm_error_correct_field=Erreur: Remplissez / corrigez les lieus marqués, svp.
-    cel_tm_add_new_page_to_menu=Ajouter
-    une nouvelle page au menu
-    cel_tm_add_existing_page_to_menu=Ajouter une page existante au menu / Déplacer une page
-    existante
-    cel_tm_validate_warning=Entrez uniquement des lettres [a-z], chiffres [0-9], \"-\" et \"_\", svp.
-    cel_tm_blog_space=Espace de blogue
-    cel_tm_view_type=Type de vue
-    cel_tm_editor_type=Type d'éditeur
-    cel_tm_max_num_chars=nombre caractères pour extrait
-    cel_tm_comment=Commentaire
-    cel_tm_comments=Commentaires
-    cel_tm_has_comments=Permettre des commentaires?
-    cel_tm_post_comment=Composer und commentaire
-    cel_tm_no_comments=Pas de
-    commentaires
-    cel_tm_content_will_appear_on_article_page=Le contenu vas être affiché à la page de l'article.
-    cel_tm_extract=Extrait
-    cel_tm_extract_will_appear_on_news_page=L'extrait vas être affiché à la page de nouveautés.
-    cel_tm_newer=Plus nouveau
-    cel_tm_older=Plus vieux
-    cel_tm_rte_edit=Éditer document
-    cel_tm_rte_create=Créer document
-    cel_tm_blog_edit=Éditer blogue
-    cel_tm_article_edit=Éditer article
-    cel_tm_article_create=Créer article
-    cel_tm_blog_article=Créer un article
-    cel_tm_publish_date=Date de publication
-    cel_valid_dateRange=CAUTION: The
-    startdate {0} is older than the enddate {1}.
-    cel_valid_blog_dateRange=CAUTION: The archive date {0} is older than the
-    publish date {1}.
-    cel_tm_subscribable=Article abonnable?
-    cel_tm_is_subscribable=abonnable
-    cel_tm_subscribe_to=abonner
-    cel_tm_edit_template=modifier le modèle
-    cel_tm_error_exists_notmoveable=Le document existe et ne peut pas être
-    déplacé
-    cel_tm_rights=Accès
-    cel_tm_rights_publication=Publication durée
-    cel_tm_rights_publication_always=Toujours
-    cel_tm_rights_publication_add=Ajouter
-    cel_tm_rights_publication_remove=Eliminer
-    cel_tm_rights_publication_from=De
-    cel_tm_rights_publication_until=à
-    cel_tm_rights_publication_published=Publier
-    cel_tm_rights_publication_unpublished=Non publier
-    cel_tm_rights_group=Groupe
-    cel_tm_rights_rights=Droits
-    cel_tm_rights_realrights=Droits réel
-    cel_tm_rights_guestuser=Public (pas logué)
-    cel_tm_rights_view=Lire
-    cel_tm_rights_edit=Lire et éditer
-    cel_tm_rights_none=Aucun
-    cel_tm_rights_invalid=Les privilèges d'accès ne répond pas
-    aux exigences!! S'il vous plaît contactez l'administrateur du site.
-    cel_tm_saving_failed_document=Erreur lors de
-    l'enregistrement de la page
-    ## Admin Bar
-    cel_admin_file=Fichier
-    cel_admin_admin=Admin
-    cel_admin_logout=Fermeture&amp;nbsp;de&amp;nbsp;session
-    cel_admin_useradmin=Administration&amp;nbsp;d&amp;lsquo;utilisateur
-    cel_admin_addpage=Ajouter une page
-    cel_admin_delete=Supprimer&amp;nbsp;une&amp;nbsp;page
-    cel_admin_delete_translation=Supprimer&amp;nbsp;une&amp;nbsp;traduction
-    cel_admin_filebase=Explorateur&amp;nbsp;des&amp;nbsp;fichiers
-    cel_admin_linkpicker=Link&amp;nbsp;Picker
-    cel_admin_sitemap=Sitemap
-    cel_admin_help=Aide
-    cel_admin_onlinemanual=Aide en ligne
-    cel_admin_support=Support
-    cel_admin_edittag=Edit file tags
-    ## WebSearch
-    cel_search_page_title=Recherche
-    cel_search_page_relevance=Pertinence
-    cel_search_page_search=Recherche
-    cel_search_page_lastChanged=Dernière modification
-    cel_search_page_searchSection=Zones de recherche
-    cel_search_page_website=Site Web
-    cel_search_page_pdf=PDF
-    cel_search_page_attachment=Fichiers
-    cel_search_page_menu=Menu
-    cel_search_page_image=Galerie
-    cel_search_page_blog=Blog
-    cel_search_page_chronoblog=Chronoblog
-    cel_search_page_content=Content
-    cel_search_page_content_menu=Contenu de la page
-    cel_search_results_title=Resultats
-    cel_minisearch=Recherche
-    cel_search=Recherche
-    cel_search_noresults=Cotre recherche
-    ne correspond à aucun document
-    cel_search_breadcrumbs_title=Gefunden unter
-    cel_search_breadcrumbs_delimiter=&amp;nbsp;&amp;gt;&amp;nbsp;
-    ##LinkPicker
-    cel_lpicker_name=Link Picker
-    cel_lpicker_plzClickNotice=Cliquez sur le nom du document choisi.
-    cel_lpicker_menuLinksTitle=Structure du menu
-    cel_lpicker_otherLinksTitle=Documents hors de la structure du menu
-    ## CONTEXT MENU
-    cel_edit_tool_HeaderRTE=modifier la
-    tête de la page
-    cel_edit_tool_FooterRTE=modifier le pied de la page
-    cel_ctm_edit_content=Editer le texte
-    cel_ctm_Pageattachment=Fichiers joints
-    cel_ctm_addpage=Ajouter une page
-    cel_ctm_add_subpage=Ajouter une sous-page
-    cel_ctm_addslide=Ajouter une diapo
-    cel_ctm_add_subslide=Ajouter une sous-diapo
-    cel_cm_subslide_sitemap=Subslide
-    Sitemap
-    cel_ctm_del_slide=Ajouter une diapo
-    cel_ctm_move_up=Déplacer vers le haut
-    cel_ctm_move_down=Déplacer vers le
-    bas
-    cel_ctm_del_menu_item=Supprimer le menu
-    cel_ctm_edit_page=Editer la page
-    cel_ctm_edit_presentation=Editer la
-    présentation
-    cel_ctm_edit_Banner=Editer le logo
-    ##RTE
-    rte_title=Rubrique
-    rte_heading1=Rubrique 1
-    rte_heading2=Rubrique 2
-    rte_heading3=Rubrique 3
-    rte_heading4=Rubrique 4
-    rte_heading5=Rubrique 5
-    rte_heading6=Rubrique 6
-    rte_text=Paragraphe
-    rte_float=Texte rédigé
-    rte_imgsub=Légende d&amp;lsquo;image
-    rte_imgsub2=Légende d&amp;lsquo;image 2
-    rte_pdflink=PDF-Lien
-    rte_excellink=Excel-Lien
-    rte_wordlink=Word-Lien
-    ##DOCUMENTATION
-    celements_documentation=Documentation
-    ##GALLERY
-    gallery_edit_gallery=Editer la galerie
-    gallery_pictures=Images
-    gallery_upload_picture=Charger des Images
-    gallery_gallery_properties=Propriété de la galerie
-    gallery_album_create=Créer album
-    gallery_album_title=Album titre
-    gallery_album_description=Album description
-    gallery_with_overview=vue d&amp;squo;ensemble
-    gallery_thumbnail_width=Thumbnail largeur
-    gallery_thumbnail_height=Thumbnail hauteur
-    gallery_picture_height=Image hauteur
-    gallery_picture_width=Image largeur
-    gallery_thumbnail_desc=BildbeschreibungThumbnail description
-    ## ImageGallery
-    gallery_editor_description=Album
-    description
-    gallery_editor_height=Thumbnail hauteur
-    gallery_editor_thumbWidth=Thumbnail largeur
-    gallery_editor_height2=Image hauteur
-    gallery_editor_photoWidth=Image largeur
-    gallery_editor_galleryLayout=Album layout
-    cel_gallery_presentation_space=Gallery Slide Space
-    gallery_editor_menu_space=Slide Space Name
-    gallery_editor_addNewSlide=Add new slide
-    cel_gallery_reordering_title=Gallery Image Reordering
-    gallery_editor_newSlideTitle=Image
-    cel_nav_nomenuitems_gallery_overview=Cette galerie contient pas d'images.
-    cel_nav_empty_presentation_gallery_overview=Cette galerie contient pas d'images.
-    ## FORM PAGE TYPE
-    cel_general_form_failure_msg=Ce formular n'est pas disponible au moment car des raisons techniques.
-    cel_form_validation_failed_msg=Veuillez remplir toutes les cases marquées
-    cel_tm_error_exists_notmoveable=Ce document
-    est déjà existant et peut pas être déplacé
-    ##COURSE
-    cel_course_add=Ajouter un cours
-    cel_course_chf=Fr.
-    cel_course_city=Place
-    cel_course_cost=Coûts
-    cel_course_course=Cours
-    cel_course_course_edit=Adapter le cours
-    cel_course_courses=Cours
-    cel_course_course_nr=Cours-numéro
-    cel_course_date=Date
-    cel_course_day=Jour
-    cel_course_delete=Effacer le cours
-    cel_course_description=Description de cours
-    cel_course_edit_detail=Description de
-    cours (Détail au cours, optionnellement)
-    cel_course_edit_overview=Description de cours (courte description du cours,
-    obligatoirement)
-    cel_course_for_member=pour membres
-    cel_course_for_non_member=pour non-membres
-    cel_course_local=Localité
-    cel_course_membership=Affiliation
-    cel_course_membership_state_choose=Veuillez choisir vos
-    embouteillages d'affiliation
-    cel_course_membership_state_member=Je suis membre de la Ligue Suisse contre le
-    Rhumatisme {0}
-    cel_course_membership_state_subscribe=Je voudrais devenir membre, demande m'envoie vous documents
-    cel_course_membership_state_non_member=Je suis un non-membre
-    cel_course_missing=Un cours doit être choisi, afin
-    qu'ils puissent s'enregistrer!
-    cel_course_redirect_link=A l'aperçu de cours
-    cel_course_oClock=Heures
-    cel_course_overview=Aperçu de cours
-    cel_course_price=Prix
-    cel_course_price_per_member_lesson=Frais de cours par leçon
-    en SFr. pour des membres
-    cel_course_provisional_registration=inscription provisoire
-    cel_course_provisional_registration_request=Veuillez m'annoncer provisoirement
-    cel_course_registration=Inscription
-    cel_course_registration_request=Veuillez m'annoncer
-    cel_course_register=annoncer
-    cel_course_subscribe=inscrire
-    cel_course_subscriber_name=Nom
-    cel_course_subscriber_subscribe=&gt;&gt; envoyer une inscription provisoire
-    cel_course_subscriber_subscribe2=&gt;&gt; envoyer inscription
-    cel_course_type=Type de cours
-    cel_course_weekday=jour de
-    semaine
-    cel_course_weekday_mon_short=Lu
-    cel_course_weekday_mon=Lundi
-    cel_course_weekday_tue_short=Ma
-    cel_course_weekday_tue=Mardi
-    cel_course_weekday_wed_short=Me
-    cel_course_weekday_wed=Mercredi
-    cel_course_weekday_thu_short=Je
-    cel_course_weekday_thu=Jeudi
-    cel_course_weekday_fri_short=Ve
-    cel_course_weekday_fri=Vendredi
-    cel_course_weekday_sat_short=Sa
-    cel_course_weekday_sat=Samedi
-    cel_course_weekday_sun_short=Di
-    cel_course_weekday_sun=Dimanche
-    cel_course_weekday_noday_short=-
-    cel_course_weekday_noday=non défini
-    cel_course_time=heure
-    cel_course_zip=CP
-    ##SHOP
-    cel_shop_cart=Panier
-    cel_shop_your_cart=Votre panier
-    cel_shop_article=Article
-    cel_shop_search_in=Rechercher dans
-    cel_shop_searchresults=Résultats de recherche
-    cel_shop_search_no_results=Malheureusement, pas de résultats!
-    cel_shop_cart_description=Bienvenue dans la boutique de la ligue suisse contre le rhumatisme
-    cel_shop_submit_orderform=Envoyer la commande
-    cel_shop_total_costs=Totale
-    cel_shop_order_form=Formulaire de commande
-    cel_shop_submit_order=Envoyer la commande
-    cel_shop_price=Prix
-    cel_shop_nr_of=Pièce
-    cel_shop_billing_address=Adresse de
-    facturation
-    cel_shop_shipping_address=Adresse de livraison
-    cel_shop_shipping_remark=(uniquement si différente à
-    l'adresse de facturation)
-    cel_shop_company=Société
-    cel_shop_name=Nom
-    cel_shop_mandatory_fields=* Informations
-    obilgatoires
-    cel_shop_order_thank=Merci beaucoup
-    cel_shop_order_confirmation=Merci pour votre commande
-    cel_shop_order_print=Imprimer la commande
-    cel_shop_edit_category=Déterminez la contraction de catégorie de la
-    catégorie (conformément à l'importation)
-    cel_shop_cart_ordered=Le panier a été commandé.
-    cel_shop_empty_cart_message=Il n'y a pas de produits dans le panier
-    cel_shop_comment=Remarques
-    ##BLOG
-    cel_blog_empty=No news is good news.
-    cel_blog_addarticle=ajouter article
-    cel_blog_copyarticle=copier l'article
-    cel_blog_editarticle=éditer article
-    cel_blog_deletearticle=supprimer article
-    cel_blog_subscriber_notice=Article
-    abonnale de: {0}
-    cel_blog_subscriber_show=afficher
-    cel_blog_sendarticle=Envoyer le bulletin d'information
-    cel_blog_newsletterimport_active=Importer adresses du bulletin d'information (active-liste)
-    cel_blog_newsletterimport_inactive=Importer adresses du bulletin d'information (inactive-liste)
-    cel_blog_newsletteraddresslist=liste d'adresses du bulletin d'information
-    cel_plain_text_mail=
-    cel_tm_archive_date=date d'archivage
-    cel_ctm_blog_del_confirm=Do you really want to delete this news article?
-    cel_ctm_blog_edit=Éditer blogue
-    ##Muss RLS-entspezifiziert werden!!!
-    cel_rls_blog_article_more=&gt; suite
-    ##NEWSLETTER
-    cel_newsletter_text_only_message=Vous pouvez pas recevoir des Messages HTML. Vous pouvez voir le bulletin
-    d'information sous {0}.
-    cel_newsletter_unsubscribe_info=Vous pouvez annuler le bulletin d'information ici {0}.
-    cel_newsletter_could_not_activate=La subscription n'a pas pu être aktivé.
-    cel_newsletter_activated=Subscription du
-    bulletin d'information activé. Vous recevrez le bulletin jusqu'a annulation.
-    cel_newsletter_could_not_unsubscribe=Le
-    bulletin d'information n'a pas pu être annulé. Ou l'adresse e-mail ou le
-    code d'activations sont faux.
-    cel_newsletter_unsubscribed=Subscription du bulletin annulé. Vous ne reverez plus de bulletins.
-    cel_newsletter_could_not_subscribe=Le bulletin d'information n'a pas pu être abonné.
-    cel_newsletter_subscribed=Bulletin d'informations abonné. Pour raisons de sécurité la subscription doit être activé
-    avant que vous recevrez le bulletin
-    d'information. Vous recevrez le liens corresppondant dans quelque minutes.
-    cel_newsletter_send_history_title=Historie de l'article
-    cel_newsletter_times_sent=Cet article à été envoyés {0} fois.
-    cel_newsletter_last_sent=Envoyé en dernier du {0} le {1} à {2} personnes
-    cel_newsletter_never_sent=Cet artcle n'a
-    jamais été envoyé.
-    cel_newsletter_recipients_title=Destinataire
-    cel_newsletter_no_recipients=Aucun destinataire
-    definit pour ce bulletin d'information.
-    cel_newsletter_user_group=Group d'utilisateurs
-    cel_newsletter_user_groups=Groups d'utilisateurs
-    cel_newsletter_nr_of_members={0} membres avec adress e-mail
-    cel_newsletter_recipient=Adresse de destinataire
-    cel_newsletter_recipients=Adresses de destinataire
-    cel_newsletter_from_address=E-Mail d'expéditeur (z.B. newsletter@mydomain.com):
-    cel_newsletter_reply_to=Adresse de
-    réponse (optionale, seulement si différent de l'adresse d'expéditeur):
-    cel_newsletter_subject=Objet:
-    cel_newsletter_is_no_newsletter=Ce blogue n'est pas préparé pour les bulletins d'information.
-    cel_tm_edit_is_newsletter=Est un bulletin d'information
-    cel_tm_edit_newsletter_from=Adresse d'expéditeur
-    cel_tm_edit_newsletter_reply_to=Adresse de réponse
-    cel_tm_edit_newsletter_unsubscribe=Annuler le bulletin
-    d'information
-    cel_newsletter_sent={0} envoyé
-    cel_newsletter_error_sending={0} (Erreur {1} en envoyant)
-    cel_newsletter_html_footer_message=Si vous ne pouvez pas lire ce bulletin d’information vous pouvez le voir sous {0}
-    &lt;br /&gt;
-    cel_newsletter_unsubscribe_footer=Si vous souhaitez de ne plus recevoir ce bulletin d'information vous
-    l'annuler
-    sous {0}
-    cel_newsletter_test_submit=Envoyer un email de teste
-    cel_newsletter_submit=Envoyer bulletin
-    d'information
-    cel_newsletter_confirm_send=Envoyer maintenant le bulletin d’information aux recipients notés {0}?
-    ##IMPORT
-    cel_import_filelist=Import - Fichiers disponibles
-    cel_import_preimport=Fichier à importer
-    cel_import_preimport_message=Cliquer sur un fichier pour préparer l'import.
-    cel_import_upload=Ajouter un nouveau
-    fichier
-    cel_import_alert=Êtes-vous sur d'effacer tous les {0} existant et de les réplacer avec les nouveau?
-    cel_import_alert_courses=Courses
-    cel_import_alert_articles=Articles
-    cel_import_import=Importer maintenant
-    cel_import_courses_deleted=Courses effacés aux pages suivantes:
-    cel_import_course_import=Importation des cours {0}
-    cel_import_course_doc_created=Nouveau document de cours crée:
-    cel_import_course_add_course=Ajouté un cours:
-    cel_import_course_success_msg=L'importation de {1} courses de {0} catégories avec success.
-    cel_import_shop_importtype_msg=Contiens des dates de la catégorie:
-    cel_import_shop_please_choose=Choisissez s'il vous
-    plaît ...
-    cel_import_wrong_file_msg=Seulement des fichier en forme XLS (Excel) et CSV (séparé par virgule) peuvent
-    être importés.
-    cel_import_shop_success=Fichiers importés avec succes.
-    cel_import_exception=Un erreur est apparait.
-    Message d'erreur:
-    cel_import_shop_plz=CPL
-    cel_import_shop_ort=Place
-    cel_import_shop_local=Locale
-    cel_import_shop_nr=No.
-    cel_import_shop_type=Type
-    cel_import_course_import_space=Importer à {0}.
-    cel_import_course_preimport_msg=Importation
-    de {0} cours préparé.
-    cel_import_shop_category=Categorie
-    cel_import_shop_title=Titre
-    cel_import_shop_price=Prix
-    cel_import_shop_lang=Langue
-    cel_import_shop_articles=Articles
-    cel_import_shop_categories=Categories
-    cel_import_shop_preimport_msg=Importation de {0} {1} préparé.
-    cel_import_shop_preimport_now=Commencer l'importation
-    provisoire
-    sgr_import_result_failed=Importation échoué
-    cel_import_imported=Importation terminé
-    cel_import_course_deleted=Les courses des pages suivantes ont êté effacé
-    cel_import_member_preimport_msg=Les dates
-    pour l'importation ont êté preparés.
-    cel_import_member_changelog_title=Changements aux contes d'utilisateurs pendant
-    l'importation
-    cel_import_member_first_name=Prenom
-    cel_import_member_name=Nom
-    cel_import_member_region=Canton
-    cel_import_member_email=Email
-    cel_import_member_group=Group d'utilisateurs
-    import_wrong_file_format=Format de fichier
-    faux
-    import_io_exception=Erreur exceptionel pendant la lecture du fichier!
-    import_xwiki_exception=Erreur exceptionel
-    XWiki pendant la lecture du fichier!
-    import_error_cleaning_old_preimports=Effacement des vieux fichier échoué
-    import_csv_row_short=La ligne d'input {0} est trop courte! {1} ligne(s) manques.
-    import_csv_row_long=La ligne d'input
-    {0} est trop longe! Commentcement du contenu: [{1}]
-    sgr_import_member_error_removing_members=Des vieux dates des
-    membres n'ont pas pu êtés éffacés!
-    sgr_import_member_error_copying_members=Les nouveaux membres de l'importation ne
-    pouvaient pas être copiés dans le tableau des membres actifs!
-    sgr_import_member_error_no_preimport=Pas de dates
-    d'importation provisoir existant - rien à importer!
-    sgr_import_result_title_group=Changement de group
-    c3_import_changes_from_to = {0} ont étés changés de "{1}" en "{2}".
-    sgr_import_result_title_user_data=Changements aux
-    dates d'utilisateurs
-    sgr_import_result_title_new=Nouveaux utilisateurs (reçevoivent un Email)
-    sgr_import_result_title_delete=Utilisatuers effacés
-    no_content=Aucun contenu, bouton droit pour éditer
-    ##Synventis
-    Form
-    Synventis_Feedbacktext=Veuillez entrer votre nom, e-mail et votre message
-    ValidationMSG_Name=Entrez votre nom,
-    s'il vois plaît!
-    ValidationMSG_Email=Entrez votre e-mail, s'il vous plaît!
-    ValidationMSG_Nachricht=Entrez votre
-    message, s'il vous plaît!
-    PRINT_THIS_PAGE=Imprimer la page
-    GENERATE_PDF=Créer und pdf
-    SEND_FEEDBACK=Envoyez un
-    commentaire
-    EnterQueryHere=Recherche...
-    ##Register Form
-    core.register.company=Société:
-    ## Calendar
-    cel_cal_f_date-location=Date - lieu
-    cel_cal_f_l_title=Titre
-    cel_cal_f_detaillink=Info
-    cel_cal_more_detaillink=plus...
-    cel_cal_overview_column_config=Vue d'ensemble de la configuration des colonnes
-    cel_cal_overview_column_config_concat_msg=Les descriptions suivantes peuvent être utilisées dans le champ ci-dessus
-    (Vue d'ensemble de la configuration des
-    colonnes), séparées par virgule. Des combinaisons de descriptions sont
-    possible avec un trait d'union (-).
-    cel_cal_event_column_config=Configuration des colonnes dela manifestation
-    cel_cal_hasMoreLink=Liens plus
-    cel_cal_overview_column_config_l_title=Titre
-    cel_cal_f_l_description=Description
-    cel_cal_ev_lang_indep_fields=Champs valables pour toutes les langues
-    cel_cal_ev_eventDate=Date de la manifestation
-    (TT.MM.JJJJ HH:MM)
-    cel_cal_ev_eventDate_end=Enddate of the event (TT.MM.JJJJ HH:MM)
-    cel_cal_ev_lang_dep_fields=Champs
-    spécifiques à la langue
-    cel_cal_ev_l_description=Description de la manifestation
-    cel_cal_ev_l_title=Titre de la
-    manifestation
-    cel_cal_empty_calendar=Au moment, il n'y a aucune manifestation.
-    cel_cal_previous=Page précédente
-    cel_cal_next=Page prochaine
-    cel_cal_f_date=Date
-    cel_cal_f_time=Heure
-    cel_cal_f_title=Manifestation
-    cel_cal_f_location=Lieu
-    cel_cal_f_date-time=Date/Heure
-    cel_cal_f_date-location=Date/Lieu
-    cel_cal_count={0}-{1} de {2}
-    manifestations
-    cel_cal_description=Détails de la manifestation
-    cel_cal_no_event=Aucun détails entrés.
-    cel_cal_ev_edit=Éditer la manifestation
-    cel_cal_ev_title=Titre de la manifestation
-    cel_cal_ev_description=Détails de
-    la manifestation
-    cel_cal_ev_location=Lieu de la manifestation
-    cel_cal_ev_date=Date de la manifestation
-    cel_cal_ev_subscribable=La manifestation est abonnable
-    cel_cal_ev_subscribers=Abonné de:
-    cel_cal_edit=Paramètres du
-    calendrier
-    cel_cal_calendarspace=Espace de manifestation
-    cel_cal_subscribe_to=Calendriers abonnés
-    (&amp;lt;space&amp;gt;.&amp;lt;name&amp;gt;,&amp;lt;space2&amp;gt;.&amp;lt;name2&amp;gt;,...)
-    cel_cal_event_per_page=Nombre des manifestations par page
-    cel_cal_is_subscribable=Est abonnable
-    cel_ctm_cal_add_event=Ajouter une manifestation
-    cel_ctm_cal_edit_event=Éditer une manifestation
-    cel_ctm_cal_del_event=Effacer une manifestation
-    cel_ctm_cal_del_confirm=Effacer {0} ?
-    cel_ctm_cal_archive=go to
-    archive
-    cel_ctm_cal_overview=go to overview
-    cel_ctm_cal_edit=Éditer le calendrier
-    ## User Administration
-    cel_useradmin_search_user=Benutzer suchen
-    cel_useradmin_edit_user=Benutzer editieren/registrieren
-    cel_useradmin_title=Benutzer: {0}
-    cel_useradmin_userdata=Benutzer Daten
-    cel_useradmin_groupdata=Mitglied der Gruppen
-    cel_useradmin_password_change=Passwort ändern
-    cel_useradmin_edit_active=Aktiv
-    cel_useradmin_edit_suspended=Suspendiert
-    cel_useradmin_edit_first_name=Vorname
-    cel_useradmin_edit_last_name=Nachname
-    cel_useradmin_edit_email=E-Mail-Adresse
-    XWiki.XWikiUsers_email=E-Mail-Adresse
-    cel_useradmin_edit_company=Unternehmen
-    cel_useradmin_edit_department=Departement
-    cel_useradmin_edit_city=Stadt
-    cel_useradmin_edit_country=Land
-    cel_useradmin_edit_admin_language=Sprache der Benutzeroberfläche
-    cel_useradmin_edit_force_pwd_change=Bei nächster
-    Anmeldung neues Passwort verlangen
-    cel_add_user=Benutzer registrieren
-    cel_delete_user=Benutzer l&amp;ouml;schen
-    cel_useradmin_emailInvalid=Die E-Mail-Adresse ist ungültig. Bitte geben Sie eine gültige E-Mail-Adresse ein.
-    cel_useradmin_emailNotUnique=Diese E-Mail-Adresse existiert bereits. Bitte geben Sie eine andere ein.
-    cel_useradmin_noRegisterRights=Sie haben keine Berechtigung um neue Benutzer zu erstellen.
-    cel_useradmin_invalidRequest=Ungültiger Request.
-    cel_useradmin_missingEmail=Die E-Mail-Adresse fehlt. Bitte geben Sie
-    eine gültige E-Mail-Adresse ein.
-    cel_useradmin_severalEmails=Es sind zuviele E-Mail-Adressen. Bitte geben Sie nur
-    eine ein.
-    ## Group Names
-    cel_groupname_XWikiAdminGroup=Administrator
-    cel_groupname_ContentEditorsGroup=Content Editor
-    cel_groupname_LayoutEditorsGroup=Layout Editor
-    ## Login Screen
-    cel_login_title=Log In
-    username=login emailadresse
-    password=mot de passe
-    cel_login_username=Login-emailadresse:
-    cel_login_password=mot de passe:
-    cel_login_loggedinas=Angemeldet als {0}
-    ## cel_login_logoutbutton kann Benutzername über {0} verwendet werden
-    cel_login_logoutbutton=Abmelden
-    cel_login_loginbutton=Anmelden
-    cel_ctm_gal_edit=Edit Picture Gallery
-    cel_ctm_gal_add=New Picture Gallery
-    cel_ctm_gal_import=Import Pictures
-    cel_ctm_gal_delete=Delete Picture Gallery
-    cel_ctm_gal_show=Show Picture Gallery
-    ## image gallery view context menu
-    cel_ctm_gal_add_slide=Add Slide
-    cel_ctm_gal_edit_slide=Edit Slide
-    cel_ctm_gal_delete_slide=Delete Slide
-    ## password recovery
-    cel_login_forgotpassword=Mot de passe oubli&amp;eacute;?
-    cel_password_recovery_process_description=Veuillez mettte
-    votre nom d'utilisateur (adresse e-mail). Vous allez recevoir les informations necessaires pour définir un
-    nouveau
-    mot de passe par e-mail.
-    cel_password_recovery_button=Envoyer e-mail
-    cel_password_recovery_failed=F&amp;uuml;r dieses
-    Konto ist die Passwortwiederherstellung leider nicht automatisch m&amp;ouml;glich. Bitte wenden Sie sich an
-    den
-    Seitenadministrator.
-    cel_password_recovery_success=Un e-mail avec les informations pour restaurer le mot de passe
-    sera envoyé à vous.
-    ## Celements Navigation
-    cel_nav_nomenuitems=keine Navigationspunkte gefunden
-    cel_cal_ev_isSubscribable=Abonnierbar?
-    cel_filebase_upload_namechange_message=Dateiname enthält vom Server nicht
-    unterstützte Zeichen und wird wie folgt abgeändert
-    cel_navcell_edit_data_type=Navigation Source Data Type (empty for
-    general Page Menu)
-    cel_nav_confirm_delete=Soll dieser Eintrag wirklich aus dem Menu gel&amp;ouml;scht werden
-    (Hinweis: Bei dieser Aktion wird der Menu Eintrag,
-    nicht aber die Seite gel&amp;ouml;scht)?
-    ## Celements Presentation
-    cel_nav_empty_presentation=keine Folien gefunden
-    cel_presentation_confirm_delete=Soll diese Folie wirklich aus der
-    Präsentation gel&amp;ouml;scht werden (Hinweis: Bei dieser Aktion wird der Eintrag in
-    der Präsentation, nicht aber
-    die Folie gel&amp;ouml;scht)?
-    cel_presentation_reordering_title=Anpassung der Anordnung
-    cel_presentation_reordering_hint=Bitte mit Drag&amp;amp;Drop die Struktur anpassen!
-    ## Delete Pages
-    cel_delete_doc_confirm=Sie l&amp;ouml;schen die vollständige Seite {0}.
-    cel_delete_doc_confirm_warn_translations=Achtung! Bei diesem Vorgang werden die &amp;Uuml;bersetzungen {0}
-    unwiderrufliche gel&amp;ouml;escht.
-    cel_delete_translation_confirm=Sie l&amp;ouml;schen unwiderrufliche die
-    &amp;Uuml;bersetzung {0} der Seite {1}
-    ## form validation
-    cel_form_valid_required=Information obligatoire
-    ## Zendesk
-    Support Form
-    cel_support_desctext=Haben Sie eine Frage oder oder ein Problem? Wir sind f&amp;uuml;r Sie da! Unser
-    Ziel ist es, alle Fragen innert 24 Stunden
-    zu beantworten :-)
-    cel_support_host=helpdesk.synventis.com
-    cel_support_title=celements.web Helpdesk
-    ## Page Layouts
-    cel_default_pagelayout=Standard Layout
-    cel_layout_editor_title=Layout bearbeiten: {0}
-    cel_layout_editor_editconfig=edit configuration
-    cel_layout_create_successful=Layout établi avec succès
-    cel_layout_empty_name_msg=Le nom de la mise en page est vide
-    cel_ctm_edit_cell=Zelle bearbeiten
-    cel_ctm_addcell=Zelle hinzuf&amp;uuml;gen
-    cel_ctm_add_subcell=Unter-Zelle
-    hinzuf&amp;uuml;gen
-    cel_ctm_reorder_cell=Anordnung &amp;auml;ndern
-    cel_ctm_del_menu_item_cell=Zelle entfernen
-    cel_cm_properties_cellname=Zellen
-    cel_ctm_edit_BackgroundCell_banner=Banner bearbeiten
-    cel_ctm_Cellattachment=Zellen
-    Anhang
-    cel_cell_node_confirm_delete=Voulez-vous vraiment supprimer ce nœud de la structure (Remarque : Cette action
-    supprime l'entrée de la structure, mais pas la
-    page) ?
-    ## Translation Box Cell
-    cel_notranslation_availableLanguages=Vous pouvez voyer cette page dans les langues suivantes: {0}.
-    cel_notranslation=Vous voyez cette page en {0}, parce qu'il n y a pas de traduction en {1} .
-    cel_editnow=edit now
-    ##
-    Overlay
-    cel_overlay_not_available=Das Overlay {0} ist nicht vorhanden
-    ## Objectedit
-    cel_objectedit_addsameobject=Neuer
-    {0} Eintrag hinzuf&amp;uuml;gen
-    cel_objectedit_removeobject=Eintrag entfernen
-    ##Captcha
-    cel_captcha_check=Spam
-    protection
-    cel_captcha_error=Falsche Spamschutzeingabe. Bitte versuchen Sie es nochmals.
-    ## Sitemap
-    cel_overlay_title_sitemap_for_space=Sitemap für den "{0}"-Bereich
-    cel_overlay_title_sitemap=Sitemap
-    ##Search
-    search_result_last_change=modifi&amp;eacute;
-    cel_search_results_total={0} résultats
-    cel_search_results_total_1000=Plus de {0} résultats
-    ## recycle bin
-    cel_menu_recyclebin=Document Recycle Bin
-    cel_menu_attrecyclebin=File Recycle Bin
-    cel_att_recyclebin_delete_hint=You can permanently delete all files which are
-    in the recycle bin for more than 30 days.
-    cel_att_recyclebin_delete_warning=CAUTION: You CANNOT recover any files
-    permanently deleted from the recycle bin!
-    cel_att_recyclebin_delete_now_link=permanently delete files in the recycle
-    bin for more than 30 days NOW
-    cel_att_recyclebin_deleted_true=Deleted the files that have been in the recycle bin for
-    more than 30 days.
-    cel_att_recyclebin_deleted_false=No files have been deleted.
-    cel_att_recyclebin_deleted_backlink=back to recycle bin
-    cel_att_recyclebin_empty=Everything's clean. No trashed
-    document found.
-    cel_att_recyclebin_not_enough_rights=You need edit rights to view the recycle bin.
-    cel_recyclebin_title=Document Recycle Bin
-    cel_recyclebin_title_numDocuments=documents {0}
-    cel_recyclebin_delete_hint=You can permanently delete all documents which are in the recycle bin for more than 30
-    days.
-    cel_recyclebin_delete_warning=CAUTION: You CANNOT recover any documents permanently deleted from the recycle
-    bin!
-    cel_recyclebin_delete_now_link=permanently delete documents in the recycle bin for more than 30 days NOW
-    cel_recyclebin_deleted=Deleted {0} document versions in total.
-    cel_recyclebin_deleted_backlink=back to recycle bin
-    cel_recyclebin_empty=Everything's clean. No trashed document found.
-    cel_recyclebin_not_enough_rights=You need edit
-    rights to view the recycle bin.
-    xe.index.trash.attachments.delete.text=delete
-    core.recyclebin.docname=Document
-    core.recyclebin.numDelVersions=num deleted versions
-    ## Import Manager
-    cel_menu_importmanager=xar Import Manager
-    ##Calendar validation
-    cel_calendar_validation_event_date=Startdate must not be empty and has to be in the date-format
-    TT.MM.JJJJ HH:MM
-    cel_calendar_validation_event_end_date=Enddate has to be in the date-format TT.MM.JJJJ HH:MM
-    ##Blog
-    validation
-    cel_blog_validation_publishdate=publish date format is wrong. Please use format: TT.MM.JJJJ HH:MM
-    cel_blog_validation_archivedate=archive date format is wrong. Please use format: TT.MM.JJJJ HH:MM
-    ## shop
-    shop_address_title=Titre
-    shop_address_name=Nom
-    shop_address_firstname=Prénom
-    shop_address_institution=Institution
-    shop_address_address=Rue
-    shop_address_zip=Code Postal
-    shop_address_city=Ville
-    shop_address_country=Pays
-    shop_address_email=E-Mail
-    shop_address_korremail=E-Mail Correspondance (en cas de divergence)
-    ## Structured Data
-    Editor
-    cel_pagetype_prettyname_StructuredDataEditor=Struct-Editor
-    cel_struct_autocomplete_placeholder_default=Veuillez sélectionner...
-    cel_struct_autocomplete_UrlToNewElementEditorButtonText_default=Ajouter un nouveau
-    ## SelectTag Options
-    cel_yes=Oui
-    cel_no=Non
-    ##Course validation
-    cel_course_validation_titleToLong=Le titre ne peut pas dépasser 8 caractères
-  </content>
-</xwikidoc>
+<web>Celements2</web>
+<name>Dictionary</name>
+<language>fr</language>
+<defaultLanguage>en</defaultLanguage>
+<translation>1</translation>
+<parent></parent>
+<creator>xwiki:XWiki.fpichler</creator>
+<author>xwiki:XWiki.cpichler</author>
+<customClass></customClass>
+<contentAuthor>xwiki:XWiki.cpichler</contentAuthor>
+<creationDate>1205674364000</creationDate>
+<date>1720776215000</date>
+<contentUpdateDate>1720776215000</contentUpdateDate>
+<version>1.14</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>true</minorEdit>
+<syntaxId>xwiki/1.0</syntaxId>
+<hidden>false</hidden>
+<content>## Languages
+cel_de=Allemand
+cel_fr=Français
+cel_en=Anglais
+cel_it=Italien
+cel_es=Espagnol
+cel_de_de=Deutsch
+cel_en_en=English
+cel_fr_fr=Français
+cel_it_it=Italiano
+cel_es_es=Español
+## General terms
+cel_filename=Nom du fichier
+cel_size=Dimension
+cel_delete=Supprimer
+cel_version=Version
+cel_upload=Téléversement
+cel_save=Sauver
+cel_submit=Submit
+cel_cancel=Annuler
+cel_save_and_close=enregistrer et fermer
+cel_close=fermer
+cel_save_and_continue=enregistrer
+cel_back=Retour
+cel_create_page=Créer page
+cel_edit_page=Editer la page
+cel_name=Nom
+cel_email=E-Mail
+cel_invalideActivationCode=Ce code d'activation n'est plus ou pas valable.
+cel_forcedPasswordChange=Votre mot de passe est expiré. Renouvelez votre mot de passe.
+no_menuitems=no menuitems found
+cel_AccountSuccessfulActivated=Votre compte a été activé avec succès . Entrez votre nouveau mot de passe s'il vous plaît.
+cel_PasswordSuccessfulChanged=Votre mot de passe a été changé avec succès
+cel_loginDisabledMessage=Le login est actuellement indisponible. Veuillez réessayer plus tard.
+cel_youcandoubleclicktoedit=Doubleclick to edit it.
+sgr_aerzteverzeichnis_titel=Index des médecins
+## RTE terms
+cel_rte_howto_proceed=Comment aimez-vous procéder?
+cel_rte_quit_wo_saving=Quitter sans changements
+cel_rte_cancel_all_changes=Annuler tous les changements
+cel_rte_resume_editing=Continuer à éditer
+cel_rte_always_perform_option=Toujours exécuter cette option
+cel_rte_editable_in_user_prefs=Editable dans la région de gestion d&amp;lsquo;utilisateur
+cel_rte_always_ask=Demander toujours
+cel_rte_pref_title=Représentation du Rich Text Editor
+cel_rte_filename=Nom du fichier
+cel_rte_version=Version
+cel_rte_author=Auteur
+cel_rte_choosetargetfilename=Choisissez le nom final du fichier
+cel_rte_choosefiletoupload=Choisissez le fichier à télécharger
+cel_rte_attachthisfile=Ajouter ce fichier
+cel_rte_style_titel=Titre
+cel_rte_style_untertitel=Sous-titre
+cel_rte_style_text=Texte
+## page dependend cells
+cel_ctm_edit_pdCell=Edit content
+cel_ctm_edit_pdCellProperties=Edit properties
+cel_ctm_add_pdCell=Add content
+cel_ctm_delete_pdCell=Delete content
+cel_ctm_restore_pdCell=Restore content
+cel_ctm_edit_pdSpaceDefaultCell=Edit default (space)
+cel_ctm_edit_pdWikiDefaultCell=Edit default (site)
+## ImageBase
+cel_import_photo_unimported_preimport=Attention, un aperçu n'a pas été importé. La sélection vas être perdu!
+cel_import_photo_importing=Importation en progress...
+cel_import_photo_imported=Importation terminée
+cel_import_error_missing_preimport=Aucune fonctionne d'import défini
+cel_import_allowed_extentions=Fichiers de ce type ne peut pas être importés. Types de fichier supportés sont {0}
+gallery_import_link=Gestionnaire d'importation
+cel_photo_all=Tous
+cel_photo_none=Aucun
+cel_photo_skip=ignorer
+cel_photo_overwrite=écraser
+cel_photo_add=ajouter
+cel_photo_import_selected_now=Importer la sélection
+cel_photo_import=Sélection
+cel_photo_filename=Nom du fichier
+cel_photo_action=action
+cel_photo_preview=Aperçu
+cel_import_alert_images_empty=Aucun photo choisi
+cel_import_alert_images_overwrite=Attention, quelques photos seront replacés
+## Filebase terms
+cel_media_library=Médiathèque
+cel_ml_filename=Nom de fichier
+cel_ml_attached_to=joint à
+cel_ml_revision=Révision
+cel_ml_date=Date
+cel_ml_all_docs=Tous les documents
+cel_ml_mime_type=type de fichier
+cel_ml_add_tag=Adjoindre un filtre
+cel_ml_edit_tag=Adapter le filtre
+cel_ml_delete_tag=Supprimer le filtre
+cel_ml_delete_att=supprimer le fichier
+cel_ml_delete=supprimer
+cel_ml_delete_msg=Êtes-vous sûr que vous voulez supprimer le filtre suivant ?
+cel_ml_delete_successful=supprimer avec succès
+cel_ml_no_tags_available=Il n'existe pas de filtes
+cel_ml_delete_confirmation=Supprimer {0}?
+## TabMenu
+cel_tm_content=Contenu
+cel_tm_navigation=Navigation
+cel_tm_attachments=Fichier joint
+cel_tm_properties=Caractéristiques
+cel_tm_history=Histoire
+cel_tm_rls=RLS
+cel_tm_edit_translation=Vous éditez la traduction suivante
+cel_tm_title=Titre
+cel_tm_menu_name=Nom de menu
+cel_tm_menu_image=Fond d'écran
+cel_tm_menu_removeimage=supprimer image
+cel_tm_redirect=Redirection
+cel_tm_target=Cible
+cel_tm_no_attachments=Aucun joint
+cel_tm_upload_attachment=Téléversement du joint
+cel_tm_save_first=Sauvez le document avant télécharger, s'il vous plaît
+cel_tm_page_type=Typ de page
+cel_tm_page_master=Page matrice
+cel_tm_view_translation_history=Histoire de la traduction
+cel_tm_document_history=Histoire du document
+cel_tm_compare=Comparer
+cel_tm_all_changes=Tous les changements
+cel_tm_cannotreaddocumentversion=Ne peut pas lire la version de document
+cel_tm_edited_by=édité par
+cel_tm_on=sur
+cel_tm_page_title=Nom de page
+cel_tm_document_name=Nom du document
+cel_tm_move_page=Déplacer page
+cel_tm_warning_doc_exists_already=Attention: Le document {0} existe déjà. Voulez-vous le déplacer?
+cel_tm_error_doc_exists_already=Erreur: Le document {0} existe déjà.
+cel_tm_error_correct_field=Erreur: Remplissez / corrigez les lieus marqués, svp.
+cel_tm_add_new_page_to_menu=Ajouter une nouvelle page au menu
+cel_tm_add_existing_page_to_menu=Ajouter une page existante au menu / Déplacer une page existante
+cel_tm_validate_warning=Entrez uniquement des lettres [a-z], chiffres [0-9], \"-\" et \"_\", svp.
+cel_tm_blog_space=Espace de blogue
+cel_tm_view_type=Type de vue
+cel_tm_editor_type=Type d'éditeur
+cel_tm_max_num_chars=nombre caractères pour extrait
+cel_tm_comment=Commentaire
+cel_tm_comments=Commentaires
+cel_tm_has_comments=Permettre des commentaires?
+cel_tm_post_comment=Composer und commentaire
+cel_tm_no_comments=Pas de commentaires
+cel_tm_content_will_appear_on_article_page=Le contenu vas être affiché à la page de l'article.
+cel_tm_extract=Extrait
+cel_tm_extract_will_appear_on_news_page=L'extrait vas être affiché à la page de nouveautés.
+cel_tm_newer=Plus nouveau
+cel_tm_older=Plus vieux
+cel_tm_rte_edit=Éditer document
+cel_tm_rte_create=Créer document
+cel_tm_blog_edit=Éditer blogue
+cel_tm_article_edit=Éditer article
+cel_tm_article_create=Créer article
+cel_tm_blog_article=Créer un article
+cel_tm_publish_date=Date de publication
+cel_valid_dateRange=CAUTION: The startdate {0} is older than the enddate {1}.
+cel_valid_blog_dateRange=CAUTION: The archive date {0} is older than the publish date {1}.
+cel_tm_subscribable=Article abonnable?
+cel_tm_is_subscribable=abonnable
+cel_tm_subscribe_to=abonner
+cel_tm_edit_template=modifier le modèle
+cel_tm_error_exists_notmoveable=Le document existe et ne peut pas être déplacé
+cel_tm_rights=Accès
+cel_tm_rights_publication=Publication durée
+cel_tm_rights_publication_always=Toujours
+cel_tm_rights_publication_add=Ajouter
+cel_tm_rights_publication_remove=Eliminer
+cel_tm_rights_publication_from=De
+cel_tm_rights_publication_until=à
+cel_tm_rights_publication_published=Publier
+cel_tm_rights_publication_unpublished=Non publier
+cel_tm_rights_group=Groupe
+cel_tm_rights_rights=Droits
+cel_tm_rights_realrights=Droits réel
+cel_tm_rights_guestuser=Public (pas logué)
+cel_tm_rights_view=Lire
+cel_tm_rights_edit=Lire et éditer
+cel_tm_rights_none=Aucun
+cel_tm_rights_invalid=Les privilèges d'accès ne répond pas aux exigences!! S'il vous plaît contactez l'administrateur du site.
+cel_tm_saving_failed_document=Erreur lors de l'enregistrement de la page
+## Admin Bar
+cel_admin_file=Fichier
+cel_admin_admin=Admin
+cel_admin_logout=Fermeture&amp;nbsp;de&amp;nbsp;session
+cel_admin_useradmin=Administration&amp;nbsp;d&amp;lsquo;utilisateur
+cel_admin_addpage=Ajouter une page
+cel_admin_delete=Supprimer&amp;nbsp;une&amp;nbsp;page
+cel_admin_delete_translation=Supprimer&amp;nbsp;une&amp;nbsp;traduction
+cel_admin_filebase=Explorateur&amp;nbsp;des&amp;nbsp;fichiers
+cel_admin_linkpicker=Link&amp;nbsp;Picker
+cel_admin_sitemap=Sitemap
+cel_admin_help=Aide
+cel_admin_onlinemanual=Aide en ligne
+cel_admin_support=Support
+cel_admin_edittag=Edit file tags
+## WebSearch
+cel_search_page_title=Recherche
+cel_search_page_relevance=Pertinence
+cel_search_page_search=Recherche
+cel_search_page_lastChanged=Dernière modification
+cel_search_page_searchSection=Zones de recherche
+cel_search_page_website=Site Web
+cel_search_page_pdf=PDF
+cel_search_page_attachment=Fichiers
+cel_search_page_menu=Menu
+cel_search_page_image=Galerie
+cel_search_page_blog=Blog
+cel_search_page_chronoblog=Chronoblog
+cel_search_page_content=Content
+cel_search_page_content_menu=Contenu de la page
+cel_search_results_title=Resultats
+cel_minisearch=Recherche
+cel_search=Recherche
+cel_search_noresults=Cotre recherche ne correspond à aucun document
+cel_search_breadcrumbs_title=Gefunden unter
+cel_search_breadcrumbs_delimiter=&amp;nbsp;&amp;gt;&amp;nbsp;
+##LinkPicker
+cel_lpicker_name=Link Picker
+cel_lpicker_plzClickNotice=Cliquez sur le nom du document choisi.
+cel_lpicker_menuLinksTitle=Structure du menu
+cel_lpicker_otherLinksTitle=Documents hors de la structure du menu
+## CONTEXT MENU
+cel_edit_tool_HeaderRTE=modifier la tête de la page
+cel_edit_tool_FooterRTE=modifier le pied de la page
+cel_ctm_edit_content=Editer le texte
+cel_ctm_Pageattachment=Fichiers joints
+cel_ctm_addpage=Ajouter une page
+cel_ctm_add_subpage=Ajouter une sous-page
+cel_ctm_addslide=Ajouter une diapo
+cel_ctm_add_subslide=Ajouter une sous-diapo
+cel_cm_subslide_sitemap=Subslide Sitemap
+cel_ctm_del_slide=Ajouter une diapo
+cel_ctm_move_up=Déplacer vers le haut
+cel_ctm_move_down=Déplacer vers le bas
+cel_ctm_del_menu_item=Supprimer le menu
+cel_ctm_edit_page=Editer la page
+cel_ctm_edit_presentation=Editer la présentation
+cel_ctm_edit_Banner=Editer le logo
+##RTE
+rte_title=Rubrique
+rte_heading1=Rubrique 1
+rte_heading2=Rubrique 2
+rte_heading3=Rubrique 3
+rte_heading4=Rubrique 4
+rte_heading5=Rubrique 5
+rte_heading6=Rubrique 6
+rte_text=Paragraphe
+rte_float=Texte rédigé
+rte_imgsub=Légende d&amp;lsquo;image
+rte_imgsub2=Légende d&amp;lsquo;image 2
+rte_pdflink=PDF-Lien
+rte_excellink=Excel-Lien
+rte_wordlink=Word-Lien
+##DOCUMENTATION
+celements_documentation=Documentation
+##GALLERY
+gallery_edit_gallery=Editer la galerie
+gallery_pictures=Images
+gallery_upload_picture=Charger des Images
+gallery_gallery_properties=Propriété de la galerie
+gallery_album_create=Créer album
+gallery_album_title=Album titre
+gallery_album_description=Album description
+gallery_with_overview=vue d&amp;squo;ensemble
+gallery_thumbnail_width=Thumbnail largeur
+gallery_thumbnail_height=Thumbnail hauteur
+gallery_picture_height=Image hauteur
+gallery_picture_width=Image largeur
+gallery_thumbnail_desc=BildbeschreibungThumbnail description
+## ImageGallery
+gallery_editor_description=Album description
+gallery_editor_height=Thumbnail hauteur
+gallery_editor_thumbWidth=Thumbnail largeur
+gallery_editor_height2=Image hauteur
+gallery_editor_photoWidth=Image largeur
+gallery_editor_galleryLayout=Album layout
+cel_gallery_presentation_space=Gallery Slide Space
+gallery_editor_menu_space=Slide Space Name
+gallery_editor_addNewSlide=Add new slide
+cel_gallery_reordering_title=Gallery Image Reordering
+gallery_editor_newSlideTitle=Image
+cel_nav_nomenuitems_gallery_overview=Cette galerie contient pas d'images.
+cel_nav_empty_presentation_gallery_overview=Cette galerie contient pas d'images.
+## FORM PAGE TYPE
+cel_general_form_failure_msg=Ce formular n'est pas disponible au moment car des raisons techniques.
+cel_form_validation_failed_msg=Veuillez remplir toutes les cases marquées
+cel_tm_error_exists_notmoveable=Ce document est déjà existant et peut pas être déplacé
+##COURSE
+cel_course_add=Ajouter un cours
+cel_course_chf=Fr.
+cel_course_city=Place
+cel_course_cost=Coûts
+cel_course_course=Cours
+cel_course_course_edit=Adapter le cours
+cel_course_courses=Cours
+cel_course_course_nr=Cours-numéro
+cel_course_date=Date
+cel_course_day=Jour
+cel_course_delete=Effacer le cours
+cel_course_description=Description de cours
+cel_course_edit_detail=Description de cours (Détail au cours, optionnellement)
+cel_course_edit_overview=Description de cours (courte description du cours, obligatoirement)
+cel_course_for_member=pour membres
+cel_course_for_non_member=pour non-membres
+cel_course_local=Localité
+cel_course_membership=Affiliation
+cel_course_membership_state_choose=Veuillez choisir vos embouteillages d'affiliation
+cel_course_membership_state_member=Je suis membre de la Ligue Suisse contre le Rhumatisme {0}
+cel_course_membership_state_subscribe=Je voudrais devenir membre, demande m'envoie vous documents
+cel_course_membership_state_non_member=Je suis un non-membre
+cel_course_missing=Un cours doit être choisi, afin qu'ils puissent s'enregistrer!
+cel_course_redirect_link=A l'aperçu de cours
+cel_course_oClock=Heures
+cel_course_overview=Aperçu de cours
+cel_course_price=Prix
+cel_course_price_per_member_lesson=Frais de cours par leçon en SFr. pour des membres
+cel_course_provisional_registration=inscription provisoire
+cel_course_provisional_registration_request=Veuillez m'annoncer provisoirement
+cel_course_registration=Inscription
+cel_course_registration_request=Veuillez m'annoncer
+cel_course_register=annoncer
+cel_course_subscribe=inscrire
+cel_course_subscriber_name=Nom
+cel_course_subscriber_subscribe=&gt;&gt; envoyer une inscription provisoire
+cel_course_subscriber_subscribe2=&gt;&gt; envoyer inscription
+cel_course_type=Type de cours
+cel_course_weekday=jour de semaine
+cel_course_weekday_mon_short=Lu
+cel_course_weekday_mon=Lundi
+cel_course_weekday_tue_short=Ma
+cel_course_weekday_tue=Mardi
+cel_course_weekday_wed_short=Me
+cel_course_weekday_wed=Mercredi
+cel_course_weekday_thu_short=Je
+cel_course_weekday_thu=Jeudi
+cel_course_weekday_fri_short=Ve
+cel_course_weekday_fri=Vendredi
+cel_course_weekday_sat_short=Sa
+cel_course_weekday_sat=Samedi
+cel_course_weekday_sun_short=Di
+cel_course_weekday_sun=Dimanche
+cel_course_weekday_noday_short=-
+cel_course_weekday_noday=non défini
+cel_course_time=heure
+cel_course_zip=CP
+##SHOP
+cel_shop_cart=Panier
+cel_shop_your_cart=Votre panier
+cel_shop_article=Article
+cel_shop_search_in=Rechercher dans
+cel_shop_searchresults=Résultats de recherche
+cel_shop_search_no_results=Malheureusement, pas de résultats!
+cel_shop_cart_description=Bienvenue dans la boutique de la ligue suisse contre le rhumatisme
+cel_shop_submit_orderform=Envoyer la commande
+cel_shop_total_costs=Totale
+cel_shop_order_form=Formulaire de commande
+cel_shop_submit_order=Envoyer la commande
+cel_shop_price=Prix
+cel_shop_nr_of=Pièce
+cel_shop_billing_address=Adresse de facturation
+cel_shop_shipping_address=Adresse de livraison
+cel_shop_shipping_remark=(uniquement si différente à l'adresse de facturation)
+cel_shop_company=Société
+cel_shop_name=Nom
+cel_shop_mandatory_fields=* Informations obilgatoires
+cel_shop_order_thank=Merci beaucoup
+cel_shop_order_confirmation=Merci pour votre commande
+cel_shop_order_print=Imprimer la commande
+cel_shop_edit_category=Déterminez la contraction de catégorie de la catégorie (conformément à l'importation)
+cel_shop_cart_ordered=Le panier a été commandé.
+cel_shop_empty_cart_message=Il n'y a pas de produits dans le panier
+cel_shop_comment=Remarques
+##BLOG
+cel_blog_empty=No news is good news.
+cel_blog_addarticle=ajouter article
+cel_blog_copyarticle=copier l'article
+cel_blog_editarticle=éditer article
+cel_blog_deletearticle=supprimer article
+cel_blog_subscriber_notice=Article abonnale de: {0}
+cel_blog_subscriber_show=afficher
+cel_blog_sendarticle=Envoyer le bulletin d'information
+cel_blog_newsletterimport_active=Importer adresses du bulletin d'information (active-liste)
+cel_blog_newsletterimport_inactive=Importer adresses du bulletin d'information (inactive-liste)
+cel_blog_newsletteraddresslist=liste d'adresses du bulletin d'information
+cel_plain_text_mail=
+cel_tm_archive_date=date d'archivage
+cel_ctm_blog_del_confirm=Do you really want to delete this news article?
+cel_ctm_blog_edit=Éditer blogue
+##Muss RLS-entspezifiziert werden!!!
+cel_rls_blog_article_more=&gt; suite
+##NEWSLETTER
+cel_newsletter_text_only_message=Vous pouvez pas recevoir des Messages HTML. Vous pouvez voir le bulletin d'information sous {0}.
+cel_newsletter_unsubscribe_info=Vous pouvez annuler le bulletin d'information ici {0}.
+cel_newsletter_could_not_activate=La subscription n'a pas pu être aktivé.
+cel_newsletter_activated=Subscription du bulletin d'information activé. Vous recevrez le bulletin jusqu'a annulation.
+cel_newsletter_could_not_unsubscribe=Le bulletin d'information n'a pas pu être annulé. Ou l'adresse e-mail ou le code d'activations sont faux.
+cel_newsletter_unsubscribed=Subscription du bulletin annulé. Vous ne reverez plus de bulletins.
+cel_newsletter_could_not_subscribe=Le bulletin d'information n'a pas pu être abonné.
+cel_newsletter_subscribed=Bulletin d'informations abonné. Pour raisons de sécurité la subscription doit être activé avant que vous recevrez le bulletin d'information. Vous recevrez le liens corresppondant dans quelque minutes.
+cel_newsletter_send_history_title=Historie de l'article
+cel_newsletter_times_sent=Cet article à été envoyés {0} fois.
+cel_newsletter_last_sent=Envoyé en dernier du {0} le {1} à {2} personnes
+cel_newsletter_never_sent=Cet artcle n'a jamais été envoyé.
+cel_newsletter_recipients_title=Destinataire
+cel_newsletter_no_recipients=Aucun destinataire definit pour ce bulletin d'information.
+cel_newsletter_user_group=Group d'utilisateurs
+cel_newsletter_user_groups=Groups d'utilisateurs
+cel_newsletter_nr_of_members={0} membres avec adress e-mail
+cel_newsletter_recipient=Adresse de destinataire
+cel_newsletter_recipients=Adresses de destinataire
+cel_newsletter_from_address=E-Mail d'expéditeur (z.B. newsletter@mydomain.com):
+cel_newsletter_reply_to=Adresse de réponse (optionale, seulement si différent de l'adresse d'expéditeur):
+cel_newsletter_subject=Objet:
+cel_newsletter_is_no_newsletter=Ce blogue n'est pas préparé pour les bulletins d'information.
+cel_tm_edit_is_newsletter=Est un bulletin d'information
+cel_tm_edit_newsletter_from=Adresse d'expéditeur
+cel_tm_edit_newsletter_reply_to=Adresse de réponse
+cel_tm_edit_newsletter_unsubscribe=Annuler le bulletin d'information
+cel_newsletter_sent={0} envoyé
+cel_newsletter_error_sending={0} (Erreur {1} en envoyant)
+cel_newsletter_html_footer_message=Si vous ne pouvez pas lire ce bulletin d’information vous pouvez le voir sous {0} &lt;br /&gt;
+cel_newsletter_unsubscribe_footer=Si vous souhaitez de ne plus recevoir ce bulletin d'information vous l'annuler sous {0}
+cel_newsletter_test_submit=Envoyer un email de teste
+cel_newsletter_submit=Envoyer bulletin d'information
+cel_newsletter_confirm_send=Envoyer maintenant le bulletin d’information aux recipients notés {0}?
+##IMPORT
+cel_import_filelist=Import - Fichiers disponibles
+cel_import_preimport=Fichier à importer
+cel_import_preimport_message=Cliquer sur un fichier pour préparer l'import.
+cel_import_upload=Ajouter un nouveau fichier
+cel_import_alert=Êtes-vous sur d'effacer tous les {0} existant et de les réplacer avec les nouveau?
+cel_import_alert_courses=Courses
+cel_import_alert_articles=Articles
+cel_import_import=Importer maintenant
+cel_import_courses_deleted=Courses effacés aux pages suivantes:
+cel_import_course_import=Importation des cours {0}
+cel_import_course_doc_created=Nouveau document de cours crée:
+cel_import_course_add_course=Ajouté un cours:
+cel_import_course_success_msg=L'importation de {1} courses de {0} catégories avec success.
+cel_import_shop_importtype_msg=Contiens des dates de la catégorie:
+cel_import_shop_please_choose=Choisissez s'il vous plaît ...
+cel_import_wrong_file_msg=Seulement des fichier en forme XLS (Excel) et CSV (séparé par virgule) peuvent être importés.
+cel_import_shop_success=Fichiers importés avec succes.
+cel_import_exception=Un erreur est apparait. Message d'erreur:
+cel_import_shop_plz=CPL
+cel_import_shop_ort=Place
+cel_import_shop_local=Locale
+cel_import_shop_nr=No.
+cel_import_shop_type=Type
+cel_import_course_import_space=Importer à {0}.
+cel_import_course_preimport_msg=Importation de {0} cours préparé.
+cel_import_shop_category=Categorie
+cel_import_shop_title=Titre
+cel_import_shop_price=Prix
+cel_import_shop_lang=Langue
+cel_import_shop_articles=Articles
+cel_import_shop_categories=Categories
+cel_import_shop_preimport_msg=Importation de {0} {1} préparé.
+cel_import_shop_preimport_now=Commencer l'importation provisoire
+sgr_import_result_failed=Importation échoué
+cel_import_imported=Importation terminé
+cel_import_course_deleted=Les courses des pages suivantes ont êté effacé
+cel_import_member_preimport_msg=Les dates pour l'importation ont êté preparés.
+cel_import_member_changelog_title=Changements aux contes d'utilisateurs pendant l'importation
+cel_import_member_first_name=Prenom
+cel_import_member_name=Nom
+cel_import_member_region=Canton
+cel_import_member_email=Email
+cel_import_member_group=Group d'utilisateurs
+import_wrong_file_format=Format de fichier faux
+import_io_exception=Erreur exceptionel pendant la lecture du fichier!
+import_xwiki_exception=Erreur exceptionel XWiki pendant la lecture du fichier!
+import_error_cleaning_old_preimports=Effacement des vieux fichier échoué
+import_csv_row_short=La ligne d'input {0} est trop courte! {1} ligne(s) manques.
+import_csv_row_long=La ligne d'input {0} est trop longe! Commentcement du contenu: [{1}]
+sgr_import_member_error_removing_members=Des vieux dates des membres n'ont pas pu êtés éffacés!
+sgr_import_member_error_copying_members=Les nouveaux membres de l'importation ne pouvaient pas être copiés dans le tableau des membres actifs!
+sgr_import_member_error_no_preimport=Pas de dates d'importation provisoir existant - rien à importer!
+sgr_import_result_title_group=Changement de group
+c3_import_changes_from_to = {0} ont étés changés de "{1}" en "{2}".
+sgr_import_result_title_user_data=Changements aux dates d'utilisateurs
+sgr_import_result_title_new=Nouveaux utilisateurs (reçevoivent un Email)
+sgr_import_result_title_delete=Utilisatuers effacés
+no_content=Aucun contenu, bouton droit pour éditer
+##Synventis Form
+Synventis_Feedbacktext=Veuillez entrer votre nom, e-mail et votre message
+ValidationMSG_Name=Entrez votre nom, s'il vois plaît!
+ValidationMSG_Email=Entrez votre e-mail, s'il vous plaît!
+ValidationMSG_Nachricht=Entrez votre message, s'il vous plaît!
+PRINT_THIS_PAGE=Imprimer la page
+GENERATE_PDF=Créer und pdf
+SEND_FEEDBACK=Envoyez un commentaire
+EnterQueryHere=Recherche...
+##Register Form
+core.register.company=Société:
+## Calendar
+cel_cal_f_date-location=Date - lieu
+cel_cal_f_l_title=Titre
+cel_cal_f_detaillink=Info
+cel_cal_more_detaillink=plus...
+cel_cal_overview_column_config=Vue d'ensemble de la configuration des colonnes
+cel_cal_overview_column_config_concat_msg=Les descriptions suivantes peuvent être utilisées dans le champ ci-dessus (Vue d'ensemble de la configuration des colonnes), séparées par virgule. Des combinaisons de descriptions sont possible avec un trait d'union (-).
+cel_cal_event_column_config=Configuration des colonnes dela manifestation
+cel_cal_hasMoreLink=Liens plus
+cel_cal_overview_column_config_l_title=Titre
+cel_cal_f_l_description=Description
+cel_cal_ev_lang_indep_fields=Champs valables pour toutes les langues
+cel_cal_ev_eventDate=Date de la manifestation (TT.MM.JJJJ HH:MM)
+cel_cal_ev_eventDate_end=Enddate of the event (TT.MM.JJJJ HH:MM)
+cel_cal_ev_lang_dep_fields=Champs spécifiques à la langue
+cel_cal_ev_l_description=Description de la manifestation
+cel_cal_ev_l_title=Titre de la manifestation
+cel_cal_empty_calendar=Au moment, il n'y a aucune manifestation.
+cel_cal_previous=Page précédente
+cel_cal_next=Page prochaine
+cel_cal_f_date=Date
+cel_cal_f_time=Heure
+cel_cal_f_title=Manifestation
+cel_cal_f_location=Lieu
+cel_cal_f_date-time=Date/Heure
+cel_cal_f_date-location=Date/Lieu
+cel_cal_count={0}-{1} de {2} manifestations
+cel_cal_description=Détails de la manifestation
+cel_cal_no_event=Aucun détails entrés.
+cel_cal_ev_edit=Éditer la manifestation
+cel_cal_ev_title=Titre de la manifestation
+cel_cal_ev_description=Détails de la manifestation
+cel_cal_ev_location=Lieu de la manifestation
+cel_cal_ev_date=Date de la manifestation
+cel_cal_ev_subscribable=La manifestation est abonnable
+cel_cal_ev_subscribers=Abonné de:
+cel_cal_edit=Paramètres du calendrier
+cel_cal_calendarspace=Espace de manifestation
+cel_cal_subscribe_to=Calendriers abonnés (&amp;lt;space&amp;gt;.&amp;lt;name&amp;gt;,&amp;lt;space2&amp;gt;.&amp;lt;name2&amp;gt;,...)
+cel_cal_event_per_page=Nombre des manifestations par page
+cel_cal_is_subscribable=Est abonnable
+cel_ctm_cal_add_event=Ajouter une manifestation
+cel_ctm_cal_edit_event=Éditer une manifestation
+cel_ctm_cal_del_event=Effacer une manifestation
+cel_ctm_cal_del_confirm=Effacer {0} ?
+cel_ctm_cal_archive=go to archive
+cel_ctm_cal_overview=go to overview
+cel_ctm_cal_edit=Éditer le calendrier
+## User Administration
+cel_useradmin_search_user=Benutzer suchen
+cel_useradmin_edit_user=Benutzer editieren/registrieren
+cel_useradmin_title=Benutzer: {0}
+cel_useradmin_userdata=Benutzer Daten
+cel_useradmin_groupdata=Mitglied der Gruppen
+cel_useradmin_password_change=Passwort ändern
+cel_useradmin_edit_active=Aktiv
+cel_useradmin_edit_suspended=Suspendiert
+cel_useradmin_edit_first_name=Vorname
+cel_useradmin_edit_last_name=Nachname
+cel_useradmin_edit_email=E-Mail-Adresse
+XWiki.XWikiUsers_email=E-Mail-Adresse
+cel_useradmin_edit_company=Unternehmen
+cel_useradmin_edit_department=Departement
+cel_useradmin_edit_city=Stadt
+cel_useradmin_edit_country=Land
+cel_useradmin_edit_admin_language=Sprache der Benutzeroberfläche
+cel_useradmin_edit_force_pwd_change=Bei nächster Anmeldung neues Passwort verlangen
+cel_add_user=Benutzer registrieren
+cel_delete_user=Benutzer l&amp;ouml;schen
+cel_useradmin_emailInvalid=Die E-Mail-Adresse ist ungültig. Bitte geben Sie eine gültige E-Mail-Adresse ein.
+cel_useradmin_emailNotUnique=Diese E-Mail-Adresse existiert bereits. Bitte geben Sie eine andere ein.
+cel_useradmin_noRegisterRights=Sie haben keine Berechtigung um neue Benutzer zu erstellen.
+cel_useradmin_invalidRequest=Ungültiger Request.
+cel_useradmin_missingEmail=Die E-Mail-Adresse fehlt. Bitte geben Sie eine gültige E-Mail-Adresse ein.
+cel_useradmin_severalEmails=Es sind zuviele E-Mail-Adressen. Bitte geben Sie nur eine ein.
+## Group Names
+cel_groupname_XWikiAdminGroup=Administrator
+cel_groupname_ContentEditorsGroup=Content Editor
+cel_groupname_LayoutEditorsGroup=Layout Editor
+## Login Screen
+cel_login_title=Log In
+username=login emailadresse
+password=mot de passe
+cel_login_username=Login-emailadresse:
+cel_login_password=mot de passe:
+cel_login_loggedinas=Angemeldet als {0}
+## cel_login_logoutbutton kann Benutzername über {0} verwendet werden
+cel_login_logoutbutton=Abmelden
+cel_login_loginbutton=Anmelden
+cel_ctm_gal_edit=Edit Picture Gallery
+cel_ctm_gal_add=New Picture Gallery
+cel_ctm_gal_import=Import Pictures
+cel_ctm_gal_delete=Delete Picture Gallery
+cel_ctm_gal_show=Show Picture Gallery
+## image gallery view context menu
+cel_ctm_gal_add_slide=Add Slide
+cel_ctm_gal_edit_slide=Edit Slide
+cel_ctm_gal_delete_slide=Delete Slide
+## password recovery
+cel_login_forgotpassword=Mot de passe oubli&amp;eacute;?
+cel_password_recovery_process_description=Veuillez mettte votre nom d'utilisateur (adresse e-mail). Vous allez recevoir les informations necessaires pour définir un nouveau mot de passe par e-mail.
+cel_password_recovery_button=Envoyer e-mail
+cel_password_recovery_failed=F&amp;uuml;r dieses Konto ist die Passwortwiederherstellung leider nicht automatisch m&amp;ouml;glich. Bitte wenden Sie sich an den Seitenadministrator.
+cel_password_recovery_success=Un e-mail avec les informations pour restaurer le mot de passe sera envoyé à vous.
+## Celements Navigation
+cel_nav_nomenuitems=keine Navigationspunkte gefunden
+cel_cal_ev_isSubscribable=Abonnierbar?
+cel_filebase_upload_namechange_message=Dateiname enthält vom Server nicht unterstützte Zeichen und wird wie folgt abgeändert
+cel_navcell_edit_data_type=Navigation Source Data Type (empty for general Page Menu)
+cel_nav_confirm_delete=Soll dieser Eintrag wirklich aus dem Menu gel&amp;ouml;scht werden (Hinweis: Bei dieser Aktion wird der Menu Eintrag, nicht aber die Seite gel&amp;ouml;scht)?
+## Celements Presentation
+cel_nav_empty_presentation=keine Folien gefunden
+cel_presentation_confirm_delete=Soll diese Folie wirklich aus der Präsentation gel&amp;ouml;scht werden (Hinweis: Bei dieser Aktion wird der Eintrag in der Präsentation, nicht aber die Folie gel&amp;ouml;scht)?
+cel_presentation_reordering_title=Anpassung der Anordnung
+cel_presentation_reordering_hint=Bitte mit Drag&amp;amp;Drop die Struktur anpassen!
+## Delete Pages
+cel_delete_doc_confirm=Sie l&amp;ouml;schen die vollständige Seite {0}.
+cel_delete_doc_confirm_warn_translations=Achtung! Bei diesem Vorgang werden die &amp;Uuml;bersetzungen {0} unwiderrufliche gel&amp;ouml;escht.
+cel_delete_translation_confirm=Sie l&amp;ouml;schen unwiderrufliche die &amp;Uuml;bersetzung {0} der Seite {1}
+## form validation
+cel_form_valid_required=Information obligatoire
+## Zendesk Support Form
+cel_support_desctext=Haben Sie eine Frage oder oder ein Problem? Wir sind f&amp;uuml;r Sie da! Unser Ziel ist es, alle Fragen innert 24 Stunden zu beantworten :-)
+cel_support_host=helpdesk.synventis.com
+cel_support_title=celements.web Helpdesk
+## Page Layouts
+cel_default_pagelayout=Standard Layout
+cel_layout_editor_title=Layout bearbeiten: {0}
+cel_layout_editor_editconfig=edit configuration
+cel_layout_create_successful=Layout établi avec succès
+cel_layout_empty_name_msg=Le nom de la mise en page est vide
+cel_ctm_edit_cell=Zelle bearbeiten
+cel_ctm_addcell=Zelle hinzuf&amp;uuml;gen
+cel_ctm_add_subcell=Unter-Zelle hinzuf&amp;uuml;gen
+cel_ctm_reorder_cell=Anordnung &amp;auml;ndern
+cel_ctm_del_menu_item_cell=Zelle entfernen
+cel_cm_properties_cellname=Zellen
+cel_ctm_edit_BackgroundCell_banner=Banner bearbeiten
+cel_ctm_Cellattachment=Zellen Anhang
+cel_cell_node_confirm_delete=Voulez-vous vraiment supprimer ce nœud de la structure (Remarque : Cette action supprime l'entrée de la structure, mais pas la page) ?
+## Translation Box Cell
+cel_notranslation_availableLanguages=Vous pouvez voyer cette page dans les langues suivantes: {0}.
+cel_notranslation=Vous voyez cette page en {0}, parce qu'il n y a pas de traduction en {1} .
+cel_editnow=edit now
+## Overlay
+cel_overlay_not_available=Das Overlay {0} ist nicht vorhanden
+## Objectedit
+cel_objectedit_addsameobject=Neuer {0} Eintrag hinzuf&amp;uuml;gen
+cel_objectedit_removeobject=Eintrag entfernen
+##Captcha
+cel_captcha_check=Spam protection
+cel_captcha_error=Falsche Spamschutzeingabe. Bitte versuchen Sie es nochmals.
+## Sitemap
+cel_overlay_title_sitemap_for_space=Sitemap für den "{0}"-Bereich
+cel_overlay_title_sitemap=Sitemap
+##Search
+search_result_last_change=modifi&amp;eacute;
+cel_search_results_total={0} résultats
+cel_search_results_total_1000=Plus de {0} résultats
+## recycle bin
+cel_menu_recyclebin=Document Recycle Bin
+cel_menu_attrecyclebin=File Recycle Bin
+cel_att_recyclebin_delete_hint=You can permanently delete all files which are in the recycle bin for more than 30 days.
+cel_att_recyclebin_delete_warning=CAUTION: You CANNOT recover any files permanently deleted from the recycle bin!
+cel_att_recyclebin_delete_now_link=permanently delete files in the recycle bin for more than 30 days NOW
+cel_att_recyclebin_deleted_true=Deleted the files that have been in the recycle bin for more than 30 days.
+cel_att_recyclebin_deleted_false=No files have been deleted.
+cel_att_recyclebin_deleted_backlink=back to recycle bin
+cel_att_recyclebin_empty=Everything's clean. No trashed document found.
+cel_att_recyclebin_not_enough_rights=You need edit rights to view the recycle bin.
+cel_recyclebin_title=Document Recycle Bin
+cel_recyclebin_title_numDocuments=documents {0}
+cel_recyclebin_delete_hint=You can permanently delete all documents which are in the recycle bin for more than 30 days.
+cel_recyclebin_delete_warning=CAUTION: You CANNOT recover any documents permanently deleted from the recycle bin!
+cel_recyclebin_delete_now_link=permanently delete documents in the recycle bin for more than 30 days NOW
+cel_recyclebin_deleted=Deleted {0} document versions in total.
+cel_recyclebin_deleted_backlink=back to recycle bin
+cel_recyclebin_empty=Everything's clean. No trashed document found.
+cel_recyclebin_not_enough_rights=You need edit rights to view the recycle bin.
+xe.index.trash.attachments.delete.text=delete
+core.recyclebin.docname=Document
+core.recyclebin.numDelVersions=num deleted versions
+## Import Manager
+cel_menu_importmanager=xar Import Manager
+##Calendar validation
+cel_calendar_validation_event_date=Startdate must not be empty and has to be in the date-format TT.MM.JJJJ HH:MM
+cel_calendar_validation_event_end_date=Enddate has to be in the date-format TT.MM.JJJJ HH:MM
+##Blog validation
+cel_blog_validation_publishdate=publish date format is wrong. Please use format: TT.MM.JJJJ HH:MM
+cel_blog_validation_archivedate=archive date format is wrong. Please use format: TT.MM.JJJJ HH:MM
+## shop
+shop_address_title=Titre
+shop_address_name=Nom
+shop_address_firstname=Prénom
+shop_address_institution=Institution
+shop_address_address=Rue
+shop_address_zip=Code Postal
+shop_address_city=Ville
+shop_address_country=Pays
+shop_address_email=E-Mail
+shop_address_korremail=E-Mail Correspondance (en cas de divergence)
+## Structured Data Editor
+cel_pagetype_prettyname_StructuredDataEditor=Struct-Editor
+cel_struct_autocomplete_placeholder_default=Veuillez sélectionner...
+cel_struct_autocomplete_UrlToNewElementEditorButtonText_default=Ajouter un nouveau
+## SelectTag Options
+cel_yes=Oui
+cel_no=Non
+##Course validation
+cel_course_validation_titleToLong=Le titre ne peut pas dépasser 8 caractères
+</content></xwikidoc>

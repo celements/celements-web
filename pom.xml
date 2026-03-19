@@ -474,6 +474,7 @@
                 <include>**/*.xslt</include>
               </includes>
               <excludes>
+                <exclude>src/main/webapp/docs/**/*.xml</exclude>
                 <exclude>**/target/**</exclude>
                 <exclude>**/node_modules/**</exclude>
               </excludes>
