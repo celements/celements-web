@@ -100,10 +100,8 @@
         );
         _me._nextSlideBind = _me._nextSlideClickHandler.bind(_me);
         _me._prevSlideBind = _me._prevSlideClickHandler.bind(_me);
-        _me._registerOnOpenOverlayCheckerBind =
-          _me._registerOnOpenOverlayChecker.bind(_me);
-        _me._imgLoadedResizeAndCenterSlideBind =
-          _me._imgLoadedResizeAndCenterSlide.bind(_me);
+        _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(_me);
+        _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(_me);
         _me._cleanupSlideTransitionBind = _me._cleanupSlideTransition.bind(_me);
         _me._gotoSlideClickHandlerBind = _me._gotoSlideClickHandler.bind(_me);
       },
@@ -133,18 +131,12 @@
       _registerOnOpenOverlayChecker: function (event) {
         const _me = this;
         const celOverlayObj = event.memo;
-        const checkRegisterEvent = $(document.body).fire(
-          'cel_slideShow:shouldRegister',
-          {
-            origEvent: event,
-            slideShow: _me,
-            celOverlay: celOverlayObj,
-          },
-        );
-        if (
-          checkRegisterEvent.stopped &&
-          _me._htmlContainerId === celOverlayObj.getContainerId()
-        ) {
+        const checkRegisterEvent = $(document.body).fire('cel_slideShow:shouldRegister', {
+          origEvent: event,
+          slideShow: _me,
+          celOverlay: celOverlayObj,
+        });
+        if (checkRegisterEvent.stopped && _me._htmlContainerId === celOverlayObj.getContainerId()) {
           _me._htmlContainer = null;
           _me.register();
         }
@@ -245,10 +237,7 @@
         if (_me._htmlContainer) {
           _me._addContentWrapper();
           if (typeof initContextMenuAsync !== 'undefined') {
-            _me._htmlContainer.observe(
-              'cel_yuiOverlay:contentChanged',
-              initContextMenuAsync,
-            );
+            _me._htmlContainer.observe('cel_yuiOverlay:contentChanged', initContextMenuAsync);
             initContextMenuAsync();
           }
           _me._htmlContainer.observe(
@@ -268,15 +257,9 @@
             'cel_slideShow:preloadContentFinished',
             _me._preloadSlideImages.bind(_me),
           );
-          $(document.body).observe(
-            'cel_yuiOverlay:hideEvent',
-            _me._resetContainerElem.bind(_me),
-          );
+          $(document.body).observe('cel_yuiOverlay:hideEvent', _me._resetContainerElem.bind(_me));
         } else {
-          if (
-            typeof console != 'undefined' &&
-            typeof console.warn != 'undefined'
-          ) {
+          if (typeof console != 'undefined' && typeof console.warn != 'undefined') {
             console.warn(
               'register slideshow failed. Reason: container with id "' +
                 _me._htmlContainerId +
@@ -295,20 +278,14 @@
             registerCelAnimMoviePlayerInsideParent.curry(_me._htmlContainer),
           );
         }
-        $(document.body).fire(
-          'cel_slideShow:registerAfterContentChanged',
-          _me._htmlContainer,
-        );
+        $(document.body).fire('cel_slideShow:registerAfterContentChanged', _me._htmlContainer);
       },
 
       _resetContainerElem: function (event) {
         const _me = this;
         const celOverlayObj = event.memo;
         if (_me._debug) {
-          console.log(
-            '_resetContainerElem: for htmlElem ',
-            _me.getHtmlContainer(),
-          );
+          console.log('_resetContainerElem: for htmlElem ', _me.getHtmlContainer());
         }
         if (celOverlayObj.getContainerId() == _me._htmlContainerId) {
           _me._htmlContainer = null;
@@ -336,14 +313,8 @@
               _me._navObj._addSlides(jsonObj);
               callbackFN(jsonObj);
             } else {
-              if (
-                typeof console != 'undefined' &&
-                typeof console.error != 'undefined'
-              ) {
-                console.error(
-                  'loadAndAddMainSlides returns no Json: ',
-                  transport.responseText,
-                );
+              if (typeof console != 'undefined' && typeof console.error != 'undefined') {
+                console.error('loadAndAddMainSlides returns no Json: ', transport.responseText);
               }
             }
           },
@@ -369,35 +340,21 @@
               let startAtIndex = startAtIndexOrName;
               if (typeof startAtIndexOrName === 'string') {
                 if (startAtIndexOrName === '!RANDOM!') {
-                  startAtIndex = Math.floor(
-                    Math.random() * (jsonObj.length - 1),
-                  );
+                  startAtIndex = Math.floor(Math.random() * (jsonObj.length - 1));
                 } else {
-                  startAtIndex = jsonObj.indexOf(
-                    spaceName + '.' + startAtIndexOrName,
-                  );
+                  startAtIndex = jsonObj.indexOf(spaceName + '.' + startAtIndexOrName);
                 }
               }
               _me._navObj._setAllSlides(jsonObj, startAtIndex);
               callbackFN(jsonObj);
             } else {
-              if (
-                typeof console != 'undefined' &&
-                typeof console.error != 'undefined'
-              ) {
-                console.error(
-                  'loadMainSlides returns no Json: ',
-                  transport.responseText,
-                );
+              if (typeof console != 'undefined' && typeof console.error != 'undefined') {
+                console.error('loadMainSlides returns no Json: ', transport.responseText);
               }
             }
           },
           onFailure: function (transport) {
-            console.warn(
-              'loadMainSlides failed for: ',
-              spaceName,
-              startAtIndexOrName,
-            );
+            console.warn('loadMainSlides failed for: ', spaceName, startAtIndexOrName);
           },
         });
       },
@@ -417,14 +374,8 @@
               _me._navObj._addSlides(jsonObj);
               callbackFN(jsonObj);
             } else {
-              if (
-                typeof console != 'undefined' &&
-                typeof console.error != 'undefined'
-              ) {
-                console.error(
-                  'loadAndAddSubSlides returns no Json: ',
-                  transport.responseText,
-                );
+              if (typeof console != 'undefined' && typeof console.error != 'undefined') {
+                console.error('loadAndAddSubSlides returns no Json: ', transport.responseText);
               }
             }
           },
@@ -449,14 +400,8 @@
               _me._navObj._setAllSlides(jsonObj, startAtIndex);
               callbackFN(jsonObj);
             } else {
-              if (
-                typeof console != 'undefined' &&
-                typeof console.error != 'undefined'
-              ) {
-                console.error(
-                  'loadSubSlides returns no Json: ',
-                  transport.responseText,
-                );
+              if (typeof console != 'undefined' && typeof console.error != 'undefined') {
+                console.error('loadSubSlides returns no Json: ', transport.responseText);
               }
             }
           },
@@ -550,19 +495,13 @@
         if (_me.gotoSlide(fullName)) {
           event.stop();
         } else {
-          const nonSlideClickEvent = _me._htmlContainer.fire(
-            'cel_slideShow:nonSlideClick',
-            {
-              theSlideShow: _me,
-              fullName: fullName,
-              clickEvent: event,
-            },
-          );
+          const nonSlideClickEvent = _me._htmlContainer.fire('cel_slideShow:nonSlideClick', {
+            theSlideShow: _me,
+            fullName: fullName,
+            clickEvent: event,
+          });
           if (!nonSlideClickEvent.stopped) {
-            if (
-              typeof console != 'undefined' &&
-              typeof console.error != 'undefined'
-            ) {
+            if (typeof console != 'undefined' && typeof console.error != 'undefined') {
               console.error(
                 '_gotoSlideClickHandler failed. Index not found for: ',
                 fullName,
@@ -575,14 +514,12 @@
 
       _registerDirectLinks: function () {
         const _me = this;
-        _me._htmlContainer
-          .select('.celPresSlideShow_navigation')
-          .each(function (navElem) {
-            navElem.select('a').each(function (navLink) {
-              navLink.stopObserving('click', _me._gotoSlideClickHandlerBind);
-              navLink.observe('click', _me._gotoSlideClickHandlerBind);
-            });
+        _me._htmlContainer.select('.celPresSlideShow_navigation').each(function (navElem) {
+          navElem.select('a').each(function (navLink) {
+            navLink.stopObserving('click', _me._gotoSlideClickHandlerBind);
+            navLink.observe('click', _me._gotoSlideClickHandlerBind);
           });
+        });
       },
 
       setAutoresize: function (doAutoResize) {
@@ -657,14 +594,11 @@
               );
               if (!beforeRedirEvent.stopped) {
                 if (!_me.gotoSlide(jsonObj.redirectFN)) {
-                  _me._htmlContainer.fire(
-                    'cel_slideShow:preloadContentRedirectFailed',
-                    {
-                      theSlideShow: _me,
-                      slideFN: slideFN,
-                      jsonObj: jsonObj,
-                    },
-                  );
+                  _me._htmlContainer.fire('cel_slideShow:preloadContentRedirectFailed', {
+                    theSlideShow: _me,
+                    slideFN: slideFN,
+                    jsonObj: jsonObj,
+                  });
                 }
               }
             } else {
@@ -696,9 +630,7 @@
         const _me = this;
         const preLoadSlide = event.memo;
         if (!_me._preloadSlideImagesHash.get(preLoadSlide.slideFN)) {
-          const preloadElem = new Element('div').update(
-            preLoadSlide.responseText,
-          );
+          const preloadElem = new Element('div').update(preLoadSlide.responseText);
           const imgsArray = preloadElem.select('img');
           _me._preloadSlideImagesHash.set(preLoadSlide.slideFN, preloadElem);
           _me._htmlContainer.fire('cel_slideShow:afterPreloadImages', {
@@ -790,12 +722,7 @@
         });
       },
 
-      _imgLoadedResizeAndCenterSlide: function (
-        imgElem,
-        slideWrapper,
-        callbackFN,
-        event,
-      ) {
+      _imgLoadedResizeAndCenterSlide: function (imgElem, slideWrapper, callbackFN, event) {
         const _me = this;
         imgElem.stopObserving('load', _me._imgLoadedResizeAndCenterSlideBind);
         imgElem.stopObserving('error', _me._imgLoadedResizeAndCenterSlideBind);
@@ -844,36 +771,21 @@
             position: 'relative',
           });
         });
-        _me._htmlContainer.fire(
-          'cel_slideShow:beforeResizeAndCenterSlide',
-          _me,
-        );
+        _me._htmlContainer.fire('cel_slideShow:beforeResizeAndCenterSlide', _me);
         if (_me._resizeSlide) {
-          const resizeSlideEvent = _me._htmlContainer.fire(
-            'cel_slideShow:resizeSlide',
-            _me,
-          );
+          const resizeSlideEvent = _me._htmlContainer.fire('cel_slideShow:resizeSlide', _me);
           if (!resizeSlideEvent.stopped) {
             _me._resizeCurrentSlide(slideWrapper);
           } else {
-            console.log(
-              '_resizeAndCenterSlide: resizeSlideEvent.stopped ',
-              slideWrapper,
-            );
+            console.log('_resizeAndCenterSlide: resizeSlideEvent.stopped ', slideWrapper);
           }
         }
         if (_me._centerSlide) {
-          const centerSlideEvent = _me._htmlContainer.fire(
-            'cel_slideShow:centerSlide',
-            _me,
-          );
+          const centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide', _me);
           if (!centerSlideEvent.stopped) {
             _me._centerCurrentSlide(slideWrapper);
           } else {
-            console.log(
-              '_resizeAndCenterSlide: centerSlideEvent.stopped ',
-              slideWrapper,
-            );
+            console.log('_resizeAndCenterSlide: centerSlideEvent.stopped ', slideWrapper);
           }
         }
         slideWrapper.select('img').each(function (imgElem) {
@@ -1032,14 +944,9 @@
         _me.getHtmlContainer().addClassName('celanim_isChanging');
         _me._htmlContainer.fire('cel_yuiOverlay:beforeContentChanged', _me);
         const slideRootElem = _me._addWrapperElements(slideContent).hide();
-        const slideWrapperElem = slideRootElem.down(
-          '.cel_slideShow_slideWrapper',
-        );
+        const slideWrapperElem = slideRootElem.down('.cel_slideShow_slideWrapper');
         if (_me._debug) {
-          console.debug(
-            '_showSlide: before cel_yuiOverlay:beforeSlideInsert ',
-            _me._htmlContainer,
-          );
+          console.debug('_showSlide: before cel_yuiOverlay:beforeSlideInsert ', _me._htmlContainer);
         }
         _me._htmlContainer.fire('cel_yuiOverlay:beforeSlideInsert', {
           celSlideShow: _me,
@@ -1072,10 +979,7 @@
         }
       },
 
-      _preloadImagesAndResizeCenterSlide: function (
-        slideWrapperElem,
-        callbackFN,
-      ) {
+      _preloadImagesAndResizeCenterSlide: function (slideWrapperElem, callbackFN) {
         const _me = this;
         _me._preloadingImageQueue = new Array();
         slideWrapperElem.select('img').each(function (imgElem) {
@@ -1105,8 +1009,7 @@
         if (_me._preloadingImageQueue.size() == 0) {
           if (_me._debug) {
             console.log(
-              '_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide' +
-                'for ',
+              '_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide' + 'for ',
               slideWrapperElem,
             );
             slideWrapperElem.select('img').each(function (imgElem) {
@@ -1144,9 +1047,7 @@
 
       _showSlideAfterPreloadingImg: function () {
         const _me = this;
-        const slides = _me
-          .getHtmlContainer()
-          .select('> .cel_slideShow_slideRoot');
+        const slides = _me.getHtmlContainer().select('> .cel_slideShow_slideRoot');
         _me._htmlContainer.stopObserving(
           'cel_slideShow:slideTransitionFinished',
           _me._cleanupSlideTransitionBind,
@@ -1155,13 +1056,10 @@
           'cel_slideShow:slideTransitionFinished',
           _me._cleanupSlideTransitionBind,
         );
-        const contentChangeEvent = _me._htmlContainer.fire(
-          'cel_yuiOverlay:changeContent',
-          {
-            slideShowObj: _me,
-            slides: slides,
-          },
-        );
+        const contentChangeEvent = _me._htmlContainer.fire('cel_yuiOverlay:changeContent', {
+          slideShowObj: _me,
+          slides: slides,
+        });
         if (!contentChangeEvent.stopped) {
           if (slides.length > 1) {
             slides[0].hide();
@@ -1179,9 +1077,7 @@
           'cel_slideShow:slideTransitionFinished',
           _me._cleanupSlideTransitionBind,
         );
-        const slides = _me
-          .getHtmlContainer()
-          .select('> .cel_slideShow_slideRoot');
+        const slides = _me.getHtmlContainer().select('> .cel_slideShow_slideRoot');
         slides.each(function (slideElem) {
           if (!slideElem.visible()) {
             slideElem.remove();
@@ -1280,16 +1176,10 @@
         _me._currContent = newCurrContent;
         _me._showFunc(_me._currContent);
         if (_me._hasSlidePreload && !_me._preloadNext) {
-          _me._preloadFunc(
-            _me._allSlides[_me.getNextIndex()],
-            _me._updateNextContent.bind(_me),
-          );
+          _me._preloadFunc(_me._allSlides[_me.getNextIndex()], _me._updateNextContent.bind(_me));
         }
         if (_me._hasSlidePreload && !_me._preloadPrev) {
-          _me._preloadFunc(
-            _me._allSlides[_me.getPrevIndex()],
-            _me._updatePrevContent.bind(_me),
-          );
+          _me._preloadFunc(_me._allSlides[_me.getPrevIndex()], _me._updatePrevContent.bind(_me));
         }
       },
 
@@ -1436,10 +1326,7 @@
           _me._currContent = null;
           _me._preloadNext = null;
           _me._preloadPrev = null;
-          _me._preloadFunc(
-            _me._allSlides[_me._currIndex],
-            _me._updateCurrentContent.bind(_me),
-          );
+          _me._preloadFunc(_me._allSlides[_me._currIndex], _me._updateCurrentContent.bind(_me));
         }
       },
     });

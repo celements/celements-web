@@ -1,9 +1,7 @@
 var image_path = '';
 var image_up = "$xwiki.getSkinFile('icons/table/arrow-up.gif', true)";
-var image_down =
-  "$xwiki.getSkinFile('js/xwiki/table/img/arrow-down.gif', true)";
-var image_none =
-  "$xwiki.getSkinFile('js/xwiki/table/img/arrow-none.gif', true)";
+var image_down = "$xwiki.getSkinFile('js/xwiki/table/img/arrow-down.gif', true)";
+var image_none = "$xwiki.getSkinFile('js/xwiki/table/img/arrow-none.gif', true)";
 var TblId, StartRow, SearchFlt, ModFn, ModFnId;
 ((TblId = new Array()), (StartRow = new Array()));
 ((ModFn = new Array()), (ModFnId = new Array()));
@@ -40,10 +38,7 @@ function filterable_init() {
 function ts_resortTable(R) {
   var N, L;
   for (var H = 0; H < R.childNodes.length; H++) {
-    if (
-      R.childNodes[H].tagName &&
-      R.childNodes[H].tagName.toLowerCase() == 'span'
-    ) {
+    if (R.childNodes[H].tagName && R.childNodes[H].tagName.toLowerCase() == 'span') {
       N = R.childNodes[H];
     }
   }
@@ -97,10 +92,7 @@ function ts_resortTable(R) {
     N.setAttribute('sortdir', 'down');
   }
   for (var O = 0; O < Q.length; O++) {
-    if (
-      !Q[O].className ||
-      (Q[O].className && Q[O].className.indexOf('sortBottom') == -1)
-    ) {
+    if (!Q[O].className || (Q[O].className && Q[O].className.indexOf('sortBottom') == -1)) {
       P.tBodies[0].appendChild(Q[O]);
     }
   }
@@ -116,11 +108,7 @@ function ts_resortTable(R) {
   for (var H = 0; H < A.length; H++) {
     if (A[H].className == 'sortarrow') {
       if (getParent(A[H], 'table') == getParent(R, 'table')) {
-        A[H].innerHTML =
-          '<img border="0" src="' +
-          image_path +
-          image_none +
-          '" alt="&darr;"/>';
+        A[H].innerHTML = '<img border="0" src="' + image_path + image_none + '" alt="&darr;"/>';
       }
     }
   }
@@ -164,9 +152,7 @@ function Filter(J) {
                 R < parseFloat(O[P].replace(/</, '')) ? (I[P] = 3) : (I[P] = 1);
               } else {
                 if (/>/.test(O[P]) && !isNaN(R)) {
-                  R > parseFloat(O[P].replace(/>/, ''))
-                    ? (I[P] = 3)
-                    : (I[P] = 1);
+                  R > parseFloat(O[P].replace(/>/, '')) ? (I[P] = 3) : (I[P] = 1);
                 } else {
                   I[P] = E.split(O[P]).length;
                 }
@@ -244,10 +230,7 @@ function ts_makeSortable(D) {
   for (var C = 0; C < E.cells.length; C++) {
     var B = E.cells[C];
     var A = ts_getInnerText(B);
-    if (
-      B.className != 'unsortable' &&
-      B.className.indexOf('unsortable') == -1
-    ) {
+    if (B.className != 'unsortable' && B.className.indexOf('unsortable') == -1) {
       B.innerHTML =
         '<a href="#" class="sortHeader" onclick="ts_resortTable(this);return false;">' +
         A +
@@ -352,9 +335,7 @@ function AddRow(C, G, J) {
     var H = A.cells[I];
     I == G - 1 && Q == true ? (K = 'flt_s') : (K = 'flt');
     if (
-      (J == undefined ||
-        J['col_' + I] == undefined ||
-        J['col_' + I] == 'none') &&
+      (J == undefined || J['col_' + I] == undefined || J['col_' + I] == 'none') &&
       H.className.indexOf('selectFilter') == -1
     ) {
       var N = document.createElement('input');
@@ -478,13 +459,7 @@ function getCellText(E) {
 function DetectKey(G) {
   var A = G ? G : window.event ? window.event : null;
   if (A) {
-    var D = A.charCode
-      ? A.charCode
-      : A.keyCode
-        ? A.keyCode
-        : A.which
-          ? A.which
-          : 0;
+    var D = A.charCode ? A.charCode : A.keyCode ? A.keyCode : A.which ? A.which : 0;
     if (D == '13') {
       var H, E, B, F;
       H = this.getAttribute('id');
@@ -502,15 +477,13 @@ function swapOddEven(B, A) {
     if (B.className.indexOf('odd') > -1) {
       B.className = replace(B.className, 'odd', 'even');
     } else {
-      B.className =
-        B.className.indexOf('even') > -1 ? B.className : B.className + ' even';
+      B.className = B.className.indexOf('even') > -1 ? B.className : B.className + ' even';
     }
   } else {
     if (B.className.indexOf('even') > -1) {
       B.className = replace(B.className, 'even', 'odd');
     }
-    B.className =
-      B.className.indexOf('odd') > -1 ? B.className : B.className + ' odd';
+    B.className = B.className.indexOf('odd') > -1 ? B.className : B.className + ' odd';
   }
 }
 function ts_sort_date(C, A) {
@@ -550,9 +523,7 @@ function ts_sort_date(C, A) {
 function ts_sort_currency(B, A) {
   var C = ts_getInnerText(B.cells[SORT_COLUMN_INDEX]).replace(/[^0-9.]/g, '');
   var D = ts_getInnerText(A.cells[SORT_COLUMN_INDEX]).replace(/[^0-9.]/g, '');
-  return isNaN(parseFloat(C) - parseFloat(D))
-    ? -1
-    : parseFloat(C) - parseFloat(D);
+  return isNaN(parseFloat(C) - parseFloat(D)) ? -1 : parseFloat(C) - parseFloat(D);
 }
 function ts_sort_numeric(B, A) {
   var C = parseFloat(ts_getInnerText(B.cells[SORT_COLUMN_INDEX]));

@@ -91,9 +91,7 @@ table.xwiki-livetable {
   padding: 0 0 0 4px;
   width: auto;
 }
-.xwiki-livetable
-  td.xwiki-livetable-display-container
-  table.xwiki-livetable-display {
+.xwiki-livetable td.xwiki-livetable-display-container table.xwiki-livetable-display {
   margin: 0;
   border-collapse: collapse;
   width: 100%;
@@ -105,9 +103,7 @@ table.xwiki-livetable {
 html > body .xwiki-livetable-display td {
   border: 0;
 }
-table.xwiki-livetable
-  table.xwiki-livetable-display
-  thead.xwiki-livetable-display-header {
+table.xwiki-livetable table.xwiki-livetable-display thead.xwiki-livetable-display-header {
   border-bottom: 5px solid #ddd;
 }
 thead.xwiki-livetable-display-header tr.xwiki-livetable-display-filters:hover,
@@ -133,13 +129,11 @@ thead.xwiki-livetable-display-header th.sortable {
   cursor: pointer;
 }
 thead.xwiki-livetable-display-header th.desc {
-  background: #ddd
-    url("$xwiki.getSkinFile('icons/silk/bullet_arrow_down.gif', true)")
-    no-repeat scroll right center;
+  background: #ddd url("$xwiki.getSkinFile('icons/silk/bullet_arrow_down.gif', true)") no-repeat
+    scroll right center;
 }
 thead.xwiki-livetable-display-header th.asc {
-  background: #ddd
-    url("$xwiki.getSkinFile('icons/silk/bullet_arrow_up.gif', true)") no-repeat
+  background: #ddd url("$xwiki.getSkinFile('icons/silk/bullet_arrow_up.gif', true)") no-repeat
     scroll right center;
 }
 thead.xwiki-livetable-display-header th.selected {
@@ -149,19 +143,12 @@ thead.xwiki-livetable-display-header th.selected {
 thead.xwiki-livetable-display-header td.xwiki-livetable-display-header-filter {
   padding: 1px;
 }
-html
-  > body
-  thead.xwiki-livetable-display-header
-  td.xwiki-livetable-display-header-filter {
+html > body thead.xwiki-livetable-display-header td.xwiki-livetable-display-header-filter {
   padding: 2px 5px 2px 0;
   border-color: transparent;
 }
-thead.xwiki-livetable-display-header
-  td.xwiki-livetable-display-header-filter
-  input,
-thead.xwiki-livetable-display-header
-  td.xwiki-livetable-display-header-filter
-  select {
+thead.xwiki-livetable-display-header td.xwiki-livetable-display-header-filter input,
+thead.xwiki-livetable-display-header td.xwiki-livetable-display-header-filter select {
   width: 100%;
   border: 1px solid #ddd;
   color: #888;
@@ -194,14 +181,14 @@ tbody.xwiki-livetable-display-body td.editableCellHover.linkeditor a {
   cursor: pointer;
 }
 tbody.xwiki-livetable-display-body td:hover.linkeditor {
-  background: lemonChiffon url("$xwiki.getSkinFile('pencil.gif', true)")
-    no-repeat scroll right center;
+  background: lemonChiffon url("$xwiki.getSkinFile('pencil.gif', true)") no-repeat scroll right
+    center;
   cursor: pointer;
 }
 tbody.xwiki-livetable-display-body td.linkeditor a.editableCellHover {
   display: block;
-  background: lemonChiffon url("$xwiki.getSkinFile('pencil.gif', true)")
-    no-repeat scroll right center;
+  background: lemonChiffon url("$xwiki.getSkinFile('pencil.gif', true)") no-repeat scroll right
+    center;
   cursor: pointer;
   color: #4d4d4d;
   padding-right: 16px;
@@ -232,16 +219,10 @@ tbody.xwiki-livetable-display-body td a.action:hover {
   text-decoration: underline;
 }
 tbody.xwiki-livetable-display-body td a.actioncopy {
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/page_white_copy.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/page_white_copy.gif', true));
 }
 tbody.xwiki-livetable-display-body td a.actionrename {
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/textfield_rename.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/textfield_rename.gif', true));
 }
 tbody.xwiki-livetable-display-body td a.actiondelete {
   background-image: url($xwiki.getSkinFile('icons/silk/cross.gif', true));
@@ -250,10 +231,7 @@ tbody.xwiki-livetable-display-body td a.actionrights {
   background-image: url($xwiki.getSkinFile('icons/silk/lock_edit.gif', true));
 }
 tbody.xwiki-livetable-display-body td a.actionedit {
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/page_white_edit.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/page_white_edit.gif', true));
 }
 div.dialog-loading {
   border: 1px solid #aaa;
@@ -261,10 +239,7 @@ div.dialog-loading {
 div.dialog-loading tr.dialogTop td.dialogTopCenter div.Caption {
   background-color: #ddd;
 }
-div.dialog-loading
-  tr.dialogMiddle
-  td.dialogMiddleCenter
-  div.gwt-ModalDialog-Content {
+div.dialog-loading tr.dialogMiddle td.dialogMiddleCenter div.gwt-ModalDialog-Content {
   padding: 20px;
 }
 div.xwikigwt-editfield {
@@ -279,10 +254,7 @@ div.xwikigwt-editfield tr.dialogTop td.dialogTopCenter div.Caption {
   color: #4d4d4d;
   padding: 9px 4px 4px;
 }
-div.xwikigwt-editfield
-  tr.dialogMiddle
-  td.dialogMiddleCenter
-  div.xwikigwt-editfield-actions {
+div.xwikigwt-editfield tr.dialogMiddle td.dialogMiddleCenter div.xwikigwt-editfield-actions {
   margin-top: 10px;
   width: 75%;
 }
@@ -314,8 +286,7 @@ div.xwikigwt-editfield
   margin-top: 10px;
 }
 .xwiki-livetable-tagcloud-container h2 {
-  background: url($xwiki.getSkinFile('icons/silk/tag_yellow.gif', true))
-    no-repeat;
+  background: url($xwiki.getSkinFile('icons/silk/tag_yellow.gif', true)) no-repeat;
   font-size: 1em;
   color: #888;
   padding-left: 25px;
@@ -373,8 +344,7 @@ div.xwiki-livetable-tagcloud ol.tagCloud li.selected span {
   border-bottom: 0 none;
 }
 div.xwiki-livetable-pagination-content {
-  background: url($xwiki.getSkinFile('icons/silk/page_white_copy.gif', true))
-    no-repeat;
+  background: url($xwiki.getSkinFile('icons/silk/page_white_copy.gif', true)) no-repeat;
   padding-left: 20px;
   padding-bottom: 2px;
   display: inline;

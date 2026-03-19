@@ -130,15 +130,7 @@ if (typeof CELEMENTS.editorsupport == 'undefined') {
           'November',
           'Dezember',
         ]);
-        _me._pickerDateCal.cfg.setProperty('WEEKDAYS_1CHAR', [
-          'S',
-          'M',
-          'D',
-          'M',
-          'D',
-          'F',
-          'S',
-        ]);
+        _me._pickerDateCal.cfg.setProperty('WEEKDAYS_1CHAR', ['S', 'M', 'D', 'M', 'D', 'F', 'S']);
         _me._pickerDateCal.cfg.setProperty('WEEKDAYS_SHORT', [
           'So',
           'Mo',
@@ -168,37 +160,13 @@ if (typeof CELEMENTS.editorsupport == 'undefined') {
         ]);
         _me._pickerDateCal.cfg.setProperty('START_WEEKDAY', 1);
         _me._pickerDateCal.render();
-        _me._pickerDateCal.selectEvent.subscribe(
-          _me._handleDateSelected,
-          _me,
-          true,
-        );
-        _me._pickerDateCal.hideEvent.subscribe(
-          _me._calHideEventHandler,
-          _me,
-          true,
-        );
-        _me._pickerDateCal.showEvent.subscribe(
-          _me._calShowEventHandler,
-          _me,
-          true,
-        );
-        $(_me._inputField).observe(
-          'focus',
-          _me._calClickInsideInputHandler.bind(_me),
-        );
-        $(_me._inputField).observe(
-          'click',
-          _me._calClickInsideInputHandler.bind(_me),
-        );
-        $(_me._inputField).observe(
-          'blur',
-          _me._blurInputFieldHandler.bind(_me),
-        );
-        $(document.body).observe(
-          'click',
-          _me._calClickOutsideHandler.bind(_me),
-        );
+        _me._pickerDateCal.selectEvent.subscribe(_me._handleDateSelected, _me, true);
+        _me._pickerDateCal.hideEvent.subscribe(_me._calHideEventHandler, _me, true);
+        _me._pickerDateCal.showEvent.subscribe(_me._calShowEventHandler, _me, true);
+        $(_me._inputField).observe('focus', _me._calClickInsideInputHandler.bind(_me));
+        $(_me._inputField).observe('click', _me._calClickInsideInputHandler.bind(_me));
+        $(_me._inputField).observe('blur', _me._blurInputFieldHandler.bind(_me));
+        $(document.body).observe('click', _me._calClickOutsideHandler.bind(_me));
         $(document.body).observe(
           'celements:datePicker-show',
           _me._calCheckMultipleOpenHandler.bind(_me),
@@ -227,9 +195,7 @@ if (typeof CELEMENTS.editorsupport == 'undefined') {
           _me._pickerDateCal.setMonth(curMonth - 1);
           if (selectDate) {
             var curDay = dateStr[0];
-            _me._pickerDateCal.select(
-              new Date(curMonth + '/' + curDay + '/' + curYear),
-            );
+            _me._pickerDateCal.select(new Date(curMonth + '/' + curDay + '/' + curYear));
           }
           _me._pickerDateCal.render();
         }
@@ -261,8 +227,7 @@ if (typeof CELEMENTS.editorsupport == 'undefined') {
 
       _calClickOutsideHandler: function (event) {
         var _me = this;
-        var isOutside =
-          typeof event.findElement('#' + _me._datePickerCon.id) == 'undefined';
+        var isOutside = typeof event.findElement('#' + _me._datePickerCon.id) == 'undefined';
         if (_me.visible() && isOutside) {
           Event.fire(_me._inputField, 'celements:datePicker-clickoutside', {
             celCalDatePicker: _me,
@@ -308,20 +273,11 @@ if (typeof CELEMENTS.editorsupport == 'undefined') {
             }
             _me._selectedDateFormat = newFormatString;
           } catch (exp) {
-            if (
-              typeof console != 'undefined' &&
-              typeof console.error != 'undefined'
-            ) {
-              console.error(
-                'failed to parse new date format with: ' + newFormatString,
-                exp,
-              );
+            if (typeof console != 'undefined' && typeof console.error != 'undefined') {
+              console.error('failed to parse new date format with: ' + newFormatString, exp);
             }
           }
-        } else if (
-          typeof console != 'undefined' &&
-          typeof console.warn != 'undefined'
-        ) {
+        } else if (typeof console != 'undefined' && typeof console.warn != 'undefined') {
           console.warn('Failed to finde jquery-formater plugin!');
         }
       },
@@ -332,25 +288,16 @@ if (typeof CELEMENTS.editorsupport == 'undefined') {
         var selDates = args[0];
         if (selDates.length > 0 && _me._inputField) {
           var selDate = selDates[0];
-          var selectedDate = new Date(
-            selDate[1] + '/' + selDate[2] + '/' + selDate[0],
-          );
-          var dateSelectedEvent = Event.fire(
-            _me._inputField,
-            'celements:datePicker-dateSelected',
-            {
-              selDate: selDate,
-              date: selectedDate,
-              dateField: _me._inputField,
-            },
-          );
+          var selectedDate = new Date(selDate[1] + '/' + selDate[2] + '/' + selDate[0]);
+          var dateSelectedEvent = Event.fire(_me._inputField, 'celements:datePicker-dateSelected', {
+            selDate: selDate,
+            date: selectedDate,
+            dateField: _me._inputField,
+          });
           if (!dateSelectedEvent.stopped) {
             var newStartDate = selDate[2] + '.' + selDate[1] + '.' + selDate[0];
             if ($j.format && _me._selectedDateFormat != '') {
-              newStartDate = $j.format.date(
-                selectedDate,
-                _me._selectedDateFormat,
-              );
+              newStartDate = $j.format.date(selectedDate, _me._selectedDateFormat);
             }
             _me._inputField.value = newStartDate;
             _me._inputField.fire('celValidation:revalidateField');

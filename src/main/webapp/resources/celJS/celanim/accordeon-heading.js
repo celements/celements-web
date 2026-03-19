@@ -54,14 +54,9 @@ if (typeof CELEMENTS.anim == 'undefined') {
           _me._hideAllBlocksAfter();
           _me._registerOpeningListeners();
           _me.openOnlyOnePerLevel = false;
-          _me.htmlElem.fire(
-            'celanim_accordeon-heading:initFinished',
-            _me.htmlElem,
-          );
+          _me.htmlElem.fire('celanim_accordeon-heading:initFinished', _me.htmlElem);
         } else {
-          console.warn(
-            'Failed to initialize accordeon-heading for id "' + elemId + '".',
-          );
+          console.warn('Failed to initialize accordeon-heading for id "' + elemId + '".');
         }
       },
 
@@ -73,18 +68,13 @@ if (typeof CELEMENTS.anim == 'undefined') {
       _hideAllBlocksAfter: function () {
         var _me = this;
         if (!_me.htmlElem) return;
-        _me.htmlElem
-          .select(_me._getHeadings('h6'))
-          .each(function (headingBlock) {
-            if (
-              headingBlock.visible() &&
-              headingBlock.hasClassName('accordeon')
-            ) {
-              _me.getAllSiblings(headingBlock, true).each(function (elem) {
-                elem.hide();
-              });
-            }
-          });
+        _me.htmlElem.select(_me._getHeadings('h6')).each(function (headingBlock) {
+          if (headingBlock.visible() && headingBlock.hasClassName('accordeon')) {
+            _me.getAllSiblings(headingBlock, true).each(function (elem) {
+              elem.hide();
+            });
+          }
+        });
       },
 
       _headingGetLevel: function (headingElem) {
@@ -115,10 +105,8 @@ if (typeof CELEMENTS.anim == 'undefined') {
           currentElem = currentElem.next(_me._getHeadings(onlySubHeadings));
           if (currentElem) {
             isHeading = currentElem.tagName.toLowerCase().startsWith('h');
-            isAccordeonHeading =
-              isHeading && currentElem.hasClassName('accordeon');
-            var nextSubHeadingFound =
-              _me._headingGetLevel(currentElem) > startLevel;
+            isAccordeonHeading = isHeading && currentElem.hasClassName('accordeon');
+            var nextSubHeadingFound = _me._headingGetLevel(currentElem) > startLevel;
             if (isHeading) {
               if (nextSubHeadingFound) {
                 resultArray.push(currentElem);
@@ -202,16 +190,10 @@ if (typeof CELEMENTS.anim == 'undefined') {
         if (!_me.htmlElem) return;
         if (isVisible) {
           clickedHeading.removeClassName('active');
-          _me.htmlElem.fire(
-            'celanim_accordeon-heading:dropActive',
-            clickedHeading,
-          );
+          _me.htmlElem.fire('celanim_accordeon-heading:dropActive', clickedHeading);
         } else {
           clickedHeading.addClassName('active');
-          _me.htmlElem.fire(
-            'celanim_accordeon-heading:addActive',
-            clickedHeading,
-          );
+          _me.htmlElem.fire('celanim_accordeon-heading:addActive', clickedHeading);
         }
       },
 
@@ -220,17 +202,12 @@ if (typeof CELEMENTS.anim == 'undefined') {
         if (!_me.htmlElem) return;
         parallelEffects = [];
         if (!isVisible && _me.openOnlyOnePerLevel) {
-          _me.htmlElem
-            .select(clickedHeading.tagName + '.active')
-            .each(function (activElem) {
-              parallelEffects.concat(
-                _me._getEffectsForElements(
-                  _me.getAllSiblings(activElem, true),
-                  true,
-                ),
-              );
-              _me._updateClickedHeading(true, activElem);
-            });
+          _me.htmlElem.select(clickedHeading.tagName + '.active').each(function (activElem) {
+            parallelEffects.concat(
+              _me._getEffectsForElements(_me.getAllSiblings(activElem, true), true),
+            );
+            _me._updateClickedHeading(true, activElem);
+          });
         }
         return parallelEffects;
       },
@@ -259,17 +236,10 @@ if (typeof CELEMENTS.anim == 'undefined') {
           allElems.last().addClassName('accordeonLast');
           allElems
             .last()
-            .addClassName(
-              'accordeon_' + clickedHeading.tagName.toLowerCase() + 'Last',
-            );
+            .addClassName('accordeon_' + clickedHeading.tagName.toLowerCase() + 'Last');
           var isVisible = allElems[0].visible();
-          var parallelEffects = _me._checkCloseBeforeOpen(
-            clickedHeading,
-            isVisible,
-          );
-          parallelEffects = parallelEffects.concat(
-            _me._getEffectsForElements(allElems, isVisible),
-          );
+          var parallelEffects = _me._checkCloseBeforeOpen(clickedHeading, isVisible);
+          parallelEffects = parallelEffects.concat(_me._getEffectsForElements(allElems, isVisible));
           new Effect.Parallel(parallelEffects, {
             duration: 1.0,
             afterFinish: function () {

@@ -54,14 +54,8 @@
       _me._fileUploadElem = $('uploadBrowser');
       _me._fileUploadElem.value = '';
       _me._fileUploadElem.clear();
-      _me._fileUploadElem.observe(
-        'celements:beforeUpload',
-        _me._beforeUploading.bind(_me),
-      );
-      _me._fileUploadElem.observe(
-        'celements:uploadfinished',
-        _me._finishUploading.bind(_me),
-      );
+      _me._fileUploadElem.observe('celements:beforeUpload', _me._beforeUploading.bind(_me));
+      _me._fileUploadElem.observe('celements:uploadfinished', _me._finishUploading.bind(_me));
     },
 
     _reshowUploadElements: function () {
@@ -129,15 +123,11 @@
             var jsonResultObj = jsonResult.evalJSON();
             var filename = jsonResultObj.allFileNames[0].fileName;
             var clearedName = jsonResultObj.allFileNames[0].clearedFileName;
-            var noFileNameChanges =
-              name == filename && name.match(clearedName + '$');
-            var noOverwrites =
-              jsonResultObj.filesExistList.size() == 0 || forceOverwrite;
+            var noFileNameChanges = name == filename && name.match(clearedName + '$');
+            var noOverwrites = jsonResultObj.filesExistList.size() == 0 || forceOverwrite;
             if (noFileNameChanges && noOverwrites) {
               $('uploadFilename').value = clearedName;
-              var elements = $$(
-                '.c3_fb_upload_filter input[name="uploadFilterItem"]',
-              );
+              var elements = $$('.c3_fb_upload_filter input[name="uploadFilterItem"]');
               for (var i = 0; i < elements.length; i++) {
                 if (elements[i].checked) {
                   _me.setTag(clearedName, uploadDoc, elements[i].value, true);

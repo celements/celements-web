@@ -35,18 +35,12 @@ var XWiki = (function (XWiki) {
           event.stop(); // prevent loading the link.
 
           // Visually mark the selected package as active.
-          $$('div#packagelistcontainer div.active').invoke(
-            'removeClassName',
-            'active',
-          );
+          $$('div#packagelistcontainer div.active').invoke('removeClassName', 'active');
           event.element().up('div.package').addClassName('active');
 
           // Create a package explorer widget to let the user browse
           // and select/unselect the documents he wants.
-          new importer.PackageExplorer(
-            'packagecontainer',
-            decodeURIComponent(file),
-          );
+          new importer.PackageExplorer('packagecontainer', decodeURIComponent(file));
         },
       );
     });
@@ -159,9 +153,7 @@ var XWiki = (function (XWiki) {
 
       if (this.node.empty()) {
         this.node.insert(
-          new Element('h4', { class: 'legend' }).update(
-            translations['availableDocuments'],
-          ),
+          new Element('h4', { class: 'legend' }).update(translations['availableDocuments']),
         );
       }
 
@@ -192,14 +184,10 @@ var XWiki = (function (XWiki) {
       // Create and inject in the DOM the parent UL HTML element
       // that will contain the list of space and documents present in the package.
       this.list = new Element('ul', { class: 'xlist package' });
-      this.container.insert(
-        new Element('div', { id: 'package' }).update(this.list),
-      );
+      this.container.insert(new Element('div', { id: 'package' }).update(this.list));
 
       // Create the list of spaces and their documents
-      Object.keys(this.packageDocuments)
-        .sort()
-        .each(this.addSpaceToPackage.bind(this));
+      Object.keys(this.packageDocuments).sort().each(this.addSpaceToPackage.bind(this));
 
       // Insert options and button to submit the form.
       this.container.insert(this.createPackageFormSubmit(pack.infos));
@@ -209,39 +197,26 @@ var XWiki = (function (XWiki) {
     },
 
     onIgnoreAllDocuments: function () {
-      this.container
-        .select('input[type=checkbox][class=space]')
-        .invoke('uncheck');
-      this.container
-        .select('input[type=checkbox][class=space]')
-        .invoke('fire', 'custom:click');
+      this.container.select('input[type=checkbox][class=space]').invoke('uncheck');
+      this.container.select('input[type=checkbox][class=space]').invoke('fire', 'custom:click');
     },
 
     onRestoreAllDocuments: function () {
-      this.container
-        .select('input[type=checkbox][class=space]')
-        .invoke('check');
-      this.container
-        .select('input[type=checkbox][class=space]')
-        .invoke('fire', 'custom:click');
+      this.container.select('input[type=checkbox][class=space]').invoke('check');
+      this.container.select('input[type=checkbox][class=space]').invoke('fire', 'custom:click');
     },
 
     onPackageInfosRequestFailed: function (transport) {
       this.node.update();
 
       var errorMessage = 'Failed to retrieve package information. Reason: ';
-      if (
-        transport.statusText == '' /* No response */ ||
-        response.status == 12031 /* In IE */
-      ) {
+      if (transport.statusText == '' /* No response */ || response.status == 12031 /* In IE */) {
         errorMessage += 'Server not responding';
       } else {
         errorMessage += transport.statusText;
       }
       this.node.removeClassName('loading');
-      this.node.update(
-        new Element('div', { class: 'errormessage' }).update(errorMessage),
-      );
+      this.node.update(new Element('div', { class: 'errormessage' }).update(errorMessage));
     },
 
     /**
@@ -250,9 +225,7 @@ var XWiki = (function (XWiki) {
     createPackageFormSubmit: function (infos) {
       var submitBlock = new Element('div', { class: 'packagesubmit' });
 
-      submitBlock.insert(
-        new Element('em').update(translations['whenDocumentAlreadyExists']),
-      );
+      submitBlock.insert(new Element('em').update(translations['whenDocumentAlreadyExists']));
 
       var defaultChoiceRadioButton = new Element('input', {
         type: 'radio',
@@ -331,14 +304,9 @@ var XWiki = (function (XWiki) {
         var warning = new Element('span', { class: 'warningmessage' }).update(
           translations['selectionEmpty'],
         );
-        if (
-          !$('packagecontainer').down('div.packagesubmit span.warningmessage')
-        ) {
+        if (!$('packagecontainer').down('div.packagesubmit span.warningmessage')) {
           // Display the warning only if not present yet in the DOM (in case the user clicks like a maniac).
-          $('packagecontainer')
-            .select('div.packagesubmit input')
-            .last()
-            .insert({ after: warning });
+          $('packagecontainer').select('div.packagesubmit input').last().insert({ after: warning });
           Element.remove.delay(5, warning);
         }
 
@@ -351,12 +319,10 @@ var XWiki = (function (XWiki) {
       parameters['action'] = 'import';
       parameters['name'] = this.name;
 
-      parameters['historyStrategy'] = $('packageDescription').down(
-        "input[type=radio][value='add']",
-      ).checked
+      parameters['historyStrategy'] = $('packageDescription').down("input[type=radio][value='add']")
+        .checked
         ? 'add'
-        : $('packageDescription').down("input[type=radio][value='replace']")
-              .checked
+        : $('packageDescription').down("input[type=radio][value='replace']").checked
           ? 'replace'
           : 'reset';
       if (XWiki.hasBackupPackImportRights) {
@@ -440,61 +406,35 @@ var XWiki = (function (XWiki) {
       var packageInfos = new Element('div', { class: 'packageinfos' });
       packageInfos.insert(
         new Element('div')
-          .insert(
-            new Element('span', { class: 'label' }).update(
-              translations['package'],
-            ),
-          )
+          .insert(new Element('span', { class: 'label' }).update(translations['package']))
           .insert(new Element('span', { class: 'filename' }).update(this.name)),
       );
       if (infos.name !== '') {
         packageInfos.insert(
           new Element('div')
-            .insert(
-              new Element('span', { class: 'label' }).update(
-                translations['description'],
-              ),
-            )
+            .insert(new Element('span', { class: 'label' }).update(translations['description']))
             .insert(new Element('span', { class: 'name' }).update(infos.name)),
         );
       }
       if (infos.version !== '') {
         packageInfos.insert(
           new Element('div')
-            .insert(
-              new Element('span', { class: 'label' }).update(
-                translations['version'],
-              ),
-            )
-            .insert(
-              new Element('span', { class: 'version' }).update(infos.version),
-            ),
+            .insert(new Element('span', { class: 'label' }).update(translations['version']))
+            .insert(new Element('span', { class: 'version' }).update(infos.version)),
         );
       }
       if (infos.author !== '') {
         packageInfos.insert(
           new Element('div')
-            .insert(
-              new Element('span', { class: 'label' }).update(
-                translations['author'],
-              ),
-            )
-            .insert(
-              new Element('span', { class: 'author' }).update(infos.author),
-            ),
+            .insert(new Element('span', { class: 'label' }).update(translations['author']))
+            .insert(new Element('span', { class: 'author' }).update(infos.author)),
         );
       }
       if (infos.licence !== '') {
         packageInfos.insert(
           new Element('div')
-            .insert(
-              new Element('span', { class: 'label' }).update(
-                translations['licence'],
-              ),
-            )
-            .insert(
-              new Element('span', { class: 'licence' }).update(infos.licence),
-            ),
+            .insert(new Element('span', { class: 'label' }).update(translations['licence']))
+            .insert(new Element('span', { class: 'licence' }).update(infos.licence)),
         );
       }
       return packageInfos;
@@ -505,8 +445,7 @@ var XWiki = (function (XWiki) {
      */
     addSpaceToPackage: function (space) {
       var docNb = this.countDocumentsInSpace(space);
-      var selection =
-        docNb + ' / ' + docNb + ' ' + translations['documentSelected'];
+      var selection = docNb + ' / ' + docNb + ' ' + translations['documentSelected'];
 
       var spaceItem = new Element('li', { class: 'xitem xunderline' });
 
@@ -550,9 +489,7 @@ var XWiki = (function (XWiki) {
       expandImage.observe('click', onToggle);
       spaceName.observe('click', onToggle);
 
-      spaceItemContainer.insert(
-        new Element('div', { class: 'selection' }).update(selection),
-      );
+      spaceItemContainer.insert(new Element('div', { class: 'selection' }).update(selection));
       spaceItemContainer.insert(new Element('div', { class: 'clearfloats' }));
 
       var pagesContainer = new Element('div', { class: 'pages hidden' });
@@ -602,35 +539,19 @@ var XWiki = (function (XWiki) {
             checked: 'checked',
           });
           docBox.observe('click', self.documentCheckboxClicked.bind(self));
-          pageItemContainer.insert(
-            new Element('span', { class: 'checkbox' }).update(docBox),
-          );
+          pageItemContainer.insert(new Element('span', { class: 'checkbox' }).update(docBox));
 
-          pageItemContainer.insert(
-            new Element('span', { class: 'documentName' }).update(page),
-          );
+          pageItemContainer.insert(new Element('span', { class: 'documentName' }).update(page));
           if (infos.language != '') {
             pageItemContainer.insert(
-              new Element('span', { class: 'documentLanguage' }).update(
-                ' - ' + infos.language,
-              ),
+              new Element('span', { class: 'documentLanguage' }).update(' - ' + infos.language),
             );
           }
-          pageItemContainer.insert(
-            new Element('div', { class: 'clearfloats' }),
-          );
+          pageItemContainer.insert(new Element('div', { class: 'clearfloats' }));
 
           // Insert some hidden div to store exact fullName and language of the node.
-          pageItem.insert(
-            new Element('div', { class: 'fullName hidden' }).update(
-              infos.fullName,
-            ),
-          );
-          pageItem.insert(
-            new Element('div', { class: 'language hidden' }).update(
-              infos.language,
-            ),
-          );
+          pageItem.insert(new Element('div', { class: 'fullName hidden' }).update(infos.fullName));
+          pageItem.insert(new Element('div', { class: 'language hidden' }).update(infos.language));
 
           // Finally inserts the page item in the list of pages for that space.
           pageItem.insert(pageItemContainer);
@@ -644,12 +565,13 @@ var XWiki = (function (XWiki) {
     countDocumentsInSpace: function (spaceName) {
       var self = this;
       if (typeof this.documentCount[spaceName] == 'undefined') {
-        this.documentCount[spaceName] = Object.keys(
-          this.packageDocuments[spaceName],
-        ).inject(0, function (acc, elem) {
-          // Not super efficient, but will do the trick.
-          return acc + self.packageDocuments[spaceName][elem].length;
-        });
+        this.documentCount[spaceName] = Object.keys(this.packageDocuments[spaceName]).inject(
+          0,
+          function (acc, elem) {
+            // Not super efficient, but will do the trick.
+            return acc + self.packageDocuments[spaceName][elem].length;
+          },
+        );
       }
       delete self;
       return this.documentCount[spaceName];
@@ -690,9 +612,7 @@ var XWiki = (function (XWiki) {
 
       container
         .down('.selection')
-        .update(
-          selected + ' / ' + total + ' ' + translations['documentSelected'],
-        );
+        .update(selected + ' / ' + total + ' ' + translations['documentSelected']);
 
       if (selected == 0) {
         // If all document checkboxes have been unchecked, ensure that the space box is unchecked as well
@@ -708,10 +628,7 @@ var XWiki = (function (XWiki) {
      */
     spaceCheckboxClicked: function (event) {
       var selected = event.element().checked;
-      var spaceName = event
-        .element()
-        .up('.xitemcontainer')
-        .down('.spacename').innerHTML;
+      var spaceName = event.element().up('.xitemcontainer').down('.spacename').innerHTML;
       var pages = event.element().up('.xitemcontainer').down('div.pages');
       if (!selected) {
         // An entire space has been unselected.
@@ -729,17 +646,8 @@ var XWiki = (function (XWiki) {
      * Callback when a checkbox has been clicked for a single document.
      */
     documentCheckboxClicked: function (event) {
-      var page = event
-        .element()
-        .up('div')
-        .down('span.documentName')
-        .innerHTML.stripTags()
-        .strip();
-      var space = event
-        .element()
-        .up('li')
-        .up('div.xitemcontainer')
-        .down('.spacename').innerHTML;
+      var page = event.element().up('div').down('span.documentName').innerHTML.stripTags().strip();
+      var space = event.element().up('li').up('div.xitemcontainer').down('.spacename').innerHTML;
       var language = event.element().up('li').down('.language').innerHTML;
       var selected = event.element().checked;
       if (!selected) {
@@ -747,10 +655,7 @@ var XWiki = (function (XWiki) {
       } else {
         this.restoreDocument(space, page, language);
       }
-      this.updateSelection(
-        event.element().up('li').up('div.xitemcontainer'),
-        space,
-      );
+      this.updateSelection(event.element().up('li').up('div.xitemcontainer'), space);
     },
 
     /**
@@ -776,9 +681,7 @@ var XWiki = (function (XWiki) {
      * Ignore an entire space.
      */
     ignoreSpace: function (spaceName) {
-      this.ignore[spaceName] = Object.toJSON(
-        this.packageDocuments[spaceName],
-      ).evalJSON();
+      this.ignore[spaceName] = Object.toJSON(this.packageDocuments[spaceName]).evalJSON();
       // Object#clone is swallow copy
       // here we emulate a deep copy by serializing/unserializing to/from JSON.
       // FIXME: not the most efficient for spaces with lot of documents.
@@ -803,9 +706,9 @@ var XWiki = (function (XWiki) {
       if (typeof this.ignore[spaceName][documentName] == 'undefined') {
         this.ignore[spaceName][documentName] = [];
       }
-      this.ignore[spaceName][documentName][
-        this.ignore[spaceName][documentName].length
-      ] = { language: language };
+      this.ignore[spaceName][documentName][this.ignore[spaceName][documentName].length] = {
+        language: language,
+      };
     },
 
     /**
@@ -819,8 +722,7 @@ var XWiki = (function (XWiki) {
         for (var i = 0; i < this.ignore[spaceName][documentName].length; i++) {
           if (this.ignore[spaceName][documentName][i].language === language) {
             delete this.ignore[spaceName][documentName][i];
-            this.ignore[spaceName][documentName] =
-              this.ignore[spaceName][documentName].compact();
+            this.ignore[spaceName][documentName] = this.ignore[spaceName][documentName].compact();
           }
         }
       }

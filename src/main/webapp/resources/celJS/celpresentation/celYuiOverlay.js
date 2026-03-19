@@ -147,9 +147,7 @@ external js-files
       var closeEvent = bodyElem.fire('cel_yuiOverlay:hideEvent', _me);
       if (!closeEvent.stopped) {
         if ($(_me._dialogConfig.dialogId)) {
-          var dialogWrapper = $(_me._dialogConfig.dialogId).up(
-            'div.cel-YuiOverlay',
-          );
+          var dialogWrapper = $(_me._dialogConfig.dialogId).up('div.cel-YuiOverlay');
           if (dialogWrapper) {
             dialogWrapper.remove();
           }
@@ -182,14 +180,8 @@ external js-files
         _me._overlayDialog.cfg.setProperty('width', _me._dialogConfig.width);
       }
       var dialogHeight = '';
-      if (
-        _me._dialogConfig.height != undefined &&
-        _me._dialogConfig.height != ''
-      ) {
-        dialogHeight =
-          'style="height: ' +
-          _me._dialogConfig.height +
-          '; position: relative;"';
+      if (_me._dialogConfig.height != undefined && _me._dialogConfig.height != '') {
+        dialogHeight = 'style="height: ' + _me._dialogConfig.height + '; position: relative;"';
       }
       _me._overlayDialog.setHeader('&nbsp;');
       _me._overlayDialog.setBody(
@@ -208,10 +200,7 @@ external js-files
       var yuiSamSkinDiv = new Element('div')
         .addClassName('yui-skin-sam')
         .addClassName('cel-YuiOverlay');
-      if (
-        _me._dialogConfig.additionalCssClass &&
-        _me._dialogConfig.additionalCssClass != ''
-      ) {
+      if (_me._dialogConfig.additionalCssClass && _me._dialogConfig.additionalCssClass != '') {
         yuiSamSkinDiv.addClassName(_me._dialogConfig.additionalCssClass);
       }
       $(document.body).insert(yuiSamSkinDiv);
@@ -221,10 +210,7 @@ external js-files
           'cel_yuiOverlay:contentChanged',
           _me._centerBind,
         );
-        $(_me._dialogConfig.containerId).observe(
-          'cel_yuiOverlay:contentChanged',
-          _me._centerBind,
-        );
+        $(_me._dialogConfig.containerId).observe('cel_yuiOverlay:contentChanged', _me._centerBind);
       }
       $(document.body).fire('cel_yuiOverlay:afterRenderDialog', _me);
       _me.celFire('cel-yuiOverlay:afterRenderDialog', _me);
@@ -251,10 +237,7 @@ external js-files
         bodyElem.setStyle({ overflow: 'hidden' });
       }
       bodyElem.fire('cel_yuiOverlay:afterShowDialog_General', _me);
-      $(_me._dialogConfig.containerId).fire(
-        'cel_yuiOverlay:afterShowDialog',
-        _me,
-      );
+      $(_me._dialogConfig.containerId).fire('cel_yuiOverlay:afterShowDialog', _me);
       _me.celFire('cel-yuiOverlay:afterShowDialog', _me);
     },
 
@@ -283,14 +266,8 @@ external js-files
       console.log('showConfirmDialog: ', openConfig);
       var dialog = _me.getOverlayDialog(openConfig);
       var dialogHeight = '';
-      if (
-        _me._dialogConfig.height != undefined &&
-        _me._dialogConfig.height != ''
-      ) {
-        dialogHeight =
-          'style="height: ' +
-          _me._dialogConfig.height +
-          '; position: relative;"';
+      if (_me._dialogConfig.height != undefined && _me._dialogConfig.height != '') {
+        dialogHeight = 'style="height: ' + _me._dialogConfig.height + '; position: relative;"';
       }
       dialog.setHeader('Confirmation'); //TODO get from celMessage
       _me._overlayDialog.setBody(
@@ -320,16 +297,11 @@ external js-files
     _confirmYesHandler: function (openConfig) {
       var _me = this;
       console.debug('_confirmYesHandler: start', openConfig);
-      var confirmYesEvent = $(document.body).fire(
-        'cel_yuiOverlay:confirmYes',
-        openConfig,
-      );
+      var confirmYesEvent = $(document.body).fire('cel_yuiOverlay:confirmYes', openConfig);
       if (!confirmYesEvent.stopped) {
         _me._internalOpenCelPageInOverlay();
       } else {
-        console.log(
-          '_confirmYesHandler skipping _internalOpenCelPageInOverlay.',
-        );
+        console.log('_confirmYesHandler skipping _internalOpenCelPageInOverlay.');
       }
     },
 
@@ -354,10 +326,7 @@ external js-files
       var _me = this;
       if ($(_me._dialogConfig.dialogId + '_mask')) {
         $(_me._dialogConfig.dialogId + '_mask').addClassName('cel-YuiOverlay');
-        if (
-          _me._dialogConfig.additionalCssClass &&
-          _me._dialogConfig.additionalCssClass != ''
-        ) {
+        if (_me._dialogConfig.additionalCssClass && _me._dialogConfig.additionalCssClass != '') {
           $(_me._dialogConfig.dialogId + '_mask').addClassName(
             _me._dialogConfig.additionalCssClass,
           );
@@ -369,16 +338,11 @@ external js-files
       var _me = this;
       openConfig = openConfig || _me._dialogConfig;
       console.debug('_internalOpenCelPageInOverlay: ', openConfig);
-      var openDialogEvent = $(document.body).fire(
-        'cel_yuiOverlay:openDialog',
-        openConfig,
-      );
+      var openDialogEvent = $(document.body).fire('cel_yuiOverlay:openDialog', openConfig);
       if (!openDialogEvent.stopped) {
         _me._defaultOpenDialog(openConfig);
       } else {
-        console.log(
-          '_internalOpenCelPageInOverlay skipping defaultOpenDialog.',
-        );
+        console.log('_internalOpenCelPageInOverlay skipping defaultOpenDialog.');
       }
     },
 

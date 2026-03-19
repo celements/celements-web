@@ -102,10 +102,7 @@
     var winHeight = 0;
     if (typeof window.innerWidth == 'number') {
       winHeight = window.innerHeight;
-    } else if (
-      document.documentElement &&
-      document.documentElement.clientHeight
-    ) {
+    } else if (document.documentElement && document.documentElement.clientHeight) {
       winHeight = document.documentElement.clientHeight;
     } else if (document.body && document.body.clientHeight) {
       winHeight = document.body.clientHeight;

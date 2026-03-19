@@ -46,11 +46,7 @@
    * hoverContentSelector   content for hover box is taken from element selected by
    *                        hoverContentSelector inside link-element parent
    */
-  CELEMENTS.anim.ArrowBox = function (
-    boxParent,
-    linkCSSselector,
-    hoverContentSelector,
-  ) {
+  CELEMENTS.anim.ArrowBox = function (boxParent, linkCSSselector, hoverContentSelector) {
     // constructor
     this._init(boxParent, linkCSSselector, hoverContentSelector);
   };
@@ -101,10 +97,7 @@
     _getHoverContent: function (linkElem) {
       var _me = this;
       var hoverContentElemMemo = { hoverContentElem: null };
-      var wrapperEvent = _me._boxParent.fire(
-        'celements:arrowBoxGetWrapper',
-        hoverContentElemMemo,
-      );
+      var wrapperEvent = _me._boxParent.fire('celements:arrowBoxGetWrapper', hoverContentElemMemo);
       if (wrapperEvent.stopped) {
         if (hoverContentElemMemo.hoverContentElem) {
           return hoverContentElemMemo.hoverContentElem.innerHTML;
@@ -115,10 +108,7 @@
         if (hoverContentElem) {
           return hoverContentElem.innerHTML;
         } else {
-          console.warn(
-            '_getHoverContent: failed to get content for ',
-            linkElem,
-          );
+          console.warn('_getHoverContent: failed to get content for ', linkElem);
         }
       }
       return linkElem.title;
@@ -295,9 +285,7 @@
 
     _hoverMouseClickOutside: function (event) {
       var _me = this;
-      $(_me._boxParent.id + 'HoverBox').removeClassName(
-        'celArrowBoxHoverForceOpen',
-      );
+      $(_me._boxParent.id + 'HoverBox').removeClassName('celArrowBoxHoverForceOpen');
       _me._hoverMouseOut(_me._currentHoverLink);
     },
 
@@ -305,9 +293,7 @@
       var _me = this;
       event.stop();
       _me._hoverMouseOverHandlerBind(event, true);
-      $(_me._boxParent.id + 'HoverBox').addClassName(
-        'celArrowBoxHoverForceOpen',
-      );
+      $(_me._boxParent.id + 'HoverBox').addClassName('celArrowBoxHoverForceOpen');
       $(document.body).stopObserving('click', _me._hoverMouseClickOutsideBind);
       $(document.body).observe('click', _me._hoverMouseClickOutsideBind);
     },

@@ -39,8 +39,7 @@ var XWiki = (function (XWiki) {
               } else {
                 new XWiki.widgets.ConfirmedAjaxRequest(
                   /* Ajax request URL */
-                  item.readAttribute('href') +
-                    (Prototype.Browser.Opera ? '' : '&ajax=1'),
+                  item.readAttribute('href') + (Prototype.Browser.Opera ? '' : '&ajax=1'),
                   /* Ajax request parameters */
                   {
                     onCreate: function () {
@@ -59,14 +58,10 @@ var XWiki = (function (XWiki) {
                   },
                   /* Interaction parameters */
                   {
-                    confirmationText:
-                      "$msg.get('core.viewers.attachments.delete.confirm')",
-                    progressMessageText:
-                      "$msg.get('core.viewers.attachments.delete.inProgress')",
-                    successMessageText:
-                      "$msg.get('core.viewers.attachments.delete.done')",
-                    failureMessageText:
-                      "$msg.get('core.viewers.attachments.delete.failed')",
+                    confirmationText: "$msg.get('core.viewers.attachments.delete.confirm')",
+                    progressMessageText: "$msg.get('core.viewers.attachments.delete.inProgress')",
+                    successMessageText: "$msg.get('core.viewers.attachments.delete.done')",
+                    failureMessageText: "$msg.get('core.viewers.attachments.delete.failed')",
                   },
                 );
               }
@@ -86,10 +81,7 @@ var XWiki = (function (XWiki) {
             ),
           );
       }
-      if (
-        $('attachmentsshortcut') &&
-        $('attachmentsshortcut').down('.itemCount')
-      ) {
+      if ($('attachmentsshortcut') && $('attachmentsshortcut').down('.itemCount')) {
         $('attachmentsshortcut')
           .down('.itemCount')
           .update(
@@ -126,31 +118,17 @@ var XWiki = (function (XWiki) {
       });
       this.addDiv = new Element('div');
       this.addDiv.appendChild(addButton);
-      Event.observe(
-        addButton,
-        'click',
-        this.addField.bindAsEventListener(this),
-      );
-      this.defaultFileDiv
-        .up()
-        .insertBefore(this.addDiv, this.defaultFileDiv.next());
+      Event.observe(addButton, 'click', this.addField.bindAsEventListener(this));
+      this.defaultFileDiv.up().insertBefore(this.addDiv, this.defaultFileDiv.next());
     },
     /** Add a submit listener that prevents submitting the form if no file was specified. */
     blockEmptySubmit: function () {
-      Event.observe(
-        this.form,
-        'submit',
-        this.onSubmit.bindAsEventListener(this),
-      );
+      Event.observe(this.form, 'submit', this.onSubmit.bindAsEventListener(this));
     },
     /** Add a reset listener that resets the number of file fields to 1. */
     resetOnCancel: function () {
       Event.observe(this.form, 'reset', this.onReset.bindAsEventListener(this));
-      Event.observe(
-        this.form.down('.cancel'),
-        'click',
-        this.onReset.bindAsEventListener(this),
-      );
+      Event.observe(this.form.down('.cancel'), 'click', this.onReset.bindAsEventListener(this));
     },
     /** Creates and inserts a new file input field. */
     addField: function (event) {
@@ -182,15 +160,10 @@ var XWiki = (function (XWiki) {
       var removeButton = new Element('input', {
         type: 'button',
         value: "$msg.get('core.viewers.attachments.upload.removeFileInput')",
-        title:
-          "$msg.get('core.viewers.attachments.upload.removeFileInput.title')",
+        title: "$msg.get('core.viewers.attachments.upload.removeFileInput.title')",
         className: 'attachmentActionButton remove-file-input',
       });
-      Event.observe(
-        removeButton,
-        'click',
-        this.removeField.bindAsEventListener(this),
-      );
+      Event.observe(removeButton, 'click', this.removeField.bindAsEventListener(this));
       return removeButton;
     },
     /** Form submit listener. It checks that at least one file item contains a filename. If not, cancel the submission. */

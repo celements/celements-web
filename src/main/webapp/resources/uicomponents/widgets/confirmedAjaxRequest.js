@@ -5,9 +5,7 @@ if (
   typeof XWiki.widgets.ConfirmationBox == 'undefined'
 ) {
   if (typeof console != 'undefined' && typeof console.warn == 'function') {
-    console.warn(
-      '[MessageBox widget] Required class missing: XWiki.widgets.ModalPopup',
-    );
+    console.warn('[MessageBox widget] Required class missing: XWiki.widgets.ModalPopup');
   }
 } else {
   /**
@@ -36,116 +34,101 @@ if (
    *      <li><tt>failureMessageText</tt>: the text for the "failed" notification. Default: "Failed: &lt;status text&gt;"</li>
    * </dl>
    */
-  XWiki.widgets.ConfirmedAjaxRequest = Class.create(
-    XWiki.widgets.ConfirmationBox,
-    {
-      /** Some functions to fix several browser specific problems */
-      defaultAjaxRequestParameters: {
-        // IE converts 204 status code into 1223...
-        on1223: function (response) {
-          response.request.options.onSuccess(response);
-        },
-        // 0 is returned for network failures, except on IE where a strange large number (12031) is returned.
-        on0: function (response) {
-          response.request.options.onFailure(response);
-        },
+  XWiki.widgets.ConfirmedAjaxRequest = Class.create(XWiki.widgets.ConfirmationBox, {
+    /** Some functions to fix several browser specific problems */
+    defaultAjaxRequestParameters: {
+      // IE converts 204 status code into 1223...
+      on1223: function (response) {
+        response.request.options.onSuccess(response);
       },
-      /** Constructor. Registers the key listener that pops up the dialog. */
-      initialize: function (
-        $super,
-        requestUrl,
-        ajaxRequestParameters,
-        interactionParameters,
-      ) {
-        this.interactionParameters = Object.extend(
-          {
-            displayProgressMessage: true,
-            progressMessageText:
-              "$msg.get('core.widgets.confirmationBox.notification.inProgress')",
-            displaySuccessMessage: true,
-            successMessageText:
-              "$msg.get('core.widgets.confirmationBox.notification.done')",
-            displayFailureMessage: true,
-            failureMessageText:
-              "$msg.get('core.widgets.confirmationBox.notification.failed')",
-          },
-          interactionParameters || {},
-        );
-        this.requestUrl = requestUrl;
-        this.ajaxRequestParameters = Object.extend(
-          Object.clone(this.defaultAjaxRequestParameters),
-          ajaxRequestParameters || {},
-        );
-        Object.extend(this.ajaxRequestParameters, {
-          onSuccess: function () {
-            if (this.interactionParameters.displaySuccessMessage) {
-              if (this.progressNotification) {
-                this.progressNotification.replace(
-                  new XWiki.widgets.Notification(
-                    this.interactionParameters.successMessageText,
-                    'done',
-                  ),
-                );
-              } else {
+      // 0 is returned for network failures, except on IE where a strange large number (12031) is returned.
+      on0: function (response) {
+        response.request.options.onFailure(response);
+      },
+    },
+    /** Constructor. Registers the key listener that pops up the dialog. */
+    initialize: function ($super, requestUrl, ajaxRequestParameters, interactionParameters) {
+      this.interactionParameters = Object.extend(
+        {
+          displayProgressMessage: true,
+          progressMessageText: "$msg.get('core.widgets.confirmationBox.notification.inProgress')",
+          displaySuccessMessage: true,
+          successMessageText: "$msg.get('core.widgets.confirmationBox.notification.done')",
+          displayFailureMessage: true,
+          failureMessageText: "$msg.get('core.widgets.confirmationBox.notification.failed')",
+        },
+        interactionParameters || {},
+      );
+      this.requestUrl = requestUrl;
+      this.ajaxRequestParameters = Object.extend(
+        Object.clone(this.defaultAjaxRequestParameters),
+        ajaxRequestParameters || {},
+      );
+      Object.extend(this.ajaxRequestParameters, {
+        onSuccess: function () {
+          if (this.interactionParameters.displaySuccessMessage) {
+            if (this.progressNotification) {
+              this.progressNotification.replace(
                 new XWiki.widgets.Notification(
                   this.interactionParameters.successMessageText,
                   'done',
-                );
-              }
-            } else if (this.progressNotification) {
-              this.progressNotification.hide();
+                ),
+              );
+            } else {
+              new XWiki.widgets.Notification(this.interactionParameters.successMessageText, 'done');
             }
-            if (ajaxRequestParameters.onSuccess) {
-              ajaxRequestParameters.onSuccess.apply(this, arguments);
+          } else if (this.progressNotification) {
+            this.progressNotification.hide();
+          }
+          if (ajaxRequestParameters.onSuccess) {
+            ajaxRequestParameters.onSuccess.apply(this, arguments);
+          }
+        }.bind(this),
+        onFailure: function (response) {
+          if (this.interactionParameters.displayFailureMessage) {
+            var failureReason = response.statusText;
+            if (
+              response.statusText == '' /* No response */ ||
+              response.status == 12031 /* In IE */
+            ) {
+              failureReason = 'Server not responding';
             }
-          }.bind(this),
-          onFailure: function (response) {
-            if (this.interactionParameters.displayFailureMessage) {
-              var failureReason = response.statusText;
-              if (
-                response.statusText == '' /* No response */ ||
-                response.status == 12031 /* In IE */
-              ) {
-                failureReason = 'Server not responding';
-              }
-              if (this.progressNotification) {
-                this.progressNotification.replace(
-                  new XWiki.widgets.Notification(
-                    this.interactionParameters.failureMessageText +
-                      failureReason,
-                    'error',
-                  ),
-                );
-              } else {
+            if (this.progressNotification) {
+              this.progressNotification.replace(
                 new XWiki.widgets.Notification(
                   this.interactionParameters.failureMessageText + failureReason,
                   'error',
-                );
-              }
-            } else if (this.progressNotification) {
-              this.progressNotification.hide();
+                ),
+              );
+            } else {
+              new XWiki.widgets.Notification(
+                this.interactionParameters.failureMessageText + failureReason,
+                'error',
+              );
             }
-            if (ajaxRequestParameters.onFailure) {
-              ajaxRequestParameters.onFailure.apply(this, arguments);
+          } else if (this.progressNotification) {
+            this.progressNotification.hide();
+          }
+          if (ajaxRequestParameters.onFailure) {
+            ajaxRequestParameters.onFailure.apply(this, arguments);
+          }
+        }.bind(this),
+      });
+      $super(
+        {
+          onYes: function () {
+            if (this.interactionParameters.displayProgressMessage) {
+              this.progressNotification = new XWiki.widgets.Notification(
+                this.interactionParameters.progressMessageText,
+                'inprogress',
+              );
             }
+            // perform the ajax request
+            new Ajax.Request(this.requestUrl, this.ajaxRequestParameters);
           }.bind(this),
-        });
-        $super(
-          {
-            onYes: function () {
-              if (this.interactionParameters.displayProgressMessage) {
-                this.progressNotification = new XWiki.widgets.Notification(
-                  this.interactionParameters.progressMessageText,
-                  'inprogress',
-                );
-              }
-              // perform the ajax request
-              new Ajax.Request(this.requestUrl, this.ajaxRequestParameters);
-            }.bind(this),
-          },
-          this.interactionParameters,
-        );
-      },
+        },
+        this.interactionParameters,
+      );
     },
-  );
+  });
 } // if the parent widget is defined

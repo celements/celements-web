@@ -41,17 +41,13 @@ if (typeof CELEMENTS.layout.editor == 'undefined') {
         if (_me.delayedOutlineScheduled) {
           window.clearTimeout(_me.delayedOutlineScheduled);
         }
-        _me.delayedOutlineScheduled = _me._outlineAllCells_intern
-          .bind(_me)
-          .delay(_me.delayValue);
+        _me.delayedOutlineScheduled = _me._outlineAllCells_intern.bind(_me).delay(_me.delayValue);
       },
 
       _outlineAllCells_intern: function () {
         var _me = this;
         $$('.cel_cell').each(
-          _me._outliner.outlineElementAddClass
-            .curry('cel_cellOutline')
-            .bind(_me._outliner),
+          _me._outliner.outlineElementAddClass.curry('cel_cellOutline').bind(_me._outliner),
         );
       },
 

@@ -99,10 +99,7 @@ if (typeof CELEMENTS.navigation == 'undefined') {
         var _me = this;
         $$(_me._secondMenuLevelCssSelector).each(function (subNav) {
           var mainLi = subNav.up('li');
-          if (
-            !mainLi.hasClassName('active') &&
-            (!skipSubNav || skipSubNav != subNav)
-          ) {
+          if (!mainLi.hasClassName('active') && (!skipSubNav || skipSubNav != subNav)) {
             _me._cancelDelayedHide(subNav);
             subNav.hide();
           }
@@ -143,10 +140,7 @@ if (typeof CELEMENTS.navigation == 'undefined') {
         var insideMainLi = menuElem.up('li');
         if (!(insideMainLi === mainLi)) {
           var subNav = mainLi.down('ul');
-          _me._scheduledHide.set(
-            subNav.id,
-            _me._delayedHide.delay(0.5, myself, subNav),
-          );
+          _me._scheduledHide.set(subNav.id, _me._delayedHide.delay(0.5, myself, subNav));
           subNav.setStyle({ opacity: '0.8' });
           mainLi.stopObserving('mouseout', _me._mainNavMouseOutBind);
         }

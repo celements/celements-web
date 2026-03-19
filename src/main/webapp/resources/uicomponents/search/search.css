@@ -17,8 +17,7 @@
   display: inline-block;
   width: 82%;
   padding-left: 20px;
-  background: transparent
-    url($xwiki.getSkinFile('icons/silk/page_white_text.gif', true)) no-repeat
+  background: transparent url($xwiki.getSkinFile('icons/silk/page_white_text.gif', true)) no-repeat
     left top;
 }
 .resultItem .type-comment {
@@ -161,19 +160,13 @@
   background: transparent no-repeat center center;
 }
 .itemActions .copy {
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/page_white_copy.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/page_white_copy.gif', true));
 }
 .itemActions .delete {
   background-image: url($xwiki.getSkinFile('icons/silk/cross.gif', true));
 }
 .itemActions .rename {
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/textfield_rename.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/textfield_rename.gif', true));
 }
 .itemActions .rights {
   background-image: url($xwiki.getSkinFile('icons/silk/lock_edit.gif', true));
@@ -189,8 +182,7 @@
   font-size: 1.1em;
 }
 #searchBar .searchQuery {
-  background: transparent
-    url($xwiki.getSkinFile('icons/xwiki/search.png', true)) left center
+  background: transparent url($xwiki.getSkinFile('icons/xwiki/search.png', true)) left center
     no-repeat;
   display: inline-block;
   padding-left: 18px;

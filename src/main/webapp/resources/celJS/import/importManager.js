@@ -50,9 +50,7 @@ function updateObservers() {
 const clickObserve = function (event) {
   if (typeof preimport !== 'undefined') {
     if (typeof console != 'undefined' && typeof console.warn != 'undefined') {
-      console.warn(
-        'deprecated usage of direct "preimport" global function call.',
-      );
+      console.warn('deprecated usage of direct "preimport" global function call.');
     }
     preimport(event);
   }
@@ -88,10 +86,7 @@ function resizeTab() {
   let winHeight = 0;
   if (typeof window.innerWidth == 'number') {
     winHeight = window.innerHeight;
-  } else if (
-    document.documentElement &&
-    document.documentElement.clientHeight
-  ) {
+  } else if (document.documentElement && document.documentElement.clientHeight) {
     winHeight = document.documentElement.clientHeight;
   } else if (document.body && document.body.clientHeight) {
     winHeight = document.body.clientHeight;
@@ -106,8 +101,7 @@ function resizeTab() {
       //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
       //counting margin-auto offsets. Thus we need to use jquery.offset
       const offsetBefore =
-        typeof scrollboxOffset !== 'undefined' &&
-        typeof $j(box).offset() !== 'undefined'
+        typeof scrollboxOffset !== 'undefined' && typeof $j(box).offset() !== 'undefined'
           ? scrollboxTop - $j(box).offset().top
           : 0;
       let ele = scrollbox;
@@ -115,21 +109,14 @@ function resizeTab() {
       while (ele && !ele.hasClassName('c3_import_tabbox')) {
         ele.siblings().each(function (sibl) {
           const siblOffset = $j(sibl).offset();
-          if (
-            typeof siblOffset !== 'undefined' &&
-            sibl.getStyle('position') != 'absolute'
-          ) {
+          if (typeof siblOffset !== 'undefined' && sibl.getStyle('position') != 'absolute') {
             // use offsetHeight instead of getHeight() which is wrong for script and link elements}
-            lastElemBottom = Math.max(
-              lastElemBottom,
-              siblOffset.top + sibl.offsetHeight,
-            );
+            lastElemBottom = Math.max(lastElemBottom, siblOffset.top + sibl.offsetHeight);
           }
         });
         ele = ele.up();
       }
-      const offsetAfter =
-        lastElemBottom - (scrollboxTop + scrollbox.getHeight());
+      const offsetAfter = lastElemBottom - (scrollboxTop + scrollbox.getHeight());
       const newScrollableHeight = tabboxsize - offsetAfter - offsetBefore;
       scrollbox.setStyle({ height: Math.max(50, newScrollableHeight) + 'px' });
     }

@@ -145,12 +145,7 @@
           try {
             callbackFN(event);
           } catch (exp) {
-            console.error(
-              'listener in celFire failed for event',
-              eventKey,
-              callbackFN,
-              exp,
-            );
+            console.error('listener in celFire failed for event', eventKey, callbackFN, exp);
           }
         });
         return event;
@@ -275,9 +270,7 @@
               srcOriginHost = srcMatches[1];
               const prefixPath = srcMatches[2];
               const prefixPathSplit = prefixPath.split('/');
-              const prefixStr = prefixPathSplit
-                .splice(0, prefixPathSplit.length - 2)
-                .join('/');
+              const prefixStr = prefixPathSplit.splice(0, prefixPathSplit.length - 2).join('/');
               if (prefixStr != '') {
                 srcOriginHost += '/' + prefixStr;
               }
@@ -293,8 +286,7 @@
       convertFullNameToViewURL: function (fullName) {
         const _me = this;
         return (
-          _me.getPathPrefix() +
-          ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/')
+          _me.getPathPrefix() + ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/')
         );
       },
     });
@@ -384,10 +376,7 @@
 
       _fireAjaxRecconectTrying: function () {
         const _me = this;
-        return _me._htmlElem.fire(
-          'celements:AjaxReconnectTrying',
-          _me._reconnectWait,
-        );
+        return _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
       },
 
       _reconnectorHandler: function () {
@@ -395,10 +384,7 @@
         _me._reconnectWait--;
         if (_me._reconnectWait == 0) {
           _me._reconnectorExecuter.stop();
-          if (
-            !_me._fireAjaxRecconectTrying().stopped &&
-            !_me._configObj.skipRetryMsg
-          ) {
+          if (!_me._fireAjaxRecconectTrying().stopped && !_me._configObj.skipRetryMsg) {
             let mesg = 'Trying...';
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryNotice;
@@ -407,10 +393,7 @@
           }
           _me._connectionTester();
         } else {
-          if (
-            !_me._fireAjaxRecconectTrying().stopped &&
-            !_me._configObj.skipRetryMsg
-          ) {
+          if (!_me._fireAjaxRecconectTrying().stopped && !_me._configObj.skipRetryMsg) {
             let mesg = 'Retrying in {} seconds.';
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryDelayNotice;
@@ -425,10 +408,7 @@
       start: function () {
         const _me = this;
         _me._reconnectWait = _me._reconnectWaitStart;
-        _me._reconnectorExecuter = new PeriodicalExecuter(
-          _me._reconnectorHandlerBind,
-          1,
-        );
+        _me._reconnectorExecuter = new PeriodicalExecuter(_me._reconnectorHandlerBind, 1);
       },
 
       _cancelAjaxOnTimeout: function (ajaxCall) {
@@ -453,10 +433,7 @@
             _me._htmlElem.fire('celements:AjaxReconnectSuccess');
           },
           onFailure: function () {
-            _me._reconnectWaitStart = Math.min(
-              _me._reconnectWaitStart * 2,
-              _me._maxReconnectWait,
-            );
+            _me._reconnectWaitStart = Math.min(_me._reconnectWaitStart * 2, _me._maxReconnectWait);
             _me.start();
           },
         });
@@ -516,9 +493,7 @@
       onSuccess: function (transport) {
         if (transport.responseText.isJSON()) {
           const newMessages = transport.responseText.evalJSON();
-          console.log(
-            'initCelements.js: finished getting dictionary messages.',
-          );
+          console.log('initCelements.js: finished getting dictionary messages.');
           newMessages.isLoaded = true;
           window.celMessages = newMessages;
           celMessagesCbFnArray.forEach(function (callbackFn) {
@@ -579,11 +554,7 @@
         _me._className = className;
         _me._actionFunction = actionFunction;
         if (condition && !/\s|;/.test(condition)) {
-          _me._conditionFunction = new Function(
-            'me',
-            'origin',
-            'return ' + condition + ';',
-          );
+          _me._conditionFunction = new Function('me', 'origin', 'return ' + condition + ';');
         }
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
         _me._registerActionHandler();
@@ -591,11 +562,7 @@
 
       _registerActionHandler: function () {
         const _me = this;
-        Event.stopObserving(
-          _me._htmlElement,
-          _me._eventName,
-          _me._actionHandlerBind,
-        );
+        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug(
           'EventHandler - register: ',
@@ -610,10 +577,7 @@
       _actionHandler: function (event) {
         const _me = this;
         _me._getTargetElements().each(function (targetElement) {
-          if (
-            !_me._conditionFunction ||
-            _me._conditionFunction(targetElement, _me._htmlElement)
-          ) {
+          if (!_me._conditionFunction || _me._conditionFunction(targetElement, _me._htmlElement)) {
             _me._actionFunction(targetElement, _me._className);
             console.debug(
               'EventHandler -  upon',
@@ -649,11 +613,7 @@
 
       unregister: function () {
         const _me = this;
-        Event.stopObserving(
-          _me._htmlElement,
-          _me._eventName,
-          _me._actionHandlerBind,
-        );
+        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug(
           'EventHandler - unregister: ',
           _me._eventName,
@@ -696,10 +656,7 @@
             { threshold: [0, 0.5, 1] },
           );
         } catch (exp) {
-          console.warn(
-            'EventManager - initialize: IntersectionObserver not available',
-            exp,
-          );
+          console.warn('EventManager - initialize: IntersectionObserver not available', exp);
         }
       },
 
@@ -707,9 +664,7 @@
         let ret = new Array();
         if (dataValue) {
           // split single '&', avoid splitting double '&&' within condition string
-          ret = dataValue
-            .replace(/([^&])&([^&])/g, '$1#SPLIT#$2')
-            .split('#SPLIT#');
+          ret = dataValue.replace(/([^&])&([^&])/g, '$1#SPLIT#$2').split('#SPLIT#');
         }
         return ret;
       },
@@ -724,19 +679,10 @@
           cssSelector: parts[4],
           condition: parts[5],
         };
-        if (
-          data.eventName &&
-          data.action &&
-          data.className &&
-          data.cssSelector
-        ) {
+        if (data.eventName && data.action && data.className && data.cssSelector) {
           return data;
         } else {
-          throw (
-            "parseEventInstruction: unable to parse event instruction '" +
-            instruction +
-            "'"
-          );
+          throw "parseEventInstruction: unable to parse event instruction '" + instruction + "'";
         }
       },
 
@@ -747,8 +693,7 @@
         if (actionFunction) {
           if (
             _me._intersectionObserver &&
-            (data.eventName.startsWith('cel:enter') ||
-              data.eventName.startsWith('cel:leave'))
+            (data.eventName.startsWith('cel:enter') || data.eventName.startsWith('cel:leave'))
           ) {
             _me._intersectionObserver.observe(htmlElem);
             console.debug(
@@ -782,11 +727,7 @@
               try {
                 return _me._createEventHandler(htmlElem, instruction);
               } catch (exp) {
-                console.error(
-                  'EventManager - interpretData: invalid instruction ',
-                  exp,
-                  htmlElem,
-                );
+                console.error('EventManager - interpretData: invalid instruction ', exp, htmlElem);
               }
             })
             .filter(Boolean),
@@ -825,10 +766,7 @@
           ratio: entry.intersectionRatio,
         });
         const direction = current.y > previous.y ? 'up' : 'down';
-        const type =
-          entry.isIntersecting && current.ratio >= previous.ratio
-            ? 'enter'
-            : 'leave';
+        const type = entry.isIntersecting && current.ratio >= previous.ratio ? 'enter' : 'leave';
         const ratioA = type === 'enter' ? current.ratio : previous.ratio;
         const ratioB = type === 'leave' ? current.ratio : previous.ratio;
         const steps = [];
@@ -836,21 +774,20 @@
         if (ratioA >= 0.5 && ratioB < 0.5) steps.push(':half');
         if (ratioA > 0 && ratioB <= 0) steps.push('');
         steps.forEach(function (step) {
-          [
-            'cel:' + type + step,
-            'cel:' + type + step + ':' + direction,
-          ].forEach(function (eventName) {
-            console.debug(
-              'EventManager - intersect',
-              eventName,
-              'on',
-              eventNb,
-              previous,
-              '->',
-              current,
-            );
-            htmlElem.fire(eventName);
-          });
+          ['cel:' + type + step, 'cel:' + type + step + ':' + direction].forEach(
+            function (eventName) {
+              console.debug(
+                'EventManager - intersect',
+                eventName,
+                'on',
+                eventNb,
+                previous,
+                '->',
+                current,
+              );
+              htmlElem.fire(eventName);
+            },
+          );
         });
         _me._intersectionValues[eventNb] = current;
       },
@@ -873,15 +810,9 @@
           'celements:contentChanged',
           _me._contentChangedHandlerBind,
         );
-        Event.observe(
-          $(document.body),
-          'celements:contentChanged',
-          _me._contentChangedHandlerBind,
-        );
+        Event.observe($(document.body), 'celements:contentChanged', _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
-        rootElem
-          .querySelectorAll('.celOnEvent')
-          .forEach(_me._interpretDataCelEventBind);
+        rootElem.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
       },
 
       _removeDisappearedElems: function () {
@@ -889,8 +820,7 @@
         for (let i = _me._eventElements.length - 1; i >= 0; i--) {
           const elem = _me._eventElements[i];
           const isInBody = $(document.body).contains(elem.htmlElem);
-          const changedDataValue =
-            elem.htmlElem.dataset.celEvent !== elem.dataValue;
+          const changedDataValue = elem.htmlElem.dataset.celEvent !== elem.dataValue;
           if (
             !isInBody ||
             changedDataValue ||
@@ -931,10 +861,7 @@
       });
       formValidations.set(formElem.id, valid);
     } else {
-      console.error(
-        'failed to register validation on form with no id. ',
-        formElem,
-      );
+      console.error('failed to register validation on form with no id. ', formElem);
     }
   };
 
@@ -943,9 +870,7 @@
     $(document.body).observe('cel_yuiOverlay:contentChanged', function (event) {
       const containerElem = event.findElement();
       if (containerElem) {
-        containerElem
-          .select('form.cel_form_validation')
-          .each(registerValidation);
+        containerElem.select('form.cel_form_validation').each(registerValidation);
       }
     });
   });
@@ -975,13 +900,7 @@
           a.async = 1;
           a.src = g;
           m.parentNode.insertBefore(a, m);
-        })(
-          window,
-          document,
-          'script',
-          '//www.google-analytics.com/analytics.js',
-          'ga',
-        );
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
         ga('create', gaaNum, window.getCelDomain());
         ga('set', 'anonymizeIp', true);
         ga('send', 'pageview');
@@ -993,11 +912,7 @@
           s.async = 1;
           s.src = g;
           m.parentNode.insertBefore(s, m);
-        })(
-          document,
-          'script',
-          'https://www.googletagmanager.com/gtag/js?id=' + gaaNum,
-        );
+        })(document, 'script', 'https://www.googletagmanager.com/gtag/js?id=' + gaaNum);
         window.dataLayer = window.dataLayer || [];
         function gtag() {
           dataLayer.push(arguments);
@@ -1055,16 +970,8 @@
   document.addEventListener('DOMContentLoaded', function () {
     if (CELEMENTS && CELEMENTS.mobile && CELEMENTS.mobile.Dimensions) {
       mobileDim = new CELEMENTS.mobile.Dimensions();
-      Event.stopObserving(
-        window,
-        'orientationchange',
-        cel_updateOrientationCSSclasses,
-      );
-      Event.observe(
-        window,
-        'orientationchange',
-        cel_updateOrientationCSSclasses,
-      );
+      Event.stopObserving(window, 'orientationchange', cel_updateOrientationCSSclasses);
+      Event.observe(window, 'orientationchange', cel_updateOrientationCSSclasses);
     }
   });
 
@@ -1101,10 +1008,7 @@
     // check deprecated data-multiselectAttr for backwards compatibility
     if (!bootstrapCfg && element.getAttribute('data-multiselectAttr')) {
       bootstrapCfg = element.getAttribute('data-multiselectAttr');
-      console.warn(
-        'initAllMultiselect: deprecated data-multiselectAttr in use',
-        element,
-      );
+      console.warn('initAllMultiselect: deprecated data-multiselectAttr in use', element);
     }
     if (bootstrapCfg) {
       params = $j.extend(params, JSON.parse(bootstrapCfg));
@@ -1155,28 +1059,16 @@
    * Initialize Bootstrap Multiselect
    */
   document.addEventListener('DOMContentLoaded', function () {
-    $(document.body).stopObserving(
-      'cel:initMultiselect',
-      cel_initAllMultiselect,
-    );
-    $(document.body).stopObserving(
-      'celements:contentChanged',
-      cel_initAllMultiselect,
-    );
+    $(document.body).stopObserving('cel:initMultiselect', cel_initAllMultiselect);
+    $(document.body).stopObserving('celements:contentChanged', cel_initAllMultiselect);
     $(document.body).observe('cel:initMultiselect', cel_initAllMultiselect);
-    $(document.body).observe(
-      'celements:contentChanged',
-      cel_initAllMultiselect,
-    );
+    $(document.body).observe('celements:contentChanged', cel_initAllMultiselect);
     if ($('tabMenuPanel')) {
       $('tabMenuPanel').stopObserving(
         'tabedit:tabLoadingFinished',
         cel_initAllMultiselect_tabMenuPanel,
       );
-      $('tabMenuPanel').observe(
-        'tabedit:tabLoadingFinished',
-        cel_initAllMultiselect_tabMenuPanel,
-      );
+      $('tabMenuPanel').observe('tabedit:tabLoadingFinished', cel_initAllMultiselect_tabMenuPanel);
     }
     $(document.body).fire('cel:initMultiselect');
   });
@@ -1198,31 +1090,20 @@
    * Initialize fluid image
    */
   document.addEventListener('DOMContentLoaded', function () {
-    $(document.body).stopObserving(
-      'cel:initFluidImage',
-      cel_addMaxDimToFluidImg,
-    );
-    $(document.body).stopObserving(
-      'celements:contentChanged',
-      cel_addMaxDimToFluidImg,
-    );
+    $(document.body).stopObserving('cel:initFluidImage', cel_addMaxDimToFluidImg);
+    $(document.body).stopObserving('celements:contentChanged', cel_addMaxDimToFluidImg);
     $(document.body).observe('cel:initFluidImage', cel_addMaxDimToFluidImg);
-    $(document.body).observe(
-      'celements:contentChanged',
-      cel_addMaxDimToFluidImg,
-    );
+    $(document.body).observe('celements:contentChanged', cel_addMaxDimToFluidImg);
   });
 
   /**
    * Initialize close Window on Overlay CloseButton
    */
   document.addEventListener('DOMContentLoaded', function () {
-    $$('.generalOverlayWrapper .generalOverlay .exitOnClose').each(
-      function (elem) {
-        elem.stopObserving('click', cel_closeOverlayWindow);
-        elem.observe('click', cel_closeOverlayWindow);
-      },
-    );
+    $$('.generalOverlayWrapper .generalOverlay .exitOnClose').each(function (elem) {
+      elem.stopObserving('click', cel_closeOverlayWindow);
+      elem.observe('click', cel_closeOverlayWindow);
+    });
   });
 
   const cel_closeOverlayWindow = function (event) {
@@ -1241,10 +1122,7 @@
   };
 
   document.addEventListener('DOMContentLoaded', function () {
-    if (
-      window.celMessages.isLoaded &&
-      typeof celMessages.jqueryFormater === 'object'
-    ) {
+    if (window.celMessages.isLoaded && typeof celMessages.jqueryFormater === 'object') {
       updateCelMessages();
     } else {
       $(document.body).observe('cel:messagesLoaded', updateCelMessages);

@@ -44,33 +44,17 @@ if (typeof CELEMENTS.layout == 'undefined') {
 
       _chromeAskToolbarFixTop: function (top) {
         var _me = this;
-        if (
-          $$('html iframe.apn-toolbar') &&
-          $$('html iframe.apn-toolbar').size() > 0
-        ) {
+        if ($$('html iframe.apn-toolbar') && $$('html iframe.apn-toolbar').size() > 0) {
           var toolbarHeight = $j('html iframe.apn-toolbar').height();
           top = top - toolbarHeight;
         }
         return top;
       },
 
-      _addOutlineElement: function (
-        elemId,
-        idSuffix,
-        top,
-        left,
-        width,
-        height,
-        cssClass,
-      ) {
+      _addOutlineElement: function (elemId, idSuffix, top, left, width, height, cssClass) {
         var _me = this;
         var cssClassStr = cssClass || '';
-        cssClassStr = (
-          'cel_outline cel_outline_' +
-          elemId +
-          ' ' +
-          cssClassStr
-        ).strip();
+        cssClassStr = ('cel_outline cel_outline_' + elemId + ' ' + cssClassStr).strip();
         var outlineElemId = elemId + idSuffix;
         var outlineElem = $(outlineElemId);
         if (!outlineElem) {
@@ -153,11 +137,9 @@ if (typeof CELEMENTS.layout == 'undefined') {
       removeOutlinesForElement: function (element) {
         var _me = this;
         element = $(element);
-        $$('.cel_outline_' + _me._makeSafeForCSS(element.id)).each(
-          function (element) {
-            element.remove();
-          },
-        );
+        $$('.cel_outline_' + _me._makeSafeForCSS(element.id)).each(function (element) {
+          element.remove();
+        });
       },
 
       removeAllOutlines: function () {
@@ -169,28 +151,24 @@ if (typeof CELEMENTS.layout == 'undefined') {
 
       addFocus: function (element) {
         var _me = this;
-        $$('.cel_outline_' + _me._makeSafeForCSS($(element).id)).each(
-          function (outlineElem) {
-            outlineElem.addClassName('cel_outline_focus');
-            outlineElem.setStyle({
-              background: 'lime',
-              zIndex: '999',
-            });
-          },
-        );
+        $$('.cel_outline_' + _me._makeSafeForCSS($(element).id)).each(function (outlineElem) {
+          outlineElem.addClassName('cel_outline_focus');
+          outlineElem.setStyle({
+            background: 'lime',
+            zIndex: '999',
+          });
+        });
       },
 
       removeFocus: function (element) {
         var _me = this;
-        $$('.cel_outline_' + _me._makeSafeForCSS($(element).id)).each(
-          function (outlineElem) {
-            outlineElem.removeClassName('cel_outline_focus');
-            outlineElem.setStyle({
-              background: 'green',
-              zIndex: '',
-            });
-          },
-        );
+        $$('.cel_outline_' + _me._makeSafeForCSS($(element).id)).each(function (outlineElem) {
+          outlineElem.removeClassName('cel_outline_focus');
+          outlineElem.setStyle({
+            background: 'green',
+            zIndex: '',
+          });
+        });
       },
     };
   })();

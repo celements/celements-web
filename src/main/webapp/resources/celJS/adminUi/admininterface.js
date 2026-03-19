@@ -110,10 +110,7 @@ AdminInterface.prototype = {
         var leftOffset = 0;
       }
 
-      this.mousePos = new Array(
-        event.clientX + leftOffset,
-        event.clientY + topOffset,
-      );
+      this.mousePos = new Array(event.clientX + leftOffset, event.clientY + topOffset);
     } else {
       this.mousePos = new Array(0, 0);
     }

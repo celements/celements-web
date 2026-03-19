@@ -5,16 +5,13 @@ if (
   typeof XWiki.widgets.ModalPopup == 'undefined'
 ) {
   if (typeof console != 'undefined' && typeof console.warn == 'function') {
-    console.warn(
-      '[MessageBox widget] Required class missing: XWiki.widgets.ModalPopup',
-    );
+    console.warn('[MessageBox widget] Required class missing: XWiki.widgets.ModalPopup');
   }
 } else {
   XWiki.widgets.ConfirmationBox = Class.create(XWiki.widgets.ModalPopup, {
     /** Default displayed texts */
     defaultInteractionParameters: {
-      confirmationText:
-        "$msg.get('core.widgets.confirmationBox.defaultQuestion')",
+      confirmationText: "$msg.get('core.widgets.confirmationBox.defaultQuestion')",
       yesButtonText: "$msg.get('core.widgets.confirmationBox.button.yes')",
       noButtonText: "$msg.get('core.widgets.confirmationBox.button.no')",
     },
@@ -43,22 +40,10 @@ if (
     },
     /** Create the content of the confirmation dialog: icon + question text, buttons */
     createContent: function (data) {
-      var question = new Element('div', { class: 'question' }).update(
-        data.confirmationText,
-      );
+      var question = new Element('div', { class: 'question' }).update(data.confirmationText);
       var buttons = new Element('div', { class: 'buttons' });
-      var yesButton = this.createButton(
-        'button',
-        data.yesButtonText,
-        '(Enter)',
-        '',
-      );
-      var noButton = this.createButton(
-        'button',
-        data.noButtonText,
-        '(Esc)',
-        '',
-      );
+      var yesButton = this.createButton('button', data.yesButtonText, '(Enter)', '');
+      var noButton = this.createButton('button', data.noButtonText, '(Esc)', '');
       buttons.insert(yesButton);
       buttons.insert(noButton);
       var content = new Element('div');

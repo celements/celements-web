@@ -84,17 +84,11 @@ newsletter_send_answer {
   overflow-y: auto;
   border: 1px solid black;
 }
-#newsletter_send_answer
-  .cel_newsletter_receivers_groups
-  ul
-  li.cel_newsletter_row_uneven {
+#newsletter_send_answer .cel_newsletter_receivers_groups ul li.cel_newsletter_row_uneven {
   padding-left: 5px;
   background-color: #f0f0f0;
 }
-#newsletter_send_answer
-  .cel_newsletter_receivers_groups
-  ul
-  li.cel_newsletter_row_even {
+#newsletter_send_answer .cel_newsletter_receivers_groups ul li.cel_newsletter_row_even {
   padding-left: 5px;
   background-color: #cccccc;
 }
@@ -112,17 +106,11 @@ newsletter_send_answer {
   overflow-y: auto;
   border: 1px solid black;
 }
-#newsletter_send_answer
-  .cel_newsletter_receivers_single_users
-  ul
-  li.cel_newsletter_row_uneven {
+#newsletter_send_answer .cel_newsletter_receivers_single_users ul li.cel_newsletter_row_uneven {
   padding-left: 5px;
   background-color: #f0f0f0;
 }
-#newsletter_send_answer
-  .cel_newsletter_receivers_single_users
-  ul
-  li.cel_newsletter_row_even {
+#newsletter_send_answer .cel_newsletter_receivers_single_users ul li.cel_newsletter_row_even {
   padding-left: 5px;
   background-color: #cccccc;
 }
@@ -356,41 +344,21 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table {
   width: 885px;
 }
-.generalOverlay
-  #cel_overlaybody
-  #recylceBinAttachmentList
-  table
-  .column_filename {
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_filename {
   width: 295px;
   overflow: hidden;
   word-wrap: break-word;
 }
-.generalOverlay
-  #cel_overlaybody
-  #recylceBinAttachmentList
-  table
-  .column_docName {
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_docName {
   width: 200px;
 }
-.generalOverlay
-  #cel_overlaybody
-  #recylceBinAttachmentList
-  table
-  .column_deldate {
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_deldate {
   width: 140px;
 }
-.generalOverlay
-  #cel_overlaybody
-  #recylceBinAttachmentList
-  table
-  .column_deleter {
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_deleter {
   width: 130px;
 }
-.generalOverlay
-  #cel_overlaybody
-  #recylceBinAttachmentList
-  table
-  .column_actions {
+.generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_actions {
   width: 120px;
 }
 

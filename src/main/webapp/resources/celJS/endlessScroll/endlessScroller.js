@@ -81,10 +81,7 @@ if (typeof CELEMENTS.anim == 'undefined') {
         } else {
           _me.isScrollBlockEle = true;
         }
-        _me._elementHeight = Math.max(
-          _me.htmlElem.scrollHeight,
-          _me.htmlElem.getHeight(),
-        );
+        _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
         _me.action = action;
         _me.loadAllOnInit =
           typeof params != 'undefined' &&
@@ -110,16 +107,9 @@ if (typeof CELEMENTS.anim == 'undefined') {
           _me._executeActionCallback();
         }
         if (_me.isScrollBlockEle) {
-          _me._observer = _me.htmlElem.observe(
-            _me._scrollEventName,
-            _me._checkIsScrollBottomBind,
-          );
+          _me._observer = _me.htmlElem.observe(_me._scrollEventName, _me._checkIsScrollBottomBind);
         } else {
-          _me._observer = Event.observe(
-            window,
-            _me._scrollEventName,
-            _me._checkIsScrollBottomBind,
-          );
+          _me._observer = Event.observe(window, _me._scrollEventName, _me._checkIsScrollBottomBind);
         }
       }
     },
@@ -152,16 +142,10 @@ if (typeof CELEMENTS.anim == 'undefined') {
           typeof console != 'undefined' &&
           typeof console.log != 'undefined'
         ) {
-          console.log(
-            '_executeActionCallback: skipp execute action ',
-            _me._isLoading,
-          );
+          console.log('_executeActionCallback: skipp execute action ', _me._isLoading);
         }
       } catch (exp) {
-        if (
-          typeof console != 'undefined' &&
-          typeof console.error != 'undefined'
-        ) {
+        if (typeof console != 'undefined' && typeof console.error != 'undefined') {
           console.error('endlessScroller failed in action callback. ', exp);
         }
       }
@@ -197,38 +181,24 @@ if (typeof CELEMENTS.anim == 'undefined') {
       var params = {
         currentScrollOverflow: null,
       };
-      var scrollPosEvent = _me.htmlElem.fire(
-        'celEndlessScroll:ScrollPosEvent',
-        params,
-      );
+      var scrollPosEvent = _me.htmlElem.fire('celEndlessScroll:ScrollPosEvent', params);
       if (!scrollPosEvent.stopped) {
         if (_me.isScrollBlockEle) {
-          pos =
-            _me.htmlElem.scrollTop +
-            _me.htmlElem.getHeight() -
-            _me.htmlElem.scrollHeight;
+          pos = _me.htmlElem.scrollTop + _me.htmlElem.getHeight() - _me.htmlElem.scrollHeight;
         } else {
           pos =
-            -1 * _me.htmlElem.viewportOffset().top +
-            window.innerHeight -
-            _me.htmlElem.scrollHeight;
+            -1 * _me.htmlElem.viewportOffset().top + window.innerHeight - _me.htmlElem.scrollHeight;
         }
       } else {
         pos = -params.currentScrollOverflow;
         if (_me._isLogEnabled()) {
-          console.log(
-            '_checkIsScrollBottom: scrollPosEvent stopped and got pos ',
-            pos,
-          );
+          console.log('_checkIsScrollBottom: scrollPosEvent stopped and got pos ', pos);
         }
       }
       if (pos + _me.overlap >= 0) {
         _me._executeActionCallback();
       } else if (_me._isLogEnabled()) {
-        console.log(
-          '_checkIsScrollBottom: skipp executeActionCallback ',
-          pos + _me.overlap,
-        );
+        console.log('_checkIsScrollBottom: skipp executeActionCallback ', pos + _me.overlap);
       }
     },
 
@@ -242,10 +212,7 @@ if (typeof CELEMENTS.anim == 'undefined') {
         console.log('reloadDoneCallback: start ', keepObserving);
       }
       _me._isLoading = false;
-      var maxHeight = Math.max(
-        _me.htmlElem.scrollHeight,
-        _me.htmlElem.getHeight(),
-      );
+      var maxHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
       if (
         keepObserving ||
         ((typeof keepObserving == 'undefined' || keepObserving == null) &&
@@ -253,8 +220,7 @@ if (typeof CELEMENTS.anim == 'undefined') {
       ) {
         if (
           _me.loadAllOnInit ||
-          (keepObserving &&
-            _me._elementHeight - _me.overlap <= _me.htmlElem.getHeight())
+          (keepObserving && _me._elementHeight - _me.overlap <= _me.htmlElem.getHeight())
         ) {
           if (
             _me._isLogEnabled() &&
@@ -275,25 +241,15 @@ if (typeof CELEMENTS.anim == 'undefined') {
       } else {
         _me.stopObserving();
       }
-      _me._elementHeight = Math.max(
-        _me.htmlElem.scrollHeight,
-        _me.htmlElem.getHeight(),
-      );
+      _me._elementHeight = Math.max(_me.htmlElem.scrollHeight, _me.htmlElem.getHeight());
     },
 
     stopObserving: function () {
       var _me = this;
       if (_me.isScrollBlockEle) {
-        _me.htmlElem.stopObserving(
-          _me._scrollEventName,
-          _me._checkIsScrollBottomBind,
-        );
+        _me.htmlElem.stopObserving(_me._scrollEventName, _me._checkIsScrollBottomBind);
       } else {
-        Event.stopObserving(
-          window,
-          _me._scrollEventName,
-          _me._checkIsScrollBottomBind,
-        );
+        Event.stopObserving(window, _me._scrollEventName, _me._checkIsScrollBottomBind);
       }
     },
   };

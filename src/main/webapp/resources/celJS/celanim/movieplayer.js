@@ -52,18 +52,9 @@
         'celanim_externalvideo',
         'celanim_overlay_externalvideo',
       ]);
-      initFlowPlayerLinksInsideParent(
-        parentElemIn,
-        'a.celanim_flowplayerStart',
-      );
-      initOneFlowPlayerLinksInsideParent(
-        parentElemIn,
-        'a.celanim_oneflowplayerStart',
-      );
-      initFlowPlayerAudioLinksInsideParent(
-        parentElemIn,
-        'a.celanim_flowplayerAudioStart',
-      );
+      initFlowPlayerLinksInsideParent(parentElemIn, 'a.celanim_flowplayerStart');
+      initOneFlowPlayerLinksInsideParent(parentElemIn, 'a.celanim_oneflowplayerStart');
+      initFlowPlayerAudioLinksInsideParent(parentElemIn, 'a.celanim_flowplayerAudioStart');
       initOverlayLinksInsideParent(parentElemIn, 'a.celanim_overlay');
       initCelAnimSWFPlayerInsideParent(parentElemIn);
     } else {
@@ -85,10 +76,7 @@
     }
   };
 
-  const initMoviePlayerCssClassesInsideParent = function (
-    parentElem,
-    cssClassNames,
-  ) {
+  const initMoviePlayerCssClassesInsideParent = function (parentElem, cssClassNames) {
     $A(cssClassNames).each(function (flowclassname) {
       if (parentElem.select('a.' + flowclassname).size() > 0) {
         parentElem.select('a.' + flowclassname).each(function (elem) {
@@ -158,11 +146,7 @@
         movielink: movieLink,
       });
       const linkReplaceObj = getCelAnimSWFConfigForLink(playerLink.href);
-      console.log(
-        'celanimLoadSWFplayer: not stopped ',
-        movieLink,
-        linkReplaceObj.loadType,
-      );
+      console.log('celanimLoadSWFplayer: not stopped ', movieLink, linkReplaceObj.loadType);
       if (linkReplaceObj.loadType && linkReplaceObj.loadType === 'iframe') {
         const iFrameElem = document.createElement('iframe');
         iFrameElem.src = movieLink;
@@ -227,10 +211,7 @@
         }
       }
     } else {
-      console.debug(
-        'celanimLoadSWFplayer: skip loading, already started',
-        playerLink,
-      );
+      console.debug('celanimLoadSWFplayer: skip loading, already started', playerLink);
     }
   };
 
@@ -254,17 +235,14 @@
       {
         name: 'sfaudioPortal',
         matchStr: '^https?:\/\/(www.srf.ch)\/.*\/audio/.*[\/=]',
-        replaceStr:
-          'https://www.srf.ch/player/flash/srfplayer.swf?mode=embed&audio_id=',
+        replaceStr: 'https://www.srf.ch/player/flash/srfplayer.swf?mode=embed&audio_id=',
         cssClass: 'celanim_sfaudio',
         replaceOnLoad: true,
       },
       {
         name: 'sfvideoPortal',
-        matchStr:
-          '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv|www.srf.ch)\/.*[\/=]',
-        replaceStr:
-          'https://www.srf.ch/player/flash/srfplayer.swf?mode=embed&segment_id=',
+        matchStr: '^https?:\/\/(www.videoportal.sf.tv|www.sf.tv|www.srf.ch)\/.*[\/=]',
+        replaceStr: 'https://www.srf.ch/player/flash/srfplayer.swf?mode=embed&segment_id=',
         cssClass: 'celanim_sfvideo',
         replaceOnLoad: true,
       },
@@ -287,10 +265,7 @@
   const getCelAnimSWFmovieLink = function (elemHref) {
     const linkReplaceObj = getCelAnimSWFConfigForLink(elemHref);
     if (linkReplaceObj) {
-      elemHref = elemHref.replace(
-        new RegExp(linkReplaceObj.matchStr),
-        linkReplaceObj.replaceStr,
-      );
+      elemHref = elemHref.replace(new RegExp(linkReplaceObj.matchStr), linkReplaceObj.replaceStr);
     }
     return elemHref;
   };
@@ -330,10 +305,7 @@
     }
   };
 
-  var initOneFlowPlayerLinksInsideParent = function (
-    parentElem,
-    flowclassname,
-  ) {
+  var initOneFlowPlayerLinksInsideParent = function (parentElem, flowclassname) {
     if (parentElem.select(flowclassname).size() > 0) {
       var flowLink = parentElem.select(flowclassname)[0];
       var playerid = 'celanimFlowPlayer';
@@ -343,10 +315,7 @@
     }
   };
 
-  var initFlowPlayerAudioLinksInsideParent = function (
-    parentElem,
-    flowclassname,
-  ) {
+  var initFlowPlayerAudioLinksInsideParent = function (parentElem, flowclassname) {
     if (parentElem.select(flowclassname).size() > 0) {
       var clipConfig = conf.defaults;
       if (clipConfig.autoBuffering && !clipConfig.autoPlay) {
@@ -418,9 +387,7 @@
           },
           onLoad: function () {
             this.getPlugin('content').setHtml(
-              '<span class="celanim_audiocontent">' +
-                this.celStoreHtml +
-                '</span>',
+              '<span class="celanim_audiocontent">' + this.celStoreHtml + '</span>',
             );
             this.getPlugin('content').height =
               this.getParent().getHeight() - this.getPlugin('controls').height;
@@ -475,17 +442,14 @@
       window.CELEMENTS.getUtils().getPathPrefix() + '/',
     );
     var cssClassNames = $w($(elem).className).without('celanim_overlay');
-    var overlaySrc =
-      getCelHost() + '?xpage=celements_ajax&ajax_mode=FlowplayerInOverlay';
+    var overlaySrc = getCelHost() + '?xpage=celements_ajax&ajax_mode=FlowplayerInOverlay';
     overlaySrc += '&cssclassname=' + cssClassNames.join(',');
     overlaySrc += '&flvfilename=' + encodeURIComponent(flvLink);
     hs.graphicsDir =
-      window.CELEMENTS.getUtils().getPathPrefix() +
-      '/file/celJS/highslide/graphics/';
+      window.CELEMENTS.getUtils().getPathPrefix() + '/file/celJS/highslide/graphics/';
     hs.outlineType = '';
     hs.wrapperClassName =
-      'no-footer no-move draggable-header celanim_overlay_wrapper ' +
-      cssClassNames.join(' ');
+      'no-footer no-move draggable-header celanim_overlay_wrapper ' + cssClassNames.join(' ');
     var params = {
       src: overlaySrc,
       objectType: 'iframe',

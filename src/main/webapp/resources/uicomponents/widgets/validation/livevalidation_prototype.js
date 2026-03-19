@@ -75,9 +75,7 @@ LiveValidation.prototype = {
     this.element = $(element);
     if (!this.element)
       throw new Error(
-        "LiveValidation::initialize - No element with reference or id of '" +
-          element +
-          "' exists!",
+        "LiveValidation::initialize - No element with reference or id of '" + element + "' exists!",
       );
     // properties that could not be initialised above
     this.elementType = this.getElementType();
@@ -158,8 +156,7 @@ LiveValidation.prototype = {
           Event.stopObserving(this.element, 'change', this.boundChange);
           break;
         default:
-          if (!this.onlyOnBlur)
-            Event.stopObserving(this.element, 'keyup', this.boundKeyup);
+          if (!this.onlyOnBlur) Event.stopObserving(this.element, 'keyup', this.boundKeyup);
           Event.stopObserving(this.element, 'blur', this.boundBlur);
       }
     }
@@ -274,16 +271,10 @@ LiveValidation.prototype = {
         case Validate.Confirmation:
         case Validate.Acceptance:
           this.displayMessageWhenEmpty = true;
-          this.validationFailed = !this.validateElement(
-            validation.type,
-            validation.params,
-          );
+          this.validationFailed = !this.validateElement(validation.type, validation.params);
           break;
         default:
-          this.validationFailed = !this.validateElement(
-            validation.type,
-            validation.params,
-          );
+          this.validationFailed = !this.validateElement(validation.type, validation.params);
           break;
       }
       if (this.validationFailed) return false;
@@ -399,16 +390,12 @@ LiveValidation.prototype = {
     var className = this.validationFailed ? this.invalidClass : this.validClass;
     if (
       (this.displayMessageWhenEmpty &&
-        (this.elementType == LiveValidation.CHECKBOX ||
-          this.element.value == '')) ||
+        (this.elementType == LiveValidation.CHECKBOX || this.element.value == '')) ||
       this.element.value != ''
     ) {
       $(elementToInsert).addClassName(this.messageClass + (' ' + className));
       if ((nxtSibling = this.insertAfterWhatNode.nextSibling)) {
-        this.insertAfterWhatNode.parentNode.insertBefore(
-          elementToInsert,
-          nxtSibling,
-        );
+        this.insertAfterWhatNode.parentNode.insertBefore(elementToInsert, nxtSibling);
       } else {
         this.insertAfterWhatNode.parentNode.appendChild(elementToInsert);
       }
@@ -435,8 +422,7 @@ LiveValidation.prototype = {
    *	removes the message element if it exists
    */
   removeMessage: function () {
-    if ((nxtEl = this.insertAfterWhatNode.next('.' + this.messageClass)))
-      nxtEl.remove();
+    if ((nxtEl = this.insertAfterWhatNode.next('.' + this.messageClass))) nxtEl.remove();
   },
 
   /**
@@ -476,12 +462,9 @@ Object.extend(LiveValidationForm, {
   getInstance: function (element) {
     var rand = Math.random() * Math.random();
     if (!element.id)
-      element.id =
-        'formId_' + rand.toString().replace(/\./, '') + new Date().valueOf();
+      element.id = 'formId_' + rand.toString().replace(/\./, '') + new Date().valueOf();
     if (!LiveValidationForm.instances[element.id])
-      LiveValidationForm.instances[element.id] = new LiveValidationForm(
-        element,
-      );
+      LiveValidationForm.instances[element.id] = new LiveValidationForm(element);
     return LiveValidationForm.instances[element.id];
   },
 });
@@ -576,8 +559,7 @@ var Validate = {
       },
       paramsObj || {},
     );
-    if (value === '' || value === null || value === undefined)
-      Validate.fail(params.failureMessage);
+    if (value === '' || value === null || value === undefined) Validate.fail(params.failureMessage);
     return true;
   },
 
@@ -613,33 +595,22 @@ var Validate = {
     var paramsObj = paramsObj || {};
     var params = {
       notANumberMessage: paramsObj.notANumberMessage || 'Must be a number!',
-      notAnIntegerMessage:
-        paramsObj.notAnIntegerMessage || 'Must be an integer!',
-      wrongNumberMessage:
-        paramsObj.wrongNumberMessage || 'Must be ' + paramsObj.is + '!',
-      tooLowMessage:
-        paramsObj.tooLowMessage ||
-        'Must not be less than ' + paramsObj.minimum + '!',
+      notAnIntegerMessage: paramsObj.notAnIntegerMessage || 'Must be an integer!',
+      wrongNumberMessage: paramsObj.wrongNumberMessage || 'Must be ' + paramsObj.is + '!',
+      tooLowMessage: paramsObj.tooLowMessage || 'Must not be less than ' + paramsObj.minimum + '!',
       tooHighMessage:
-        paramsObj.tooHighMessage ||
-        'Must not be more than ' + paramsObj.maximum + '!',
+        paramsObj.tooHighMessage || 'Must not be more than ' + paramsObj.maximum + '!',
       is: paramsObj.is || paramsObj.is == 0 ? paramsObj.is : null,
-      minimum:
-        paramsObj.minimum || paramsObj.minimum == 0 ? paramsObj.minimum : null,
-      maximum:
-        paramsObj.maximum || paramsObj.maximum == 0 ? paramsObj.maximum : null,
+      minimum: paramsObj.minimum || paramsObj.minimum == 0 ? paramsObj.minimum : null,
+      maximum: paramsObj.maximum || paramsObj.maximum == 0 ? paramsObj.maximum : null,
       onlyInteger: paramsObj.onlyInteger || false,
     };
     if (!isFinite(value)) Validate.fail(params.notANumberMessage);
-    if (
-      params.onlyInteger &&
-      (/\.0+$|\.$/.test(String(suppliedValue)) || value != parseInt(value))
-    )
+    if (params.onlyInteger && (/\.0+$|\.$/.test(String(suppliedValue)) || value != parseInt(value)))
       Validate.fail(params.notAnIntegerMessage);
     switch (true) {
       case params.is !== null:
-        if (value != Number(params.is))
-          Validate.fail(params.wrongNumberMessage);
+        if (value != Number(params.is)) Validate.fail(params.wrongNumberMessage);
         break;
       case params.minimum !== null && params.maximum !== null:
         Validate.Numericality(value, {
@@ -655,8 +626,7 @@ var Validate = {
         if (value < Number(params.minimum)) Validate.fail(params.tooLowMessage);
         break;
       case params.maximum !== null:
-        if (value > Number(params.maximum))
-          Validate.fail(params.tooHighMessage);
+        if (value > Number(params.maximum)) Validate.fail(params.tooHighMessage);
         break;
     }
     return true;
@@ -690,10 +660,8 @@ var Validate = {
       },
       paramsObj || {},
     );
-    if (!params.negate && !params.pattern.test(value))
-      Validate.fail(params.failureMessage); // normal
-    if (params.negate && params.pattern.test(value))
-      Validate.fail(params.failureMessage); // negated
+    if (!params.negate && !params.pattern.test(value)) Validate.fail(params.failureMessage); // normal
+    if (params.negate && params.pattern.test(value)) Validate.fail(params.failureMessage); // negated
     return true;
   },
 
@@ -745,8 +713,7 @@ var Validate = {
     var paramsObj = paramsObj || {};
     var params = {
       wrongLengthMessage:
-        paramsObj.wrongLengthMessage ||
-        'Must be ' + paramsObj.is + ' characters long!',
+        paramsObj.wrongLengthMessage || 'Must be ' + paramsObj.is + ' characters long!',
       tooShortMessage:
         paramsObj.tooShortMessage ||
         'Must not be less than ' + paramsObj.minimum + ' characters long!',
@@ -754,15 +721,12 @@ var Validate = {
         paramsObj.tooLongMessage ||
         'Must not be more than ' + paramsObj.maximum + ' characters long!',
       is: paramsObj.is || paramsObj.is == 0 ? paramsObj.is : null,
-      minimum:
-        paramsObj.minimum || paramsObj.minimum == 0 ? paramsObj.minimum : null,
-      maximum:
-        paramsObj.maximum || paramsObj.maximum == 0 ? paramsObj.maximum : null,
+      minimum: paramsObj.minimum || paramsObj.minimum == 0 ? paramsObj.minimum : null,
+      maximum: paramsObj.maximum || paramsObj.maximum == 0 ? paramsObj.maximum : null,
     };
     switch (true) {
       case params.is !== null:
-        if (value.length != Number(params.is))
-          Validate.fail(params.wrongLengthMessage);
+        if (value.length != Number(params.is)) Validate.fail(params.wrongLengthMessage);
         break;
       case params.minimum !== null && params.maximum !== null:
         Validate.Length(value, {
@@ -775,17 +739,13 @@ var Validate = {
         });
         break;
       case params.minimum !== null:
-        if (value.length < Number(params.minimum))
-          Validate.fail(params.tooShortMessage);
+        if (value.length < Number(params.minimum)) Validate.fail(params.tooShortMessage);
         break;
       case params.maximum !== null:
-        if (value.length > Number(params.maximum))
-          Validate.fail(params.tooLongMessage);
+        if (value.length > Number(params.maximum)) Validate.fail(params.tooLongMessage);
         break;
       default:
-        throw new Error(
-          'Validate::Length - Length(s) to validate against must be provided!',
-        );
+        throw new Error('Validate::Length - Length(s) to validate against must be provided!');
     }
     return true;
   },
@@ -823,8 +783,7 @@ var Validate = {
       paramsObj || {},
     );
     if (params.allowNull && value == null) return true;
-    if (!params.allowNull && value == null)
-      Validate.fail(params.failureMessage);
+    if (!params.allowNull && value == null) Validate.fail(params.failureMessage);
     //if case insensitive, make all strings in the array lowercase, and the value too
     if (!params.caseSensitive) {
       var lowerWithin = [];
@@ -961,8 +920,7 @@ var Validate = {
       },
       paramsObj || {},
     );
-    if (!params.against(value, params.args))
-      Validate.fail(params.failureMessage);
+    if (!params.against(value, params.args)) Validate.fail(params.failureMessage);
     return true;
   },
 

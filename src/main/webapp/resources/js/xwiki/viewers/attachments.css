@@ -10,10 +10,7 @@
 .add-file-input {
   margin-left: 10px;
   background-position: 2px top;
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/textfield_add.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/textfield_add.gif', true));
 }
 .add-file-input:hover {
   color: #070;

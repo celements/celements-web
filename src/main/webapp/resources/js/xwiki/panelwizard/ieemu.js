@@ -96,27 +96,27 @@ function extendEventObject() {
  * Emulates element.attachEvent as well as detachEvent
  */
 function emulateAttachEvent() {
-  HTMLDocument.prototype.attachEvent = HTMLElement.prototype.attachEvent =
-    function (sType, fHandler) {
-      var shortTypeName = sType.replace(/on/, '');
-      fHandler._ieEmuEventHandler = function (e) {
-        window.event = e;
-        return fHandler();
-      };
-      this.addEventListener(shortTypeName, fHandler._ieEmuEventHandler, false);
+  HTMLDocument.prototype.attachEvent = HTMLElement.prototype.attachEvent = function (
+    sType,
+    fHandler,
+  ) {
+    var shortTypeName = sType.replace(/on/, '');
+    fHandler._ieEmuEventHandler = function (e) {
+      window.event = e;
+      return fHandler();
     };
+    this.addEventListener(shortTypeName, fHandler._ieEmuEventHandler, false);
+  };
 
-  HTMLDocument.prototype.detachEvent = HTMLElement.prototype.detachEvent =
-    function (sType, fHandler) {
-      var shortTypeName = sType.replace(/on/, '');
-      if (typeof fHandler._ieEmuEventHandler == 'function')
-        this.removeEventListener(
-          shortTypeName,
-          fHandler._ieEmuEventHandler,
-          false,
-        );
-      else this.removeEventListener(shortTypeName, fHandler, true);
-    };
+  HTMLDocument.prototype.detachEvent = HTMLElement.prototype.detachEvent = function (
+    sType,
+    fHandler,
+  ) {
+    var shortTypeName = sType.replace(/on/, '');
+    if (typeof fHandler._ieEmuEventHandler == 'function')
+      this.removeEventListener(shortTypeName, fHandler._ieEmuEventHandler, false);
+    else this.removeEventListener(shortTypeName, fHandler, true);
+  };
 }
 
 /*

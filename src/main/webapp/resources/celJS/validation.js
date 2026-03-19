@@ -47,9 +47,7 @@
       return (
         this._test(v, elm) &&
         this.options.all(function (p) {
-          return Validator.methods[p.key]
-            ? Validator.methods[p.key](v, elm, p.value)
-            : true;
+          return Validator.methods[p.key] ? Validator.methods[p.key](v, elm, p.value) : true;
         })
       );
     },
@@ -98,9 +96,7 @@
       });
     },
     validDocName: function (v) {
-      return (
-        !Validation.get('IsEmpty').test(v) && !/\W/.test(v.replace(/-/g, ''))
-      );
+      return !Validation.get('IsEmpty').test(v) && !/\W/.test(v.replace(/-/g, ''));
     },
   };
 
@@ -124,36 +120,20 @@
       this.form = $(form);
       if (this.options.onSubmit) {
         Event.observe(this.form, 'submit', this.onSubmit.bind(this), false);
-        Event.observe(
-          this.form,
-          'celForm:prepareSubmit',
-          this.onSubmit.bind(this),
-          false,
-        );
+        Event.observe(this.form, 'celForm:prepareSubmit', this.onSubmit.bind(this), false);
       }
       if (this.options.immediate) {
         Form.getElements(this.form).each(function (input) {
           // Thanks Mike!
           Event.observe(input, 'blur', _me.validateFieldHandler.bind(_me));
-          Event.observe(
-            input,
-            'celValidation:revalidateField',
-            _me.validateFieldHandler.bind(_me),
-          );
-          Event.observe(
-            input,
-            'celForm:valueChanged',
-            _me.validateFieldHandler.bind(_me),
-          );
+          Event.observe(input, 'celValidation:revalidateField', _me.validateFieldHandler.bind(_me));
+          Event.observe(input, 'celForm:valueChanged', _me.validateFieldHandler.bind(_me));
         });
       }
       let submitButtons = _me.form.select('.celSubmitFormWithValidation');
       if (submitButtons.size() == 0 && $(_me.form.id + '_SubmitLink')) {
         submitButtons = [$(_me.form.id + '_SubmitLink')];
-        console.warn(
-          'deprecated usage of submit link outside of form-tag: ',
-          submitButtons,
-        );
+        console.warn('deprecated usage of submit link outside of form-tag: ', submitButtons);
       }
       submitButtons.each(function (buttonElem) {
         buttonElem.observe('click', _me.clickOnSubmitLinkHandler.bind(_me));
@@ -163,10 +143,7 @@
       const _me = this;
       const useTitles = _me.options.useTitles;
       const callback = _me.options.onElementValidate;
-      this.form.fire(
-        'celValidation:prepareElementValidation',
-        Event.element(ev),
-      );
+      this.form.fire('celValidation:prepareElementValidation', Event.element(ev));
       Validation.validate(Event.element(ev), {
         useTitle: useTitles,
         onElementValidate: callback,
@@ -178,13 +155,10 @@
         Event.stop(ev);
         this.form.fire('celValidation:validationFailedSubmitCancel', this.form);
       } else {
-        const valSubEv = this.form.fire(
-          'celValidation:submitFormAfterValidation',
-          {
-            form: this.form,
-            submitEvent: ev,
-          },
-        );
+        const valSubEv = this.form.fire('celValidation:submitFormAfterValidation', {
+          form: this.form,
+          submitEvent: ev,
+        });
         if (valSubEv.stopped) {
           ev.stop();
         }
@@ -261,11 +235,7 @@
           if (!elm[prop]) {
             let advice = Validation.getAdvice(name, elm);
             if (advice == null) {
-              const errorMsg = useTitle
-                ? elm && elm.title
-                  ? elm.title
-                  : v.error
-                : v.error;
+              const errorMsg = useTitle ? (elm && elm.title ? elm.title : v.error) : v.error;
               advice =
                 '<div class="validation-advice" id="advice-' +
                 name +
@@ -411,9 +381,7 @@
       'validate-number',
       null,
       function (v) {
-        return (
-          Validation.get('IsEmpty').test(v) || (!isNaN(v) && !/^\s+$/.test(v))
-        );
+        return Validation.get('IsEmpty').test(v) || (!isNaN(v) && !/^\s+$/.test(v));
       },
     ],
     [
@@ -450,8 +418,7 @@
       null,
       function (v) {
         return (
-          Validation.get('IsEmpty').test(v) ||
-          /\w{1,}[@][\w\-]{1,}([.]([\w\-]{1,}))+$/.test(v)
+          Validation.get('IsEmpty').test(v) || /\w{1,}[@][\w\-]{1,}([.]([\w\-]{1,}))+$/.test(v)
         );
       },
     ],
@@ -524,17 +491,14 @@
       'validate-selection',
       null,
       function (v, elm) {
-        return elm.options
-          ? elm.selectedIndex > 0
-          : !Validation.get('IsEmpty').test(v);
+        return elm.options ? elm.selectedIndex > 0 : !Validation.get('IsEmpty').test(v);
       },
     ],
     [
       'validate-one-required',
       null,
       function (v, elm) {
-        const p =
-          elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
+        const p = elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
         const options = p.getElementsByTagName('INPUT');
         return $A(options).any(function (elm) {
           return $F(elm);
@@ -546,8 +510,7 @@
       null,
       function (v, elm) {
         const nr = elm.className.replace(/^.*multipleIs(\d+)( .*|)$/g, '$1');
-        const p =
-          elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
+        const p = elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
         const options = p.getElementsByTagName('INPUT');
         return (
           nr ==
@@ -562,8 +525,7 @@
       null,
       function (v, elm) {
         const nr = elm.className.replace(/^.*minimumIs(\d+)( .*|)$/g, '$1');
-        const p =
-          elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
+        const p = elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
         const options = p.getElementsByTagName('INPUT');
         return (
           nr <=
@@ -585,20 +547,12 @@
     },
     onSuccess: function (transport) {
       if (transport.responseText.isJSON()) {
-        Validation.messages = Validation.messages.merge(
-          transport.responseText.evalJSON(),
-        );
+        Validation.messages = Validation.messages.merge(transport.responseText.evalJSON());
         Validation.addAllThese(Validation.defaultFunctions);
-        if (
-          typeof console != 'undefined' &&
-          typeof console.debug != 'undefined'
-        ) {
+        if (typeof console != 'undefined' && typeof console.debug != 'undefined') {
           console.debug('validation.js: finished adding default functions.');
         }
-      } else if (
-        typeof console != 'undefined' &&
-        typeof console.error != 'undefined'
-      ) {
+      } else if (typeof console != 'undefined' && typeof console.error != 'undefined') {
         console.error('noJSON!!! ', transport.responseText);
       }
     },
@@ -621,17 +575,12 @@
     if (elem.tagName.toLowerCase() == 'form') {
       Validation.addValidationToForm(elem);
     } else {
-      elem
-        .select('form.celAddValidationToForm')
-        .each(Validation.addValidationToForm);
+      elem.select('form.celAddValidationToForm').each(Validation.addValidationToForm);
     }
   };
 
   document.addEventListener('DOMContentLoaded', function () {
-    $(document.body).observe(
-      'celValidation:addValidation',
-      Validation.addValidationToFormListener,
-    );
+    $(document.body).observe('celValidation:addValidation', Validation.addValidationToFormListener);
     $(document.body).fire('celValidation:addValidation');
   });
 })(window);

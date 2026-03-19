@@ -48,18 +48,11 @@ var accordion = Class.create({
 
     this.duration = (11 - this.options.resizeSpeed) * 0.15;
 
-    var accordions = $$(
-      '#' + container + ' .' + this.options.classNames.toggle,
-    );
+    var accordions = $$('#' + container + ' .' + this.options.classNames.toggle);
 
     accordions.each(
       function (accordion) {
-        Event.observe(
-          accordion,
-          this.options.onEvent,
-          this.activate.bind(this, accordion),
-          false,
-        );
+        Event.observe(accordion, this.options.onEvent, this.activate.bind(this, accordion), false);
         if (this.options.onEvent == 'click') {
           accordion.onclick = function () {
             return false;
@@ -94,9 +87,7 @@ var accordion = Class.create({
       display: 'block',
     });
 
-    this.currentAccordion
-      .previous(0)
-      .addClassName(this.options.classNames.toggleActive);
+    this.currentAccordion.previous(0).addClassName(this.options.classNames.toggleActive);
 
     if (this.options.direction == 'horizontal') {
       this.scaling = {
@@ -146,9 +137,7 @@ var accordion = Class.create({
     };
     Object.extend(options, this.scaling);
 
-    this.showAccordion
-      .previous(0)
-      .removeClassName(this.options.classNames.toggleActive);
+    this.showAccordion.previous(0).removeClassName(this.options.classNames.toggleActive);
 
     new Effect.Scale(this.showAccordion, 0, options);
   },
@@ -176,9 +165,7 @@ var accordion = Class.create({
     this.effects.push(new Effect.Scale(this.currentAccordion, 100, options));
 
     if (this.showAccordion) {
-      this.showAccordion
-        .previous(0)
-        .removeClassName(this.options.classNames.toggleActive);
+      this.showAccordion.previous(0).removeClassName(this.options.classNames.toggleActive);
 
       options = {
         sync: true,

@@ -14,9 +14,7 @@ var uploading = function (event) {
   ) {
     var allowedExtentions = '';
     if ($(mlPrefix + '_cel_filebase_allowed_file_extentions')) {
-      allowedExtentions = $(
-        mlPrefix + '_cel_filebase_allowed_file_extentions',
-      ).value;
+      allowedExtentions = $(mlPrefix + '_cel_filebase_allowed_file_extentions').value;
       allowedExtentions = allowedExtentions.toLowerCase();
     }
 
@@ -31,10 +29,7 @@ var uploading = function (event) {
       transformFilename(uploadFile, mlPrefix);
     } else {
       if ($(mlPrefix + '_cel_filebase_not_allowed_file_extention_message')) {
-        alert(
-          $(mlPrefix + '_cel_filebase_not_allowed_file_extention_message')
-            .value,
-        );
+        alert($(mlPrefix + '_cel_filebase_not_allowed_file_extention_message').value);
       } else {
         alert('Unsupported file extention.');
       }
@@ -58,12 +53,10 @@ var transformFilename = function (name, mlPrefix) {
           display: 'none',
         });
         progress = $(mlPrefix + '_progressBar').setStyle({ display: '' });
-        $$('form.' + mlPrefix + '_config .cel_ml_param').each(
-          function (paramInput) {
-            $(mlPrefix + '_cel_filebase_uploadForm').action =
-              '/upload/' + paramInput.value.replace(/\./, '/');
-          },
-        );
+        $$('form.' + mlPrefix + '_config .cel_ml_param').each(function (paramInput) {
+          $(mlPrefix + '_cel_filebase_uploadForm').action =
+            '/upload/' + paramInput.value.replace(/\./, '/');
+        });
         $(mlPrefix + '_cel_filebase_uploadForm').submit();
       } else {
         //TODO give possibility to the user to change the name insead of only confirming it

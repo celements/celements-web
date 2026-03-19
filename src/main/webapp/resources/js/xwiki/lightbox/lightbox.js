@@ -21,8 +21,7 @@ Lightbox = Class.create({
   },
   lbLoading: function () {
     if (this.currentUrl) {
-      this.loadedForms[this.currentUrl] =
-        $('lb-content').firstChild.cloneNode(true);
+      this.loadedForms[this.currentUrl] = $('lb-content').firstChild.cloneNode(true);
     }
     $('lb-content').innerHTML = this.getWaiting();
   },

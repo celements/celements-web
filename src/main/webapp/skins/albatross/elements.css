@@ -11,8 +11,7 @@ body {
   line-height: 1.25em; /* 18px [2] */
   background: white;
   color: black;
-  font-family:
-    'Arial', 'Lucida', 'Trebuchet MS', 'Luxi Sans', 'Helvetica', sans-serif;
+  font-family: 'Arial', 'Lucida', 'Trebuchet MS', 'Luxi Sans', 'Helvetica', sans-serif;
 }
 h1 {
   font-size: 1.5em; /* 18px */
@@ -55,16 +54,14 @@ strong {
 dfn {
 }
 code {
-  font-family:
-    'Bitstream Vera Sans Mono', 'Courier New', Monaco, Courier, monospace; /* [3] */
+  font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monaco, Courier, monospace; /* [3] */
   overflow: auto;
   background-color: #eee;
   border: 1px solid #ddd;
   padding: 4px;
 }
 code pre {
-  font-family:
-    'Bitstream Vera Sans Mono', 'Courier New', Monaco, Courier, monospace; /* [3] */
+  font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monaco, Courier, monospace; /* [3] */
 }
 samp {
 }
@@ -178,8 +175,7 @@ applet {
 tt {
 }
 tt.wikimodel-verbatim {
-  font-family:
-    'Arial', 'Lucida', 'Trebuchet MS', 'Luxi Sans', 'Helvetica', sans-serif;
+  font-family: 'Arial', 'Lucida', 'Trebuchet MS', 'Luxi Sans', 'Helvetica', sans-serif;
 }
 i {
 }

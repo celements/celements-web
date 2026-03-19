@@ -52,10 +52,7 @@ var resizeFileBase = function () {
   var winHeight = 0;
   if (typeof window.innerWidth == 'number') {
     winHeight = window.innerHeight;
-  } else if (
-    document.documentElement &&
-    document.documentElement.clientHeight
-  ) {
+  } else if (document.documentElement && document.documentElement.clientHeight) {
     winHeight = document.documentElement.clientHeight;
   } else if (document.body && document.body.clientHeight) {
     winHeight = document.body.clientHeight;
@@ -77,10 +74,7 @@ var resizeFileBase = function () {
     scrollBox.setStyle({ height: Math.max(50, scrollableSize) + 'px' });
     if (Prototype.Browser.IE && ieCount > 0) {
       if (typeof console != 'undefined' && typeof console.log != 'undefined') {
-        console.log(
-          'found IE browser. Starting delayed fileBaseResize.',
-          ieCount,
-        );
+        console.log('found IE browser. Starting delayed fileBaseResize.', ieCount);
       }
       startDelayed();
       ieCount--;

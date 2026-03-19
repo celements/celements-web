@@ -56,10 +56,7 @@ var XWiki = (function (XWiki) {
        */
       getWikiFromResourceName: function (name) {
         if (name.include(XWiki.constants.wikiSpaceSeparator)) {
-          return name.substring(
-            0,
-            name.indexOf(XWiki.constants.wikiSpaceSeparator),
-          );
+          return name.substring(0, name.indexOf(XWiki.constants.wikiSpaceSeparator));
         }
         return null;
       },
@@ -72,10 +69,7 @@ var XWiki = (function (XWiki) {
         var originalName = name;
         // Remove wiki if any.
         if (name.include(XWiki.constants.wikiSpaceSeparator)) {
-          name = name.substring(
-            name.indexOf(XWiki.constants.wikiSpaceSeparator) + 1,
-            name.length,
-          );
+          name = name.substring(name.indexOf(XWiki.constants.wikiSpaceSeparator) + 1, name.length);
         }
         // If the resource contains an attachment, make sure the dot is not part of the attachment name.
         if (name.include(XWiki.constants.spacePageSeparator)) {
@@ -86,10 +80,7 @@ var XWiki = (function (XWiki) {
           ) {
             return null;
           }
-          return name.substring(
-            0,
-            name.indexOf(XWiki.constants.spacePageSeparator),
-          );
+          return name.substring(0, name.indexOf(XWiki.constants.spacePageSeparator));
         }
         // If the resource name looks like "xwiki:Main" we return "Main".
         if (
@@ -110,30 +101,18 @@ var XWiki = (function (XWiki) {
         var originalName = name;
         // Remove wiki if any.
         if (name.include(XWiki.constants.wikiSpaceSeparator)) {
-          name = name.substring(
-            name.indexOf(XWiki.constants.wikiSpaceSeparator) + 1,
-            name.length,
-          );
+          name = name.substring(name.indexOf(XWiki.constants.wikiSpaceSeparator) + 1, name.length);
         }
         // remove attachment if any.
         if (name.include(XWiki.constants.pageAttachmentSeparator)) {
-          name = name.substring(
-            0,
-            name.indexOf(XWiki.constants.pageAttachmentSeparator),
-          );
+          name = name.substring(0, name.indexOf(XWiki.constants.pageAttachmentSeparator));
         }
         // remove anchor if any.
         if (name.include(XWiki.constants.anchorSeparator)) {
-          name = name.substring(
-            0,
-            name.indexOf(XWiki.constants.anchorSeparator),
-          );
+          name = name.substring(0, name.indexOf(XWiki.constants.anchorSeparator));
         }
         if (name.include(XWiki.constants.spacePageSeparator)) {
-          return name.substring(
-            name.indexOf(XWiki.constants.spacePageSeparator) + 1,
-            name.length,
-          );
+          return name.substring(name.indexOf(XWiki.constants.spacePageSeparator) + 1, name.length);
         } else {
           if (originalName.include(XWiki.constants.wikiSpaceSeparator)) {
             // If the resource name looks like "xwiki:Main" it does not contain page info.
@@ -164,10 +143,7 @@ var XWiki = (function (XWiki) {
        */
       getAnchorFromResourceName: function (name) {
         if (name.include(XWiki.constants.anchorSeparator)) {
-          return name.substring(
-            name.indexOf(XWiki.constants.anchorSeparator) + 1,
-            name.length,
-          );
+          return name.substring(name.indexOf(XWiki.constants.anchorSeparator) + 1, name.length);
         }
         return null;
       },
@@ -212,8 +188,7 @@ var XWiki = (function (XWiki) {
 
         var fullName = space + XWiki.constants.spacePageSeparator + pageName;
         var prefixedSpace = wiki + XWiki.constants.wikiSpaceSeparator + space;
-        var prefixedFullName =
-          wiki + XWiki.constants.wikiSpaceSeparator + fullName;
+        var prefixedFullName = wiki + XWiki.constants.wikiSpaceSeparator + fullName;
 
         return {
           wiki: wiki,
@@ -311,35 +286,31 @@ var XWiki = (function (XWiki) {
           window.activeDocExtraPane.className = 'invisible';
         }
         $('docextrapanes').className = 'loading';
-        new Ajax.Updater(
-          extraID + 'pane',
-          window.docgeturl + '?xpage=xpart&vm=' + extraTemplate,
-          {
-            method: 'post',
-            evalScripts: true,
-            onComplete: function (transport) {
-              $('docextrapanes').className = '';
+        new Ajax.Updater(extraID + 'pane', window.docgeturl + '?xpage=xpart&vm=' + extraTemplate, {
+          method: 'post',
+          evalScripts: true,
+          onComplete: function (transport) {
+            $('docextrapanes').className = '';
 
-              // Let other know new content has been loaded
-              document.fire('xwiki:docextra:loaded', {
-                id: extraID,
-                element: $(extraID + 'pane'),
-              });
+            // Let other know new content has been loaded
+            document.fire('xwiki:docextra:loaded', {
+              id: extraID,
+              element: $(extraID + 'pane'),
+            });
 
-              // switch tab
-              dhtmlSwitch(extraID);
+            // switch tab
+            dhtmlSwitch(extraID);
 
-              if (scrollToAnchor) {
-                // Yes, this is a POJW (Plain Old JavaScript Ha^Wworkaround) which
-                // prevents the anchor 'jump' after a click event but enable it
-                // when the user is arriving from a direct /Space/Page#Section URL
-                $(extraID + 'anchor').id = extraID;
-                location.href = '#' + extraID;
-                $(extraID).id = extraID + 'anchor';
-              }
-            },
+            if (scrollToAnchor) {
+              // Yes, this is a POJW (Plain Old JavaScript Ha^Wworkaround) which
+              // prevents the anchor 'jump' after a click event but enable it
+              // when the user is arriving from a direct /Space/Page#Section URL
+              $(extraID + 'anchor').id = extraID;
+              location.href = '#' + extraID;
+              $(extraID).id = extraID + 'anchor';
+            }
           },
-        );
+        });
       } else {
         dhtmlSwitch(extraID);
         if (scrollToAnchor) {
@@ -367,8 +338,7 @@ var XWiki = (function (XWiki) {
             error.next().hasClassName('xwikirenderingerrordescription')
           ) {
             error.style.cursor = 'pointer';
-            error.title =
-              "$msg.get('platform.core.rendering.error.readTechnicalInformation')";
+            error.title = "$msg.get('platform.core.rendering.error.readTechnicalInformation')";
             Event.observe(error, 'click', function (event) {
               event.element().next().toggleClassName('hidden');
             });
@@ -416,11 +386,7 @@ var XWiki = (function (XWiki) {
      */
     insertSectionEditLinks: function () {
       // Insert links only in view mode and for xwiki/2.0 documents.
-      if (
-        XWiki.docsyntax == 'xwiki/2.0' &&
-        XWiki.contextaction == 'view' &&
-        XWiki.hasEdit
-      ) {
+      if (XWiki.docsyntax == 'xwiki/2.0' && XWiki.contextaction == 'view' && XWiki.hasEdit) {
         // Section count starts at one, not zero.
         var sectioncount = 1;
 
@@ -432,9 +398,7 @@ var XWiki = (function (XWiki) {
         nodes = nodes.childNodes;
 
         // Only allow section editing for the specified depth level (2 by default)
-        var headerPattern = new RegExp(
-          'H[1-' + $xwiki.getSectionEditingDepth() + ']',
-        );
+        var headerPattern = new RegExp('H[1-' + $xwiki.getSectionEditingDepth() + ']');
 
         // For all non-generated headers, add a SPAN and A element in order to be able to edit the section.
         for (var i = 0; i < nodes.length; i++) {
@@ -465,11 +429,7 @@ var XWiki = (function (XWiki) {
      */
     insertCreatePageFromTemplateModalBoxes: function () {
       // Insert links only in view mode and for xwiki/2.0 documents.
-      if (
-        XWiki.docsyntax == 'xwiki/2.0' &&
-        XWiki.contextaction == 'view' &&
-        XWiki.hasEdit
-      ) {
+      if (XWiki.docsyntax == 'xwiki/2.0' && XWiki.contextaction == 'view' && XWiki.hasEdit) {
         XWiki.widgets.CreatePagePopup = Class.create(XWiki.widgets.ModalPopup, {
           initialize: function ($super, interactionParameters) {
             var content = new Element('div', { class: 'modal-popup' });
@@ -494,29 +454,24 @@ var XWiki = (function (XWiki) {
         var spans = document.body.select('span.wikicreatelink');
         for (var i = 0; i < spans.length; i++) {
           spans[i].down('a').observe('click', function (event) {
-            new Ajax.Request(
-              event.findElement('a').href + '&xpage=createinline&ajax=1',
-              {
-                method: 'get',
-                onSuccess: function (transport) {
-                  var redirect = transport.getHeader('redirect');
-                  if (redirect) {
-                    window.location = redirect;
-                  } else {
-                    new XWiki.widgets.CreatePagePopup({
-                      content: transport.responseText,
-                    });
-                  }
-                },
-                onFailure: function () {
-                  new XWiki.widgets.Notification(
-                    "$msg.get('core.create.ajax.error')",
-                    'error',
-                    { inactive: true },
-                  ).show();
-                },
+            new Ajax.Request(event.findElement('a').href + '&xpage=createinline&ajax=1', {
+              method: 'get',
+              onSuccess: function (transport) {
+                var redirect = transport.getHeader('redirect');
+                if (redirect) {
+                  window.location = redirect;
+                } else {
+                  new XWiki.widgets.CreatePagePopup({
+                    content: transport.responseText,
+                  });
+                }
               },
-            );
+              onFailure: function () {
+                new XWiki.widgets.Notification("$msg.get('core.create.ajax.error')", 'error', {
+                  inactive: true,
+                }).show();
+              },
+            });
             event.stop();
           });
         }
@@ -557,16 +512,13 @@ var XWiki = (function (XWiki) {
        * @param element the element that fired the action.
        */
       executeAction: function (element) {
-        var surl =
-          window.docgeturl + '?xpage=watch&do=' + this.actionsMap[element.id];
+        var surl = window.docgeturl + '?xpage=watch&do=' + this.actionsMap[element.id];
         var myAjax = new Ajax.Request(surl, {
           method: 'get',
           onComplete: function () {
             if (element.nodeName == 'A') {
               element.parentNode.toggleClassName('hidden');
-              $(XWiki.watchlist.flowMap[element.id]).parentNode.toggleClassName(
-                'hidden',
-              );
+              $(XWiki.watchlist.flowMap[element.id]).parentNode.toggleClassName('hidden');
             } else {
               element.toggleClassName('hidden');
               $(XWiki.watchlist.flowMap[element.id]).toggleClassName('hidden');
@@ -662,9 +614,7 @@ var XWiki = (function (XWiki) {
       element = $(element);
       element.toggleClassName('collapsed');
       if (cookieName) {
-        var cookieValue = element.hasClassName('collapsed')
-          ? 'collapsed'
-          : 'expanded';
+        var cookieValue = element.hasClassName('collapsed') ? 'collapsed' : 'expanded';
         XWiki.cookies.create(cookieName, cookieValue, '');
       }
     },
@@ -677,10 +627,7 @@ var XWiki = (function (XWiki) {
     initialize: function () {
       // Extra security to make sure we do not get initalized twice.
       // It would fire the custom dom:loaded event twice, which could make their observers misbehave.
-      if (
-        typeof this.isInitialized == 'undefined' ||
-        this.isInitialized == false
-      ) {
+      if (typeof this.isInitialized == 'undefined' || this.isInitialized == false) {
         this.isInitialized = true;
         document.fire('xwiki:dom:loading');
 
@@ -729,10 +676,7 @@ function showsubmenu(element) {
     var coords = Element.positionedOffset(element);
     element.lastChild.style.left = coords[0] - 10 + 'px';
     element.lastChild.style.top = coords[1] + element.offsetHeight + 'px';
-    element.lastChild.className = element.lastChild.className.replace(
-      'hidden',
-      'visible',
-    );
+    element.lastChild.className = element.lastChild.className.replace('hidden', 'visible');
   }
 }
 
@@ -755,10 +699,7 @@ function hidesubmenu(element) {
  * @return
  */
 function doHide() {
-  window.hideelement.className = window.hideelement.className.replace(
-    'visible',
-    'hidden',
-  );
+  window.hideelement.className = window.hideelement.className.replace('visible', 'hidden');
   clearTimeout(window.hidetimer);
   window.hidetimer = null;
   window.hideelement = null;
@@ -810,10 +751,7 @@ function eltHasClass(o, className) {
  * @return
  */
 function rmClass(o, className) {
-  o.className = o.className.replace(
-    new RegExp('\\s*\\b' + className + '\\b'),
-    '',
-  );
+  o.className = o.className.replace(new RegExp('\\s*\\b' + className + '\\b'), '');
 }
 
 /**
@@ -823,11 +761,7 @@ function rmClass(o, className) {
  * @return
  */
 function openURL(url) {
-  win = open(
-    url,
-    'win',
-    'titlebar=0,width=990,height=500,resizable,scrollbars',
-  );
+  win = open(url, 'win', 'titlebar=0,width=990,height=500,resizable,scrollbars');
   if (win) {
     win.focus();
   }
@@ -927,10 +861,7 @@ function noaccent(txt) {
   temp = temp.replace(/[\u0139\u013b\u013d\u013f\u0141]/g, 'L');
   temp = temp.replace(/[\u013a\u013c\u013e\u0140\u0142\u0234]/g, 'l');
   temp = temp.replace(/[\u00d1\u0143\u0145\u0147\u014a\u01f8]/g, 'N');
-  temp = temp.replace(
-    /[\u00f1\u0144\u0146\u0148\u0149\u014b\u01f9\u0235]/g,
-    'n',
-  );
+  temp = temp.replace(/[\u00f1\u0144\u0146\u0148\u0149\u014b\u01f9\u0235]/g, 'n');
   temp = temp.replace(
     /[\u00d2\u00d3\u00d4\u00d5\u00d6\u00d8\u014c\u014e\u0150\u01d1\u01ea\u01ec\u01fe\u020c\u020e\u022a\u022c\u022e\u0230]/g,
     'O',
@@ -1045,8 +976,7 @@ shortcut = {
     }
 
     var ele = opt.target;
-    if (typeof opt.target == 'string')
-      ele = document.getElementById(opt.target);
+    if (typeof opt.target == 'string') ele = document.getElementById(opt.target);
     var ths = this;
     shortcut_combination = shortcut_combination.toLowerCase();
 
@@ -1253,8 +1183,7 @@ shortcut = {
     var callback = binding['callback'];
 
     if (ele.detachEvent) ele.detachEvent('on' + type, callback);
-    else if (ele.removeEventListener)
-      ele.removeEventListener(type, callback, false);
+    else if (ele.removeEventListener) ele.removeEventListener(type, callback, false);
     else ele['on' + type] = false;
   },
 };
@@ -1280,11 +1209,9 @@ function BrowserDetect() {
   this.isOpera = ua.indexOf('opera') != -1;
   this.isIcab = ua.indexOf('icab') != -1;
   this.isAol = ua.indexOf('aol') != -1;
-  this.isIE =
-    ua.indexOf('msie') != -1 && !this.isOpera && ua.indexOf('webtv') == -1;
+  this.isIE = ua.indexOf('msie') != -1 && !this.isOpera && ua.indexOf('webtv') == -1;
   this.isMozilla = this.isGecko && ua.indexOf('gecko/') + 14 == ua.length;
-  this.isFirefox =
-    ua.indexOf('firefox/') != -1 || ua.indexOf('firebird/') != -1;
+  this.isFirefox = ua.indexOf('firefox/') != -1 || ua.indexOf('firebird/') != -1;
   this.isNS = this.isGecko
     ? ua.indexOf('netscape') != -1
     : ua.indexOf('mozilla') != -1 &&
@@ -1297,16 +1224,13 @@ function BrowserDetect() {
 
   // spoofing and compatible browsers
   this.isIECompatible = ua.indexOf('msie') != -1 && !this.isIE;
-  this.isNSCompatible =
-    ua.indexOf('mozilla') != -1 && !this.isNS && !this.isMozilla;
+  this.isNSCompatible = ua.indexOf('mozilla') != -1 && !this.isNS && !this.isMozilla;
 
   // rendering engine versions
   this.geckoVersion = this.isGecko
     ? ua.substring(ua.lastIndexOf('gecko/') + 6, ua.lastIndexOf('gecko/') + 14)
     : -1;
-  this.equivalentMozilla = this.isGecko
-    ? parseFloat(ua.substring(ua.indexOf('rv:') + 3))
-    : -1;
+  this.equivalentMozilla = this.isGecko ? parseFloat(ua.substring(ua.indexOf('rv:') + 3)) : -1;
   this.appleWebKitVersion = this.isAppleWebKit
     ? parseFloat(ua.substring(ua.indexOf('applewebkit/') + 12))
     : -1;
@@ -1316,9 +1240,7 @@ function BrowserDetect() {
 
   // correct version number
   if (this.isGecko && !this.isMozilla) {
-    this.versionMinor = parseFloat(
-      ua.substring(ua.indexOf('/', ua.indexOf('gecko/') + 6) + 1),
-    );
+    this.versionMinor = parseFloat(ua.substring(ua.indexOf('/', ua.indexOf('gecko/') + 6) + 1));
   } else if (this.isMozilla) {
     this.versionMinor = parseFloat(ua.substring(ua.indexOf('rv:') + 3));
   } else if (this.isIE && this.versionMinor >= 4) {
@@ -1328,9 +1250,7 @@ function BrowserDetect() {
   } else if (this.isSafari) {
     this.versionMinor = parseFloat(ua.substring(ua.lastIndexOf('safari/') + 7));
   } else if (this.isOmniweb) {
-    this.versionMinor = parseFloat(
-      ua.substring(ua.lastIndexOf('omniweb/') + 8),
-    );
+    this.versionMinor = parseFloat(ua.substring(ua.lastIndexOf('omniweb/') + 8));
   } else if (this.isOpera) {
     this.versionMinor = parseFloat(ua.substring(ua.indexOf('opera') + 6));
   } else if (this.isIcab) {
@@ -1405,14 +1325,8 @@ XWiki.Document = Class.create({
     action = action || 'view';
     var url = XWiki.Document.URLTemplate;
     url = url.replace('__space__', encodeURIComponent(this.space));
-    url = url.replace(
-      '__page__',
-      this.page == 'WebHome' ? '' : encodeURIComponent(this.page),
-    );
-    url = url.replace(
-      '__action__/',
-      action == 'view' ? '' : encodeURIComponent(action) + '/',
-    );
+    url = url.replace('__page__', this.page == 'WebHome' ? '' : encodeURIComponent(this.page));
+    url = url.replace('__action__/', action == 'view' ? '' : encodeURIComponent(action) + '/');
     if (queryString) {
       url += '?' + queryString;
     }
@@ -1443,33 +1357,22 @@ XWiki.Document = Class.create({
 /* Initialize the document URL factory, and create XWiki.currentDocument. */
 document.observe('xwiki:dom:loading', function () {
   XWiki.Document.currentWiki =
-    $$('meta[name=wiki]').length > 0
-      ? $$('meta[name=wiki]')[0].content
-      : 'xwiki';
+    $$('meta[name=wiki]').length > 0 ? $$('meta[name=wiki]')[0].content : 'xwiki';
   XWiki.Document.currentSpace =
-    $$('meta[name=space]').length > 0
-      ? $$('meta[name=space]')[0].content
-      : 'Main';
+    $$('meta[name=space]').length > 0 ? $$('meta[name=space]')[0].content : 'Main';
   XWiki.Document.currentPage =
-    $$('meta[name=page]').length > 0
-      ? $$('meta[name=page]')[0].content
-      : 'WebHome';
-  XWiki.Document.URLTemplate =
-    "$xwiki.getURL('__space__.__page__', '__action__')";
+    $$('meta[name=page]').length > 0 ? $$('meta[name=page]')[0].content : 'WebHome';
+  XWiki.Document.URLTemplate = "$xwiki.getURL('__space__.__page__', '__action__')";
   XWiki.Document.RestURLTemplate =
     '${request.contextPath}/rest/wikis/__wiki__/spaces/__space__/pages/__page__';
-  XWiki.Document.WikiSearchURLStub =
-    '${request.contextPath}/rest/wikis/__wiki__/search';
+  XWiki.Document.WikiSearchURLStub = '${request.contextPath}/rest/wikis/__wiki__/search';
   XWiki.Document.SpaceSearchURLStub =
     '${request.contextPath}/rest/wikis/__wiki__/spaces/__space__/search';
   XWiki.Document.getRestSearchURL = function (queryString, space, wiki) {
     wiki = wiki || XWiki.Document.currentWiki;
     var url;
     if (space) {
-      url = XWiki.Document.SpaceSearchURLStub.replace('__wiki__', wiki).replace(
-        '__space__',
-        space,
-      );
+      url = XWiki.Document.SpaceSearchURLStub.replace('__wiki__', wiki).replace('__space__', space);
     } else {
       url = XWiki.Document.WikiSearchURLStub.replace('__wiki__', wiki);
     }
@@ -1554,31 +1457,29 @@ document.observe('xwiki:dom:loaded', function () {
   }
   if (parentInputField) {
     if (hierarchyElement || breadcrumbsElement) {
-      ['blur', 'change', 'xwiki:suggest:selected'].each(
-        function (monitoredEvent) {
-          parentInputField.observe(monitoredEvent, function () {
-            new Ajax.Request(XWiki.currentDocument.getURL('edit'), {
-              parameters: {
-                xpage: 'xpart',
-                vm: hierarchyElement ? 'hierarchy.vm' : 'space.vm',
-                parent: parentInputField.value,
-                title: titleInputField.value,
-              },
-              onSuccess: function (response) {
-                if (hierarchyElement) {
-                  hierarchyElement.replace(response.responseText);
-                  hierarchyElement = $('hierarchy');
-                } else {
-                  var tmp = new Element('div');
-                  tmp.update(response.responseText);
-                  breadcrumbsElement.replace(tmp.down('[id=breadcrumbs]'));
-                  breadcrumbsElement = $('breadcrumbs');
-                }
-              },
-            });
+      ['blur', 'change', 'xwiki:suggest:selected'].each(function (monitoredEvent) {
+        parentInputField.observe(monitoredEvent, function () {
+          new Ajax.Request(XWiki.currentDocument.getURL('edit'), {
+            parameters: {
+              xpage: 'xpart',
+              vm: hierarchyElement ? 'hierarchy.vm' : 'space.vm',
+              parent: parentInputField.value,
+              title: titleInputField.value,
+            },
+            onSuccess: function (response) {
+              if (hierarchyElement) {
+                hierarchyElement.replace(response.responseText);
+                hierarchyElement = $('hierarchy');
+              } else {
+                var tmp = new Element('div');
+                tmp.update(response.responseText);
+                breadcrumbsElement.replace(tmp.down('[id=breadcrumbs]'));
+                breadcrumbsElement = $('breadcrumbs');
+              }
+            },
           });
-        },
-      );
+        });
+      });
     }
     $('body').observe('click', function (event) {
       if (
@@ -1605,25 +1506,12 @@ document.observe('xwiki:dom:loaded', function () {
       if (menu.style.position == 'fixed') {
         menu.style.width = content.getWidth() + 'px';
         if (typeof menu.__fm_extra != 'undefined') {
-          if (
-            menu.__fm_extra.getStyle('padding-left').replace(/[^a-z]/g, '') ==
-            'px'
-          ) {
+          if (menu.__fm_extra.getStyle('padding-left').replace(/[^a-z]/g, '') == 'px') {
             var boxExtra =
-              menu.__fm_extra
-                .getStyle('border-left-width')
-                .replace(/[^0-9.]/g, '') - 0;
-            boxExtra +=
-              menu.__fm_extra.getStyle('padding-left').replace(/[^0-9.]/g, '') -
-              0;
-            boxExtra +=
-              menu.__fm_extra
-                .getStyle('padding-right')
-                .replace(/[^0-9.]/g, '') - 0;
-            boxExtra +=
-              menu.__fm_extra
-                .getStyle('border-right-width')
-                .replace(/[^0-9.]/g, '') - 0;
+              menu.__fm_extra.getStyle('border-left-width').replace(/[^0-9.]/g, '') - 0;
+            boxExtra += menu.__fm_extra.getStyle('padding-left').replace(/[^0-9.]/g, '') - 0;
+            boxExtra += menu.__fm_extra.getStyle('padding-right').replace(/[^0-9.]/g, '') - 0;
+            boxExtra += menu.__fm_extra.getStyle('border-right-width').replace(/[^0-9.]/g, '') - 0;
           } else {
             boxExtra = 50; // magic number 50 = standard left+right padding
           }
@@ -1652,10 +1540,7 @@ document.observe('xwiki:dom:loaded', function () {
     }
     var menuHeight = menu.getHeight();
     var menuMaxTop =
-      content.cumulativeOffset().top +
-      content.getHeight() -
-      menuHeight -
-      extraHeight;
+      content.cumulativeOffset().top + content.getHeight() - menuHeight - extraHeight;
     var menuMinTop = content.cumulativeOffset().top - menuHeight - extraHeight;
     if (
       document.viewport.getScrollOffsets().top >= menuMinTop &&

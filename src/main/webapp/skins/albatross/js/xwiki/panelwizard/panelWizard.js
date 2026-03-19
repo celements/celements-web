@@ -8,9 +8,7 @@ function computeBounds() {
 }
 
 function debugwrite(sometext) {
-  document
-    .getElementById('headerglobal')
-    .appendChild(document.createTextNode(sometext));
+  document.getElementById('headerglobal').appendChild(document.createTextNode(sometext));
 }
 
 function isPanel(el) {
@@ -30,11 +28,7 @@ function getX(el) {
     if (window.ActiveXObject) {
       return el.offsetLeft + getX(el.offsetParent) + el.clientLeft;
     } else {
-      return (
-        el.offsetLeft +
-        getX(el.offsetParent) +
-        (el.scrollWidth - el.clientWidth)
-      );
+      return el.offsetLeft + getX(el.offsetParent) + (el.scrollWidth - el.clientWidth);
     }
   } else {
     if (el.x) {
@@ -48,11 +42,7 @@ function getY(el) {
     if (window.ActiveXObject) {
       return el.offsetTop + getY(el.offsetParent) + el.clientTop;
     } else {
-      return (
-        el.offsetTop +
-        getY(el.offsetParent) +
-        (el.scrollHeight - el.clientHeight)
-      );
+      return el.offsetTop + getY(el.offsetParent) + (el.scrollHeight - el.clientHeight);
     }
   } else {
     if (el.y) return el.y;
@@ -97,17 +87,9 @@ function getAllPanels(el) {
 }
 
 function getClosestDropTarget(x, y, w, h) {
-  if (
-    window.showLeftColumn == 1 &&
-    x <= leftPanelsRight &&
-    x + w >= leftPanelsLeft
-  )
+  if (window.showLeftColumn == 1 && x <= leftPanelsRight && x + w >= leftPanelsLeft)
     return leftPanels;
-  if (
-    window.showRightColumn == 1 &&
-    x + w >= rightPanelsLeft &&
-    x <= rightPanelsRight
-  )
+  if (window.showRightColumn == 1 && x + w >= rightPanelsLeft && x <= rightPanelsRight)
     return rightPanels;
   return allPanels;
 }
@@ -124,15 +106,11 @@ function onDragStart(el, x, y) {
   var coords2 = Position.realOffset(el);
   var x = coords[0];
   var y =
-    coords[1] -
-    coords2[1] +
-    (document.documentElement.scrollTop - 0 + document.body.scrollTop - 0);
+    coords[1] - coords2[1] + (document.documentElement.scrollTop - 0 + document.body.scrollTop - 0);
   if (window.ActiveXObject) {
-    dragel.style.height =
-      (el.offsetHeight ? el.offsetHeight : el.displayHeight) + 'px';
+    dragel.style.height = (el.offsetHeight ? el.offsetHeight : el.displayHeight) + 'px';
   } else {
-    dragel.style.height =
-      (el.offsetHeight ? el.offsetHeight - 2 : el.displayHeight) + 'px';
+    dragel.style.height = (el.offsetHeight ? el.offsetHeight - 2 : el.displayHeight) + 'px';
   }
   dragel.style.display = 'block';
   // Make the current absolute
@@ -145,8 +123,7 @@ function onDragStart(el, x, y) {
     el.placeholder = document.createElement('div');
     el.placeholder.className = 'placeholder';
     if (window.ActiveXObject) {
-      el.placeholder.style.height =
-        (el.offsetHeight ? el.offsetHeight : el.displayHeight) + 'px';
+      el.placeholder.style.height = (el.offsetHeight ? el.offsetHeight : el.displayHeight) + 'px';
     } else {
       el.placeholder.style.height =
         (el.offsetHeight ? el.offsetHeight - 2 : el.displayHeight) + 'px';
@@ -304,10 +281,7 @@ function start1() {
         }
         el.placeholder.style.height = el.displayHeight + 'px';
         el.placeholder.style.display = 'block';
-        panelsInList[i].parentNode.replaceChild(
-          el.placeholder,
-          panelsInList[i],
-        );
+        panelsInList[i].parentNode.replaceChild(el.placeholder, panelsInList[i]);
       }
     }
     pos = window.allPanelsPlace[i]['right'];
@@ -325,10 +299,7 @@ function start1() {
         el.placeholder.style.height = el.displayHeight + 'px';
         el.placeholder.style.display = 'block';
         if (panelsInList[i].parentNode) {
-          panelsInList[i].parentNode.replaceChild(
-            el.placeholder,
-            panelsInList[i],
-          );
+          panelsInList[i].parentNode.replaceChild(el.placeholder, panelsInList[i]);
         }
       }
     }
@@ -346,9 +317,7 @@ function start1() {
     rightPanels.panels = getBlocList(rightPanels);
   }
   //
-  var layoutMaquettesTD = document
-    .getElementById('PageLayoutSection')
-    .getElementsByTagName('td');
+  var layoutMaquettesTD = document.getElementById('PageLayoutSection').getElementsByTagName('td');
   layoutMaquettes = new Object();
   for (i = 0; i < layoutMaquettesTD.length; i++) {
     for (j = 0; j < layoutMaquettesTD[i].childNodes.length; ++j) {

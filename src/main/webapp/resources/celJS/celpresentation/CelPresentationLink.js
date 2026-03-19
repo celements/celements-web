@@ -49,10 +49,7 @@ if (typeof CELEMENTS.anim == 'undefined') {
       _init: function () {
         var _me = this;
         _me.currentHref = top.location.href;
-        _me.currentStart = _me.currentHref.replace(
-          /^([^\/]*\/\/[^\/]*\/).*/,
-          '$1',
-        );
+        _me.currentStart = _me.currentHref.replace(/^([^\/]*\/\/[^\/]*\/).*/, '$1');
         _me.History = top.History;
       },
 
@@ -64,31 +61,23 @@ if (typeof CELEMENTS.anim == 'undefined') {
         var _me = this;
         var isTopEditLink = top.location.pathname.startsWith('/edit/');
         var isTopDownloadLink = top.location.pathname.startsWith('/download/');
-        return (
-          !_me.shouldRenderPage(linkHref) &&
-          !isTopEditLink &&
-          !isTopDownloadLink
-        );
+        return !_me.shouldRenderPage(linkHref) && !isTopEditLink && !isTopDownloadLink;
       },
 
       shouldRenderPage: function (pageHref) {
-        var isEditorLoggedIn = $$('body')[0].hasClassName(
-          'celementsmenubarvisible',
-        );
+        var isEditorLoggedIn = $$('body')[0].hasClassName('celementsmenubarvisible');
         var url = new Element('a', {
           href: pageHref,
         });
         var pathname = url.pathname;
         var isEditLink = pathname.startsWith('/edit/');
         var isDownloadLink = pathname.startsWith('/download/');
-        var isResourcesLink =
-          pathname.startsWith('/skin/') || pathname.startsWith('/file/');
+        var isResourcesLink = pathname.startsWith('/skin/') || pathname.startsWith('/file/');
         //    console.log('isEditLink: ', pathname, isEditLink);
         //  console.log('rendering: ', pathname, url.search);
         //  console.log('hash value: ', url.hash);
         //  console.log('search value: ', url.search);
-        var hasSearchValue =
-          typeof url.search != 'undefined' && url.search != '';
+        var hasSearchValue = typeof url.search != 'undefined' && url.search != '';
         return (
           pathname != '/login' &&
           !isEditLink &&
@@ -111,35 +100,21 @@ if (typeof CELEMENTS.anim == 'undefined') {
       isInternalLink: function (linkElem) {
         var _me = this;
         var linkHref = linkElem.href;
-        return (
-          linkHref.startsWith('/') || linkHref.startsWith(_me.currentStart)
-        );
+        return linkHref.startsWith('/') || linkHref.startsWith(_me.currentStart);
       },
 
       registerInternalLinks: function (parentElem) {
         var _me = this;
         if ($(parentElem).select) {
-          if (
-            typeof console != 'undefined' &&
-            typeof console.log != 'undefined'
-          ) {
-            console.log(
-              'registerInternalLinks: ',
-              $(parentElem).select('a').size(),
-            );
+          if (typeof console != 'undefined' && typeof console.log != 'undefined') {
+            console.log('registerInternalLinks: ', $(parentElem).select('a').size());
           }
           $(parentElem)
             .select('a')
             .each(function (linkElem) {
               //      console.log('register linkElem: ', linkElem, isInternalLink(linkElem), !isCelanimLink(linkElem));
-              if (
-                _me.isInternalLink(linkElem) &&
-                !_me.isCelanimLink(linkElem)
-              ) {
-                linkElem.observe(
-                  'click',
-                  _me.presentationNavigationHandler.bind(_me),
-                );
+              if (_me.isInternalLink(linkElem) && !_me.isCelanimLink(linkElem)) {
+                linkElem.observe('click', _me.presentationNavigationHandler.bind(_me));
               }
             });
         }

@@ -60,10 +60,7 @@ var checkIframeTarget = function (formElm, fileUploadElm) {
       name: 'xpage',
     });
     Element.insert(formElm, inputElem);
-  } else if (
-    formElm.elements['xpage'] &&
-    formElm.elements['beforeUploadXpage'] == null
-  ) {
+  } else if (formElm.elements['xpage'] && formElm.elements['beforeUploadXpage'] == null) {
     var inputElem = new Element('input', {
       type: 'hidden',
       name: 'beforeUploadXpage',
@@ -90,8 +87,7 @@ var checkIframeTarget = function (formElm, fileUploadElm) {
   $('celementsFormId').value = Element.readAttribute(formElm, 'id');
   formElm.target = 'uploadFrame';
   if (formElm.elements['beforeUploadXpage']) {
-    formElm.elements['beforeUploadXpage'].value =
-      formElm.elements['xpage'].value;
+    formElm.elements['beforeUploadXpage'].value = formElm.elements['xpage'].value;
   }
   formElm.elements['xpage'].value = 'celements_ajax';
   $('uploadFrame').stopObserving('load', celUploadCallbackHandler);
@@ -111,9 +107,7 @@ Because Safari has no way to directly access the window object of an iframe elem
 };
 
 var celUploadCallbackHandler = function (event) {
-  var fileUploadInputElems = $($('celementsFormId').value).select(
-    'input.celfileupload',
-  );
+  var fileUploadInputElems = $($('celementsFormId').value).select('input.celfileupload');
   var fileUploadInputElem = fileUploadInputElems.pop();
   while (fileUploadInputElems.size() > 0 && fileUploadInputElem.visible()) {
     fileUploadInputElem = fileUploadInputElems.pop();
@@ -126,10 +120,7 @@ var celUploadCallbackHandler = function (event) {
   if (resultText.isJSON()) {
     var uploadRes = resultText.evalJSON();
     if (uploadRes.success != '1') {
-      if (
-        typeof console != 'undefined' &&
-        typeof console.error != 'undefined'
-      ) {
+      if (typeof console != 'undefined' && typeof console.error != 'undefined') {
         console.error('upload failed: ' + resultText, resultText.isJSON());
       }
     }
@@ -182,8 +173,7 @@ var uploadAttResetFormAfter = function (fileUploadInputElem) {
     $('beforeUploadFormTarget').remove();
   }
   if (formElm.elements['beforeUploadXpage']) {
-    formElm.elements['xpage'].value =
-      formElm.elements['beforeUploadXpage'].value;
+    formElm.elements['xpage'].value = formElm.elements['beforeUploadXpage'].value;
     formElm.elements['beforeUploadXpage'].remove();
   } else if (formElm.elements['xpage'] != null) {
     formElm.elements['xpage'].remove();
@@ -199,10 +189,7 @@ var uploadAttResetFormAfter = function (fileUploadInputElem) {
 };
 
 var checkAttachmentList = function (fileUploadElm) {
-  if (
-    $('attachmentList') == null &&
-    !fileUploadElm.hasClassName('celSupressAttachmentList')
-  ) {
+  if ($('attachmentList') == null && !fileUploadElm.hasClassName('celSupressAttachmentList')) {
     fileUploadElm.insert({
       after: new Element('div', {
         id: 'attachmentList',
@@ -213,16 +200,11 @@ var checkAttachmentList = function (fileUploadElm) {
 
 var registerOnInputFields = function () {
   if (typeof console != 'undefined' && typeof console.debug != 'undefined') {
-    console.debug(
-      'registerOnInputFields: registering change observers for file upload fields...',
-    );
+    console.debug('registerOnInputFields: registering change observers for file upload fields...');
   }
   $$('input.celfileupload').each(function (inputElem) {
     if (typeof console != 'undefined' && typeof console.debug != 'undefined') {
-      console.debug(
-        'registerOnInputFields: change observer for ' + inputElem.inspect(),
-        inputElem,
-      );
+      console.debug('registerOnInputFields: change observer for ' + inputElem.inspect(), inputElem);
     }
     inputElem.stopObserving('change', celFileSelectionChanged);
     inputElem.observe('change', celFileSelectionChanged);
@@ -239,33 +221,18 @@ var celFileSelectionChanged = function (event) {
     if (!beforeEvent.stopped) {
       formElm.submit();
     } else {
-      console.log(
-        'celFileSelectionChanged: skip submit ',
-        fileUploadElm.inspect(),
-      );
+      console.log('celFileSelectionChanged: skip submit ', fileUploadElm.inspect());
     }
   } else {
-    console.log(
-      'celFileSelectionChanged: checkUploadFileName failed ',
-      fileUploadElm.inspect(),
-    );
+    console.log('celFileSelectionChanged: checkUploadFileName failed ', fileUploadElm.inspect());
   }
 };
 
 var celFileUploadRegisterListeners = function () {
   if ($(document.body)) {
-    $(document.body).stopObserving(
-      'cel_yuiOverlay:contentChanged',
-      registerOnInputFields,
-    );
-    $(document.body).observe(
-      'cel_yuiOverlay:contentChanged',
-      registerOnInputFields,
-    );
-    $(document.body).stopObserving(
-      'celements:contentChanged',
-      registerOnInputFields,
-    );
+    $(document.body).stopObserving('cel_yuiOverlay:contentChanged', registerOnInputFields);
+    $(document.body).observe('cel_yuiOverlay:contentChanged', registerOnInputFields);
+    $(document.body).stopObserving('celements:contentChanged', registerOnInputFields);
     $(document.body).observe('celements:contentChanged', registerOnInputFields);
   }
 };

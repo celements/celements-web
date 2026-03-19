@@ -32,15 +32,13 @@ let overlaySlideIsDebug = false;
   );
 
   const registerCelanimOverlayLinkListeners = (elem) => {
-    elem
-      .querySelectorAll('a.celanim_overlay, a.celanim_overlayIframe')
-      .forEach((elem) =>
-        celanimOverlay_addOpenConfig(elem.id, {
-          src: elem.href,
-          objectType: 'iframe',
-          cssClassNames: ['draggable-header'],
-        }),
-      );
+    elem.querySelectorAll('a.celanim_overlay, a.celanim_overlayIframe').forEach((elem) =>
+      celanimOverlay_addOpenConfig(elem.id, {
+        src: elem.href,
+        objectType: 'iframe',
+        cssClassNames: ['draggable-header'],
+      }),
+    );
   };
 
   const registerCelanimOverlayImageListeners = (elem) => {
@@ -55,9 +53,7 @@ let overlaySlideIsDebug = false;
           imgOverlayDim.width;
         celanimOverlay_addOpenConfig(elem.id, {
           src: imgOverlaySrc,
-          addCloseButton: $(elem.id).hasClassName(
-            'celanim_overlay_addCloseButton',
-          ),
+          addCloseButton: $(elem.id).hasClassName('celanim_overlay_addCloseButton'),
           addNavigation: $(elem.id).hasClassName('celanim_addNavigation'),
           captionEval: 'this.thumb.alt',
           objectType: 'image',
@@ -113,14 +109,8 @@ let overlaySlideIsDebug = false;
         });
         $(elemId).stopObserving('click', celanimOverlay_OpenInOverlay);
         $(elemId).observe('click', celanimOverlay_OpenInOverlay);
-        $(elemId).stopObserving(
-          'celanim_overlay:openOverlay',
-          celanimOverlay_OpenInOverlay,
-        );
-        $(elemId).observe(
-          'celanim_overlay:openOverlay',
-          celanimOverlay_OpenInOverlay,
-        );
+        $(elemId).stopObserving('celanim_overlay:openOverlay', celanimOverlay_OpenInOverlay);
+        $(elemId).observe('celanim_overlay:openOverlay', celanimOverlay_OpenInOverlay);
       } else {
         console.warn(
           'Skipping add open config because one of the required config fields' +
@@ -131,11 +121,7 @@ let overlaySlideIsDebug = false;
         );
       }
     } else {
-      console.warn(
-        'Skipping add open config because no element with id "' +
-          elemId +
-          '" found.',
-      );
+      console.warn('Skipping add open config because no element with id "' + elemId + '" found.');
     }
   };
 
@@ -177,12 +163,7 @@ let overlaySlideIsDebug = false;
 
   const celanimOverlay_BeforeExpandHandler = (hsExpander) => {
     if (overlaySlideIsDebug) {
-      console.debug(
-        'celanimOverlay_BeforeExpandHandler: ',
-        hsExpander.thumb,
-        ', ',
-        hsExpander,
-      );
+      console.debug('celanimOverlay_BeforeExpandHandler: ', hsExpander.thumb, ', ', hsExpander);
     }
     document.querySelectorAll('.highslide-html').forEach((overlayHTMLDiv) => {
       const overlayHTMLDiv2 = overlayHTMLDiv.down('div');
@@ -229,8 +210,7 @@ let overlaySlideIsDebug = false;
         hsConfig = celanimOverlay_HandleImageContent(hsConfig);
       }
       hs.graphicsDir =
-        window.CELEMENTS.getUtils().getPathPrefix() +
-        '/file/resources/celJS/highslide/graphics/';
+        window.CELEMENTS.getUtils().getPathPrefix() + '/file/resources/celJS/highslide/graphics/';
       hs.outlineType = hsConfig.outlineType || '';
       if (openConfig.addNavigation) {
         openConfig.cssClassNames.push('celanim_addNavigation');
@@ -239,8 +219,7 @@ let overlaySlideIsDebug = false;
         openConfig.cssClassNames.push('celanim_hasCloseButton');
       }
       hs.wrapperClassName =
-        'no-footer no-move celanim_overlay_wrapper ' +
-        openConfig.cssClassNames.join(' ');
+        'no-footer no-move celanim_overlay_wrapper ' + openConfig.cssClassNames.join(' ');
       hs.height = hsConfig.get('height');
       hs.width = hsConfig.get('width');
       hs.Expander.prototype.onBeforeExpand = celanimOverlay_BeforeExpandHandler;
@@ -250,35 +229,23 @@ let overlaySlideIsDebug = false;
       event.stop();
     } else {
       console.warn(
-        'Skipping open-in-overlay event, because no open config for elemId"' +
-          this.id +
-          '" found.',
+        'Skipping open-in-overlay event, because no open config for elemId"' + this.id + '" found.',
       );
     }
   };
 
   const celanimOverlay_HandleImageContent = (hsConfig) => {
     hsConfig.unset('objectType');
-    const overlayContentId =
-      'celanim_overlay_contentId_image_' + hsConfig.get('id');
+    const overlayContentId = 'celanim_overlay_contentId_image_' + hsConfig.get('id');
     hsConfig.set('contentId', overlayContentId);
-    const overlayStartImg = celanimOverlay_getOrCreateStartImgElem(
-      overlayContentId,
-      hsConfig,
-    );
+    const overlayStartImg = celanimOverlay_getOrCreateStartImgElem(overlayContentId, hsConfig);
     overlayStartImg.src = hsConfig.get('src');
     hsConfig.unset('src');
     return hsConfig;
   };
 
-  const celanimOverlay_getOrCreateStartImgElem = (
-    overlayContentId,
-    hsConfig,
-  ) => {
-    const overlayContentElem = celanimOverlay_getOrCreateContentElem(
-      overlayContentId,
-      hsConfig,
-    );
+  const celanimOverlay_getOrCreateStartImgElem = (overlayContentId, hsConfig) => {
+    const overlayContentElem = celanimOverlay_getOrCreateContentElem(overlayContentId, hsConfig);
     let overlayStartImg = overlayContentElem.down('img.highslide-image');
     if (!overlayStartImg) {
       overlayStartImg = new Element('img', {
@@ -289,10 +256,7 @@ let overlaySlideIsDebug = false;
     return overlayStartImg;
   };
 
-  const celanimOverlay_getOrCreateContentElem = (
-    overlayContentId,
-    hsConfig,
-  ) => {
+  const celanimOverlay_getOrCreateContentElem = (overlayContentId, hsConfig) => {
     let overlayContentElem = $(overlayContentId);
     if (!overlayContentElem) {
       overlayContentElem = new Element('div', {

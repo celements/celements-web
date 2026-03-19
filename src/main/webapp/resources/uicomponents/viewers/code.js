@@ -25,10 +25,7 @@ XWiki.viewers.Code = Class.create({
   },
   attachToggleListener: function () {
     this.toggleLink.href = '';
-    this.toggleLink.observe(
-      'click',
-      this.toggleLineNumbers.bindAsEventListener(this),
-    );
+    this.toggleLink.observe('click', this.toggleLineNumbers.bindAsEventListener(this));
   },
   toggleLineNumbers: function (event) {
     if (event) {
@@ -44,11 +41,7 @@ XWiki.viewers.Code = Class.create({
         lines[i] = lines[i].replace(/^\s*[0-9]+:\s/, '');
       } else {
         var lineNumber = i + 1 + '';
-        lines[i] =
-          ' '.times(prefixLength - lineNumber.length) +
-          lineNumber +
-          ': ' +
-          lines[i];
+        lines[i] = ' '.times(prefixLength - lineNumber.length) + lineNumber + ': ' + lines[i];
       }
     }
     this.textarea.value = lines.join(sep);

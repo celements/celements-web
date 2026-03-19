@@ -43,8 +43,7 @@ var XWiki = (function (XWiki) {
       this.items = items || [];
       this.options = options || {};
       this.listElement = new Element(this.options.ordered ? 'ol' : 'ul', {
-        class:
-          'xlist' + (this.options.classes ? ' ' + this.options.classes : ''),
+        class: 'xlist' + (this.options.classes ? ' ' + this.options.classes : ''),
       });
       if (this.items && this.items.length > 0) {
         for (var i = 0; i < this.items.length; i++) {
@@ -87,14 +86,10 @@ var XWiki = (function (XWiki) {
       this.containerElement.setStyle({ textIndent: '0px' });
       if (this.options.value) {
         this.containerElement.insert(
-          new Element('div', { class: 'hidden value' }).insert(
-            this.options.value,
-          ),
+          new Element('div', { class: 'hidden value' }).insert(this.options.value),
         );
       }
-      this.listItemElement = new Element('li', { class: classes }).update(
-        this.containerElement,
-      );
+      this.listItemElement = new Element('li', { class: classes }).update(this.containerElement);
       if (this.options.icon && !this.options.icon.blank()) {
         this.setIcon(this.options.icon);
         this.hasIcon = true;
@@ -125,10 +120,7 @@ var XWiki = (function (XWiki) {
     bindEventListeners: function (eventListeners) {
       var events = Object.keys(eventListeners);
       for (var i = 0; i < events.length; i++) {
-        this.listItemElement.observe(
-          events[i],
-          eventListeners[events[i]].bind(this),
-        );
+        this.listItemElement.observe(events[i], eventListeners[events[i]].bind(this));
       }
     },
   });

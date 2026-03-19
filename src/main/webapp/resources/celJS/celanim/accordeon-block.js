@@ -41,13 +41,7 @@ if (typeof CELEMENTS.anim == 'undefined') {
   // cssContent  css selector for content box which is open and closed by a click on the
   //              title box.
   //////////////////////////////////////////////////////////////////////////////
-  CELEMENTS.anim.AccordeonEffect = function (
-    id,
-    cssBox,
-    cssTitle,
-    cssContent,
-    debug,
-  ) {
+  CELEMENTS.anim.AccordeonEffect = function (id, cssBox, cssTitle, cssContent, debug) {
     // constructor
     cssTitle = cssTitle || '.accordeonTitle';
     cssContent = cssContent || '.accordeonContent';
@@ -86,24 +80,14 @@ if (typeof CELEMENTS.anim == 'undefined') {
         var stepsToHide = _me.htmlElem.select(_me.cssBox);
         stepsToHide.each(function (step) {
           if (_me.isValidStep(step)) {
-            step
-              .down(_me.cssTitle)
-              .stopObserving('click', _me._clickHandlerBind);
+            step.down(_me.cssTitle).stopObserving('click', _me._clickHandlerBind);
             step.down(_me.cssTitle).observe('click', _me._clickHandlerBind);
-            if (
-              !step.hasClassName('active') &&
-              !step.hasClassName('inactive')
-            ) {
+            if (!step.hasClassName('active') && !step.hasClassName('inactive')) {
               step.addClassName('inactive');
               step.down(_me.cssContent).hide();
             }
           } else if (_me._debug) {
-            console.log(
-              'stepsToHide: skip step ',
-              step,
-              _me.cssContent,
-              _me.cssTitle,
-            );
+            console.log('stepsToHide: skip step ', step, _me.cssContent, _me.cssTitle);
           }
         });
       },
@@ -123,16 +107,10 @@ if (typeof CELEMENTS.anim == 'undefined') {
         return new Effect.SlideUp(stepToHide.down(_me.cssContent), {
           transition: Effect.Transitions.sinoidal,
           beforeStart: function () {
-            stepToHide.fire(
-              'celanim_accordeon-block:accordeonBeforeHide',
-              stepToHide,
-            );
+            stepToHide.fire('celanim_accordeon-block:accordeonBeforeHide', stepToHide);
           },
           afterFinish: function () {
-            stepToHide.fire(
-              'celanim_accordeon-block:accordeonAfterHide',
-              stepToHide,
-            );
+            stepToHide.fire('celanim_accordeon-block:accordeonAfterHide', stepToHide);
             stepToHide.removeClassName('active');
             stepToHide.addClassName('inactive');
           },
@@ -147,16 +125,10 @@ if (typeof CELEMENTS.anim == 'undefined') {
         return new Effect.SlideDown(stepToShow.down(_me.cssContent), {
           transition: Effect.Transitions.sinoidal,
           beforeStart: function () {
-            stepToShow.fire(
-              'celanim_accordeon-block:accordeonBeforeShow',
-              stepToShow,
-            );
+            stepToShow.fire('celanim_accordeon-block:accordeonBeforeShow', stepToShow);
           },
           afterFinish: function () {
-            stepToShow.fire(
-              'celanim_accordeon-block:accordeonAfterShow',
-              stepToShow,
-            );
+            stepToShow.fire('celanim_accordeon-block:accordeonAfterShow', stepToShow);
           },
           sync: true,
         });
@@ -170,16 +142,10 @@ if (typeof CELEMENTS.anim == 'undefined') {
           new Effect.Parallel(parallelEffects, {
             duration: 1.0,
             beforeStart: function () {
-              _me.htmlElem.fire(
-                'celanim_accordeon-block:accordeonBeforeStart',
-                nextStep,
-              );
+              _me.htmlElem.fire('celanim_accordeon-block:accordeonBeforeStart', nextStep);
             },
             afterFinish: function () {
-              _me.htmlElem.fire(
-                'celanim_accordeon-block:accordeonAfterFinish',
-                nextStep,
-              );
+              _me.htmlElem.fire('celanim_accordeon-block:accordeonAfterFinish', nextStep);
               //IE7 Fix!!! Do not remove!!!
               (function () {
                 stepToShow.setStyle({ visibility: 'visible' });
@@ -188,13 +154,8 @@ if (typeof CELEMENTS.anim == 'undefined') {
             },
           });
         } else {
-          if (
-            typeof console != 'undefined' &&
-            typeof console.warn != 'undefined'
-          ) {
-            console.warn(
-              'accordeonExecute: doubleclick registered! ignoring...',
-            );
+          if (typeof console != 'undefined' && typeof console.warn != 'undefined') {
+            console.warn('accordeonExecute: doubleclick registered! ignoring...');
           }
         }
       },
@@ -220,19 +181,12 @@ if (typeof CELEMENTS.anim == 'undefined') {
         event.stop();
         var step = event.findElement(_me.cssBox);
         if (typeof step !== 'undefined' && _me.isValidStep(step)) {
-          var clickEvent = step.fire(
-            'celanim_accordeon-block:beforeClickHandler',
-            step,
-          );
+          var clickEvent = step.fire('celanim_accordeon-block:beforeClickHandler', step);
           if (!clickEvent.stopped) {
             _me.toggleAccordeon(step);
           }
         } else if (_me._debug) {
-          console.log(
-            'clickHandler: failed to get valid step. ',
-            _me.cssBox,
-            event.findElement(),
-          );
+          console.log('clickHandler: failed to get valid step. ', _me.cssBox, event.findElement());
         }
       },
 
@@ -253,11 +207,7 @@ if (typeof CELEMENTS.anim == 'undefined') {
         var accordeonEffects = [];
         if (_me.getOpenOnlyOnePerLevel()) {
           activeSteps.each(function (step) {
-            if (
-              _me.isValidStep(step) &&
-              step != nextStep &&
-              _me.isStepVisible(step)
-            ) {
+            if (_me.isValidStep(step) && step != nextStep && _me.isStepVisible(step)) {
               accordeonEffects.push(_me.accordeonHide(step));
             }
           });
@@ -268,10 +218,7 @@ if (typeof CELEMENTS.anim == 'undefined') {
         if (accordeonEffects.size() > 0) {
           _me._accordeonExecute(accordeonEffects, nextStep);
         }
-        _me.htmlElem.fire(
-          'celanim_accordeon-block:activateStepAfterFinish',
-          nextStep,
-        );
+        _me.htmlElem.fire('celanim_accordeon-block:activateStepAfterFinish', nextStep);
       },
     };
   })();

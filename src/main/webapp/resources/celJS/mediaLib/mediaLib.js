@@ -83,11 +83,7 @@ var languageListFormatter = function (elCell, oRecord, oColumn, sData) {
     //    }
     langUrl += xredirect;
     var langLink =
-      "<a target='_blank' class='cel_lang_link' href='" +
-      langUrl +
-      "'>" +
-      langList[i] +
-      '</a> ';
+      "<a target='_blank' class='cel_lang_link' href='" + langUrl + "'>" + langList[i] + '</a> ';
     langString += langLink;
   }
   elCell.innerHTML = langString;
@@ -117,11 +113,9 @@ CELEMENTS.widget.MediaLibTable.prototype.requestData = function () {
   var reqParams = new Hash();
   reqParams.set('xpage', 'celements_ajax');
   reqParams.set('ajax_mode', 'MediaLibConfig');
-  $$('form.' + formCssClass + ' .cel_ml_config_name').each(
-    function (configInput) {
-      reqParams.set('configname', configInput.value);
-    },
-  );
+  $$('form.' + formCssClass + ' .cel_ml_config_name').each(function (configInput) {
+    reqParams.set('configname', configInput.value);
+  });
   $$('form.' + formCssClass + ' .cel_ml_param').each(function (paramInput) {
     reqParams.set(paramInput.name, paramInput.value);
   });
@@ -193,9 +187,7 @@ CELEMENTS.widget.MediaLibTable.prototype.requestData = function () {
       YAHOO.util.Event.onDOMReady(mediaLib.handleDomReady, mediaLib, true);
 
       $(mediaLib.id).setStyle({ display: '' });
-      $(mediaLib.id + '_ml_loader').parentNode.removeChild(
-        $(mediaLib.id + '_ml_loader'),
-      );
+      $(mediaLib.id + '_ml_loader').parentNode.removeChild($(mediaLib.id + '_ml_loader'));
     },
   });
 };

@@ -46,8 +46,7 @@ var XWiki = (function (XWiki) {
     loadIDs: function () {
       $$(this.xcommentSelector).each(function (item) {
         var elementId = item.id;
-        item._x_number =
-          elementId.substring(elementId.lastIndexOf('_') + 1) - 0;
+        item._x_number = elementId.substring(elementId.lastIndexOf('_') + 1) - 0;
       });
     },
     /**
@@ -75,8 +74,7 @@ var XWiki = (function (XWiki) {
               } else {
                 new XWiki.widgets.ConfirmedAjaxRequest(
                   /* Ajax request URL */
-                  item.readAttribute('href') +
-                    (Prototype.Browser.Opera ? '' : '&ajax=1'),
+                  item.readAttribute('href') + (Prototype.Browser.Opera ? '' : '&ajax=1'),
                   /* Ajax request parameters */
                   {
                     onCreate: function () {
@@ -87,17 +85,12 @@ var XWiki = (function (XWiki) {
                       // Remove the corresponding HTML element from the UI and update the comment count
                       var comment = item.up(this.xcommentSelector);
                       // If the form is inside this comment's reply thread, move it back to the bottom.
-                      if (
-                        this.form &&
-                        this.form.descendantOf(comment.next('.commentthread'))
-                      ) {
+                      if (this.form && this.form.descendantOf(comment.next('.commentthread'))) {
                         this.resetForm();
                       }
                       // Replace the comment with a "deleted comment" placeholder
                       comment.replace(
-                        this.createNotification(
-                          "$msg.get('core.viewers.comments.commentDeleted')",
-                        ),
+                        this.createNotification("$msg.get('core.viewers.comments.commentDeleted')"),
                       );
                       this.updateCount();
                     }.bind(this),
@@ -108,14 +101,10 @@ var XWiki = (function (XWiki) {
                   },
                   /* Interaction parameters */
                   {
-                    confirmationText:
-                      "$msg.get('core.viewers.comments.delete.confirm')",
-                    progressMessageText:
-                      "$msg.get('core.viewers.comments.delete.inProgress')",
-                    successMessageText:
-                      "$msg.get('core.viewers.comments.delete.done')",
-                    failureMessageText:
-                      "$msg.get('core.viewers.comments.delete.failed')",
+                    confirmationText: "$msg.get('core.viewers.comments.delete.confirm')",
+                    progressMessageText: "$msg.get('core.viewers.comments.delete.inProgress')",
+                    successMessageText: "$msg.get('core.viewers.comments.delete.done')",
+                    failureMessageText: "$msg.get('core.viewers.comments.delete.failed')",
                   },
                 );
               }
@@ -156,10 +145,7 @@ var XWiki = (function (XWiki) {
                   /* Ajax request URL */
                   item
                     .readAttribute('href')
-                    .replace(
-                      'viewer=comments',
-                      'xpage=xpart&vm=commentsinline.vm',
-                    ),
+                    .replace('viewer=comments', 'xpage=xpart&vm=commentsinline.vm'),
                   /* Ajax request parameters */
                   {
                     onCreate: function () {
@@ -183,10 +169,7 @@ var XWiki = (function (XWiki) {
                       this.addPreview(item._x_editForm);
                       item._x_editForm
                         .down('a.cancel')
-                        .observe(
-                          'click',
-                          this.cancelEdit.bindAsEventListener(this, item),
-                        );
+                        .observe('click', this.cancelEdit.bindAsEventListener(this, item));
                       comment.hide();
                       item._x_notification.hide();
                       // Currently editing: this comment
@@ -202,8 +185,7 @@ var XWiki = (function (XWiki) {
                       }
                       item._x_notification.replace(
                         new XWiki.widgets.Notification(
-                          "$msg.get('core.viewers.comments.editForm.fetch.failed')" +
-                            failureReason,
+                          "$msg.get('core.viewers.comments.editForm.fetch.failed')" + failureReason,
                           'error',
                         ),
                       );
@@ -263,10 +245,7 @@ var XWiki = (function (XWiki) {
                     .show();
                 }
                 // Insert the form on top of that comment's discussion
-                item
-                  .up(this.xcommentSelector)
-                  .next('.commentthread')
-                  .insert({ top: this.form });
+                item.up(this.xcommentSelector).next('.commentthread').insert({ top: this.form });
                 // Set the replyto field to the replied comment's number
                 this.form['XWiki.XWikiComments_replyto'].value = item.up(
                   this.xcommentSelector,
@@ -340,8 +319,7 @@ var XWiki = (function (XWiki) {
                   }
                   form._x_notification.replace(
                     new XWiki.widgets.Notification(
-                      "$msg.get('core.viewers.comments.add.failed')" +
-                        failureReason,
+                      "$msg.get('core.viewers.comments.add.failed')" + failureReason,
                       'error',
                     ),
                   );
@@ -375,9 +353,7 @@ var XWiki = (function (XWiki) {
         this.initialLocation = new Element('span', { className: 'hidden' });
         $('_comments').insert(this.initialLocation);
         // If the form is inside a thread, as a reply form, move it back to the bottom.
-        this.form
-          .down('a.cancel')
-          .observe('click', this.resetForm.bindAsEventListener(this));
+        this.form.down('a.cancel').observe('click', this.resetForm.bindAsEventListener(this));
       }
     },
     /**
@@ -388,14 +364,8 @@ var XWiki = (function (XWiki) {
         return;
       }
       var previewURL = "$xwiki.getURL('__space__.__page__', 'preview')"
-        .replace(
-          '__space__',
-          encodeURIComponent($$('meta[name=space]')[0].content),
-        )
-        .replace(
-          '__page__',
-          encodeURIComponent($$('meta[name=page]')[0].content),
-        );
+        .replace('__space__', encodeURIComponent($$('meta[name=space]')[0].content))
+        .replace('__page__', encodeURIComponent($$('meta[name=page]')[0].content));
       form.commentElt = form.down('textarea');
       var buttons = form.down('input[type=submit]').up('div');
       form.previewButton = new Element('span', {
@@ -417,10 +387,7 @@ var XWiki = (function (XWiki) {
       form.previewButton.observe(
         'click',
         function () {
-          if (
-            !form.previewButton._x_modePreview &&
-            !form.previewButton.disabled
-          ) {
+          if (!form.previewButton._x_modePreview && !form.previewButton.disabled) {
             form.previewButton.disabled = true;
             var notification = new XWiki.widgets.Notification(
               "$msg.get('core.viewers.comments.preview.inProgress')",
@@ -449,8 +416,7 @@ var XWiki = (function (XWiki) {
                 }
                 notification.replace(
                   new XWiki.widgets.Notification(
-                    "$msg.get('core.viewers.comments.preview.failed')" +
-                      failureReason,
+                    "$msg.get('core.viewers.comments.preview.failed')" + failureReason,
                     'error',
                   ),
                 );

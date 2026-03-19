@@ -35,9 +35,7 @@ var layoutEditor_endReorderMode = function (event) {
 
 var layoutEditor_reorderObj = null;
 var layoutEditor_reorder = function () {
-  layoutEditor_reorderObj = new CELEMENTS.reorder.DDReorder(
-    'cel_skin_editor_reorder_tree',
-  );
+  layoutEditor_reorderObj = new CELEMENTS.reorder.DDReorder('cel_skin_editor_reorder_tree');
   myContextMenu.internal_hide();
 };
 
@@ -63,10 +61,7 @@ var saveNavReorderHandler = function (event) {
       $('cel_skin_editor_reorder_tree').fire('celreorder_reorderMode:end');
       window.location.reload();
     } else {
-      if (
-        typeof console != 'undefined' &&
-        typeof console.debug != 'undefined'
-      ) {
+      if (typeof console != 'undefined' && typeof console.debug != 'undefined') {
         console.debug('failed saving reorder: ' + transport.responseText);
       }
       alert('Failed saving!');

@@ -31,10 +31,7 @@ if (
     disabledOpacity: 0.2,
     /** Initialization */
     initialize: function () {
-      if (
-        !(this.form = $('xwikieditcontent')) ||
-        !(this.form = this.form.up('form'))
-      ) {
+      if (!(this.form = $('xwikieditcontent')) || !(this.form = this.form.up('form'))) {
         return;
       }
       this.initVersionMetadataElements();
@@ -117,9 +114,7 @@ if (
       container.appendChild(frequencyLabel);
       container.appendChild(document.createTextNode(' '));
       // Insert in the editing UI
-      $(document.body)
-        .down('.bottombuttons .buttons')
-        .insert({ bottom: container });
+      $(document.body).down('.bottombuttons .buttons').insert({ bottom: container });
       // If we keep the autosave control in the form, the fast back-forward is broken in FF, so we lose the edited content
       // when pressing the browser Back button, instead of the form Back to Edit. Catch the form submission and remove the
       // controls.

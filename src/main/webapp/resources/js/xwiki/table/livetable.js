@@ -63,13 +63,11 @@
 
       // Array of nodes under which pagination for this livetable will be displayed.
       this.paginationNodes =
-        options.paginationNodes ||
-        $(this.domNodeName).select('.xwiki-livetable-pagination');
+        options.paginationNodes || $(this.domNodeName).select('.xwiki-livetable-pagination');
 
       // Array of nodes under which a page size control will be displayed
       this.pageSizeNodes =
-        options.pageSizeNodes ||
-        $(this.domNodeName).select('.xwiki-livetable-pagesize');
+        options.pageSizeNodes || $(this.domNodeName).select('.xwiki-livetable-pagesize');
 
       if (typeof options == 'undefined') {
         options = {};
@@ -123,23 +121,16 @@
 
       // Initialize filters
       if (this.filtersNodes.length > 0) {
-        this.filter = new LiveTableFilter(
-          this,
-          this.filtersNodes,
-          this.permalinks.getFilters(),
-          {
-            throttlingDelay: this.throttlingDelay,
-          },
-        );
+        this.filter = new LiveTableFilter(this, this.filtersNodes, this.permalinks.getFilters(), {
+          throttlingDelay: this.throttlingDelay,
+        });
       }
 
       if ($(domNodeName + '-tagcloud')) {
         this.tagCloud = new LiveTableTagCloud(this, domNodeName + '-tagcloud');
       }
-      this.loadingStatus =
-        $(this.domNodeName + '-ajax-loader') || $('ajax-loader');
-      this.limitsDisplay =
-        $(this.domNodeName + '-limits') || new Element('div');
+      this.loadingStatus = $(this.domNodeName + '-ajax-loader') || $('ajax-loader');
+      this.limitsDisplay = $(this.domNodeName + '-limits') || new Element('div');
       this.filters = '';
       this.handler = handler || function () {};
       this.totalRows = -1;
@@ -181,13 +172,7 @@
      * @param delay An possible delay before firing the request to allow that request to be cancelled (used
      *          for submission throttling on filters)
      */
-    getRows: function (
-      reqOffset,
-      reqLimit,
-      displayOffset,
-      displayLimit,
-      delay,
-    ) {
+    getRows: function (reqOffset, reqLimit, displayOffset, displayLimit, delay) {
       var self = this;
 
       if (this.nextRequestTimeoutId) {
@@ -222,9 +207,7 @@
 
         // Let code know the table is about to load new entries.
         // 1. Named event (for code interested by that table only)
-        document.fire(
-          'xwiki:livetable:' + this.domNodeName + ':loadingEntries',
-        );
+        document.fire('xwiki:livetable:' + this.domNodeName + ':loadingEntries');
         // 2. Generic event (for code potentially interested in any livetable)
         document.fire('xwiki:livetable:loadingEntries', {
           tableId: this.domNodeName,
@@ -235,12 +218,9 @@
           onComplete: function (transport) {
             // Let code know loading is finished
             // 1. Named event (for code interested by that table only)
-            document.fire(
-              'xwiki:livetable:' + self.domNodeName + ':loadingComplete',
-              {
-                status: transport.status,
-              },
-            );
+            document.fire('xwiki:livetable:' + self.domNodeName + ':loadingComplete', {
+              status: transport.status,
+            });
             // 2. Generic event (for code potentially interested in any livetable)
             document.fire('xwiki:livetable:loadingComplete', {
               status: transport.status,
@@ -265,12 +245,9 @@
 
             // Let code know new entries arrived
             // 1. Named event (for code interested by that table only)
-            document.fire(
-              'xwiki:livetable:' + this.domNodeName + ':receivedEntries',
-              {
-                data: res,
-              },
-            );
+            document.fire('xwiki:livetable:' + this.domNodeName + ':receivedEntries', {
+              data: res,
+            });
             // 2. Generic event (for code potentially interested in any livetable)
             document.fire('xwiki:livetable:receivedEntries', {
               data: res,
@@ -348,10 +325,7 @@
             tableId: this.domNodeName,
           };
           // 1. Named event (for code interested by that table only)
-          document.fire(
-            'xwiki:livetable:' + this.domNodeName + ':newrow',
-            memo,
-          );
+          document.fire('xwiki:livetable:' + this.domNodeName + ':newrow', memo);
           // 2. Generic event (for code potentially interested in any livetable)
           document.fire('xwiki:livetable:newrow', memo);
         }
@@ -382,12 +356,7 @@
       this.permalinks.update();
 
       // This is some debugging string.
-      var buff =
-        'request to display rows ' +
-        offset +
-        ' to ' +
-        (offset + limit) +
-        ' <br />\n';
+      var buff = 'request to display rows ' + offset + ' to ' + (offset + limit) + ' <br />\n';
 
       // If no rows fetched yet, get all we need
       if (this.totalRows == -1) {
@@ -429,8 +398,7 @@
      */
     deleteAndShiftRows: function (indx) {
       for (var i in this.fetchedRows) {
-        if (i >= indx)
-          this.fetchedRows[i] = this.fetchedRows['' + (parseInt(i) + 1)];
+        if (i >= indx) this.fetchedRows[i] = this.fetchedRows['' + (parseInt(i) + 1)];
       }
     },
 
@@ -714,12 +682,9 @@
 
       var params = this.getTableParams();
       var paramsString = this.serializeParams(params);
-      var filterString = this.table.filter
-        ? this.table.filter.serializeFilters()
-        : '';
+      var filterString = this.table.filter ? this.table.filter.serializeFilters() : '';
 
-      var shouldUpdate =
-        !filterString.blank() || paramsString != this.serializeParams();
+      var shouldUpdate = !filterString.blank() || paramsString != this.serializeParams();
 
       if (shouldUpdate) {
         var currentHash = window.location.hash.substring(1);
@@ -767,8 +732,7 @@
       });
       var pages = Math.ceil(this.table.totalRows / this.table.limit);
       var currentMax = !this.max ? pages : this.max;
-      var currentPage =
-        Math.floor(this.table.lastOffset / this.table.limit) + 1;
+      var currentPage = Math.floor(this.table.lastOffset / this.table.limit) + 1;
       var startPage = Math.floor(currentPage / currentMax) * currentMax - 1;
       // always display the first page
       if (startPage > 1) {
@@ -818,34 +782,23 @@
       return pageSpan;
     },
     gotoPage: function (page) {
-      this.table.showRows(
-        (parseInt(page) - 1) * this.table.limit + 1,
-        this.table.limit,
-      );
+      this.table.showRows((parseInt(page) - 1) * this.table.limit + 1, this.table.limit);
     },
     gotoPrevPage: function (ev) {
       ev.stop();
-      var currentPage =
-        Math.floor(this.table.lastOffset / this.table.limit) + 1;
+      var currentPage = Math.floor(this.table.lastOffset / this.table.limit) + 1;
       var prevPage = currentPage - 1;
       if (prevPage > 0) {
-        this.table.showRows(
-          (parseInt(prevPage) - 1) * this.table.limit + 1,
-          this.table.limit,
-        );
+        this.table.showRows((parseInt(prevPage) - 1) * this.table.limit + 1, this.table.limit);
       }
     },
     gotoNextPage: function (ev) {
       ev.stop();
-      var currentPage =
-        Math.floor(this.table.lastOffset / this.table.limit) + 1;
+      var currentPage = Math.floor(this.table.lastOffset / this.table.limit) + 1;
       var pages = Math.ceil(this.table.totalRows / this.table.limit);
       var nextPage = currentPage + 1;
       if (nextPage <= pages) {
-        this.table.showRows(
-          (parseInt(nextPage) - 1) * this.table.limit + 1,
-          this.table.limit,
-        );
+        this.table.showRows((parseInt(nextPage) - 1) * this.table.limit + 1, this.table.limit);
       }
     },
   });
@@ -941,15 +894,11 @@
     initializeFilters: function () {
       for (var i = 0; i < this.inputs.length; ++i) {
         var key = this.inputs[i].name;
-        if (
-          this.inputs[i].type == 'radio' ||
-          this.inputs[i].type == 'checkbox'
-        ) {
+        if (this.inputs[i].type == 'radio' || this.inputs[i].type == 'checkbox') {
           var filter = this.filters[key];
           if (filter) {
             if (Object.isArray(filter)) {
-              this.inputs[i].checked =
-                filter.indexOf(this.inputs[i].value.strip()) != -1;
+              this.inputs[i].checked = filter.indexOf(this.inputs[i].value.strip()) != -1;
             } else {
               this.inputs[i].checked = filter == this.inputs[i].value.strip();
             }
@@ -970,8 +919,7 @@
               this.selects[i].options[j].selected =
                 filter.indexOf(this.selects[i].options[j].value) != -1;
             } else {
-              this.selects[i].options[j].selected =
-                this.selects[i].options[j].value == filter;
+              this.selects[i].options[j].selected = this.selects[i].options[j].value == filter;
             }
           }
         }
@@ -990,13 +938,9 @@
         // Ignore filters with blank value if are not used as filters yet
         if (
           !filters[i].value.blank() ||
-          (this.filters[filters[i].name] &&
-            !this.filters[filters[i].name].blank())
+          (this.filters[filters[i].name] && !this.filters[filters[i].name].blank())
         ) {
-          if (
-            (filters[i].type != 'radio' && filters[i].type != 'checkbox') ||
-            filters[i].checked
-          ) {
+          if ((filters[i].type != 'radio' && filters[i].type != 'checkbox') || filters[i].checked) {
             result += '&' + filters[i].serialize();
           }
         }
@@ -1007,37 +951,17 @@
     attachEventHandlers: function () {
       for (var i = 0; i < this.inputs.length; i++) {
         if (this.inputs[i].type == 'text') {
-          Event.observe(
-            this.inputs[i],
-            'keyup',
-            this.refreshHandler.bind(this),
-          );
-          Event.observe(
-            this.inputs[i],
-            'change',
-            this.refreshHandler.bind(this),
-          );
+          Event.observe(this.inputs[i], 'keyup', this.refreshHandler.bind(this));
+          Event.observe(this.inputs[i], 'change', this.refreshHandler.bind(this));
         } else {
           //IE is buggy on "change" events for checkboxes and radios
-          Event.observe(
-            this.inputs[i],
-            'click',
-            this.refreshHandler.bind(this),
-          );
-          Event.observe(
-            this.inputs[i],
-            'change',
-            this.refreshHandler.bind(this),
-          );
+          Event.observe(this.inputs[i], 'click', this.refreshHandler.bind(this));
+          Event.observe(this.inputs[i], 'change', this.refreshHandler.bind(this));
         }
       }
 
       for (var i = 0; i < this.selects.length; i++) {
-        Event.observe(
-          this.selects[i],
-          'change',
-          this.refreshHandler.bind(this),
-        );
+        Event.observe(this.selects[i], 'change', this.refreshHandler.bind(this));
       }
 
       // Allow custom filters to trigger filter change from non-native events
@@ -1175,11 +1099,7 @@
         if (typeof this.matchingTags[tagLabel] != 'undefined') {
           tag.addClassName('selectable');
           Event.observe(tagSpan, 'click', function (event) {
-            var tag = event
-              .element()
-              .up('li')
-              .down('span')
-              .innerHTML.unescapeHTML();
+            var tag = event.element().up('li').down('span').innerHTML.unescapeHTML();
             event.element().up('li').toggleClassName('selected');
             if (event.element().up('li').hasClassName('selected')) {
               self.selectedTags[tag] = {};

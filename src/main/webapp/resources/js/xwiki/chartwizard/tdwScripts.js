@@ -96,10 +96,8 @@ function tdwWizard() {
       document.documentElement.attachEvent('onselect', onSelectIE);
     }
     activePage = pageOrder[0];
-    document.getElementById('tdw' + activePage + 'Wizard').className =
-      'tdwActivePage';
-    document.getElementById('tdw' + activePage + 'WizardButton').className =
-      'tdwNavigationImage';
+    document.getElementById('tdw' + activePage + 'Wizard').className = 'tdwActivePage';
+    document.getElementById('tdw' + activePage + 'WizardButton').className = 'tdwNavigationImage';
     if (document.getElementById('tdwPageInput').selectedIndex == -1) {
       disableNext();
     }
@@ -182,8 +180,7 @@ function tdwWizard() {
     }
 
     // Hide the previous page
-    document.getElementById('tdw' + activePage + 'Wizard').className =
-      'tdwInactivePage';
+    document.getElementById('tdw' + activePage + 'Wizard').className = 'tdwInactivePage';
     var button = document.getElementById('tdw' + activePage + 'WizardButton');
     if (button.src.indexOf('Hover.png') >= 0) {
       button.src = skinDirectory + 'chwTaskCompletedHover.png';
@@ -213,8 +210,7 @@ function tdwWizard() {
     }
 
     // Show the selected page
-    document.getElementById('tdw' + activePage + 'Wizard').className =
-      'tdwActivePage';
+    document.getElementById('tdw' + activePage + 'Wizard').className = 'tdwActivePage';
     button = document.getElementById('tdw' + activePage + 'WizardButton');
     if (button.src.indexOf('Hover.png') >= 0) {
       button.src = skinDirectory + 'chwTaskCompletingHover.png';
@@ -293,19 +289,12 @@ function tdwWizard() {
     if (!window.opener) return false;
     if (document.getElementById('tdwSaveInput').checked) {
       if (document.getElementById('tdwSaveNameInput').value == '') {
-        if (
-          !confirm(
-            document.getElementById('tdwSaveNoNameMsg').firstChild.nodeValue,
-          )
-        )
+        if (!confirm(document.getElementById('tdwSaveNoNameMsg').firstChild.nodeValue))
           return false;
       }
       if (saveObject()) {
         window.opener.wizard.setValidDatasource(
-          'type:object;doc:' +
-            doc +
-            ';class:TableDataSource;object_number:' +
-            objectNumber,
+          'type:object;doc:' + doc + ';class:TableDataSource;object_number:' + objectNumber,
         );
       } else {
         return false;
@@ -330,9 +319,7 @@ function tdwWizard() {
           ';ignore_alpha:' +
           document.getElementById('tdwIgnoreAlphaInput').checked +
           ';decimal_symbol:' +
-          (document.getElementById('tdwDecimalSymbolInput').checked
-            ? 'comma'
-            : 'period'),
+          (document.getElementById('tdwDecimalSymbolInput').checked ? 'comma' : 'period'),
       );
     }
     window.close();
@@ -401,16 +388,13 @@ function tdwWizard() {
         break;
       case 'rows':
         for (var i = startRowIndex; i <= endRowIndex; i++) {
-          document.getElementById('T' + table + 'R' + i).className =
-            'tdwUnselectedRow';
+          document.getElementById('T' + table + 'R' + i).className = 'tdwUnselectedRow';
         }
         break;
       case 'columns':
         for (var i = startColumnIndex; i <= endColumnIndex; i++) {
-          document.getElementById('T' + table + 'C' + i).className =
-            'tdwUnselectedColumn';
-          document.getElementById('T' + table + 'R0C' + i).className =
-            'tdwUnselectedCell';
+          document.getElementById('T' + table + 'C' + i).className = 'tdwUnselectedColumn';
+          document.getElementById('T' + table + 'R0C' + i).className = 'tdwUnselectedCell';
         }
         break;
       case 'cells':
@@ -446,23 +430,19 @@ function tdwWizard() {
         hasValidSelection = true;
       } else {
         // A whole column is selected
-        document.getElementById('T' + tidx + 'C' + cidx).className =
-          'tdwSelectedColumn';
-        document.getElementById('T' + tidx + 'R0C' + cidx).className =
-          'tdwSelectedCell';
+        document.getElementById('T' + tidx + 'C' + cidx).className = 'tdwSelectedColumn';
+        document.getElementById('T' + tidx + 'R0C' + cidx).className = 'tdwSelectedCell';
         selectionState = 'columns';
         selectionType = 'columns';
       }
     } else if (cidx == 0) {
       // A whole row is selected
-      document.getElementById('T' + tidx + 'R' + ridx).className =
-        'tdwSelectedRow';
+      document.getElementById('T' + tidx + 'R' + ridx).className = 'tdwSelectedRow';
       selectionState = 'rows';
       selectionType = 'rows';
     } else {
       // Cellblock selection
-      document.getElementById('T' + tidx + 'R' + ridx + 'C' + cidx).className =
-        'tdwSelectedCell';
+      document.getElementById('T' + tidx + 'R' + ridx + 'C' + cidx).className = 'tdwSelectedCell';
       selectionState = 'cells';
       selectionType = 'cells';
     }
@@ -542,28 +522,19 @@ function tdwWizard() {
         ) {
           var sign = signum(ridx - endRowIndex);
           for (var i = endRowIndex + sign; (ridx - i) * sign >= 0; i += sign) {
-            document.getElementById('T' + tidx + 'R' + i).className =
-              'tdwSelectedRow';
+            document.getElementById('T' + tidx + 'R' + i).className = 'tdwSelectedRow';
           }
         } else {
           var sign = signum(endRowIndex - startRowIndex);
           var start =
-            (startRowIndex +
-              ridx +
-              sign * signum(startRowIndex - ridx) * (startRowIndex - ridx)) /
+            (startRowIndex + ridx + sign * signum(startRowIndex - ridx) * (startRowIndex - ridx)) /
               2 +
             sign;
           for (var i = start; (endRowIndex - i) * sign >= 0; i += sign) {
-            document.getElementById('T' + tidx + 'R' + i).className =
-              'tdwUnSelectedRow';
+            document.getElementById('T' + tidx + 'R' + i).className = 'tdwUnSelectedRow';
           }
-          for (
-            var i = startRowIndex - sign;
-            (ridx - i) * sign <= 0;
-            i -= sign
-          ) {
-            document.getElementById('T' + tidx + 'R' + i).className =
-              'tdwSelectedRow';
+          for (var i = startRowIndex - sign; (ridx - i) * sign <= 0; i -= sign) {
+            document.getElementById('T' + tidx + 'R' + i).className = 'tdwSelectedRow';
           }
         }
         break;
@@ -574,45 +545,28 @@ function tdwWizard() {
         if (endColumnIndex == cidx) break;
         if (
           startColumnIndex == endColumnIndex ||
-          signum(endColumnIndex - startColumnIndex) ==
-            signum(cidx - endColumnIndex)
+          signum(endColumnIndex - startColumnIndex) == signum(cidx - endColumnIndex)
         ) {
           var sign = signum(cidx - endColumnIndex);
-          for (
-            var i = endColumnIndex + sign;
-            (cidx - i) * sign >= 0;
-            i += sign
-          ) {
-            document.getElementById('T' + tidx + 'C' + i).className =
-              'tdwSelectedColumn';
-            document.getElementById('T' + tidx + 'R0C' + i).className =
-              'tdwSelectedCell';
+          for (var i = endColumnIndex + sign; (cidx - i) * sign >= 0; i += sign) {
+            document.getElementById('T' + tidx + 'C' + i).className = 'tdwSelectedColumn';
+            document.getElementById('T' + tidx + 'R0C' + i).className = 'tdwSelectedCell';
           }
         } else {
           var sign = signum(endColumnIndex - startColumnIndex);
           var start =
             (startColumnIndex +
               cidx +
-              sign *
-                signum(startColumnIndex - cidx) *
-                (startColumnIndex - cidx)) /
+              sign * signum(startColumnIndex - cidx) * (startColumnIndex - cidx)) /
               2 +
             sign;
           for (var i = start; (endColumnIndex - i) * sign >= 0; i += sign) {
-            document.getElementById('T' + tidx + 'C' + i).className =
-              'tdwUnSelectedColumn';
-            document.getElementById('T' + tidx + 'R0C' + i).className =
-              'tdwUnselectedCell';
+            document.getElementById('T' + tidx + 'C' + i).className = 'tdwUnSelectedColumn';
+            document.getElementById('T' + tidx + 'R0C' + i).className = 'tdwUnselectedCell';
           }
-          for (
-            var i = startColumnIndex - sign;
-            (cidx - i) * sign <= 0;
-            i -= sign
-          ) {
-            document.getElementById('T' + tidx + 'C' + i).className =
-              'tdwSelectedColumn';
-            document.getElementById('T' + tidx + 'R0C' + i).className =
-              'tdwSelectedCell';
+          for (var i = startColumnIndex - sign; (cidx - i) * sign <= 0; i -= sign) {
+            document.getElementById('T' + tidx + 'C' + i).className = 'tdwSelectedColumn';
+            document.getElementById('T' + tidx + 'R0C' + i).className = 'tdwSelectedCell';
           }
         }
         break;
@@ -629,14 +583,8 @@ function tdwWizard() {
           var csign = signum(endColumnIndex - startColumnIndex);
           if (csign == 0) csign = 1;
           for (var i = endRowIndex + sign; (ridx - i) * sign >= 0; i += sign) {
-            for (
-              var j = startColumnIndex;
-              (endColumnIndex - j) * csign >= 0;
-              j += csign
-            ) {
-              document.getElementById(
-                'T' + tidx + 'R' + i + 'C' + j,
-              ).className = 'tdwSelectedCell';
+            for (var j = startColumnIndex; (endColumnIndex - j) * csign >= 0; j += csign) {
+              document.getElementById('T' + tidx + 'R' + i + 'C' + j).className = 'tdwSelectedCell';
             }
           }
         } else {
@@ -644,35 +592,18 @@ function tdwWizard() {
           var csign = signum(endColumnIndex - startColumnIndex);
           if (csign == 0) csign = 1;
           var start =
-            (startRowIndex +
-              ridx +
-              sign * signum(startRowIndex - ridx) * (startRowIndex - ridx)) /
+            (startRowIndex + ridx + sign * signum(startRowIndex - ridx) * (startRowIndex - ridx)) /
               2 +
             sign;
           for (var i = start; (endRowIndex - i) * sign >= 0; i += sign) {
-            for (
-              var j = startColumnIndex;
-              (endColumnIndex - j) * csign >= 0;
-              j += csign
-            ) {
-              document.getElementById(
-                'T' + tidx + 'R' + i + 'C' + j,
-              ).className = 'tdwUnselectedCell';
+            for (var j = startColumnIndex; (endColumnIndex - j) * csign >= 0; j += csign) {
+              document.getElementById('T' + tidx + 'R' + i + 'C' + j).className =
+                'tdwUnselectedCell';
             }
           }
-          for (
-            var i = startRowIndex - sign;
-            (ridx - i) * sign <= 0;
-            i -= sign
-          ) {
-            for (
-              var j = startColumnIndex;
-              (endColumnIndex - j) * csign >= 0;
-              j += csign
-            ) {
-              document.getElementById(
-                'T' + tidx + 'R' + i + 'C' + j,
-              ).className = 'tdwSelectedCell';
+          for (var i = startRowIndex - sign; (ridx - i) * sign <= 0; i -= sign) {
+            for (var j = startColumnIndex; (endColumnIndex - j) * csign >= 0; j += csign) {
+              document.getElementById('T' + tidx + 'R' + i + 'C' + j).className = 'tdwSelectedCell';
             }
           }
         }
@@ -683,21 +614,14 @@ function tdwWizard() {
           break;
         } else if (
           startColumnIndex == endColumnIndex ||
-          signum(endColumnIndex - startColumnIndex) ==
-            signum(cidx - endColumnIndex)
+          signum(endColumnIndex - startColumnIndex) == signum(cidx - endColumnIndex)
         ) {
           var sign = signum(cidx - endColumnIndex);
           var rsign = signum(ridx - startRowIndex);
           if (rsign == 0) rsign = 1;
-          for (
-            var i = endColumnIndex + sign;
-            (cidx - i) * sign >= 0;
-            i += sign
-          ) {
+          for (var i = endColumnIndex + sign; (cidx - i) * sign >= 0; i += sign) {
             for (var j = startRowIndex; (ridx - j) * rsign >= 0; j += rsign) {
-              document.getElementById(
-                'T' + tidx + 'R' + j + 'C' + i,
-              ).className = 'tdwSelectedCell';
+              document.getElementById('T' + tidx + 'R' + j + 'C' + i).className = 'tdwSelectedCell';
             }
           }
         } else {
@@ -707,27 +631,18 @@ function tdwWizard() {
           var start =
             (startColumnIndex +
               cidx +
-              sign *
-                signum(startColumnIndex - cidx) *
-                (startColumnIndex - cidx)) /
+              sign * signum(startColumnIndex - cidx) * (startColumnIndex - cidx)) /
               2 +
             sign;
           for (var i = start; (endColumnIndex - i) * sign >= 0; i += sign) {
             for (var j = startRowIndex; (ridx - j) * rsign >= 0; j += rsign) {
-              document.getElementById(
-                'T' + tidx + 'R' + j + 'C' + i,
-              ).className = 'tdwUnselectedCell';
+              document.getElementById('T' + tidx + 'R' + j + 'C' + i).className =
+                'tdwUnselectedCell';
             }
           }
-          for (
-            var i = startColumnIndex - sign;
-            (cidx - i) * sign <= 0;
-            i -= sign
-          ) {
+          for (var i = startColumnIndex - sign; (cidx - i) * sign <= 0; i -= sign) {
             for (var j = startRowIndex; (ridx - j) * rsign >= 0; j += rsign) {
-              document.getElementById(
-                'T' + tidx + 'R' + j + 'C' + i,
-              ).className = 'tdwSelectedCell';
+              document.getElementById('T' + tidx + 'R' + j + 'C' + i).className = 'tdwSelectedCell';
             }
           }
         }
@@ -906,9 +821,7 @@ function tdwWizard() {
       (document.getElementById('tdwIgnoreAlphaInput').checked ? '1' : '0');
     objectData +=
       '&XWiki.TableDataSource_decimal_symbol=' +
-      (document.getElementById('tdwDecimalSymbolInput').checked
-        ? 'comma'
-        : 'period');
+      (document.getElementById('tdwDecimalSymbolInput').checked ? 'comma' : 'period');
 
     if (window.XMLHttpRequest) {
       request = new XMLHttpRequest();
@@ -916,10 +829,7 @@ function tdwWizard() {
       request = new ActiveXObject('Microsoft.XMLHTTP');
     }
     request.open('POST', saveAddress + doc.replace('.', '/'), false);
-    request.setRequestHeader(
-      'Content-Type',
-      'application/x-www-form-urlencoded; charset=UTF-8',
-    );
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     try {
       request.send(objectData);
     } catch (ex) {
@@ -973,26 +883,18 @@ function tdwWizard() {
       if (request.responseXML) {
         try {
           if (
-            request.responseXML
-              .getElementsByTagName('div')
-              .item(0)
-              .getAttribute('id') != 'tdwEnvelope'
+            request.responseXML.getElementsByTagName('div').item(0).getAttribute('id') !=
+            'tdwEnvelope'
           ) {
-            document.getElementById('tdwNoTablePageName').firstChild.nodeValue =
-              doc;
+            document.getElementById('tdwNoTablePageName').firstChild.nodeValue = doc;
             notablesMsg.className = 'tdwErrorMessage';
             return;
           } else {
-            var envelope = request.responseXML
-              .getElementsByTagName('div')
-              .item(0);
-            objectNumber = request.responseXML
-              .getElementsByTagName('div')
-              .item(1).firstChild.nodeValue;
+            var envelope = request.responseXML.getElementsByTagName('div').item(0);
+            objectNumber = request.responseXML.getElementsByTagName('div').item(1)
+              .firstChild.nodeValue;
             if (envelope.getElementsByTagName('table').length == 0) {
-              document.getElementById(
-                'tdwNoTablePageName',
-              ).firstChild.nodeValue = doc;
+              document.getElementById('tdwNoTablePageName').firstChild.nodeValue = doc;
               notablesMsg.className = 'tdwErrorMessage';
               return;
             }
@@ -1012,8 +914,7 @@ function tdwWizard() {
             return;
           }
         } catch (e) {
-          document.getElementById('tdwNoTablePageName').firstChild.nodeValue =
-            doc;
+          document.getElementById('tdwNoTablePageName').firstChild.nodeValue = doc;
           notablesMsg.className = 'tdwErrorMessage';
         }
       } else {

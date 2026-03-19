@@ -22,22 +22,20 @@ function chwPositionSelector(property, type, defaultPosition) {
     if (this.selected == position) {
       element.className = 'chwSelectedCellHighlighted';
     } else if (this.leftButtonDown == true) {
-      document.getElementById('chw' + this.property + this.selected).className =
-        'normal';
+      document.getElementById('chw' + this.property + this.selected).className = 'normal';
       this.selected = position;
       element.className = 'chwSelectedCellHighlighted';
       switch (this.type) {
         case 'Position':
-          document.getElementById('chw' + this.property + 'Input').value =
-            position.toLowerCase();
+          document.getElementById('chw' + this.property + 'Input').value = position.toLowerCase();
           break;
         case 'Alignment':
-          document.getElementById(
-            'chw' + this.property + 'HorizontalInput',
-          ).value = position.substring(position.indexOf('_') + 1).toLowerCase();
-          document.getElementById(
-            'chw' + this.property + 'VerticalInput',
-          ).value = position.substring(0, position.indexOf('_')).toLowerCase();
+          document.getElementById('chw' + this.property + 'HorizontalInput').value = position
+            .substring(position.indexOf('_') + 1)
+            .toLowerCase();
+          document.getElementById('chw' + this.property + 'VerticalInput').value = position
+            .substring(0, position.indexOf('_'))
+            .toLowerCase();
           break;
       }
     } else {
@@ -63,20 +61,19 @@ function chwPositionSelector(property, type, defaultPosition) {
     if (evt.button != window.wizard.LMB) return;
     this.leftButtonDown = true;
     if (this.selected == position) return;
-    document.getElementById('chw' + this.property + this.selected).className =
-      'chwNormalCell';
+    document.getElementById('chw' + this.property + this.selected).className = 'chwNormalCell';
     this.selected = position;
     switch (this.type) {
       case 'Position':
-        document.getElementById('chw' + this.property + 'Input').value =
-          position.toLowerCase();
+        document.getElementById('chw' + this.property + 'Input').value = position.toLowerCase();
         break;
       case 'Alignment':
-        document.getElementById(
-          'chw' + this.property + 'HorizontalInput',
-        ).value = position.substring(position.indexOf('_') + 1).toLowerCase();
-        document.getElementById('chw' + this.property + 'VerticalInput').value =
-          position.substring(0, position.indexOf('_')).toLowerCase();
+        document.getElementById('chw' + this.property + 'HorizontalInput').value = position
+          .substring(position.indexOf('_') + 1)
+          .toLowerCase();
+        document.getElementById('chw' + this.property + 'VerticalInput').value = position
+          .substring(0, position.indexOf('_'))
+          .toLowerCase();
         break;
     }
     document.getElementById('chw' + this.property + position).className =
@@ -99,13 +96,9 @@ function chwPositionSelector(property, type, defaultPosition) {
 function chwColorChooser(property) {
   this.property = property;
   this.element = document.getElementById('chw' + this.property + 'Input');
-  this.customGroup = document.getElementById(
-    'chw' + this.property + 'CustomGroup',
-  );
+  this.customGroup = document.getElementById('chw' + this.property + 'CustomGroup');
   this.custom = document.getElementById('chw' + this.property + 'CustomInput');
-  this.customOption = document.getElementById(
-    'chw' + this.property + 'CustomOption',
-  );
+  this.customOption = document.getElementById('chw' + this.property + 'CustomOption');
   /*
      The color code that replaces the value entered
      by the user, if that vakue is wrong
@@ -142,14 +135,10 @@ function chwColorChooser(property) {
       //    else if (this.custom.value.match("^(([9a-fA-F]{3})|(([9a-fA-F][0-9a-fA-F]){3}))$")){
       this.custom.style.backgroundColor = '#' + this.custom.value;
       this.custom.style.color = '#000';
-    } else if (
-      this.custom.value.match('(^#[0-9a-fA-F]{3}$)|(^#[0-9a-fA-F]{6}$)')
-    ) {
+    } else if (this.custom.value.match('(^#[0-9a-fA-F]{3}$)|(^#[0-9a-fA-F]{6}$)')) {
       this.custom.style.backgroundColor = this.custom.value;
       this.custom.style.color = '#FFF';
-    } else if (
-      this.custom.value.match('(^[0-9a-fA-F]{3}$)|(^[0-9a-fA-F]{6}$)')
-    ) {
+    } else if (this.custom.value.match('(^[0-9a-fA-F]{3}$)|(^[0-9a-fA-F]{6}$)')) {
       this.custom.style.backgroundColor = '#' + this.custom.value;
       this.custom.style.color = '#FFF';
     }
@@ -304,23 +293,19 @@ function chwWizard() {
       b = 0;
     while (a < show.length && b < hide.length) {
       if (show[a] < hide[b]) {
-        document.getElementById('chw' + show[a++] + 'Div').className =
-          'chwVisible';
+        document.getElementById('chw' + show[a++] + 'Div').className = 'chwVisible';
       } else if (show[a] > hide[b]) {
-        document.getElementById('chw' + hide[b++] + 'Div').className =
-          'chwHidden';
+        document.getElementById('chw' + hide[b++] + 'Div').className = 'chwHidden';
       } else {
         a++;
         b++;
       }
     }
     while (a < show.length) {
-      document.getElementById('chw' + show[a++] + 'Div').className =
-        'chwVisible';
+      document.getElementById('chw' + show[a++] + 'Div').className = 'chwVisible';
     }
     while (b < hide.length) {
-      document.getElementById('chw' + hide[b++] + 'Div').className =
-        'chwHidden';
+      document.getElementById('chw' + hide[b++] + 'Div').className = 'chwHidden';
     }
   };
 
@@ -379,16 +364,14 @@ function chwWizard() {
     nextBtn = document.getElementById('chwNextButton');
     finishBtn = document.getElementById('chwFinishButton');
     activePage = pageOrder[0];
-    document.getElementById('chw' + activePage + 'Wizard').className =
-      'chwActivePage';
+    document.getElementById('chw' + activePage + 'Wizard').className = 'chwActivePage';
     selectedChartType = document.getElementById('chwChartTypeInput').value;
     for (var wizardPage in activatedElements[selectedChartType]) {
       document.getElementById('chw' + wizardPage + 'WizardButton').className =
         'chwNavigationImageDisabled';
       adjustPage(activatedElements[selectedChartType][wizardPage], []);
     }
-    document.getElementById('chw' + activePage + 'WizardButton').className =
-      'chwNavigationImage';
+    document.getElementById('chw' + activePage + 'WizardButton').className = 'chwNavigationImage';
     selectorObjects.ChartTitlePosition = new chwPositionSelector(
       'ChartTitlePosition',
       'Position',
@@ -410,17 +393,10 @@ function chwWizard() {
       'Center_Center',
     );
     colorObjects.ChartTitleColor = new chwColorChooser('ChartTitleColor');
-    colorObjects.ChartTitleBackgroundColor = new chwColorChooser(
-      'ChartTitleBackgroundColor',
-    );
+    colorObjects.ChartTitleBackgroundColor = new chwColorChooser('ChartTitleBackgroundColor');
     colorObjects.ChartSubtitleColor = new chwColorChooser('ChartSubtitleColor');
-    colorObjects.ChartSubtitleBackgroundColor = new chwColorChooser(
-      'ChartSubtitleBackgroundColor',
-    );
-    if (
-      document.implementation &&
-      document.implementation.hasFeature('HTMLEvents', '2.0')
-    ) {
+    colorObjects.ChartSubtitleBackgroundColor = new chwColorChooser('ChartSubtitleBackgroundColor');
+    if (document.implementation && document.implementation.hasFeature('HTMLEvents', '2.0')) {
       this.LMB = 0;
     } else {
       this.LMB = 1;
@@ -457,8 +433,7 @@ function chwWizard() {
       nextEnabled = true;
     }
 
-    document.getElementById('chw' + activePage + 'Wizard').className =
-      'chwInactivePage';
+    document.getElementById('chw' + activePage + 'Wizard').className = 'chwInactivePage';
     var button = document.getElementById('chw' + activePage + 'WizardButton');
     if (button.src.indexOf('Hover.png') >= 0) {
       button.src = skinDirectory + 'chwTaskCompletedHover.png';
@@ -483,8 +458,7 @@ function chwWizard() {
       nextEnabled = false;
     }
 
-    document.getElementById('chw' + activePage + 'Wizard').className =
-      'chwActivePage';
+    document.getElementById('chw' + activePage + 'Wizard').className = 'chwActivePage';
     button = document.getElementById('chw' + activePage + 'WizardButton');
     if (button.src.indexOf('Hover.png') >= 0) {
       button.src = skinDirectory + 'chwTaskCompletingHover.png';
@@ -513,10 +487,7 @@ function chwWizard() {
 
   this.changeChartType = function (newChartType) {
     var dImage = document.getElementById('chwPreviewImg');
-    dImage.setAttribute(
-      'src',
-      skinDirectory + '/chwSample' + newChartType + 'Chart.png',
-    );
+    dImage.setAttribute('src', skinDirectory + '/chwSample' + newChartType + 'Chart.png');
     dImage.setAttribute('alt', 'Chart Type: ' + newChartType);
     dImage.setAttribute('title', 'Chart Type: ' + newChartType);
     // Hide old pages
@@ -545,17 +516,11 @@ function chwWizard() {
       document.getElementById('chw' + wizardPage + 'WizardButton').src =
         skinDirectory + 'chwTaskWaiting.png';
     }
-    document.getElementById('chw' + selectedChartType + 'Subtypes').className =
-      'chwHidden';
-    document.getElementById(
-      'chw' + selectedChartType + 'SubtypeInput',
-    ).disabled = true;
+    document.getElementById('chw' + selectedChartType + 'Subtypes').className = 'chwHidden';
+    document.getElementById('chw' + selectedChartType + 'SubtypeInput').disabled = true;
     selectedChartType = newChartType;
-    document.getElementById('chw' + selectedChartType + 'Subtypes').className =
-      'chwVisible';
-    document.getElementById(
-      'chw' + selectedChartType + 'SubtypeInput',
-    ).disabled = false;
+    document.getElementById('chw' + selectedChartType + 'Subtypes').className = 'chwVisible';
+    document.getElementById('chw' + selectedChartType + 'SubtypeInput').disabled = false;
     var currentPage = getPageIndex(activePage);
     for (var i = 0; i < currentPage; i++) {
       if (!activatedElements[selectedChartType][pageOrder[i]]) continue;
@@ -568,8 +533,7 @@ function chwWizard() {
     enabledPages[activePage] = true;
     document.getElementById('chwFinishButton').className = 'chwButtonDisabled';
     finishEnabled = false;
-    document.getElementById('chw' + activePage + 'WizardButton').className =
-      'chwNavigationImage';
+    document.getElementById('chw' + activePage + 'WizardButton').className = 'chwNavigationImage';
     document.getElementById('chw' + activePage + 'WizardButton').src =
       skinDirectory + 'chwTaskCompleting.png';
   };
@@ -587,21 +551,13 @@ function chwWizard() {
   this.flipAdvanced = function (elementName) {
     var legend = document.getElementById('chw' + elementName + 'Legend');
     if (legend.firstChild.nodeValue.indexOf('>>') >= 0) {
-      legend.firstChild.nodeValue = legend.firstChild.nodeValue.replace(
-        '>>',
-        '<<',
-      );
+      legend.firstChild.nodeValue = legend.firstChild.nodeValue.replace('>>', '<<');
       legend.title = legend.title.replace(showWord, hideWord);
-      document.getElementById('chw' + elementName + 'Div').className =
-        'chwVisible';
+      document.getElementById('chw' + elementName + 'Div').className = 'chwVisible';
     } else {
-      legend.firstChild.nodeValue = legend.firstChild.nodeValue.replace(
-        '<<',
-        '>>',
-      );
+      legend.firstChild.nodeValue = legend.firstChild.nodeValue.replace('<<', '>>');
       legend.title = legend.title.replace(hideWord, showWord);
-      document.getElementById('chw' + elementName + 'Div').className =
-        'chwHidden';
+      document.getElementById('chw' + elementName + 'Div').className = 'chwHidden';
     }
   };
 
@@ -650,8 +606,7 @@ function chwWizard() {
     if (activePage == 'Type') {
       for (var page in activatedElements[selectedChartType]) {
         enabledPages[page] = true;
-        document.getElementById('chw' + page + 'WizardButton').className =
-          'chwNavigationImage';
+        document.getElementById('chw' + page + 'WizardButton').className = 'chwNavigationImage';
         document.getElementById('chw' + page + 'WizardButton').src =
           skinDirectory + 'chwTaskCompleted.png';
       }
@@ -660,8 +615,7 @@ function chwWizard() {
     }
     nextPage = pageOrder[nextPage];
     enabledPages[nextPage] = true;
-    document.getElementById('chw' + nextPage + 'WizardButton').className =
-      'chwNavigationImage';
+    document.getElementById('chw' + nextPage + 'WizardButton').className = 'chwNavigationImage';
     this.showWizardPage(nextPage);
     return false;
   };
@@ -715,35 +669,20 @@ function chwWizard() {
   this.changeInserts = function (elementName) {
     var element = document.getElementById('chw' + elementName + 'Input');
     element.value =
-      'left:' +
-      document.getElementById('chw' + elementName + 'LeftInput').value +
-      ';';
+      'left:' + document.getElementById('chw' + elementName + 'LeftInput').value + ';';
+    element.value += 'top:' + document.getElementById('chw' + elementName + 'TopInput').value + ';';
     element.value +=
-      'top:' +
-      document.getElementById('chw' + elementName + 'TopInput').value +
-      ';';
-    element.value +=
-      'right:' +
-      document.getElementById('chw' + elementName + 'RightInput').value +
-      ';';
-    element.value +=
-      'bottom:' +
-      document.getElementById('chw' + elementName + 'BottomInput').value;
+      'right:' + document.getElementById('chw' + elementName + 'RightInput').value + ';';
+    element.value += 'bottom:' + document.getElementById('chw' + elementName + 'BottomInput').value;
   };
 
   this.changeFont = function (elementName) {
     var element = document.getElementById('chw' + elementName + 'Input');
     element.value =
-      'name:' +
-      document.getElementById('chw' + elementName + 'FamilyInput').value +
-      ';';
+      'name:' + document.getElementById('chw' + elementName + 'FamilyInput').value + ';';
     element.value +=
-      'style:' +
-      document.getElementById('chw' + elementName + 'StyleInput').value +
-      ';';
-    element.value +=
-      'size:' +
-      document.getElementById('chw' + elementName + 'SizeInput').value;
+      'style:' + document.getElementById('chw' + elementName + 'StyleInput').value + ';';
+    element.value += 'size:' + document.getElementById('chw' + elementName + 'SizeInput').value;
   };
 
   this.checkTitle = function (titleName) {
@@ -1079,15 +1018,7 @@ function ColorPicker(hsmap, lmap, lpointer, colorShower, codeDisplay) {
     var colorcode = this.rgb2code(rgb.red, rgb.green, rgb.blue);
     if (!this.validCode(colorcode)) return;
     this.setValues(rgb.red, rgb.green, rgb.blue, hue, sat, this.lum);
-    this.setComponents(
-      rgb.red,
-      rgb.green,
-      rgb.blue,
-      hue,
-      sat,
-      this.lum,
-      colorcode,
-    );
+    this.setComponents(rgb.red, rgb.green, rgb.blue, hue, sat, this.lum, colorcode);
   };
 
   /*
@@ -1103,15 +1034,7 @@ function ColorPicker(hsmap, lmap, lpointer, colorShower, codeDisplay) {
     var colorcode = this.rgb2code(rgb.red, rgb.green, rgb.blue);
     if (!this.validCode(colorcode)) return;
     this.setValues(rgb.red, rgb.green, rgb.blue, this.hue, this.sat, lum);
-    this.setComponents(
-      this.red,
-      this.green,
-      this.blue,
-      this.hue,
-      this.sat,
-      this.lum,
-      colorcode,
-    );
+    this.setComponents(this.red, this.green, this.blue, this.hue, this.sat, this.lum, colorcode);
   };
   /*
      The user entered a custom color code in the
@@ -1128,15 +1051,7 @@ function ColorPicker(hsmap, lmap, lpointer, colorShower, codeDisplay) {
     var rgb = this.code2rgb(colorcode);
     var hsl = this.rgb2hsl(rgb.red, rgb.green, rgb.blue);
     this.setValues(rgb.red, rgb.green, rgb.blue, hsl.hue, hsl.sat, hsl.lum);
-    this.setComponents(
-      this.red,
-      this.green,
-      this.blue,
-      this.hue,
-      this.sat,
-      this.lum,
-      colorcode,
-    );
+    this.setComponents(this.red, this.green, this.blue, this.hue, this.sat, this.lum, colorcode);
   };
   this.rgbCodeChanged = function () {
     var red = this.redComponent.value - 0;
@@ -1175,15 +1090,7 @@ function ColorPicker(hsmap, lmap, lpointer, colorShower, codeDisplay) {
     }
     var hsl = this.rgb2hsl(red, green, blue);
     this.setValues(red, green, blue, hsl.hue, hsl.sat, hsl.lum);
-    this.setComponents(
-      this.red,
-      this.green,
-      this.blue,
-      this.hue,
-      this.sat,
-      this.lum,
-      colorcode,
-    );
+    this.setComponents(this.red, this.green, this.blue, this.hue, this.sat, this.lum, colorcode);
   };
   this.hslCodeChanged = function () {
     var hue = this.hueComponent.value - 0;
@@ -1222,15 +1129,7 @@ function ColorPicker(hsmap, lmap, lpointer, colorShower, codeDisplay) {
     }
     var rgb = this.hsl2rgb(hue, sat, lum);
     this.setValues(rgb.red, rgb.green, rgb.blue, hue, sat, lum);
-    this.setComponents(
-      this.red,
-      this.green,
-      this.blue,
-      this.hue,
-      this.sat,
-      this.lum,
-      colorcode,
-    );
+    this.setComponents(this.red, this.green, this.blue, this.hue, this.sat, this.lum, colorcode);
   };
 
   /*
@@ -1307,15 +1206,7 @@ function ColorPicker(hsmap, lmap, lpointer, colorShower, codeDisplay) {
     var rgb = this.code2rgb(color);
     var hsl = this.rgb2hsl(rgb.red, rgb.green, rgb.blue);
     this.setValues(rgb.red, rgb.green, rgb.blue, hsl.hue, hsl.sat, hsl.lum);
-    this.setComponents(
-      this.red,
-      this.green,
-      this.blue,
-      this.hue,
-      this.sat,
-      this.lum,
-      color,
-    );
+    this.setComponents(this.red, this.green, this.blue, this.hue, this.sat, this.lum, color);
     this.container.style.display = 'block';
     if (window.ActiveXObject) {
       // this is an ugly way of avoiding an Internet Explorer 'feature'
@@ -1328,19 +1219,11 @@ function ColorPicker(hsmap, lmap, lpointer, colorShower, codeDisplay) {
     }
     if (document.width && document.getBoxObjectFor) {
       this.fieldset.style.left =
-        this.max3(
-          document.width / 2 -
-            document.getBoxObjectFor(this.fieldset).width / 2,
-          0,
-          0,
-        ) + 'px';
+        this.max3(document.width / 2 - document.getBoxObjectFor(this.fieldset).width / 2, 0, 0) +
+        'px';
     } else if (document.body.clientWidth) {
       this.fieldset.style.left =
-        this.max3(
-          document.body.clientWidth / 2 - this.fieldset.clientWidth / 2,
-          0,
-          0,
-        ) + 'px';
+        this.max3(document.body.clientWidth / 2 - this.fieldset.clientWidth / 2, 0, 0) + 'px';
     }
   };
 

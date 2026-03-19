@@ -44,8 +44,7 @@
 .more-actions .edit-all {
   display: block;
   padding: 2px 18px;
-  background: transparent url($xwiki.getSkinFile('icons/silk/pencil.gif', true))
-    left top no-repeat;
+  background: transparent url($xwiki.getSkinFile('icons/silk/pencil.gif', true)) left top no-repeat;
 }
 .xclass-title {
   margin: 16px 0 2px;
@@ -153,8 +152,7 @@ xproperty-title h2 {
   margin: 0;
   font-size: 1em;
   font-weight: 100;
-  background: transparent
-    url($xwiki.getSkinFile('icons/datamodel/propertyType-Generic.png', true))
+  background: transparent url($xwiki.getSkinFile('icons/datamodel/propertyType-Generic.png', true))
     14px center no-repeat;
   min-height: 16px;
 }
@@ -181,20 +179,14 @@ xproperty-title h2 {
 #body .collapsable .xobject-title h3,
 #body .collapsable .xclass-title,
 #body .collapsable .xproperty-title {
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/bullet_toggle_minus.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/bullet_toggle_minus.gif', true));
   background-position: 0 center;
   background-repeat: no-repeat;
 }
 #body .collapsed .xobject-title h3,
 #body .collapsed .xclass-title,
 #body .collapsed .xproperty-title {
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/bullet_toggle_plus.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/bullet_toggle_plus.gif', true));
 }
 .xclass.collapsed .xclass-content,
 .xobject.collapsed .xobject-content,
@@ -202,10 +194,7 @@ xproperty-title h2 {
   display: none;
 }
 .collapsable dt .collapser {
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/bullet_toggle_minus.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/bullet_toggle_minus.gif', true));
   background-position: -4px center;
   background-repeat: no-repeat;
   cursor: default;
@@ -220,10 +209,7 @@ xproperty-title h2 {
   margin-left: -10px;
 }
 .collapsable dt .collapsed {
-  background-image: url($xwiki.getSkinFile(
-    'icons/silk/bullet_toggle_plus.gif',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/silk/bullet_toggle_plus.gif', true));
 }
 .xproperty-title .move {
   display: block;
@@ -241,29 +227,19 @@ xproperty-title h2 {
   background-image: url($xwiki.getSkinFile('icons/datamodel/string.png', true));
 }
 .DateClass h2 {
-  background-image: url($xwiki.getSkinFile(
-    'icons/datamodel/calendar.png',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/datamodel/calendar.png', true));
 }
 .TextAreaClass h2 {
-  background-image: url($xwiki.getSkinFile(
-    'icons/datamodel/textarea.png',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/datamodel/textarea.png', true));
 }
 .NumberClass h2 {
   background-image: url($xwiki.getSkinFile('icons/datamodel/number.png', true));
 }
 .BooleanClass h2 {
-  background-image: url($xwiki.getSkinFile(
-    'icons/datamodel/boolean.png, true'
-  ));
+  background-image: url($xwiki.getSkinFile('icons/datamodel/boolean.png, true'));
 }
 .StaticListClass h2 {
-  background-image: url($xwiki.getSkinFile(
-    'icons/datamodel/staticlist.png, true'
-  ));
+  background-image: url($xwiki.getSkinFile('icons/datamodel/staticlist.png, true'));
 }
 .GroupsClass h2 {
   background-image: url($xwiki.getSkinFile('icons/datamodel/groups.png, true'));
@@ -275,17 +251,11 @@ xproperty-title h2 {
   background-image: url($xwiki.getSkinFile('icons/datamodel/rights.png', true));
 }
 .DBListClass h2 {
-  background-image: url($xwiki.getSkinFile(
-    'icons/datamodel/database.png',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/datamodel/database.png', true));
 }
 .DBTreeListClass h2 {
   background-image: url($xwiki.getSkinFile('icons/datamodel/tree.png', true));
 }
 .PasswordClass h2 {
-  background-image: url($xwiki.getSkinFile(
-    'icons/datamodel/password.png',
-    true
-  ));
+  background-image: url($xwiki.getSkinFile('icons/datamodel/password.png', true));
 }

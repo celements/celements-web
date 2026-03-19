@@ -40,18 +40,14 @@
       initialize: function () {
         const _me = this;
         _me._startReorderModeBind = _me._startReorderMode.bind(_me);
-        _me._cancelNavReorderHandlerBind =
-          _me._cancelNavReorderHandler.bind(_me);
+        _me._cancelNavReorderHandlerBind = _me._cancelNavReorderHandler.bind(_me);
         _me._saveNavReorderHandlerBind = _me._saveNavReorderHandler.bind(_me);
         _me._registerReorderBind = _me._registerReorder.bind(_me);
         _me._initReorderBind = _me._initReorder.bind(_me);
         _me._reorderObj = null;
         _me._modalDialog = null;
         if ($('tabMenuPanel')) {
-          $('tabMenuPanel').observe(
-            'tabedit:scriptsLoaded',
-            _me._registerReorderBind,
-          );
+          $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._registerReorderBind);
         } else {
           Event.observe(window, 'load', _me._registerReorderBind);
         }
@@ -60,10 +56,7 @@
       _registerReorder: function (event) {
         const _me = this;
         if ($('tabMenuPanel')) {
-          $('tabMenuPanel').stopObserving(
-            'tabedit:scriptsLoaded',
-            _me._registerReorderBind,
-          );
+          $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._registerReorderBind);
         }
         Event.stopObserving(window, 'load', _me._registerReorderBind);
         $('cel_presentation_editor_reorder_tree').stopObserving(
@@ -74,10 +67,7 @@
           'celreorder_reorderMode:start',
           _me._startReorderModeBind,
         );
-        if (
-          typeof getCelementsTabEditor !== 'undefined' &&
-          getCelementsTabEditor()
-        ) {
+        if (typeof getCelementsTabEditor !== 'undefined' && getCelementsTabEditor()) {
           getCelementsTabEditor().addAfterInitListener(function () {
             _me._initReorder();
           });
@@ -99,10 +89,7 @@
           button.stopObserving('click', _me._saveNavReorderHandlerBind);
           button.observe('click', _me._saveNavReorderHandlerBind);
         });
-        if (
-          $('reorderingTitle') &&
-          $('reorderingTitle').hasClassName('celReorderToggle')
-        ) {
+        if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
           $('reorderingTitle').show();
         }
         $('cel_presentation_editor_reorder_tree').addClassName('reorderMode');
@@ -116,16 +103,11 @@
         $$('.cel_naveditor_button_saveAndContinue').each(function (button) {
           button.stopObserving('click', _me._saveNavReorderHandlerBind);
         });
-        if (
-          $('reorderingTitle') &&
-          $('reorderingTitle').hasClassName('celReorderToggle')
-        ) {
+        if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
           $('reorderingTitle').hide();
           window.location.reload();
         }
-        $('cel_presentation_editor_reorder_tree').removeClassName(
-          'reorderMode',
-        );
+        $('cel_presentation_editor_reorder_tree').removeClassName('reorderMode');
       },
 
       _initReorder: function () {
@@ -139,10 +121,7 @@
 
       _cancelNavReorderHandler: function (event) {
         event.stop();
-        if (
-          $('reorderingTitle') &&
-          $('reorderingTitle').hasClassName('celReorderToggle')
-        ) {
+        if ($('reorderingTitle') && $('reorderingTitle').hasClassName('celReorderToggle')) {
           window.location.reload();
         }
       },
@@ -169,13 +148,8 @@
             console.error('failed saving reorder: ' + transport.responseText);
             alert('Failed saving!');
           }
-          if (
-            !$('reorderingTitle') ||
-            !$('reorderingTitle').hasClassName('celReorderToggle')
-          ) {
-            $('cel_presentation_editor_reorder_tree').fire(
-              'celreorder_reorderMode:start',
-            );
+          if (!$('reorderingTitle') || !$('reorderingTitle').hasClassName('celReorderToggle')) {
+            $('cel_presentation_editor_reorder_tree').fire('celreorder_reorderMode:start');
             _me._startReorderMode();
           }
           savingDialog.hide();

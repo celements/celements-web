@@ -77,12 +77,8 @@ var XWiki = (function (XWiki) {
     },
     initialize: function (text, type, options) {
       this.text = text || this.text;
-      this.type =
-        typeof this.defaultOptions[type] != 'undefined' ? type : 'plain';
-      this.options = Object.extend(
-        Object.clone(this.defaultOptions[this.type]),
-        options || {},
-      );
+      this.type = typeof this.defaultOptions[type] != 'undefined' ? type : 'plain';
+      this.options = Object.extend(Object.clone(this.defaultOptions[this.type]), options || {});
       this.createElement();
       if (!this.options.inactive) {
         this.show();
@@ -108,14 +104,8 @@ var XWiki = (function (XWiki) {
         if (this.options.color) {
           this.element.setStyle({ color: this.options.color });
         }
-        this.element = this.element.wrap(
-          new Element('div', { class: 'xnotification-wrapper' }),
-        );
-        Event.observe(
-          this.element,
-          'click',
-          this.hide.bindAsEventListener(this),
-        );
+        this.element = this.element.wrap(new Element('div', { class: 'xnotification-wrapper' }));
+        Event.observe(this.element, 'click', this.hide.bindAsEventListener(this));
       }
     },
     /** Display the notification and schedule an automatic hide after the configured period of time, if any. */
@@ -125,10 +115,7 @@ var XWiki = (function (XWiki) {
       }
       this.element.show();
       if (this.options.timeout) {
-        this.timer = window.setTimeout(
-          this.hide.bind(this),
-          this.options.timeout * 1000,
-        );
+        this.timer = window.setTimeout(this.hide.bind(this), this.options.timeout * 1000);
       }
     },
     /** Hide the notification. */

@@ -88,8 +88,7 @@ if (typeof CELEMENTS.cookie == 'undefined') {
 
       _defaultCallback: function (response) {
         var _me = this;
-        var cookiesEnabled =
-          'true' == response.data.replace(/thirdPartyCookiesEnabled=/g, '');
+        var cookiesEnabled = 'true' == response.data.replace(/thirdPartyCookiesEnabled=/g, '');
         $(_me._frameId).remove();
         var overlayConf = {
           fixedcenter: true,
@@ -128,9 +127,7 @@ if (typeof CELEMENTS.cookie == 'undefined') {
           $(document.body).insert(checkFrame);
           Event.observe(window, 'message', callback.bind(_me));
         } else {
-          console.log(
-            'No external URL to check third party cookies configured.',
-          );
+          console.log('No external URL to check third party cookies configured.');
         }
       },
     };

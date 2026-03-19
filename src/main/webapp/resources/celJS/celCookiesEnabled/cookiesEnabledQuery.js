@@ -18,10 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 (function (window, undefined) {
-  var responseDomain = window.location.search.replace(
-    /^.*[&\?]domain=(.*?)(&.*)?$/g,
-    '$1',
-  );
+  var responseDomain = window.location.search.replace(/^.*[&\?]domain=(.*?)(&.*)?$/g, '$1');
   var cookiesAllowed = false;
   var cookieName = 'CelementsTestThirdPartyCookieEnabled';
   document.cookie = cookieName + '=yes;';
@@ -37,10 +34,7 @@
     var loc = locSearch.replace(/^.*[&\?]domain=(.*?)(&.*)?$/g, '$1');
     var decodedLoc = decodeURIComponent(loc);
     // DON'T use anything but string. (It's IE, what else?)
-    parent.postMessage(
-      'thirdPartyCookiesEnabled=' + cookiesAllowed,
-      decodedLoc,
-    );
+    parent.postMessage('thirdPartyCookiesEnabled=' + cookiesAllowed, decodedLoc);
   } else {
     var failMsg = 'Third party cookie enabled check failed.';
     alert(failMsg);

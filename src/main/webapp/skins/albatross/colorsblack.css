@@ -314,8 +314,7 @@ button.button:hover {
 }
 #body .buttonwrapper * {
   background-color: transparent;
-  background: transparent url('icons/black-button24r.png') right center
-    no-repeat;
+  background: transparent url('icons/black-button24r.png') right center no-repeat;
   color: #fff;
   padding: 4px 8px;
   border: none;
@@ -516,8 +515,7 @@ th {
   border: none;
 }
 .xwikitabbar li.active {
-  background: transparent url(icons/black-tabedit-current.png) top center
-    no-repeat;
+  background: transparent url(icons/black-tabedit-current.png) top center no-repeat;
   border: none;
 }
 

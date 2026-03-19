@@ -63,16 +63,8 @@ function positionTip(e) {
     //same concept with the vertical position
     if (bottomedge < tipobj.offsetHeight) {
       tipobj.style.top = ie
-        ? ietruebody().scrollTop +
-          event.clientY -
-          tipobj.offsetHeight -
-          offsetypoint +
-          'px'
-        : window.pageYOffset +
-          e.clientY -
-          tipobj.offsetHeight -
-          offsetypoint +
-          'px';
+        ? ietruebody().scrollTop + event.clientY - tipobj.offsetHeight - offsetypoint + 'px'
+        : window.pageYOffset + e.clientY - tipobj.offsetHeight - offsetypoint + 'px';
     } else {
       tipobj.style.top = curY + offsetypoint + 'px';
     }

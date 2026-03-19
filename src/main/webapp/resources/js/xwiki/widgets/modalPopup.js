@@ -24,10 +24,7 @@ var XWiki = (function (XWiki) {
       }),
         (this.content = content || 'Hello world!'));
       // Add the new shortcuts
-      this.shortcuts = Object.extend(
-        Object.clone(this.shortcuts),
-        shortcuts || {},
-      );
+      this.shortcuts = Object.extend(Object.clone(this.shortcuts), shortcuts || {});
       // Add the custom options
       this.options = Object.extend(Object.clone(this.options), options || {});
       // Register a shortcut for showing the dialog.
@@ -50,9 +47,7 @@ var XWiki = (function (XWiki) {
       this.dialogBox._x_contentPlug.update(this.content);
       // Add the dialog title
       if (this.options.title) {
-        var title = new Element('div', { class: 'xdialog-title' }).update(
-          this.options.title,
-        );
+        var title = new Element('div', { class: 'xdialog-title' }).update(this.options.title);
         title.setStyle({ color: this.options.titleColor });
         this.dialogBox.insertBefore(title, this.dialogBox.firstChild);
       }
@@ -63,10 +58,7 @@ var XWiki = (function (XWiki) {
           title: 'Close',
         }).update('X');
         closeButton.setStyle({ color: this.options.titleColor });
-        closeButton.observe(
-          'click',
-          this.closeDialog.bindAsEventListener(this),
-        );
+        closeButton.observe('click', this.closeDialog.bindAsEventListener(this));
         this.dialogBox.insertBefore(closeButton, this.dialogBox.firstChild);
       }
       this.dialog.appendChild(this.dialogBox);
@@ -135,8 +127,7 @@ var XWiki = (function (XWiki) {
           this.dialog.setStyle({
             top: document.viewport.getScrollOffsets().top + 'px',
           });
-          this.dialog._x_scrollListener =
-            this.onScroll.bindAsEventListener(this);
+          this.dialog._x_scrollListener = this.onScroll.bindAsEventListener(this);
           Event.observe(window, 'scroll', this.dialog._x_scrollListener);
           $$('select').each(function (item) {
             item._x_initiallyVisible = item.style.visibility;

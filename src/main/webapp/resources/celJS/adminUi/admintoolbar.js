@@ -207,25 +207,8 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
   this.contentUrl = null;
   this.title = null;
 
-  this.AdminWindow = function (
-    parent,
-    parent_node,
-    top,
-    left,
-    height,
-    width,
-    className,
-  ) {
-    this.inheritFrom(
-      'admin_div',
-      parent,
-      parent_node,
-      top,
-      left,
-      height,
-      width,
-      className,
-    );
+  this.AdminWindow = function (parent, parent_node, top, left, height, width, className) {
+    this.inheritFrom('admin_div', parent, parent_node, top, left, height, width, className);
 
     // create close element
     this.closeDiv = new CloseDiv(
@@ -244,23 +227,10 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
     this.closeDiv.setContent('close');
 
     // create title
-    this.titleDiv = new Div(
-      'title',
-      this,
-      this.n,
-      0,
-      0,
-      this.pt,
-      this.totalw - 50,
-      'admin_title',
-    );
+    this.titleDiv = new Div('title', this, this.n, 0, 0, this.pt, this.totalw - 50, 'admin_title');
     this.titleDiv.setSize(
       this.pt - (this.titleDiv.totalh - this.titleDiv.h),
-      this.w +
-        this.pl +
-        this.pr -
-        (this.titleDiv.totalw - this.titleDiv.w) -
-        this.closeDiv.totalw,
+      this.w + this.pl + this.pr - (this.titleDiv.totalw - this.titleDiv.w) - this.closeDiv.totalw,
     );
     this.setTitle('celements2.0 admin mode');
 
@@ -318,11 +288,7 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
     );
     this.titleDiv.setSize(
       this.pt - (this.titleDiv.totalh - this.titleDiv.h),
-      this.w +
-        this.pl +
-        this.pr -
-        (this.titleDiv.totalw - this.titleDiv.w) -
-        this.closeDiv.totalw,
+      this.w + this.pl + this.pr - (this.titleDiv.totalw - this.titleDiv.w) - this.closeDiv.totalw,
     );
 
     return true;
@@ -394,25 +360,8 @@ function ContentDiv(parent, parent_node, top, left, height, width, className) {
 
   this.http_request = false;
 
-  this.ContentDiv = function (
-    parent,
-    parent_node,
-    top,
-    left,
-    height,
-    width,
-    className,
-  ) {
-    this.inheritFrom(
-      'content',
-      parent,
-      parent_node,
-      top,
-      left,
-      height,
-      width,
-      className,
-    );
+  this.ContentDiv = function (parent, parent_node, top, left, height, width, className) {
+    this.inheritFrom('content', parent, parent_node, top, left, height, width, className);
 
     return true;
   };
@@ -483,8 +432,7 @@ function ContentDiv(parent, parent_node, top, left, height, width, className) {
       if (me.http_request.status == 200 || me.http_request.status == 304) {
         if (me.http_request.responseXML) {
           var xmlDoc = me.http_request.responseXML;
-          var renderedCodeElem =
-            xmlDoc.getElementsByTagName('renderedcontent')[0];
+          var renderedCodeElem = xmlDoc.getElementsByTagName('renderedcontent')[0];
           me.n.innerHTML = renderedCodeElem.firstChild.nodeValue;
         } else {
           //me.parent.statusDiv.setContent('Error: no XML file!');
@@ -515,25 +463,8 @@ function CloseDiv(parent, parent_node, top, left, height, width, className) {
 
   this.inheritFrom = Div;
 
-  this.CloseDiv = function (
-    parent,
-    parent_node,
-    top,
-    left,
-    height,
-    width,
-    className,
-  ) {
-    this.inheritFrom(
-      'close',
-      parent,
-      parent_node,
-      top,
-      left,
-      height,
-      width,
-      className,
-    );
+  this.CloseDiv = function (parent, parent_node, top, left, height, width, className) {
+    this.inheritFrom('close', parent, parent_node, top, left, height, width, className);
 
     return true;
   };

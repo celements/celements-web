@@ -27,8 +27,7 @@
     return (
       !isInReorderMode ||
       confirm(
-        'Sie sind am neu ordnen der Knoten.' +
-          ' Nicht gespeicherte Änderungen gehen verloren.',
+        'Sie sind am neu ordnen der Knoten.' + ' Nicht gespeicherte Änderungen gehen verloren.',
       )
     );
   };
@@ -37,11 +36,7 @@
     const langName = theLink.innerHTML;
     return (
       !theLink.hasClassName('transNotExists') ||
-      confirm(
-        "Möchten Sie wirklich eine Übersetzung für '" +
-          langName +
-          "' erstellen?",
-      )
+      confirm("Möchten Sie wirklich eine Übersetzung für '" + langName + "' erstellen?")
     );
   };
 
@@ -51,15 +46,9 @@
     let linkUrl = theLink.href;
     if (!theLink.up('.docLangs')) {
       window.open(linkUrl);
-    } else if (
-      checkIsCreateTrans(theLink) &&
-      checkReorderModeBrowseAway(theLink)
-    ) {
+    } else if (checkIsCreateTrans(theLink) && checkReorderModeBrowseAway(theLink)) {
       const xredirect =
-        'xredirect=' +
-        encodeURIComponent(
-          window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'),
-        );
+        'xredirect=' + encodeURIComponent(window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
       if (!linkUrl.match(/\?/)) {
         linkUrl += '?' + xredirect;
       } else {
@@ -79,9 +68,7 @@
     });
   };
 
-  document.addEventListener('DOMContentLoaded', () =>
-    registerOnSiteEditLinks(),
-  );
+  document.addEventListener('DOMContentLoaded', () => registerOnSiteEditLinks());
 
   /****
    * Space selector

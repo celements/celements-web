@@ -61,12 +61,7 @@
               listItem.id = 'LI' + menuItemId;
             }
             _me._addEmptySublists(listItem.id);
-            const ddElem = new CELEMENTS.reorder.DDList(
-              listItem.id,
-              undefined,
-              undefined,
-              _me,
-            );
+            const ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
             _me._addHandleIfPresent(ddElem, listItem);
           }
         });
@@ -102,11 +97,7 @@
         const _me = this;
         const currentLevel = _me._getLevelOfMenuItem(listItemId);
         const subULid = listItemId.replace(/^LI/, 'C');
-        if (
-          !$(subULid) &&
-          currentLevel >= _me.minLevel &&
-          currentLevel < _me.maxLevel
-        ) {
+        if (!$(subULid) && currentLevel >= _me.minLevel && currentLevel < _me.maxLevel) {
           const emptyList = new Element('ul', {
             id: subULid,
             class: 'cel_skin_editor_reorder',
@@ -156,9 +147,7 @@
               if (transport.responseText == 'OK') {
                 _me.celFire('Cel_DDReorder:saveSuccess');
               } else {
-                console.error(
-                  'failed saving reorder: ' + transport.responseText,
-                );
+                console.error('failed saving reorder: ' + transport.responseText);
                 _me.celFire('Cel_DDReorder:saveError');
               }
             }
@@ -177,12 +166,7 @@
   //////////////////////////////////////////////////////////////////////////////
 
   window.CELEMENTS.reorder.DDList = function (id, sGroup, config, ddReorder) {
-    window.CELEMENTS.reorder.DDList.superclass.constructor.call(
-      this,
-      id,
-      sGroup,
-      config,
-    );
+    window.CELEMENTS.reorder.DDList.superclass.constructor.call(this, id, sGroup, config);
 
     this.ddReorder = ddReorder;
     const el = this.getDragEl();
@@ -214,11 +198,7 @@
       dragEl.innerHTML = clickEl.innerHTML;
 
       Dom.setStyle(dragEl, 'color', Dom.getStyle(clickEl, 'color'));
-      Dom.setStyle(
-        dragEl,
-        'backgroundColor',
-        Dom.getStyle(clickEl, 'backgroundColor'),
-      );
+      Dom.setStyle(dragEl, 'backgroundColor', Dom.getStyle(clickEl, 'backgroundColor'));
       Dom.setStyle(dragEl, 'border', 'none');
       YAHOO.util.DDM.mode = YAHOO.util.DDM.INTERSECT;
     },
@@ -307,8 +287,7 @@
       elems.forEach(function (elem) {
         if (elem.cursorIsOver) {
           if (
-            (!isOutsideArea &&
-              elem._domRef.ancestors().size() > destEl.ancestors().size()) ||
+            (!isOutsideArea && elem._domRef.ancestors().size() > destEl.ancestors().size()) ||
             elem._domRef.hasClassName('cel_layout_editor_scrollArea')
           ) {
             destEl = elem._domRef;
@@ -323,8 +302,7 @@
 
       if ($(destEl).hasClassName('cel_layout_editor_scrollArea')) {
         if (_me.celLayoutEditorReorderScrollPoll == null) {
-          _me.celLayoutEditorReorderScrollUp =
-            id == 'cel_layout_editor_scrollup';
+          _me.celLayoutEditorReorderScrollUp = id == 'cel_layout_editor_scrollup';
           _me.celLayoutEditorReorderScrollPoll = setInterval(
             _me._celLayoutEditorReorderScrollSome,
             100,
@@ -368,8 +346,7 @@
       //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
       //counting margin-auto offsets. Thus we need to use jquery.offset
       const destElOffset = $j(destEl).offset();
-      const destElMedium =
-        destElOffset.top - treeDiv.scrollTop + destEl.getHeight() / 2;
+      const destElMedium = destElOffset.top - treeDiv.scrollTop + destEl.getHeight() / 2;
       return YEvent.getPageY(e) < destElMedium;
     },
 

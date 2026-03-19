@@ -28,9 +28,7 @@ var imagePickerCallback = function (filename, origFieldName) {
   $('nav_imagePicker').down('img#celMenuImagePreview').show();
   if (!$('nav_imagePicker').down('.celMenuImagePreviewDelete')) {
     var imgElement = new Element('img', {
-      src:
-        CELEMENTS.getUtils().getPathPrefix() +
-        '/file/resources/layouts/img/cross.gif',
+      src: CELEMENTS.getUtils().getPathPrefix() + '/file/resources/layouts/img/cross.gif',
       class: 'removeBackgroundImg',
       alt: 'romove',
     });
@@ -87,9 +85,6 @@ var removeImageAfterUpload = function (event) {
     });
   };
 
-  $(document.body).stopObserving(
-    'celements:contentChanged',
-    initRemoveImgLinkClick,
-  );
+  $(document.body).stopObserving('celements:contentChanged', initRemoveImgLinkClick);
   $(document.body).observe('celements:contentChanged', initRemoveImgLinkClick);
 })(window);

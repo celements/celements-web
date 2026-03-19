@@ -30,10 +30,7 @@ function startResizeObservers(event) {
 
 function resize() {
   //alert(($$('.cel_overlay_outerBox').size() > 0) + " - " + ($$('.cel_overlay_innerBox').size() > 0));
-  if (
-    $$('.cel_overlay_outerBox').size() > 0 &&
-    $$('.cel_overlay_innerBox').size() > 0
-  ) {
+  if ($$('.cel_overlay_outerBox').size() > 0 && $$('.cel_overlay_innerBox').size() > 0) {
     var outerBox = $$('.cel_overlay_outerBox')[0];
     var innerBox = $$('.cel_overlay_innerBox')[0];
     var scrollBox = innerBox.down('.cel_overlay_scrollable');
@@ -50,10 +47,7 @@ function resize() {
     if (scrollBox) {
       scrollBox.siblings().each(function (sibl) {
         //excluding 'style' needed for IE7 since style tags in IE7 have a heigth ... sometimes ...
-        if (
-          sibl.getStyle('position') != 'absolute' &&
-          sibl.tagName.toLowerCase() != 'style'
-        ) {
+        if (sibl.getStyle('position') != 'absolute' && sibl.tagName.toLowerCase() != 'style') {
           siblingHeight += sibl.offsetHeight;
         }
       });
@@ -66,10 +60,7 @@ function resize() {
     var winHeight = 0;
     if (typeof window.innerWidth == 'number') {
       winHeight = window.innerHeight;
-    } else if (
-      document.documentElement &&
-      document.documentElement.clientHeight
-    ) {
+    } else if (document.documentElement && document.documentElement.clientHeight) {
       winHeight = document.documentElement.clientHeight;
     } else if (document.body && document.body.clientHeight) {
       winHeight = document.body.clientHeight;

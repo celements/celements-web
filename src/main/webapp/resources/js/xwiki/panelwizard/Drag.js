@@ -41,10 +41,7 @@ var Drag = {
   end: function () {
     document.onmousemove = null;
     document.onmouseup = null;
-    Drag.obj.root.onDragEnd(
-      parseInt(Drag.obj.root.style.left),
-      parseInt(Drag.obj.root.style.top),
-    );
+    Drag.obj.root.onDragEnd(parseInt(Drag.obj.root.style.left), parseInt(Drag.obj.root.style.top));
     Drag.obj = null;
   },
   fixE: function (evt) {

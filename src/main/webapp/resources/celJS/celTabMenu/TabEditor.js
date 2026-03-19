@@ -119,10 +119,7 @@
           formId,
           newInitialValues,
         );
-        this.editorFormsInitialValues.set(
-          formId,
-          Object.freeze(newInitialValues),
-        );
+        this.editorFormsInitialValues.set(formId, Object.freeze(newInitialValues));
       }
       console.debug('retrieveInitialValues: end');
     },
@@ -177,10 +174,7 @@
               console.log('initTabMenu: before tabMenuSetup ');
               _me.tabMenuSetup(transport.responseText.evalJSON());
             } else {
-              console.log(
-                'failed to get CelTabMenu config: no valid JSON!',
-                transport,
-              );
+              console.log('failed to get CelTabMenu config: no valid JSON!', transport);
             }
             $$('body')[0].observe('scroll', function (event) {
               event.target.scrollTop = 0; //FF and IE fix
@@ -232,22 +226,15 @@
         }
       });
       _me._isEditorDirtyOnLoad =
-        _me.tabMenuConfig.isDirtyOnLoad !== undefined &&
-        _me.tabMenuConfig.isDirtyOnLoad == true;
-      _me.tmd = new YAHOO.widget.Panel(
-        'tabMenuPanel',
-        _me.tabMenuConfig.tabMenuPanelConfig,
-      );
+        _me.tabMenuConfig.isDirtyOnLoad !== undefined && _me.tabMenuConfig.isDirtyOnLoad == true;
+      _me.tmd = new YAHOO.widget.Panel('tabMenuPanel', _me.tabMenuConfig.tabMenuPanelConfig);
       _me.tmd.render();
       console.log('tabMenuSetup after render');
 
       if (starttabId == '') {
         var starttablist = $$('.celements3_tabMenu .starttab');
         if (starttablist.length > 0) {
-          starttabId = starttablist[0].id.substring(
-            0,
-            starttablist[0].id.length - 4,
-          );
+          starttabId = starttablist[0].id.substring(0, starttablist[0].id.length - 4);
           starttablist[0].select('form').each(function (formelem) {
             _me.retrieveInitialValues(formelem.id);
           });
@@ -256,14 +243,8 @@
         }
       }
       console.log('editorReadyDisplayNow register');
-      $('tabMenuPanel').stopObserving(
-        'tabedit:scriptsLoaded',
-        _me._editorReadyDisplayNowBind,
-      );
-      $('tabMenuPanel').observe(
-        'tabedit:scriptsLoaded',
-        _me._editorReadyDisplayNowBind,
-      );
+      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
+      $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
       if (starttabId != null) {
         console.log('tabMenuSetup before showTabMenu');
         _me.showTabMenu(starttabId);
@@ -302,10 +283,7 @@
     _editorReadyDisplayNow: function () {
       const _me = this;
       console.log('editorReadyDisplayNow start');
-      $('tabMenuPanel').stopObserving(
-        'tabedit:scriptsLoaded',
-        _me._editorReadyDisplayNowBind,
-      );
+      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._editorReadyDisplayNowBind);
       _me._displayNowEffect('tabMenuPanel', 'celementsLoadingIndicator');
       console.log('editorReadyDisplayNow finish');
     },
@@ -313,14 +291,8 @@
     _tabReadyDisplayNow: function () {
       const _me = this;
       console.log('_tabReadyDisplayNow start', _me._loadingTabId);
-      $('tabMenuPanel').stopObserving(
-        'tabedit:scriptsLoaded',
-        _me._tabReadyDisplayNowBind,
-      );
-      _me._displayNowEffect(
-        _me._getTabBodyId(_me._loadingTabId),
-        _me._getTabLoaderElement(),
-      );
+      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+      _me._displayNowEffect(_me._getTabBodyId(_me._loadingTabId), _me._getTabLoaderElement());
       console.log('_tabReadyDisplayNow finish');
     },
 
@@ -338,9 +310,7 @@
                 console.log('afterFinish: in appear before _fireTabChange');
                 _me._fireTabChange(_me._loadingTabId);
               }
-              console.log(
-                "afterFinish: in appear fire 'tabedit:afterDisplayNow'",
-              );
+              console.log("afterFinish: in appear fire 'tabedit:afterDisplayNow'");
               $('tabMenuPanel').fire('tabedit:afterDisplayNow');
             },
             sync: true,
@@ -359,17 +329,12 @@
       });
       Promise.all(beforeDisplayEvent.memo.beforePromises)
         .then(() => {
-          const defaultShowEvent = $('tabMenuPanel').fire(
-            'tabedit:finishedLoadingDisplayNow',
-            {
-              effect: displayNowEffect,
-              tabBodyId: tabBodyId,
-            },
-          );
+          const defaultShowEvent = $('tabMenuPanel').fire('tabedit:finishedLoadingDisplayNow', {
+            effect: displayNowEffect,
+            tabBodyId: tabBodyId,
+          });
           if (!defaultShowEvent.stopped) {
-            console.debug(
-              'displayNow event not stopped -> displaying instantly',
-            );
+            console.debug('displayNow event not stopped -> displaying instantly');
             displayNowEffect.start();
           } else {
             console.warn(
@@ -380,10 +345,7 @@
           console.debug('beforeDisplaying finish');
         })
         .catch((err) => {
-          console.error(
-            'preparing tab failed. Displaying will not happen.',
-            err,
-          );
+          console.error('preparing tab failed. Displaying will not happen.', err);
           //TODO show error message to user instead.
         });
       console.debug('_displayNowEffect finish');
@@ -420,8 +382,7 @@
     initDefaultCloseButton: function () {
       const _me = this;
       /* close button functions */
-      $$('.container-close')[0].innerHTML =
-        _me.tabMenuConfig.tabEditorSaveAndClose;
+      $$('.container-close')[0].innerHTML = _me.tabMenuConfig.tabEditorSaveAndClose;
       $$('.container-close')[0].onclick = function () {
         _me.saveAndClose();
       };
@@ -445,10 +406,7 @@
         id: tabData['container'],
       });
       _me._addClearButtons();
-      $('tabMenuPanel')
-        .down('.hd')
-        .down('div.clearbuttons')
-        .insert({ before: span });
+      $('tabMenuPanel').down('.hd').down('div.clearbuttons').insert({ before: span });
       tabData['onclick'] = { fn: clickHandler };
       _me.actionButtons.set(tabData['id'], new YAHOO.widget.Button(tabData));
     },
@@ -471,10 +429,7 @@
       });
       standardWhiteList = standardWhiteList.concat(additionalWhiteList);
       for (var index = 0; index < standardWhiteList.length; index++) {
-        var regEx = new RegExp(
-          '^.*(' + standardWhiteList[index] + '=[^&]*).*$',
-          'g',
-        );
+        var regEx = new RegExp('^.*(' + standardWhiteList[index] + '=[^&]*).*$', 'g');
         var regExArray = regEx.exec(window.location.search);
         if (regExArray != null) {
           newUrlParams = newUrlParams.concat(regExArray.slice(1));
@@ -495,20 +450,11 @@
                 window.location.search = _me._deleteParamsFromURL();
               }
             } catch (err) {
-              console.error(
-                'initSaveButton: error in saveAndContinue callback ',
-                err,
-              );
+              console.error('initSaveButton: error in saveAndContinue callback ', err);
             }
-            $('tabMenuPanel').fire(
-              'tabedit:saveAndContinueButtonSuccessful',
-              jsonResponses,
-            );
+            $('tabMenuPanel').fire('tabedit:saveAndContinueButtonSuccessful', jsonResponses);
           } else {
-            $('tabMenuPanel').fire(
-              'tabedit:saveAndContinueButtonFailed',
-              jsonResponses,
-            );
+            $('tabMenuPanel').fire('tabedit:saveAndContinueButtonFailed', jsonResponses);
           }
         });
       };
@@ -544,10 +490,7 @@
               window.location.href = _me._getCancelURL();
             }
           } else {
-            console.error(
-              'closeClickHandler: checkUnsavedChanges failed! ',
-              failed,
-            );
+            console.error('closeClickHandler: checkUnsavedChanges failed! ', failed);
           }
         });
       };
@@ -562,9 +505,7 @@
     _getCancelURL: function () {
       const _me = this;
       let redirectValue = '';
-      const editorRedirectInput = document.querySelector(
-        'input.celEditorRedirect',
-      );
+      const editorRedirectInput = document.querySelector('input.celEditorRedirect');
       if (editorRedirectInput) {
         redirectValue = $F(editorRedirectInput);
       } else {
@@ -578,10 +519,7 @@
           }
         }
       }
-      const redirectBaseValue = window.location.pathname.replace(
-        /\/edit\/|\/inline\//,
-        '/cancel/',
-      );
+      const redirectBaseValue = window.location.pathname.replace(/\/edit\/|\/inline\//, '/cancel/');
       redirectValue = redirectBaseValue + '?xredirect=' + redirectValue;
       console.log('_getCancelURL: return redirectValue ', redirectValue);
       return redirectValue;
@@ -659,13 +597,8 @@
       var width = _me.tabMenuConfig.tabMenuPanelConfig.width;
       var scriptLoadedHandler = function () {
         console.log('scriptLoadedHandler: start');
-        $('tabMenuPanel').stopObserving(
-          'tabedit:scriptsLoaded',
-          scriptLoadedHandler,
-        );
-        console.log(
-          'TabEditor: async loading tab firing celements:contentChanged',
-        );
+        $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
+        console.log('TabEditor: async loading tab firing celements:contentChanged');
         $(tabBodyId).fire('celements:contentChanged', {
           htmlElem: $(tabBodyId),
         });
@@ -685,18 +618,11 @@
       if (!tabBodyElem || (reload !== 'undefined' && reload)) {
         _me._loadTabAsync(tabId);
       } else if (_me._tabsInitalized.indexOf(tabBodyId) <= -1) {
-        console.log(
-          'getTab: static loaded ; start initialize ',
-          tabBodyId,
-          $(tabBodyId),
-        );
+        console.log('getTab: static loaded ; start initialize ', tabBodyId, $(tabBodyId));
         _me._initializeLoadedTab(tabBodyId);
         console.log('getTab: finish static loaded', tabId);
       } else {
-        $('tabMenuPanel').stopObserving(
-          'tabedit:scriptsLoaded',
-          scriptLoadedHandler,
-        );
+        $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', scriptLoadedHandler);
         _me._getTabLoaderElement().hide();
         $(tabBodyId).show();
         _me._fireTabChange(tabId);
@@ -716,11 +642,7 @@
     _fireTabChange: function (tabId) {
       const _me = this;
       var tabBodyId = _me._getTabBodyId(tabId);
-      console.log(
-        '_fireTabChange: fire tabedit:tabchange event for',
-        tabId,
-        tabBodyId,
-      );
+      console.log('_fireTabChange: fire tabedit:tabchange event for', tabId, tabBodyId);
       $(tabBodyId).fire('tabedit:tabchange', {
         newTabId: tabBodyId,
         newTabBodyId: tabBodyId,
@@ -736,14 +658,8 @@
       var tabBodyElem = _me._getOrCreateTabBody(tabBodyId);
       tabBodyElem.hide();
       _me._loadingTabId = tabId;
-      $('tabMenuPanel').stopObserving(
-        'tabedit:scriptsLoaded',
-        _me._tabReadyDisplayNowBind,
-      );
-      $('tabMenuPanel').observe(
-        'tabedit:scriptsLoaded',
-        _me._tabReadyDisplayNowBind,
-      );
+      $('tabMenuPanel').stopObserving('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
+      $('tabMenuPanel').observe('tabedit:scriptsLoaded', _me._tabReadyDisplayNowBind);
       console.log('_hideTabShowLoadingIndicator: finish ', tabId);
     },
 
@@ -756,11 +672,7 @@
       $(tabBodyId)
         .select('form')
         .each(function (formelem) {
-          console.log(
-            '_initializeLoadedTab: before retrieveInitialValues ',
-            tabBodyId,
-            formelem,
-          );
+          console.log('_initializeLoadedTab: before retrieveInitialValues ', tabBodyId, formelem);
           if (formelem && formelem.id) {
             _me.retrieveInitialValues(formelem.id);
           }
@@ -789,32 +701,23 @@
           '$1',
         );
       }
-      console.log(
-        '_loadTabAsync: template in URL? ',
-        loadTabParams['template'],
-      );
+      console.log('_loadTabAsync: template in URL? ', loadTabParams['template']);
       if (window.location.search.match(/\&?language=[^\&]+/)) {
         loadTabParams['language'] = window.location.search.replace(
           /.*\&?language=([^\&]+).*/,
           '$1',
         );
       }
-      console.log(
-        '_loadTabAsync: overwrite language from URL ? ',
-        loadTabParams['language'],
+      console.log('_loadTabAsync: overwrite language from URL ? ', loadTabParams['language']);
+      $A(decodeURI(window.location.search).match(/(\&|\?)data-[^=\&]+=[^\&]+/g)).each(
+        function (elem) {
+          var elemArray = elem.split('=');
+          var key = elemArray[0].substr(1);
+          var value = elemArray[1];
+          loadTabParams[key] = value;
+        },
       );
-      $A(
-        decodeURI(window.location.search).match(/(\&|\?)data-[^=\&]+=[^\&]+/g),
-      ).each(function (elem) {
-        var elemArray = elem.split('=');
-        var key = elemArray[0].substr(1);
-        var value = elemArray[1];
-        loadTabParams[key] = value;
-      });
-      console.log(
-        '_loadTabAsync: start Ajax call to load content ',
-        loadTabParams,
-      );
+      console.log('_loadTabAsync: start Ajax call to load content ', loadTabParams);
       new Ajax.Request(getTMCelHost(), {
         method: 'post',
         parameters: loadTabParams,
@@ -835,9 +738,7 @@
       const _me = this;
       syncLoadOnly = syncLoadOnly || false;
       var scripts = [];
-      var scriptElems = parentEle.select(
-        'span.cel_lazyloadJS, span.cel_lazyloadJS_exec',
-      );
+      var scriptElems = parentEle.select('span.cel_lazyloadJS, span.cel_lazyloadJS_exec');
       console.log('lazyLoadJS: start ', parentEle, syncLoadOnly, scriptElems);
       scriptElems.each(function (scriptEle) {
         if (scriptEle.hasClassName('cel_lazyloadJS')) {
@@ -845,22 +746,14 @@
           var scriptPathObj = '';
           var scriptURL = '';
           var loadScript = !syncLoadOnly;
-          console.log(
-            'lazyLoadJS: scriptPath isJSON ',
-            scriptPath,
-            scriptPath.isJSON(),
-          );
+          console.log('lazyLoadJS: scriptPath isJSON ', scriptPath, scriptPath.isJSON());
           if (scriptPath.isJSON()) {
             scriptPathObj = scriptPath.evalJSON();
             scriptPath = scriptPathObj.url;
             scriptURL = scriptPathObj.fullURL;
             loadScript = !syncLoadOnly || scriptPathObj.initLoad;
           }
-          console.log(
-            'lazyLoadJS: scriptPath after isJSON ',
-            scriptPath,
-            scriptURL,
-          );
+          console.log('lazyLoadJS: scriptPath after isJSON ', scriptPath, scriptURL);
           if (typeof scriptPath !== 'undefined' && scriptPath != '') {
             if (scriptPath.indexOf('?') > 0) {
               scriptPath += '&';
@@ -868,38 +761,22 @@
               scriptPath += '?';
             }
             scriptPath += 'version=' + _me.tabMenuConfig.startupTimeStamp;
-            if (
-              typeof scriptPathObj === 'object' &&
-              scriptPathObj.action == 'file'
-            ) {
-              scriptPath =
-                _me.tabMenuConfig.jsPathFileActionPrefix + scriptPath;
+            if (typeof scriptPathObj === 'object' && scriptPathObj.action == 'file') {
+              scriptPath = _me.tabMenuConfig.jsPathFileActionPrefix + scriptPath;
             } else {
               scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
             }
             scriptURL = scriptPath;
           }
-          console.log(
-            'lazyLoadJS: before check load script ',
-            loadScript,
-            scriptURL,
-          );
-          if (
-            loadScript &&
-            scriptURL &&
-            scriptURL !== '' &&
-            !_me.scriptIsLoaded(scriptURL)
-          ) {
+          console.log('lazyLoadJS: before check load script ', loadScript, scriptURL);
+          if (loadScript && scriptURL && scriptURL !== '' && !_me.scriptIsLoaded(scriptURL)) {
             console.log('lazyLoadJS: add ', scriptURL);
             scripts.push({ isUrl: true, value: scriptURL });
             //          var newEle = new Element('script', { type: 'text/javascript', src: scriptURL });
             //          $$('head')[0].insert(newEle);
           }
         } else if (scriptEle.hasClassName('cel_lazyloadJS_exec')) {
-          console.log(
-            'lazyLoadJS: elsif is URL false add ',
-            scriptEle.innerHTML,
-          );
+          console.log('lazyLoadJS: elsif is URL false add ', scriptEle.innerHTML);
           scripts.push({ isUrl: false, value: scriptEle.innerHTML });
           //      eval(scriptEle.innerHTML);
         }
@@ -908,9 +785,7 @@
         console.log('lazyLoadJS scripts ', scripts);
         _me.loadScripts(scripts);
       } else {
-        console.log(
-          'TabEditor: lazyLoadJS NO scripts to add -> firing tabedit:scriptsLoaded',
-        );
+        console.log('TabEditor: lazyLoadJS NO scripts to add -> firing tabedit:scriptsLoaded');
         $('tabMenuPanel').fire('tabedit:scriptsLoaded');
       }
       console.log('lazyLoadJS: end');
@@ -933,10 +808,7 @@
             scriptPath += '?';
           }
           scriptPath += 'version=' + _me.tabMenuConfig.startupTimeStamp;
-          if (
-            typeof scriptPathObj === 'object' &&
-            scriptPathObj.action == 'file'
-          ) {
+          if (typeof scriptPathObj === 'object' && scriptPathObj.action == 'file') {
             scriptPath = _me.tabMenuConfig.jsPathFileActionPrefix + scriptPath;
           } else {
             scriptPath = _me.tabMenuConfig.jsPathPrefix + scriptPath;
@@ -969,10 +841,7 @@
           });
           if (Prototype.Browser.IE) {
             newEle.onreadystatechange = function () {
-              if (
-                this.readyState === 'loaded' ||
-                this.readyState === 'complete'
-              ) {
+              if (this.readyState === 'loaded' || this.readyState === 'complete') {
                 CSSLoaded();
               }
             };
@@ -1010,10 +879,7 @@
           });
           if (Prototype.Browser.IE) {
             newEle.onreadystatechange = function () {
-              if (
-                this.readyState === 'loaded' ||
-                this.readyState === 'complete'
-              ) {
+              if (this.readyState === 'loaded' || this.readyState === 'complete') {
                 scriptLoaded();
               }
             };
@@ -1040,9 +906,7 @@
     _loadScriptsCheckFinished: function () {
       const _me = this;
       if (!_me.scriptLoading && _me.scriptQueue.length <= 0) {
-        console.log(
-          'TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded',
-        );
+        console.log('TabEditor: _loadScriptsCheckFinished firing tabedit:scriptsLoaded');
         $('tabMenuPanel').fire('tabedit:scriptsLoaded');
       }
       console.log('_loadScriptsCheckFinished: finish');
@@ -1200,10 +1064,7 @@
             errorMessages.join('</li><li>').replace(new RegExp('<li>$'), '') +
             '</ul>',
         );
-        errorMesgDialog.cfg.setProperty(
-          'icon',
-          YAHOO.widget.SimpleDialog.ICON_WARN,
-        );
+        errorMesgDialog.cfg.setProperty('icon', YAHOO.widget.SimpleDialog.ICON_WARN);
         errorMesgDialog.cfg.queueProperty('buttons', [
           {
             text: 'OK',
@@ -1227,11 +1088,9 @@
         if (typeof doBeforeEditSubmit != 'undefined') {
           doBeforeEditSubmit();
         }
-        document.forms[formName]
-          .select('textarea.mceEditor')
-          .each(function (formfield) {
-            formfield.value = tinymce.get(formfield.id).save();
-          });
+        document.forms[formName].select('textarea.mceEditor').each(function (formfield) {
+          formfield.value = tinymce.get(formfield.id).save();
+        });
         $(formName).request(handler);
       } else {
         alert('Error: No edit form!');
@@ -1255,36 +1114,20 @@
 
     isDirty: function () {
       const _me = this;
-      const isDirty =
-        _me.getDirtyFormIds().length > 0 || _me._isEditorDirtyOnLoad;
-      console.debug(
-        'isDirty: ',
-        isDirty,
-        ' , isEditorDirtyOnLoad: ',
-        _me._isEditorDirtyOnLoad,
-      );
+      const isDirty = _me.getDirtyFormIds().length > 0 || _me._isEditorDirtyOnLoad;
+      console.debug('isDirty: ', isDirty, ' , isEditorDirtyOnLoad: ', _me._isEditorDirtyOnLoad);
       return isDirty;
     },
 
     updateOneTinyMCETextArea: function (ed) {
       const formfield = document.getElementById(ed.id);
-      console.debug(
-        'updateOneTinyMCETextArea: updating field value',
-        formfield.id,
-      );
+      console.debug('updateOneTinyMCETextArea: updating field value', formfield.id);
       try {
         if (typeof ed.serializer !== 'undefined') {
           formfield.value = ed.getContent();
-          console.log(
-            'updateOneTinyMCETextArea: for field ',
-            formfield.id,
-            formfield.value,
-          );
+          console.log('updateOneTinyMCETextArea: for field ', formfield.id, formfield.value);
         } else {
-          console.warn(
-            'updateOneTinyMCETextArea: no serializer -> skip',
-            ed.id,
-          );
+          console.warn('updateOneTinyMCETextArea: no serializer -> skip', ed.id);
         }
       } catch (exp) {
         console.error(
@@ -1341,10 +1184,7 @@
     },
 
     _isIgnoreDirty: function (formElements, key) {
-      return (
-        formElements[key].classList &&
-        formElements[key].classList.contains('celIgnoreDirty')
-      );
+      return formElements[key].classList && formElements[key].classList.contains('celIgnoreDirty');
     },
 
     _equalsParamValues: function (currentValueArr, initValueSet = new Set()) {
@@ -1375,10 +1215,7 @@
             this.updateTinyMCETextAreas(formId);
             for (let elem of document.getElementById(formId).elements) {
               if (this._isSubmittableField(elem) && this.isDirtyField(elem)) {
-                console.debug(
-                  'getDirtyFormIds first found dirty field: ',
-                  elem.name,
-                );
+                console.debug('getDirtyFormIds first found dirty field: ', elem.name);
                 dirtyFormIds.push(formId);
                 break;
               }
@@ -1386,9 +1223,7 @@
           }
         } else {
           console.warn(
-            'getDirtyFormIds: form with id [' +
-              formId +
-              '] disappeared since loading the editor.',
+            'getDirtyFormIds: form with id [' + formId + '] disappeared since loading the editor.',
           );
         }
       }
@@ -1404,9 +1239,7 @@
             '?language=' +
             newEditLanguage +
             '&' +
-            window.location.search
-              .replace(/^\?/, '')
-              .replace(/language=[^&]*&?/g, '');
+            window.location.search.replace(/^\?/, '').replace(/language=[^&]*&?/g, '');
         } else {
           execCancelCallback();
         }
@@ -1419,14 +1252,9 @@
       execCancelCallback = execCancelCallback || function () {};
       if (_me.isDirty()) {
         const saveBeforeCloseQuestion = _me._getModalDialog();
-        saveBeforeCloseQuestion.setHeader(
-          _me.tabMenuConfig.savingDialogWarningHeader,
-        );
+        saveBeforeCloseQuestion.setHeader(_me.tabMenuConfig.savingDialogWarningHeader);
         saveBeforeCloseQuestion.setBody(_me.tabMenuConfig.savingDialogMessage);
-        saveBeforeCloseQuestion.cfg.setProperty(
-          'icon',
-          YAHOO.widget.SimpleDialog.ICON_WARN,
-        );
+        saveBeforeCloseQuestion.cfg.setProperty('icon', YAHOO.widget.SimpleDialog.ICON_WARN);
         saveBeforeCloseQuestion.cfg.queueProperty('buttons', [
           {
             text: _me.tabMenuConfig.savingDialogButtonDoNotSave,
@@ -1450,12 +1278,7 @@
               _me.saveAllFormsAjax(function (transport, jsonResponses) {
                 _dialog.hide();
                 const failed = _me.showErrorMessages(jsonResponses);
-                console.log(
-                  'saveAllFormsAjax returning: ',
-                  failed,
-                  jsonResponses,
-                  execCallback,
-                );
+                console.log('saveAllFormsAjax returning: ', failed, jsonResponses, execCallback);
                 execCallback(transport, jsonResponses, failed);
               });
               _dialog.setHeader(_me.tabMenuConfig.savingDialogHeader);
@@ -1512,19 +1335,13 @@
 
     _handleSaveAjaxResponse: function (formId, transport, jsonResponses) {
       if (transport.responseText.isJSON()) {
-        console.debug(
-          '_handleSaveAjaxResponse with json result: ',
-          transport.responseText,
-        );
+        console.debug('_handleSaveAjaxResponse with json result: ', transport.responseText);
         const jsonResult = transport.responseText.evalJSON();
         jsonResponses.set(formId, jsonResult);
         if (jsonResult.successful) {
           return true;
         } else {
-          console.warn(
-            '_handleSaveAjaxResponse: save failed for [' + formId + ']: ',
-            jsonResult,
-          );
+          console.warn('_handleSaveAjaxResponse: save failed for [' + formId + ']: ', jsonResult);
         }
       } else {
         return true;
@@ -1540,11 +1357,7 @@
       url = url + '&pagefullname=' + pageFullName;
       url = url + '&lang=' + lang;
       url = url + '&' + queryString;
-      console.warn(
-        'DEPRECATED saveWithAjax on TabEditor: ',
-        pageFullName,
-        queryString,
-      );
+      console.warn('DEPRECATED saveWithAjax on TabEditor: ', pageFullName, queryString);
       new Ajax.Request(url, { method: 'get' });
     },
 
@@ -1557,11 +1370,7 @@
         pagefullname: pageFullName,
         lang: lang,
       }).merge(paramsHash);
-      console.warn(
-        'DEPRECATED saveWithAjaxPOST on TabEditor: ',
-        pageFullName,
-        queryString,
-      );
+      console.warn('DEPRECATED saveWithAjaxPOST on TabEditor: ', pageFullName, queryString);
       new Ajax.Request(getTMCelHost(), {
         method: 'post',
         parameters: ajaxParams,

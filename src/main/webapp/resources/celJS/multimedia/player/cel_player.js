@@ -54,10 +54,7 @@
               _me._conf = _me.getConfObjCopy();
               _me.celFire('cel-media-player:confLoaded', _me._conf);
             } else {
-              console.warn(
-                'Failed to load cel-multimedia config (no json):',
-                _me._confStr,
-              );
+              console.warn('Failed to load cel-multimedia config (no json):', _me._confStr);
             }
           },
           onFailure: function (transport) {
@@ -79,11 +76,7 @@
       getConfObj: function (subConfigName) {
         var _me = this;
         if (_me._conf && _me._conf[subConfigName]) {
-          console.debug(
-            'getConfObj: ',
-            subConfigName,
-            _me._conf[subConfigName],
-          );
+          console.debug('getConfObj: ', subConfigName, _me._conf[subConfigName]);
           return _me._conf[subConfigName];
         }
         return _me._conf;
@@ -115,8 +108,7 @@
           }
         }
         if (flowclassname.includes('_externalvideo')) {
-          var celAnimLinkConfig =
-            _me._getExternalMappingConfigForLink(mediaLink);
+          var celAnimLinkConfig = _me._getExternalMappingConfigForLink(mediaLink);
           if (celAnimLinkConfig && celAnimLinkConfig.cssClass) {
             elem.addClassName(celAnimLinkConfig.cssClass);
           }
@@ -145,10 +137,7 @@
             configObject = linkReplaceObj;
           }
         });
-        console.debug(
-          '_getExternalMappingConfigForLink: returning ',
-          configObject,
-        );
+        console.debug('_getExternalMappingConfigForLink: returning ', configObject);
         return configObject;
       },
 
@@ -187,18 +176,12 @@
 
       _initDocumentReady: function () {
         var _me = this;
-        _me._playerConf.celStopObserving(
-          'cel-media-player:confLoaded',
-          _me._initDocumentReadyBind,
-        );
+        _me._playerConf.celStopObserving('cel-media-player:confLoaded', _me._initDocumentReadyBind);
         if (_me._playerConf.isConfDefined()) {
           _me._addDefaultCss(_me._playerConf.getConfObj('defaults').defaultCss);
           _me.celFire('cel-media-player:initPlayers', _me._playerConf);
         } else {
-          _me._playerConf.celObserve(
-            'cel-media-player:confLoaded',
-            _me._initDocumentReadyBind,
-          );
+          _me._playerConf.celObserve('cel-media-player:confLoaded', _me._initDocumentReadyBind);
         }
       },
 
@@ -238,8 +221,7 @@
         _me._initPlayerBind = _me._initPlayer.bind(_me);
         _me._openOverlayPlayerBind = _me.openOverlayPlayer.bind(_me);
         _me._afterRenderOverlayBind = _me._afterRenderOverlay.bind(_me);
-        _me._replaceWithPlayerElementBind =
-          _me._replaceWithPlayerElement.bind(_me);
+        _me._replaceWithPlayerElementBind = _me._replaceWithPlayerElement.bind(_me);
         window.CELEMENTS.multimedia.generalPlayerInitializer.celObserve(
           'cel-media-player:initPlayers',
           _me._initPlayerBind,
@@ -272,10 +254,7 @@
         var newHeight = playerElem.getHeight() + 20 + headHeight;
         console.log('_afterRenderOverlay: resize to ', newWidth, newHeight);
         overlayDialog._overlayDialog.cfg.setProperty('width', newWidth + 'px');
-        overlayDialog._overlayDialog.cfg.setProperty(
-          'height',
-          newHeight + 'px',
-        );
+        overlayDialog._overlayDialog.cfg.setProperty('height', newHeight + 'px');
       },
 
       _createPlayerElement: function (linkElem) {
@@ -308,10 +287,7 @@
           parentElemIn,
         );
         if (!shouldRegisterBodyEvent.stopped) {
-          _me._initMultimedaPlayerInsideParent(
-            parentElemIn,
-            _me._getPlayerCssClassNames(),
-          );
+          _me._initMultimedaPlayerInsideParent(parentElemIn, _me._getPlayerCssClassNames());
           _me._initalizePlayer(parentElemIn);
         } else {
           console.log('register of cel-mediaplayer stopped for ', parentElemIn);
@@ -349,11 +325,7 @@
 
       _initMultimedaPlayerInsideParent: function (parentElem, cssClassNames) {
         var _me = this;
-        console.debug(
-          '_initMultimedaPlayerInsideParent: ',
-          parentElem,
-          cssClassNames,
-        );
+        console.debug('_initMultimedaPlayerInsideParent: ', parentElem, cssClassNames);
         $A(cssClassNames).each(function (flowclassname) {
           parentElem.select('a.' + flowclassname).each(function (elem) {
             _me._playerConf.transformCssClassName(elem, flowclassname);
@@ -378,98 +350,72 @@
   }
 
   if (typeof window.CELEMENTS.multimedia.AudioPlayer === 'undefined') {
-    window.CELEMENTS.multimedia.AudioPlayer = Class.create(
-      CELEMENTS.multimedia.AbstractPlayer,
-      {
-        _getPlayerCssClassNames: function () {
-          return ['celanim_mp3_flowplayer', 'celanim_overlay_mp3_flowplayer'];
-        },
-
-        _initalizePlayer: function (parentElem) {
-          var _me = this;
-          _me._replaceAllElementsWithPlayers(
-            parentElem,
-            'a.celmultimedia_audioStart',
-          );
-          _me._initalizeOverlayPlayer(
-            parentElem,
-            'a.celanim_overlay.celmultimedia_audio',
-          );
-        },
-
-        _getDefaultOverlayConfig: function () {
-          return { x: 350, y: 105 };
-        },
-
-        _createPlayerElement: function (linkElem) {
-          var audioElem = new Element('audio', {
-            controls: '',
-            class: linkElem.classNames(),
-            preload: 'none',
-          });
-          var audioSrcElem = new Element('source', {
-            src: linkElem.href,
-            type: 'audio/mpeg',
-          });
-          audioElem.update(audioSrcElem);
-          audioElem.insert({
-            bottom: 'Your browser does not support the audio element.',
-          });
-          return audioElem;
-        },
+    window.CELEMENTS.multimedia.AudioPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
+      _getPlayerCssClassNames: function () {
+        return ['celanim_mp3_flowplayer', 'celanim_overlay_mp3_flowplayer'];
       },
-    );
-    window.CELEMENTS.multimedia.audioPlayer =
-      new CELEMENTS.multimedia.AudioPlayer();
+
+      _initalizePlayer: function (parentElem) {
+        var _me = this;
+        _me._replaceAllElementsWithPlayers(parentElem, 'a.celmultimedia_audioStart');
+        _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celmultimedia_audio');
+      },
+
+      _getDefaultOverlayConfig: function () {
+        return { x: 350, y: 105 };
+      },
+
+      _createPlayerElement: function (linkElem) {
+        var audioElem = new Element('audio', {
+          controls: '',
+          class: linkElem.classNames(),
+          preload: 'none',
+        });
+        var audioSrcElem = new Element('source', {
+          src: linkElem.href,
+          type: 'audio/mpeg',
+        });
+        audioElem.update(audioSrcElem);
+        audioElem.insert({
+          bottom: 'Your browser does not support the audio element.',
+        });
+        return audioElem;
+      },
+    });
+    window.CELEMENTS.multimedia.audioPlayer = new CELEMENTS.multimedia.AudioPlayer();
   }
 
   if (typeof window.CELEMENTS.multimedia.ExternalPlayer === 'undefined') {
-    window.CELEMENTS.multimedia.ExternalPlayer = Class.create(
-      CELEMENTS.multimedia.AbstractPlayer,
-      {
-        _getPlayerCssClassNames: function () {
-          return ['celanim_externalvideo', 'celanim_overlay_externalvideo'];
-        },
-
-        _initalizePlayer: function (parentElem) {
-          var _me = this;
-          _me._replaceAllElementsWithPlayers(
-            parentElem,
-            'a.celmultimedia_externalvideo',
-          );
-          _me._initalizeOverlayPlayer(
-            parentElem,
-            'a.celanim_overlay.celanim_externalvideo',
-          );
-        },
-
-        _createPlayerElement: function (linkElem) {
-          var _me = this;
-          var linkSrcTransformed = _me._playerConf.getExternalMovieLink(
-            linkElem.href,
-          );
-          console.log(
-            'externalVideo create:',
-            linkElem.href,
-            linkSrcTransformed,
-          );
-          var extVideoFrame = new Element('iframe', {
-            allowfullscreen: '',
-            width: '100%',
-            height: '100%',
-            allow: 'encrypted-media; gyroscope;',
-            frameborder: '0',
-            style: 'height: 100%; width: 100%;',
-            src: linkSrcTransformed,
-          });
-          var extVideoDiv = new Element('div', {
-            class: linkElem.classNames(),
-          }).update(extVideoFrame);
-          return extVideoDiv;
-        },
+    window.CELEMENTS.multimedia.ExternalPlayer = Class.create(CELEMENTS.multimedia.AbstractPlayer, {
+      _getPlayerCssClassNames: function () {
+        return ['celanim_externalvideo', 'celanim_overlay_externalvideo'];
       },
-    );
-    window.CELEMENTS.multimedia.externalPlayer =
-      new CELEMENTS.multimedia.ExternalPlayer();
+
+      _initalizePlayer: function (parentElem) {
+        var _me = this;
+        _me._replaceAllElementsWithPlayers(parentElem, 'a.celmultimedia_externalvideo');
+        _me._initalizeOverlayPlayer(parentElem, 'a.celanim_overlay.celanim_externalvideo');
+      },
+
+      _createPlayerElement: function (linkElem) {
+        var _me = this;
+        var linkSrcTransformed = _me._playerConf.getExternalMovieLink(linkElem.href);
+        console.log('externalVideo create:', linkElem.href, linkSrcTransformed);
+        var extVideoFrame = new Element('iframe', {
+          allowfullscreen: '',
+          width: '100%',
+          height: '100%',
+          allow: 'encrypted-media; gyroscope;',
+          frameborder: '0',
+          style: 'height: 100%; width: 100%;',
+          src: linkSrcTransformed,
+        });
+        var extVideoDiv = new Element('div', {
+          class: linkElem.classNames(),
+        }).update(extVideoFrame);
+        return extVideoDiv;
+      },
+    });
+    window.CELEMENTS.multimedia.externalPlayer = new CELEMENTS.multimedia.ExternalPlayer();
   }
 })(window);

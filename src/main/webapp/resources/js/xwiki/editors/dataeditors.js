@@ -25,13 +25,10 @@ $j(document).ready(function () {
               },
             },
             {
-              confirmationText:
-                "$msg.get('core.editors.object.delete.confirm')",
-              progressMessageText:
-                "$msg.get('core.editors.object.delete.inProgress')",
+              confirmationText: "$msg.get('core.editors.object.delete.confirm')",
+              progressMessageText: "$msg.get('core.editors.object.delete.inProgress')",
               successMessageText: "$msg.get('core.editors.object.delete.done')",
-              failureMessageText:
-                "$msg.get('core.editors.object.delete.failed')",
+              failureMessageText: "$msg.get('core.editors.object.delete.failed')",
             },
           );
         }
@@ -92,27 +89,22 @@ $j(document).ready(function () {
   $$('.xobject-content dt, .xproperty-content dt').each(function (B) {
     if (!B.down('input[type=checkbox]')) {
       B.addClassName('collapsable');
-      B.insertBefore(
-        new Element('span', { class: 'collapser' }),
-        B.firstDescendant(),
-      );
+      B.insertBefore(new Element('span', { class: 'collapser' }), B.firstDescendant());
     } else {
       B.addClassName('uncollapsable');
     }
   });
-  $$('.xobject-content dt label, .xproperty-content dt label').each(
-    function (B) {
-      B.observe(
-        'click',
-        function (C) {
-          if (B.up('dt').down('span').hasClassName('collapsed')) {
-            B.up('dt').next('dd').toggle();
-            B.up('dt').down('span').toggleClassName('collapsed');
-          }
-        }.bindAsEventListener(),
-      );
-    },
-  );
+  $$('.xobject-content dt label, .xproperty-content dt label').each(function (B) {
+    B.observe(
+      'click',
+      function (C) {
+        if (B.up('dt').down('span').hasClassName('collapsed')) {
+          B.up('dt').next('dd').toggle();
+          B.up('dt').down('span').toggleClassName('collapsed');
+        }
+      }.bindAsEventListener(),
+    );
+  });
   $$('.collapser').each(function (B) {
     B.observe(
       'click',

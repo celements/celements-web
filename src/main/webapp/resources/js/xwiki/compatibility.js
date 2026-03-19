@@ -23,10 +23,7 @@
   /**
    * Deprecated since 2.6RC2
    */
-  if (
-    typeof XWiki.widgets == 'object' &&
-    typeof XWiki.widgets.FullScreen == 'function'
-  ) {
+  if (typeof XWiki.widgets == 'object' && typeof XWiki.widgets.FullScreen == 'function') {
     XWiki.editors = XWiki.editors || {};
     XWiki.editors.FullScreenEditing = Class.create(XWiki.widgets.FullScreen, {
       initialize: function ($super) {
@@ -43,9 +40,7 @@
    * Deprecated since 2.6RC1
    */
   if (window.useXWKns) {
-    warn(
-      '_xwk namespace is deprecated since XWiki 2.6RC1. Use the XWiki namespace instead.',
-    );
+    warn('_xwk namespace is deprecated since XWiki 2.6RC1. Use the XWiki namespace instead.');
     if (typeof _xwk == 'undefined') {
       _xwk = new Object();
     }
@@ -59,9 +54,7 @@
   if (typeof XWiki.widgets.Suggest !== 'undefined') {
     _xwk.ajaxSuggest = Class.create(XWiki.widgets.Suggest, {
       initialize: function ($super) {
-        warn(
-          'ajaxSuggest is deprecated since XWiki 2.6RC1. Use XWiki.widgets.Suggest instead.',
-        );
+        warn('ajaxSuggest is deprecated since XWiki 2.6RC1. Use XWiki.widgets.Suggest instead.');
         var args = $A(arguments);
         args.shift();
         $super.apply(_xwk, args);
@@ -85,10 +78,7 @@
    * window.ASSTable
    * Deprecated since 1.9M2
    */
-  if (
-    typeof XWiki.widgets == 'object' &&
-    typeof XWiki.widgets.LiveTable == 'function'
-  ) {
+  if (typeof XWiki.widgets == 'object' && typeof XWiki.widgets.LiveTable == 'function') {
     window.ASSTable = Class.create(XWiki.widgets.LiveTable, {
       initialize: function (
         $super,
@@ -183,9 +173,7 @@
    * Deprecated since 2.6RC1
    */
   window.createCookie = XWiki.cookies.create.wrap(function () {
-    warn(
-      'window.createCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.create instead.',
-    );
+    warn('window.createCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.create instead.');
     var args = $A(arguments),
       proceed = args.shift();
     return proceed.apply(window, args);
@@ -195,9 +183,7 @@
    * Deprecated since 2.6RC1
    */
   window.readCookie = XWiki.cookies.read.wrap(function () {
-    warn(
-      'window.readCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.read instead.',
-    );
+    warn('window.readCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.read instead.');
     var args = $A(arguments),
       proceed = args.shift();
     return proceed.apply(window, args);
@@ -207,9 +193,7 @@
    * Deprecated since 2.6RC1
    */
   window.eraseCookie = XWiki.cookies.erase.wrap(function () {
-    warn(
-      'window.eraseCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.erase instead.',
-    );
+    warn('window.eraseCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.erase instead.');
     var args = $A(arguments),
       proceed = args.shift();
     return proceed.apply(window, args);

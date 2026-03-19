@@ -20,8 +20,7 @@
     var doIt = confirm('Send Article to the ' + receivers + ' receivers?');
     if (doIt && receivers > 0) {
       var form = $$('.newsletter_receiver_inject')[0];
-      var url =
-        '?xpage=celements_ajax&ajax_mode=sendNewsletterToInjectedReceiverList';
+      var url = '?xpage=celements_ajax&ajax_mode=sendNewsletterToInjectedReceiverList';
       new Ajax.Request(url, {
         parameters: form.serialize(true),
         method: 'post',

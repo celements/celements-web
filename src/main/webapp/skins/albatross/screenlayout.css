@@ -369,16 +369,13 @@ Comments
   cursor: pointer;
 }
 #xwikidata #commentscontent .xwikititlewrapper {
-  background: transparent url('icons/black-bg-comments-right.png') right top
-    no-repeat;
+  background: transparent url('icons/black-bg-comments-right.png') right top no-repeat;
 }
 #xwikidata #attw {
-  background: transparent url('icons/black-bg-attach-right.png') right bottom
-    no-repeat;
+  background: transparent url('icons/black-bg-attach-right.png') right bottom no-repeat;
 }
 .xwikiintratitle {
-  background: transparent url('icons/black-content-more.png') right center
-    no-repeat;
+  background: transparent url('icons/black-content-more.png') right center no-repeat;
   font-size: 160%;
   font-weight: 400;
   font-style: normal;
@@ -386,8 +383,7 @@ Comments
   padding: 16px 0px 16px;
 }
 .exp .xwikiintratitle {
-  background: transparent url('icons/black-content-less.png') right center
-    no-repeat;
+  background: transparent url('icons/black-content-less.png') right center no-repeat;
 }
 #xwikidata #attachmentscontent {
   background: url('icons/black-bg-attach-left.png') left bottom no-repeat;

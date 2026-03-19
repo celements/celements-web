@@ -11,16 +11,8 @@
 .c3_import_box {
   margin-bottom: 0px;
 }
-.c3_import_box
-  div.celements3_filebase
-  #fileBasePanel
-  .c2_ml_overlay_box
-  #c2_ml_container_shadow,
-.c3_import_box
-  div.celements3_filebase
-  .fileBasePanel
-  .c2_ml_overlay_box
-  .c2_ml_container_shadow {
+.c3_import_box div.celements3_filebase #fileBasePanel .c2_ml_overlay_box #c2_ml_container_shadow,
+.c3_import_box div.celements3_filebase .fileBasePanel .c2_ml_overlay_box .c2_ml_container_shadow {
   width: 650px;
 }
 .c3_import_box .celements3_filebase .yui-panel-container {
@@ -32,16 +24,8 @@
   position: relative;
   height: 100%;
 }
-.c3_import_box
-  div.celements3_filebase
-  #fileBasePanel
-  .c2_ml_overlay_box
-  #c2_ml_container_shadow,
-.c3_import_box
-  div.celements3_filebase
-  .fileBasePanel
-  .c2_ml_overlay_box
-  .c2_ml_container_shadow {
+.c3_import_box div.celements3_filebase #fileBasePanel .c2_ml_overlay_box #c2_ml_container_shadow,
+.c3_import_box div.celements3_filebase .fileBasePanel .c2_ml_overlay_box .c2_ml_container_shadow {
   width: auto;
 }
 .c3_import_box .celements3_filebase .c2_ml_container_shadow {
@@ -82,16 +66,8 @@
   background-position: top left;
   background-repeat: no-repeat;
 }
-div.c3_import_box
-  div.c3_filebase_box
-  div.celements3_filebase
-  #c2_ml_container
-  td.yui-dt-col-name,
-div.c3_import_box
-  div.c3_filebase_box
-  div.celements3_filebase
-  #c2_ml_container
-  th.yui-dt-col-name,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container td.yui-dt-col-name,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container th.yui-dt-col-name,
 div.c3_import_box
   div.c3_filebase_box
   div.celements3_filebase
@@ -163,16 +139,8 @@ div.c3_import_box
   padding-left: 5px;
   padding-bottom: 1px;
 }
-div.c3_import_box
-  div.c3_filebase_box
-  div.celements3_filebase
-  #c2_ml_container
-  td.yui-dt-col-date,
-div.c3_import_box
-  div.c3_filebase_box
-  div.celements3_filebase
-  #c2_ml_container
-  th.yui-dt-col-date,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container td.yui-dt-col-date,
+div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container th.yui-dt-col-date,
 div.c3_import_box
   div.c3_filebase_box
   div.celements3_filebase
@@ -256,16 +224,8 @@ div.c3_import_box
   color: #384554;
   overflow: auto;
 }
-.c3_import_box
-  div.celements3_filebase
-  #fileBasePanel
-  #c2_ml_container
-  #c2_ml_content,
-.c3_import_box
-  div.celements3_filebase
-  .fileBasePanel
-  #c2_ml_container
-  #c2_ml_content {
+.c3_import_box div.celements3_filebase #fileBasePanel #c2_ml_container #c2_ml_content,
+.c3_import_box div.celements3_filebase .fileBasePanel #c2_ml_container #c2_ml_content {
   width: 605px !important;
 }
 /** removed to fix not visible scrollbar in import manager

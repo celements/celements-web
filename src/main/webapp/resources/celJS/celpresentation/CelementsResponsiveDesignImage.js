@@ -33,10 +33,7 @@ if (typeof CELEMENTS.presentation == 'undefined') {
   //////////////////////////////////////////////////////////////////////////////
   // Celements presentation ResponsiveDesignImage
   //////////////////////////////////////////////////////////////////////////////
-  CELEMENTS.presentation.ResponsiveDesignImage = function (
-    containerId,
-    wrapperId,
-  ) {
+  CELEMENTS.presentation.ResponsiveDesignImage = function (containerId, wrapperId) {
     containerId = containerId || 'sitecontainer';
     // constructor
     this._init(containerId, wrapperId);
@@ -118,32 +115,20 @@ if (typeof CELEMENTS.presentation == 'undefined') {
         });
       },
 
-      checkImageDimensions: function (
-        wrapperElemDim,
-        contentImg,
-        preloadIfEditor,
-      ) {
+      checkImageDimensions: function (wrapperElemDim, contentImg, preloadIfEditor) {
         var _me = this;
         preloadIfEditor = preloadIfEditor || true;
         var wrapHeight = wrapperElemDim.height;
         var wrapWidth = wrapperElemDim.width;
-        if (
-          preloadIfEditor &&
-          $$('body')[0].hasClassName('celementsmenubarvisible')
-        ) {
+        if (preloadIfEditor && $$('body')[0].hasClassName('celementsmenubarvisible')) {
           _me.preloadContentImages(contentImg);
         }
-        var updatedImgSrc = _me._getImgSourceWithDim(
-          contentImg.src,
-          wrapWidth,
-          wrapHeight,
-        );
+        var updatedImgSrc = _me._getImgSourceWithDim(contentImg.src, wrapWidth, wrapHeight);
         if (contentImg.src != updatedImgSrc) {
           contentImg.removeAttribute('width');
           contentImg.removeAttribute('height');
           contentImg.hide();
-          var bindedResizeImageLoaded =
-            _me._resizedImageLoaded.bind(contentImg);
+          var bindedResizeImageLoaded = _me._resizedImageLoaded.bind(contentImg);
           $(contentImg).stopObserving('load', bindedResizeImageLoaded);
           $(contentImg).observe('load', bindedResizeImageLoaded);
           contentImg.src = updatedImgSrc;
@@ -170,12 +155,8 @@ if (typeof CELEMENTS.presentation == 'undefined') {
         var _me = this;
         if (_me._htmlContainer && _me._getWrapper()) {
           var wrapperElem = _me._getWrapper();
-          var wrapperElemHeight = Math.round(
-            parseFloat(wrapperElem.getStyle('height')),
-          );
-          var wrapperElemWidth = Math.round(
-            parseFloat(wrapperElem.getStyle('width')),
-          );
+          var wrapperElemHeight = Math.round(parseFloat(wrapperElem.getStyle('height')));
+          var wrapperElemWidth = Math.round(parseFloat(wrapperElem.getStyle('width')));
           var checkImageDimBinded = _me.checkImageDimensions
             .curry({
               width: wrapperElemWidth,
@@ -189,9 +170,7 @@ if (typeof CELEMENTS.presentation == 'undefined') {
       doImageRescaleToDim: function (wrapperElemDim) {
         var _me = this;
         if (_me._htmlContainer) {
-          var checkImageDimBinded = _me.checkImageDimensions
-            .curry(wrapperElemDim)
-            .bind(_me);
+          var checkImageDimBinded = _me.checkImageDimensions.curry(wrapperElemDim).bind(_me);
           _me._htmlContainer.select('img').each(checkImageDimBinded);
         }
       },

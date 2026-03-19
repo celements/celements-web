@@ -44,11 +44,7 @@
     isMobile: {
       Safari: function () {
         const _me = this;
-        return (
-          window.navigator.userAgent.match(/Safari/i) &&
-          !_me.Chrome() &&
-          !_me.Windows()
-        );
+        return window.navigator.userAgent.match(/Safari/i) && !_me.Chrome() && !_me.Windows();
       },
       Chrome: function () {
         return window.navigator.userAgent.match(/Chrome|CriOS/i);
@@ -174,10 +170,8 @@
     },
 
     isOrientationLandscape: function () {
-      const innerWidth =
-        window.innerWidth || document.documentElement.clientWidth;
-      const innerHeight =
-        window.innerHeight || document.documentElement.clientHeight;
+      const innerWidth = window.innerWidth || document.documentElement.clientWidth;
+      const innerHeight = window.innerHeight || document.documentElement.clientHeight;
       //window.orientation works only correct on load, but has whimsical behavior when
       //  rotating
       return innerWidth > innerHeight;
@@ -253,12 +247,7 @@
       const _me = this;
       const mobileDim = _me.getDimensions();
       let outStr = 'dimensions: \n';
-      outStr +=
-        'screen: ' +
-        mobileDim.screen.width +
-        ',' +
-        mobileDim.screen.height +
-        '\n';
+      outStr += 'screen: ' + mobileDim.screen.width + ',' + mobileDim.screen.height + '\n';
       outStr +=
         'screenAvailable: ' +
         mobileDim.screenAvailable.width +
@@ -266,17 +255,9 @@
         mobileDim.screenAvailable.height +
         '\n';
       outStr +=
-        'windowInner: ' +
-        mobileDim.windowInner.width +
-        ',' +
-        mobileDim.windowInner.height +
-        '\n';
+        'windowInner: ' + mobileDim.windowInner.width + ',' + mobileDim.windowInner.height + '\n';
       outStr +=
-        'windowOuter: ' +
-        mobileDim.windowOuter.width +
-        ',' +
-        mobileDim.windowOuter.height +
-        '\n';
+        'windowOuter: ' + mobileDim.windowOuter.width + ',' + mobileDim.windowOuter.height + '\n';
       outStr +=
         'docBodyClient: ' +
         mobileDim.docBodyClient.width +
@@ -290,11 +271,7 @@
         mobileDim.docBodyOffset.height +
         '\n';
       outStr +=
-        'docElement: ' +
-        mobileDim.docElement.width +
-        ',' +
-        mobileDim.docElement.height +
-        '\n';
+        'docElement: ' + mobileDim.docElement.width + ',' + mobileDim.docElement.height + '\n';
       alert(outStr);
     },
 
@@ -314,10 +291,7 @@
         onSuccess: function (transport) {
           if (transport.responseText.isJSON()) {
             const responseObject = transport.responseText.evalJSON();
-            console.log(
-              'MobileLogDimAndAgent finished successfully. ',
-              responseObject,
-            );
+            console.log('MobileLogDimAndAgent finished successfully. ', responseObject);
           } else {
             console.error('noJSON!!! ', transport.responseText);
           }

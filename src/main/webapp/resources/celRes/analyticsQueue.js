@@ -83,12 +83,7 @@
 
     _sendHits: function () {
       var _me = this;
-      console.debug(
-        'send hits, _running',
-        _me._running,
-        ', queue size is',
-        _me._sizeBind(),
-      );
+      console.debug('send hits, _running', _me._running, ', queue size is', _me._sizeBind());
       if (_me._running) {
         while (_me._highPrioritySizeBind() > 0) {
           var nextHit = _me._analyticsPriorizedEventQueue.shift();
@@ -151,10 +146,7 @@
   });
 
   const initQueue = function () {
-    if (
-      window.CELEMENTS.analytics.MatomoQueue &&
-      window.CELEMENTS.analytics.MatomoQueue()
-    ) {
+    if (window.CELEMENTS.analytics.MatomoQueue && window.CELEMENTS.analytics.MatomoQueue()) {
       window.CELEMENTS.analytics.Queue = new Queue();
     } else {
       //console.debug('analytics delay', window.CELEMENTS.analytics.MatomoQueue);
