@@ -1,1651 +1,1654 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xwikidoc>
-<web>Celements2</web>
-<name>AdminMenu</name>
-<language></language>
-<defaultLanguage>en</defaultLanguage>
-<translation>0</translation>
-<parent></parent>
-<creator>xwiki:XWiki.fpichler</creator>
-<author>xwiki:XWiki.cpichler</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.cpichler</contentAuthor>
-<creationDate>1210761297000</creationDate>
-<date>1713798679000</date>
-<contentUpdateDate>1713798679000</contentUpdateDate>
-<version>3.1</version>
-<title></title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/1.0</syntaxId>
-<hidden>false</hidden>
-<object>
-<class>
-<name>Celements.MenuBarHeaderItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-<pos>
-<disabled>0</disabled>
-<name>pos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</pos>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>0</number>
-<className>Celements.MenuBarHeaderItemClass</className>
-<guid>0fc93f6f-c70d-42ae-8a65-87920fffa23b</guid>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<name>EditPlus</name>
-</property>
-<property>
-<pos>-100</pos>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarHeaderItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-<pos>
-<disabled>0</disabled>
-<name>pos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</pos>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>2</number>
-<className>Celements.MenuBarHeaderItemClass</className>
-<guid>59a6d7f9-102e-48bf-bbeb-5cc8a3c489f8</guid>
-<property>
-<header_id>-3</header_id>
-</property>
-<property>
-<name>Admin Plus</name>
-</property>
-<property>
-<pos>-5</pos>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>0</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>d70a2306-a6a3-40a4-90d5-19a54d48e0eb</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>1</itempos>
-</property>
-<property>
-<link>$doc.getURL('edit','editor=object')</link>
-</property>
-<property>
-<name>Edit Object</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>1</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>7f3a0e57-aa85-40f1-a506-085209b1e43f</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>10</itempos>
-</property>
-<property>
-<link>$doc.getURL('view', 'xpage=overlay&amp;conf=PageAttachments')</link>
-</property>
-<property>
-<name>Page Attachments</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>2</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>7a8528c1-25dc-4f2a-853a-3d604f3de231</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>100</itempos>
-</property>
-<property>
-<link>$doc.getURL('view',"xpage=overlay&amp;conf=WhatsNew&amp;space=$!doc.space")</link>
-</property>
-<property>
-<name>What is New</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>3</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>01b5aff2-30d7-4d14-9fe7-9db7df71bb46</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>20</itempos>
-</property>
-<property>
-<link>$xwiki.getURL('XWiki.XWikiPreferences','edit',"editor=object")</link>
-</property>
-<property>
-<name>Edit XWiki Preferences</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>4</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>db4812de-b639-4399-9332-9b65fc52c556</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>30</itempos>
-</property>
-<property>
-<link>$xwiki.getURL("${doc.space}.WebPreferences",'edit',"editor=object")</link>
-</property>
-<property>
-<name>Edit Space Preferences</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>7</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>b14e307d-4f6b-47a7-9990-25d7d601a01a</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>5</itempos>
-</property>
-<property>
-<link>$doc.getURL('view','xpage=rename')</link>
-</property>
-<property>
-<name>Rename</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>8</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>3c08da94-e8ca-440c-9e76-491adeb92788</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>6</itempos>
-</property>
-<property>
-<link>$doc.getURL('view','xpage=overlay&amp;conf=RenameSpace')</link>
-</property>
-<property>
-<name>Space Rename</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>10</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>83134879-bfd1-4c5c-9d11-579f37d98891</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-3</header_id>
-</property>
-<property>
-<itempos>60</itempos>
-</property>
-<property>
-<link>$xwiki.getURL('XWiki.Import','import','xpage=overlay&amp;conf=XarImport')</link>
-</property>
-<property>
-<name>Import Manager</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>11</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>f9a6e058-b5c1-4144-8063-71bb43477cff</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-3</header_id>
-</property>
-<property>
-<itempos>80</itempos>
-</property>
-<property>
-<link>$doc.getURL('view','xpage=overlay&amp;conf=CheckAccessRights')</link>
-</property>
-<property>
-<name>Check Access Rights</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>12</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>0d241aa1-d1cd-4dcb-935a-7e05b9cfe0d6</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-3</header_id>
-</property>
-<property>
-<itempos>81</itempos>
-</property>
-<property>
-<link>$doc.getURL('view','xpage=overlay&amp;conf=CheckIncludes')</link>
-</property>
-<property>
-<name>Check CSS and JS Includes</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>13</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>da957d5c-e960-4e00-9cec-5c44b5b85d54</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-3</header_id>
-</property>
-<property>
-<itempos>82</itempos>
-</property>
-<property>
-<link>$doc.getURL('view','xpage=overlay&amp;conf=MaintenanceHelper')</link>
-</property>
-<property>
-<name>Maintenance</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>14</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>fcc2afee-3aeb-454c-8465-ee510456e085</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>2</itempos>
-</property>
-<property>
-<link>$doc.getURL('edit','editor=wiki')</link>
-</property>
-<property>
-<name>Edit Wiki</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>15</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>a4857cfa-8020-4967-9ff3-157ccc5c110b</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-3</header_id>
-</property>
-<property>
-<itempos>85</itempos>
-</property>
-<property>
-<link>$doc.getURL('view','xpage=celements_ajax&amp;ajax_mode=SendValidationEmail')</link>
-</property>
-<property>
-<name>Resend Email Validation</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>16</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>8b1fc7b6-d3b7-4c85-a108-84c1c3d3a50c</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-3</header_id>
-</property>
-<property>
-<itempos>90</itempos>
-</property>
-<property>
-<link>$doc.getURL('view',"xpage=overlay&amp;conf=SitemapForSpace&amp;space=${doc.documentReference.lastSpaceReference.name}&amp;hasLink=1&amp;spaceNav=1&amp;forceAllSpaces=1&amp;showOutStruct=1")</link>
-</property>
-<property>
-<name>Sitemap Force ALL Spaces</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>21</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>dfe8002c-3389-4ee1-a515-0a4bb853639c</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>3</itempos>
-</property>
-<property>
-<link>$doc.getURL('edit','editor=class')</link>
-</property>
-<property>
-<name>Edit Class</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>22</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>85b71901-4be2-40d7-a94a-8b637312f619</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>4</itempos>
-</property>
-<property>
-<link>$doc.getURL('edit','editor=history')</link>
-</property>
-<property>
-<name>Document History</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>23</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>c9a86c03-6db8-418e-a999-3af81bc3d189</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-1</header_id>
-</property>
-<property>
-<itempos>101</itempos>
-</property>
-<property>
-<link>#if(!$doc.isNew())$doc.getURL('export', "format=xar&amp;name=${doc.fullName}&amp;pages=${doc.fullName}&amp;language=$language")#end</link>
-</property>
-<property>
-<name>Export as xar</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>24</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>4459ecf3-b365-43dd-96e5-5881637cea2c</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-3</header_id>
-</property>
-<property>
-<itempos>110</itempos>
-</property>
-<property>
-<link>#if($services.celementsweb.isClassCollectionActivated('scheduler'))$!{doc.getURL('view','xpage=overlay&amp;conf=Scheduler')}#end</link>
-</property>
-<property>
-<name>Scheduler</name>
-</property>
-</object>
-<object>
-<class>
-<name>Celements.MenuBarSubItemClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<css_classes>
-<disabled>0</disabled>
-<name>css_classes</name>
-<number>5</number>
-<prettyName>CSS Classes</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</css_classes>
-<header_id>
-<disabled>0</disabled>
-<name>header_id</name>
-<number>2</number>
-<numberType>integer</numberType>
-<prettyName>Header Id</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</header_id>
-<itempos>
-<disabled>0</disabled>
-<name>itempos</name>
-<number>3</number>
-<numberType>integer</numberType>
-<prettyName>Position</prettyName>
-<size>10</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
-</itempos>
-<link>
-<disabled>0</disabled>
-<name>link</name>
-<number>4</number>
-<prettyName>Link (velocity possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</link>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name (dictionary possible)</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>25</number>
-<className>Celements.MenuBarSubItemClass</className>
-<guid>d1ee3eac-cdbd-4e65-a1a3-3c48bd0c371f</guid>
-<property>
-<css_classes></css_classes>
-</property>
-<property>
-<header_id>-3</header_id>
-</property>
-<property>
-<itempos>100</itempos>
-</property>
-<property>
-<link>/app/cel/admin/UserAdmin</link>
-</property>
-<property>
-<name>New User Manager</name>
-</property>
-</object>
-<object>
-<class>
-<name>XWiki.TagClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<tags>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>checkbox</displayType>
-<multiSelect>1</multiSelect>
-<name>tags</name>
-<number>1</number>
-<prettyName>Tags</prettyName>
-<relationalStorage>1</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<values></values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</tags>
-</class>
-<name>Celements2.AdminMenu</name>
-<number>0</number>
-<className>XWiki.TagClass</className>
-<guid>c9538209-1020-4f4c-8da6-79b018428fef</guid>
-<property>
-<tags/>
-</property>
-</object>
-<content>
-</content></xwikidoc>
+  <web>Celements2</web>
+  <name>AdminMenu</name>
+  <language></language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <parent></parent>
+  <creator>xwiki:XWiki.fpichler</creator>
+  <author>xwiki:XWiki.cpichler</author>
+  <customClass></customClass>
+  <contentAuthor>xwiki:XWiki.cpichler</contentAuthor>
+  <creationDate>1210761297000</creationDate>
+  <date>1713798679000</date>
+  <contentUpdateDate>1713798679000</contentUpdateDate>
+  <version>3.1</version>
+  <title></title>
+  <template></template>
+  <defaultTemplate></defaultTemplate>
+  <validationScript></validationScript>
+  <comment></comment>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/1.0</syntaxId>
+  <hidden>false</hidden>
+  <object>
+    <class>
+      <name>Celements.MenuBarHeaderItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <pos>
+        <disabled>0</disabled>
+        <name>pos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </pos>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>0</number>
+    <className>Celements.MenuBarHeaderItemClass</className>
+    <guid>0fc93f6f-c70d-42ae-8a65-87920fffa23b</guid>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <name>EditPlus</name>
+    </property>
+    <property>
+      <pos>-100</pos>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarHeaderItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <pos>
+        <disabled>0</disabled>
+        <name>pos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </pos>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>2</number>
+    <className>Celements.MenuBarHeaderItemClass</className>
+    <guid>59a6d7f9-102e-48bf-bbeb-5cc8a3c489f8</guid>
+    <property>
+      <header_id>-3</header_id>
+    </property>
+    <property>
+      <name>Admin Plus</name>
+    </property>
+    <property>
+      <pos>-5</pos>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>0</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>d70a2306-a6a3-40a4-90d5-19a54d48e0eb</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>1</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('edit','editor=object')</link>
+    </property>
+    <property>
+      <name>Edit Object</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>1</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>7f3a0e57-aa85-40f1-a506-085209b1e43f</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>10</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('view', 'xpage=overlay&amp;conf=PageAttachments')</link>
+    </property>
+    <property>
+      <name>Page Attachments</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>2</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>7a8528c1-25dc-4f2a-853a-3d604f3de231</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>100</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('view',"xpage=overlay&amp;conf=WhatsNew&amp;space=$!doc.space")</link>
+    </property>
+    <property>
+      <name>What is New</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>3</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>01b5aff2-30d7-4d14-9fe7-9db7df71bb46</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>20</itempos>
+    </property>
+    <property>
+      <link>$xwiki.getURL('XWiki.XWikiPreferences','edit',"editor=object")</link>
+    </property>
+    <property>
+      <name>Edit XWiki Preferences</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>4</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>db4812de-b639-4399-9332-9b65fc52c556</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>30</itempos>
+    </property>
+    <property>
+      <link>$xwiki.getURL("${doc.space}.WebPreferences",'edit',"editor=object")</link>
+    </property>
+    <property>
+      <name>Edit Space Preferences</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>7</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>b14e307d-4f6b-47a7-9990-25d7d601a01a</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>5</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('view','xpage=rename')</link>
+    </property>
+    <property>
+      <name>Rename</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>8</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>3c08da94-e8ca-440c-9e76-491adeb92788</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>6</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('view','xpage=overlay&amp;conf=RenameSpace')</link>
+    </property>
+    <property>
+      <name>Space Rename</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>10</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>83134879-bfd1-4c5c-9d11-579f37d98891</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-3</header_id>
+    </property>
+    <property>
+      <itempos>60</itempos>
+    </property>
+    <property>
+      <link>$xwiki.getURL('XWiki.Import','import','xpage=overlay&amp;conf=XarImport')</link>
+    </property>
+    <property>
+      <name>Import Manager</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>11</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>f9a6e058-b5c1-4144-8063-71bb43477cff</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-3</header_id>
+    </property>
+    <property>
+      <itempos>80</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('view','xpage=overlay&amp;conf=CheckAccessRights')</link>
+    </property>
+    <property>
+      <name>Check Access Rights</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>12</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>0d241aa1-d1cd-4dcb-935a-7e05b9cfe0d6</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-3</header_id>
+    </property>
+    <property>
+      <itempos>81</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('view','xpage=overlay&amp;conf=CheckIncludes')</link>
+    </property>
+    <property>
+      <name>Check CSS and JS Includes</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>13</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>da957d5c-e960-4e00-9cec-5c44b5b85d54</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-3</header_id>
+    </property>
+    <property>
+      <itempos>82</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('view','xpage=overlay&amp;conf=MaintenanceHelper')</link>
+    </property>
+    <property>
+      <name>Maintenance</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>14</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>fcc2afee-3aeb-454c-8465-ee510456e085</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>2</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('edit','editor=wiki')</link>
+    </property>
+    <property>
+      <name>Edit Wiki</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>15</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>a4857cfa-8020-4967-9ff3-157ccc5c110b</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-3</header_id>
+    </property>
+    <property>
+      <itempos>85</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('view','xpage=celements_ajax&amp;ajax_mode=SendValidationEmail')</link>
+    </property>
+    <property>
+      <name>Resend Email Validation</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>16</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>8b1fc7b6-d3b7-4c85-a108-84c1c3d3a50c</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-3</header_id>
+    </property>
+    <property>
+      <itempos>90</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('view',"xpage=overlay&amp;conf=SitemapForSpace&amp;space=${doc.documentReference.lastSpaceReference.name}&amp;hasLink=1&amp;spaceNav=1&amp;forceAllSpaces=1&amp;showOutStruct=1")</link>
+    </property>
+    <property>
+      <name>Sitemap Force ALL Spaces</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>21</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>dfe8002c-3389-4ee1-a515-0a4bb853639c</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>3</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('edit','editor=class')</link>
+    </property>
+    <property>
+      <name>Edit Class</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>22</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>85b71901-4be2-40d7-a94a-8b637312f619</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>4</itempos>
+    </property>
+    <property>
+      <link>$doc.getURL('edit','editor=history')</link>
+    </property>
+    <property>
+      <name>Document History</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>23</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>c9a86c03-6db8-418e-a999-3af81bc3d189</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-1</header_id>
+    </property>
+    <property>
+      <itempos>101</itempos>
+    </property>
+    <property>
+      <link>#if(!$doc.isNew())$doc.getURL('export',
+        "format=xar&amp;name=${doc.fullName}&amp;pages=${doc.fullName}&amp;language=$language")#end</link>
+    </property>
+    <property>
+      <name>Export as xar</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>24</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>4459ecf3-b365-43dd-96e5-5881637cea2c</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-3</header_id>
+    </property>
+    <property>
+      <itempos>110</itempos>
+    </property>
+    <property>
+      <link>#if($services.celementsweb.isClassCollectionActivated('scheduler'))$!{doc.getURL('view','xpage=overlay&amp;conf=Scheduler')}#end</link>
+    </property>
+    <property>
+      <name>Scheduler</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>Celements.MenuBarSubItemClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <css_classes>
+        <disabled>0</disabled>
+        <name>css_classes</name>
+        <number>5</number>
+        <prettyName>CSS Classes</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </css_classes>
+      <header_id>
+        <disabled>0</disabled>
+        <name>header_id</name>
+        <number>2</number>
+        <numberType>integer</numberType>
+        <prettyName>Header Id</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </header_id>
+      <itempos>
+        <disabled>0</disabled>
+        <name>itempos</name>
+        <number>3</number>
+        <numberType>integer</numberType>
+        <prettyName>Position</prettyName>
+        <size>10</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+      </itempos>
+      <link>
+        <disabled>0</disabled>
+        <name>link</name>
+        <number>4</number>
+        <prettyName>Link (velocity possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </link>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name (dictionary possible)</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>25</number>
+    <className>Celements.MenuBarSubItemClass</className>
+    <guid>d1ee3eac-cdbd-4e65-a1a3-3c48bd0c371f</guid>
+    <property>
+      <css_classes></css_classes>
+    </property>
+    <property>
+      <header_id>-3</header_id>
+    </property>
+    <property>
+      <itempos>100</itempos>
+    </property>
+    <property>
+      <link>/app/cel/admin/UserAdmin</link>
+    </property>
+    <property>
+      <name>New User Manager</name>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.TagClass</name>
+      <customClass></customClass>
+      <customMapping></customMapping>
+      <defaultViewSheet></defaultViewSheet>
+      <defaultEditSheet></defaultEditSheet>
+      <defaultWeb></defaultWeb>
+      <nameField></nameField>
+      <validationScript></validationScript>
+      <tags>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>checkbox</displayType>
+        <multiSelect>1</multiSelect>
+        <name>tags</name>
+        <number>1</number>
+        <prettyName>Tags</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator>
+        </separator>
+        <separators> ,|</separators>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <values></values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </tags>
+    </class>
+    <name>Celements2.AdminMenu</name>
+    <number>0</number>
+    <className>XWiki.TagClass</className>
+    <guid>c9538209-1020-4f4c-8da6-79b018428fef</guid>
+    <property>
+      <tags />
+    </property>
+  </object>
+  <content>
+  </content>
+</xwikidoc>

@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xwikidoc>
-<web>Main</web>
-<name>WebHome</name>
-<language></language>
-<defaultLanguage>en</defaultLanguage>
-<translation>0</translation>
-<parent></parent>
-<creator>XWiki.superadmin</creator>
-<author>XWiki.superadmin</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-<creationDate>1529285641000</creationDate>
-<date>1529285664000</date>
-<contentUpdateDate>1529285664000</contentUpdateDate>
-<version>2.1</version>
-<title>Celements</title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/1.0</syntaxId>
-<hidden>false</hidden>
-<content>#includeInContext("Content.WebHome")
+  <web>Main</web>
+  <name>WebHome</name>
+  <language></language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>0</translation>
+  <parent></parent>
+  <creator>XWiki.superadmin</creator>
+  <author>XWiki.superadmin</author>
+  <customClass></customClass>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1529285641000</creationDate>
+  <date>1529285664000</date>
+  <contentUpdateDate>1529285664000</contentUpdateDate>
+  <version>2.1</version>
+  <title>Celements</title>
+  <template></template>
+  <defaultTemplate></defaultTemplate>
+  <validationScript></validationScript>
+  <comment></comment>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/1.0</syntaxId>
+  <hidden>false</hidden>
+  <content>#includeInContext("Content.WebHome")
 
-</content></xwikidoc>
+  </content>
+</xwikidoc>

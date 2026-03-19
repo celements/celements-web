@@ -4,7 +4,7 @@
   'http://www.sun.com/software/sunone/appserver/dtds/sun-web-app_2_3-0.dtd'>
 
 <sun-web-app>
-  <!-- Change the class lookup behavior so that it looks first in the application's libs,
-       and then in the container's system libs. -->
+  <!-- Change the class lookup behavior so that it looks first in the application's libs, and then in the container's system 
+    libs. -->
   <class-loader delegate="false" />
 </sun-web-app>
