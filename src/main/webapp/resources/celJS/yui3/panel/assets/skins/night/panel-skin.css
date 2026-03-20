@@ -8,7 +8,6 @@ http://yuilibrary.com/license/
     color: #FFFFFF;
     font-family: HelveticaNeue, arial, helvetica, clean, sans-serif;
 }
-
 .yui3-skin-night .yui3-widget-mask {
     background-color: black;
     zoom: 1;
@@ -16,7 +15,6 @@ http://yuilibrary.com/license/
     filter: alpha(opacity=70);
     opacity: 0.7;
 }
-
 .yui3-skin-night .yui3-panel-content {
     background: #6D6E6E;
     -webkit-box-shadow: 0 0 20px #000;
@@ -103,7 +101,6 @@ http://yuilibrary.com/license/
 	-webkit-border-radius: 0.435em;
 	border-radius: 0.435em;
 }
-
 /*
 .yui3-skin-night .yui3-panel-content .yui3-widget-ft .yui3-widget-button-wrapper .yui3-button {
 
@@ -126,11 +123,9 @@ http://yuilibrary.com/license/
 .yui3-skin-night input {
     color: #fff;
 }
-
 .yui3-skin-night {
     background-color: #000;
 }
-
 .yui3-skin-night .yui3-button-back:before {
 	background: -moz-linear-gradient(
 		0% 100% 45deg,
@@ -167,7 +162,6 @@ http://yuilibrary.com/license/
         to(#3d3e3f)
     );
 }
-
 .yui3-skin-night .yui3-widget-ft .yui3-button,
 .yui3-skin-night .yui3-widget-ft .yui3-button-disabled:hover {
 /*

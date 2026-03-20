@@ -10,14 +10,12 @@ version: 2.9.0
     opacity: .25;
     filter: alpha(opacity=25);  /* Set opacity in IE */
 }
-
 /* Panel styles */
 .yui-skin-sam .yui-panel-container {
     padding:0 1px;
     /* Padding added for IE to allow 0,0 alignment with shadow */
     *padding:2px;
 }
-
 .yui-skin-sam .yui-panel {
     position: relative;
     left:0;
@@ -32,7 +30,6 @@ version: 2.9.0
     *zoom:1;
     _zoom:normal;
 }
-
 .yui-skin-sam .yui-panel .hd,
 .yui-skin-sam .yui-panel .bd,
 .yui-skin-sam .yui-panel .ft {
@@ -45,16 +42,13 @@ version: 2.9.0
     *margin:0;
     *border:0;
 }
-
 .yui-skin-sam .yui-panel .hd {
     border-bottom: solid 1px #ccc;
 }
-
 .yui-skin-sam .yui-panel .bd,
 .yui-skin-sam .yui-panel .ft {
     background-color: #F2F2F2;
 }
-
 .yui-skin-sam .yui-panel .hd {
     padding: 0 10px;
     font-size: 93%;  /* 12px */
@@ -64,21 +58,17 @@ version: 2.9.0
     color: #000;
     background: url(../../../../assets/skins/sam/sprite.png) repeat-x 0 -200px;
 }
-
 .yui-skin-sam .yui-panel .bd {
     padding: 10px;
 }
-
 .yui-skin-sam .yui-panel .ft {
     border-top: solid 1px #808080;
     padding: 5px 10px;
     font-size: 77%;
 }
-
 .yui-skin-sam .yui-panel-container.focused .yui-panel .hd {
 
 }
-
 .yui-skin-sam .container-close {
     position: absolute;
     top: 5px;
@@ -88,23 +78,19 @@ version: 2.9.0
     background: url(../../../../assets/skins/sam/sprite.png) no-repeat 0 -300px;
     cursor:pointer;
 }
-
 /* Panel underlay styles */
 .yui-skin-sam .yui-panel-container .underlay {
     right: -1px;
     left: -1px;
 }
-
 .yui-skin-sam .yui-panel-container.matte {
     padding: 9px 10px;
     background-color: #fff;
 }
-
 .yui-skin-sam .yui-panel-container.shadow {
     /* IE 7 Quirks Mode and IE 6 Standards Mode and Quirks mode */
     _padding: 2px 4px 0 2px;
 }
-
 .yui-skin-sam .yui-panel-container.shadow .underlay {
     position: absolute;
     top: 2px;
@@ -131,52 +117,42 @@ version: 2.9.0
     filter: alpha(opacity=12);  /* Set opacity in IE */
 }
 
-
 /* Dialog styles */
 .yui-skin-sam .yui-dialog .ft {
     border-top: none;
     padding: 0 10px 10px 10px;
     font-size: 100%;
 }
-
 .yui-skin-sam .yui-dialog .ft .button-group {
     display: block;
     text-align: right;
 }
-
 /* Dialog default button style */
 .yui-skin-sam .yui-dialog .ft button.default {
     font-weight:bold;
 }
-
 /* Dialog default YUI Button style */
 .yui-skin-sam .yui-dialog .ft span.default {
     border-color: #304369;
     background-position: 0 -1400px;
 }
-
 .yui-skin-sam .yui-dialog .ft span.default .first-child {
     border-color: #304369;
 }
-
 .yui-skin-sam .yui-dialog .ft span.default button {
     color: #fff;
 }
-
 /* Dialog YUI Button disabled state */
 .yui-skin-sam .yui-dialog .ft span.yui-button-disabled {
     background-position:0pt -1500px;
     border-color:#ccc;
 }
-
 .yui-skin-sam .yui-dialog .ft span.yui-button-disabled .first-child {
     border-color:#ccc;
 }
-
 .yui-skin-sam .yui-dialog .ft span.yui-button-disabled button {
     color:#a6a6a6;
 }
-
 /* SimpleDialog icon styles */
 .yui-skin-sam .yui-simple-dialog .bd .yui-icon {
     background: url(../../../../assets/skins/sam/sprite.png) no-repeat 0 0;
@@ -185,31 +161,24 @@ version: 2.9.0
     margin-right: 10px;
     float: left;
 }
-
 .yui-skin-sam .yui-simple-dialog .bd span.blckicon {
     background-position: 0 -1100px;
 }
-
 .yui-skin-sam .yui-simple-dialog .bd span.alrticon {
     background-position: 0 -1050px;
 }
-
 .yui-skin-sam .yui-simple-dialog .bd span.hlpicon {
     background-position: 0 -1150px;
 }
-
 .yui-skin-sam .yui-simple-dialog .bd span.infoicon {
     background-position: 0 -1200px;
 }
-
 .yui-skin-sam .yui-simple-dialog .bd span.warnicon {
     background-position: 0 -1900px;
 }
-
 .yui-skin-sam .yui-simple-dialog .bd span.tipicon {
     background-position: 0 -1250px;
 }
-
 /* Tooltip styles */
 .yui-skin-sam .yui-tt .bd {
     position: relative;
@@ -223,11 +192,9 @@ version: 2.9.0
     border-style: solid;
     background-color: #FFEE69;
 }
-
 .yui-skin-sam .yui-tt.show-scrollbars .bd {
     overflow: auto;
 }
-
 .yui-skin-sam .yui-tt-shadow {
     top: 2px;
     right: -3px;
@@ -235,7 +202,6 @@ version: 2.9.0
     bottom: -3px;
     background-color: #000;
 }
-
 .yui-skin-sam .yui-tt-shadow-visible {
     opacity: .12;
     filter: alpha(opacity=12);  /* For IE */

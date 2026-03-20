@@ -10,15 +10,12 @@ version: 2.9.0
     position: absolute;
     z-index: 2;
 }
-
 .yui-panel {
     position:relative;
 }
-
 .yui-panel-container form {
     margin: 0;
 }
-
 .mask {
     z-index: 1;
     display: none;
@@ -28,7 +25,6 @@ version: 2.9.0
     right: 0;
     bottom: 0;
 }
-
 .mask.block-scrollbars {
     /*
         Application of "overflow:auto" prevents Mac scrollbars from bleeding
@@ -37,7 +33,6 @@ version: 2.9.0
     */
     overflow: auto;
 }
-
 /* 
     PLEASE NOTE:
 
@@ -60,11 +55,9 @@ version: 2.9.0
 .hide-select select {
     _visibility: hidden;
 }
-
 .yui-panel-container select {
     _visibility: inherit;
 }
-
 /*
 
 There are two known issues with YAHOO.widget.Overlay (and its subclasses) that 
@@ -113,27 +106,22 @@ PLEASE NOTE:
     overflow: hidden;
 
 }
-
 .hide-scrollbars select {
     display: none;
 }
-
 .show-scrollbars {
     overflow: auto;
 }
-
 .yui-panel-container.show-scrollbars,
 .yui-tt.show-scrollbars {
     overflow: visible;
 }
-
 .yui-panel-container.show-scrollbars .underlay,
 .yui-tt.show-scrollbars .yui-tt-shadow {
 
     overflow: auto;
 
 }
-
 /* 
    Workaround for Safari 2.x - the yui-force-redraw class is applied, and then removed when
    the Panel's content changes, to force Safari 2.x to redraw the underlay.
@@ -143,11 +131,9 @@ PLEASE NOTE:
 .yui-panel-container.shadow .underlay.yui-force-redraw {
     padding-bottom: 1px;
 }
-
 .yui-effect-fade .underlay, .yui-effect-fade .yui-tt-shadow {
     display:none;
 }
-
 /*
     PLEASE NOTE: The <DIV> element used for a Tooltip's shadow is appended 
     to its root element via JavaScript once it has been rendered.  The 
@@ -160,17 +146,14 @@ PLEASE NOTE:
 .yui-tt-shadow {
     position: absolute;
 }
-
 .yui-override-padding {
     padding:0 !important;
 }
-
 .yui-panel-container .container-close {
     overflow:hidden;
     text-indent:-10000em;
     text-decoration:none;
 }
-
 .yui-overlay.yui-force-redraw, .yui-panel-container.yui-force-redraw {
     margin-bottom:1px;
 }

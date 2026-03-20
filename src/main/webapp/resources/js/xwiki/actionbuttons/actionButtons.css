@@ -21,7 +21,6 @@
 .meta-minorEdit * {
   vertical-align: text-bottom;
 }
-
 #commentinput {
   width: 99.7%; /* 100% - 2px border; FIXME when calc() becomes standard */
 }

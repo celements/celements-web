@@ -13,7 +13,6 @@ http://yuilibrary.com/license/
 	*font-size:small; /* for IE */
 	*font:x-small; /* for IE in quirks mode */
 }
-
 /**
  * Nudge down to get to 13px equivalent for these form elements
  */ 
@@ -23,7 +22,6 @@ http://yuilibrary.com/license/
 .yui3-cssfonts textarea {
 	font:99% arial,helvetica,clean,sans-serif;
 }
-
 /**
  * To help tables remember to inherit
  */
@@ -31,7 +29,6 @@ http://yuilibrary.com/license/
 	font-size:inherit;
 	font:100%;
 }
-
 /**
  * Bump up IE to get to 13px equivalent for these fixed-width elements
  */

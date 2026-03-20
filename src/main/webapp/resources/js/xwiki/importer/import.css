@@ -4,7 +4,6 @@
 #import ul.xlist li.xitem div.xitemcontainer {
   text-indent: 0;
 }
-
 div.legend {
   margin-bottom: 10px;
   font-size: 1.33em;
@@ -16,7 +15,6 @@ div.legend {
   margin: 20px 0;
   overflow: hidden;
 }
-
 .clearfloats {
   font-size: 0;
   /* toucan IE6 */
@@ -25,46 +23,37 @@ div.legend {
   clear: both;
   height: 1px;
 }
-
 ul {
   list-style-position: outside !important;
 }
-
 ul.xlist li.xunderline {
   border: 0 !important;
 }
-
 #attachform .buttonwrapper {
   margin: 0;
 }
-
 div.loading {
   min-height: 200px;
 }
-
 /* Package List  styles */
 #packagelist {
   float: left;
   width: 51%;
 }
-
 #packagelist fieldset {
   background-color: var(--backgroundSecondaryColor);
   padding: 5px;
 }
-
 .package-upload {
   background: transparent url('/file/resources/icons/silk/package_add.gif') no-repeat scroll 0 5px;
   padding-left: 20px;
   min-height: 16px;
 }
-
 #packagelist ul.xlist {
   margin: 0 !important;
   list-style: none;
   padding: 0px;
 }
-
 #packagelist .xitemcontainer {
   background: transparent url('/file/resources/icons/silk/package.gif') no-repeat scroll 5px 0.5em;
   font-size: 0.85em;
@@ -72,41 +61,34 @@ div.loading {
   padding: 0.3em 0 0.3em 1em;
   padding-left: 30px;
 }
-
 #packagelist .active {
   border: 0px solid var(--borderColor);
   background-color: #fcfcfc;
 }
-
 #packagelistcontainer .name a {
   font-size: 1.4em;
 }
-
 #packagelistcontainer .size {
   color: var(--textSecondaryColor);
 }
-
 #packagelistcontainer .xwikibuttonlinks {
   float: right;
   padding-right: 0.2em;
   *margin-top: -2em;
   /* IE7 */
 }
-
 #packagelistcontainer .deletelink {
   background: url('/file/resources/icons/silk/cross.gif') no-repeat left 0.2em;
   display: block;
   height: 1.4em;
   width: 16px;
 }
-
 /* Package Content styles */
 #packagecontainer {
   float: left;
   margin-left: 2%;
   width: 46%;
 }
-
 #packageDescription {
   background-color: #fcfcfc;
   border: 0px solid var(--borderColor);
@@ -115,48 +97,39 @@ div.loading {
   margin-bottom: 1px;
   width: 95%;
 }
-
 #packagecontainer .packageinfos {
   font-size: 0.9em;
   margin-bottom: 0.5em;
 }
-
 .packageinfos div {
   display: table-row;
 }
-
 #packagecontainer .packageinfos .filename {
   font-weight: 700;
 }
-
 #packagecontainer .packageinfos span {
   color: var(--textSecondaryColor);
   margin: 0 5px 0;
 }
-
 #packagecontainer .packageinfos span.label {
   color: var(--textColor);
   font-size: 0.85em;
   font-weight: 700;
   text-transform: uppercase;
 }
-
 .selectLinks {
   font-size: 0.8em;
   margin-right: 0.5em;
   text-align: right;
 }
-
 .selectLinks span {
   color: var(--linkColor);
   cursor: pointer;
   margin-left: 0.2em;
 }
-
 div#package div.importOption {
   margin-bottom: 5px;
 }
-
 div#package ul.package {
   background-color: var(--pageContentBackgroundColor);
   border: 0px solid var(--borderColor);
@@ -164,12 +137,10 @@ div#package ul.package {
   padding: 3px !important;
   width: 98%;
 }
-
 ul.package li.xitem div.xitemcontainer span.checkbox,
 ul.package li.xitem div.xitemcontainer input.space {
   float: right;
 }
-
 ul.package li.xitem div.xitemcontainer span.checkbox {
   display: inline;
   height: auto;
@@ -178,14 +149,12 @@ ul.package li.xitem div.xitemcontainer span.checkbox {
   top: auto;
   width: auto;
 }
-
 ul.package li.xitem div.xitemcontainer div.spacename {
   background: transparent url('/file/resources/icons/silk/folder.gif') no-repeat scroll 0 0.1em;
   cursor: pointer;
   font-weight: bold;
   padding-left: 30px;
 }
-
 ul.package li.xitem div.xitemcontainer div.selection {
   color: var(--textSecondaryColor);
   margin-left: auto;
@@ -193,19 +162,15 @@ ul.package li.xitem div.xitemcontainer div.selection {
   line-height: 1.7em;
   margin-right: 0.2em;
 }
-
 div#package .hidden {
   display: none !important;
 }
-
 ul.pages {
   margin: 0 !important;
 }
-
 ul.pages li.xitem {
   width: 100%;
 }
-
 ul.pages li.xitem,
 ul.package li.xitem {
   list-style-type: none;
@@ -221,36 +186,29 @@ ul.package li.xitem {
       margin-right: 5px;
     }
   }
-
   div.pages {
     width: 100%;
   }
-
   div.clearfloats {
     display: none;
   }
 }
-
 .documentName {
   background: transparent url('/file/resources/icons/silk/page_white_text.gif') no-repeat scroll 0 0;
   padding-left: 20px;
 }
-
 ul.package ul.pages li.xitem div.xpagecontainer input {
   *margin-right: 20px;
 }
-
 .historyStrategyOption {
   font-size: 0.9em;
   line-height: 1.2em;
   margin-bottom: 0;
 }
-
 #packagecontainer .buttonwrapper {
   display: block;
   margin-top: 0.5em;
 }
-
 .generalOverlay .main.layoutsubsection {
   width: 1024px;
 }

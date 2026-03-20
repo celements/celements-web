@@ -66,7 +66,6 @@ body div.mask.celmultimedia_inoverlay {
   left: 0px;
   z-index: 99;
 }
-
 .celmultimedia_inoverlay .yui-panel .hd {
   height: 0px;
 }
@@ -119,11 +118,9 @@ body div.mask.celmultimedia_inoverlay {
   bottom: 0px;
   display: none;
 }
-
 .celmultimedia_inoverlay .yui-panel .bd .cel_slideShow_slideRoot {
   overflow: hidden;
 }
-
 /** navigation default configuration **/
 .celmultimedia_inoverlay .celPresSlideShow_next,
 .celmultimedia_inoverlay .celPresSlideShow_prev {

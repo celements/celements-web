@@ -9,7 +9,6 @@ body {
   margin: auto;
   text-align: center;
 }
-
 #chwWizard {
   width: 700px;
   height: 470px;
@@ -20,20 +19,17 @@ body {
   margin: auto;
   text-align: left;
 }
-
 .chwTitle {
   color: #5368a6;
   font-size: 17px;
   font-style: italic;
 }
-
 #chwNavigation {
   height: 20px;
   margin: 0;
   padding: 0;
   border-style: hidden;
 }
-
 #chwNavigationButtons {
   height: 20px;
   background-color: #b6c5f2;
@@ -42,11 +38,9 @@ body {
   margin: 0px 0px 0px 0px;
   padding-left: 4px;
 }
-
 #chwNavigationButtons > p {
   display: none;
 }
-
 img.chwNavigationImage,
 img.chwNavigationImageDisabled,
 img.chwNavigationImageHidden {
@@ -54,15 +48,12 @@ img.chwNavigationImageHidden {
   height: 16px;
   vertical-align: middle;
 }
-
 img.chwNavigationImage {
   cursor: pointer;
 }
-
 img.chwNavigationImageHidden {
   display: none;
 }
-
 .chwButton,
 .chwButtonDisabled {
   text-decoration: none;
@@ -77,7 +68,6 @@ img.chwNavigationImageHidden {
   background-color: #888;
   cursor: default;
 }
-
 td {
   vertical-align: top;
   /*  border: black 1px solid;*/
@@ -91,13 +81,11 @@ td {
 #chwPreviewImg {
   width: 256px;
 }
-
 #chwOptions {
   width: 385px;
   height: 420px;
   overflow: auto;
 }
-
 fieldset.chwLargeFieldset,
 fieldset.chwSmallFieldset {
   border: #5368a6 1px solid;
@@ -105,11 +93,9 @@ fieldset.chwSmallFieldset {
   padding: 6px;
   padding-bottom: 16px;
 }
-
 fieldset.chwSmallFieldset {
   border: #bbb 1px solid;
 }
-
 legend.chwLargeLegend,
 legend.chwSmallLegend {
   color: #5368a6;
@@ -123,30 +109,24 @@ legend.chwSmallLegend {
 legend.chwLargeLegend {
   border: #5368a6 1px solid;
 }
-
 legend.chwSmallLegend {
   font-size: 12px;
   font-weight: 600;
 }
-
 legend label {
   margin-left: 0px;
 }
-
 input {
   margin-bottom: 0px;
 }
-
 label {
   /*margin-left: 8px;
 */
 }
-
 #chwButtons {
   padding: 8px 12px 8px 12px;
   text-align: right;
 }
-
 .chwActivePage,
 .chwInactivePage {
   overflow: auto;
@@ -154,21 +134,17 @@ label {
   height: 420px;
   padding: 10px;
 }
-
 .chwActivePage,
 .chwVisible {
   display: block;
 }
-
 .chwInline {
   display: inline;
 }
-
 .chwInactivePage,
 .chwHidden {
   display: none;
 }
-
 .chwCentered {
   text-align: center;
   margin: auto;
@@ -190,14 +166,11 @@ label {
   margin-bottom: 10px;
   vertical-align: middle;
 }
-
 .chwLargeField {
   width: 95%;
 }
-
 #chwPreview {
 }
-
 /*
   Position selector table
  */
@@ -208,13 +181,11 @@ label {
   border: navy 2px outset;
   cursor: pointer;
 }
-
 td.chwDisabledCell {
   background-color: #ddd;
   border: none;
   cursor: default;
 }
-
 .chwNormalCell {
   background-color: transparent;
 }
@@ -227,7 +198,6 @@ td.chwDisabledCell {
 .chwSelectedCellHighlighted {
   background-color: #c82;
 }
-
 .chwNormalBlockDiv {
   width: 16px;
   height: 16px;
@@ -235,7 +205,6 @@ td.chwDisabledCell {
 .chwLargeBlockDiv {
   height: 16px;
 }
-
 /*
   Color chooser style
  */
@@ -295,21 +264,17 @@ td.chwDisabledCell {
 .chwAqua {
   color: aqua;
 }
-
 .chwCustomColorGroup {
   display: none;
   margin-bottom: 0px;
   padding-bottom: 0px;
 }
-
 .chwCustomColor {
   color: black !important;
 }
-
 .chwCustomColorGroup input {
   width: 56px;
 }
-
 /*
   Margin selector
  */
@@ -347,30 +312,24 @@ td.chwDisabledCell {
   color: #bbb;
   border: #bbb 1px dashed;
 }
-
 td.chwLowered {
   vertical-align: text-bottom;
 }
-
 td.chwFormLabelCell {
   vertical-align: middle;
 }
-
 table.chwTitlePositioningLayout {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0px;
 }
-
 td.chwTitlePositioningUnitLeft {
   border-right: #bbb 1px solid;
   width: 50%;
 }
-
 td.chwTitlePositioningUnitRight {
   border-left: #bbb 1px solid;
 }
-
 .chwColorPickerInvoker,
 .chwDatSourceWizardInvoker {
   text-decoration: none;
@@ -389,7 +348,6 @@ td.chwTitlePositioningUnitRight {
   width: 100%;
   height: 100%;
 }
-
 #chwColorPickerFieldset {
   margin: 0px;
   position: relative;
@@ -402,7 +360,6 @@ td.chwTitlePositioningUnitRight {
   border: 2px solid #369;
   border-top: 8px solid #369;
 }
-
 #chwColorPickerScreen {
   position: absolute;
   left: 0px;
@@ -414,18 +371,15 @@ html > body #chwColorPickerScreen {
   opacity: 0.6;
   background-color: #fff;
 }
-
 #chwColorPickerFieldset legend {
   background-color: #369;
   color: #fff;
   cursor: default;
 }
-
 #chwColorpickerControlsTable {
   width: 265px;
   margin-bottom: 12px;
 }
-
 .chwColorpickerHSDiv {
   border: inset 1px;
   padding: 0px;
@@ -439,7 +393,6 @@ html > body #chwColorPickerScreen {
   padding: 0px;
   display: block;
 }
-
 .chwColorpickerLDiv {
   border: inset 1px;
   padding: 0px;
@@ -454,7 +407,6 @@ html > body #chwColorPickerScreen {
   display: block;
   background-color: #5064a0;
 }
-
 .chwColorpickerShow {
   width: 56px;
   height: 45px;
@@ -479,7 +431,6 @@ html > body #chwColorPickerScreen {
   line-height: 1px;
   clear: both;
 }
-
 .chwColorpickerLPointerContainer {
   vertical-align: top;
   padding: 0px;
@@ -489,7 +440,6 @@ html > body #chwColorPickerScreen {
   height: 241px;
   line-height: 1px;
 }
-
 .chwColorpickerHtmlCode {
   width: 56px;
   display: block;
@@ -508,7 +458,6 @@ html > body #chwColorPickerScreen {
   margin: 5px 0px 0px;
   width: 48px;
 }
-
 #chwColorpickerButtons {
   text-align: right;
   margin-right: 8px;
@@ -519,13 +468,11 @@ html > body #chwColorPickerScreen {
 }
 .chwColorpickerButton .chwButton {
 }
-
 #chwColorpickerShowContainer {
   text-align: left;
   border: 0px solid red;
   width: 64px;
 }
-
 select {
   z-index: -10;
 }

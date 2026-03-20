@@ -11,11 +11,9 @@ http://yuilibrary.com/license/
     -webkit-box-shadow: 1px 1px 4px #888;
     box-shadow: 1px 1px 4px #888;
 }
-
 .yui3-skin-sam .yui3-aclist-item-hover {
     background: #bfdaff;
 }
-
 .yui3-skin-sam .yui3-aclist-item-active {
     background: #2647a0;
     color: #fff;

@@ -10,11 +10,9 @@ http://yuilibrary.com/license/
     -webkit-user-select: none;
     -moz-user-select: none;
 }
-
 .yui3-scrollview-hidden {
     display:none;
 }
-
 .yui3-scrollview-content {
     position:relative;
 }

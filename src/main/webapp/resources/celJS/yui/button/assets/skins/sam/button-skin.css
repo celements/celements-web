@@ -13,7 +13,6 @@ version: 2.9.0
     margin: auto .25em;
     
 }
-
 .yui-skin-sam .yui-button .first-child {
 
     border-width: 0 1px;
@@ -29,7 +28,6 @@ version: 2.9.0
  	_margin: 0;
 
 }
-
 .yui-skin-sam .yui-button button,
 .yui-skin-sam .yui-button a,
 .yui-skin-sam .yui-button a:visited {
@@ -43,7 +41,6 @@ version: 2.9.0
     color: #000; 
 
 }
-
 .yui-skin-sam .yui-button a {
 
     /*
@@ -54,7 +51,6 @@ version: 2.9.0
 	*padding-bottom: 1px;
 
 }
-
 .yui-skin-sam .yui-split-button button,
 .yui-skin-sam .yui-menu-button button {
 
@@ -63,19 +59,16 @@ version: 2.9.0
     background-repeat: no-repeat;
     
 }
-
 .yui-skin-sam .yui-menu-button button {
 
     background-image: url(menu-button-arrow.png);
 
 }
-
 .yui-skin-sam .yui-split-button button {
 
     background-image: url(split-button-arrow.png);
 
 }
-
 
 /* Focus state */
 
@@ -86,19 +79,16 @@ version: 2.9.0
     background-position: 0 -1300px;
 
 }
-
 .yui-skin-sam .yui-button-focus .first-child {
 
     border-color: #7D98B8;
 
 }
-
 .yui-skin-sam .yui-split-button-focus button {
 
     background-image: url(split-button-arrow-focus.png);
 
 }
-
 
 /* Hover state */
 
@@ -108,19 +98,16 @@ version: 2.9.0
     background-position: 0 -1300px;
 
 }
-
 .yui-skin-sam .yui-button-hover .first-child {
 
     border-color: #7D98B8;
 
 }
-
 .yui-skin-sam .yui-split-button-hover button {
 
     background-image: url(split-button-arrow-hover.png);
 
 }
-
 
 /* Active state */
 
@@ -130,32 +117,27 @@ version: 2.9.0
     background-position: 0 -1700px;
     
 }
-
 .yui-skin-sam .yui-button-active .first-child {
 
     border-color: #7D98B8;
 
 }
-
 .yui-skin-sam .yui-split-button-activeoption {
 
     border-color: #808080;
     background-position: 0 0;
 
 }
-
 .yui-skin-sam .yui-split-button-activeoption .first-child {
 
     border-color: #808080;
 
 }
-
 .yui-skin-sam .yui-split-button-activeoption button {
 
     background-image: url(split-button-arrow-active.png);
 
 }
-
 
 /* Checked state */
 
@@ -166,21 +148,18 @@ version: 2.9.0
     background-position: 0 -1400px;
     
 }
-
 .yui-skin-sam .yui-radio-button-checked .first-child,
 .yui-skin-sam .yui-checkbox-button-checked .first-child {
 
     border-color: #304369;
 
 }
-
 .yui-skin-sam .yui-radio-button-checked button,
 .yui-skin-sam .yui-checkbox-button-checked button { 
 
     color: #fff;
 
 }
-
 
 /* Disabled state */
 
@@ -190,13 +169,11 @@ version: 2.9.0
     background-position: 0 -1500px;
     
 }
-
 .yui-skin-sam .yui-button-disabled .first-child {
 
     border-color: #ccc;
 
 }
-
 .yui-skin-sam .yui-button-disabled button, 
 .yui-skin-sam .yui-button-disabled a,
 .yui-skin-sam .yui-button-disabled a:visited {
@@ -205,13 +182,11 @@ version: 2.9.0
     cursor: default;
 
 }
-
 .yui-skin-sam .yui-menu-button-disabled button {
 
     background-image: url(menu-button-arrow-disabled.png);
     
 }
-
 .yui-skin-sam .yui-split-button-disabled button {
 
     background-image: url(split-button-arrow-disabled.png);

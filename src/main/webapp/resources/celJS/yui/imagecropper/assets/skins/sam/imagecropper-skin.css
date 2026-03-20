@@ -9,8 +9,6 @@ version: 2.9.0
     opacity: .5;
     filter: alpha(opacity=50);
 }
-
 .yui-skin-sam .yui-crop .yui-resize {
     border: 1px dashed #fff;   
 }
-

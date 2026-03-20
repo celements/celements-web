@@ -11,7 +11,6 @@ http://yuilibrary.com/license/
 
 }
 
-
 .yui3-menu .yui3-shim {
 
 	/* 
@@ -33,7 +32,6 @@ http://yuilibrary.com/license/
 	width: 100%;
 
 }
-
 .yui3-menu-hidden {
 
 	/*
@@ -60,13 +58,11 @@ http://yuilibrary.com/license/
 	visibility: hidden;
 
 }
-
 .yui3-menu li {
 
     list-style-type: none;    
 
 }
-
 .yui3-menu ul, 
 .yui3-menu li { 
 
@@ -74,7 +70,6 @@ http://yuilibrary.com/license/
     padding: 0;
 
 }
-
 .yui3-menu-label,
 .yui3-menuitem-content {
 
@@ -83,20 +78,17 @@ http://yuilibrary.com/license/
     display: block;
 
 }
-
 .yui3-menu-horizontal li {
 
 	float: left;
 	width: auto;
 
 }
-
 .yui3-menu-horizontal li li {
 
 	float: none;
 
 }
-
 .yui3-menu-horizontal ul {
 
 	/*
@@ -108,7 +100,6 @@ http://yuilibrary.com/license/
 	*zoom: 1;
 
 }
-
 .yui3-menu-horizontal ul ul {
 
 	/*
@@ -133,7 +124,6 @@ http://yuilibrary.com/license/
 
 }
 
-
 /*
 	The following two rules are for IE 7.  Triggering "hasLayout" (via use of "zoom") prevents 
 	first-tier submenus from hiding when the mouse is moving from an menu label in a root menu to 
@@ -146,13 +136,11 @@ http://yuilibrary.com/license/
     
 }
 
-
 .yui3-menu-hidden .yui3-menu-content {
 
 	*zoom: normal;
 
 }
-
 
 /*
 	The following two rules are for IE 6 (Standards Mode and Quirks Mode) and IE 7 (Quirks Mode 
@@ -166,7 +154,6 @@ http://yuilibrary.com/license/
 	_zoom: 1;
 
 }
-
 .yui3-menu-hidden .yui3-menuitem-content,
 .yui3-menu-hidden .yui3-menu-label {
 

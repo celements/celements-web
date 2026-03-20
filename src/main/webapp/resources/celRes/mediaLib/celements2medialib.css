@@ -45,7 +45,6 @@ body {
   height: inherit;
   background-color: #b0b0b0;
 }
-
 #c2_ml_browser {
   position: relative;
   display: inline;
@@ -137,14 +136,12 @@ body {
 #c2_ml_close:active {
   background-image: url(conimg.gif);
 }
-
 .c2_ml_title {
   width: 179px;
   height: 17px;
   border-bottom: 1px solid #c5c5c5;
   border-right: 1px solid #929292;
 }
-
 .c2_colheaders,
 .yui-dt-header a,
 .yui-dt-header a:hover,
@@ -170,7 +167,6 @@ body {
   text-decoration: none;
   border: none;
 }
-
 .c2_ml_label0 {
   display: block;
   height: 19px;
@@ -384,7 +380,6 @@ th.yui-dt-asc {
 .celements3_filebase #c2_ml_container .yui-dt-bd table thead {
   display: none;
 }
-
 .celements3_filebase * {
   box-sizing: content-box;
 }

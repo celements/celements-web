@@ -2,20 +2,17 @@ body#body {
   background-color: #fff;
   color: #000;
 }
-
 h1,
 h2,
 h3,
 h4 {
   color: #000;
 }
-
 #companylogo img {
   background-image: url('xwlogoblack.png');
   height: 91px;
   width: 136px;
 }
-
 /*
 ---------------------------------------
 Space header, footer
@@ -51,16 +48,13 @@ table.xwikidatatable th {
   background-color: #ccc;
   border-color: #ddd;
 }
-
 .xwikiintracontent legend,
 .xwikiintracontent fieldset {
   border-color: #ddd;
 }
-
 .xwikiintracontent fieldset.collapsed legend {
   background-color: #ccc;
 }
-
 /*
 ---------------------------------------
 Menu
@@ -71,7 +65,6 @@ Menu
   border-color: #ddd;
   border-top-color: #fff;
 }
-
 /*
 ---------------------------------------------
 "Message Boxes"
@@ -81,12 +74,10 @@ fieldset.xwikimessage {
   border-color: #000;
   background-color: #eee;
 }
-
 fieldset.xwikimessage legend {
   background-color: #000;
   color: #fff;
 }
-
 /*
 ---------------------------------------
 Editors
@@ -95,7 +86,6 @@ Editors
 #xwikicontentedit {
   border-color: #ddd;
 }
-
 /*
 ---------------------------------------
 Tabs
@@ -107,7 +97,6 @@ Tabs
   border-left-color: #ddd;
   border-top-color: #ddd;
 }
-
 .xwikitabbar li a {
   color: #000 !important;
 }
@@ -116,7 +105,6 @@ Tabs
   border-color: #ddd;
   border-bottom-color: #fff;
 }
-
 /*
 ---------------------------------------
 Panels
@@ -126,14 +114,12 @@ Panels
   background-color: #eee;
   border-color: #ddd;
 }
-
 .panel {
   border-color: #ddd;
 }
 .xwikipaneltitle {
   background-color: #ccc;
 }
-
 /*
 ----------------------------------
 Rico Acordeon -- Sintax Help Panel
@@ -146,14 +132,12 @@ Rico Acordeon -- Sintax Help Panel
   background-color: #fff;
   border-bottom-color: #ddd;
 }
-
 .accordionTabTitleBar {
   border-color: #fff;
   border-bottom-color: #ddd;
   border-right-color: #ddd;
   background-color: #eee;
 }
-
 /*
 ----------------------------------
 Misc
@@ -163,7 +147,6 @@ Misc
 #xwikihelpsyntax {
   border-top-color: #ddd;
 }
-
 tr.row.odd {
   background-color: #eee;
 }
@@ -179,7 +162,6 @@ a:link {
 a:visited {
   color: #000;
 }
-
 .button,
 .xwikibuttonlink a {
   background-color: #ccc;
@@ -189,19 +171,16 @@ a:visited {
 .xwikibuttonlink a:hover {
   background-color: #ffd;
 }
-
 #xwikirightstable,
 #xwikirightstable th,
 #xwikirightstable td,
 #xwikirightstable tr {
   border-color: #ddd;
 }
-
 .article_footer {
   color: #000;
   border-color: #000;
 }
-
 .xwikiuserblog .rssfeed {
   border-top-color: #ddd;
   border-left-color: #ddd;

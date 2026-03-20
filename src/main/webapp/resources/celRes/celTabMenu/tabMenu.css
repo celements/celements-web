@@ -12,7 +12,6 @@ body div.celements3_tabMenu {
   position: relative;
   z-index: 99; /** needed because cel_overlay is on z-index: 99; **/
 }
-
 body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
 .celements3_tabMenu .celementsLoadingIndicator {
   font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
@@ -23,26 +22,22 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   text-transform: none;
   color: #3e3e3e;
 }
-
 .celements3_tabMenu .celementsLoadingIndicator {
   background-color: #f0f0f0;
   position: absolute;
   top: 0;
 }
-
 .celements3_tabMenu #celementsLoadingIndicator,
 .celements3_tabMenu .celementsLoadingIndicator > div {
   padding-top: 100px;
   padding-bottom: 100px;
 }
-
 /* main panel */
 /* and panel header */
 .celements3_tabMenu #tabMenuPanel,
 .celements3_tabMenu .hd {
   background-color: transparent;
 }
-
 /* tab buttons */
 .celements3_tabMenu .tabButton {
   margin: 0px;
@@ -52,7 +47,6 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   vertical-align: bottom;
   float: left;
 }
-
 .celements3_tabMenu .tabButton .yui-button button,
 .celements3_tabMenu .tabButton .cel-button-active button {
   background-color: #4c4c4c;
@@ -70,32 +64,27 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   line-height: 13px;
   font-weight: 400;
 }
-
 .celements3_tabMenu .tabButton .yui-button button:hover {
   background-color: #ff9900;
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
-
 .celements3_tabMenu .tabButton .cel-button-active button {
   background-color: #f0f0f0;
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
-
 .celements3_tabMenu .tabButton .cel-button-focus button {
   background: none;
   background-color: #f0f0f0;
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
-
 .yui-skin-sam .yui-dialog .ft span.default button {
   font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   background-color: #ff9900;
   color: #333333 !important;
 }
-
 /* save buttons */
 .celements3_tabMenu .saveButton .yui-button button,
 .celements3_tabMenu .saveButton .cel-button-active button {

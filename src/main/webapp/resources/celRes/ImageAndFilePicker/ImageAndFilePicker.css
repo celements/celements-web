@@ -6,12 +6,10 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
-
 .filebasePicker #attachments.celDropOverActive {
   border: 3px dashed #3e3e3e;
   cursor: copy;
 }
-
 .filebasePicker #attachments.celDropOverActive::after {
   content: 'drop files here';
   position: absolute;
@@ -23,11 +21,9 @@
   font-weight: bold;
   color: black;
 }
-
 .filebasePicker #attachments.celDropOverActive div.imagePickerWrapper {
   opacity: 0.6;
 }
-
 .filebasePicker div.imagePickerWrapper {
   position: relative;
   margin: 0;
@@ -42,19 +38,15 @@
   line-height: 0px;
   font-size: 0px;
 }
-
 .filebasePicker div.imagePickerWrapper div.imagePickerSource {
   border: 4px dashed transparent;
 }
-
 .filebasePicker div.imagePickerWrapper div.imagePickerSource img {
   background: url(../celRes/transpBGsmall.gif);
 }
-
 .filebasePicker div.imagePickerWrapper div.imagePickerSource.selected {
   border: 4px dashed #ff9900;
 }
-
 .filebasePicker div.imagePickerWrapper:hover div.imagePickerSource img {
   border-style: solid;
   cursor: pointer;

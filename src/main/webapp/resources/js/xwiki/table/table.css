@@ -6,7 +6,6 @@
   border-collapse: collapse;
   width: 90%;
 }
-
 .grid th {
   border-right: #ccc 1px solid;
   padding-right: 4px;
@@ -21,7 +20,6 @@
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;
 }
-
 .grid td {
   border-right: #ccc 1px solid;
   padding-right: 4px;
@@ -32,16 +30,13 @@
   padding-top: 3px;
   border-bottom: #ccc 1px solid;
 }
-
 .gridHover {
   background-color: #f9f9f9;
 }
-
 /* Button to filter columns */
 .btnflt {
   vertical-align: middle;
 }
-
 /* Filter input box */
 input.flt,
 select.flt {
@@ -54,7 +49,6 @@ select.flt {
   width: 100%;
   vertical-align: middle;
 }
-
 /* Filter input box when the filter is next to the filter button */
 input.flt_s,
 select.flt_s {

@@ -14,7 +14,6 @@ http://yuilibrary.com/license/
     background-image: url(rail-x.png);
     background-repeat: repeat-x;
 }
-
 .yui3-skin-audio .yui3-slider-x .yui3-slider-rail {
     height: 35px;
     background-position: 0 7px;
@@ -23,7 +22,6 @@ http://yuilibrary.com/license/
     height: 35px;
     width: 19px;
 }
-
 .yui3-skin-audio .yui3-slider-x .yui3-slider-rail-cap-left {
     background-position: 0 -20px;
     height: 13px;
@@ -38,7 +36,6 @@ http://yuilibrary.com/license/
     width: 5px;
     top: 7px;
 }
-
 .yui3-skin-audio .yui3-slider-x .yui3-slider-thumb-image {
     left: 0;
     top: -3px;
@@ -49,7 +46,6 @@ http://yuilibrary.com/license/
     filter: alpha(opacity=15);
     top: -43px;
 }
-
 /* Vertical Slider */
 
 /* Use thumbUrl /build/slider-base/assets/skins/audio/thumb-y.png */
@@ -60,7 +56,6 @@ http://yuilibrary.com/license/
     background-image: url(rail-y.png);
     background-repeat: repeat-y;
 }
-
 .yui3-skin-audio .yui3-slider-y .yui3-slider-rail {
     width: 35px;
     background-position: 7px 0;
@@ -69,7 +64,6 @@ http://yuilibrary.com/license/
     width: 35px;
     height: 19px;
 }
-
 .yui3-skin-audio .yui3-slider-y .yui3-slider-rail-cap-top {
     background-position: -20px 0;
     width: 13px;
@@ -84,7 +78,6 @@ http://yuilibrary.com/license/
     height: 5px;
     left: 7px;
 }
-
 .yui3-skin-audio .yui3-slider-y .yui3-slider-thumb-image {
     left: -3px;
     top: 0;

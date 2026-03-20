@@ -8,16 +8,13 @@ version: 2.9.0
 .yui-dt-table th, .yui-dt-table td {
     overflow:hidden;
 }
-
 th .yui-dt-header {
     position:relative;
 }
-
 th .yui-dt-label {
     position:relative;
     border-right:10px;
 }
-
 th .yui-dt-resizer {
     position:absolute;
     margin-right:-6px;
@@ -28,7 +25,6 @@ th .yui-dt-resizer {
     cursor:w-resize;
     cursor:col-resize;
 }
-
 /* foundational scrolling css */
 .yui-dt-scrollable  {
     *overflow-y:auto; /* for ie */
@@ -43,7 +39,6 @@ th .yui-dt-resizer {
     display:block; /* for safari and opera */
     overflow:auto; /* for gecko */
 }
-
 .yui-dt-editor {
     position:absolute;
 }

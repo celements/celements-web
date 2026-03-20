@@ -7,22 +7,18 @@ http://yuilibrary.com/license/
 .yui3-tab-panel {
     display:none;
 }
-
 .yui3-tab-panel-selected {
     display:block;
 }
-
 .yui3-tabview-list,
 .yui3-tab {
     margin:0;
     padding:0;
     list-style:none;
 }
-
 .yui3-tabview {
     position:relative; /* contain absolute positioned tabs (left/right) */
 }
-
 .yui3-tabview,
 .yui3-tabview-list,
 .yui3-tabview-panel,
@@ -30,14 +26,12 @@ http://yuilibrary.com/license/
 .yui3-tab-panel { /* IE: kill space between horizontal tabs */
     zoom:1;
 }
-
 .yui3-tab {
     display:inline-block;
     *display:inline; /* IE */
     vertical-align:bottom; /* safari: for overlap */
     cursor:pointer;
 }
-
 .yui3-tab-label {
     display:block;
     display:inline-block;

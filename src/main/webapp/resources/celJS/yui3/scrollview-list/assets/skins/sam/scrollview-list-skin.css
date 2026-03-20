@@ -7,7 +7,6 @@ http://yuilibrary.com/license/
 .yui3-skin-sam .yui3-scrollview {
     -webkit-tap-highlight-color: rgba(255,255,255,0);
 }
-
 .yui3-skin-sam .yui3-scrollview{
 	background-color: white;
 }
@@ -15,7 +14,6 @@ http://yuilibrary.com/license/
 .yui3-skin-sam .yui3-scrollview-vert .yui3-scrollview-content .yui3-scrollview-item {
     *zoom:1;
 }
-
 /* For IE7 - needs zoom, otherwise clipped content is not rendered */
 .yui3-skin-sam .yui3-scrollview-vert .yui3-scrollview-content .yui3-scrollview-list {
     *zoom:1;
@@ -23,7 +21,6 @@ http://yuilibrary.com/license/
 	padding:0; /*need these since reset is not required*/
 	margin:0; /*need these since reset is not required*/
 }
-
 .yui3-skin-sam .yui3-scrollview-vert .yui3-scrollview-content {
     /*border:1px solid #303030; If the ScrollView needs a border add it here */
     border-top:0;
@@ -31,7 +28,6 @@ http://yuilibrary.com/license/
 	font-family: HelveticaNeue,arial,helvetica,clean,sans-serif;
 	color:black;
 }
-
 .yui3-skin-sam .yui3-scrollview-vert .yui3-scrollview-content .yui3-scrollview-item {
     border-bottom: 1px solid #303030;
     padding: 15px 20px 16px;
@@ -40,4 +36,3 @@ http://yuilibrary.com/license/
     background-color:white;
 	cursor:pointer;
 }
-

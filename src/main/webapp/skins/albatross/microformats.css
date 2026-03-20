@@ -19,20 +19,17 @@ address.vcard {
   margin-top: 6px;
   margin-right: 8px;
 }
-
 dt.label label {
   color: #999;
   padding: 0px 2px;
   font-variant: small-caps;
 }
-
 .vevent h4 {
   color: #000;
   line-height: 1.1em;
   font-size: 130%;
   font-weight: bold;
 }
-
 .vevent .eventinfo {
   padding-left: 24px;
 }
@@ -44,7 +41,6 @@ dt.label label {
   font-style: italic;
   border-bottom: 1px solid #ddd;
 }
-
 .vcard .fdaad {
   margin-bottom: -1em;
 }

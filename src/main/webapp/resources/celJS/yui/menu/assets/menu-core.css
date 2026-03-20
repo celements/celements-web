@@ -12,27 +12,23 @@ version: 2.9.0
     left: -999em;
 
 }
-
 .yuimenubar {
 
     position: static;
 
 }
-
 .yuimenu .yuimenu,
 .yuimenubar .yuimenu {
 
     position: absolute;
 
 }
-
 .yuimenubar li, 
 .yuimenu li {
 
     list-style-type: none;    
 
 }
-
 .yuimenubar ul, 
 .yuimenu ul,
 .yuimenubar li, 
@@ -44,7 +40,6 @@ version: 2.9.0
     padding: 0;
 
 }
-
 .yuimenuitemlabel,
 .yuimenubaritemlabel {
 
@@ -52,7 +47,6 @@ version: 2.9.0
     white-space: nowrap;
 
 }
-
 
 /* 
     The following style rule trigger the "hasLayout" property in 
@@ -67,7 +61,6 @@ version: 2.9.0
 
 }
 
-
 /* 
     Remove the "hasLayout" trigger for submenus of MenuBar instances as it 
     is unnecessary. 
@@ -78,7 +71,6 @@ version: 2.9.0
     *zoom: normal;
 
 }
-
 /*
     The following style rule allows a MenuBar instance's <ul> element to clear
     its floated <li> elements in Firefox, Safari and and Opera.
@@ -94,20 +86,17 @@ version: 2.9.0
     line-height: 0;
 
 }
-
 .yuimenubaritem {
 
     float: left;
 
 }
-
 .yuimenubaritemlabel,
 .yuimenuitemlabel {
 
     display: block;
 
 }
-
 .yuimenuitemlabel .helptext {
 
     font-style: normal;
@@ -122,7 +111,6 @@ version: 2.9.0
     margin: -1em 0 0 10em;
     
 }
-
 /*
     PLEASE NOTE: The <div> element used for a menu's shadow is appended 
     to its root element via JavaScript once it has been rendered.  The 
@@ -139,7 +127,6 @@ version: 2.9.0
     z-index: -1;
 
 }
-
 .yui-menu-shadow-visible {
 
     top: 2px;
@@ -149,7 +136,6 @@ version: 2.9.0
     visibility: visible;
 
 }
-
 
 /*
 
@@ -198,13 +184,11 @@ PLEASE NOTE:
 	overflow: hidden;
 
 }
-
 .hide-scrollbars select {
 
 	display: none;
 
 }
-
 
 /*
 
@@ -222,21 +206,18 @@ when one of its submenus is visible.
 	overflow: visible; 
 
 }
-
 .yuimenu.hide-scrollbars .yui-menu-shadow,
 .yuimenubar.hide-scrollbars .yui-menu-shadow {
 
     overflow: hidden;
 
 }
-
 .yuimenu.show-scrollbars .yui-menu-shadow,
 .yuimenubar.show-scrollbars .yui-menu-shadow {
 
     overflow: auto;
 
 }
-
 .yui-overlay.yui-force-redraw {
    margin-bottom: 1px;
 }

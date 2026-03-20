@@ -1,14 +1,12 @@
 #body {
   background-color: #4c5661;
 }
-
 h1,
 h2,
 h3,
 h4 {
   color: #000;
 }
-
 #companylogo img {
 } /* supprimé : logo transparent*/
 
@@ -16,18 +14,15 @@ h4 {
   background-color: #fff;
   border: 2px solid #474f57;
 }
-
 #xwikimaincontainerinner {
   background-color: transparent;
   border: 1px solid #444b53;
 }
-
 #body #contentcontainer,
 #headerglobal,
 #xwikieditor {
   border-color: #676d73; /* couleur de fond de la sidebar*/
 }
-
 #headerglobal {
   background-color: transparent;
   background-image: url('header-bg.jpg');
@@ -47,7 +42,6 @@ h4 {
 #globallinks a:hover {
   color: #0066ff;
 }
-
 #headeruser,
 #headeradmin,
 #headerlogin,
@@ -75,7 +69,6 @@ h4 {
 #headerlanguages {
   background-image: url('icons/black-lang.png');
 }
-
 /*
 ---------------------------------------
 Space header, footer
@@ -117,7 +110,6 @@ Content
 .main {
   background-color: transparent;
 }
-
 /*
 ---------------------------------------
 Zone for Comments, attachments, History...
@@ -127,24 +119,20 @@ ul.xwikiintra {
   border-bottom-color: #ddd;
   background-color: #eee;
 }
-
 .xwikiintra li {
   background-color: #bbb;
   border-color: #ccc;
   border-right-color: #aaa;
 }
-
 .xwikiintra li a,
 .xwikiintra li.active a {
   color: #000;
 }
-
 .xwikiintra li.active {
   background-color: #fff !important;
   border-bottom-color: #fff;
   border-top-color: #ddd;
 }
-
 table.xwikidatatable,
 table.xwikidatatable th {
   border-color: #ddd;
@@ -155,16 +143,13 @@ table.xwikidatatable th {
   border-color: #ccc;
   border: none;
 }
-
 .xwikiintracontent legend,
 .xwikiintracontent fieldset {
   border-color: #ddd;
 }
-
 .xwikiintracontent fieldset.collapsed legend {
   background-color: transparent;
 }
-
 /*
 ---------------------------------------
 Menu
@@ -215,11 +200,9 @@ Menu
 #tmCreate a strong {
   background-image: url(icons/black-create-ab.png);
 }
-
 #tmFile a strong {
   background-image: url(icons/black-file2.png);
 }
-
 #tmEdit a strong {
   background-image: url(icons/black-edit-ab.png);
 }
@@ -268,7 +251,6 @@ Menu
 #tmRename a:hover strong {
   background-image: url(icons/black-rename-ab2.png);
 }
-
 .submenu {
   border: 2px solid #000;
   background-color: #e8f1ff;
@@ -282,13 +264,11 @@ Menu
 .submenuitem a:active {
   color: #333;
 }
-
 .submenuitem a:hover {
   background-image: none;
   background-color: #bfe4ff;
   background-repeat: repeat-x;
 }
-
 /*
 ---------------------------------------------
 "Message Boxes"
@@ -298,12 +278,10 @@ fieldset.xwikimessage {
   border-color: #bbb;
   background-color: #f5f5f5;
 }
-
 fieldset.xwikimessage legend {
   background-color: #bbb;
   color: #fff;
 }
-
 input.button,
 button.button {
   background-color: #eee;
@@ -339,27 +317,23 @@ Editors
   border-left-color: #ddf;
   border-top-color: #ddf;
 }
-
 .xwikitabbar li a {
   color: #fff !important;
 }
 .xwikitabbar li.active a {
   color: #fff !important;
 }
-
 .xwikitabbar li.active {
   background-color: #fff !important;
   border-color: #ddd;
   border-bottom-color: #fff;
 }
-
 /*
 --
 */
 #xwikicontentedit {
   border-color: #ddd;
 }
-
 /*
 ---------------------------------------
 Panels
@@ -375,12 +349,10 @@ Panels
 .globalsearch input.button {
   background-color: #384554;
 }
-
 .fakepanel {
   background-color: #eee;
   border-color: #e5e5e5;
 }
-
 .panel {
   border-color: #ddd;
   background-color: #384554;
@@ -397,14 +369,12 @@ Panels
   background-color: #384554;
   color: #fff;
 }
-
 .expanded .xwikipaneltitle:hover {
   color: #006acc;
 }
 .collapsed .xwikipaneltitle:hover {
   color: #c0d4e7;
 }
-
 /*
 ----------------------------------
 Rico Acordeon -- Sintax Help Panel
@@ -414,14 +384,12 @@ Rico Acordeon -- Sintax Help Panel
   background-color: #fff;
   border-bottom-color: #ddd;
 }
-
 .accordionTabTitleBar {
   border-color: #fff;
   border-bottom-color: #ddd;
   border-right-color: #ddd;
   background-color: #eee;
 }
-
 /*
 ----------------------------------
 Misc
@@ -431,22 +399,18 @@ Misc
 td.label {
   color: #777;
 }
-
 #xwikiclassproperties,
 #xwikiobjects {
   border-color: #ddd !important;
 }
-
 #xwikihelpsyntax {
   border-top-color: #ddd;
 }
-
 .editactions a {
   background-color: #eee;
   color: #000;
   border-color: #dcdcdc;
 }
-
 .editactions a:hover {
   background-color: #ffd;
 }
@@ -458,12 +422,10 @@ td.label {
 fieldset.xwikimessage {
   border-color: #658bb2;
 }
-
 fieldset.xwikimessage legend {
   background-color: #658bb2;
   color: #fff;
 }
-
 tr.row.odd,
 .odd {
   background-color: #eee;
@@ -477,14 +439,12 @@ tr th {
 }
 body#body {
 }
-
 a:link {
   color: #369;
 }
 a:visited {
   color: #777;
 }
-
 tr.row.odd,
 .odd {
   background-color: #fff;
@@ -496,7 +456,6 @@ tr.row.even,
 th {
   background-color: #cdf;
 }
-
 .xwikibuttonlink a {
   background-color: #369;
   color: #fff;
@@ -505,7 +464,6 @@ th {
   background-color: #cdf;
   color: #369;
 }
-
 .xwikitabbar li {
   text-align: center;
   display: block;
@@ -518,7 +476,6 @@ th {
   background: transparent url(icons/black-tabedit-current.png) top center no-repeat;
   border: none;
 }
-
 #xwikirightstable {
   border-color: #ddd;
 }
@@ -532,12 +489,10 @@ th {
 #xwikirightstable tr {
   border-color: #ddd;
 }
-
 .article_footer {
   color: #777;
   border-color: #777;
 }
-
 .xwikiuserblog .rssfeed {
   border-top-color: #ddd;
   border-left-color: #ddd;
@@ -547,13 +502,11 @@ th {
 .rsschanneltitle {
   background-color: transparent;
 }
-
 .panel a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
 }
-
 .panel .accordionTabTitleBar {
   background-color: #384554 !important;
   border: none !important;
@@ -562,7 +515,6 @@ th {
   border-top: 1px solid #384554 !important;
   border-bottom: 1px solid #384554 !important;
 }
-
 /* Note that h6 styling is provided in order to ensure backward compatibility after XSALBATROSS-71 */
 .panel .accordionTabTitleBar h1,
 .panel .accordionTabTitleBar h6 {
@@ -576,13 +528,11 @@ th {
   border-bottom: 2px solid #384554 !important;
   border-top: 1px solid #384554;
 }
-
 /* Note that h6 styling is provided in order to ensure backward compatibility after XSALBATROSS-71 */
 .panel .accordionTabTitleBar h1:hover,
 .panel .accordionTabTitleBar h6:hover {
   background: transparent url('icons/black-more-3.png') right center no-repeat !important;
 }
-
 .panel .accordionTabContentBox {
   background-color: #c0d4e7 !important;
   border: 1px solid #c0d4e7 !important;
@@ -607,13 +557,11 @@ th {
 .panel .accordionTabContentBox a:hover {
   color: #d70 !important;
 }
-
 #body .panel .tbexpanded {
   background-color: #fff !important;
   border-top: 1px solid #d6d6d6 !important;
   border-bottom: 1px solid #384554 !important;
 }
-
 #body .panel .tbexpanded h6 {
   color: #384554 !important;
   border-bottom: 2px solid #dfe5e4 !important;
@@ -622,21 +570,17 @@ th {
 .panel .tbexpanded h6:hover {
   background-image: none !important;
 }
-
 .placeholder {
   background-color: #555;
   border: 1px dotted #ccc;
 }
-
 #dragbox {
   background-color: #c82 !important;
   border: 1px dotted #fff !important;
 }
-
 .dropTarget .accordionTabContentBox {
   background-color: #777 !important;
 }
-
 input.button {
   background-color: #3381cc;
   border: solid 0px #3381cc;
@@ -644,11 +588,9 @@ input.button {
   font-weight: bold;
   padding: 2px;
 }
-
 input.button:hover {
   background-color: #98bfe6;
 }
-
 input[type='submit'] {
   background-color: #3381cc;
   border: solid 0px #3381cc;
@@ -656,7 +598,6 @@ input[type='submit'] {
   font-weight: bold;
   padding: 2px;
 }
-
 textarea {
   background-image: url('black-textareabg.png');
   background-position: 0px 0px;
@@ -665,7 +606,6 @@ textarea {
   border: 1px solid #000;
   padding: 2px;
 }
-
 textarea[disabled] {
   background-image: url('black-textareabg-disabled.png');
   background-position: 0px 0px;
@@ -674,7 +614,6 @@ textarea[disabled] {
   border: 1px solid #000;
   padding: 2px;
 }
-
 input[type='text'],
 input[type='password'],
 input[type='checkbox'],
@@ -684,45 +623,37 @@ select {
   border: 1px solid #000;
   padding: 2px;
 }
-
 input[disabled],
 select[disabled] {
   background: #e4e4e4 url('black-textareabg-disabled.png') 0px 0px no-repeat;
   border: 1px solid #000;
   padding: 2px;
 }
-
 input[type='radio'][disabled] {
   background-image: none;
 }
-
 /*ie nescessite de passer par une classe ou un selecteur sinon il pose des problemes*/
 input.ie {
   background: #e6eaee url('black-textareabg.png') 0px 0px no-repeat;
   border: 1px solid #000;
   padding: 2px;
 }
-
 input:focus,
 textarea:focus {
   background-image: url('black-textareabg1.png');
 }
-
 form label {
   padding: 0px;
 }
-
 form input {
   /* display: block;*/
   margin-top: 3px;
 }
-
 input[type='checkbox'],
 input[type='radio'] {
   /*float: left;*/
   margin-right: 0.75em;
 }
-
 .buttonwrapper {
   background: transparent url('icons/black-button24l.png') left center no-repeat;
   min-height: 24px !important;
@@ -739,15 +670,12 @@ input[type='radio'] {
   display: block;
   line-height: 1.6em !important;
 }
-
 .important {
   color: #c82 !important;
 }
-
 #xwikidataindex {
   display: none;
 }
-
 #commentscontent {
 }
 /*
@@ -768,7 +696,6 @@ input[type='radio'] {
   padding-bottom: 10px;
   padding-top: 10px;
 }
-
 #xwikidata form {
   width: 90%;
   margin: auto;
@@ -781,18 +708,15 @@ input[type='radio'] {
 .xwikiintratitle {
   display: block !important;
 }
-
 a.deletelink {
   padding-left: 20px;
   background: transparent url(icons/black-delete.png) left center no-repeat;
   text-decoration: none;
 }
-
 a.deletelink:hover {
   color: #900;
   text-decoration: underline;
 }
-
 /*-----------------------------*/
 
 .about,
@@ -814,7 +738,6 @@ a.deletelink:hover {
 #footerglobal a:hover {
   color: #d70;
 }
-
 a:hover {
   color: #c82;
   color: #d70;

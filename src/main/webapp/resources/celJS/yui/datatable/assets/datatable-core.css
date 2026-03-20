@@ -11,13 +11,11 @@ version: 2.9.0
     position:absolute;
     z-index:9500;
 }
-
 /* scrollable */
 .yui-dt-tmp {
     position:absolute;
     left:-9000px;
 }
-
 .yui-dt-scrollable .yui-dt-bd {
     overflow:auto;
 }
@@ -31,17 +29,14 @@ version: 2.9.0
     position:absolute;
     left:-1500px;
 }
-
 .yui-dt-scrollable tbody {
     -moz-outline:none;
 }
-
 /* sortable columns */
 
 .yui-skin-sam thead .yui-dt-sortable {
     cursor:pointer;
 }
-
 /* draggable columns */
 .yui-skin-sam thead .yui-dt-draggable {
     cursor: move;
@@ -50,7 +45,6 @@ version: 2.9.0
     position: absolute;
     z-index: 999;
 }
-
 /* resizeable columns */
 .yui-dt-hd {
     zoom:1; 
@@ -73,7 +67,6 @@ th.yui-dt-resizeable .yui-dt-resizerliner {
     z-index:9000;
     background-color:#CCC;opacity:0;filter: alpha(opacity=0); /* Bug 1952811: IE transparency z-index */
 }
-
 /* hidden columns */
 th.yui-dt-hidden .yui-dt-liner, 
 td.yui-dt-hidden .yui-dt-liner,
@@ -86,7 +79,6 @@ th.yui-dt-hidden .yui-dt-resizer {
     overflow:hidden;*/
     display:none;
 }
-
 /* editing */
 .yui-dt-editor, .yui-dt-editor-shim {
     position:absolute;z-index:9000;

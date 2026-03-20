@@ -17,13 +17,11 @@ http://yuilibrary.com/license/
     padding: 3px 0;
 
 }
-
 .yui3-skin-sam .yui3-menu .yui3-menu .yui3-menu-content {
 
 	font-size: 100%;
     
 }
-
 
 /* Horizontal menus */
 
@@ -36,7 +34,6 @@ http://yuilibrary.com/license/
 
 }
 
-
 .yui3-skin-sam .yui3-menu ul,
 .yui3-skin-sam .yui3-menu ul ul {
 
@@ -45,7 +42,6 @@ http://yuilibrary.com/license/
     border-top: solid 1px #ccc;
 
 }
-
 .yui3-skin-sam .yui3-menu ul.first-of-type {
 
     border: 0;
@@ -53,7 +49,6 @@ http://yuilibrary.com/license/
 	padding: 0;    
 
 }
-
 .yui3-skin-sam .yui3-menu-horizontal ul {
 
 	padding: 0;
@@ -61,7 +56,6 @@ http://yuilibrary.com/license/
 	border: 0;
 
 }
-
 
 .yui3-skin-sam .yui3-menu li,
 .yui3-skin-sam .yui3-menu .yui3-menu li {
@@ -76,32 +70,27 @@ http://yuilibrary.com/license/
     _border-bottom: solid 1px #fff;
 
 }
-
 .yui3-skin-sam .yui3-menu-horizontal li {
 
 	_border-bottom: 0;
 
 }
-
 .yui3-skin-sam .yui3-menubuttonnav li {
 
     border-right: solid 1px #ccc;
 
 }
-
 .yui3-skin-sam .yui3-splitbuttonnav li {
 
     border-right: solid 1px #808080;
 
 }
-
 .yui3-skin-sam .yui3-menubuttonnav li li,
 .yui3-skin-sam .yui3-splitbuttonnav li li {
 
 	border-right: 0;
 
 }
-
 
 /* Menuitems and menu labels */
 
@@ -126,7 +115,6 @@ http://yuilibrary.com/license/
 	margin: 0;
 
 }
-
 .yui3-skin-sam .yui3-menu-horizontal .yui3-menu-label,
 .yui3-skin-sam .yui3-menu-horizontal .yui3-menuitem-content {
 
@@ -142,33 +130,28 @@ http://yuilibrary.com/license/
     width: auto;
 
 }
-
 .yui3-skin-sam .yui3-menu-label,
 .yui3-skin-sam .yui3-menu .yui3-menu .yui3-menu-label {
 
 	background: url(vertical-menu-submenu-indicator.png) right center no-repeat;
 
 }
-
 .yui3-skin-sam .yui3-menu-horizontal .yui3-menu-label {
 
     background: url(../../../../assets/skins/sam/sprite.png) repeat-x 0 0;
 
 }
-
 .yui3-skin-sam .yui3-menubuttonnav .yui3-menu-label,
 .yui3-skin-sam .yui3-splitbuttonnav .yui3-menu-label {
 
 	background-image: none;
 
 }
-
 .yui3-skin-sam .yui3-menubuttonnav .yui3-menu-label {
 
     padding-right: 0;
 
 }
-
 .yui3-skin-sam .yui3-menubuttonnav .yui3-menu-label em {
 
 	font-style: normal;
@@ -178,13 +161,11 @@ http://yuilibrary.com/license/
 
 }
 
-
 .yui3-skin-sam .yui3-splitbuttonnav .yui3-menu-label {
 
 	padding: 0;
 
 }
-
 .yui3-skin-sam .yui3-splitbuttonnav .yui3-menu-label a {
 
 	float: left;
@@ -195,7 +176,6 @@ http://yuilibrary.com/license/
 	padding: 0 5px 0 10px;
 
 }
-
 .yui3-skin-sam .yui3-splitbuttonnav .yui3-menu-label .yui3-menu-toggle {
 	
 	padding: 0;	/* Overide padding applied by the preceeding rule. */
@@ -207,7 +187,6 @@ http://yuilibrary.com/license/
 	
 }
 
-
 /* Selected menuitem */
 
 .yui3-skin-sam .yui3-menu-label-active,
@@ -218,7 +197,6 @@ http://yuilibrary.com/license/
 	background-color: #B3D4FF;
 
 }
-
 .yui3-skin-sam .yui3-menuitem-active .yui3-menuitem-content,
 .yui3-skin-sam .yui3-menu .yui3-menu .yui3-menuitem-active .yui3-menuitem-content {
 
@@ -234,7 +212,6 @@ http://yuilibrary.com/license/
     margin-left: 0;
 
 }
-
 .yui3-skin-sam .yui3-menu-horizontal .yui3-menu-label-active,
 .yui3-skin-sam .yui3-menu-horizontal .yui3-menuitem-active .yui3-menuitem-content,
 .yui3-skin-sam .yui3-menu-horizontal .yui3-menu-label-menuvisible {
@@ -243,7 +220,6 @@ http://yuilibrary.com/license/
     background: url(../../../../assets/skins/sam/sprite.png) repeat-x 0 -1700px;
 
 }
-
 .yui3-skin-sam .yui3-menubuttonnav .yui3-menu-label-active,
 .yui3-skin-sam .yui3-menubuttonnav .yui3-menuitem-active .yui3-menuitem-content,
 .yui3-skin-sam .yui3-menubuttonnav .yui3-menu-label-menuvisible,
@@ -255,14 +231,12 @@ http://yuilibrary.com/license/
     margin-left: -1px;
 
 }
-
 .yui3-skin-sam .yui3-splitbuttonnav .yui3-menu-label-menuvisible {
 
     border-color: #808080;
     background: transparent;
 
 }
-
 .yui3-skin-sam .yui3-splitbuttonnav .yui3-menu-label-menuvisible .yui3-menu-toggle {
 
     border-color: #7D98B8;

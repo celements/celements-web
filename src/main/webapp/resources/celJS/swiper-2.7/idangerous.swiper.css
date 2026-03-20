@@ -74,7 +74,6 @@ Basic Swiper Styles
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
 }
-
 /* IE10 Windows Phone 8 Fixes */
 .swiper-wp8-horizontal {
 	-ms-touch-action: pan-y;
@@ -82,7 +81,6 @@ Basic Swiper Styles
 .swiper-wp8-vertical {
 	-ms-touch-action: pan-x;
 }
-
 /* ===============================================================
 Your custom styles, here you need to specify container's and slide's
 sizes, pagination, etc.

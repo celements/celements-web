@@ -7,17 +7,14 @@
   overflow: hidden;
   color: #333;
 }
-
 .CodeMirror-dialog-top {
   border-bottom: 1px solid #eee;
   top: 0;
 }
-
 .CodeMirror-dialog-bottom {
   border-top: 1px solid #eee;
   bottom: 0;
 }
-
 .CodeMirror-dialog input {
   border: none;
   outline: none;
@@ -26,7 +23,6 @@
   color: inherit;
   font-family: monospace;
 }
-
 .CodeMirror-dialog button {
   font-size: 70%;
 }

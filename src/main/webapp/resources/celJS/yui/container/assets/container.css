@@ -10,7 +10,6 @@ version: 2.9.0
     position:absolute;
     z-index: 2;
 }
-
 .yui-tt {
     visibility:hidden;
     position:absolute;
@@ -22,7 +21,6 @@ version: 2.9.0
     font:100% sans-serif;
     width:auto;
 }
-
 /*
     PLEASE NOTE: The <DIV> element used for a Tooltip's shadow is appended 
     to its root element via JavaScript once it has been rendered.  The 
@@ -35,23 +33,18 @@ version: 2.9.0
 .yui-tt-shadow {
     display: none;
 }
-
 * html body.masked select {
     visibility:hidden;
 }
-
 * html div.yui-panel-container select {
     visibility:inherit;
 }
-
 * html div.drag select {
     visibility:hidden;
 }
-
 * html div.hide-select select {
     visibility:hidden;
 }
-
 .mask {
     z-index: 1; 
     display:none;
@@ -63,7 +56,6 @@ version: 2.9.0
     filter: alpha(opacity=50);
     background-color:#CCC;
 }
-
 /*
 
 There are two known issues with YAHOO.widget.Overlay (and its subclasses) that 
@@ -111,35 +103,29 @@ PLEASE NOTE:
     overflow: hidden;
 
 }
-
 .hide-scrollbars select {
 
     display: none;
 
 }
-
 .show-scrollbars {
 
     overflow: auto;
 
 }
-
 .yui-panel-container.show-scrollbars {
 
     overflow: visible;
 
 }
-
 .yui-panel-container.show-scrollbars .underlay {
 
     overflow: auto;
 
 }
-
 .yui-panel-container.focused {
 
 }
-
 
 /* Panel underlay styles */
 
@@ -152,14 +138,12 @@ PLEASE NOTE:
     left: 0;
 
 }
-
 .yui-panel-container.matte {
 
     padding: 3px;
     background-color: #fff;
 
 }
-
 .yui-panel-container.shadow .underlay {
 
     top: 3px;
@@ -171,7 +155,6 @@ PLEASE NOTE:
     filter: alpha(opacity=12);  /* For IE */
 
 }
-
 /* 
    Workaround for Safari 2.x - the yui-force-redraw class is applied, and then removed when
    the Panel's content changes, to force Safari 2.x to redraw the underlay.
@@ -181,11 +164,9 @@ PLEASE NOTE:
 .yui-panel-container.shadow .underlay.yui-force-redraw {
     padding-bottom: 1px;
 }
-
 .yui-effect-fade .underlay {
     display:none;
 }
-
 .yui-panel {
     visibility:hidden;
     border-collapse:separate;
@@ -198,7 +179,6 @@ PLEASE NOTE:
     z-index:1;
     overflow:hidden;
 }
-
 .yui-panel .hd {
     background-color:#3d77cb;
     color:#FFF;
@@ -210,16 +190,13 @@ PLEASE NOTE:
     padding:4px;
     white-space:nowrap;
 }
-
 .yui-panel .bd {
     overflow:hidden;
     padding:4px;
 }
-
 .yui-panel .bd p {
     margin:0 0 1em;
 }
-
 .yui-panel .container-close {
     position:absolute;
     top:5px;
@@ -236,12 +213,10 @@ PLEASE NOTE:
     overflow:hidden;
     text-decoration:none;
 }
-
 .yui-panel .ft {
     padding:4px;
     overflow:hidden;
 }
-
 .yui-simple-dialog .bd .yui-icon {
     background-repeat:no-repeat;
     width:16px;
@@ -249,43 +224,34 @@ PLEASE NOTE:
     margin-right:10px;
     float:left;
 }
-
 .yui-simple-dialog .bd span.blckicon {
     background: url("blck16_1.gif") no-repeat;
 }
-
 .yui-simple-dialog .bd span.alrticon {
     background: url("alrt16_1.gif") no-repeat;
 }
-
 .yui-simple-dialog .bd span.hlpicon {
     background: url("hlp16_1.gif") no-repeat;
 }
-
 .yui-simple-dialog .bd span.infoicon {
     background: url("info16_1.gif") no-repeat;
 }
-
 .yui-simple-dialog .bd span.warnicon {
     background: url("warn16_1.gif") no-repeat;
 }
-
 .yui-simple-dialog .bd span.tipicon {
     background: url("tip16_1.gif") no-repeat;
 }
-
 .yui-dialog .ft, 
 .yui-simple-dialog .ft {
     padding-bottom:5px;
     padding-right:5px;
     text-align:right;
 }
-
 .yui-dialog form, 
 .yui-simple-dialog form {
     margin:0;
 }
-
 .button-group button {
     font:100 76% verdana;
     text-decoration:none;
@@ -299,11 +265,9 @@ PLEASE NOTE:
     margin:2px;
     padding:2px;
 }
-
 .button-group button.default {
     font-weight:bold;
 }
-
 .button-group button:hover, 
 .button-group button.hover {
     border:2px solid #90A029;
@@ -311,14 +275,12 @@ PLEASE NOTE:
     border-top-color:#FFF;
     border-left-color:#FFF;
 }
-
 .button-group button:active {
     border:2px solid #E4E4E4;
     background-color:#BBB;
     border-top-color:#333;
     border-left-color:#333;
 }
-
 .yui-override-padding {
     padding:0 !important;
 }

@@ -81,7 +81,6 @@ version: 2.9.0
 .yui-skin-sam .yui-carousel-nav select {
     position:static;
 }
-
 .yui-carousel .yui-carousel-item-selected {
     border: 1px dashed #000;
     margin: 1px;

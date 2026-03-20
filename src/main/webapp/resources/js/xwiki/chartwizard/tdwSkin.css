@@ -47,7 +47,6 @@ fieldset.tdwSmallFieldset {
 fieldset.tdwSmallFieldset {
   border: #bbb 1px solid;
 }
-
 legend.tdwLargeLegend,
 legend.tdwSmallLegend {
   color: #5368a6;
@@ -61,23 +60,19 @@ legend.tdwSmallLegend {
 legend.tdwLargeLegend {
   border: #5368a6 1px solid;
 }
-
 legend.tdwSmallLegend {
   font-size: 12px;
   font-weight: 600;
 }
-
 img.tdwNavigationImage,
 img.tdwNavigationImageDisabled {
   margin: 3px 4px 2px 3px;
   height: 16px;
   vertical-align: middle;
 }
-
 img.tdwNavigationImage {
   cursor: pointer;
 }
-
 .tdwButton,
 .tdwButtonDisabled {
   text-decoration: none;
@@ -92,7 +87,6 @@ img.tdwNavigationImage {
   background-color: #888;
   cursor: default;
 }
-
 .tdwActivePage,
 .tdwInactivePage {
   overflow: auto;
@@ -112,7 +106,6 @@ img.tdwNavigationImage {
 .tdwInactivePage {
   display: none;
 }
-
 .tdwListbox {
   display: block;
 }
@@ -124,7 +117,6 @@ img.tdwNavigationImage {
   font-size: larger;
   color: #900;
 }
-
 /*
   Tables skin
  */
@@ -148,34 +140,28 @@ img.tdwNavigationImage {
   cursor: crosshair;
   empty-cells: show;
 }
-
 tbody.tdwUnselectedTable {
   background-color: transparent;
 }
 tbody.tdwSelectedTable {
   background-color: #f7f0d2;
 }
-
 tbody.tdwSelectedTable th,
 tr.tdwSelectedRow th,
 th.tdwSelectedCell {
   background-color: #c82;
   color: #fff;
 }
-
 tr.tdwUnselectedRow,
 col.tdwUnselectedColumn {
   background-color: transparent;
 }
-
 col.tdwSelectedColumn {
   background: #f7f0d2;
 }
-
 tr.tdwSelectedRow {
   background-color: #f7f0d2;
 }
-
 td.tdwSelectedCell {
   background: #f7f0d2;
 }

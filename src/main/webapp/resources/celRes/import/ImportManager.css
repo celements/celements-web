@@ -114,11 +114,9 @@ div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container .
 div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container #yui-dt-fixedth-del_attachment {
   border-right: 0px;
 }
-
 .c3_import_tabbox {
   position: relative;
 }
-
 .c3_import_title {
   position: relative;
   background-color: #eeeeee;
@@ -134,14 +132,12 @@ div.c3_import_box div.c3_filebase_box div.celements3_filebase #c2_ml_container #
   font-size: 16px;
   line-height: 20px;
 }
-
 #c3_import_preimport_result > p {
   padding-left: 10px;
   padding-bottom: 3px;
   margin-bottom: 0px;
   color: #384554;
 }
-
 #c3_import_preimport_result {
   color: #384554;
   overflow: auto;

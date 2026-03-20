@@ -14,64 +14,52 @@ body#body {
   /* padding et margin nul pour emulation min width*/
   min-width: 760px;
 }
-
 #xwikimaincontainer {
   margin: 0px 40px;
   text-align: center;
   margin-bottom: 40px;
 }
-
 html > body .minwidth,
 html > body .minwidthb,
 html > body .minwidthc {
   display: none;
 }
-
 .minwidth,
 .minwidthb,
 .minwidthc {
   width: 720px;
   height: 0px;
 }
-
 * html .minwidth,
 * html .minwidthb,
 * html .minwidthc {
   height: 1px !important;
   overflow: hidden;
 }
-
 .minwidthb {
   width: 520px;
 }
-
 .minwidthc {
   width: 438px;
 }
-
 .layoutsection {
   clear: both;
 }
-
 #xwikimaincontainerinner {
   text-align: left;
 }
-
 #contentcontainer {
   z-index: 1;
 }
-
 #xwikieditor {
   border-right: 310px solid;
   z-index: 1;
 }
-
 .wiki-code {
   width: 100%;
   height: 300px;
   overflow: auto;
 }
-
 /*
 ---------------------------------------
 Global header
@@ -85,7 +73,6 @@ Global header
   border-right: 200px solid;
   z-index: 1;
 }
-
 #globallinks {
   position: relative;
   float: left;
@@ -94,44 +81,36 @@ Global header
   min-height: 100px;
   margin-right: -200px;
 }
-
 .editbody #headerglobal {
   border-right: 310px solid;
 }
-
 .editbody #globallinks {
   width: 310px;
   margin-right: -310px;
 }
-
 #globalmenu {
   padding: 1.8em 0.5em 0.5em 0.5em;
   text-align: right;
   font-size: 115%;
   line-height: 1em;
 }
-
 #globalmenu .glink {
   display: block;
   text-decoration: none;
   font-size: 0.8em;
   font-weight: bold;
 }
-
 #globalmenu #headerlanguages a {
   text-transform: capitalize;
 }
-
 #globalmenu span {
   display: none;
 }
-
 #company {
   height: 8em;
   float: left;
   width: 100%;
 }
-
 #companylogo {
   padding: 50px 0 0 40px;
   font-family: 'Open Sans', sans-serif;
@@ -140,12 +119,10 @@ Global header
   font-size: 38px;
   line-height: 40px;
 }
-
 #globaldoctitle {
   display: none;
   /*pour éviter pb dans IE -- a regler*/
 }
-
 /*
 ---------------------------------------
 Space header, footer
@@ -155,35 +132,29 @@ Space header, footer
 #footerglobal {
   height: 1.5em;
 }
-
 #footerglobal {
   padding: 1em 0px;
   text-align: center;
 }
-
 #headerspace hr,
 #footerglobal hr {
   display: none;
 }
-
 #breadcrumbs {
   padding-left: 40px;
   display: inline-block;
   float: left;
 }
-
 /* "Edit parent" icon */
 .edit-meta-tools {
   display: inline-block;
   vertical-align: middle;
   float: left;
 }
-
 #headerspace:target #breadcrumbs,
 #headerspace:target .edit-meta-tools {
   display: none;
 }
-
 .edit-meta-tools a {
   display: block;
   width: 16px;
@@ -193,15 +164,12 @@ Space header, footer
   background: transparent none left top no-repeat;
   margin-left: 4px;
 }
-
 .edit-meta-tools a.edit-parent {
   background-image: url(/file/resources/icons/xwiki/parent_edit.gif);
 }
-
 .edit-meta-tools a.hide-edit-parent {
   background-image: url(/file/resources/icons/silk/chart_organisation.gif);
 }
-
 /* Parent editing area */
 #headerspace #parentinput {
   display: none;
@@ -209,40 +177,32 @@ Space header, footer
   font-size: 90%;
   vertical-align: baseline;
 }
-
 #headerspace #parentinput * {
   vertical-align: baseline;
 }
-
 /* Don't combine the following two rules, otherwise IE will fail to recognize either of them */
 #headerspace:target #parentinput {
   display: inline-block;
 }
-
 #headerspace #parentinput.active {
   display: inline-block;
 }
-
 #footerglobal,
 #headerspace {
   clear: both;
 }
-
 #xwikilicence {
   float: right;
   clear: right;
   margin-right: 5px;
 }
-
 #xwikidocinfo {
   width: 100%;
 }
-
 #celementsplatformversion {
   float: left;
   margin-left: 5px;
 }
-
 /*
 ---------------------------------------
 Content
@@ -253,56 +213,45 @@ Content
   width: 100%;
   background-color: #fff;
 }
-
 #contentcolumn {
   float: right;
   padding: 0px;
 }
-
 * html #contentcolumn {
   width: auto;
 }
-
 .main {
   padding: 20px 40px 20px 40px;
 }
-
 .leftsidecolumns {
   float: left;
   width: 100%;
 }
-
 .content {
   border-right: 200px solid;
   border-left: 200px solid;
 }
-
 .contenthideleft {
   border-right: 200px solid;
   border-left: 0px solid;
 }
-
 .contenthideright {
   border-right: 0px solid;
   border-left: 200px solid;
 }
-
 #contentcontainer.contenthidelefthideright {
   border-right: 0px solid;
   border-left: 0px solid;
 }
-
 #editcolumn {
   width: 100%;
   float: left;
   overflow: hidden;
   padding-bottom: 20px;
 }
-
 #xwikieditcontent textarea#content {
   width: 100%;
 }
-
 .layoutsubsection.about {
   border: none;
   text-align: right;
@@ -310,7 +259,6 @@ Content
   margin-bottom: 10px;
   padding-bottom: 10px;
 }
-
 .about {
   float: right;
   text-align: right;
@@ -319,7 +267,6 @@ Content
   height: 30px;
   line-height: 15px;
 }
-
 /*
 ---------------------------------------
 Zone for Comments, attachments, History...
@@ -329,11 +276,9 @@ Zone for Comments, attachments, History...
   padding: 0px;
   border: none;
 }
-
 .xwikiintracontent {
   margin: 0px;
 }
-
 /*
 ---------------------------------------------
 "Message Boxes"
@@ -348,47 +293,38 @@ fieldset.xwikimessage {
   border-top: 8px solid #bbb;
   padding: 0px 8px 16px;
 }
-
 html > body fieldset.xwikimessage {
   padding-top: 8px;
 }
-
 fieldset.xwikimessage legend {
   font-weight: bold;
   font-size: 110%;
   padding: 2px 8px;
   margin: 0px;
 }
-
 fieldset.xwikimessage .xwikimessage {
   text-align: center;
   font-weight: bold;
   font-size: 110%;
 }
-
 fieldset.xwikimessage .buttons {
   text-align: center;
 }
-
 fieldset.xwikimessage .buttons a {
   text-decoration: none;
   margin: 8px;
 }
-
 .button {
   font-family: Helvetica, sans-serif;
   font-weight: bold;
   text-align: center;
 }
-
 .topbuttons {
   margin-bottom: 5px;
 }
-
 .bottombuttons {
   margin-top: 5px;
 }
-
 /*
 ----------------------------------------------
 Comments
@@ -397,24 +333,19 @@ Comments
 #xwikidata #commentscontent {
   background: #e5f0fe url('icons/black-bg-comments-left.png') left top no-repeat;
 }
-
 #comments,
 #attachments {
   padding: 0px 20px;
 }
-
 #xwikidata .xwikititlewrapper {
   cursor: pointer;
 }
-
 #xwikidata #commentscontent .xwikititlewrapper {
   background: transparent url('icons/black-bg-comments-right.png') right top no-repeat;
 }
-
 #xwikidata #attw {
   background: transparent url('icons/black-bg-attach-right.png') right bottom no-repeat;
 }
-
 .xwikiintratitle {
   background: transparent url('icons/black-content-more.png') right center no-repeat;
   font-size: 160%;
@@ -423,126 +354,100 @@ Comments
   margin: 0px 24px;
   padding: 16px 0px 16px;
 }
-
 .exp .xwikiintratitle {
   background: transparent url('icons/black-content-less.png') right center no-repeat;
 }
-
 #xwikidata #attachmentscontent {
   background: url('icons/black-bg-attach-left.png') left bottom no-repeat;
 }
-
 #attachmentscontent table {
   border: none;
 }
-
 .mime {
   text-align: center;
 }
-
 .xwikicomment {
   padding: 10px 24px;
   position: relative;
   overflow: hidden;
 }
-
 .commentspacer {
   display: none;
 }
-
 #comments .odd {
   background-color: #fff;
 }
-
 #comments .even {
   background-color: #e5f0fe;
 }
-
 .commentavatar {
   left: 0px;
   top: 0px;
   width: 54px;
 }
-
 .commentavatar img {
   width: 3.5em;
   display: block;
   margin: auto;
 }
-
 .commentheader {
   padding: 6px 0px;
 }
-
 .commentauthor {
   font-size: 130%;
   font-weight: 900;
 }
-
 .commentauthor a {
   text-decoration: none;
   color: #000 !important;
 }
-
 .xwikibuttonlink a {
   background-color: #bbb;
   padding: 2px 4px;
   text-decoration: none;
   font-weight: bold;
 }
-
 table.xwikidatatable {
   margin: 8px auto;
   /* width: 100%; */
 }
-
 table.xwikidatatable,
 table.xwikidatatable th {
   border: 1px solid #ddd;
 }
-
 table.xwikidatatable td {
   padding: 2px 8px;
 }
-
 .xwikiintracontent legend {
   border: 1px solid #ddd;
   padding: 2px 4px;
 }
-
 .xwikiintracontent fieldset {
   border-color: #ddd;
   border-style: solid;
   padding: 8px 8px;
 }
-
 .xwikiintracontent legend {
   font-size: 110%;
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 8px;
 }
-
 html > body .xwikiintracontent legend {
   margin-bottom: 0px;
 }
-
 .xwikiintracontent fieldset.collapsed {
   border: none;
 }
-
 .xwikiintracontent fieldset.collapsed legend {
   margin-left: 2px;
 }
-
 .xwikiintracontent fieldset.collapsed div {
   display: none;
 }
-
 .xwikiintracontent fieldset.expanded .expands {
   display: none;
 }
-
 .commentsno,
 .attachmentsno {
   font-size: 50%;
@@ -550,11 +455,9 @@ html > body .xwikiintracontent legend {
   padding: 11px 24px 13px;
   font-weight: 900;
 }
-
 .attachmentsno {
   background: transparent url('icons/black-doc2.png') center no-repeat;
 }
-
 /*
 ---------------------------------------
 Menu
@@ -573,28 +476,23 @@ Menu
   z-index: 999999;
   overflow: visible;
 }
-
 html > body #actionmenu {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
 }
-
 html > body.celementsmenubarvisible #actionmenu {
   top: 28px;
 }
-
 #actionmenu a {
   text-decoration: none;
 }
-
 .rightmenu {
   position: absolute;
   right: 0px;
   margin-right: 40px;
 }
-
 .rightmenu a {
   float: left;
   width: 200px;
@@ -613,17 +511,14 @@ html > body.celementsmenubarvisible #actionmenu {
   height: 2em;
   line-height: 1.9em;
 }
-
 .leftmenu {
   position: absolute;
   left: 42px;
 }
-
 .leftmenu2 {
   text-align: left;
   text-align: left;
 }
-
 .topmenuentry {
   float: left;
   width: 7em;
@@ -635,11 +530,9 @@ html > body.celementsmenubarvisible #actionmenu {
   border-width: 0px 1px;
   margin-right: -1px;
 }
-
 .topmenuentry strong {
   font-size: 90%;
 }
-
 .submenu {
   display: block;
   width: 12em;
@@ -648,7 +541,6 @@ html > body.celementsmenubarvisible #actionmenu {
   margin-top: -1px;
   margin-left: 0px;
 }
-
 .topmenuentry a,
 .topmenuentry a:link,
 .topmenuentry a:visited,
@@ -660,32 +552,27 @@ html > body.celementsmenubarvisible #actionmenu {
   height: 2em;
   line-height: 1.9em;
 }
-
 .rightmenu a {
   height: 2em;
   line-height: 1.9em;
   font-size: 1em;
   text-decoration: none;
 }
-
 .submenu .submenuitem {
   display: block;
   padding: 2px;
   border-bottom: 1px dashed;
   margin-bottom: -1px;
 }
-
 .submenu .submenuseparator {
   display: block;
   font-size: 1px;
   line-height: 1px;
   border-top: 1px solid;
 }
-
 .submenu.hidden {
   display: none;
 }
-
 .submenuitem a,
 .submenuitem a:link,
 .submenuitem a:visited,
@@ -699,11 +586,9 @@ html > body.celementsmenubarvisible #actionmenu {
   padding: 1px 3px;
   line-height: 1.5em;
 }
-
 .menuarrow {
   display: none;
 }
-
 /*
 ---------------------------------------
 Editors
@@ -713,7 +598,6 @@ Editors
 #xwikiviewerstitles {
   display: none;
 }
-
 /*
 ---------------------------------------
 Tabs
@@ -723,7 +607,6 @@ ul.xwikitabbar {
   padding: 4px 0px;
   margin: 0px;
 }
-
 .xwikitabbar li {
   display: inline;
   padding: 5px 0px;
@@ -733,37 +616,30 @@ ul.xwikitabbar {
   margin-right: 2px;
   margin-top: 2px;
 }
-
 html > body .xwikitabbar li {
   padding: 5px 0px;
 }
-
 .xwikitabbar li a {
   padding: 5px 15px;
   font-weight: bold;
   text-decoration: none;
 }
-
 .xwikitabbar li a:hover {
   text-decoration: none;
 }
-
 .xwikitabbar li.active {
   border: 1px solid;
   border-bottom: 3px solid;
 }
-
 .xwikitabbar li.active a:hover {
   cursor: default;
 }
-
 /*
 --
 */
 #xwikicontentedit {
   border: 1px solid;
 }
-
 /*
 ---------------------------------------
 Panels
@@ -775,20 +651,17 @@ Panels
   margin: 0px;
   padding: 0px 0px 30px;
 }
-
 .globalsearch input {
   font-size: 0.7em;
   border: 1px solid;
   display: inline !important;
 }
-
 .globalsearch input.button {
   vertical-align: middle;
   font-size: 1em;
   border: 0px;
   padding: 0px;
 }
-
 #rightPanels,
 #leftPanels {
   position: relative;
@@ -796,31 +669,25 @@ Panels
   width: 200px;
   padding-top: 0px;
 }
-
 #rightPanels {
   margin-right: -200px;
 }
-
 #leftPanels {
   margin-left: -200px;
 }
-
 html > body .panels {
   margin-top: 0px;
 }
-
 .panels.left {
   float: left;
   clear: none;
   margin-left: 0px;
 }
-
 .panels.right {
   float: right;
   clear: right;
   margin-right: 0px;
 }
-
 .panel,
 .fakepanel {
   color: #ddd;
@@ -830,66 +697,53 @@ html > body .panels {
   padding: 0px;
   border: 0px solid;
 }
-
 .placeholder {
   width: 200px;
 }
-
 html > body #dragbox {
   width: 198px !important;
 }
-
 #xwikinavcontainer {
   margin-bottom: 20px;
 }
-
 .fakepanel {
   display: none;
   height: 320px;
 }
-
 #editPanels.panels {
   width: 310px;
   float: left;
   position: relative;
   margin-right: -310px;
 }
-
 #editPanels .panel {
   width: 310px;
 }
-
 .collapsed .xwikipanelcontents {
   display: none;
 }
-
 span.panelitem {
   display: block;
 }
-
 span.pitemseparator {
   display: none;
 }
-
 .panelcontainer {
   height: 200px;
   overflow: hidden;
   border: 1px inset #444;
   padding: 3px;
 }
-
 .panelitemc {
   height: 256px;
   margin: 0px 4px;
   width: 210px;
   float: left;
 }
-
 .panelitemc .label,
 .panelitemc .xwikibuttonlink {
   text-align: center;
 }
-
 /*
 ----------------------------------
 Scriptaculous Acordeon
@@ -904,32 +758,26 @@ Scriptaculous Acordeon
   border-top-style: solid;
   border: none;
 }
-
 .accordionTabContentBox {
   overflow: hidden !important;
 }
-
 /* Note that h6 styling is provided in order to ensure backward compatibility after XSALBATROSS-71 */
 .accordionTabTitleBar h1,
 .accordionTabTitleBar h6 {
   margin: 0px;
   padding: 0px 4px;
 }
-
 #editPanels .accordionTabContentBox {
   border: none;
   overflow: auto !important;
 }
-
 #editPanels .accordionTabContentBox table {
   border: none;
 }
-
 .accordionTabContentBox table th {
   border-bottom: 1px solid #ddd;
   text-align: center;
 }
-
 #xwikihelptitlesContent h1,
 #xwikihelptitlesContent h2,
 #xwikihelptitlesContent h3,
@@ -939,12 +787,10 @@ Scriptaculous Acordeon
   margin: 0px;
   text-align: right;
 }
-
 .accordionTabTitleBar {
   border: 1px solid #fff;
   cursor: default;
 }
-
 /*
 -----------------------------
 Misc
@@ -954,18 +800,15 @@ Misc
 #xwikihelplistsContent ol {
   margin: 0px;
 }
-
 #contentcolumn .panel.large {
   width: 290px;
 }
-
 .accordionTabTitleBar tt {
   font-style: normal;
   font-size: 150%;
   font-weight: 100;
   padding: 0px 4px;
 }
-
 /*.accordionTabContentBox div{
   padding: 0px;
 }*/
@@ -973,61 +816,49 @@ td.label {
   text-align: right;
   padding-right: 4px;
 }
-
 #xwikiclassproperties,
 #xwikiobjects {
   border: 1px solid #ddd !important;
   overflow: hidden;
 }
-
 .center {
   text-align: center;
 }
-
 .padded {
   padding: 8px;
 }
-
 #xwikihelpsyntax {
   border-top: 1px solid #ddd;
   padding: 2px 6px;
   margin: -2px 1px 0px;
 }
-
 .editactions {
   border: none !important;
   margin-top: 10px;
   padding: 0px;
 }
-
 #historycontent td {
   padding: 2px;
 }
-
 #xwikiuserprofile th {
   background-color: transparent;
   text-align: right;
 }
-
 #xwikiuserprofile td,
 #xwikiuserprofile th {
   padding: 4px;
 }
-
 #xwikiobjects td {
   vertical-align: top;
 }
-
 html > body .xwikidatatable {
   width: 100%;
 }
-
 .xwikiuserblog .rssfeed {
   width: 200px;
   float: right;
   border: 2px solid;
 }
-
 .edit_section {
   visibility: hidden;
   display: block;
@@ -1035,7 +866,6 @@ html > body .xwikidatatable {
   height: 24px;
   width: 24px;
 }
-
 .edit_section a {
   visibility: visible;
   position: relative;
@@ -1043,7 +873,6 @@ html > body .xwikidatatable {
   background: transparent url('icons/black-edit.png') left bottom no-repeat;
   padding: 0px 10px 20px;
 }
-
 /*
 ------------------------
 Page Layout Selection
@@ -1054,7 +883,6 @@ td div.pagelayoutoption {
   margin: 0px auto;
   width: 106px;
 }
-
 div.layoutmaquette {
   width: 100px;
   height: 100px;
@@ -1062,7 +890,6 @@ div.layoutmaquette {
   background-color: #fff;
   padding: 2px;
 }
-
 div.lmleftcolumn,
 div.lmrightcolumn {
   width: 20px;
@@ -1071,76 +898,60 @@ div.lmrightcolumn {
   background-color: #ddd;
   float: left;
 }
-
 div.lmrightcolumn {
   float: right;
 }
-
 div.lmcontentcolumn {
   border: 1px solid #aaa;
   background-color: #eee;
   height: 90px;
 }
-
 #leftcolumn div.lmcontentcolumn {
   margin-left: 24px;
 }
-
 #rightcolumn div.lmcontentcolumn {
   margin-right: 24px;
 }
-
 #bothcolumns div.lmcontentcolumn {
   margin-left: 24px;
   margin-right: 24px;
 }
-
 div.pagelayoutoption:hover .layoutmaquette {
   background-color: #ffd;
 }
-
 div.pagelayoutoption:hover .lmcontentcolumn {
   background-color: #ddd;
 }
-
 div.pagelayoutoption:hover .lmleftcolumn,
 div.pagelayoutoption:hover .lmrightcolumn {
   background-color: #acf;
 }
-
 div.pagelayoutoptions > table {
   width: 100%;
   text-align: center;
 }
-
 div.pagelayoutoptions td {
   padding: 2px;
   vertical-align: bottom;
 }
-
 #selectedoption .lmcontentcolumn {
   background-color: #acf;
 }
-
 #selectedoption .lmleftcolumn,
 #selectedoption .lmrightcolumn {
   background-color: #369;
 }
-
 .pagelayoutoption label {
   color: #aaa;
 }
-
 #selectedoption label,
 .pagelayoutoption:hover label {
   color: #000;
 }
-
 .hastooltip {
   border-bottom: 1px dotted #000;
   cursor: help;
 }
-
 #dhtmltooltip {
   border: 1px solid #aaa;
   padding: 2px 4px;
@@ -1148,80 +959,65 @@ div.pagelayoutoptions td {
   text-align: justify;
   position: absolute;
 }
-
 #panelwizardbuttons {
   padding: 8px 5px 0px;
   margin: 8px -5px 0px;
   border-top: 1px solid #ddd;
   text-align: left;
 }
-
 .alleditcontent {
   position: relative;
   width: auto;
   margin: 20px 20px 0px 20px;
 }
-
 .floatcontainer {
   overflow: hidden;
 }
-
 #xwikieditcontent,
 .xwikitabpanescontainer {
   border: 2px solid #3381cc;
   padding: 3px 8px 3px 3px;
   overflow: auto;
 }
-
 #xwikieditcontent div {
   overflow: hidden;
 }
-
 * html #xwikieditcontent {
   padding: 0px 3px 3px 3px;
 }
-
 .editinfo {
   height: 2em;
   font-weight: bold;
   font-size: 1em;
   line-height: 2em;
 }
-
 #edit {
   padding: 0px;
   margin: 0px;
   border: none;
 }
-
 #xwikitext {
   clear: both;
 }
-
 #panelsBackground {
   height: 20px;
   background-color: #384554;
 }
-
 #xwikidoctitleinput {
   width: 100%;
   font-size: 150%;
 }
-
 * html form {
   margin-top: 0px;
 }
-
 .xwiki-form-listclass input[type='checkbox'] {
   float: none;
   display: inline;
   margin-right: 2px;
 }
-
 .xwiki-form-listclass {
   margin-right: 10px;
 }
-
 /**
 Attachments
 */
@@ -1235,40 +1031,33 @@ div.attachment {
   border-left: 1px solid #eee;
   font-size: 85%;
 }
-
 .attachment .mime {
   display: block;
   float: left;
   padding-right: 8px;
   padding-bottom: 4px;
 }
-
 .attachment .information {
   position: relative;
   overflow: hidden;
 }
-
 .attachment .name {
   display: block;
   float: left;
   font-size: 170%;
   padding: 0px 6px 4px 0px;
 }
-
 .attachment .version {
   display: block;
 }
-
 .attachment .meta {
   clear: left;
 }
-
 .attachment .xwikibuttonlinks {
   float: right;
   font-size: 130%;
   padding: 4px 10px;
 }
-
 .mceEditorContainer {
   display: block;
   height: 100% !important;
@@ -1277,7 +1066,6 @@ div.attachment {
   height: 100% !important;
   position: relative;
 }
-
 .mceToolbar {
   z-index: 30002;
 }

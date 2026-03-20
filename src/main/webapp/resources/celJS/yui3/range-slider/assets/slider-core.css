@@ -13,7 +13,6 @@ http://yuilibrary.com/license/
     zoom: 1;
     vertical-align: middle;
 }
-
 .yui3-slider-content {
     position: relative;
     display: block;
@@ -21,7 +20,6 @@ http://yuilibrary.com/license/
 .yui3-slider-rail {
     position: relative;
 }
-
 .yui3-slider-rail-cap-top,
 .yui3-slider-rail-cap-left,
 .yui3-slider-rail-cap-bottom,
@@ -31,7 +29,6 @@ http://yuilibrary.com/license/
 .yui3-slider-thumb-shadow {
     position: absolute;
 }
-
 .yui3-slider-thumb {
     overflow: hidden;
 }
