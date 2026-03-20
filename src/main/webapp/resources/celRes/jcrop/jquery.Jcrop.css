@@ -7,7 +7,7 @@
 .jcrop-hline {
   font-size: 0px;
   position: absolute;
-  background: white url("Jcrop.gif") top left repeat;
+  background: white url('Jcrop.gif') top left repeat;
 }
 .jcrop-vline {
   height: 100%;

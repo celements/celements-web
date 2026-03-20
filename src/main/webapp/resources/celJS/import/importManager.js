@@ -20,52 +20,50 @@
 
 const startObserversNewUniqueName = function () {
   updateObservers();
-  Event.observe(window, "resize", resizeTab);
-  $$(".c3_import_box")[0].observe("filepicker:changed", updateObservers);
-  if (typeof preimportChanged !== "undefined") {
-    if (typeof console != "undefined" && typeof console.warn != "undefined") {
-      console.warn("deprecated usage of direct preimportChanged registration.");
+  Event.observe(window, 'resize', resizeTab);
+  $$('.c3_import_box')[0].observe('filepicker:changed', updateObservers);
+  if (typeof preimportChanged !== 'undefined') {
+    if (typeof console != 'undefined' && typeof console.warn != 'undefined') {
+      console.warn('deprecated usage of direct preimportChanged registration.');
     }
-    $("c3_import_box").observe("preimport:changed", preimportChanged);
+    $('c3_import_box').observe('preimport:changed', preimportChanged);
   }
-  $(document.body).fire("preimport:beforeShowBox");
-  showTab($$(".c3_import_box")[0]);
+  $(document.body).fire('preimport:beforeShowBox');
+  showTab($$('.c3_import_box')[0]);
   resizeTab();
 };
 
 function updateObservers() {
-  if (typeof myDataTable != "undefined" && myDataTable != null) {
-    myDataTable.subscribe("rowClickEvent", clickObserve);
+  if (typeof myDataTable != 'undefined' && myDataTable != null) {
+    myDataTable.subscribe('rowClickEvent', clickObserve);
   }
-  $$(".c3_import_title").each(function (tab) {
-    tab.stopObserving("click", changeTabEvent);
-    tab.observe("click", changeTabEvent);
+  $$('.c3_import_title').each(function (tab) {
+    tab.stopObserving('click', changeTabEvent);
+    tab.observe('click', changeTabEvent);
   });
-  $$("c3_import_tabbox").each(function (tabbox) {
+  $$('c3_import_tabbox').each(function (tabbox) {
     tabbox.stopObserving();
   });
   resizeTab();
 }
 
 const clickObserve = function (event) {
-  if (typeof preimport !== "undefined") {
-    if (typeof console != "undefined" && typeof console.warn != "undefined") {
-      console.warn(
-        'deprecated usage of direct "preimport" global function call.',
-      );
+  if (typeof preimport !== 'undefined') {
+    if (typeof console != 'undefined' && typeof console.warn != 'undefined') {
+      console.warn('deprecated usage of direct "preimport" global function call.');
     }
     preimport(event);
   }
-  $("c3_import_box").fire("preimport:clickOnRow", event);
-  showTab($$(".c3_import_middle")[0]);
+  $('c3_import_box').fire('preimport:clickOnRow', event);
+  showTab($$('.c3_import_middle')[0]);
 };
 
 const sortObserve = function (event) {
-  if (typeof $("c2_ml_content") != undefined && $("c2_ml_content") != null) {
-    $("c2_ml_content").fire("filepicker:changed");
+  if (typeof $('c2_ml_content') != undefined && $('c2_ml_content') != null) {
+    $('c2_ml_content').fire('filepicker:changed');
   } else {
     YAHOO.util.Event.onDOMReady(function () {
-      $("c2_ml_content").fire("filepicker:changed");
+      $('c2_ml_content').fire('filepicker:changed');
     });
   }
 };
@@ -76,77 +74,66 @@ const sortObserve = function (event) {
  */
 function resizeTab() {
   let tabtitlesheight = 0;
-  $$(".c3_import_title").each(function (titleElem) {
+  $$('.c3_import_title').each(function (titleElem) {
     tabtitlesheight += titleElem.getHeight();
-    tabtitlesheight += parseInt(titleElem.getStyle("margin-top"));
-    tabtitlesheight += parseInt(titleElem.getStyle("margin-bottom"));
+    tabtitlesheight += parseInt(titleElem.getStyle('margin-top'));
+    tabtitlesheight += parseInt(titleElem.getStyle('margin-bottom'));
   });
-  const mainpadding = parseInt($$(".main")[0].getStyle("padding-top"));
-  const mainmargin = parseInt($$(".main")[0].getStyle("margin-top"));
+  const mainpadding = parseInt($$('.main')[0].getStyle('padding-top'));
+  const mainmargin = parseInt($$('.main')[0].getStyle('margin-top'));
   const mainborders = 2 * (mainpadding + mainmargin);
 
   let winHeight = 0;
-  if (typeof window.innerWidth == "number") {
+  if (typeof window.innerWidth == 'number') {
     winHeight = window.innerHeight;
-  } else if (
-    document.documentElement &&
-    document.documentElement.clientHeight
-  ) {
+  } else if (document.documentElement && document.documentElement.clientHeight) {
     winHeight = document.documentElement.clientHeight;
   } else if (document.body && document.body.clientHeight) {
     winHeight = document.body.clientHeight;
   }
 
   var tabboxsize = winHeight - tabtitlesheight - mainborders;
-  $$(".c3_import_tabbox").each(function (box) {
-    const scrollbox = box.down(".c3_import_scrollable");
+  $$('.c3_import_tabbox').each(function (box) {
+    const scrollbox = box.down('.c3_import_scrollable');
     if (scrollbox) {
       const scrollboxOffset = $j(scrollbox).offset();
       const scrollboxTop = scrollboxOffset ? scrollboxOffset.top : 0;
       //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
       //counting margin-auto offsets. Thus we need to use jquery.offset
       const offsetBefore =
-        typeof scrollboxOffset !== "undefined" &&
-        typeof $j(box).offset() !== "undefined"
+        typeof scrollboxOffset !== 'undefined' && typeof $j(box).offset() !== 'undefined'
           ? scrollboxTop - $j(box).offset().top
           : 0;
       let ele = scrollbox;
       let lastElemBottom = scrollboxTop + scrollbox.getHeight();
-      while (ele && !ele.hasClassName("c3_import_tabbox")) {
+      while (ele && !ele.hasClassName('c3_import_tabbox')) {
         ele.siblings().each(function (sibl) {
           const siblOffset = $j(sibl).offset();
-          if (
-            typeof siblOffset !== "undefined" &&
-            sibl.getStyle("position") != "absolute"
-          ) {
+          if (typeof siblOffset !== 'undefined' && sibl.getStyle('position') != 'absolute') {
             // use offsetHeight instead of getHeight() which is wrong for script and link elements}
-            lastElemBottom = Math.max(
-              lastElemBottom,
-              siblOffset.top + sibl.offsetHeight,
-            );
+            lastElemBottom = Math.max(lastElemBottom, siblOffset.top + sibl.offsetHeight);
           }
         });
         ele = ele.up();
       }
-      const offsetAfter =
-        lastElemBottom - (scrollboxTop + scrollbox.getHeight());
+      const offsetAfter = lastElemBottom - (scrollboxTop + scrollbox.getHeight());
       const newScrollableHeight = tabboxsize - offsetAfter - offsetBefore;
-      scrollbox.setStyle({ height: Math.max(50, newScrollableHeight) + "px" });
+      scrollbox.setStyle({ height: Math.max(50, newScrollableHeight) + 'px' });
     }
-    box.setStyle({ height: Math.max(50, tabboxsize) + "px" });
+    box.setStyle({ height: Math.max(50, tabboxsize) + 'px' });
   });
 }
 
 function changeTabEvent(event) {
-  showTab(event.element().up(".c3_import_box"));
+  showTab(event.element().up('.c3_import_box'));
 }
 
 function showTab(tab) {
   if (tab) {
-    $$(".c3_import_box").each(function (elemTab) {
-      hideDisplay(elemTab.down(".c3_import_tabbox"));
+    $$('.c3_import_box').each(function (elemTab) {
+      hideDisplay(elemTab.down('.c3_import_tabbox'));
     });
-    showDisplay(tab.down(".c3_import_tabbox"));
+    showDisplay(tab.down('.c3_import_tabbox'));
     //needs two resizes!
     resizeTab();
     resizeTab();
@@ -154,21 +141,21 @@ function showTab(tab) {
 }
 
 function showDisplay(tab) {
-  tab.setStyle({ display: "" });
+  tab.setStyle({ display: '' });
 }
 
 function hideDisplay(tab) {
-  tab.setStyle({ display: "none" });
+  tab.setStyle({ display: 'none' });
 }
 
 function getProgressBar(title) {
-  const titlediv = $("c3_import_box").down(".c3_import_title");
+  const titlediv = $('c3_import_box').down('.c3_import_title');
   titlediv.innerHTML = title;
-  $("c3_import_box").down(".c3_import_tabbox").setStyle({ display: "none" });
+  $('c3_import_box').down('.c3_import_tabbox').setStyle({ display: 'none' });
   const bardiv =
     "<div class='c3_import_tabbox'><img src='/skin/skins/albatross/icons/ajax%2Dloader.gif'></div>";
   titlediv.insert({ after: bardiv });
   resizeTab();
 }
 
-Event.observe(window, "load", startObserversNewUniqueName);
+Event.observe(window, 'load', startObserversNewUniqueName);

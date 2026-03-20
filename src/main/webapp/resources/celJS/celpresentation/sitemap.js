@@ -19,16 +19,15 @@
  */
 
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
   const checkReorderModeBrowseAway = function (theLink) {
-    const parentDiv = theLink.up("ul").up();
-    const isInReorderMode = parentDiv.hasClassName("reorderMode");
+    const parentDiv = theLink.up('ul').up();
+    const isInReorderMode = parentDiv.hasClassName('reorderMode');
     return (
       !isInReorderMode ||
       confirm(
-        "Sie sind am neu ordnen der Knoten." +
-          " Nicht gespeicherte Änderungen gehen verloren.",
+        'Sie sind am neu ordnen der Knoten.' + ' Nicht gespeicherte Änderungen gehen verloren.',
       )
     );
   };
@@ -36,12 +35,8 @@
   const checkIsCreateTrans = function (theLink) {
     const langName = theLink.innerHTML;
     return (
-      !theLink.hasClassName("transNotExists") ||
-      confirm(
-        "Möchten Sie wirklich eine Übersetzung für '" +
-          langName +
-          "' erstellen?",
-      )
+      !theLink.hasClassName('transNotExists') ||
+      confirm("Möchten Sie wirklich eine Übersetzung für '" + langName + "' erstellen?")
     );
   };
 
@@ -49,23 +44,17 @@
     event.stop();
     const theLink = this;
     let linkUrl = theLink.href;
-    if (!theLink.up(".docLangs")) {
+    if (!theLink.up('.docLangs')) {
       window.open(linkUrl);
-    } else if (
-      checkIsCreateTrans(theLink) &&
-      checkReorderModeBrowseAway(theLink)
-    ) {
+    } else if (checkIsCreateTrans(theLink) && checkReorderModeBrowseAway(theLink)) {
       const xredirect =
-        "xredirect=" +
-        encodeURIComponent(
-          window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, "/"),
-        );
+        'xredirect=' + encodeURIComponent(window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
       if (!linkUrl.match(/\?/)) {
-        linkUrl += "?" + xredirect;
+        linkUrl += '?' + xredirect;
       } else {
-        linkUrl += "&" + xredirect;
+        linkUrl += '&' + xredirect;
       }
-      if (theLink.getAttribute("target") === "_blank") {
+      if (theLink.getAttribute('target') === '_blank') {
         window.open(linkUrl);
       } else {
         window.location.href = linkUrl;
@@ -74,14 +63,12 @@
   };
 
   const registerOnSiteEditLinks = () => {
-    $$(".presentation_order_edit ul li a").each(function (pageLink) {
-      pageLink.observe("click", pageLinkClickHandler);
+    $$('.presentation_order_edit ul li a').each(function (pageLink) {
+      pageLink.observe('click', pageLinkClickHandler);
     });
   };
 
-  document.addEventListener("DOMContentLoaded", () =>
-    registerOnSiteEditLinks(),
-  );
+  document.addEventListener('DOMContentLoaded', () => registerOnSiteEditLinks());
 
   /****
    * Space selector
@@ -90,7 +77,7 @@
     window.location.href = this.value;
   };
 
-  document.addEventListener("DOMContentLoaded", () =>
-    $("spaceSelector").observe("change", spaceSelectorChangeHandler),
+  document.addEventListener('DOMContentLoaded', () =>
+    $('spaceSelector').observe('change', spaceSelectorChangeHandler),
   );
 })(window);

@@ -132,7 +132,7 @@
   overflow: auto;
 }
 
-#lb input[type="text"],
+#lb input[type='text'],
 #lb textarea {
   cursor: text;
 }
@@ -210,16 +210,16 @@
   margin-top: -0.2em;
 }
 
-*+html #lb-top .rounded .b1,
+* + html #lb-top .rounded .b1,
 * html #lb-top .rounded .b1,
-*+html #lb-top .roundedlight .b1,
+* + html #lb-top .roundedlight .b1,
 * html #lb-top .roundedlight .b1 {
   margin-bottom: -1em;
 }
 
-*+html #lb-bottom .rounded .b12b,
+* + html #lb-bottom .rounded .b12b,
 * html #lb-bottom .rounded .b12b,
-*+html #lb-bottom .roundedlight .b4b,
+* + html #lb-bottom .roundedlight .b4b,
 * html #lb-bottom .roundedlight .b4b {
   margin-bottom: -1em;
 }

@@ -1,5 +1,5 @@
 * {
-  font-family: "Helvetica Neue", "Arial", "sans-serif";
+  font-family: 'Helvetica Neue', 'Arial', 'sans-serif';
   text-decoration: none;
 }
 html,
@@ -427,7 +427,7 @@ a.article_link:visited {
 }
 .archiveitem,
 .article_abstract {
-  padding-top: 9px "pages/Skins/BaseSkin/attachments/baseskin.css";
+  padding-top: 9px 'pages/Skins/BaseSkin/attachments/baseskin.css';
   padding-bottom: 1px;
   border-bottom-width: 1px;
   border-bottom-style: solid;

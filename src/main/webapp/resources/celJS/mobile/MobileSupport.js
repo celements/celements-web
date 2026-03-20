@@ -23,10 +23,10 @@
  * This is the Celements mobile support library.
  */
 (function (window, undefined) {
-  if (typeof window.CELEMENTS === "undefined") {
+  if (typeof window.CELEMENTS === 'undefined') {
     window.CELEMENTS = {};
   }
-  if (typeof window.CELEMENTS.mobile === "undefined") {
+  if (typeof window.CELEMENTS.mobile === 'undefined') {
     window.CELEMENTS.mobile = {};
   }
 
@@ -44,11 +44,7 @@
     isMobile: {
       Safari: function () {
         const _me = this;
-        return (
-          window.navigator.userAgent.match(/Safari/i) &&
-          !_me.Chrome() &&
-          !_me.Windows()
-        );
+        return window.navigator.userAgent.match(/Safari/i) && !_me.Chrome() && !_me.Windows();
       },
       Chrome: function () {
         return window.navigator.userAgent.match(/Chrome|CriOS/i);
@@ -62,15 +58,15 @@
       iOS: function () {
         return (
           [
-            "iPad Simulator",
-            "iPhone Simulator",
-            "iPod Simulator",
-            "iPad",
-            "iPhone",
-            "iPod",
+            'iPad Simulator',
+            'iPhone Simulator',
+            'iPod Simulator',
+            'iPad',
+            'iPhone',
+            'iPod',
           ].includes(navigator.platform) ||
           // iPad on iOS 13 detection
-          (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+          (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
         );
       },
       iPhone: function () {
@@ -90,7 +86,7 @@
       },
       IE: function () {
         const ua = window.navigator.userAgent;
-        const msie = ua.indexOf("MSIE ");
+        const msie = ua.indexOf('MSIE ');
         const trident = ua.match(/Trident.*rv\:(\d{2})\./) || false;
         const edge = ua.match(/Edge\/(\d{2})\./) || false;
         return msie > 0 || trident || edge;
@@ -128,7 +124,7 @@
       } else if (_me.isMobile.Chrome()) {
         return ua.match(/Chrome|CriOS\/(\d+\.\d+)/)[1];
       } else if (_me.isMobile.IE()) {
-        const msie = ua.indexOf("MSIE ");
+        const msie = ua.indexOf('MSIE ');
         const trident = ua.match(/Trident.*rv\:(\d{2})\./) || false;
         const edge = ua.match(/Edge\/(\d{2})\./) || false;
         if (trident) {
@@ -136,7 +132,7 @@
         } else if (edge) {
           return parseInt(edge[1]);
         } else {
-          return parseInt(ua.substring(msie + 5, ua.indexOf(".", msie)), 10);
+          return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
         }
       }
       return $j.browser.version;
@@ -146,38 +142,36 @@
       const _me = this;
       const zoomStyles = {};
       if (_me.isMobile.IE() && _me.version() < 10) {
-        zoomStyles["msTransformOrigin"] = "0 0"; //IE9 only supports 2D values
-        zoomStyles["msTransform"] = "scale(" + zoomFactor + ")";
-        zoomStyles["transformOrigin"] = "0 0 0";
-        zoomStyles["transform"] = "scale(" + zoomFactor + ")";
+        zoomStyles['msTransformOrigin'] = '0 0'; //IE9 only supports 2D values
+        zoomStyles['msTransform'] = 'scale(' + zoomFactor + ')';
+        zoomStyles['transformOrigin'] = '0 0 0';
+        zoomStyles['transform'] = 'scale(' + zoomFactor + ')';
       } else {
-        zoomStyles["webkitTransformOrigin"] = "0 0 0";
-        zoomStyles["webkitTransform"] = "scale(" + zoomFactor + ")";
-        zoomStyles["transformOrigin"] = "0 0 0";
-        zoomStyles["transform"] = "scale(" + zoomFactor + ")";
+        zoomStyles['webkitTransformOrigin'] = '0 0 0';
+        zoomStyles['webkitTransform'] = 'scale(' + zoomFactor + ')';
+        zoomStyles['transformOrigin'] = '0 0 0';
+        zoomStyles['transform'] = 'scale(' + zoomFactor + ')';
       }
       if (!Number.isNaN(fullHeight)) {
         // transform-scale only scales the content of the box, the box must be resized itself
         const scaledHeight = zoomFactor * fullHeight;
-        zoomStyles["height"] = scaledHeight + "px";
+        zoomStyles['height'] = scaledHeight + 'px';
       } else {
-        zoomStyles["height"] = fullHeight;
+        zoomStyles['height'] = fullHeight;
       }
       if (!Number.isNaN(fullWidth)) {
         // transform-scale only scales the content of the box, the box must be resized itself
         const scaledWidth = zoomFactor * fullWidth;
-        zoomStyles["width"] = scaledWidth + "px";
+        zoomStyles['width'] = scaledWidth + 'px';
       } else {
-        zoomStyles["width"] = fullWidth;
+        zoomStyles['width'] = fullWidth;
       }
       return zoomStyles;
     },
 
     isOrientationLandscape: function () {
-      const innerWidth =
-        window.innerWidth || document.documentElement.clientWidth;
-      const innerHeight =
-        window.innerHeight || document.documentElement.clientHeight;
+      const innerWidth = window.innerWidth || document.documentElement.clientWidth;
+      const innerHeight = window.innerHeight || document.documentElement.clientHeight;
       //window.orientation works only correct on load, but has whimsical behavior when
       //  rotating
       return innerWidth > innerHeight;
@@ -194,7 +188,7 @@
         }
       }
       if (_me._dimLogging) {
-        _me.logDimAndAgent("getInnerWidth returning: [" + width + "].");
+        _me.logDimAndAgent('getInnerWidth returning: [' + width + '].');
       }
       return width;
     },
@@ -210,7 +204,7 @@
         }
       }
       if (_me._dimLogging) {
-        _me.logDimAndAgent("getInnerHeight returning: [" + height + "].");
+        _me.logDimAndAgent('getInnerHeight returning: [' + height + '].');
       }
       return height;
     },
@@ -252,60 +246,43 @@
     alertDim: function () {
       const _me = this;
       const mobileDim = _me.getDimensions();
-      let outStr = "dimensions: \n";
+      let outStr = 'dimensions: \n';
+      outStr += 'screen: ' + mobileDim.screen.width + ',' + mobileDim.screen.height + '\n';
       outStr +=
-        "screen: " +
-        mobileDim.screen.width +
-        "," +
-        mobileDim.screen.height +
-        "\n";
-      outStr +=
-        "screenAvailable: " +
+        'screenAvailable: ' +
         mobileDim.screenAvailable.width +
-        "," +
+        ',' +
         mobileDim.screenAvailable.height +
-        "\n";
+        '\n';
       outStr +=
-        "windowInner: " +
-        mobileDim.windowInner.width +
-        "," +
-        mobileDim.windowInner.height +
-        "\n";
+        'windowInner: ' + mobileDim.windowInner.width + ',' + mobileDim.windowInner.height + '\n';
       outStr +=
-        "windowOuter: " +
-        mobileDim.windowOuter.width +
-        "," +
-        mobileDim.windowOuter.height +
-        "\n";
+        'windowOuter: ' + mobileDim.windowOuter.width + ',' + mobileDim.windowOuter.height + '\n';
       outStr +=
-        "docBodyClient: " +
+        'docBodyClient: ' +
         mobileDim.docBodyClient.width +
-        "," +
+        ',' +
         mobileDim.docBodyClient.height +
-        "\n";
+        '\n';
       outStr +=
-        "docBodyOffset: " +
+        'docBodyOffset: ' +
         mobileDim.docBodyOffset.width +
-        "," +
+        ',' +
         mobileDim.docBodyOffset.height +
-        "\n";
+        '\n';
       outStr +=
-        "docElement: " +
-        mobileDim.docElement.width +
-        "," +
-        mobileDim.docElement.height +
-        "\n";
+        'docElement: ' + mobileDim.docElement.width + ',' + mobileDim.docElement.height + '\n';
       alert(outStr);
     },
 
     logDimAndAgent: function (message) {
       const _me = this;
-      const logMessage = message || "";
+      const logMessage = message || '';
       new Ajax.Request(getCelHost(), {
-        method: "POST",
+        method: 'POST',
         parameters: {
-          xpage: "celements_ajax",
-          ajax_mode: "MobileLogDimAndAgent",
+          xpage: 'celements_ajax',
+          ajax_mode: 'MobileLogDimAndAgent',
           mobileDim: Object.toJSON(_me.getDimensions()),
           userAgent: window.navigator.userAgent,
           isOrientationLandscape: _me.isOrientationLandscape(),
@@ -314,12 +291,9 @@
         onSuccess: function (transport) {
           if (transport.responseText.isJSON()) {
             const responseObject = transport.responseText.evalJSON();
-            console.log(
-              "MobileLogDimAndAgent finished successfully. ",
-              responseObject,
-            );
+            console.log('MobileLogDimAndAgent finished successfully. ', responseObject);
           } else {
-            console.error("noJSON!!! ", transport.responseText);
+            console.error('noJSON!!! ', transport.responseText);
           }
         },
       });

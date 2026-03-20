@@ -19,11 +19,11 @@
  */
 
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
   console.warn(
-    "analyticsQueue.js is deprecated since November 2023." +
-      " Instead use celDynJS/analytics/analyticsQueue.mjs",
+    'analyticsQueue.js is deprecated since November 2023.' +
+      ' Instead use celDynJS/analytics/analyticsQueue.mjs',
   );
 
   var Queue = Class.create({
@@ -50,7 +50,7 @@
       _me._getPrioMsgPartBind = _me._getPrioMsgPart.bind(_me);
       _me._running = true;
       _me._sendHitsBind();
-      Event.observe(window, "beforeunload", _me._sendMissedHits.bind(_me));
+      Event.observe(window, 'beforeunload', _me._sendMissedHits.bind(_me));
     },
 
     add: function (action, parameters) {
@@ -83,19 +83,14 @@
 
     _sendHits: function () {
       var _me = this;
-      console.debug(
-        "send hits, _running",
-        _me._running,
-        ", queue size is",
-        _me._sizeBind(),
-      );
+      console.debug('send hits, _running', _me._running, ', queue size is', _me._sizeBind());
       if (_me._running) {
         while (_me._highPrioritySizeBind() > 0) {
           var nextHit = _me._analyticsPriorizedEventQueue.shift();
           window.CELEMENTS.analytics
             .MatomoQueue()
             .push([
-              "trackEvent",
+              'trackEvent',
               nextHit.params.eventAction,
               nextHit.params.eventLabel,
               nextHit.params.eventValue,
@@ -106,7 +101,7 @@
           window.CELEMENTS.analytics
             .MatomoQueue()
             .push([
-              "trackEvent",
+              'trackEvent',
               nextHit.params.eventAction,
               nextHit.params.eventLabel,
               nextHit.params.eventValue,
@@ -124,37 +119,34 @@
         window.CELEMENTS.analytics
           .MatomoQueue()
           .push([
-            "trackEvent",
-            "Ad",
-            "Missed hits: ",
-            _me._getPrioMsgPartBind() + _me._sizeBind() + " in queue on unload",
+            'trackEvent',
+            'Ad',
+            'Missed hits: ',
+            _me._getPrioMsgPartBind() + _me._sizeBind() + ' in queue on unload',
           ]);
       }
     },
 
     _getPrioMsgPart: function () {
       var _me = this;
-      var prioMsg = "No priority events remaining. ";
+      var prioMsg = 'No priority events remaining. ';
       if (_me._highPrioritySizeBind() > 0) {
         var nextPrioObj = _me._analyticsPriorizedEventQueue.shift();
         prioMsg =
           _me._highPrioritySizeBind() +
-          " remaining high prio hits. Top most of which has" +
-          " action [" +
+          ' remaining high prio hits. Top most of which has' +
+          ' action [' +
           nextPrioObj.eventAction +
-          "] and label [" +
+          '] and label [' +
           nextPrioObj.eventLabel +
-          "]. ";
+          ']. ';
       }
       return prioMsg;
     },
   });
 
   const initQueue = function () {
-    if (
-      window.CELEMENTS.analytics.MatomoQueue &&
-      window.CELEMENTS.analytics.MatomoQueue()
-    ) {
+    if (window.CELEMENTS.analytics.MatomoQueue && window.CELEMENTS.analytics.MatomoQueue()) {
       window.CELEMENTS.analytics.Queue = new Queue();
     } else {
       //console.debug('analytics delay', window.CELEMENTS.analytics.MatomoQueue);
@@ -162,11 +154,11 @@
     }
   };
 
-  document.addEventListener("DOMContentLoaded", function () {
-    if (typeof window.CELEMENTS === "undefined") {
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof window.CELEMENTS === 'undefined') {
       window.CELEMENTS = {};
     }
-    if (typeof window.CELEMENTS.analytics === "undefined") {
+    if (typeof window.CELEMENTS.analytics === 'undefined') {
       window.CELEMENTS.analytics = {};
     }
     initQueue();

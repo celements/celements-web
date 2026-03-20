@@ -4,99 +4,91 @@ var XWiki = (function (XWiki) {
   widgets.ModalPopup = Class.create({
     /** Configuration. Empty values will fall back to the CSS. */
     options: {
-      title: "",
+      title: '',
       displayCloseButton: true,
-      screenColor: "",
-      borderColor: "",
-      titleColor: "",
-      backgroundColor: "",
-      screenOpacity: "0.5",
-      verticalPosition: "center",
-      horizontalPosition: "center",
+      screenColor: '',
+      borderColor: '',
+      titleColor: '',
+      backgroundColor: '',
+      screenOpacity: '0.5',
+      verticalPosition: 'center',
+      horizontalPosition: 'center',
       removeOnClose: false,
     },
     /** Constructor. Registers the key listener that pops up the dialog. */
     initialize: function (content, shortcuts, options) {
       /** Shortcut configuration. Action name -&gt; {method: function(evt), keys: string[]}. */
       ((this.shortcuts = {
-        show: { method: this.showDialog, keys: ["Ctrl+G", "Meta+G"] },
-        close: { method: this.closeDialog, keys: ["Esc"] },
+        show: { method: this.showDialog, keys: ['Ctrl+G', 'Meta+G'] },
+        close: { method: this.closeDialog, keys: ['Esc'] },
       }),
-        (this.content = content || "Hello world!"));
+        (this.content = content || 'Hello world!'));
       // Add the new shortcuts
-      this.shortcuts = Object.extend(
-        Object.clone(this.shortcuts),
-        shortcuts || {},
-      );
+      this.shortcuts = Object.extend(Object.clone(this.shortcuts), shortcuts || {});
       // Add the custom options
       this.options = Object.extend(Object.clone(this.options), options || {});
       // Register a shortcut for showing the dialog.
-      this.registerShortcuts("show");
+      this.registerShortcuts('show');
     },
     /** Create the dialog, if it is not already loaded. Otherwise, just make it visible again. */
     createDialog: function (event) {
-      this.dialog = new Element("div", { class: "xdialog-modal-container" });
+      this.dialog = new Element('div', { class: 'xdialog-modal-container' });
       // A full-screen semi-transparent screen covering the main document
-      var screen = new Element("div", { class: "xdialog-screen" }).setStyle({
+      var screen = new Element('div', { class: 'xdialog-screen' }).setStyle({
         opacity: this.options.screenOpacity,
         backgroundColor: this.options.screenColor,
       });
       this.dialog.update(screen);
       // The dialog chrome
-      this.dialogBox = new Element("div", { class: "xdialog-box" });
+      this.dialogBox = new Element('div', { class: 'xdialog-box' });
       // Insert the content
-      this.dialogBox._x_contentPlug = new Element("div");
+      this.dialogBox._x_contentPlug = new Element('div');
       this.dialogBox.update(this.dialogBox._x_contentPlug);
       this.dialogBox._x_contentPlug.update(this.content);
       // Add the dialog title
       if (this.options.title) {
-        var title = new Element("div", { class: "xdialog-title" }).update(
-          this.options.title,
-        );
+        var title = new Element('div', { class: 'xdialog-title' }).update(this.options.title);
         title.setStyle({ color: this.options.titleColor });
         this.dialogBox.insertBefore(title, this.dialogBox.firstChild);
       }
       // Add the close button
       if (this.options.displayCloseButton) {
-        var closeButton = new Element("div", {
-          class: "xdialog-close",
-          title: "Close",
-        }).update("X");
+        var closeButton = new Element('div', {
+          class: 'xdialog-close',
+          title: 'Close',
+        }).update('X');
         closeButton.setStyle({ color: this.options.titleColor });
-        closeButton.observe(
-          "click",
-          this.closeDialog.bindAsEventListener(this),
-        );
+        closeButton.observe('click', this.closeDialog.bindAsEventListener(this));
         this.dialogBox.insertBefore(closeButton, this.dialogBox.firstChild);
       }
       this.dialog.appendChild(this.dialogBox);
       this.dialogBox.setStyle({
-        textAlign: "left",
+        textAlign: 'left',
         borderColor: this.options.borderColor,
         backgroundColor: this.options.backgroundColor,
       });
       switch (this.options.verticalPosition) {
-        case "top":
-          this.dialogBox.setStyle({ top: "0" });
+        case 'top':
+          this.dialogBox.setStyle({ top: '0' });
           break;
-        case "bottom":
-          this.dialogBox.setStyle({ bottom: "0" });
+        case 'bottom':
+          this.dialogBox.setStyle({ bottom: '0' });
           break;
         default:
           // TODO: smart alignment according to the actual height
-          this.dialogBox.setStyle({ top: "35%" });
+          this.dialogBox.setStyle({ top: '35%' });
           break;
       }
       switch (this.options.horizontalPosition) {
-        case "left":
-          this.dialog.setStyle({ textAlign: "left" });
+        case 'left':
+          this.dialog.setStyle({ textAlign: 'left' });
           break;
-        case "right":
-          this.dialog.setStyle({ textAlign: "right" });
+        case 'right':
+          this.dialog.setStyle({ textAlign: 'right' });
           break;
         default:
-          this.dialog.setStyle({ textAlign: "center" });
-          this.dialogBox.setStyle({ margin: "auto" });
+          this.dialog.setStyle({ textAlign: 'center' });
+          this.dialogBox.setStyle({ margin: 'auto' });
           break;
       }
       // Append to the end of the document body.
@@ -105,11 +97,11 @@ var XWiki = (function (XWiki) {
     },
     /** Set a class name to the dialog box */
     setClass: function (className) {
-      this.dialogBox.addClassName("xdialog-box-" + className);
+      this.dialogBox.addClassName('xdialog-box-' + className);
     },
     /** Remove a class name from the dialog box */
     removeClass: function (className) {
-      this.dialogBox.removeClassName("xdialog-box-" + className);
+      this.dialogBox.removeClassName('xdialog-box-' + className);
     },
     /** Set the content of the dialog box */
     setContent: function (content) {
@@ -133,14 +125,13 @@ var XWiki = (function (XWiki) {
         // In IE, position: fixed does not work.
         if (window.browser.isIE6x) {
           this.dialog.setStyle({
-            top: document.viewport.getScrollOffsets().top + "px",
+            top: document.viewport.getScrollOffsets().top + 'px',
           });
-          this.dialog._x_scrollListener =
-            this.onScroll.bindAsEventListener(this);
-          Event.observe(window, "scroll", this.dialog._x_scrollListener);
-          $$("select").each(function (item) {
+          this.dialog._x_scrollListener = this.onScroll.bindAsEventListener(this);
+          Event.observe(window, 'scroll', this.dialog._x_scrollListener);
+          $$('select').each(function (item) {
             item._x_initiallyVisible = item.style.visibility;
-            item.style.visibility = "hidden";
+            item.style.visibility = 'hidden';
           });
         }
         // Display the dialog
@@ -149,7 +140,7 @@ var XWiki = (function (XWiki) {
     },
     onScroll: function (event) {
       this.dialog.setStyle({
-        top: document.viewport.getScrollOffsets().top + "px",
+        top: document.viewport.getScrollOffsets().top + 'px',
       });
     },
     /** Called when the dialog is closed. Disables the key listeners, hides the UI and re-enables the 'Show' behavior. */
@@ -158,8 +149,8 @@ var XWiki = (function (XWiki) {
         Event.stop(event);
       }
       if (window.browser.isIE6x) {
-        Event.stopObserving(window, "scroll", this.dialog._x_scrollListener);
-        $$("select").each(function (item) {
+        Event.stopObserving(window, 'scroll', this.dialog._x_scrollListener);
+        $$('select').each(function (item) {
           item.style.visibility = item._x_initiallyVisible;
         });
       }
@@ -176,7 +167,7 @@ var XWiki = (function (XWiki) {
     /** Enables all the keyboard shortcuts, except the one that opens the dialog, which is already enabled. */
     attachKeyListeners: function () {
       for (var action in this.shortcuts) {
-        if (action != "show") {
+        if (action != 'show') {
           this.registerShortcuts(action);
         }
       }
@@ -184,7 +175,7 @@ var XWiki = (function (XWiki) {
     /** Disables all the keyboard shortcuts, except the one that opens the dialog. */
     detachKeyListeners: function () {
       for (var action in this.shortcuts) {
-        if (action != "show") {
+        if (action != 'show') {
           this.unregisterShortcuts(action);
         }
       }
@@ -201,11 +192,11 @@ var XWiki = (function (XWiki) {
       for (var i = 0; i < shortcuts.size(); ++i) {
         if (Prototype.Browser.IE || Prototype.Browser.WebKit) {
           shortcut.add(shortcuts[i], method.bindAsEventListener(this, action), {
-            type: "keyup",
+            type: 'keyup',
           });
         } else {
           shortcut.add(shortcuts[i], method.bindAsEventListener(this, action), {
-            type: "keypress",
+            type: 'keypress',
           });
         }
       }
@@ -221,10 +212,10 @@ var XWiki = (function (XWiki) {
       }
     },
     createButton: function (type, text, title, id) {
-      var wrapper = new Element("span", { class: "buttonwrapper" });
-      var button = new Element("input", {
+      var wrapper = new Element('span', { class: 'buttonwrapper' });
+      var button = new Element('input', {
         type: type,
-        class: "button",
+        class: 'button',
         value: text,
         title: title,
         id: id,

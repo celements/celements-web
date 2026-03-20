@@ -11,7 +11,7 @@ h4 {
 }
 
 #companylogo img {
-  background-image: url("xwlogoblack.png");
+  background-image: url('xwlogoblack.png');
   height: 91px;
   width: 136px;
 }

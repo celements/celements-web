@@ -26,7 +26,7 @@ fx.MoveX.prototype = Object.extend(new fx.Base(), {
     this.setOptions(options);
   },
   increase: function () {
-    this.el.style.left = this.now + "px";
+    this.el.style.left = this.now + 'px';
   },
 });
 fx.MoveY = Class.create();
@@ -36,7 +36,7 @@ fx.MoveY.prototype = Object.extend(new fx.Base(), {
     this.setOptions(options);
   },
   increase: function () {
-    this.el.style.top = this.now + "px";
+    this.el.style.top = this.now + 'px';
   },
 });
 /*** CLASS AdminInteface ***/
@@ -44,7 +44,7 @@ var AdminInterface = Class.create();
 AdminInterface.prototype = {
   // constructor
   initialize: function () {
-    this.n = document.getElementsByTagName("body")[0];
+    this.n = document.getElementsByTagName('body')[0];
 
     // windows
     this.windows = new Array();
@@ -55,7 +55,7 @@ AdminInterface.prototype = {
 
     // observer mouse position
     this.mousePos = new Array(0, 0); // (X,Y)
-    Event.observe(document, "mousemove", this.mouseMove);
+    Event.observe(document, 'mousemove', this.mouseMove);
   },
 
   newWindow: function (top, left, height, width, url) {
@@ -67,7 +67,7 @@ AdminInterface.prototype = {
       left,
       height,
       width,
-      "wmwindow",
+      'wmwindow',
     );
     return true;
   },
@@ -110,10 +110,7 @@ AdminInterface.prototype = {
         var leftOffset = 0;
       }
 
-      this.mousePos = new Array(
-        event.clientX + leftOffset,
-        event.clientY + topOffset,
-      );
+      this.mousePos = new Array(event.clientX + leftOffset, event.clientY + topOffset);
     } else {
       this.mousePos = new Array(0, 0);
     }
@@ -123,21 +120,21 @@ AdminInterface.prototype = {
 
   createTmpSheet: function () {
     if (
-      typeof this.n.style.filter == "string" ||
-      typeof this.n.style.KHTMLOpacity == "string" ||
-      typeof this.n.style.MozOpacity == "string" ||
-      typeof sheet.n.style.opacity == "string"
+      typeof this.n.style.filter == 'string' ||
+      typeof this.n.style.KHTMLOpacity == 'string' ||
+      typeof this.n.style.MozOpacity == 'string' ||
+      typeof sheet.n.style.opacity == 'string'
     ) {
       if (!this.tmpSheet) {
         this.tmpSheet = new Div(
-          "tmpsheet",
+          'tmpsheet',
           null,
-          document.getElementsByTagName("body")[0],
+          document.getElementsByTagName('body')[0],
           0,
           0,
           this.getDocumentHeight(),
           this.getDocumentWidth(),
-          "sheet",
+          'sheet',
         );
 
         this.tmpSheet.setOpacity(1);

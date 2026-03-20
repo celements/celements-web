@@ -23,16 +23,16 @@
  * This is the Arrow Box effect.
  */
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
   /**
    * package CELEMENTS definition
    * package CELEMENTS.anim definition
    */
-  if (typeof CELEMENTS == "undefined") {
+  if (typeof CELEMENTS == 'undefined') {
     window.CELEMENTS = {};
   }
-  if (typeof CELEMENTS.anim == "undefined") {
+  if (typeof CELEMENTS.anim == 'undefined') {
     window.CELEMENTS.anim = {};
   }
 
@@ -46,11 +46,7 @@
    * hoverContentSelector   content for hover box is taken from element selected by
    *                        hoverContentSelector inside link-element parent
    */
-  CELEMENTS.anim.ArrowBox = function (
-    boxParent,
-    linkCSSselector,
-    hoverContentSelector,
-  ) {
+  CELEMENTS.anim.ArrowBox = function (boxParent, linkCSSselector, hoverContentSelector) {
     // constructor
     this._init(boxParent, linkCSSselector, hoverContentSelector);
   };
@@ -85,40 +81,34 @@
     registerMouseoverHandler: function () {
       var _me = this;
       _me._boxParent.select(_me._linkCSSselector).each(function (linkElem) {
-        linkElem.stopObserving("mouseover", _me._hoverMouseOverHandlerBind);
-        linkElem.observe("mouseover", _me._hoverMouseOverHandlerBind);
+        linkElem.stopObserving('mouseover', _me._hoverMouseOverHandlerBind);
+        linkElem.observe('mouseover', _me._hoverMouseOverHandlerBind);
       });
     },
 
     registerClickHandler: function () {
       var _me = this;
       _me._boxParent.select(_me._linkCSSselector).each(function (linkElem) {
-        linkElem.stopObserving("click", _me._hoverMouseClickHandlerBind);
-        linkElem.observe("click", _me._hoverMouseClickHandlerBind);
+        linkElem.stopObserving('click', _me._hoverMouseClickHandlerBind);
+        linkElem.observe('click', _me._hoverMouseClickHandlerBind);
       });
     },
 
     _getHoverContent: function (linkElem) {
       var _me = this;
       var hoverContentElemMemo = { hoverContentElem: null };
-      var wrapperEvent = _me._boxParent.fire(
-        "celements:arrowBoxGetWrapper",
-        hoverContentElemMemo,
-      );
+      var wrapperEvent = _me._boxParent.fire('celements:arrowBoxGetWrapper', hoverContentElemMemo);
       if (wrapperEvent.stopped) {
         if (hoverContentElemMemo.hoverContentElem) {
           return hoverContentElemMemo.hoverContentElem.innerHTML;
         }
       } else {
-        var wrapperElem = linkElem.up(".celArrowBoxWrapper") || linkElem.up();
+        var wrapperElem = linkElem.up('.celArrowBoxWrapper') || linkElem.up();
         var hoverContentElem = wrapperElem.down(_me._hoverContentSelector);
         if (hoverContentElem) {
           return hoverContentElem.innerHTML;
         } else {
-          console.warn(
-            "_getHoverContent: failed to get content for ",
-            linkElem,
-          );
+          console.warn('_getHoverContent: failed to get content for ', linkElem);
         }
       }
       return linkElem.title;
@@ -141,9 +131,9 @@
           var linkOffset = $j(theLink).offset();
           var linkTop = linkOffset.top + _me._positionOffset.top;
           var linkLeft = linkOffset.left + _me._positionOffset.left;
-          if (theLink.readAttribute("coords")) {
+          if (theLink.readAttribute('coords')) {
             var boxParentPos = _me._boxParent.positionedOffset();
-            var linkCoords = theLink.readAttribute("coords").split(",");
+            var linkCoords = theLink.readAttribute('coords').split(',');
             linkTop = parseInt(linkCoords[1]) + boxParentPos.top;
             linkLeft = parseInt(linkCoords[0]) + boxParentPos.left;
           } else {
@@ -155,33 +145,33 @@
           var top = linkTop - theBox.getHeight() - 25;
           var left = linkLeft - theBox.getWidth() / 2;
           theBox.setStyle({
-            top: top + "px",
-            left: left + "px",
+            top: top + 'px',
+            left: left + 'px',
           });
         } else {
-          console.warn("positionHoverBox: skipped. ", theLink);
+          console.warn('positionHoverBox: skipped. ', theLink);
         }
       }
     },
 
     _getHoverArrowBoxElem: function (boxElem) {
-      var arrowElem = boxElem.down(".arrowElement");
+      var arrowElem = boxElem.down('.arrowElement');
       if (!arrowElem) {
-        arrowElem = new Element("div").addClassName("arrowElement");
-        var arrowLeftInnerPartElem = new Element("div")
-          .addClassName("arrowInnerPart")
-          .addClassName("arrowLeftInnerPart");
-        var arrowLeftPartElem = new Element("div")
-          .addClassName("arrowClipPart")
-          .addClassName("arrowClipLeftPart");
+        arrowElem = new Element('div').addClassName('arrowElement');
+        var arrowLeftInnerPartElem = new Element('div')
+          .addClassName('arrowInnerPart')
+          .addClassName('arrowLeftInnerPart');
+        var arrowLeftPartElem = new Element('div')
+          .addClassName('arrowClipPart')
+          .addClassName('arrowClipLeftPart');
         arrowLeftPartElem.update(arrowLeftInnerPartElem);
         arrowElem.insert({ bottom: arrowLeftPartElem });
-        var arrowRightInnerPartElem = new Element("div")
-          .addClassName("arrowInnerPart")
-          .addClassName("arrowRightInnerPart");
-        var arrowRightPartElem = new Element("div")
-          .addClassName("arrowClipPart")
-          .addClassName("arrowClipRightPart");
+        var arrowRightInnerPartElem = new Element('div')
+          .addClassName('arrowInnerPart')
+          .addClassName('arrowRightInnerPart');
+        var arrowRightPartElem = new Element('div')
+          .addClassName('arrowClipPart')
+          .addClassName('arrowClipRightPart');
         arrowRightPartElem.update(arrowRightInnerPartElem);
         arrowElem.insert({ bottom: arrowRightPartElem });
         boxElem.insert({ bottom: arrowElem });
@@ -213,63 +203,63 @@
 
     getHoverBoxElem: function () {
       var _me = this;
-      return $(_me._boxParent.id + "HoverBox");
+      return $(_me._boxParent.id + 'HoverBox');
     },
 
     _getHoverTextBoxElem: function (linkElem) {
       var _me = this;
       var boxElem = _me.getHoverBoxElem();
-      var textBoxElem = $(_me._boxParent.id + "HoverTextBox");
-      var shadowBoxElem = $(_me._boxParent.id + "HoverShadowBox");
-      var shadowArrowBoxElem = $(_me._boxParent.id + "HoverShadowArrow");
+      var textBoxElem = $(_me._boxParent.id + 'HoverTextBox');
+      var shadowBoxElem = $(_me._boxParent.id + 'HoverShadowBox');
+      var shadowArrowBoxElem = $(_me._boxParent.id + 'HoverShadowArrow');
       if (!boxElem || !textBoxElem) {
-        boxElem = new Element("div", {
-          id: _me._boxParent.id + "HoverBox",
+        boxElem = new Element('div', {
+          id: _me._boxParent.id + 'HoverBox',
         })
-          .addClassName("HoverBox")
+          .addClassName('HoverBox')
           .hide();
-        textBoxElem = new Element("div", {
-          id: _me._boxParent.id + "HoverTextBox",
-        }).addClassName("HoverTextBox");
+        textBoxElem = new Element('div', {
+          id: _me._boxParent.id + 'HoverTextBox',
+        }).addClassName('HoverTextBox');
         boxElem.insert({ bottom: textBoxElem });
-        shadowBoxElem = new Element("div", {
-          id: _me._boxParent.id + "HoverShadowBox",
-        }).addClassName("HoverShadowBox");
+        shadowBoxElem = new Element('div', {
+          id: _me._boxParent.id + 'HoverShadowBox',
+        }).addClassName('HoverShadowBox');
         boxElem.insert({ bottom: shadowBoxElem });
-        shadowArrowBoxElem = new Element("div", {
-          id: _me._boxParent.id + "HoverShadowArrow",
-        }).addClassName("HoverShadowArrow");
+        shadowArrowBoxElem = new Element('div', {
+          id: _me._boxParent.id + 'HoverShadowArrow',
+        }).addClassName('HoverShadowArrow');
         boxElem.insert({ bottom: shadowArrowBoxElem });
         _me._boxParent.insert({
           after: boxElem,
         });
       }
       var textBoxContent = _me._getHoverContent(linkElem);
-      textBoxElem.update("<p>" + textBoxContent + "</p>");
+      textBoxElem.update('<p>' + textBoxContent + '</p>');
       boxElem.setStyle({
-        visibility: "hidden",
+        visibility: 'hidden',
       });
       boxElem.show();
       _me.positionHoverBox(boxElem, linkElem);
       var arrowBoxElem = _me._getHoverArrowBoxElem(boxElem);
       var shadowArrowLeft = boxElem.getWidth() / 2 - 5;
       shadowArrowBoxElem.setStyle({
-        left: shadowArrowLeft + "px",
+        left: shadowArrowLeft + 'px',
       });
       arrowBoxElem.setStyle({
-        left: shadowArrowLeft + "px",
+        left: shadowArrowLeft + 'px',
       });
       boxElem.setStyle({
-        visibility: "",
+        visibility: '',
       });
       return boxElem;
     },
 
     _hoverMouseOut: function (linkElem) {
       var _me = this;
-      linkElem.stopObserving("mouseout", _me._hoverMouseOutHandlerBind);
-      $(_me._boxParent.id + "HoverBox").hide();
-      _me._currentHoverLink.removeClassName("celArrowBoxHoverActive");
+      linkElem.stopObserving('mouseout', _me._hoverMouseOutHandlerBind);
+      $(_me._boxParent.id + 'HoverBox').hide();
+      _me._currentHoverLink.removeClassName('celArrowBoxHoverActive');
       _me._currentHoverLink = null;
     },
 
@@ -286,18 +276,16 @@
         _me._hoverMouseOut(_me._currentHoverLink);
       }
       _me._currentHoverLink = linkElem;
-      _me._currentHoverLink.addClassName("celArrowBoxHoverActive");
+      _me._currentHoverLink.addClassName('celArrowBoxHoverActive');
       _me._getHoverTextBoxElem(linkElem);
       if (!onlyClick) {
-        linkElem.observe("mouseout", _me._hoverMouseOutHandlerBind);
+        linkElem.observe('mouseout', _me._hoverMouseOutHandlerBind);
       }
     },
 
     _hoverMouseClickOutside: function (event) {
       var _me = this;
-      $(_me._boxParent.id + "HoverBox").removeClassName(
-        "celArrowBoxHoverForceOpen",
-      );
+      $(_me._boxParent.id + 'HoverBox').removeClassName('celArrowBoxHoverForceOpen');
       _me._hoverMouseOut(_me._currentHoverLink);
     },
 
@@ -305,11 +293,9 @@
       var _me = this;
       event.stop();
       _me._hoverMouseOverHandlerBind(event, true);
-      $(_me._boxParent.id + "HoverBox").addClassName(
-        "celArrowBoxHoverForceOpen",
-      );
-      $(document.body).stopObserving("click", _me._hoverMouseClickOutsideBind);
-      $(document.body).observe("click", _me._hoverMouseClickOutsideBind);
+      $(_me._boxParent.id + 'HoverBox').addClassName('celArrowBoxHoverForceOpen');
+      $(document.body).stopObserving('click', _me._hoverMouseClickOutsideBind);
+      $(document.body).observe('click', _me._hoverMouseClickOutsideBind);
     },
   };
 })(window);

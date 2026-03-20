@@ -19,27 +19,27 @@
  */
 
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
   /**
    * START: patch for missing window.console object or methods
    **/
-  if (typeof window.console === "undefined") {
+  if (typeof window.console === 'undefined') {
     window.console = {};
   }
-  if (typeof window.console.error === "undefined") {
+  if (typeof window.console.error === 'undefined') {
     window.console.error = Prototype.emptyFunction;
   }
-  if (typeof window.console.warn === "undefined") {
+  if (typeof window.console.warn === 'undefined') {
     window.console.warn = window.console.error;
   }
-  if (typeof window.console.info === "undefined") {
+  if (typeof window.console.info === 'undefined') {
     window.console.info = window.console.warn;
   }
-  if (typeof window.console.log === "undefined") {
+  if (typeof window.console.log === 'undefined') {
     window.console.log = window.console.info;
   }
-  if (typeof window.console.debug === "undefined") {
+  if (typeof window.console.debug === 'undefined') {
     window.console.debug = window.console.log;
   }
   /**
@@ -49,13 +49,13 @@
   /**
    * A generic javascript Object observer pattern
    */
-  if (typeof window.CELEMENTS === "undefined") {
+  if (typeof window.CELEMENTS === 'undefined') {
     window.CELEMENTS = {};
   }
-  if (typeof window.CELEMENTS.mixins === "undefined") {
+  if (typeof window.CELEMENTS.mixins === 'undefined') {
     window.CELEMENTS.mixins = {};
   }
-  if (typeof window.CELEMENTS.mixins.Event === "undefined") {
+  if (typeof window.CELEMENTS.mixins.Event === 'undefined') {
     window.CELEMENTS.mixins.Event = Class.create({
       memo: undefined,
       stopped: undefined,
@@ -96,7 +96,7 @@
       },
     });
   }
-  if (typeof window.CELEMENTS.mixins.Observable === "undefined") {
+  if (typeof window.CELEMENTS.mixins.Observable === 'undefined') {
     window.CELEMENTS.mixins.Observable = {
       _celEventMap: null,
 
@@ -114,17 +114,17 @@
       },
 
       celObserve: function (eventKey, callbackFN) {
-        console.debug("cel celObserve:", eventKey, callbackFN);
+        console.debug('cel celObserve:', eventKey, callbackFN);
         if (!eventKey) {
-          throw "undefined eventKey in celObserve call";
+          throw 'undefined eventKey in celObserve call';
         }
         this._getCelEventMap(eventKey).push(callbackFN);
       },
 
       celStopObserving: function (eventKey, callbackFN) {
-        console.debug("cel celStopObserving:", eventKey, callbackFN);
+        console.debug('cel celStopObserving:', eventKey, callbackFN);
         if (!eventKey) {
-          throw "undefined eventKey in celStopObserving call";
+          throw 'undefined eventKey in celStopObserving call';
         }
         this._getCelEventMap().set(
           eventKey,
@@ -136,21 +136,16 @@
 
       celFire: function (eventKey, memo) {
         if (!eventKey) {
-          throw "undefined eventKey in celFire call";
+          throw 'undefined eventKey in celFire call';
         }
         const event = new CELEMENTS.mixins.Event(eventKey, memo, this);
         const listeners = this._getCelEventMap(eventKey);
-        console.debug("cel celFire:", event, "on", listeners);
+        console.debug('cel celFire:', event, 'on', listeners);
         listeners.forEach(function (callbackFN) {
           try {
             callbackFN(event);
           } catch (exp) {
-            console.error(
-              "listener in celFire failed for event",
-              eventKey,
-              callbackFN,
-              exp,
-            );
+            console.error('listener in celFire failed for event', eventKey, callbackFN, exp);
           }
         });
         return event;
@@ -169,22 +164,22 @@
    */
   window.celAddOnBeforeLoadListener = function (listenerFunc) {
     console.warn(
-      "celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022." +
+      'celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022.' +
         ' Instead register a listener on "DOMContentLoaded"',
       listenerFunc,
     );
     celOnBeforeLoadListenerArray.push(listenerFunc);
   };
 
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener('DOMContentLoaded', function () {
     celOnBeforeLoadListenerArray.forEach(function (listener) {
       try {
         listener();
       } catch (e) {
-        console.error("Listener for celOnBeforeLoad failed: ", e);
+        console.error('Listener for celOnBeforeLoad failed: ', e);
       }
     });
-    $(document.body).fire("celements:beforeOnLoad");
+    $(document.body).fire('celements:beforeOnLoad');
   });
 
   /**
@@ -201,7 +196,7 @@
       try {
         listener();
       } catch (exp) {
-        console.error("Failed to execute celOnFinishHeader listener. ", exp);
+        console.error('Failed to execute celOnFinishHeader listener. ', exp);
       }
     });
   };
@@ -209,14 +204,14 @@
   /**
    * getCelDomain function
    **/
-  if (typeof window.getCelDomain === "undefined") {
+  if (typeof window.getCelDomain === 'undefined') {
     window.getCelDomain = function () {
       const hostName = window.location.host;
-      return hostName.replace(/^www\./, "");
+      return hostName.replace(/^www\./, '');
     };
   }
 
-  if (typeof window.CELEMENTS.LoadingIndicator === "undefined") {
+  if (typeof window.CELEMENTS.LoadingIndicator === 'undefined') {
     window.CELEMENTS.LoadingIndicator = Class.create({
       _loadingImg: undefined,
 
@@ -227,25 +222,25 @@
 
       getLoadingIndicator: function (isSmallOrPxSize) {
         const _me = this;
-        let loaderType = "ajax-loader-32px";
-        if (typeof isSmallOrPxSize === "boolean") {
+        let loaderType = 'ajax-loader-32px';
+        if (typeof isSmallOrPxSize === 'boolean') {
           if (isSmallOrPxSize) {
-            loaderType = "ajax-loader-16px";
+            loaderType = 'ajax-loader-16px';
           }
-        } else if (typeof isSmallOrPxSize === "number") {
-          loaderType = "ajax-loader-" + isSmallOrPxSize + "px";
+        } else if (typeof isSmallOrPxSize === 'number') {
+          loaderType = 'ajax-loader-' + isSmallOrPxSize + 'px';
         }
         if (!_me._loadingImg.get(loaderType)) {
           _me._loadingImg.set(
             loaderType,
-            new Element("img", {
+            new Element('img', {
               src:
                 CELEMENTS.getUtils().getPathPrefix() +
-                "/file/resources/celRes/spinner/" +
+                '/file/resources/celRes/spinner/' +
                 loaderType +
-                ".png",
-              class: "editorLoading",
-              alt: "loading...",
+                '.png',
+              class: 'editorLoading',
+              alt: 'loading...',
             }),
           );
         }
@@ -254,7 +249,7 @@
     });
   }
 
-  if (typeof window.CELEMENTS.Utils === "undefined") {
+  if (typeof window.CELEMENTS.Utils === 'undefined') {
     window.CELEMENTS.Utils = Class.create({
       _srcOriginHost: undefined,
 
@@ -262,10 +257,10 @@
         const _me = this;
         if (!_me._srcOriginHost) {
           let srcOriginHost = null;
-          const scripts = document.getElementsByTagName("script");
+          const scripts = document.getElementsByTagName('script');
           let len = scripts.length;
           const re = new RegExp(
-            "(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements(.min)?\\.js(\\?.*)?$",
+            '(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements(.min)?\\.js(\\?.*)?$',
           );
           let src;
           while (len--) {
@@ -274,17 +269,15 @@
             if (src && srcMatches) {
               srcOriginHost = srcMatches[1];
               const prefixPath = srcMatches[2];
-              const prefixPathSplit = prefixPath.split("/");
-              const prefixStr = prefixPathSplit
-                .splice(0, prefixPathSplit.length - 2)
-                .join("/");
-              if (prefixStr != "") {
-                srcOriginHost += "/" + prefixStr;
+              const prefixPathSplit = prefixPath.split('/');
+              const prefixStr = prefixPathSplit.splice(0, prefixPathSplit.length - 2).join('/');
+              if (prefixStr != '') {
+                srcOriginHost += '/' + prefixStr;
               }
               break;
             }
           }
-          console.log("getPathPrefix computed prefixPath: ", srcOriginHost);
+          console.log('getPathPrefix computed prefixPath: ', srcOriginHost);
           _me._srcOriginHost = srcOriginHost;
         }
         return _me._srcOriginHost;
@@ -293,8 +286,7 @@
       convertFullNameToViewURL: function (fullName) {
         const _me = this;
         return (
-          _me.getPathPrefix() +
-          ("/" + fullName.replace(/\./, "/")).replace(/\/Content\//, "/")
+          _me.getPathPrefix() + ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/')
         );
       },
     });
@@ -310,11 +302,11 @@
    * getPathPrefix function
    * @deprecated Instead use window.CELEMENTS.getUtils().getPathPrefix()
    */
-  if (typeof window.CELEMENTS.getPathPrefix === "undefined") {
+  if (typeof window.CELEMENTS.getPathPrefix === 'undefined') {
     window.CELEMENTS.getPathPrefix = function () {
       console.warn(
-        "deprecated call of window.CELEMENTS.getPathPrefix." +
-          " Instead use window.CELEMENTS.getUtils().getPathPrefix()",
+        'deprecated call of window.CELEMENTS.getPathPrefix.' +
+          ' Instead use window.CELEMENTS.getUtils().getPathPrefix()',
       );
       return window.CELEMENTS.getUtils().getPathPrefix();
     };
@@ -323,7 +315,7 @@
   /**
    * getCelHost function
    **/
-  if (typeof window.getCelHost === "undefined") {
+  if (typeof window.getCelHost === 'undefined') {
     window.getCelHost = function () {
       let celHost = document.location + '?';
       if (document.location.pathname.indexOf('/skin/resources/') > -1) {
@@ -331,16 +323,16 @@
       } else if (document.location.pathname.indexOf('/file/resources/') > -1) {
         celHost = celHost.substring(0, celHost.indexOf('/file/resources/'));
       } else {
-        celHost = celHost.substring(0, celHost.indexOf("?"));
+        celHost = celHost.substring(0, celHost.indexOf('?'));
       }
       return celHost;
     };
   }
 
-  if (typeof window.CELEMENTS.Ajax === "undefined") {
+  if (typeof window.CELEMENTS.Ajax === 'undefined') {
     window.CELEMENTS.Ajax = {};
   }
-  if (typeof window.CELEMENTS.Ajax.Reconnector === "undefined") {
+  if (typeof window.CELEMENTS.Ajax.Reconnector === 'undefined') {
     window.CELEMENTS.Ajax.Reconnector = Class.create({
       _htmlElem: undefined,
       _callbackOnSuccess: undefined,
@@ -384,10 +376,7 @@
 
       _fireAjaxRecconectTrying: function () {
         const _me = this;
-        return _me._htmlElem.fire(
-          "celements:AjaxReconnectTrying",
-          _me._reconnectWait,
-        );
+        return _me._htmlElem.fire('celements:AjaxReconnectTrying', _me._reconnectWait);
       },
 
       _reconnectorHandler: function () {
@@ -395,11 +384,8 @@
         _me._reconnectWait--;
         if (_me._reconnectWait == 0) {
           _me._reconnectorExecuter.stop();
-          if (
-            !_me._fireAjaxRecconectTrying().stopped &&
-            !_me._configObj.skipRetryMsg
-          ) {
-            let mesg = "Trying...";
+          if (!_me._fireAjaxRecconectTrying().stopped && !_me._configObj.skipRetryMsg) {
+            let mesg = 'Trying...';
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryNotice;
             }
@@ -407,17 +393,14 @@
           }
           _me._connectionTester();
         } else {
-          if (
-            !_me._fireAjaxRecconectTrying().stopped &&
-            !_me._configObj.skipRetryMsg
-          ) {
-            let mesg = "Retrying in {} seconds.";
+          if (!_me._fireAjaxRecconectTrying().stopped && !_me._configObj.skipRetryMsg) {
+            let mesg = 'Retrying in {} seconds.';
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryDelayNotice;
             }
-            mesg = mesg.replace("{}", _me._reconnectWait);
+            mesg = mesg.replace('{}', _me._reconnectWait);
             _me._htmlElem.update(mesg);
-            _me._htmlElem.fire("celements:AjaxReconnectFailed");
+            _me._htmlElem.fire('celements:AjaxReconnectFailed');
           }
         }
       },
@@ -425,10 +408,7 @@
       start: function () {
         const _me = this;
         _me._reconnectWait = _me._reconnectWaitStart;
-        _me._reconnectorExecuter = new PeriodicalExecuter(
-          _me._reconnectorHandlerBind,
-          1,
-        );
+        _me._reconnectorExecuter = new PeriodicalExecuter(_me._reconnectorHandlerBind, 1);
       },
 
       _cancelAjaxOnTimeout: function (ajaxCall) {
@@ -442,21 +422,18 @@
         const connectionTestAjax = new Ajax.Request(_me._url, {
           parameters: {
             ajax: 1,
-            xpage: "celements_ajax",
-            ajax_mode: "pageTypeWithLayout",
-            overwriteLayout: "SimpleLayout",
+            xpage: 'celements_ajax',
+            ajax_mode: 'pageTypeWithLayout',
+            overwriteLayout: 'SimpleLayout',
           },
           onSuccess: function () {
             _me._reset();
             _me._reconnectorExecuter = null;
             _me._callbackOnSuccess();
-            _me._htmlElem.fire("celements:AjaxReconnectSuccess");
+            _me._htmlElem.fire('celements:AjaxReconnectSuccess');
           },
           onFailure: function () {
-            _me._reconnectWaitStart = Math.min(
-              _me._reconnectWaitStart * 2,
-              _me._maxReconnectWait,
-            );
+            _me._reconnectWaitStart = Math.min(_me._reconnectWaitStart * 2, _me._maxReconnectWait);
             _me.start();
           },
         });
@@ -469,7 +446,7 @@
     getParams: function (search) {
       const _me = this;
       search = search || window.location.search;
-      const paramSplit = search.split(new RegExp("[?&]"));
+      const paramSplit = search.split(new RegExp('[?&]'));
       paramSplit.unshift(new Hash()); // add initial param as first array element
       return paramSplit.reduce(_me._splitUriSearch.bind(_me)) || new Hash();
     },
@@ -478,15 +455,15 @@
       let paramsArray = [];
       $H(hash).each(function (pair) {
         const pairMapped = pair.value.map(function (elem) {
-          return pair.key + "=" + encodeURI(elem);
+          return pair.key + '=' + encodeURI(elem);
         });
         paramsArray = paramsArray.concat(pairMapped);
       });
-      return paramsArray.join("&");
+      return paramsArray.join('&');
     },
 
     _splitUriSearch: function (paramHash, elem) {
-      let key = elem.split("=", 1);
+      let key = elem.split('=', 1);
       if (key.length > 0 && key[0].length > 0) {
         key = key[0];
         const val = decodeURI(elem.substring(key.length + 1));
@@ -508,34 +485,32 @@
 
   try {
     new Ajax.Request(window.getCelHost(), {
-      method: "post",
+      method: 'post',
       parameters: {
-        xpage: "celements_ajax",
-        ajax_mode: "Messages",
+        xpage: 'celements_ajax',
+        ajax_mode: 'Messages',
       },
       onSuccess: function (transport) {
         if (transport.responseText.isJSON()) {
           const newMessages = transport.responseText.evalJSON();
-          console.log(
-            "initCelements.js: finished getting dictionary messages.",
-          );
+          console.log('initCelements.js: finished getting dictionary messages.');
           newMessages.isLoaded = true;
           window.celMessages = newMessages;
           celMessagesCbFnArray.forEach(function (callbackFn) {
             try {
               callbackFn(newMessages);
             } catch (exp) {
-              console.error("Failed to execute callbackFn!", exp);
+              console.error('Failed to execute callbackFn!', exp);
             }
           });
-          $(document.body).fire("cel:messagesLoaded", newMessages);
+          $(document.body).fire('cel:messagesLoaded', newMessages);
         } else {
-          console.error("noJSON!!! ", transport.responseText);
+          console.error('noJSON!!! ', transport.responseText);
         }
       },
     });
   } catch (exp) {
-    console.error("Failed to get Cel-Messages async!", exp);
+    console.error('Failed to get Cel-Messages async!', exp);
   }
 
   const celMessagesCbFnArray = [];
@@ -554,7 +529,7 @@
   /**
    *  celEventManager
    */
-  if (typeof window.CELEMENTS.CssClassEventHandler === "undefined") {
+  if (typeof window.CELEMENTS.CssClassEventHandler === 'undefined') {
     window.CELEMENTS.CssClassEventHandler = Class.create({
       _htmlElement: undefined,
       _eventName: undefined,
@@ -579,11 +554,7 @@
         _me._className = className;
         _me._actionFunction = actionFunction;
         if (condition && !/\s|;/.test(condition)) {
-          _me._conditionFunction = new Function(
-            "me",
-            "origin",
-            "return " + condition + ";",
-          );
+          _me._conditionFunction = new Function('me', 'origin', 'return ' + condition + ';');
         }
         _me._actionHandlerBind = _me._actionHandler.bind(_me);
         _me._registerActionHandler();
@@ -591,14 +562,10 @@
 
       _registerActionHandler: function () {
         const _me = this;
-        Event.stopObserving(
-          _me._htmlElement,
-          _me._eventName,
-          _me._actionHandlerBind,
-        );
+        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug(
-          "EventHandler - register: ",
+          'EventHandler - register: ',
           _me._eventName,
           _me._cssSelector,
           _me._className,
@@ -610,25 +577,22 @@
       _actionHandler: function (event) {
         const _me = this;
         _me._getTargetElements().each(function (targetElement) {
-          if (
-            !_me._conditionFunction ||
-            _me._conditionFunction(targetElement, _me._htmlElement)
-          ) {
+          if (!_me._conditionFunction || _me._conditionFunction(targetElement, _me._htmlElement)) {
             _me._actionFunction(targetElement, _me._className);
             console.debug(
-              "EventHandler -  upon",
+              'EventHandler -  upon',
               _me._eventName,
-              "action [",
+              'action [',
               _me._actionFunction.name,
               _me._className,
-              "] executed on",
+              '] executed on',
               targetElement,
             );
           } else {
             console.debug(
-              "EventHandler - action skipped for failed condition [",
+              'EventHandler - action skipped for failed condition [',
               _me._conditionFunction,
-              "] on ",
+              '] on ',
               targetElement,
             );
           }
@@ -637,7 +601,7 @@
 
       _getTargetElements: function () {
         const _me = this;
-        if (_me._cssSelector.startsWith("^")) {
+        if (_me._cssSelector.startsWith('^')) {
           // match up the DOM from origin
           parent = _me._htmlElement.up(_me._cssSelector.substring(1));
           return parent ? [parent] : [];
@@ -649,13 +613,9 @@
 
       unregister: function () {
         const _me = this;
-        Event.stopObserving(
-          _me._htmlElement,
-          _me._eventName,
-          _me._actionHandlerBind,
-        );
+        Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         console.debug(
-          "EventHandler - unregister: ",
+          'EventHandler - unregister: ',
           _me._eventName,
           _me._cssSelector,
           _me._className,
@@ -666,14 +626,14 @@
     });
   }
 
-  if (typeof window.CELEMENTS.EventManager === "undefined") {
+  if (typeof window.CELEMENTS.EventManager === 'undefined') {
     window.CELEMENTS.EventManager = Class.create({
       _instructionRegex: new RegExp(/([\w:]+)([%+-])([\w-]+):([^?]+)\??(.+)?/),
       _actionFunctionMap: {
         // map may be extendend. also extend second group in instructionRegex accordingly
-        "+": Element.addClassName,
-        "-": Element.removeClassName,
-        "%": Element.toggleClassName,
+        '+': Element.addClassName,
+        '-': Element.removeClassName,
+        '%': Element.toggleClassName,
       },
       _eventElements: undefined,
       _eventElemCounter: undefined,
@@ -696,10 +656,7 @@
             { threshold: [0, 0.5, 1] },
           );
         } catch (exp) {
-          console.warn(
-            "EventManager - initialize: IntersectionObserver not available",
-            exp,
-          );
+          console.warn('EventManager - initialize: IntersectionObserver not available', exp);
         }
       },
 
@@ -707,9 +664,7 @@
         let ret = new Array();
         if (dataValue) {
           // split single '&', avoid splitting double '&&' within condition string
-          ret = dataValue
-            .replace(/([^&])&([^&])/g, "$1#SPLIT#$2")
-            .split("#SPLIT#");
+          ret = dataValue.replace(/([^&])&([^&])/g, '$1#SPLIT#$2').split('#SPLIT#');
         }
         return ret;
       },
@@ -724,19 +679,10 @@
           cssSelector: parts[4],
           condition: parts[5],
         };
-        if (
-          data.eventName &&
-          data.action &&
-          data.className &&
-          data.cssSelector
-        ) {
+        if (data.eventName && data.action && data.className && data.cssSelector) {
           return data;
         } else {
-          throw (
-            "parseEventInstruction: unable to parse event instruction '" +
-            instruction +
-            "'"
-          );
+          throw "parseEventInstruction: unable to parse event instruction '" + instruction + "'";
         }
       },
 
@@ -747,12 +693,11 @@
         if (actionFunction) {
           if (
             _me._intersectionObserver &&
-            (data.eventName.startsWith("cel:enter") ||
-              data.eventName.startsWith("cel:leave"))
+            (data.eventName.startsWith('cel:enter') || data.eventName.startsWith('cel:leave'))
           ) {
             _me._intersectionObserver.observe(htmlElem);
             console.debug(
-              "EventManager - observing intersection",
+              'EventManager - observing intersection',
               htmlElem.dataset.celEventNb,
               data,
             );
@@ -782,11 +727,7 @@
               try {
                 return _me._createEventHandler(htmlElem, instruction);
               } catch (exp) {
-                console.error(
-                  "EventManager - interpretData: invalid instruction ",
-                  exp,
-                  htmlElem,
-                );
+                console.error('EventManager - interpretData: invalid instruction ', exp, htmlElem);
               }
             })
             .filter(Boolean),
@@ -795,21 +736,21 @@
 
       _interpretDataCelEvent: function (htmlElem) {
         const _me = this;
-        const logPref = "EventManager - interpretData: ";
-        if (htmlElem.classList.contains("celOnEventInit")) {
-          console.debug(logPref, "skip already initialized: ", htmlElem);
-        } else if (htmlElem.up(".cel_template")) {
-          console.debug(logPref, "skip template element: ", htmlElem);
+        const logPref = 'EventManager - interpretData: ';
+        if (htmlElem.classList.contains('celOnEventInit')) {
+          console.debug(logPref, 'skip already initialized: ', htmlElem);
+        } else if (htmlElem.up('.cel_template')) {
+          console.debug(logPref, 'skip template element: ', htmlElem);
         } else {
           htmlElem.dataset.celEventNb = ++_me._eventElemCounter;
           const newElem = _me._createEventElement(htmlElem);
           if (newElem.eventHandlers.length > 0) {
             _me._eventElements.push(newElem);
           } else {
-            console.warn(logPref, "no valid instructions found on ", htmlElem);
+            console.warn(logPref, 'no valid instructions found on ', htmlElem);
           }
-          htmlElem.classList.add("celOnEventInit");
-          $(htmlElem).fire("celEM:init");
+          htmlElem.classList.add('celOnEventInit');
+          $(htmlElem).fire('celEM:init');
         }
       },
 
@@ -824,40 +765,36 @@
           y: entry.boundingClientRect.y,
           ratio: entry.intersectionRatio,
         });
-        const direction = current.y > previous.y ? "up" : "down";
-        const type =
-          entry.isIntersecting && current.ratio >= previous.ratio
-            ? "enter"
-            : "leave";
-        const ratioA = type === "enter" ? current.ratio : previous.ratio;
-        const ratioB = type === "leave" ? current.ratio : previous.ratio;
+        const direction = current.y > previous.y ? 'up' : 'down';
+        const type = entry.isIntersecting && current.ratio >= previous.ratio ? 'enter' : 'leave';
+        const ratioA = type === 'enter' ? current.ratio : previous.ratio;
+        const ratioB = type === 'leave' ? current.ratio : previous.ratio;
         const steps = [];
-        if (ratioA >= 1 && ratioB < 1) steps.push(":full");
-        if (ratioA >= 0.5 && ratioB < 0.5) steps.push(":half");
-        if (ratioA > 0 && ratioB <= 0) steps.push("");
+        if (ratioA >= 1 && ratioB < 1) steps.push(':full');
+        if (ratioA >= 0.5 && ratioB < 0.5) steps.push(':half');
+        if (ratioA > 0 && ratioB <= 0) steps.push('');
         steps.forEach(function (step) {
-          [
-            "cel:" + type + step,
-            "cel:" + type + step + ":" + direction,
-          ].forEach(function (eventName) {
-            console.debug(
-              "EventManager - intersect",
-              eventName,
-              "on",
-              eventNb,
-              previous,
-              "->",
-              current,
-            );
-            htmlElem.fire(eventName);
-          });
+          ['cel:' + type + step, 'cel:' + type + step + ':' + direction].forEach(
+            function (eventName) {
+              console.debug(
+                'EventManager - intersect',
+                eventName,
+                'on',
+                eventNb,
+                previous,
+                '->',
+                current,
+              );
+              htmlElem.fire(eventName);
+            },
+          );
         });
         _me._intersectionValues[eventNb] = current;
       },
 
       _contentChangedHandler: function (event) {
         const _me = this;
-        console.debug("EventManager - contentChanged ", event);
+        console.debug('EventManager - contentChanged ', event);
         if (event.memo && event.memo.htmlElem) {
           _me.updateCelEventHandlers(event.memo.htmlElem);
         } else {
@@ -870,18 +807,12 @@
         const rootElem = htmlContainer || document.body;
         Event.stopObserving(
           $(document.body),
-          "celements:contentChanged",
+          'celements:contentChanged',
           _me._contentChangedHandlerBind,
         );
-        Event.observe(
-          $(document.body),
-          "celements:contentChanged",
-          _me._contentChangedHandlerBind,
-        );
+        Event.observe($(document.body), 'celements:contentChanged', _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
-        rootElem
-          .querySelectorAll(".celOnEvent")
-          .forEach(_me._interpretDataCelEventBind);
+        rootElem.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
       },
 
       _removeDisappearedElems: function () {
@@ -889,19 +820,18 @@
         for (let i = _me._eventElements.length - 1; i >= 0; i--) {
           const elem = _me._eventElements[i];
           const isInBody = $(document.body).contains(elem.htmlElem);
-          const changedDataValue =
-            elem.htmlElem.dataset.celEvent !== elem.dataValue;
+          const changedDataValue = elem.htmlElem.dataset.celEvent !== elem.dataValue;
           if (
             !isInBody ||
             changedDataValue ||
-            !elem.htmlElem.classList.contains("celOnEventInit")
+            !elem.htmlElem.classList.contains('celOnEventInit')
           ) {
             elem.eventHandlers.forEach(function (handler) {
               handler.unregister();
             });
             _me._eventElements.splice(i, 1);
-            elem.htmlElem.classList.remove("celOnEventInit");
-            console.debug("EventManager - removeDisappearedElem: ", elem);
+            elem.htmlElem.classList.remove('celOnEventInit');
+            console.debug('EventManager - removeDisappearedElem: ', elem);
           }
         }
       },
@@ -909,7 +839,7 @@
 
     window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
     document.addEventListener(
-      "DOMContentLoaded",
+      'DOMContentLoaded',
       window.CELEMENTS.globalEventManager._contentChangedHandlerBind,
     );
   }
@@ -931,21 +861,16 @@
       });
       formValidations.set(formElem.id, valid);
     } else {
-      console.error(
-        "failed to register validation on form with no id. ",
-        formElem,
-      );
+      console.error('failed to register validation on form with no id. ', formElem);
     }
   };
 
-  document.addEventListener("DOMContentLoaded", function () {
-    $$("form.cel_form_validation").each(registerValidation);
-    $(document.body).observe("cel_yuiOverlay:contentChanged", function (event) {
+  document.addEventListener('DOMContentLoaded', function () {
+    $$('form.cel_form_validation').each(registerValidation);
+    $(document.body).observe('cel_yuiOverlay:contentChanged', function (event) {
       const containerElem = event.findElement();
       if (containerElem) {
-        containerElem
-          .select("form.cel_form_validation")
-          .each(registerValidation);
+        containerElem.select('form.cel_form_validation').each(registerValidation);
       }
     });
   });
@@ -959,12 +884,12 @@
   window.celAddOnFinishHeaderListener(function () {
     //get google Account Number from Meta-Tags
     const metas = $$('meta[name="cel-GAA-Num"]');
-    if (metas.size() > 0 && metas[0].content != "") {
+    if (metas.size() > 0 && metas[0].content != '') {
       const gaaNum = metas[0].content;
-      if (gaaNum.startsWith("UA-")) {
+      if (gaaNum.startsWith('UA-')) {
         // deprecated Universal Analytics (obsolete by 1.7.2023)
         (function (i, s, o, g, r, a, m) {
-          i["GoogleAnalyticsObject"] = r;
+          i['GoogleAnalyticsObject'] = r;
           ((i[r] =
             i[r] ||
             function () {
@@ -975,17 +900,11 @@
           a.async = 1;
           a.src = g;
           m.parentNode.insertBefore(a, m);
-        })(
-          window,
-          document,
-          "script",
-          "//www.google-analytics.com/analytics.js",
-          "ga",
-        );
-        ga("create", gaaNum, window.getCelDomain());
-        ga("set", "anonymizeIp", true);
-        ga("send", "pageview");
-        console.log("finish initalizing google universal analytics.", gaaNum);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', gaaNum, window.getCelDomain());
+        ga('set', 'anonymizeIp', true);
+        ga('send', 'pageview');
+        console.log('finish initalizing google universal analytics.', gaaNum);
       } else {
         (function (d, o, g, s, m) {
           s = d.createElement(o);
@@ -993,18 +912,14 @@
           s.async = 1;
           s.src = g;
           m.parentNode.insertBefore(s, m);
-        })(
-          document,
-          "script",
-          "https://www.googletagmanager.com/gtag/js?id=" + gaaNum,
-        );
+        })(document, 'script', 'https://www.googletagmanager.com/gtag/js?id=' + gaaNum);
         window.dataLayer = window.dataLayer || [];
         function gtag() {
           dataLayer.push(arguments);
         }
-        gtag("js", new Date());
-        gtag("config", gaaNum);
-        console.log("finish initalizing google analytics v4.", gaaNum);
+        gtag('js', new Date());
+        gtag('config', gaaNum);
+        console.log('finish initalizing google analytics v4.', gaaNum);
       }
     }
   });
@@ -1012,16 +927,16 @@
   /**
    * Fluid Design image map support
    */
-  document.addEventListener("DOMContentLoaded", function () {
-    if (typeof $j("img[usemap]").rwdImageMaps !== "undefined") {
-      $j("img[usemap]").rwdImageMaps();
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof $j('img[usemap]').rwdImageMaps !== 'undefined') {
+      $j('img[usemap]').rwdImageMaps();
     }
   });
 
   /**
    * Register default overlay opener for .cel_yuiOverlay cssSelector
    */
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener('DOMContentLoaded', function () {
     if (
       CELEMENTS &&
       CELEMENTS.presentation &&
@@ -1030,7 +945,7 @@
     ) {
       CELEMENTS.presentation
         .getOverlayObj({
-          overlayLayout: "SimpleLayout",
+          overlayLayout: 'SimpleLayout',
         })
         .registerOpenHandler();
     }
@@ -1044,27 +959,19 @@
     const innerWidth = mobileDim.getInnerWidth();
     const innerHeight = mobileDim.getInnerHeight();
     if (innerWidth > innerHeight) {
-      $(document.body).removeClassName("cel_orientation_portrait");
-      $(document.body).addClassName("cel_orientation_landscape");
+      $(document.body).removeClassName('cel_orientation_portrait');
+      $(document.body).addClassName('cel_orientation_landscape');
     } else {
-      $(document.body).removeClassName("cel_orientation_landscape");
-      $(document.body).addClassName("cel_orientation_portrait");
+      $(document.body).removeClassName('cel_orientation_landscape');
+      $(document.body).addClassName('cel_orientation_portrait');
     }
   };
 
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener('DOMContentLoaded', function () {
     if (CELEMENTS && CELEMENTS.mobile && CELEMENTS.mobile.Dimensions) {
       mobileDim = new CELEMENTS.mobile.Dimensions();
-      Event.stopObserving(
-        window,
-        "orientationchange",
-        cel_updateOrientationCSSclasses,
-      );
-      Event.observe(
-        window,
-        "orientationchange",
-        cel_updateOrientationCSSclasses,
-      );
+      Event.stopObserving(window, 'orientationchange', cel_updateOrientationCSSclasses);
+      Event.observe(window, 'orientationchange', cel_updateOrientationCSSclasses);
     }
   });
 
@@ -1072,18 +979,18 @@
    * Register all Bootstrap-Multiselect
    */
   const cel_initAllMultiselect = function (event) {
-    console.debug("initAllMultiselect");
+    console.debug('initAllMultiselect');
     if ($j().multiselect != undefined) {
-      $j(".celBootstrap,.celMultiselect")
-        .filter(":visible,.celForceMultiselect")
+      $j('.celBootstrap,.celMultiselect')
+        .filter(':visible,.celForceMultiselect')
         .each(function (index, element) {
-          if (!$(element).up(".cel_template")) {
-            console.debug("initAllMultiselect: ", element);
+          if (!$(element).up('.cel_template')) {
+            console.debug('initAllMultiselect: ', element);
             cel_initAllMultiselect_element(element);
           }
         });
     } else {
-      console.debug("initAllMultiselect: bootstrap multiselect undefined");
+      console.debug('initAllMultiselect: bootstrap multiselect undefined');
     }
   };
 
@@ -1097,20 +1004,17 @@
       onDropdownHidden: cel_initAllMultiselect_onDropdownHidden,
       onChange: cel_initAllMultiselect_onChange,
     };
-    let bootstrapCfg = element.getAttribute("data-bootstrapConfig");
+    let bootstrapCfg = element.getAttribute('data-bootstrapConfig');
     // check deprecated data-multiselectAttr for backwards compatibility
-    if (!bootstrapCfg && element.getAttribute("data-multiselectAttr")) {
-      bootstrapCfg = element.getAttribute("data-multiselectAttr");
-      console.warn(
-        "initAllMultiselect: deprecated data-multiselectAttr in use",
-        element,
-      );
+    if (!bootstrapCfg && element.getAttribute('data-multiselectAttr')) {
+      bootstrapCfg = element.getAttribute('data-multiselectAttr');
+      console.warn('initAllMultiselect: deprecated data-multiselectAttr in use', element);
     }
     if (bootstrapCfg) {
       params = $j.extend(params, JSON.parse(bootstrapCfg));
     }
     const multiselect = $j(element).multiselect(params);
-    $(document.body).fire("cel:multiselectInitialized", {
+    $(document.body).fire('cel:multiselectInitialized', {
       multiselect: multiselect,
     });
   };
@@ -1120,8 +1024,8 @@
      * FIXME: In Celements-framework the Multiselect disappears when the dropdown switched to hidden
      * this code is just a workaround, it set the box visible again
      */
-    $j(event.target).css("display", "");
-    event.target.fire("cel:multiselectOnDropdownHidden");
+    $j(event.target).css('display', '');
+    event.target.fire('cel:multiselectOnDropdownHidden');
     /*
      * E.g. to read selected values:
        event.target.previous().select('option:selected').each(function(ele) {
@@ -1132,8 +1036,8 @@
 
   const cel_initAllMultiselect_onChange = function (option, checked, select) {
     const multiselectElement = this;
-    console.debug("fire cel:multiselectOnChange on: ", multiselectElement);
-    $(option[0]).fire("cel:multiselectOnChange", {
+    console.debug('fire cel:multiselectOnChange on: ', multiselectElement);
+    $(option[0]).fire('cel:multiselectOnChange', {
       multiselect: multiselectElement,
       checked: checked,
       select: select,
@@ -1141,11 +1045,11 @@
   };
 
   const cel_initAllMultiselect_tabMenuPanel = function (event) {
-    $("tabMenuPanel")
-      .select(".celBootstrap,.celMultiselect")
+    $('tabMenuPanel')
+      .select('.celBootstrap,.celMultiselect')
       .each(function (element) {
         if (element.visible()) {
-          element.addClassName("celForceMultiselect");
+          element.addClassName('celForceMultiselect');
         }
       });
     cel_initAllMultiselect(event);
@@ -1154,42 +1058,30 @@
   /**
    * Initialize Bootstrap Multiselect
    */
-  document.addEventListener("DOMContentLoaded", function () {
-    $(document.body).stopObserving(
-      "cel:initMultiselect",
-      cel_initAllMultiselect,
-    );
-    $(document.body).stopObserving(
-      "celements:contentChanged",
-      cel_initAllMultiselect,
-    );
-    $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
-    $(document.body).observe(
-      "celements:contentChanged",
-      cel_initAllMultiselect,
-    );
-    if ($("tabMenuPanel")) {
-      $("tabMenuPanel").stopObserving(
-        "tabedit:tabLoadingFinished",
+  document.addEventListener('DOMContentLoaded', function () {
+    $(document.body).stopObserving('cel:initMultiselect', cel_initAllMultiselect);
+    $(document.body).stopObserving('celements:contentChanged', cel_initAllMultiselect);
+    $(document.body).observe('cel:initMultiselect', cel_initAllMultiselect);
+    $(document.body).observe('celements:contentChanged', cel_initAllMultiselect);
+    if ($('tabMenuPanel')) {
+      $('tabMenuPanel').stopObserving(
+        'tabedit:tabLoadingFinished',
         cel_initAllMultiselect_tabMenuPanel,
       );
-      $("tabMenuPanel").observe(
-        "tabedit:tabLoadingFinished",
-        cel_initAllMultiselect_tabMenuPanel,
-      );
+      $('tabMenuPanel').observe('tabedit:tabLoadingFinished', cel_initAllMultiselect_tabMenuPanel);
     }
-    $(document.body).fire("cel:initMultiselect");
+    $(document.body).fire('cel:initMultiselect');
   });
 
   const cel_addMaxDimToFluidImg = function (event) {
-    $$("img.cel_fluidresizeWidth").each(function (imgElem) {
+    $$('img.cel_fluidresizeWidth').each(function (imgElem) {
       imgElem.setStyle({
-        maxWidth: imgElem.readAttribute("width") + "px",
+        maxWidth: imgElem.readAttribute('width') + 'px',
       });
     });
-    $$("img.cel_fluidresizeHeight").each(function (imgElem) {
+    $$('img.cel_fluidresizeHeight').each(function (imgElem) {
       imgElem.setStyle({
-        maxHeight: imgElem.readAttribute("height") + "px",
+        maxHeight: imgElem.readAttribute('height') + 'px',
       });
     });
   };
@@ -1197,32 +1089,21 @@
   /**
    * Initialize fluid image
    */
-  document.addEventListener("DOMContentLoaded", function () {
-    $(document.body).stopObserving(
-      "cel:initFluidImage",
-      cel_addMaxDimToFluidImg,
-    );
-    $(document.body).stopObserving(
-      "celements:contentChanged",
-      cel_addMaxDimToFluidImg,
-    );
-    $(document.body).observe("cel:initFluidImage", cel_addMaxDimToFluidImg);
-    $(document.body).observe(
-      "celements:contentChanged",
-      cel_addMaxDimToFluidImg,
-    );
+  document.addEventListener('DOMContentLoaded', function () {
+    $(document.body).stopObserving('cel:initFluidImage', cel_addMaxDimToFluidImg);
+    $(document.body).stopObserving('celements:contentChanged', cel_addMaxDimToFluidImg);
+    $(document.body).observe('cel:initFluidImage', cel_addMaxDimToFluidImg);
+    $(document.body).observe('celements:contentChanged', cel_addMaxDimToFluidImg);
   });
 
   /**
    * Initialize close Window on Overlay CloseButton
    */
-  document.addEventListener("DOMContentLoaded", function () {
-    $$(".generalOverlayWrapper .generalOverlay .exitOnClose").each(
-      function (elem) {
-        elem.stopObserving("click", cel_closeOverlayWindow);
-        elem.observe("click", cel_closeOverlayWindow);
-      },
-    );
+  document.addEventListener('DOMContentLoaded', function () {
+    $$('.generalOverlayWrapper .generalOverlay .exitOnClose').each(function (elem) {
+      elem.stopObserving('click', cel_closeOverlayWindow);
+      elem.observe('click', cel_closeOverlayWindow);
+    });
   });
 
   const cel_closeOverlayWindow = function (event) {
@@ -1235,19 +1116,16 @@
    */
 
   const updateCelMessages = function () {
-    if (typeof $j.format !== "undefined") {
+    if (typeof $j.format !== 'undefined') {
       $j.format.locale({ date: celMessages.jqueryFormater });
     }
   };
 
-  document.addEventListener("DOMContentLoaded", function () {
-    if (
-      window.celMessages.isLoaded &&
-      typeof celMessages.jqueryFormater === "object"
-    ) {
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.celMessages.isLoaded && typeof celMessages.jqueryFormater === 'object') {
       updateCelMessages();
     } else {
-      $(document.body).observe("cel:messagesLoaded", updateCelMessages);
+      $(document.body).observe('cel:messagesLoaded', updateCelMessages);
     }
   });
 })(window);

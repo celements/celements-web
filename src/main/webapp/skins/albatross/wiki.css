@@ -168,9 +168,11 @@ span.code {
   background-color: #fff;
 }
 
-.wiki-table .table-even {}
+.wiki-table .table-even {
+}
 
-.list {}
+.list {
+}
 
 .list-title {
   font-weight: bold;
@@ -442,7 +444,7 @@ span.wikicreatelink a {
 
 /* Used to signify a rendering error in the rendered page. Valid only with new rendering */
 .xwikirenderingerror {
-  background-color: #eee; 
+  background-color: #eee;
   background-image: url(/file/resources/icons/silk/exclamation.gif);
   background-position: 2px 50%;
   background-repeat: no-repeat;

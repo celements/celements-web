@@ -18,67 +18,65 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 var imagePickerCallback = function (filename, origFieldName) {
-  var celAttDocFullName = $("nav_imagePicker").down("#image_prefix").innerHTML;
-  var celAttFileName = celAttDocFullName.strip() + ";" + filename.strip();
-  $("nav_imagePicker").down("#image").value = celAttFileName;
+  var celAttDocFullName = $('nav_imagePicker').down('#image_prefix').innerHTML;
+  var celAttFileName = celAttDocFullName.strip() + ';' + filename.strip();
+  $('nav_imagePicker').down('#image').value = celAttFileName;
   var celAttUrl =
-    celAttFileName.replace(/^([^\.]+)\.([^\.]+);(.+)$/, "/download/$1/$2/$3") +
-    "?celwidth=200&celheight=200";
-  $("nav_imagePicker").down("img#celMenuImagePreview").src = celAttUrl;
-  $("nav_imagePicker").down("img#celMenuImagePreview").show();
-  if (!$("nav_imagePicker").down(".celMenuImagePreviewDelete")) {
-    var imgElement = new Element("img", {
-      src:
-        CELEMENTS.getUtils().getPathPrefix() +
-        "/file/resources/layouts/img/cross.gif",
-      class: "removeBackgroundImg",
-      alt: "romove",
+    celAttFileName.replace(/^([^\.]+)\.([^\.]+);(.+)$/, '/download/$1/$2/$3') +
+    '?celwidth=200&celheight=200';
+  $('nav_imagePicker').down('img#celMenuImagePreview').src = celAttUrl;
+  $('nav_imagePicker').down('img#celMenuImagePreview').show();
+  if (!$('nav_imagePicker').down('.celMenuImagePreviewDelete')) {
+    var imgElement = new Element('img', {
+      src: CELEMENTS.getUtils().getPathPrefix() + '/file/resources/layouts/img/cross.gif',
+      class: 'removeBackgroundImg',
+      alt: 'romove',
     });
-    var element = new Element("p")
-      .addClassName("celMenuImagePreviewDelete")
-      .update(new Element("a", { href: "#" }).update(imgElement));
-    $("nav_imagePicker").down(".celMenuImagePreviewContainer").insert(element);
+    var element = new Element('p')
+      .addClassName('celMenuImagePreviewDelete')
+      .update(new Element('a', { href: '#' }).update(imgElement));
+    $('nav_imagePicker').down('.celMenuImagePreviewContainer').insert(element);
   }
-  $$("div.celMenuImagePreviewContainer").each(function (elem) {
+  $$('div.celMenuImagePreviewContainer').each(function (elem) {
     elem.show();
   });
-  $$(".celMenuImagePreviewDelete a").each(function (elem) {
-    elem.stopObserving("click", removeImageAfterUpload);
-    elem.observe("click", removeImageAfterUpload);
+  $$('.celMenuImagePreviewDelete a').each(function (elem) {
+    elem.stopObserving('click', removeImageAfterUpload);
+    elem.observe('click', removeImageAfterUpload);
   });
 };
 
 var removeImageAfterUpload = function (event) {
   event.stop();
-  $$("div.celMenuImagePreviewContainer").each(function (elem) {
+  $$('div.celMenuImagePreviewContainer').each(function (elem) {
     elem.hide();
   });
-  $("nav_imagePicker").down("#image").value = "";
+  $('nav_imagePicker').down('#image').value = '';
 };
 
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
   var initRemoveImgLinkClick = function (event) {
-    $$(".celMenuImagePreviewDelete a").each(function (elem) {
-      elem.observe("click", removeImage);
+    $$('.celMenuImagePreviewDelete a').each(function (elem) {
+      elem.observe('click', removeImage);
     });
   };
 
   var removeImage = function (event) {
     event.stop();
     new Ajax.Request(getCelHost(), {
-      method: "post",
+      method: 'post',
       parameters: {
-        xpage: "celements_ajax",
-        ajax_mode: "RemoveNavBackgroundImg",
+        xpage: 'celements_ajax',
+        ajax_mode: 'RemoveNavBackgroundImg',
       },
       onSuccess: function (transport) {
         var jsonStr = transport.responseText;
         if (jsonStr.isJSON()) {
           var jsonResponse = jsonStr.evalJSON();
           if (jsonResponse.JSONConfirmCheckout.success) {
-            $$("div.celMenuImagePreviewContainer").each(function (elem) {
+            $$('div.celMenuImagePreviewContainer').each(function (elem) {
               elem.hide();
             });
           }
@@ -87,9 +85,6 @@ var removeImageAfterUpload = function (event) {
     });
   };
 
-  $(document.body).stopObserving(
-    "celements:contentChanged",
-    initRemoveImgLinkClick,
-  );
-  $(document.body).observe("celements:contentChanged", initRemoveImgLinkClick);
+  $(document.body).stopObserving('celements:contentChanged', initRemoveImgLinkClick);
+  $(document.body).observe('celements:contentChanged', initRemoveImgLinkClick);
 })(window);

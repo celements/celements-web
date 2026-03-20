@@ -21,10 +21,10 @@
 /**
  * outline cells
  */
-if (typeof CELEMENTS == "undefined") {
+if (typeof CELEMENTS == 'undefined') {
   var CELEMENTS = {};
 }
-if (typeof CELEMENTS.layout == "undefined") {
+if (typeof CELEMENTS.layout == 'undefined') {
   CELEMENTS.layout = {};
 }
 
@@ -44,42 +44,26 @@ if (typeof CELEMENTS.layout == "undefined") {
 
       _chromeAskToolbarFixTop: function (top) {
         var _me = this;
-        if (
-          $$("html iframe.apn-toolbar") &&
-          $$("html iframe.apn-toolbar").size() > 0
-        ) {
-          var toolbarHeight = $j("html iframe.apn-toolbar").height();
+        if ($$('html iframe.apn-toolbar') && $$('html iframe.apn-toolbar').size() > 0) {
+          var toolbarHeight = $j('html iframe.apn-toolbar').height();
           top = top - toolbarHeight;
         }
         return top;
       },
 
-      _addOutlineElement: function (
-        elemId,
-        idSuffix,
-        top,
-        left,
-        width,
-        height,
-        cssClass,
-      ) {
+      _addOutlineElement: function (elemId, idSuffix, top, left, width, height, cssClass) {
         var _me = this;
-        var cssClassStr = cssClass || "";
-        cssClassStr = (
-          "cel_outline cel_outline_" +
-          elemId +
-          " " +
-          cssClassStr
-        ).strip();
+        var cssClassStr = cssClass || '';
+        cssClassStr = ('cel_outline cel_outline_' + elemId + ' ' + cssClassStr).strip();
         var outlineElemId = elemId + idSuffix;
         var outlineElem = $(outlineElemId);
         if (!outlineElem) {
-          outlineElem = new Element("div", {
+          outlineElem = new Element('div', {
             id: outlineElemId,
             class: cssClassStr,
           }).setStyle({
-            position: "absolute",
-            background: "green",
+            position: 'absolute',
+            background: 'green',
           });
           $(document.body).insert({
             bottom: outlineElem,
@@ -87,10 +71,10 @@ if (typeof CELEMENTS.layout == "undefined") {
         }
         top = _me._chromeAskToolbarFixTop(top);
         outlineElem.setStyle({
-          top: top + "px",
-          left: left + "px",
-          width: width + "px",
-          height: height + "px",
+          top: top + 'px',
+          left: left + 'px',
+          width: width + 'px',
+          height: height + 'px',
         });
       },
 
@@ -108,7 +92,7 @@ if (typeof CELEMENTS.layout == "undefined") {
           $j(element).offset().left + element.getWidth() - _me._outline_Width;
         _me._addOutlineElement(
           element.id,
-          "-RightBorder",
+          '-RightBorder',
           $j(element).offset().top,
           elemRightBorderLeft,
           _me._outline_Width,
@@ -119,7 +103,7 @@ if (typeof CELEMENTS.layout == "undefined") {
           $j(element).offset().top + element.getHeight() - _me._outline_Width;
         _me._addOutlineElement(
           element.id,
-          "-BottomBorder",
+          '-BottomBorder',
           elemBottomBorderTop,
           $j(element).offset().left,
           element.getWidth(),
@@ -128,7 +112,7 @@ if (typeof CELEMENTS.layout == "undefined") {
         );
         _me._addOutlineElement(
           element.id,
-          "-LeftBorder",
+          '-LeftBorder',
           $j(element).offset().top,
           $j(element).offset().left,
           _me._outline_Width,
@@ -137,7 +121,7 @@ if (typeof CELEMENTS.layout == "undefined") {
         );
         _me._addOutlineElement(
           element.id,
-          "-TopBorder",
+          '-TopBorder',
           $j(element).offset().top,
           $j(element).offset().left,
           element.getWidth(),
@@ -147,50 +131,44 @@ if (typeof CELEMENTS.layout == "undefined") {
       },
 
       _makeSafeForCSS: function (name) {
-        return name.replace(/([:\.])/g, "\\$1");
+        return name.replace(/([:\.])/g, '\\$1');
       },
 
       removeOutlinesForElement: function (element) {
         var _me = this;
         element = $(element);
-        $$(".cel_outline_" + _me._makeSafeForCSS(element.id)).each(
-          function (element) {
-            element.remove();
-          },
-        );
+        $$('.cel_outline_' + _me._makeSafeForCSS(element.id)).each(function (element) {
+          element.remove();
+        });
       },
 
       removeAllOutlines: function () {
         var _me = this;
-        $$(".cel_outline").each(function (element) {
+        $$('.cel_outline').each(function (element) {
           element.remove();
         });
       },
 
       addFocus: function (element) {
         var _me = this;
-        $$(".cel_outline_" + _me._makeSafeForCSS($(element).id)).each(
-          function (outlineElem) {
-            outlineElem.addClassName("cel_outline_focus");
-            outlineElem.setStyle({
-              background: "lime",
-              zIndex: "999",
-            });
-          },
-        );
+        $$('.cel_outline_' + _me._makeSafeForCSS($(element).id)).each(function (outlineElem) {
+          outlineElem.addClassName('cel_outline_focus');
+          outlineElem.setStyle({
+            background: 'lime',
+            zIndex: '999',
+          });
+        });
       },
 
       removeFocus: function (element) {
         var _me = this;
-        $$(".cel_outline_" + _me._makeSafeForCSS($(element).id)).each(
-          function (outlineElem) {
-            outlineElem.removeClassName("cel_outline_focus");
-            outlineElem.setStyle({
-              background: "green",
-              zIndex: "",
-            });
-          },
-        );
+        $$('.cel_outline_' + _me._makeSafeForCSS($(element).id)).each(function (outlineElem) {
+          outlineElem.removeClassName('cel_outline_focus');
+          outlineElem.setStyle({
+            background: 'green',
+            zIndex: '',
+          });
+        });
       },
     };
   })();

@@ -7,7 +7,6 @@
 }
 
 .xdialog-box-confirmation .question {
-  background: transparent url(/file/resources/icons/silk/help.gif) left 2px
-    no-repeat;
+  background: transparent url(/file/resources/icons/silk/help.gif) left 2px no-repeat;
   padding: 4px 0 6px 22px;
 }

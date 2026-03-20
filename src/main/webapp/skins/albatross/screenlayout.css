@@ -134,7 +134,7 @@ Global header
 
 #companylogo {
   padding: 50px 0 0 40px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: #505050;
   font-weight: bold;
   font-size: 38px;
@@ -395,7 +395,7 @@ Comments
 ----------------------------------------------
 */
 #xwikidata #commentscontent {
-  background: #e5f0fe url("icons/black-bg-comments-left.png") left top no-repeat;
+  background: #e5f0fe url('icons/black-bg-comments-left.png') left top no-repeat;
 }
 
 #comments,
@@ -408,18 +408,15 @@ Comments
 }
 
 #xwikidata #commentscontent .xwikititlewrapper {
-  background: transparent url("icons/black-bg-comments-right.png") right top
-    no-repeat;
+  background: transparent url('icons/black-bg-comments-right.png') right top no-repeat;
 }
 
 #xwikidata #attw {
-  background: transparent url("icons/black-bg-attach-right.png") right bottom
-    no-repeat;
+  background: transparent url('icons/black-bg-attach-right.png') right bottom no-repeat;
 }
 
 .xwikiintratitle {
-  background: transparent url("icons/black-content-more.png") right center
-    no-repeat;
+  background: transparent url('icons/black-content-more.png') right center no-repeat;
   font-size: 160%;
   font-weight: 400;
   font-style: normal;
@@ -428,12 +425,11 @@ Comments
 }
 
 .exp .xwikiintratitle {
-  background: transparent url("icons/black-content-less.png") right center
-    no-repeat;
+  background: transparent url('icons/black-content-less.png') right center no-repeat;
 }
 
 #xwikidata #attachmentscontent {
-  background: url("icons/black-bg-attach-left.png") left bottom no-repeat;
+  background: url('icons/black-bg-attach-left.png') left bottom no-repeat;
 }
 
 #attachmentscontent table {
@@ -550,13 +546,13 @@ html > body .xwikiintracontent legend {
 .commentsno,
 .attachmentsno {
   font-size: 50%;
-  background: transparent url("icons/black-comment2.png") center no-repeat;
+  background: transparent url('icons/black-comment2.png') center no-repeat;
   padding: 11px 24px 13px;
   font-weight: 900;
 }
 
 .attachmentsno {
-  background: transparent url("icons/black-doc2.png") center no-repeat;
+  background: transparent url('icons/black-doc2.png') center no-repeat;
 }
 
 /*
@@ -1044,7 +1040,7 @@ html > body .xwikidatatable {
   visibility: visible;
   position: relative;
   top: -1.2em;
-  background: transparent url("icons/black-edit.png") left bottom no-repeat;
+  background: transparent url('icons/black-edit.png') left bottom no-repeat;
   padding: 0px 10px 20px;
 }
 
@@ -1216,7 +1212,7 @@ div.pagelayoutoptions td {
   margin-top: 0px;
 }
 
-.xwiki-form-listclass input[type="checkbox"] {
+.xwiki-form-listclass input[type='checkbox'] {
   float: none;
   display: inline;
   margin-right: 2px;

@@ -39,12 +39,12 @@ external js-files
  */
 
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
-  if (typeof window.CELEMENTS == "undefined") {
+  if (typeof window.CELEMENTS == 'undefined') {
     window.CELEMENTS = {};
   }
-  if (typeof window.CELEMENTS.presentation === "undefined") {
+  if (typeof window.CELEMENTS.presentation === 'undefined') {
     window.CELEMENTS.presentation = {};
   }
 
@@ -93,11 +93,11 @@ external js-files
 
     _getDefaultConfig: function () {
       return {
-        dialogId: "modal dialog",
-        containerId: "yuiOverlayContainer",
-        additionalCssClass: "",
-        width: "300px",
-        height: "auto",
+        dialogId: 'modal dialog',
+        containerId: 'yuiOverlayContainer',
+        additionalCssClass: '',
+        width: '300px',
+        height: 'auto',
         fixedcenter: true,
         visible: false,
         draggable: false,
@@ -129,7 +129,7 @@ external js-files
 
     getSuppressDimFromId: function () {
       var _me = this;
-      if (typeof _me._dialogConfig.suppressDimFromId !== "undefined") {
+      if (typeof _me._dialogConfig.suppressDimFromId !== 'undefined') {
         return _me._dialogConfig.suppressDimFromId;
       }
       return _me._defaultConfig.suppressDimFromId;
@@ -142,21 +142,19 @@ external js-files
 
     _cleanUpAfterClose: function () {
       var _me = this;
-      var bodyElem = $$("body")[0];
-      bodyElem.setStyle({ overflow: "auto" });
-      var closeEvent = bodyElem.fire("cel_yuiOverlay:hideEvent", _me);
+      var bodyElem = $$('body')[0];
+      bodyElem.setStyle({ overflow: 'auto' });
+      var closeEvent = bodyElem.fire('cel_yuiOverlay:hideEvent', _me);
       if (!closeEvent.stopped) {
         if ($(_me._dialogConfig.dialogId)) {
-          var dialogWrapper = $(_me._dialogConfig.dialogId).up(
-            "div.cel-YuiOverlay",
-          );
+          var dialogWrapper = $(_me._dialogConfig.dialogId).up('div.cel-YuiOverlay');
           if (dialogWrapper) {
             dialogWrapper.remove();
           }
         }
       }
-      if ($(_me._dialogConfig.dialogId + "_mask")) {
-        $(_me._dialogConfig.dialogId + "_mask").remove();
+      if ($(_me._dialogConfig.dialogId + '_mask')) {
+        $(_me._dialogConfig.dialogId + '_mask').remove();
       }
       _me._overlayDialog = null;
     },
@@ -171,7 +169,7 @@ external js-files
     getOverlayDialog: function (openConfig) {
       var _me = this;
       _me.updateOpenConfig(openConfig);
-      console.log("celYuiOverlay: getOverlayDialog ", _me._dialogConfig);
+      console.log('celYuiOverlay: getOverlayDialog ', _me._dialogConfig);
       if (!_me._overlayDialog) {
         _me._overlayDialog = new YAHOO.widget.SimpleDialog(
           _me._dialogConfig.dialogId,
@@ -179,19 +177,13 @@ external js-files
         );
         _me._overlayDialog.hideEvent.subscribe(_me._bindCleanUpAfterClose);
       } else {
-        _me._overlayDialog.cfg.setProperty("width", _me._dialogConfig.width);
+        _me._overlayDialog.cfg.setProperty('width', _me._dialogConfig.width);
       }
-      var dialogHeight = "";
-      if (
-        _me._dialogConfig.height != undefined &&
-        _me._dialogConfig.height != ""
-      ) {
-        dialogHeight =
-          'style="height: ' +
-          _me._dialogConfig.height +
-          '; position: relative;"';
+      var dialogHeight = '';
+      if (_me._dialogConfig.height != undefined && _me._dialogConfig.height != '') {
+        dialogHeight = 'style="height: ' + _me._dialogConfig.height + '; position: relative;"';
       }
-      _me._overlayDialog.setHeader("&nbsp;");
+      _me._overlayDialog.setHeader('&nbsp;');
       _me._overlayDialog.setBody(
         '<div id="' +
           _me._dialogConfig.containerId +
@@ -205,29 +197,23 @@ external js-files
           '/file/resources/celRes/ajax-loader.gif" /></div>',
       );
       //add skin-div to get default yui-skin-sam layouting for the dialog
-      var yuiSamSkinDiv = new Element("div")
-        .addClassName("yui-skin-sam")
-        .addClassName("cel-YuiOverlay");
-      if (
-        _me._dialogConfig.additionalCssClass &&
-        _me._dialogConfig.additionalCssClass != ""
-      ) {
+      var yuiSamSkinDiv = new Element('div')
+        .addClassName('yui-skin-sam')
+        .addClassName('cel-YuiOverlay');
+      if (_me._dialogConfig.additionalCssClass && _me._dialogConfig.additionalCssClass != '') {
         yuiSamSkinDiv.addClassName(_me._dialogConfig.additionalCssClass);
       }
       $(document.body).insert(yuiSamSkinDiv);
       _me._overlayDialog.render(yuiSamSkinDiv);
       if (_me._dialogConfig.fixedcenter) {
         $(_me._dialogConfig.containerId).stopObserving(
-          "cel_yuiOverlay:contentChanged",
+          'cel_yuiOverlay:contentChanged',
           _me._centerBind,
         );
-        $(_me._dialogConfig.containerId).observe(
-          "cel_yuiOverlay:contentChanged",
-          _me._centerBind,
-        );
+        $(_me._dialogConfig.containerId).observe('cel_yuiOverlay:contentChanged', _me._centerBind);
       }
-      $(document.body).fire("cel_yuiOverlay:afterRenderDialog", _me);
-      _me.celFire("cel-yuiOverlay:afterRenderDialog", _me);
+      $(document.body).fire('cel_yuiOverlay:afterRenderDialog', _me);
+      _me.celFire('cel-yuiOverlay:afterRenderDialog', _me);
       return _me._overlayDialog;
     },
 
@@ -246,16 +232,13 @@ external js-files
       dialog.render();
       _me.show();
       _me._addCSSclassesToMask();
-      var bodyElem = $$("body")[0];
+      var bodyElem = $$('body')[0];
       if (_me._dialogConfig.modal) {
-        bodyElem.setStyle({ overflow: "hidden" });
+        bodyElem.setStyle({ overflow: 'hidden' });
       }
-      bodyElem.fire("cel_yuiOverlay:afterShowDialog_General", _me);
-      $(_me._dialogConfig.containerId).fire(
-        "cel_yuiOverlay:afterShowDialog",
-        _me,
-      );
-      _me.celFire("cel-yuiOverlay:afterShowDialog", _me);
+      bodyElem.fire('cel_yuiOverlay:afterShowDialog_General', _me);
+      $(_me._dialogConfig.containerId).fire('cel_yuiOverlay:afterShowDialog', _me);
+      _me.celFire('cel-yuiOverlay:afterShowDialog', _me);
     },
 
     close: function () {
@@ -280,30 +263,24 @@ external js-files
     showConfirmDialog: function (openConfig) {
       var _me = this;
       openConfig = openConfig || _me._dialogConfig;
-      console.log("showConfirmDialog: ", openConfig);
+      console.log('showConfirmDialog: ', openConfig);
       var dialog = _me.getOverlayDialog(openConfig);
-      var dialogHeight = "";
-      if (
-        _me._dialogConfig.height != undefined &&
-        _me._dialogConfig.height != ""
-      ) {
-        dialogHeight =
-          'style="height: ' +
-          _me._dialogConfig.height +
-          '; position: relative;"';
+      var dialogHeight = '';
+      if (_me._dialogConfig.height != undefined && _me._dialogConfig.height != '') {
+        dialogHeight = 'style="height: ' + _me._dialogConfig.height + '; position: relative;"';
       }
-      dialog.setHeader("Confirmation"); //TODO get from celMessage
+      dialog.setHeader('Confirmation'); //TODO get from celMessage
       _me._overlayDialog.setBody(
         '<div id="' +
           _me._dialogConfig.containerId +
           '"' +
           dialogHeight +
-          "><p>" +
+          '><p>' +
           _me._dialogConfig.confirmMsg +
-          "</p></div>",
+          '</p></div>',
       );
-      dialog.cfg.setProperty("icon", YAHOO.widget.SimpleDialog.ICON_WARN);
-      dialog.cfg.queueProperty("buttons", [
+      dialog.cfg.setProperty('icon', YAHOO.widget.SimpleDialog.ICON_WARN);
+      dialog.cfg.queueProperty('buttons', [
         {
           text: _me._dialogConfig.confirmBtn,
           handler: _me._confirmYesHandlerBind.curry(_me._dialogConfig),
@@ -311,7 +288,7 @@ external js-files
         },
         { text: _me._dialogConfig.cancelBtn, handler: _me._closeBind },
       ]);
-      dialog.cfg.setProperty("close", false);
+      dialog.cfg.setProperty('close', false);
       dialog.render();
       _me.show();
       _me._addCSSclassesToMask();
@@ -319,17 +296,12 @@ external js-files
 
     _confirmYesHandler: function (openConfig) {
       var _me = this;
-      console.debug("_confirmYesHandler: start", openConfig);
-      var confirmYesEvent = $(document.body).fire(
-        "cel_yuiOverlay:confirmYes",
-        openConfig,
-      );
+      console.debug('_confirmYesHandler: start', openConfig);
+      var confirmYesEvent = $(document.body).fire('cel_yuiOverlay:confirmYes', openConfig);
       if (!confirmYesEvent.stopped) {
         _me._internalOpenCelPageInOverlay();
       } else {
-        console.log(
-          "_confirmYesHandler skipping _internalOpenCelPageInOverlay.",
-        );
+        console.log('_confirmYesHandler skipping _internalOpenCelPageInOverlay.');
       }
     },
 
@@ -343,8 +315,8 @@ external js-files
           window.CELEMENTS.getUtils().getPathPrefix() +
           '/file/resources/celRes/ajax-loader-small.gif" />',
       );
-      dialog.cfg.queueProperty("buttons", null);
-      dialog.cfg.setProperty("close", false);
+      dialog.cfg.queueProperty('buttons', null);
+      dialog.cfg.setProperty('close', false);
       dialog.render();
       _me.show();
       _me._addCSSclassesToMask();
@@ -352,13 +324,10 @@ external js-files
 
     _addCSSclassesToMask: function () {
       var _me = this;
-      if ($(_me._dialogConfig.dialogId + "_mask")) {
-        $(_me._dialogConfig.dialogId + "_mask").addClassName("cel-YuiOverlay");
-        if (
-          _me._dialogConfig.additionalCssClass &&
-          _me._dialogConfig.additionalCssClass != ""
-        ) {
-          $(_me._dialogConfig.dialogId + "_mask").addClassName(
+      if ($(_me._dialogConfig.dialogId + '_mask')) {
+        $(_me._dialogConfig.dialogId + '_mask').addClassName('cel-YuiOverlay');
+        if (_me._dialogConfig.additionalCssClass && _me._dialogConfig.additionalCssClass != '') {
+          $(_me._dialogConfig.dialogId + '_mask').addClassName(
             _me._dialogConfig.additionalCssClass,
           );
         }
@@ -368,36 +337,31 @@ external js-files
     _internalOpenCelPageInOverlay: function (openConfig) {
       var _me = this;
       openConfig = openConfig || _me._dialogConfig;
-      console.debug("_internalOpenCelPageInOverlay: ", openConfig);
-      var openDialogEvent = $(document.body).fire(
-        "cel_yuiOverlay:openDialog",
-        openConfig,
-      );
+      console.debug('_internalOpenCelPageInOverlay: ', openConfig);
+      var openDialogEvent = $(document.body).fire('cel_yuiOverlay:openDialog', openConfig);
       if (!openDialogEvent.stopped) {
         _me._defaultOpenDialog(openConfig);
       } else {
-        console.log(
-          "_internalOpenCelPageInOverlay skipping defaultOpenDialog.",
-        );
+        console.log('_internalOpenCelPageInOverlay skipping defaultOpenDialog.');
       }
     },
 
     openCelPageInOverlay: function (openConfig) {
       var _me = this;
-      if (typeof openConfig === "string") {
+      if (typeof openConfig === 'string') {
         openConfig = {
           overlayURL: openConfig,
         };
       }
       openConfig = openConfig || _me._dialogConfig;
-      if (openConfig.overlayURL != "") {
-        if (openConfig.confirmMsg && openConfig.confirmMsg != "") {
+      if (openConfig.overlayURL != '') {
+        if (openConfig.confirmMsg && openConfig.confirmMsg != '') {
           _me.showConfirmDialog(openConfig);
         } else {
           _me._internalOpenCelPageInOverlay(openConfig);
         }
       } else {
-        console.error("Calling overlay without overlayURL!");
+        console.error('Calling overlay without overlayURL!');
       }
     },
 
@@ -406,34 +370,34 @@ external js-files
       event.stop();
       try {
         var attrOpenConfig =
-          _me._getDatasetValue(link, "celOverlayConfig") ||
-          link.getAttribute("data-cel-overlay-config");
+          _me._getDatasetValue(link, 'celOverlayConfig') ||
+          link.getAttribute('data-cel-overlay-config');
         if (attrOpenConfig && attrOpenConfig.isJSON()) {
           _me.updateOpenConfig(attrOpenConfig.evalJSON());
         }
       } catch (exp) {
-        console.error("failed to parse overlay config in data attribute.", exp);
+        console.error('failed to parse overlay config in data attribute.', exp);
       }
       var openConfig = {
         link: link,
         overlayURL:
-          _me._getDatasetValue(link, "celOverlayLink") ||
-          link.getAttribute("data-cel-overlay-link") ||
+          _me._getDatasetValue(link, 'celOverlayLink') ||
+          link.getAttribute('data-cel-overlay-link') ||
           link.href,
         confirmMsg:
-          _me._getDatasetValue(link, "celOverlayConfirmMessage") ||
-          link.getAttribute("data-cel-overlay-confirm-message"),
+          _me._getDatasetValue(link, 'celOverlayConfirmMessage') ||
+          link.getAttribute('data-cel-overlay-confirm-message'),
         confirmBtn:
-          _me._getDatasetValue(link, "celOverlayConfirmButton") ||
-          link.getAttribute("data-cel-overlay-confirm-button") ||
-          "OK",
+          _me._getDatasetValue(link, 'celOverlayConfirmButton') ||
+          link.getAttribute('data-cel-overlay-confirm-button') ||
+          'OK',
         cancelBtn:
-          _me._getDatasetValue(link, "celOverlayCancelButton") ||
-          link.getAttribute("data-cel-overlay-cancel-button") ||
-          "Cancel",
+          _me._getDatasetValue(link, 'celOverlayCancelButton') ||
+          link.getAttribute('data-cel-overlay-cancel-button') ||
+          'Cancel',
       };
       // allow 'configProvider' listener to change the openConfig object
-      $(document.body).fire("cel_yuiOverlay:configProvider", openConfig);
+      $(document.body).fire('cel_yuiOverlay:configProvider', openConfig);
       _me.updateOpenConfig(openConfig);
       _me.intermediatOpenHandler();
     },
@@ -451,13 +415,13 @@ external js-files
       openConfig = openConfig || _me._dialogConfig;
       if (!_me.getSuppressDimFromId()) {
         var link = openConfig.link;
-        var width = parseInt(link.id.split(":")[4]) + 5;
-        var height = link.id.split(":")[5];
+        var width = parseInt(link.id.split(':')[4]) + 5;
+        var height = link.id.split(':')[5];
         if (!isNaN(width)) {
-          openConfig["width"] = width + "px";
+          openConfig['width'] = width + 'px';
         }
         if (!isNaN(height)) {
-          openConfig["height"] = height + "px";
+          openConfig['height'] = height + 'px';
         }
       }
       _me.openCelPageInOverlay(openConfig);
@@ -465,10 +429,10 @@ external js-files
 
     registerOpenHandler: function (openCssSelector) {
       var _me = this;
-      openCssSelector = openCssSelector || ".cel_yuiOverlay";
+      openCssSelector = openCssSelector || '.cel_yuiOverlay';
       $$(openCssSelector).each(function (elem) {
-        elem.stopObserving("click", _me._bindOpenHandler.curry(elem));
-        elem.observe("click", _me._bindOpenHandler.curry(elem));
+        elem.stopObserving('click', _me._bindOpenHandler.curry(elem));
+        elem.observe('click', _me._bindOpenHandler.curry(elem));
       });
     },
 
@@ -476,30 +440,30 @@ external js-files
       var _me = this;
       _me._dialogConfig.contentChanged = true;
       var loadContentEvent = $(_me._dialogConfig.containerId).fire(
-        "cel_yuiOverlay:loadFirstContent",
+        'cel_yuiOverlay:loadFirstContent',
         _me._dialogConfig,
       );
       if (!loadContentEvent.stopped) {
         var params = {
-          xpage: "celements_ajax",
-          ajax_mode: "pageTypeWithLayout",
-          ajax: "1",
+          xpage: 'celements_ajax',
+          ajax_mode: 'pageTypeWithLayout',
+          ajax: '1',
         };
         if (_me._dialogConfig.overlayLayout) {
-          params["overwriteLayout"] = _me._dialogConfig.overlayLayout;
+          params['overwriteLayout'] = _me._dialogConfig.overlayLayout;
         }
         new Ajax.Request(_me._dialogConfig.overlayURL, {
-          method: "post",
+          method: 'post',
           parameters: params,
           onSuccess: function (transport) {
             var yuiOverlayContainer = $(_me._dialogConfig.containerId);
             yuiOverlayContainer.update(transport.responseText);
-            yuiOverlayContainer.fire("cel_yuiOverlay:contentChanged");
+            yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
           },
         });
       } else if (_me._dialogConfig.contentChanged) {
         var yuiOverlayContainer = $(_me._dialogConfig.containerId);
-        yuiOverlayContainer.fire("cel_yuiOverlay:contentChanged");
+        yuiOverlayContainer.fire('cel_yuiOverlay:contentChanged');
       }
     },
 

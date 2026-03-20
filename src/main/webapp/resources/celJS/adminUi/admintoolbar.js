@@ -20,7 +20,7 @@
 
 /* Helpers */
 function showAdminToolbar(url) {
-  if (!url) url = "";
+  if (!url) url = '';
 
   // first, remove context menu
   if (myContextMenu) myContextMenu.hide();
@@ -145,14 +145,14 @@ function AdminToolbar() {
       var docDim = getDocumentDimensions();
       // overlay div
       this.overlayDiv = new Div(
-        "admin_overlay",
+        'admin_overlay',
         null,
-        document.getElementsByTagName("body")[0],
+        document.getElementsByTagName('body')[0],
         0,
         0,
         docDim[0],
         docDim[1],
-        "admin_overlay",
+        'admin_overlay',
       );
       for (var i = 0; i <= 60; i++) this.overlayDiv.setOpacity(i);
     }
@@ -160,12 +160,12 @@ function AdminToolbar() {
     if (!this.adminDiv) {
       this.adminDiv = new AdminWindow(
         null,
-        document.getElementsByTagName("body")[0],
+        document.getElementsByTagName('body')[0],
         100,
         5,
         300,
         docDim[1] - 12,
-        "admin_div",
+        'admin_div',
       );
     }
 
@@ -207,25 +207,8 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
   this.contentUrl = null;
   this.title = null;
 
-  this.AdminWindow = function (
-    parent,
-    parent_node,
-    top,
-    left,
-    height,
-    width,
-    className,
-  ) {
-    this.inheritFrom(
-      "admin_div",
-      parent,
-      parent_node,
-      top,
-      left,
-      height,
-      width,
-      className,
-    );
+  this.AdminWindow = function (parent, parent_node, top, left, height, width, className) {
+    this.inheritFrom('admin_div', parent, parent_node, top, left, height, width, className);
 
     // create close element
     this.closeDiv = new CloseDiv(
@@ -235,34 +218,21 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
       this.w + this.pl + this.pr - 50,
       this.pt,
       50,
-      "admin_close",
+      'admin_close',
     );
     this.closeDiv.setSize(
       this.pt - (this.closeDiv.totalh - this.closeDiv.h),
       this.pt - (this.closeDiv.totalw - this.closeDiv.w),
     );
-    this.closeDiv.setContent("close");
+    this.closeDiv.setContent('close');
 
     // create title
-    this.titleDiv = new Div(
-      "title",
-      this,
-      this.n,
-      0,
-      0,
-      this.pt,
-      this.totalw - 50,
-      "admin_title",
-    );
+    this.titleDiv = new Div('title', this, this.n, 0, 0, this.pt, this.totalw - 50, 'admin_title');
     this.titleDiv.setSize(
       this.pt - (this.titleDiv.totalh - this.titleDiv.h),
-      this.w +
-        this.pl +
-        this.pr -
-        (this.titleDiv.totalw - this.titleDiv.w) -
-        this.closeDiv.totalw,
+      this.w + this.pl + this.pr - (this.titleDiv.totalw - this.titleDiv.w) - this.closeDiv.totalw,
     );
-    this.setTitle("celements2.0 admin mode");
+    this.setTitle('celements2.0 admin mode');
 
     // create content
     this.contentDiv = new ContentDiv(
@@ -272,7 +242,7 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
       this.pl,
       this.h,
       this.w,
-      "admin_content",
+      'admin_content',
     );
     this.contentDiv.setSize(
       this.h - (this.contentDiv.totalh - this.contentDiv.h),
@@ -301,8 +271,8 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
   };
 
   this.setSize = function (height, width) {
-    this.n.style.height = height + "px";
-    this.n.style.width = width - 2 + "px";
+    this.n.style.height = height + 'px';
+    this.n.style.width = width - 2 + 'px';
 
     this.h = height;
     this.w = width;
@@ -318,17 +288,13 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
     );
     this.titleDiv.setSize(
       this.pt - (this.titleDiv.totalh - this.titleDiv.h),
-      this.w +
-        this.pl +
-        this.pr -
-        (this.titleDiv.totalw - this.titleDiv.w) -
-        this.closeDiv.totalw,
+      this.w + this.pl + this.pr - (this.titleDiv.totalw - this.titleDiv.w) - this.closeDiv.totalw,
     );
 
     return true;
   };
   this.mouseDown = function (e) {
-    me.setClass("admin_div_selected");
+    me.setClass('admin_div_selected');
 
     // store the position of the click
     me.mousePosRelY = getMousePosY(e) - me.t;
@@ -338,7 +304,7 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
 
   this.mouseUp = function (e) {
     // deselect
-    me.setClass("admin_div");
+    me.setClass('admin_div');
 
     return true;
   };
@@ -375,10 +341,10 @@ function AdminWindow(parent, parent_node, top, left, height, width, className) {
   };
 
   // add aspects
-  Aspects.addBefore(this, "mouseDown", aopizeMouseDown);
-  Aspects.addAfter(this, "mouseUp", aopizeMouseUp);
-  Aspects.addBefore(this, "mouseOver", aopizeMouseOver);
-  Aspects.addAfter(this, "mouseOut", aopizeMouseOut);
+  Aspects.addBefore(this, 'mouseDown', aopizeMouseDown);
+  Aspects.addAfter(this, 'mouseUp', aopizeMouseUp);
+  Aspects.addBefore(this, 'mouseOver', aopizeMouseOver);
+  Aspects.addAfter(this, 'mouseOut', aopizeMouseOut);
 
   // set event handlers
   this.setEventHandlers();
@@ -394,25 +360,8 @@ function ContentDiv(parent, parent_node, top, left, height, width, className) {
 
   this.http_request = false;
 
-  this.ContentDiv = function (
-    parent,
-    parent_node,
-    top,
-    left,
-    height,
-    width,
-    className,
-  ) {
-    this.inheritFrom(
-      "content",
-      parent,
-      parent_node,
-      top,
-      left,
-      height,
-      width,
-      className,
-    );
+  this.ContentDiv = function (parent, parent_node, top, left, height, width, className) {
+    this.inheritFrom('content', parent, parent_node, top, left, height, width, className);
 
     return true;
   };
@@ -421,14 +370,14 @@ function ContentDiv(parent, parent_node, top, left, height, width, className) {
   this.ContentDiv(parent, parent_node, top, left, height, width, className);
 
   this.setContent = function (url) {
-    if (!url) url = "";
+    if (!url) url = '';
 
     me.n.innerHTML =
       "<iframe src='" +
       url +
       "' marginheight='0' marginwidth='0' frameborder='0' style='width:" +
       this.w +
-      "px;height:" +
+      'px;height:' +
       this.h +
       "px;'/>";
 
@@ -483,8 +432,7 @@ function ContentDiv(parent, parent_node, top, left, height, width, className) {
       if (me.http_request.status == 200 || me.http_request.status == 304) {
         if (me.http_request.responseXML) {
           var xmlDoc = me.http_request.responseXML;
-          var renderedCodeElem =
-            xmlDoc.getElementsByTagName("renderedcontent")[0];
+          var renderedCodeElem = xmlDoc.getElementsByTagName('renderedcontent')[0];
           me.n.innerHTML = renderedCodeElem.firstChild.nodeValue;
         } else {
           //me.parent.statusDiv.setContent('Error: no XML file!');
@@ -498,10 +446,10 @@ function ContentDiv(parent, parent_node, top, left, height, width, className) {
   };
 
   // add aspects
-  Aspects.addBefore(this, "mouseDown", aopizeMouseDown);
-  Aspects.addAfter(this, "mouseUp", aopizeMouseUp);
-  Aspects.addBefore(this, "mouseOver", aopizeMouseOver);
-  Aspects.addAfter(this, "mouseOut", aopizeMouseOut);
+  Aspects.addBefore(this, 'mouseDown', aopizeMouseDown);
+  Aspects.addAfter(this, 'mouseUp', aopizeMouseUp);
+  Aspects.addBefore(this, 'mouseOver', aopizeMouseOver);
+  Aspects.addAfter(this, 'mouseOut', aopizeMouseOut);
 
   // set event handlers
   this.setEventHandlers();
@@ -515,25 +463,8 @@ function CloseDiv(parent, parent_node, top, left, height, width, className) {
 
   this.inheritFrom = Div;
 
-  this.CloseDiv = function (
-    parent,
-    parent_node,
-    top,
-    left,
-    height,
-    width,
-    className,
-  ) {
-    this.inheritFrom(
-      "close",
-      parent,
-      parent_node,
-      top,
-      left,
-      height,
-      width,
-      className,
-    );
+  this.CloseDiv = function (parent, parent_node, top, left, height, width, className) {
+    this.inheritFrom('close', parent, parent_node, top, left, height, width, className);
 
     return true;
   };
@@ -547,10 +478,10 @@ function CloseDiv(parent, parent_node, top, left, height, width, className) {
   };
 
   // add aspects
-  Aspects.addBefore(this, "mouseDown", aopizeMouseDown);
-  Aspects.addAfter(this, "mouseUp", aopizeMouseUp);
-  Aspects.addBefore(this, "mouseOver", aopizeMouseOver);
-  Aspects.addAfter(this, "mouseOut", aopizeMouseOut);
+  Aspects.addBefore(this, 'mouseDown', aopizeMouseDown);
+  Aspects.addAfter(this, 'mouseUp', aopizeMouseUp);
+  Aspects.addBefore(this, 'mouseOver', aopizeMouseOver);
+  Aspects.addAfter(this, 'mouseOut', aopizeMouseOut);
 
   // set event handlers
   this.setEventHandlers();

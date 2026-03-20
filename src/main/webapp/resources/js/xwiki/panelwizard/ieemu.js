@@ -17,16 +17,16 @@ if (browser.isMozilla) {
   extendEventObject();
   emulateAttachEvent();
   emulateEventHandlers([
-    "click",
-    "dblclick",
-    "mouseover",
-    "mouseout",
-    "mousedown",
-    "mouseup",
-    "mousemove",
-    "keydown",
-    "keypress",
-    "keyup",
+    'click',
+    'dblclick',
+    'mouseover',
+    'mouseout',
+    'mousedown',
+    'mouseup',
+    'mousemove',
+    'keydown',
+    'keypress',
+    'keyup',
   ]);
   emulateCurrentStyle();
   emulateHTMLModel();
@@ -50,44 +50,44 @@ if (browser.isMozilla) {
  * fromElement and toElement
  */
 function extendEventObject() {
-  Event.prototype.__defineSetter__("returnValue", function (b) {
+  Event.prototype.__defineSetter__('returnValue', function (b) {
     if (!b) this.preventDefault();
     return b;
   });
 
-  Event.prototype.__defineSetter__("cancelBubble", function (b) {
+  Event.prototype.__defineSetter__('cancelBubble', function (b) {
     if (b) this.stopPropagation();
     return b;
   });
 
-  Event.prototype.__defineGetter__("srcElement", function () {
+  Event.prototype.__defineGetter__('srcElement', function () {
     var node = this.target;
     while (node.nodeType != 1) node = node.parentNode;
     return node;
   });
 
-  Event.prototype.__defineGetter__("fromElement", function () {
+  Event.prototype.__defineGetter__('fromElement', function () {
     var node;
-    if (this.type == "mouseover") node = this.relatedTarget;
-    else if (this.type == "mouseout") node = this.target;
+    if (this.type == 'mouseover') node = this.relatedTarget;
+    else if (this.type == 'mouseout') node = this.target;
     if (!node) return;
     while (node.nodeType != 1) node = node.parentNode;
     return node;
   });
 
-  Event.prototype.__defineGetter__("toElement", function () {
+  Event.prototype.__defineGetter__('toElement', function () {
     var node;
-    if (this.type == "mouseout") node = this.relatedTarget;
-    else if (this.type == "mouseover") node = this.target;
+    if (this.type == 'mouseout') node = this.relatedTarget;
+    else if (this.type == 'mouseover') node = this.target;
     if (!node) return;
     while (node.nodeType != 1) node = node.parentNode;
     return node;
   });
 
-  Event.prototype.__defineGetter__("offsetX", function () {
+  Event.prototype.__defineGetter__('offsetX', function () {
     return this.layerX;
   });
-  Event.prototype.__defineGetter__("offsetY", function () {
+  Event.prototype.__defineGetter__('offsetY', function () {
     return this.layerY;
   });
 }
@@ -96,27 +96,27 @@ function extendEventObject() {
  * Emulates element.attachEvent as well as detachEvent
  */
 function emulateAttachEvent() {
-  HTMLDocument.prototype.attachEvent = HTMLElement.prototype.attachEvent =
-    function (sType, fHandler) {
-      var shortTypeName = sType.replace(/on/, "");
-      fHandler._ieEmuEventHandler = function (e) {
-        window.event = e;
-        return fHandler();
-      };
-      this.addEventListener(shortTypeName, fHandler._ieEmuEventHandler, false);
+  HTMLDocument.prototype.attachEvent = HTMLElement.prototype.attachEvent = function (
+    sType,
+    fHandler,
+  ) {
+    var shortTypeName = sType.replace(/on/, '');
+    fHandler._ieEmuEventHandler = function (e) {
+      window.event = e;
+      return fHandler();
     };
+    this.addEventListener(shortTypeName, fHandler._ieEmuEventHandler, false);
+  };
 
-  HTMLDocument.prototype.detachEvent = HTMLElement.prototype.detachEvent =
-    function (sType, fHandler) {
-      var shortTypeName = sType.replace(/on/, "");
-      if (typeof fHandler._ieEmuEventHandler == "function")
-        this.removeEventListener(
-          shortTypeName,
-          fHandler._ieEmuEventHandler,
-          false,
-        );
-      else this.removeEventListener(shortTypeName, fHandler, true);
-    };
+  HTMLDocument.prototype.detachEvent = HTMLElement.prototype.detachEvent = function (
+    sType,
+    fHandler,
+  ) {
+    var shortTypeName = sType.replace(/on/, '');
+    if (typeof fHandler._ieEmuEventHandler == 'function')
+      this.removeEventListener(shortTypeName, fHandler._ieEmuEventHandler, false);
+    else this.removeEventListener(shortTypeName, fHandler, true);
+  };
 }
 
 /*
@@ -142,24 +142,24 @@ function emulateEventHandlers(eventNames) {
 
 function emulateAllModel() {
   var allGetter = function () {
-    var a = this.getElementsByTagName("*");
+    var a = this.getElementsByTagName('*');
     var node = this;
     a.tags = function (sTagName) {
       return node.getElementsByTagName(sTagName);
     };
     return a;
   };
-  HTMLDocument.prototype.__defineGetter__("all", allGetter);
-  HTMLElement.prototype.__defineGetter__("all", allGetter);
+  HTMLDocument.prototype.__defineGetter__('all', allGetter);
+  HTMLElement.prototype.__defineGetter__('all', allGetter);
 }
 
 function extendElementModel() {
-  HTMLElement.prototype.__defineGetter__("parentElement", function () {
+  HTMLElement.prototype.__defineGetter__('parentElement', function () {
     if (this.parentNode == this.ownerDocument) return null;
     return this.parentNode;
   });
 
-  HTMLElement.prototype.__defineGetter__("children", function () {
+  HTMLElement.prototype.__defineGetter__('children', function () {
     var tmp = [];
     var j = 0;
     var n;
@@ -188,7 +188,7 @@ function extendElementModel() {
 }
 
 function emulateCurrentStyle() {
-  HTMLElement.prototype.__defineGetter__("currentStyle", function () {
+  HTMLElement.prototype.__defineGetter__('currentStyle', function () {
     return this.ownerDocument.defaultView.getComputedStyle(this, null);
     /*
 		var cs = {};
@@ -207,12 +207,12 @@ function emulateHTMLModel() {
   // It also repalaces some special characters
   function convertTextToHTML(s) {
     s = s
-      .replace(/\&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/\n/g, "<BR>");
-    while (/\s\s/.test(s)) s = s.replace(/\s\s/, "&nbsp; ");
-    return s.replace(/\s/g, " ");
+      .replace(/\&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<BR>');
+    while (/\s\s/.test(s)) s = s.replace(/\s\s/, '&nbsp; ');
+    return s.replace(/\s/g, ' ');
   }
 
   HTMLElement.prototype.insertAdjacentHTML = function (sWhere, sHTML) {
@@ -220,27 +220,27 @@ function emulateHTMLModel() {
     var r = this.ownerDocument.createRange();
 
     switch (String(sWhere).toLowerCase()) {
-      case "beforebegin":
+      case 'beforebegin':
         r.setStartBefore(this);
         df = r.createContextualFragment(sHTML);
         this.parentNode.insertBefore(df, this);
         break;
 
-      case "afterbegin":
+      case 'afterbegin':
         r.selectNodeContents(this);
         r.collapse(true);
         df = r.createContextualFragment(sHTML);
         this.insertBefore(df, this.firstChild);
         break;
 
-      case "beforeend":
+      case 'beforeend':
         r.selectNodeContents(this);
         r.collapse(false);
         df = r.createContextualFragment(sHTML);
         this.appendChild(df);
         break;
 
-      case "afterend":
+      case 'afterend':
         r.setStartAfter(this);
         df = r.createContextualFragment(sHTML);
         this.parentNode.insertBefore(df, this.nextSibling);
@@ -248,7 +248,7 @@ function emulateHTMLModel() {
     }
   };
 
-  HTMLElement.prototype.__defineSetter__("outerHTML", function (sHTML) {
+  HTMLElement.prototype.__defineSetter__('outerHTML', function (sHTML) {
     var r = this.ownerDocument.createRange();
     r.setStartBefore(this);
     var df = r.createContextualFragment(sHTML);
@@ -257,47 +257,47 @@ function emulateHTMLModel() {
     return sHTML;
   });
 
-  HTMLElement.prototype.__defineGetter__("canHaveChildren", function () {
+  HTMLElement.prototype.__defineGetter__('canHaveChildren', function () {
     switch (this.tagName) {
-      case "AREA":
-      case "BASE":
-      case "BASEFONT":
-      case "COL":
-      case "FRAME":
-      case "HR":
-      case "IMG":
-      case "BR":
-      case "INPUT":
-      case "ISINDEX":
-      case "LINK":
-      case "META":
-      case "PARAM":
+      case 'AREA':
+      case 'BASE':
+      case 'BASEFONT':
+      case 'COL':
+      case 'FRAME':
+      case 'HR':
+      case 'IMG':
+      case 'BR':
+      case 'INPUT':
+      case 'ISINDEX':
+      case 'LINK':
+      case 'META':
+      case 'PARAM':
         return false;
     }
     return true;
   });
 
-  HTMLElement.prototype.__defineGetter__("outerHTML", function () {
+  HTMLElement.prototype.__defineGetter__('outerHTML', function () {
     var attr,
       attrs = this.attributes;
-    var str = "<" + this.tagName;
+    var str = '<' + this.tagName;
     for (var i = 0; i < attrs.length; i++) {
       attr = attrs[i];
-      if (attr.specified) str += " " + attr.name + '="' + attr.value + '"';
+      if (attr.specified) str += ' ' + attr.name + '="' + attr.value + '"';
     }
-    if (!this.canHaveChildren) return str + ">";
+    if (!this.canHaveChildren) return str + '>';
 
-    return str + ">" + this.innerHTML + "</" + this.tagName + ">";
+    return str + '>' + this.innerHTML + '</' + this.tagName + '>';
   });
 
-  HTMLElement.prototype.__defineSetter__("innerText", function (sText) {
+  HTMLElement.prototype.__defineSetter__('innerText', function (sText) {
     this.innerHTML = convertTextToHTML(sText);
     return sText;
   });
 
   var tmpGet;
   HTMLElement.prototype.__defineGetter__(
-    "innerText",
+    'innerText',
     (tmpGet = function () {
       var r = this.ownerDocument.createRange();
       r.selectNodeContents(this);
@@ -305,11 +305,11 @@ function emulateHTMLModel() {
     }),
   );
 
-  HTMLElement.prototype.__defineSetter__("outerText", function (sText) {
+  HTMLElement.prototype.__defineSetter__('outerText', function (sText) {
     this.outerHTML = convertTextToHTML(sText);
     return sText;
   });
-  HTMLElement.prototype.__defineGetter__("outerText", tmpGet);
+  HTMLElement.prototype.__defineGetter__('outerText', tmpGet);
 
   HTMLElement.prototype.insertAdjacentText = function (sWhere, sText) {
     this.insertAdjacentHTML(sWhere, convertTextToHTML(sText));

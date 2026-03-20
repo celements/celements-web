@@ -9,7 +9,7 @@ var LiveValidation = Class.create();
 /*** static ***/
 
 Object.extend(LiveValidation, {
-  VERSION: "1.3 prototype",
+  VERSION: '1.3 prototype',
 
   /*** element types constants ***/
   TEXTAREA: 1,
@@ -38,11 +38,11 @@ Object.extend(LiveValidation, {
 /*** prototype ***/
 
 LiveValidation.prototype = {
-  validClass: "LV_valid",
-  invalidClass: "LV_invalid",
-  messageClass: "LV_validation_message",
-  validFieldClass: "LV_valid_field",
-  invalidFieldClass: "LV_invalid_field",
+  validClass: 'LV_valid',
+  invalidClass: 'LV_invalid',
+  messageClass: 'LV_validation_message',
+  validFieldClass: 'LV_valid_field',
+  invalidFieldClass: 'LV_invalid_field',
 
   /**
    *	constructor for LiveValidation - validates a form field in real-time based on validations you assign to it
@@ -70,14 +70,12 @@ LiveValidation.prototype = {
     // set up special properties (ones that need some extra processing or can be overidden from optionsObj)
     if (!element)
       throw new Error(
-        "LiveValidation::initialize - No element reference or element id has been provided!",
+        'LiveValidation::initialize - No element reference or element id has been provided!',
       );
     this.element = $(element);
     if (!this.element)
       throw new Error(
-        "LiveValidation::initialize - No element with reference or id of '" +
-          element +
-          "' exists!",
+        "LiveValidation::initialize - No element with reference or id of '" + element + "' exists!",
       );
     // properties that could not be initialised above
     this.elementType = this.getElementType();
@@ -86,7 +84,7 @@ LiveValidation.prototype = {
     // overwrite the options defaults with passed in ones
     this.options = Object.extend(
       {
-        validMessage: "Thankyou!",
+        validMessage: 'Thankyou!',
         onValid: function () {
           this.insertMessage(this.createMessageSpan());
           this.addFieldClass();
@@ -113,25 +111,25 @@ LiveValidation.prototype = {
     // events
     // event callbacks are cached so they can be stopped being observed
     this.boundFocus = this.doOnFocus.bindAsEventListener(this);
-    Event.observe(this.element, "focus", this.boundFocus);
+    Event.observe(this.element, 'focus', this.boundFocus);
     if (!this.onlyOnSubmit) {
       switch (this.elementType) {
         case LiveValidation.CHECKBOX:
           this.boundClick = this.validate.bindAsEventListener(this);
-          Event.observe(this.element, "click", this.boundClick);
+          Event.observe(this.element, 'click', this.boundClick);
         // let it run into the next to add a change event too
         case LiveValidation.SELECT:
         case LiveValidation.FILE:
           this.boundChange = this.validate.bindAsEventListener(this);
-          Event.observe(this.element, "change", this.boundChange);
+          Event.observe(this.element, 'change', this.boundChange);
           break;
         default:
           if (!this.onlyOnBlur) {
             this.boundKeyup = this.deferValidation.bindAsEventListener(this);
-            Event.observe(this.element, "keyup", this.boundKeyup);
+            Event.observe(this.element, 'keyup', this.boundKeyup);
           }
           this.boundBlur = this.validate.bindAsEventListener(this);
-          Event.observe(this.element, "blur", this.boundBlur);
+          Event.observe(this.element, 'blur', this.boundBlur);
       }
     }
   },
@@ -147,20 +145,19 @@ LiveValidation.prototype = {
       this.formObj.destroy();
     }
     // remove events
-    Event.stopObserving(this.element, "focus", this.boundFocus);
+    Event.stopObserving(this.element, 'focus', this.boundFocus);
     if (!this.onlyOnSubmit) {
       switch (this.elementType) {
         case LiveValidation.CHECKBOX:
-          Event.stopObserving(this.element, "click", this.boundClick);
+          Event.stopObserving(this.element, 'click', this.boundClick);
         // let it run into the next to add a change event too
         case LiveValidation.SELECT:
         case LiveValidation.FILE:
-          Event.stopObserving(this.element, "change", this.boundChange);
+          Event.stopObserving(this.element, 'change', this.boundChange);
           break;
         default:
-          if (!this.onlyOnBlur)
-            Event.stopObserving(this.element, "keyup", this.boundKeyup);
-          Event.stopObserving(this.element, "blur", this.boundBlur);
+          if (!this.onlyOnBlur) Event.stopObserving(this.element, 'keyup', this.boundKeyup);
+          Event.stopObserving(this.element, 'blur', this.boundBlur);
       }
     }
     this.validations = [];
@@ -229,31 +226,31 @@ LiveValidation.prototype = {
    */
   getElementType: function () {
     switch (true) {
-      case this.element.nodeName.toUpperCase() == "TEXTAREA":
+      case this.element.nodeName.toUpperCase() == 'TEXTAREA':
         return LiveValidation.TEXTAREA;
-      case this.element.nodeName.toUpperCase() == "INPUT" &&
-        this.element.type.toUpperCase() == "TEXT":
+      case this.element.nodeName.toUpperCase() == 'INPUT' &&
+        this.element.type.toUpperCase() == 'TEXT':
         return LiveValidation.TEXT;
-      case this.element.nodeName.toUpperCase() == "INPUT" &&
-        this.element.type.toUpperCase() == "PASSWORD":
+      case this.element.nodeName.toUpperCase() == 'INPUT' &&
+        this.element.type.toUpperCase() == 'PASSWORD':
         return LiveValidation.PASSWORD;
-      case this.element.nodeName.toUpperCase() == "INPUT" &&
-        this.element.type.toUpperCase() == "CHECKBOX":
+      case this.element.nodeName.toUpperCase() == 'INPUT' &&
+        this.element.type.toUpperCase() == 'CHECKBOX':
         return LiveValidation.CHECKBOX;
-      case this.element.nodeName.toUpperCase() == "INPUT" &&
-        this.element.type.toUpperCase() == "FILE":
+      case this.element.nodeName.toUpperCase() == 'INPUT' &&
+        this.element.type.toUpperCase() == 'FILE':
         return LiveValidation.FILE;
-      case this.element.nodeName.toUpperCase() == "SELECT":
+      case this.element.nodeName.toUpperCase() == 'SELECT':
         return LiveValidation.SELECT;
-      case this.element.nodeName.toUpperCase() == "INPUT":
+      case this.element.nodeName.toUpperCase() == 'INPUT':
         throw new Error(
-          "LiveValidation::getElementType - Cannot use LiveValidation on an " +
+          'LiveValidation::getElementType - Cannot use LiveValidation on an ' +
             this.element.type +
-            " input!",
+            ' input!',
         );
       default:
         throw new Error(
-          "LiveValidation::getElementType - Element must be an input, select, or textarea!",
+          'LiveValidation::getElementType - Element must be an input, select, or textarea!',
         );
     }
   },
@@ -274,16 +271,10 @@ LiveValidation.prototype = {
         case Validate.Confirmation:
         case Validate.Acceptance:
           this.displayMessageWhenEmpty = true;
-          this.validationFailed = !this.validateElement(
-            validation.type,
-            validation.params,
-          );
+          this.validationFailed = !this.validateElement(validation.type, validation.params);
           break;
         default:
-          this.validationFailed = !this.validateElement(
-            validation.type,
-            validation.params,
-          );
+          this.validationFailed = !this.validateElement(validation.type, validation.params);
           break;
       }
       if (this.validationFailed) return false;
@@ -307,7 +298,7 @@ LiveValidation.prototype = {
     if (validationFunction == Validate.Acceptance) {
       if (this.elementType != LiveValidation.CHECKBOX)
         throw new Error(
-          "LiveValidation::validateElement - Element to validate acceptance must be a checkbox!",
+          'LiveValidation::validateElement - Element to validate acceptance must be a checkbox!',
         );
       value = this.element.checked;
     }
@@ -316,7 +307,7 @@ LiveValidation.prototype = {
       validationFunction(value, validationParamsObj);
     } catch (error) {
       if (error instanceof Validate.Error) {
-        if (value !== "" || (value === "" && this.displayMessageWhenEmpty)) {
+        if (value !== '' || (value === '' && this.displayMessageWhenEmpty)) {
           this.validationFailed = true;
           this.message = error.message;
           isValid = false;
@@ -383,7 +374,7 @@ LiveValidation.prototype = {
    * @return {HTMLSpanObject} - a span element with the message in it
    */
   createMessageSpan: function () {
-    var span = document.createElement("span");
+    var span = document.createElement('span');
     var textNode = document.createTextNode(this.message);
     span.appendChild(textNode);
     return span;
@@ -399,16 +390,12 @@ LiveValidation.prototype = {
     var className = this.validationFailed ? this.invalidClass : this.validClass;
     if (
       (this.displayMessageWhenEmpty &&
-        (this.elementType == LiveValidation.CHECKBOX ||
-          this.element.value == "")) ||
-      this.element.value != ""
+        (this.elementType == LiveValidation.CHECKBOX || this.element.value == '')) ||
+      this.element.value != ''
     ) {
-      $(elementToInsert).addClassName(this.messageClass + (" " + className));
+      $(elementToInsert).addClassName(this.messageClass + (' ' + className));
       if ((nxtSibling = this.insertAfterWhatNode.nextSibling)) {
-        this.insertAfterWhatNode.parentNode.insertBefore(
-          elementToInsert,
-          nxtSibling,
-        );
+        this.insertAfterWhatNode.parentNode.insertBefore(elementToInsert, nxtSibling);
       } else {
         this.insertAfterWhatNode.parentNode.appendChild(elementToInsert);
       }
@@ -421,7 +408,7 @@ LiveValidation.prototype = {
   addFieldClass: function () {
     this.removeFieldClass();
     if (!this.validationFailed) {
-      if (this.displayMessageWhenEmpty || this.element.value != "") {
+      if (this.displayMessageWhenEmpty || this.element.value != '') {
         if (!this.element.hasClassName(this.validFieldClass))
           this.element.addClassName(this.validFieldClass);
       }
@@ -435,8 +422,7 @@ LiveValidation.prototype = {
    *	removes the message element if it exists
    */
   removeMessage: function () {
-    if ((nxtEl = this.insertAfterWhatNode.next("." + this.messageClass)))
-      nxtEl.remove();
+    if ((nxtEl = this.insertAfterWhatNode.next('.' + this.messageClass))) nxtEl.remove();
   },
 
   /**
@@ -476,12 +462,9 @@ Object.extend(LiveValidationForm, {
   getInstance: function (element) {
     var rand = Math.random() * Math.random();
     if (!element.id)
-      element.id =
-        "formId_" + rand.toString().replace(/\./, "") + new Date().valueOf();
+      element.id = 'formId_' + rand.toString().replace(/\./, '') + new Date().valueOf();
     if (!LiveValidationForm.instances[element.id])
-      LiveValidationForm.instances[element.id] = new LiveValidationForm(
-        element,
-      );
+      LiveValidationForm.instances[element.id] = new LiveValidationForm(element);
     return LiveValidationForm.instances[element.id];
   },
 });
@@ -576,8 +559,7 @@ var Validate = {
       },
       paramsObj || {},
     );
-    if (value === "" || value === null || value === undefined)
-      Validate.fail(params.failureMessage);
+    if (value === '' || value === null || value === undefined) Validate.fail(params.failureMessage);
     return true;
   },
 
@@ -612,34 +594,23 @@ var Validate = {
     var value = Number(value);
     var paramsObj = paramsObj || {};
     var params = {
-      notANumberMessage: paramsObj.notANumberMessage || "Must be a number!",
-      notAnIntegerMessage:
-        paramsObj.notAnIntegerMessage || "Must be an integer!",
-      wrongNumberMessage:
-        paramsObj.wrongNumberMessage || "Must be " + paramsObj.is + "!",
-      tooLowMessage:
-        paramsObj.tooLowMessage ||
-        "Must not be less than " + paramsObj.minimum + "!",
+      notANumberMessage: paramsObj.notANumberMessage || 'Must be a number!',
+      notAnIntegerMessage: paramsObj.notAnIntegerMessage || 'Must be an integer!',
+      wrongNumberMessage: paramsObj.wrongNumberMessage || 'Must be ' + paramsObj.is + '!',
+      tooLowMessage: paramsObj.tooLowMessage || 'Must not be less than ' + paramsObj.minimum + '!',
       tooHighMessage:
-        paramsObj.tooHighMessage ||
-        "Must not be more than " + paramsObj.maximum + "!",
+        paramsObj.tooHighMessage || 'Must not be more than ' + paramsObj.maximum + '!',
       is: paramsObj.is || paramsObj.is == 0 ? paramsObj.is : null,
-      minimum:
-        paramsObj.minimum || paramsObj.minimum == 0 ? paramsObj.minimum : null,
-      maximum:
-        paramsObj.maximum || paramsObj.maximum == 0 ? paramsObj.maximum : null,
+      minimum: paramsObj.minimum || paramsObj.minimum == 0 ? paramsObj.minimum : null,
+      maximum: paramsObj.maximum || paramsObj.maximum == 0 ? paramsObj.maximum : null,
       onlyInteger: paramsObj.onlyInteger || false,
     };
     if (!isFinite(value)) Validate.fail(params.notANumberMessage);
-    if (
-      params.onlyInteger &&
-      (/\.0+$|\.$/.test(String(suppliedValue)) || value != parseInt(value))
-    )
+    if (params.onlyInteger && (/\.0+$|\.$/.test(String(suppliedValue)) || value != parseInt(value)))
       Validate.fail(params.notAnIntegerMessage);
     switch (true) {
       case params.is !== null:
-        if (value != Number(params.is))
-          Validate.fail(params.wrongNumberMessage);
+        if (value != Number(params.is)) Validate.fail(params.wrongNumberMessage);
         break;
       case params.minimum !== null && params.maximum !== null:
         Validate.Numericality(value, {
@@ -655,8 +626,7 @@ var Validate = {
         if (value < Number(params.minimum)) Validate.fail(params.tooLowMessage);
         break;
       case params.maximum !== null:
-        if (value > Number(params.maximum))
-          Validate.fail(params.tooHighMessage);
+        if (value > Number(params.maximum)) Validate.fail(params.tooHighMessage);
         break;
     }
     return true;
@@ -684,16 +654,14 @@ var Validate = {
     var value = String(value);
     var params = Object.extend(
       {
-        failureMessage: "Not valid!",
+        failureMessage: 'Not valid!',
         pattern: /./,
         negate: false,
       },
       paramsObj || {},
     );
-    if (!params.negate && !params.pattern.test(value))
-      Validate.fail(params.failureMessage); // normal
-    if (params.negate && params.pattern.test(value))
-      Validate.fail(params.failureMessage); // negated
+    if (!params.negate && !params.pattern.test(value)) Validate.fail(params.failureMessage); // normal
+    if (params.negate && params.pattern.test(value)) Validate.fail(params.failureMessage); // negated
     return true;
   },
 
@@ -710,7 +678,7 @@ var Validate = {
   Email: function (value, paramsObj) {
     var params = Object.extend(
       {
-        failureMessage: "Must be a valid email address!",
+        failureMessage: 'Must be a valid email address!',
       },
       paramsObj || {},
     );
@@ -745,24 +713,20 @@ var Validate = {
     var paramsObj = paramsObj || {};
     var params = {
       wrongLengthMessage:
-        paramsObj.wrongLengthMessage ||
-        "Must be " + paramsObj.is + " characters long!",
+        paramsObj.wrongLengthMessage || 'Must be ' + paramsObj.is + ' characters long!',
       tooShortMessage:
         paramsObj.tooShortMessage ||
-        "Must not be less than " + paramsObj.minimum + " characters long!",
+        'Must not be less than ' + paramsObj.minimum + ' characters long!',
       tooLongMessage:
         paramsObj.tooLongMessage ||
-        "Must not be more than " + paramsObj.maximum + " characters long!",
+        'Must not be more than ' + paramsObj.maximum + ' characters long!',
       is: paramsObj.is || paramsObj.is == 0 ? paramsObj.is : null,
-      minimum:
-        paramsObj.minimum || paramsObj.minimum == 0 ? paramsObj.minimum : null,
-      maximum:
-        paramsObj.maximum || paramsObj.maximum == 0 ? paramsObj.maximum : null,
+      minimum: paramsObj.minimum || paramsObj.minimum == 0 ? paramsObj.minimum : null,
+      maximum: paramsObj.maximum || paramsObj.maximum == 0 ? paramsObj.maximum : null,
     };
     switch (true) {
       case params.is !== null:
-        if (value.length != Number(params.is))
-          Validate.fail(params.wrongLengthMessage);
+        if (value.length != Number(params.is)) Validate.fail(params.wrongLengthMessage);
         break;
       case params.minimum !== null && params.maximum !== null:
         Validate.Length(value, {
@@ -775,17 +739,13 @@ var Validate = {
         });
         break;
       case params.minimum !== null:
-        if (value.length < Number(params.minimum))
-          Validate.fail(params.tooShortMessage);
+        if (value.length < Number(params.minimum)) Validate.fail(params.tooShortMessage);
         break;
       case params.maximum !== null:
-        if (value.length > Number(params.maximum))
-          Validate.fail(params.tooLongMessage);
+        if (value.length > Number(params.maximum)) Validate.fail(params.tooLongMessage);
         break;
       default:
-        throw new Error(
-          "Validate::Length - Length(s) to validate against must be provided!",
-        );
+        throw new Error('Validate::Length - Length(s) to validate against must be provided!');
     }
     return true;
   },
@@ -813,7 +773,7 @@ var Validate = {
   Inclusion: function (value, paramsObj) {
     var params = Object.extend(
       {
-        failureMessage: "Must be included in the list!",
+        failureMessage: 'Must be included in the list!',
         within: [],
         allowNull: false,
         partialMatch: false,
@@ -823,17 +783,16 @@ var Validate = {
       paramsObj || {},
     );
     if (params.allowNull && value == null) return true;
-    if (!params.allowNull && value == null)
-      Validate.fail(params.failureMessage);
+    if (!params.allowNull && value == null) Validate.fail(params.failureMessage);
     //if case insensitive, make all strings in the array lowercase, and the value too
     if (!params.caseSensitive) {
       var lowerWithin = [];
       params.within.each(function (item) {
-        if (typeof item == "string") item = item.toLowerCase();
+        if (typeof item == 'string') item = item.toLowerCase();
         lowerWithin.push(item);
       });
       params.within = lowerWithin;
-      if (typeof value == "string") value = value.toLowerCase();
+      if (typeof value == 'string') value = value.toLowerCase();
     }
     var found = params.within.indexOf(value) == -1 ? false : true;
     if (params.partialMatch) {
@@ -868,7 +827,7 @@ var Validate = {
   Exclusion: function (value, paramsObj) {
     var params = Object.extend(
       {
-        failureMessage: "Must not be included in the list!",
+        failureMessage: 'Must not be included in the list!',
         within: [],
         allowNull: false,
         partialMatch: false,
@@ -895,11 +854,11 @@ var Validate = {
   Confirmation: function (value, paramsObj) {
     if (!paramsObj.match)
       throw new Error(
-        "Validate::Confirmation - Error validating confirmation: Id of element to match must be provided!",
+        'Validate::Confirmation - Error validating confirmation: Id of element to match must be provided!',
       );
     var params = Object.extend(
       {
-        failureMessage: "Does not match!",
+        failureMessage: 'Does not match!',
         match: null,
       },
       paramsObj || {},
@@ -928,7 +887,7 @@ var Validate = {
   Acceptance: function (value, paramsObj) {
     var params = Object.extend(
       {
-        failureMessage: "Must be accepted!",
+        failureMessage: 'Must be accepted!',
       },
       paramsObj || {},
     );
@@ -957,12 +916,11 @@ var Validate = {
           return true;
         },
         args: {},
-        failureMessage: "Not valid!",
+        failureMessage: 'Not valid!',
       },
       paramsObj || {},
     );
-    if (!params.against(value, params.args))
-      Validate.fail(params.failureMessage);
+    if (!params.against(value, params.args)) Validate.fail(params.failureMessage);
     return true;
   },
 
@@ -975,7 +933,7 @@ var Validate = {
    */
   now: function (validationFunction, value, validationParamsObj) {
     if (!validationFunction)
-      throw new Error("Validate::now - Validation function must be provided!");
+      throw new Error('Validate::now - Validation function must be provided!');
     var isValid = true;
     try {
       validationFunction(value, validationParamsObj || {});
@@ -992,7 +950,7 @@ var Validate = {
 
   Error: function (errorMessage) {
     this.message = errorMessage;
-    this.name = "ValidationError";
+    this.name = 'ValidationError';
   },
 
   fail: function (errorMessage) {

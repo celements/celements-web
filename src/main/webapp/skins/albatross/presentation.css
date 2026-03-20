@@ -54,9 +54,9 @@ Global header
   font-variant: small-caps;
 }
 
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
   font-family: Helvetica;
   font-weight: bold;
   padding: 1px 16px;
@@ -70,9 +70,9 @@ input[type="button"] {
   width: auto;
   overflow: visible;
 }
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-input[type="button"]:hover,
+input[type='submit']:hover,
+input[type='reset']:hover,
+input[type='button']:hover,
 .button:hover {
   cursor: pointer;
 }
@@ -126,18 +126,18 @@ Panels
   padding: 0px 4px;
   margin: 0px;
   font-size: 0.9em;
-  background: url("icons/black-less.png") no-repeat right center;
+  background: url('icons/black-less.png') no-repeat right center;
   cursor: pointer;
 }
 
 .collapsed .xwikipaneltitle {
-  background-image: url("icons/black-more-3.png");
+  background-image: url('icons/black-more-3.png');
 }
 .xwikipaneltitle:hover {
   cursor: pointer;
 }
 .collapsed .xwikipaneltitle:hover {
-  background-image: url("icons/black-more-3.png");
+  background-image: url('icons/black-more-3.png');
 }
 .xwikipanelcontents {
   padding: 4px;

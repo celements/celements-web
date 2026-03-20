@@ -18,8 +18,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-Event.observe(window, "load", function () {
-  if ($$(".celements3_tabMenu").size() > 0) {
+Event.observe(window, 'load', function () {
+  if ($$('.celements3_tabMenu').size() > 0) {
     getCelementsTabEditor().initTabMenu();
   }
 });
@@ -31,7 +31,7 @@ var getCelementsTabEditor = function () {
 };
 
 var celLogMsgDebug = function (message) {
-  if (typeof console != "undefined" && typeof console.debug != "undefined") {
+  if (typeof console != 'undefined' && typeof console.debug != 'undefined') {
     console.debug(message);
   }
 };

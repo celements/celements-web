@@ -1,4 +1,4 @@
-@import "/file/resources/celRes/theme/defaultColors.css";
+@import '/file/resources/celRes/theme/defaultColors.css';
 .meta-versionSummary label {
   color: var(--textSecondaryColor);
   display: block;

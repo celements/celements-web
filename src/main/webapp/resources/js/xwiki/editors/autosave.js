@@ -1,17 +1,17 @@
 // Make sure the XWiki 'namespace' and the AjaxSaveAndContinue class exist.
 if (
-  typeof XWiki == "undefined" ||
-  typeof XWiki.actionButtons == "undefined" ||
-  typeof XWiki.actionButtons.AjaxSaveAndContinue == "undefined"
+  typeof XWiki == 'undefined' ||
+  typeof XWiki.actionButtons == 'undefined' ||
+  typeof XWiki.actionButtons.AjaxSaveAndContinue == 'undefined'
 ) {
-  if (typeof console != "undefined" && typeof console.warn == "function") {
+  if (typeof console != 'undefined' && typeof console.warn == 'function') {
     console.warn(
-      "[Autosave feature] Required class missing: XWiki.actionButtons.AjaxSaveAndContinue",
+      '[Autosave feature] Required class missing: XWiki.actionButtons.AjaxSaveAndContinue',
     );
   }
 } else {
   // Make sure the editors 'namespace' exists.
-  if (typeof XWiki.editors == "undefined") {
+  if (typeof XWiki.editors == 'undefined') {
     XWiki.editors = new Object();
   }
 
@@ -31,10 +31,7 @@ if (
     disabledOpacity: 0.2,
     /** Initialization */
     initialize: function () {
-      if (
-        !(this.form = $("xwikieditcontent")) ||
-        !(this.form = this.form.up("form"))
-      ) {
+      if (!(this.form = $('xwikieditcontent')) || !(this.form = this.form.up('form'))) {
         return;
       }
       this.initVersionMetadataElements();
@@ -51,12 +48,12 @@ if (
      * By means of these, every autosaved version is marked as minor and contains the text "(Autosaved)" in the comment.
      */
     initVersionMetadataElements: function () {
-      var container = new Element("div", { class: "hidden" });
+      var container = new Element('div', { class: 'hidden' });
       this.editComment = this.form.comment; // The element containing the edit comment from the edit form
       if (!this.editComment) {
-        this.editComment = new Element("input", {
-          type: "hidden",
-          name: "comment",
+        this.editComment = new Element('input', {
+          type: 'hidden',
+          name: 'comment',
         });
         this.customMetadataElementsContainer = container;
         container.insert(this.editComment);
@@ -64,9 +61,9 @@ if (
       this.minorEditCheckbox = this.form.minorEdit; // The minor edit checkbox from the edit form
       if (!this.minorEditCheckbox) {
         // Value already set, does not need to be switched on/off
-        this.minorEditCheckbox = new Element("input", {
-          type: "checkbox",
-          name: "minorEdit",
+        this.minorEditCheckbox = new Element('input', {
+          type: 'checkbox',
+          name: 'minorEdit',
           checked: true,
         });
         this.customMetadataElementsContainer = container;
@@ -80,55 +77,53 @@ if (
      */
     createUIElements: function () {
       // Checkbox to enable/disable the autosave
-      this.autosaveCheckbox = new Element("input", {
-        type: "checkbox",
+      this.autosaveCheckbox = new Element('input', {
+        type: 'checkbox',
         checked: this.enabled,
-        name: "doAutosave",
-        id: "doAutosave",
+        name: 'doAutosave',
+        id: 'doAutosave',
       });
       // Input for setting the autosave frequency
-      this.autosaveInput = new Element("input", {
-        type: "text",
+      this.autosaveInput = new Element('input', {
+        type: 'text',
         value: this.frequency,
-        size: "2",
-        class: "autosave-frequency",
+        size: '2',
+        class: 'autosave-frequency',
       });
       // Labels
-      var autosaveLabel = new Element("label", {
-        class: "autosave",
-        for: "doAutosave",
+      var autosaveLabel = new Element('label', {
+        class: 'autosave',
+        for: 'doAutosave',
       });
       autosaveLabel.appendChild(this.autosaveCheckbox);
-      autosaveLabel.appendChild(document.createTextNode(" Autosave"));
-      var frequencyLabel = new Element("label", { class: "frequency" });
-      frequencyLabel.appendChild(document.createTextNode("every "));
+      autosaveLabel.appendChild(document.createTextNode(' Autosave'));
+      var frequencyLabel = new Element('label', { class: 'frequency' });
+      frequencyLabel.appendChild(document.createTextNode('every '));
       frequencyLabel.appendChild(this.autosaveInput);
-      this.timeUnit = new Element("span");
+      this.timeUnit = new Element('span');
       this.setTimeUnit();
-      frequencyLabel.appendChild(document.createTextNode(" "));
+      frequencyLabel.appendChild(document.createTextNode(' '));
       frequencyLabel.appendChild(this.timeUnit);
       if (!this.enabled) {
         frequencyLabel.setOpacity(this.disabledOpacity);
       }
       // A paragraph containing the whole thing
-      var container = new Element("div", { id: "autosaveControl" });
+      var container = new Element('div', { id: 'autosaveControl' });
       container.appendChild(autosaveLabel);
-      container.appendChild(document.createTextNode(" "));
+      container.appendChild(document.createTextNode(' '));
       container.appendChild(frequencyLabel);
-      container.appendChild(document.createTextNode(" "));
+      container.appendChild(document.createTextNode(' '));
       // Insert in the editing UI
-      $(document.body)
-        .down(".bottombuttons .buttons")
-        .insert({ bottom: container });
+      $(document.body).down('.bottombuttons .buttons').insert({ bottom: container });
       // If we keep the autosave control in the form, the fast back-forward is broken in FF, so we lose the edited content
       // when pressing the browser Back button, instead of the form Back to Edit. Catch the form submission and remove the
       // controls.
-      this.form.observe("submit", function () {
+      this.form.observe('submit', function () {
         container.remove();
       });
       // When hitting cancel, the form isn't submitted anymore, instead the location is changed directly. In order to fix
       // the fastback problem above for Cancel, we need to also listen to this event:
-      document.observe("xwiki:actions:cancel", function () {
+      document.observe('xwiki:actions:cancel', function () {
         container.remove();
       });
     },
@@ -144,7 +139,7 @@ if (
           event.element().blur();
         }
       };
-      ["keydown", "keyup", "keypress"].each(
+      ['keydown', 'keyup', 'keypress'].each(
         function (eventName) {
           this.autosaveInput.observe(eventName, preventSubmit);
           this.autosaveCheckbox.observe(eventName, preventSubmit);
@@ -154,22 +149,22 @@ if (
       // Enable/disable autosave
       Event.observe(
         this.autosaveCheckbox,
-        "click",
+        'click',
         function () {
           this.enabled = this.autosaveCheckbox.checked;
           if (this.enabled) {
             this.startTimer();
-            this.autosaveInput.up("label").setOpacity("1.0");
+            this.autosaveInput.up('label').setOpacity('1.0');
           } else {
             this.stopTimer();
-            this.autosaveInput.up("label").setOpacity(this.disabledOpacity);
+            this.autosaveInput.up('label').setOpacity(this.disabledOpacity);
           }
         }.bindAsEventListener(this),
       );
       // Set autosave frequency
       Event.observe(
         this.autosaveInput,
-        "blur",
+        'blur',
         function () {
           // is the given value valid?
           var newFrequency = new Number(this.autosaveInput.value);
@@ -185,15 +180,15 @@ if (
           }
           // The input element should look like plain text when not focused.
           // Since IE doesn't understand :focused, use a classname
-          this.autosaveInput.removeClassName("focused");
+          this.autosaveInput.removeClassName('focused');
         }.bindAsEventListener(this),
       );
       // The input element should look like any input when focused
       Event.observe(
         this.autosaveInput,
-        "focus",
+        'focus',
         function () {
-          this.autosaveInput.addClassName("focused");
+          this.autosaveInput.addClassName('focused');
         }.bindAsEventListener(this),
       );
     },
@@ -205,9 +200,9 @@ if (
      */
     setTimeUnit: function () {
       if (this.frequency == 1) {
-        this.timeUnit.update("minute");
+        this.timeUnit.update('minute');
       } else {
-        this.timeUnit.update("minutes");
+        this.timeUnit.update('minutes');
       }
     },
 
@@ -251,7 +246,7 @@ if (
       // Hacks to force the rich text editors dump the data into the textarea
       // TODO Write me!
       // Call save and continue
-      document.fire("xwiki:actions:save", {
+      document.fire('xwiki:actions:save', {
         continue: true,
         form: this.editComment.form,
       });
@@ -268,7 +263,7 @@ if (
       this.userEditComment = this.editComment.value;
       this.userMinorEdit = this.minorEditCheckbox.checked;
       // Add "(Autosaved)" in the comment field
-      this.editComment.value += " (Autosaved)";
+      this.editComment.value += ' (Autosaved)';
       // Check the minor edit checkbox
       this.minorEditCheckbox.checked = true;
     },
@@ -285,7 +280,7 @@ if (
   });
 
   // When the document is loaded, create the Autosave control
-  document.observe("xwiki:dom:loaded", function () {
+  document.observe('xwiki:dom:loaded', function () {
     new XWiki.editors.AutoSave();
   });
 } //XWiki.actionButtons.AjaxSaveAndContinue exists

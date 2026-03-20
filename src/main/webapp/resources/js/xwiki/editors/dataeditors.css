@@ -1,4 +1,4 @@
-@import "/file/resources/celRes/theme/defaultColors.css";
+@import '/file/resources/celRes/theme/defaultColors.css';
 
 #xwikiobjects,
 #xwikiclassproperties {
@@ -52,8 +52,7 @@
 .more-actions .edit-all {
   display: block;
   padding: 2px 18px;
-  background: transparent url(/file/resources/icons/silk/pencil.gif) left top
-    no-repeat;
+  background: transparent url(/file/resources/icons/silk/pencil.gif) left top no-repeat;
 }
 .xclass-title {
   margin: 16px 0 2px;
@@ -160,11 +159,11 @@ xproperty-title h2 {
 }
 .xobject-title .delete {
   right: 0;
-  background-image: url("/file/resources/icons/silk/cross.gif");
+  background-image: url('/file/resources/icons/silk/cross.gif');
 }
 .xobject-title .edit {
   right: 16px;
-  background-image: url("/file/resources/icons/silk/pencil.gif");
+  background-image: url('/file/resources/icons/silk/pencil.gif');
 }
 .xproperty {
   border: none;
@@ -207,9 +206,7 @@ xproperty-title h2 {
   margin: 0;
   font-size: 1em;
   font-weight: 100;
-  background: transparent
-    url(/file/resources/icons/datamodel/propertyType-Generic.png) 14px center
-    no-repeat;
+  background: transparent url(/file/resources/icons/datamodel/propertyType-Generic.png) 14px center no-repeat;
   min-height: 16px;
 }
 .xproperty-title label {

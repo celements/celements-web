@@ -526,14 +526,8 @@ div.celements3_filebase #c2_ml_container td.yui-dt-col-del_attachment,
 div.celements3_filebase #c2_ml_container th.yui-dt-col-del_attachment {
   width: auto;
 }
-div.celements3_filebase
-  .c2_ml_container
-  .yui-dt-col-del_attachment
-  .yui-dt-liner,
-div.celements3_filebase
-  #c2_ml_container
-  .yui-dt-col-del_attachment
-  .yui-dt-liner {
+div.celements3_filebase .c2_ml_container .yui-dt-col-del_attachment .yui-dt-liner,
+div.celements3_filebase #c2_ml_container .yui-dt-col-del_attachment .yui-dt-liner {
   padding-left: 5px;
   padding-bottom: 1px;
   width: 71px;

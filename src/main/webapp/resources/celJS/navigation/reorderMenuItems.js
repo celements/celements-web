@@ -19,15 +19,15 @@
  */
 
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
   /**
    * Navigation Reordering
    */
-  if (typeof window.CELEMENTS === "undefined") {
+  if (typeof window.CELEMENTS === 'undefined') {
     window.CELEMENTS = {};
   }
-  if (typeof window.CELEMENTS.reorder === "undefined") {
+  if (typeof window.CELEMENTS.reorder === 'undefined') {
     window.CELEMENTS.reorder = {};
   }
 
@@ -40,7 +40,7 @@
   // -> call CELEMENTS.reorder.DDReorder.init() to start reordering
   // -> set minLevel and maxLevel BEFORE calling init().
   //////////////////////////////////////////////////////////////////////////////
-  if (typeof window.CELEMENTS.reorder.DDReorder === "undefined") {
+  if (typeof window.CELEMENTS.reorder.DDReorder === 'undefined') {
     window.CELEMENTS.reorder.DDReorder = Class.create({
       parentElem: undefined,
       _ulSelector: undefined,
@@ -50,37 +50,32 @@
       initialize: function (theElem, ulSelector, minLevel, maxLevel) {
         const _me = this;
         _me.parentElem = $(theElem);
-        _me._ulSelector = ulSelector || ".cel_skin_editor_reorder";
+        _me._ulSelector = ulSelector || '.cel_skin_editor_reorder';
         _me.minLevel = minLevel || 1;
         _me.maxLevel = maxLevel || 99;
 
-        $$("ul" + _me._ulSelector + " li").each(function (listItem) {
-          if (!listItem.hasClassName("cel_nodrag")) {
+        $$('ul' + _me._ulSelector + ' li').each(function (listItem) {
+          if (!listItem.hasClassName('cel_nodrag')) {
             if (!listItem.id) {
-              const menuItemId = listItem.down("span,a").id;
-              listItem.id = "LI" + menuItemId;
+              const menuItemId = listItem.down('span,a').id;
+              listItem.id = 'LI' + menuItemId;
             }
             _me._addEmptySublists(listItem.id);
-            const ddElem = new CELEMENTS.reorder.DDList(
-              listItem.id,
-              undefined,
-              undefined,
-              _me,
-            );
+            const ddElem = new CELEMENTS.reorder.DDList(listItem.id, undefined, undefined, _me);
             _me._addHandleIfPresent(ddElem, listItem);
           }
         });
-        $$("ul" + _me._ulSelector).each(function (listElem) {
+        $$('ul' + _me._ulSelector).each(function (listElem) {
           new YAHOO.util.DDTarget(listElem.id);
         });
-        _me.parentElem.fire("celreorder_reorderMode:start");
+        _me.parentElem.fire('celreorder_reorderMode:start');
       },
 
       _addHandleIfPresent: function (ddElem, listItem) {
-        const ddHandle = listItem.down(".cel_dd_handle");
+        const ddHandle = listItem.down('.cel_dd_handle');
         if (ddHandle) {
           if (!ddHandle.id) {
-            ddHandle.id = listItem.id + "_ddhandle";
+            ddHandle.id = listItem.id + '_ddhandle';
           }
           ddElem.setHandleElId(ddHandle.id);
         }
@@ -91,7 +86,7 @@
         $(listItemId)
           .ancestors()
           .each(function (parentNode) {
-            if (parentNode.tagName.toLowerCase() == "ul") {
+            if (parentNode.tagName.toLowerCase() == 'ul') {
               count++;
             }
           });
@@ -101,15 +96,11 @@
       _addEmptySublists: function (listItemId) {
         const _me = this;
         const currentLevel = _me._getLevelOfMenuItem(listItemId);
-        const subULid = listItemId.replace(/^LI/, "C");
-        if (
-          !$(subULid) &&
-          currentLevel >= _me.minLevel &&
-          currentLevel < _me.maxLevel
-        ) {
-          const emptyList = new Element("ul", {
+        const subULid = listItemId.replace(/^LI/, 'C');
+        if (!$(subULid) && currentLevel >= _me.minLevel && currentLevel < _me.maxLevel) {
+          const emptyList = new Element('ul', {
             id: subULid,
-            class: "cel_skin_editor_reorder",
+            class: 'cel_skin_editor_reorder',
           });
           $(listItemId).insert({ bottom: emptyList });
         }
@@ -126,8 +117,8 @@
         };
 
         const serialList = new Array();
-        $$("ul" + _me._ulSelector).each(function (listElem) {
-          const childElems = listElem.childElements("li");
+        $$('ul' + _me._ulSelector).each(function (listElem) {
+          const childElems = listElem.childElements('li');
           if (childElems.size() > 0) {
             const parentChild = new Hash();
             parentChild.set(listElem.id, parseList(childElems));
@@ -140,26 +131,24 @@
       saveOrder: function (callbackFn) {
         const _me = this;
         const orderJSON = Object.toJSON(_me.getOrder());
-        console.debug("DDReorder saveOrder before save: ", orderJSON);
+        console.debug('DDReorder saveOrder before save: ', orderJSON);
         new Ajax.Request(getCelHost(), {
-          method: "post",
+          method: 'post',
           parameters: {
-            xpage: "celements_ajax",
-            ajax_mode: "CelNavReorderSave",
+            xpage: 'celements_ajax',
+            ajax_mode: 'CelNavReorderSave',
             new_nav_order: orderJSON,
           },
           onSuccess: function (transport) {
-            console.log("saveOrder success: ", transport);
-            if (typeof callbackFn === "function") {
+            console.log('saveOrder success: ', transport);
+            if (typeof callbackFn === 'function') {
               callbackFn(transport);
             } else {
-              if (transport.responseText == "OK") {
-                _me.celFire("Cel_DDReorder:saveSuccess");
+              if (transport.responseText == 'OK') {
+                _me.celFire('Cel_DDReorder:saveSuccess');
               } else {
-                console.error(
-                  "failed saving reorder: " + transport.responseText,
-                );
-                _me.celFire("Cel_DDReorder:saveError");
+                console.error('failed saving reorder: ' + transport.responseText);
+                _me.celFire('Cel_DDReorder:saveError');
               }
             }
           },
@@ -177,18 +166,13 @@
   //////////////////////////////////////////////////////////////////////////////
 
   window.CELEMENTS.reorder.DDList = function (id, sGroup, config, ddReorder) {
-    window.CELEMENTS.reorder.DDList.superclass.constructor.call(
-      this,
-      id,
-      sGroup,
-      config,
-    );
+    window.CELEMENTS.reorder.DDList.superclass.constructor.call(this, id, sGroup, config);
 
     this.ddReorder = ddReorder;
     const el = this.getDragEl();
-    Dom.setStyle(el, "opacity", 0.55); // The proxy is slightly transparent
-    Dom.addClass(el, "cel_reorderNodes_proxy");
-    Dom.addClass(el, "cel_reorderNodes_parent_" + ddReorder.parentElem.id);
+    Dom.setStyle(el, 'opacity', 0.55); // The proxy is slightly transparent
+    Dom.addClass(el, 'cel_reorderNodes_proxy');
+    Dom.addClass(el, 'cel_reorderNodes_parent_' + ddReorder.parentElem.id);
     this.scroll = false; //prevent auto scrolling of the window
     this.lastList = null;
   };
@@ -203,23 +187,19 @@
       // make the proxy look like the source element
       const dragEl = _me.getDragEl();
       const clickEl = _me.getEl();
-      Dom.setStyle(clickEl, "height", "0px");
-      Dom.setStyle(clickEl, "width", "50px");
-      Dom.setStyle(clickEl, "margin", "0px");
-      Dom.setStyle(clickEl, "border-top", "2px solid red");
-      Dom.setStyle(clickEl, "position", "absolute");
-      Dom.setStyle(clickEl, "overflow", "hidden");
-      Dom.addClass(clickEl, "cel_reorderNodes_placeholder");
+      Dom.setStyle(clickEl, 'height', '0px');
+      Dom.setStyle(clickEl, 'width', '50px');
+      Dom.setStyle(clickEl, 'margin', '0px');
+      Dom.setStyle(clickEl, 'border-top', '2px solid red');
+      Dom.setStyle(clickEl, 'position', 'absolute');
+      Dom.setStyle(clickEl, 'overflow', 'hidden');
+      Dom.addClass(clickEl, 'cel_reorderNodes_placeholder');
 
       dragEl.innerHTML = clickEl.innerHTML;
 
-      Dom.setStyle(dragEl, "color", Dom.getStyle(clickEl, "color"));
-      Dom.setStyle(
-        dragEl,
-        "backgroundColor",
-        Dom.getStyle(clickEl, "backgroundColor"),
-      );
-      Dom.setStyle(dragEl, "border", "none");
+      Dom.setStyle(dragEl, 'color', Dom.getStyle(clickEl, 'color'));
+      Dom.setStyle(dragEl, 'backgroundColor', Dom.getStyle(clickEl, 'backgroundColor'));
+      Dom.setStyle(dragEl, 'border', 'none');
       YAHOO.util.DDM.mode = YAHOO.util.DDM.INTERSECT;
     },
 
@@ -229,7 +209,7 @@
       const proxy = _me.getDragEl();
 
       // Show the proxy element and animate it to the src element's location
-      Dom.setStyle(proxy, "visibility", "");
+      Dom.setStyle(proxy, 'visibility', '');
       const a = new YAHOO.util.Motion(
         proxy,
         {
@@ -245,21 +225,21 @@
 
       // Hide the proxy and show the source element when finished with the animation
       a.onComplete.subscribe(function () {
-        Dom.setStyle(proxyid, "visibility", "hidden");
-        Dom.setStyle(thisid, "height", "");
-        Dom.setStyle(thisid, "width", "");
-        Dom.setStyle(thisid, "margin", "");
-        Dom.setStyle(thisid, "border-top", "");
-        Dom.setStyle(thisid, "position", "");
-        Dom.setStyle(thisid, "overflow", "");
-        Dom.removeClass(thisid, "cel_reorderNodes_placeholder");
-        _me.ddReorder.parentElem.select(".dragDropHover").each(function (elem) {
-          elem.removeClassName("dragDropHover");
+        Dom.setStyle(proxyid, 'visibility', 'hidden');
+        Dom.setStyle(thisid, 'height', '');
+        Dom.setStyle(thisid, 'width', '');
+        Dom.setStyle(thisid, 'margin', '');
+        Dom.setStyle(thisid, 'border-top', '');
+        Dom.setStyle(thisid, 'position', '');
+        Dom.setStyle(thisid, 'overflow', '');
+        Dom.removeClass(thisid, 'cel_reorderNodes_placeholder');
+        _me.ddReorder.parentElem.select('.dragDropHover').each(function (elem) {
+          elem.removeClassName('dragDropHover');
         });
       });
       a.animate();
-      _me.ddReorder.celFire("celreorder_dragDrop:endDrag", thisid);
-      _me.ddReorder.parentElem.fire("celreorder_dragDrop:endDrag", thisid);
+      _me.ddReorder.celFire('celreorder_dragDrop:endDrag', thisid);
+      _me.ddReorder.parentElem.fire('celreorder_dragDrop:endDrag', thisid);
     },
 
     onDragDrop: function (e, id) {
@@ -288,7 +268,7 @@
     onDragOut: function (e, elems) {
       const _me = this;
       $A(elems).each(function (elem) {
-        if ($(elem._domRef).hasClassName("cel_layout_editor_scrollArea")) {
+        if ($(elem._domRef).hasClassName('cel_layout_editor_scrollArea')) {
           if (_me.celLayoutEditorReorderScrollPoll) {
             clearInterval(_me.celLayoutEditorReorderScrollPoll);
             _me.celLayoutEditorReorderScrollPoll = null;
@@ -307,9 +287,8 @@
       elems.forEach(function (elem) {
         if (elem.cursorIsOver) {
           if (
-            (!isOutsideArea &&
-              elem._domRef.ancestors().size() > destEl.ancestors().size()) ||
-            elem._domRef.hasClassName("cel_layout_editor_scrollArea")
+            (!isOutsideArea && elem._domRef.ancestors().size() > destEl.ancestors().size()) ||
+            elem._domRef.hasClassName('cel_layout_editor_scrollArea')
           ) {
             destEl = elem._domRef;
           }
@@ -321,10 +300,9 @@
         return node.id && node.id == id;
       });
 
-      if ($(destEl).hasClassName("cel_layout_editor_scrollArea")) {
+      if ($(destEl).hasClassName('cel_layout_editor_scrollArea')) {
         if (_me.celLayoutEditorReorderScrollPoll == null) {
-          _me.celLayoutEditorReorderScrollUp =
-            id == "cel_layout_editor_scrollup";
+          _me.celLayoutEditorReorderScrollUp = id == 'cel_layout_editor_scrollup';
           _me.celLayoutEditorReorderScrollPoll = setInterval(
             _me._celLayoutEditorReorderScrollSome,
             100,
@@ -333,7 +311,7 @@
       } else if (isValidDestElem) {
         // We are only concerned with list items, we ignore the dragover
         // notifications for the list.
-        if (destEl.nodeName.toLowerCase() == "li") {
+        if (destEl.nodeName.toLowerCase() == 'li') {
           const p = destEl.parentNode;
           if (_me._isMouseBeforeMedium(e, destEl)) {
             p.insertBefore(srcEl, destEl); // insert above
@@ -341,7 +319,7 @@
             p.insertBefore(srcEl, destEl.nextSibling); // insert below
           }
           DDM.refreshCache();
-        } else if (destEl.nodeName.toLowerCase() == "ul") {
+        } else if (destEl.nodeName.toLowerCase() == 'ul') {
           if (destEl != srcEl.parentNode) {
             if (!_me._isMouseBeforeMedium(e, destEl)) {
               destEl.insertBefore(srcEl, null); // insert as last
@@ -352,13 +330,13 @@
         }
         if (_me.lastList != srcEl.parentNode) {
           if (_me.lastList) {
-            $(_me.lastList).removeClassName("dragDropHover");
+            $(_me.lastList).removeClassName('dragDropHover');
           }
-          $(destEl).addClassName("dragDropHover");
+          $(destEl).addClassName('dragDropHover');
           _me.lastList = destEl;
         }
       } else {
-        console.debug("invalid dragOver: ", id, destEl);
+        console.debug('invalid dragOver: ', id, destEl);
       }
     },
 
@@ -368,8 +346,7 @@
       //there is a bug in prototypejs 1.7.2 cumulativeOffset sometimes not
       //counting margin-auto offsets. Thus we need to use jquery.offset
       const destElOffset = $j(destEl).offset();
-      const destElMedium =
-        destElOffset.top - treeDiv.scrollTop + destEl.getHeight() / 2;
+      const destElMedium = destElOffset.top - treeDiv.scrollTop + destEl.getHeight() / 2;
       return YEvent.getPageY(e) < destElMedium;
     },
 

@@ -30,12 +30,12 @@ h4 {
 
 #headerglobal {
   background-color: transparent;
-  background-image: url("header-bg.jpg");
+  background-image: url('header-bg.jpg');
   background-position: right bottom;
   background-repeat: no-repeat;
 }
 #globallinks {
-  background-image: url("headerperso-bg.jpg");
+  background-image: url('headerperso-bg.jpg');
   background-position: bottom left;
 }
 #globallinks a,
@@ -58,22 +58,22 @@ h4 {
   background: transparent right center no-repeat;
 }
 #headeruser {
-  background-image: url("icons/black-budy.png");
+  background-image: url('icons/black-budy.png');
 }
 #headeradmin {
-  background-image: url("icons/black-admin.png");
+  background-image: url('icons/black-admin.png');
 }
 #headerlogin {
-  background-image: url("icons/black-budy.png");
+  background-image: url('icons/black-budy.png');
 }
 #headerregister {
-  background-image: url("icons/black-register.png");
+  background-image: url('icons/black-register.png');
 }
 #headerlogout {
-  background-image: url("icons/black-logout.png");
+  background-image: url('icons/black-logout.png');
 }
 #headerlanguages {
-  background-image: url("icons/black-lang.png");
+  background-image: url('icons/black-lang.png');
 }
 
 /*
@@ -104,13 +104,13 @@ Content
 .content #contentcolumn,
 .contenthideleft #contentcolumn,
 #editcolumn {
-  background-image: url("icons/content-bg-r.png");
+  background-image: url('icons/content-bg-r.png');
   background-position: right top;
   background-repeat: no-repeat;
 }
 .content #contentcontainerinner,
 .contenthideright #contentcontainerinner {
-  background-image: url("icons/content-bg-l.png");
+  background-image: url('icons/content-bg-l.png');
   background-position: left top;
   background-repeat: no-repeat;
 }
@@ -172,7 +172,7 @@ Menu
 */
 #actionmenu {
   background-color: #eee;
-  background-image: url("actionbar-bg.png");
+  background-image: url('actionbar-bg.png');
   background-repeat: repeat-x;
   border-color: #333;
 }
@@ -188,7 +188,7 @@ Menu
   background: transparent right top no-repeat;
 }
 .tme {
-  background: transparent url("icons/black-arrow-ab.png") right center no-repeat;
+  background: transparent url('icons/black-arrow-ab.png') right center no-repeat;
 }
 .topmenuentry a,
 .topmenuentry a:link,
@@ -200,7 +200,7 @@ Menu
 }
 .topmenuentry:hover,
 .rightmenu:hover {
-  background-image: url("actionbar-bg2.png") !important;
+  background-image: url('actionbar-bg2.png') !important;
   background-repeat: repeat-x;
 }
 .rightmenu {
@@ -314,14 +314,13 @@ button.button:hover {
 }
 #body .buttonwrapper * {
   background-color: transparent;
-  background: transparent url("icons/black-button24r.png") right center
-    no-repeat;
+  background: transparent url('icons/black-button24r.png') right center no-repeat;
   color: #fff;
   padding: 4px 8px;
   border: none;
 }
 #body .buttonwrapper *:hover {
-  background-image: url("icons/black-button24r-hover.png");
+  background-image: url('icons/black-button24r-hover.png');
 }
 .topbuttons,
 .bottombuttons {
@@ -516,8 +515,7 @@ th {
   border: none;
 }
 .xwikitabbar li.active {
-  background: transparent url(icons/black-tabedit-current.png) top center
-    no-repeat;
+  background: transparent url(icons/black-tabedit-current.png) top center no-repeat;
   border: none;
 }
 
@@ -582,7 +580,7 @@ th {
 /* Note that h6 styling is provided in order to ensure backward compatibility after XSALBATROSS-71 */
 .panel .accordionTabTitleBar h1:hover,
 .panel .accordionTabTitleBar h6:hover {
-  background: transparent url("icons/black-more-3.png") right center no-repeat !important;
+  background: transparent url('icons/black-more-3.png') right center no-repeat !important;
 }
 
 .panel .accordionTabContentBox {
@@ -651,7 +649,7 @@ input.button:hover {
   background-color: #98bfe6;
 }
 
-input[type="submit"] {
+input[type='submit'] {
   background-color: #3381cc;
   border: solid 0px #3381cc;
   color: #fff;
@@ -660,7 +658,7 @@ input[type="submit"] {
 }
 
 textarea {
-  background-image: url("black-textareabg.png");
+  background-image: url('black-textareabg.png');
   background-position: 0px 0px;
   background-repeat: no-repeat;
   background-color: #e6eaee;
@@ -669,7 +667,7 @@ textarea {
 }
 
 textarea[disabled] {
-  background-image: url("black-textareabg-disabled.png");
+  background-image: url('black-textareabg-disabled.png');
   background-position: 0px 0px;
   background-repeat: no-repeat;
   background-color: #e4e4e4;
@@ -677,37 +675,37 @@ textarea[disabled] {
   padding: 2px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="checkbox"],
-input[type="file"],
+input[type='text'],
+input[type='password'],
+input[type='checkbox'],
+input[type='file'],
 select {
-  background: #e6eaee url("black-textareabg.png") 0px 0px no-repeat;
+  background: #e6eaee url('black-textareabg.png') 0px 0px no-repeat;
   border: 1px solid #000;
   padding: 2px;
 }
 
 input[disabled],
 select[disabled] {
-  background: #e4e4e4 url("black-textareabg-disabled.png") 0px 0px no-repeat;
+  background: #e4e4e4 url('black-textareabg-disabled.png') 0px 0px no-repeat;
   border: 1px solid #000;
   padding: 2px;
 }
 
-input[type="radio"][disabled] {
+input[type='radio'][disabled] {
   background-image: none;
 }
 
 /*ie nescessite de passer par une classe ou un selecteur sinon il pose des problemes*/
 input.ie {
-  background: #e6eaee url("black-textareabg.png") 0px 0px no-repeat;
+  background: #e6eaee url('black-textareabg.png') 0px 0px no-repeat;
   border: 1px solid #000;
   padding: 2px;
 }
 
 input:focus,
 textarea:focus {
-  background-image: url("black-textareabg1.png");
+  background-image: url('black-textareabg1.png');
 }
 
 form label {
@@ -719,21 +717,21 @@ form input {
   margin-top: 3px;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type='checkbox'],
+input[type='radio'] {
   /*float: left;*/
   margin-right: 0.75em;
 }
 
 .buttonwrapper {
-  background: transparent url("icons/black-button24l.png") left center no-repeat;
+  background: transparent url('icons/black-button24l.png') left center no-repeat;
   min-height: 24px !important;
   float: left;
   display: block;
   margin: 10px 0px 10px 10px;
 }
 .buttonwrapper:hover {
-  background-image: url("icons/black-button24l-hover.png");
+  background-image: url('icons/black-button24l-hover.png');
 }
 .buttonwrapper * {
   min-height: 24px !important;

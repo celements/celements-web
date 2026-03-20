@@ -19,19 +19,17 @@
  */
 
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
-  var padding = "=";
-  var chrTable =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  var padding = '=';
+  var chrTable = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
   var binTable = [
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    -1, -1, -1, -1, -1, 62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-    61, -1, -1, -1, 0, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-    14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26,
-    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
-    46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
+    52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, 0, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27,
+    28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,
+    -1, -1, -1, -1, -1,
   ];
 
   var utf8Encode = function (str) {
@@ -47,7 +45,7 @@
       char = str[offset];
       offset += 1;
 
-      if ("%" !== char) {
+      if ('%' !== char) {
         bytes.push(char.charCodeAt(0));
       } else {
         char = str[offset] + str[offset + 1];
@@ -79,20 +77,18 @@
         chars.push(String.fromCharCode(((c & 31) << 6) | (c2 & 63)));
         offset += 2;
       } else {
-        chars.push(
-          String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63)),
-        );
+        chars.push(String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63)));
         offset += 3;
       }
     }
 
-    return chars.join("");
+    return chars.join('');
   };
 
   // public api ////////////////////////////////////////////////////////////////
 
   var encode = function (str) {
-    var result = "",
+    var result = '',
       bytes = utf8Encode(str),
       length = bytes.length,
       i;
@@ -137,9 +133,7 @@
 
       if (-1 === value) {
         // Skip illegal characters and whitespace
-        console.log(
-          "WARN: Illegal characters (code=" + code + ") in position " + idx,
-        );
+        console.log('WARN: Illegal characters (code=' + code + ') in position ' + idx);
       } else {
         // Collect data into leftdata, update bitcount
         leftdata = (leftdata << 6) | value;
@@ -159,7 +153,7 @@
 
     // If there are any bits left, the base64 string was corrupted
     if (leftbits) {
-      console.log("ERROR: Corrupted base64 string");
+      console.log('ERROR: Corrupted base64 string');
       return null;
     }
 

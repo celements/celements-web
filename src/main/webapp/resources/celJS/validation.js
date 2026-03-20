@@ -31,7 +31,7 @@
 
   window.Validator.prototype = {
     initialize: function (className, error, test, options) {
-      if (typeof test == "function") {
+      if (typeof test == 'function') {
         this.options = $H(options);
         this._test = test;
       } else {
@@ -40,23 +40,21 @@
           return true;
         };
       }
-      this.error = error || "Validation failed.";
+      this.error = error || 'Validation failed.';
       this.className = className;
     },
     test: function (v, elm) {
       return (
         this._test(v, elm) &&
         this.options.all(function (p) {
-          return Validator.methods[p.key]
-            ? Validator.methods[p.key](v, elm, p.value)
-            : true;
+          return Validator.methods[p.key] ? Validator.methods[p.key](v, elm, p.value) : true;
         })
       );
     },
   };
   window.Validator.methods = {
     pattern: function (v, elm, opt) {
-      return Validation.get("IsEmpty").test(v) || opt.test(v);
+      return Validation.get('IsEmpty').test(v) || opt.test(v);
     },
     minLength: function (v, elm, opt) {
       return v.length >= opt;
@@ -98,9 +96,7 @@
       });
     },
     validDocName: function (v) {
-      return (
-        !Validation.get("IsEmpty").test(v) && !/\W/.test(v.replace(/-/g, ""))
-      );
+      return !Validation.get('IsEmpty').test(v) && !/\W/.test(v.replace(/-/g, ''));
     },
   };
 
@@ -123,68 +119,46 @@
       );
       this.form = $(form);
       if (this.options.onSubmit) {
-        Event.observe(this.form, "submit", this.onSubmit.bind(this), false);
-        Event.observe(
-          this.form,
-          "celForm:prepareSubmit",
-          this.onSubmit.bind(this),
-          false,
-        );
+        Event.observe(this.form, 'submit', this.onSubmit.bind(this), false);
+        Event.observe(this.form, 'celForm:prepareSubmit', this.onSubmit.bind(this), false);
       }
       if (this.options.immediate) {
         Form.getElements(this.form).each(function (input) {
           // Thanks Mike!
-          Event.observe(input, "blur", _me.validateFieldHandler.bind(_me));
-          Event.observe(
-            input,
-            "celValidation:revalidateField",
-            _me.validateFieldHandler.bind(_me),
-          );
-          Event.observe(
-            input,
-            "celForm:valueChanged",
-            _me.validateFieldHandler.bind(_me),
-          );
+          Event.observe(input, 'blur', _me.validateFieldHandler.bind(_me));
+          Event.observe(input, 'celValidation:revalidateField', _me.validateFieldHandler.bind(_me));
+          Event.observe(input, 'celForm:valueChanged', _me.validateFieldHandler.bind(_me));
         });
       }
-      let submitButtons = _me.form.select(".celSubmitFormWithValidation");
-      if (submitButtons.size() == 0 && $(_me.form.id + "_SubmitLink")) {
-        submitButtons = [$(_me.form.id + "_SubmitLink")];
-        console.warn(
-          "deprecated usage of submit link outside of form-tag: ",
-          submitButtons,
-        );
+      let submitButtons = _me.form.select('.celSubmitFormWithValidation');
+      if (submitButtons.size() == 0 && $(_me.form.id + '_SubmitLink')) {
+        submitButtons = [$(_me.form.id + '_SubmitLink')];
+        console.warn('deprecated usage of submit link outside of form-tag: ', submitButtons);
       }
       submitButtons.each(function (buttonElem) {
-        buttonElem.observe("click", _me.clickOnSubmitLinkHandler.bind(_me));
+        buttonElem.observe('click', _me.clickOnSubmitLinkHandler.bind(_me));
       });
     },
     validateFieldHandler: function (ev) {
       const _me = this;
       const useTitles = _me.options.useTitles;
       const callback = _me.options.onElementValidate;
-      this.form.fire(
-        "celValidation:prepareElementValidation",
-        Event.element(ev),
-      );
+      this.form.fire('celValidation:prepareElementValidation', Event.element(ev));
       Validation.validate(Event.element(ev), {
         useTitle: useTitles,
         onElementValidate: callback,
       });
     },
     onSubmit: function (ev) {
-      this.form.fire("celValidation:prepareFormValidation", this.form);
+      this.form.fire('celValidation:prepareFormValidation', this.form);
       if (!this.validate()) {
         Event.stop(ev);
-        this.form.fire("celValidation:validationFailedSubmitCancel", this.form);
+        this.form.fire('celValidation:validationFailedSubmitCancel', this.form);
       } else {
-        const valSubEv = this.form.fire(
-          "celValidation:submitFormAfterValidation",
-          {
-            form: this.form,
-            submitEvent: ev,
-          },
-        );
+        const valSubEv = this.form.fire('celValidation:submitFormAfterValidation', {
+          form: this.form,
+          submitEvent: ev,
+        });
         if (valSubEv.stopped) {
           ev.stop();
         }
@@ -214,7 +188,7 @@
       if (!result && this.options.focusOnError) {
         Form.getElements(this.form)
           .findAll(function (elm) {
-            return $(elm).hasClassName("validation-failed");
+            return $(elm).hasClassName('validation-failed');
           })
           .first()
           .focus();
@@ -230,7 +204,7 @@
       event.stopPropagation();
       if (this.form.requestSubmit) {
         this.form.requestSubmit(); // triggers onSubmit
-      } else if (!this.form.fire("celForm:prepareSubmit").stopped) {
+      } else if (!this.form.fire('celForm:prepareSubmit').stopped) {
         this.form.submit();
       }
     },
@@ -255,28 +229,24 @@
     },
     test: function (name, elm, useTitle) {
       const v = Validation.get(name);
-      const prop = "__advice" + name.camelize();
+      const prop = '__advice' + name.camelize();
       try {
         if (Validation.isVisible(elm) && !v.test($F(elm), elm)) {
           if (!elm[prop]) {
             let advice = Validation.getAdvice(name, elm);
             if (advice == null) {
-              const errorMsg = useTitle
-                ? elm && elm.title
-                  ? elm.title
-                  : v.error
-                : v.error;
+              const errorMsg = useTitle ? (elm && elm.title ? elm.title : v.error) : v.error;
               advice =
                 '<div class="validation-advice" id="advice-' +
                 name +
-                "-" +
+                '-' +
                 Validation.getElmID(elm) +
                 '" style="display:none">' +
                 errorMsg +
-                "</div>";
+                '</div>';
               switch (elm.type.toLowerCase()) {
-                case "checkbox":
-                case "radio":
+                case 'checkbox':
+                case 'radio':
                   const p = elm.parentNode;
                   if (p) {
                     new Insertion.Bottom(p, advice);
@@ -289,41 +259,41 @@
               }
               advice = Validation.getAdvice(name, elm);
             }
-            if (typeof Effect == "undefined") {
-              advice.style.display = "block";
+            if (typeof Effect == 'undefined') {
+              advice.style.display = 'block';
             } else {
               new Effect.Appear(advice, { duration: 1 });
             }
           }
           elm[prop] = true;
-          elm.removeClassName("validation-passed");
-          elm.addClassName("validation-failed");
-          const elmWrapper = elm.up(".validation-field-wrapper");
+          elm.removeClassName('validation-passed');
+          elm.addClassName('validation-failed');
+          const elmWrapper = elm.up('.validation-field-wrapper');
           if (elmWrapper) {
-            elmWrapper.removeClassName("validation-passed");
-            elmWrapper.addClassName("validation-failed");
+            elmWrapper.removeClassName('validation-passed');
+            elmWrapper.addClassName('validation-failed');
           }
           return false;
         } else {
           const advice = Validation.getAdvice(name, elm);
           if (advice != null) advice.hide();
-          elm[prop] = "";
-          elm.removeClassName("validation-failed");
-          elm.addClassName("validation-passed");
-          const elmWrapper = elm.up(".validation-field-wrapper");
+          elm[prop] = '';
+          elm.removeClassName('validation-failed');
+          elm.addClassName('validation-passed');
+          const elmWrapper = elm.up('.validation-field-wrapper');
           if (elmWrapper) {
-            elmWrapper.removeClassName("validation-failed");
-            elmWrapper.addClassName("validation-passed");
+            elmWrapper.removeClassName('validation-failed');
+            elmWrapper.addClassName('validation-passed');
           }
           return true;
         }
       } catch (e) {
-        console.warn("Exception in test ", e);
+        console.warn('Exception in test ', e);
         throw e;
       }
     },
     isVisible: function (elm) {
-      while (elm.tagName != "BODY") {
+      while (elm.tagName != 'BODY') {
         if (!$(elm).visible()) return false;
         elm = elm.parentNode;
       }
@@ -331,8 +301,8 @@
     },
     getAdvice: function (name, elm) {
       return (
-        $("advice-" + name + "-" + Validation.getElmID(elm)) ||
-        $("advice-" + Validation.getElmID(elm))
+        $('advice-' + name + '-' + Validation.getElmID(elm)) ||
+        $('advice-' + Validation.getElmID(elm))
       );
     },
     getElmID: function (elm) {
@@ -342,18 +312,18 @@
       elm = $(elm);
       const cn = elm.classNames();
       cn.each(function (value) {
-        const prop = "__advice" + value.camelize();
+        const prop = '__advice' + value.camelize();
         if (elm[prop]) {
           const advice = Validation.getAdvice(value, elm);
           advice.hide();
-          elm[prop] = "";
+          elm[prop] = '';
         }
-        elm.removeClassName("validation-failed");
-        elm.removeClassName("validation-passed");
-        const elmWrapper = elm.up(".validation-field-wrapper");
+        elm.removeClassName('validation-failed');
+        elm.removeClassName('validation-passed');
+        const elmWrapper = elm.up('.validation-field-wrapper');
         if (elmWrapper) {
-          elmWrapper.removeClassName("validation-failed");
-          elmWrapper.removeClassName("validation-passed");
+          elmWrapper.removeClassName('validation-failed');
+          elmWrapper.removeClassName('validation-passed');
         }
       });
     },
@@ -369,7 +339,7 @@
           if (Validation.messages.get(value[0])) {
             value[1] = Validation.messages.get(value[0]);
           } else {
-            value[1] = Validation.messages.get("_unknown_");
+            value[1] = Validation.messages.get('_unknown_');
           }
         }
         nv[value[0]] = new Validator(
@@ -384,83 +354,80 @@
     get: function (name) {
       return Validation.methods[name]
         ? Validation.methods[name]
-        : Validation.methods["_LikeNoIDIEverSaw_"];
+        : Validation.methods['_LikeNoIDIEverSaw_'];
     },
     methods: {
-      _LikeNoIDIEverSaw_: new Validator("_LikeNoIDIEverSaw_", "", {}),
+      _LikeNoIDIEverSaw_: new Validator('_LikeNoIDIEverSaw_', '', {}),
     },
   });
 
-  Validation.add("IsEmpty", "", function (v) {
+  Validation.add('IsEmpty', '', function (v) {
     return v == null || v.length == 0; // || /^\s+$/.test(v));
   });
 
   Validation.messages = new Hash({
-    _unknown_: "unkown error",
+    _unknown_: 'unkown error',
   });
 
   Validation.defaultFunctions = [
     [
-      "required",
+      'required',
       null,
       function (v) {
-        return !Validation.get("IsEmpty").test(v);
+        return !Validation.get('IsEmpty').test(v);
       },
     ],
     [
-      "validate-number",
+      'validate-number',
       null,
       function (v) {
-        return (
-          Validation.get("IsEmpty").test(v) || (!isNaN(v) && !/^\s+$/.test(v))
-        );
+        return Validation.get('IsEmpty').test(v) || (!isNaN(v) && !/^\s+$/.test(v));
       },
     ],
     [
-      "validate-digits",
+      'validate-digits',
       null,
       function (v) {
-        return Validation.get("IsEmpty").test(v) || !/[^\d]/.test(v);
+        return Validation.get('IsEmpty').test(v) || !/[^\d]/.test(v);
       },
     ],
     [
-      "validate-alpha",
+      'validate-alpha',
       null,
       function (v) {
-        return Validation.get("IsEmpty").test(v) || /^[a-zA-Z]+$/.test(v);
+        return Validation.get('IsEmpty').test(v) || /^[a-zA-Z]+$/.test(v);
       },
     ],
     [
-      "validate-alphanum",
+      'validate-alphanum',
       null,
       function (v) {
-        return Validation.get("IsEmpty").test(v) || !/\W/.test(v);
+        return Validation.get('IsEmpty').test(v) || !/\W/.test(v);
       },
     ],
     [
-      "validate-date",
+      'validate-date',
       null,
       function (v) {
         const test = new Date(v);
-        return Validation.get("IsEmpty").test(v) || !isNaN(test);
+        return Validation.get('IsEmpty').test(v) || !isNaN(test);
       },
     ],
     [
-      "validate-email",
+      'validate-email',
       null,
       function (v) {
         return (
-          Validation.get("IsEmpty").test(v) ||
-          /\w{1,}[@][\w\-]{1,}([.]([\w\-]{1,}))+$/.test(v)
+          Validation.get('IsEmpty').test(v) || /\w{1,}[@][\w\-]{1,}([.]([\w\-]{1,}))+$/.test(v)
         );
       },
     ],
     [
-      "validate-url",
+      'validate-url',
       null,
       function (v) {
         return (
-          Validation.get("IsEmpty").test(v) ||
+          Validation.get('IsEmpty').test(v) ||
           /^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i.test(
             v,
           )
@@ -468,13 +435,13 @@
       },
     ],
     [
-      "validate-date-au",
+      'validate-date-au',
       null,
       function (v) {
-        if (Validation.get("IsEmpty").test(v)) return true;
+        if (Validation.get('IsEmpty').test(v)) return true;
         const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
         if (!regex.test(v)) return false;
-        const d = new Date(v.replace(regex, "$2/$1/$3"));
+        const d = new Date(v.replace(regex, '$2/$1/$3'));
         return (
           parseInt(RegExp.$2, 10) == 1 + d.getMonth() &&
           parseInt(RegExp.$1, 10) == d.getDate() &&
@@ -483,10 +450,10 @@
       },
     ],
     [
-      "validate-date-de",
+      'validate-date-de',
       null,
       function (v) {
-        if (Validation.get("IsEmpty").test(v)) return true;
+        if (Validation.get('IsEmpty').test(v)) return true;
         const regex = /^(\d{2})[\.\/](\d{2})[\.\/](\d{4})$/;
         if (!regex.test(v)) return false;
         const d = new Date(0);
@@ -505,7 +472,7 @@
       },
     ],
     [
-      "validate-currency-dollar",
+      'validate-currency-dollar',
       null,
       function (v) {
         // [$]1[##][,###]+[.##]
@@ -513,7 +480,7 @@
         // [$]0.##
         // [$].##
         return (
-          Validation.get("IsEmpty").test(v) ||
+          Validation.get('IsEmpty').test(v) ||
           /^\$?\-?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}\d*(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/.test(
             v,
           )
@@ -521,34 +488,30 @@
       },
     ],
     [
-      "validate-selection",
+      'validate-selection',
       null,
       function (v, elm) {
-        return elm.options
-          ? elm.selectedIndex > 0
-          : !Validation.get("IsEmpty").test(v);
+        return elm.options ? elm.selectedIndex > 0 : !Validation.get('IsEmpty').test(v);
       },
     ],
     [
-      "validate-one-required",
+      'validate-one-required',
       null,
       function (v, elm) {
-        const p =
-          elm.up(".validation-one-required-field-wrapper") || elm.parentNode;
-        const options = p.getElementsByTagName("INPUT");
+        const p = elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
+        const options = p.getElementsByTagName('INPUT');
         return $A(options).any(function (elm) {
           return $F(elm);
         });
       },
     ],
     [
-      "validate-multiple-required",
+      'validate-multiple-required',
       null,
       function (v, elm) {
-        const nr = elm.className.replace(/^.*multipleIs(\d+)( .*|)$/g, "$1");
-        const p =
-          elm.up(".validation-one-required-field-wrapper") || elm.parentNode;
-        const options = p.getElementsByTagName("INPUT");
+        const nr = elm.className.replace(/^.*multipleIs(\d+)( .*|)$/g, '$1');
+        const p = elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
+        const options = p.getElementsByTagName('INPUT');
         return (
           nr ==
           $A(options).findAll(function (elm) {
@@ -558,13 +521,12 @@
       },
     ],
     [
-      "validate-minimum-required",
+      'validate-minimum-required',
       null,
       function (v, elm) {
-        const nr = elm.className.replace(/^.*minimumIs(\d+)( .*|)$/g, "$1");
-        const p =
-          elm.up(".validation-one-required-field-wrapper") || elm.parentNode;
-        const options = p.getElementsByTagName("INPUT");
+        const nr = elm.className.replace(/^.*minimumIs(\d+)( .*|)$/g, '$1');
+        const p = elm.up('.validation-one-required-field-wrapper') || elm.parentNode;
+        const options = p.getElementsByTagName('INPUT');
         return (
           nr <=
           $A(options).findAll(function (elm) {
@@ -573,40 +535,32 @@
         );
       },
     ],
-    ["validate-email-equal", "email", Validator.methods.equalToField],
-    ["validate-docname", null, Validator.methods.validDocName],
+    ['validate-email-equal', 'email', Validator.methods.equalToField],
+    ['validate-docname', null, Validator.methods.validDocName],
   ];
 
   new Ajax.Request(getCelHost(), {
-    method: "post",
+    method: 'post',
     parameters: {
-      xpage: "celements_ajax",
-      ajax_mode: "ValidationMessages",
+      xpage: 'celements_ajax',
+      ajax_mode: 'ValidationMessages',
     },
     onSuccess: function (transport) {
       if (transport.responseText.isJSON()) {
-        Validation.messages = Validation.messages.merge(
-          transport.responseText.evalJSON(),
-        );
+        Validation.messages = Validation.messages.merge(transport.responseText.evalJSON());
         Validation.addAllThese(Validation.defaultFunctions);
-        if (
-          typeof console != "undefined" &&
-          typeof console.debug != "undefined"
-        ) {
-          console.debug("validation.js: finished adding default functions.");
+        if (typeof console != 'undefined' && typeof console.debug != 'undefined') {
+          console.debug('validation.js: finished adding default functions.');
         }
-      } else if (
-        typeof console != "undefined" &&
-        typeof console.error != "undefined"
-      ) {
-        console.error("noJSON!!! ", transport.responseText);
+      } else if (typeof console != 'undefined' && typeof console.error != 'undefined') {
+        console.error('noJSON!!! ', transport.responseText);
       }
     },
   });
 
   Validation.addValidationToForm = function (form) {
     let valid = null;
-    if (form.tagName.toLowerCase() == "form") {
+    if (form.tagName.toLowerCase() == 'form') {
       valid = new Validation(form, {
         immediate: true,
         useTitles: true,
@@ -618,20 +572,15 @@
 
   Validation.addValidationToFormListener = function (event) {
     const elem = event.findElement();
-    if (elem.tagName.toLowerCase() == "form") {
+    if (elem.tagName.toLowerCase() == 'form') {
       Validation.addValidationToForm(elem);
     } else {
-      elem
-        .select("form.celAddValidationToForm")
-        .each(Validation.addValidationToForm);
+      elem.select('form.celAddValidationToForm').each(Validation.addValidationToForm);
     }
   };
 
-  document.addEventListener("DOMContentLoaded", function () {
-    $(document.body).observe(
-      "celValidation:addValidation",
-      Validation.addValidationToFormListener,
-    );
-    $(document.body).fire("celValidation:addValidation");
+  document.addEventListener('DOMContentLoaded', function () {
+    $(document.body).observe('celValidation:addValidation', Validation.addValidationToFormListener);
+    $(document.body).fire('celValidation:addValidation');
   });
 })(window);

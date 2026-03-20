@@ -1,13 +1,13 @@
 /**
  * outline cells
  */
-if (typeof CELEMENTS == "undefined") {
+if (typeof CELEMENTS == 'undefined') {
   var CELEMENTS = {};
 }
-if (typeof CELEMENTS.layout == "undefined") {
+if (typeof CELEMENTS.layout == 'undefined') {
   CELEMENTS.layout = {};
 }
-if (typeof CELEMENTS.layout.editor == "undefined") {
+if (typeof CELEMENTS.layout.editor == 'undefined') {
   CELEMENTS.layout.editor = {};
 }
 
@@ -32,7 +32,7 @@ if (typeof CELEMENTS.layout.editor == "undefined") {
       outlineAllCells: function () {
         var _me = this;
         _me._windowResizeListener = _me._outlineAllCells_delayed.bind(_me);
-        Event.observe(window, "resize", _me._windowResizeListener);
+        Event.observe(window, 'resize', _me._windowResizeListener);
         _me._outlineAllCells_intern();
       },
 
@@ -41,32 +41,28 @@ if (typeof CELEMENTS.layout.editor == "undefined") {
         if (_me.delayedOutlineScheduled) {
           window.clearTimeout(_me.delayedOutlineScheduled);
         }
-        _me.delayedOutlineScheduled = _me._outlineAllCells_intern
-          .bind(_me)
-          .delay(_me.delayValue);
+        _me.delayedOutlineScheduled = _me._outlineAllCells_intern.bind(_me).delay(_me.delayValue);
       },
 
       _outlineAllCells_intern: function () {
         var _me = this;
-        $$(".cel_cell").each(
-          _me._outliner.outlineElementAddClass
-            .curry("cel_cellOutline")
-            .bind(_me._outliner),
+        $$('.cel_cell').each(
+          _me._outliner.outlineElementAddClass.curry('cel_cellOutline').bind(_me._outliner),
         );
       },
 
       removeAllCellOutlines: function () {
         var _me = this;
-        $$(".cel_cellOutline").each(function (cellElem) {
+        $$('.cel_cellOutline').each(function (cellElem) {
           cellElem.remove();
         });
-        Event.stopObserving(window, "resize", _me._windowResizeListener);
+        Event.stopObserving(window, 'resize', _me._windowResizeListener);
       },
 
       _addFocusToList: function (cells) {
         var _me = this;
         $A(cells).each(function (cell) {
-          if (cell.hasClassName("cel_cell")) {
+          if (cell.hasClassName('cel_cell')) {
             _me._outliner.addFocus(cell);
           }
         });
@@ -75,7 +71,7 @@ if (typeof CELEMENTS.layout.editor == "undefined") {
       _removeFocusFromList: function (cells) {
         var _me = this;
         $A(cells).each(function (cell) {
-          if (cell.hasClassName("cel_cell")) {
+          if (cell.hasClassName('cel_cell')) {
             _me._outliner.removeFocus(cell);
           }
         });

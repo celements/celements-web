@@ -99,8 +99,7 @@ li.reply {
 
 #AddComment .commentcontainer {
   padding: 4px 32px;
-  background: transparent url(/file/resources/icons/xwiki/rquo.gif) right 4px
-    no-repeat;
+  background: transparent url(/file/resources/icons/xwiki/rquo.gif) right 4px no-repeat;
 }
 
 #AddComment .commentcontainer label {
@@ -110,8 +109,7 @@ li.reply {
   font-size: 1px;
   line-height: 120px;
   overflow: hidden;
-  background: transparent url(/file/resources/icons/xwiki/lquo.gif) left top
-    no-repeat;
+  background: transparent url(/file/resources/icons/xwiki/lquo.gif) left top no-repeat;
   display: inline;
   float: left;
   margin-left: -32px;

@@ -65,7 +65,7 @@ var XWiki = (function (XWiki) {
    * </dl>
    */
   widgets.Notification = Class.create({
-    text: "Hello world!",
+    text: 'Hello world!',
     defaultOptions: {
       /** supported types: plain, info, warning, error, inprogress, done */
       plain: { timeout: 5 },
@@ -77,12 +77,8 @@ var XWiki = (function (XWiki) {
     },
     initialize: function (text, type, options) {
       this.text = text || this.text;
-      this.type =
-        typeof this.defaultOptions[type] != "undefined" ? type : "plain";
-      this.options = Object.extend(
-        Object.clone(this.defaultOptions[this.type]),
-        options || {},
-      );
+      this.type = typeof this.defaultOptions[type] != 'undefined' ? type : 'plain';
+      this.options = Object.extend(Object.clone(this.defaultOptions[this.type]), options || {});
       this.createElement();
       if (!this.options.inactive) {
         this.show();
@@ -91,13 +87,13 @@ var XWiki = (function (XWiki) {
     /** Creates the HTML structure for the notification. */
     createElement: function () {
       if (!this.element) {
-        this.element = new Element("div", {
-          class: "xnotification xnotification-" + this.type,
+        this.element = new Element('div', {
+          class: 'xnotification xnotification-' + this.type,
         }).update(this.text);
         if (this.options.icon) {
           this.element.setStyle({
             backgroundImage: this.options.icon,
-            paddingLeft: "22px",
+            paddingLeft: '22px',
           });
         }
         if (this.options.backgroundColor) {
@@ -108,14 +104,8 @@ var XWiki = (function (XWiki) {
         if (this.options.color) {
           this.element.setStyle({ color: this.options.color });
         }
-        this.element = this.element.wrap(
-          new Element("div", { class: "xnotification-wrapper" }),
-        );
-        Event.observe(
-          this.element,
-          "click",
-          this.hide.bindAsEventListener(this),
-        );
+        this.element = this.element.wrap(new Element('div', { class: 'xnotification-wrapper' }));
+        Event.observe(this.element, 'click', this.hide.bindAsEventListener(this));
       }
     },
     /** Display the notification and schedule an automatic hide after the configured period of time, if any. */
@@ -125,10 +115,7 @@ var XWiki = (function (XWiki) {
       }
       this.element.show();
       if (this.options.timeout) {
-        this.timer = window.setTimeout(
-          this.hide.bind(this),
-          this.options.timeout * 1000,
-        );
+        this.timer = window.setTimeout(this.hide.bind(this), this.options.timeout * 1000);
       }
     },
     /** Hide the notification. */
@@ -161,19 +148,19 @@ var XWiki = (function (XWiki) {
   /** Returns the container for all the notifications. The container is created the first time this function is called. */
   widgets.Notification.getContainer = function () {
     if (!widgets.Notification.container) {
-      widgets.Notification.container = new Element("div", {
-        class: "xnotification-container",
+      widgets.Notification.container = new Element('div', {
+        class: 'xnotification-container',
       });
       // Insert the container in the document body.
       $(document.body).insert(widgets.Notification.container);
       // Register a scroll listener to reposition the notifications at the bottom of the screen in IE.
       if (Prototype.Browser.IE) {
         widgets.Notification.container.setStyle({
-          position: "absolute",
-          bottom: "0px",
+          position: 'absolute',
+          bottom: '0px',
         });
-        Event.observe(window, "scroll", function () {
-          var span = new Element("div");
+        Event.observe(window, 'scroll', function () {
+          var span = new Element('div');
           widgets.Notification.container.insert({ top: span });
           setTimeout(span.remove.bind(span), 1);
         });

@@ -49,10 +49,10 @@ external js-files
  * Don't use setBody("...") on overlay dialog, instead set content of 
  * div with id="yuiOverlayContainer".
  */
-if (typeof CELEMENTS == "undefined") {
+if (typeof CELEMENTS == 'undefined') {
   var CELEMENTS = {};
 }
-if (typeof CELEMENTS.cookie == "undefined") {
+if (typeof CELEMENTS.cookie == 'undefined') {
   CELEMENTS.cookie = {};
 }
 
@@ -79,7 +79,7 @@ if (typeof CELEMENTS.cookie == "undefined") {
       _init: function (configObj) {
         var _me = this;
         configObj = configObj || {};
-        _me._frameId = configObj.frameId || "cel_checkThirdPartyCookiesEnabled";
+        _me._frameId = configObj.frameId || 'cel_checkThirdPartyCookiesEnabled';
         _me._thirdPartyURL = configObj.thirdPartyURL;
         _me._cookiesDisabledMessageURL = configObj.cookiesDisabledMessageURL;
         _me._cookiesEnabledMessageURL = configObj.cookiesEnabledMessageURL;
@@ -88,13 +88,12 @@ if (typeof CELEMENTS.cookie == "undefined") {
 
       _defaultCallback: function (response) {
         var _me = this;
-        var cookiesEnabled =
-          "true" == response.data.replace(/thirdPartyCookiesEnabled=/g, "");
+        var cookiesEnabled = 'true' == response.data.replace(/thirdPartyCookiesEnabled=/g, '');
         $(_me._frameId).remove();
         var overlayConf = {
           fixedcenter: true,
           close: true,
-          additionalCssClass: "testclass",
+          additionalCssClass: 'testclass',
         };
         if (cookiesEnabled && _me._cookiesEnabledMessageURL) {
           overlayConf.overlayURL = _me._cookiesEnabledMessageURL;
@@ -115,22 +114,20 @@ if (typeof CELEMENTS.cookie == "undefined") {
             // IE Fix
             window.location.origin =
               window.location.protocol +
-              "//" +
+              '//' +
               window.location.hostname +
-              (window.location.port ? ":" + window.location.port : "");
+              (window.location.port ? ':' + window.location.port : '');
           }
-          var url = _me._thirdPartyURL + "&domain=" + window.location.origin;
-          var checkFrame = new Element("iframe", {
+          var url = _me._thirdPartyURL + '&domain=' + window.location.origin;
+          var checkFrame = new Element('iframe', {
             id: _me._frameId,
             src: url,
           });
           checkFrame.hide();
           $(document.body).insert(checkFrame);
-          Event.observe(window, "message", callback.bind(_me));
+          Event.observe(window, 'message', callback.bind(_me));
         } else {
-          console.log(
-            "No external URL to check third party cookies configured.",
-          );
+          console.log('No external URL to check third party cookies configured.');
         }
       },
     };

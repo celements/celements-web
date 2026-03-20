@@ -22,10 +22,10 @@
  * Celements presentation ResponsiveDesignImage
  * This is the Celements presentation ResponsiveDesignImage controller.
  */
-if (typeof CELEMENTS == "undefined") {
+if (typeof CELEMENTS == 'undefined') {
   var CELEMENTS = {};
 }
-if (typeof CELEMENTS.presentation == "undefined") {
+if (typeof CELEMENTS.presentation == 'undefined') {
   CELEMENTS.presentation = {};
 }
 
@@ -33,11 +33,8 @@ if (typeof CELEMENTS.presentation == "undefined") {
   //////////////////////////////////////////////////////////////////////////////
   // Celements presentation ResponsiveDesignImage
   //////////////////////////////////////////////////////////////////////////////
-  CELEMENTS.presentation.ResponsiveDesignImage = function (
-    containerId,
-    wrapperId,
-  ) {
-    containerId = containerId || "sitecontainer";
+  CELEMENTS.presentation.ResponsiveDesignImage = function (containerId, wrapperId) {
+    containerId = containerId || 'sitecontainer';
     // constructor
     this._init(containerId, wrapperId);
   };
@@ -76,12 +73,12 @@ if (typeof CELEMENTS.presentation == "undefined") {
       },
 
       _addParamToUrl: function (currUrl, newParamPart) {
-        var srcSuffix = "";
-        if (newParamPart != "") {
-          if (currUrl.indexOf("?") > 0) {
-            srcSuffix = "&" + newParamPart;
+        var srcSuffix = '';
+        if (newParamPart != '') {
+          if (currUrl.indexOf('?') > 0) {
+            srcSuffix = '&' + newParamPart;
           } else {
-            srcSuffix = "?" + newParamPart;
+            srcSuffix = '?' + newParamPart;
           }
         }
         return srcSuffix;
@@ -91,13 +88,13 @@ if (typeof CELEMENTS.presentation == "undefined") {
         var _me = this;
         wrapWidth = parseInt(wrapWidth);
         wrapHeight = parseInt(wrapHeight);
-        var newImgSrc = imgSrc.replace(/celwidth=\d*&?|celheight=\d*&?/g, "");
-        newImgSrc = newImgSrc.replace(/\?$/g, "");
+        var newImgSrc = imgSrc.replace(/celwidth=\d*&?|celheight=\d*&?/g, '');
+        newImgSrc = newImgSrc.replace(/\?$/g, '');
         if (wrapWidth && wrapWidth > 0) {
-          newImgSrc += _me._addParamToUrl(newImgSrc, "celwidth=" + wrapWidth);
+          newImgSrc += _me._addParamToUrl(newImgSrc, 'celwidth=' + wrapWidth);
         }
         if (wrapHeight && wrapHeight > 0) {
-          newImgSrc += _me._addParamToUrl(newImgSrc, "celheight=" + wrapHeight);
+          newImgSrc += _me._addParamToUrl(newImgSrc, 'celheight=' + wrapHeight);
         }
         return newImgSrc;
       },
@@ -118,44 +115,32 @@ if (typeof CELEMENTS.presentation == "undefined") {
         });
       },
 
-      checkImageDimensions: function (
-        wrapperElemDim,
-        contentImg,
-        preloadIfEditor,
-      ) {
+      checkImageDimensions: function (wrapperElemDim, contentImg, preloadIfEditor) {
         var _me = this;
         preloadIfEditor = preloadIfEditor || true;
         var wrapHeight = wrapperElemDim.height;
         var wrapWidth = wrapperElemDim.width;
-        if (
-          preloadIfEditor &&
-          $$("body")[0].hasClassName("celementsmenubarvisible")
-        ) {
+        if (preloadIfEditor && $$('body')[0].hasClassName('celementsmenubarvisible')) {
           _me.preloadContentImages(contentImg);
         }
-        var updatedImgSrc = _me._getImgSourceWithDim(
-          contentImg.src,
-          wrapWidth,
-          wrapHeight,
-        );
+        var updatedImgSrc = _me._getImgSourceWithDim(contentImg.src, wrapWidth, wrapHeight);
         if (contentImg.src != updatedImgSrc) {
-          contentImg.removeAttribute("width");
-          contentImg.removeAttribute("height");
+          contentImg.removeAttribute('width');
+          contentImg.removeAttribute('height');
           contentImg.hide();
-          var bindedResizeImageLoaded =
-            _me._resizedImageLoaded.bind(contentImg);
-          $(contentImg).stopObserving("load", bindedResizeImageLoaded);
-          $(contentImg).observe("load", bindedResizeImageLoaded);
+          var bindedResizeImageLoaded = _me._resizedImageLoaded.bind(contentImg);
+          $(contentImg).stopObserving('load', bindedResizeImageLoaded);
+          $(contentImg).observe('load', bindedResizeImageLoaded);
           contentImg.src = updatedImgSrc;
           $(contentImg).setStyle({
             backgroundImage:
-              "url(" +
+              'url(' +
               window.CELEMENTS.getUtils().getPathPrefix() +
-              "/file/resources/celRes/ajax-loader.gif)",
-            backgroundPosition: "center center",
-            backgroundRepeat: "no-repeat",
+              '/file/resources/celRes/ajax-loader.gif)',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
           });
-          _me._htmlContainer.fire("cel_ResponsiveDesign:afterImageSrcChange", {
+          _me._htmlContainer.fire('cel_ResponsiveDesign:afterImageSrcChange', {
             img: contentImg,
           });
         }
@@ -170,29 +155,23 @@ if (typeof CELEMENTS.presentation == "undefined") {
         var _me = this;
         if (_me._htmlContainer && _me._getWrapper()) {
           var wrapperElem = _me._getWrapper();
-          var wrapperElemHeight = Math.round(
-            parseFloat(wrapperElem.getStyle("height")),
-          );
-          var wrapperElemWidth = Math.round(
-            parseFloat(wrapperElem.getStyle("width")),
-          );
+          var wrapperElemHeight = Math.round(parseFloat(wrapperElem.getStyle('height')));
+          var wrapperElemWidth = Math.round(parseFloat(wrapperElem.getStyle('width')));
           var checkImageDimBinded = _me.checkImageDimensions
             .curry({
               width: wrapperElemWidth,
               height: wrapperElemHeight,
             })
             .bind(_me);
-          _me._htmlContainer.select("img").each(checkImageDimBinded);
+          _me._htmlContainer.select('img').each(checkImageDimBinded);
         }
       },
 
       doImageRescaleToDim: function (wrapperElemDim) {
         var _me = this;
         if (_me._htmlContainer) {
-          var checkImageDimBinded = _me.checkImageDimensions
-            .curry(wrapperElemDim)
-            .bind(_me);
-          _me._htmlContainer.select("img").each(checkImageDimBinded);
+          var checkImageDimBinded = _me.checkImageDimensions.curry(wrapperElemDim).bind(_me);
+          _me._htmlContainer.select('img').each(checkImageDimBinded);
         }
       },
     };

@@ -16,13 +16,13 @@ function tdwWizard() {
     The curent state of the selection process
     Possible values: none, cells, rows, columns
   */
-  var selectionState = "none";
+  var selectionState = 'none';
 
   /*
     The type of the selection process
     Possible values: none, cells, rows, columns, table
   */
-  var selectionType = "none";
+  var selectionType = 'none';
 
   // The selection bounds
   var startRowIndex, endRowIndex, startColumnIndex, endColumnIndex;
@@ -59,7 +59,7 @@ function tdwWizard() {
   /** The new object number */
   var objectNumber;
   /** The order of the wizard pages */
-  var pageOrder = ["Doc", "Range", "Extra"];
+  var pageOrder = ['Doc', 'Range', 'Extra'];
   /** The active (selected) wizard page. */
   var activePage;
   /** The enabled wizard pages. Blocks activation of disabled pages. */
@@ -77,30 +77,28 @@ function tdwWizard() {
     - adds global event listeners
    */
   this.initialize = function (address, directory, saveAddr) {
-    container = document.getElementById("tdwTables");
-    waitingMsg = document.getElementById("tdwWaiting");
-    requestErrorMsg = document.getElementById("tdwRequestError");
-    notablesMsg = document.getElementById("tdwNoTables");
-    selectMsg = document.getElementById("tdwSelectRange");
-    backBtn = document.getElementById("tdwBackButton");
-    nextBtn = document.getElementById("tdwNextButton");
-    finishBtn = document.getElementById("tdwFinishButton");
+    container = document.getElementById('tdwTables');
+    waitingMsg = document.getElementById('tdwWaiting');
+    requestErrorMsg = document.getElementById('tdwRequestError');
+    notablesMsg = document.getElementById('tdwNoTables');
+    selectMsg = document.getElementById('tdwSelectRange');
+    backBtn = document.getElementById('tdwBackButton');
+    nextBtn = document.getElementById('tdwNextButton');
+    finishBtn = document.getElementById('tdwFinishButton');
     baseAddress = address;
     skinDirectory = directory;
     saveAddress = saveAddr;
     if (document.documentElement.addEventListener) {
-      document.documentElement.addEventListener("mouseup", onMouseUp, true);
+      document.documentElement.addEventListener('mouseup', onMouseUp, true);
     } else {
-      document.documentElement.attachEvent("onmouseup", onMouseUpIE);
-      document.documentElement.attachEvent("onselectstart", onSelectStartIE);
-      document.documentElement.attachEvent("onselect", onSelectIE);
+      document.documentElement.attachEvent('onmouseup', onMouseUpIE);
+      document.documentElement.attachEvent('onselectstart', onSelectStartIE);
+      document.documentElement.attachEvent('onselect', onSelectIE);
     }
     activePage = pageOrder[0];
-    document.getElementById("tdw" + activePage + "Wizard").className =
-      "tdwActivePage";
-    document.getElementById("tdw" + activePage + "WizardButton").className =
-      "tdwNavigationImage";
-    if (document.getElementById("tdwPageInput").selectedIndex == -1) {
+    document.getElementById('tdw' + activePage + 'Wizard').className = 'tdwActivePage';
+    document.getElementById('tdw' + activePage + 'WizardButton').className = 'tdwNavigationImage';
+    if (document.getElementById('tdwPageInput').selectedIndex == -1) {
       disableNext();
     }
   };
@@ -122,44 +120,44 @@ function tdwWizard() {
   };
 
   enableBack = function () {
-    backBtn.className = "tdwButton";
+    backBtn.className = 'tdwButton';
     backEnabled = true;
   };
   disableBack = function () {
-    backBtn.className = "tdwButtonDisabled";
+    backBtn.className = 'tdwButtonDisabled';
     backEnabled = false;
   };
   enableNext = function () {
-    nextBtn.className = "tdwButton";
+    nextBtn.className = 'tdwButton';
     nextEnabled = true;
   };
   disableNext = function () {
-    nextBtn.className = "tdwButtonDisabled";
+    nextBtn.className = 'tdwButtonDisabled';
     nextEnabled = false;
   };
   enableFinish = function () {
-    finishBtn.className = "tdwButton";
+    finishBtn.className = 'tdwButton';
     finishEnabled = true;
   };
   disableFinish = function () {
-    finishBtn.className = "tdwButtonDisabled";
+    finishBtn.className = 'tdwButtonDisabled';
     finishEnabled = false;
   };
   enablePage = function (page) {
     enabledPages[page] = true;
-    var button = document.getElementById("tdw" + page + "WizardButton");
-    button.className = "tdwNavigationImage";
-    if (button.src.indexOf("Hover.png") >= 0) {
-      button.src = skinDirectory + "chwTaskCompletedHover.png";
+    var button = document.getElementById('tdw' + page + 'WizardButton');
+    button.className = 'tdwNavigationImage';
+    if (button.src.indexOf('Hover.png') >= 0) {
+      button.src = skinDirectory + 'chwTaskCompletedHover.png';
     } else {
-      button.src = skinDirectory + "chwTaskCompleted.png";
+      button.src = skinDirectory + 'chwTaskCompleted.png';
     }
   };
   disablePage = function (page) {
     enabledPages[page] = false;
-    var button = document.getElementById("tdw" + page + "WizardButton");
-    button.className = "tdwNavigationImageDisabled";
-    button.src = skinDirectory + "chwTaskWaiting.png";
+    var button = document.getElementById('tdw' + page + 'WizardButton');
+    button.className = 'tdwNavigationImageDisabled';
+    button.src = skinDirectory + 'chwTaskWaiting.png';
   };
 
   this.showWizardPage = function (newPage) {
@@ -170,29 +168,28 @@ function tdwWizard() {
     var currentPage = getPageIndex(activePage);
     if (currentPage == 0) {
       // Enable the Back button
-      document.getElementById("tdwBackButton").className = "tdwButton";
+      document.getElementById('tdwBackButton').className = 'tdwButton';
       backEnabled = true;
     }
     // See if this was the last visible page, in order to enable the Next button
     var nextPage = getNextPageIndex(currentPage);
     if (nextPage == -1) {
       // Enable the Next button
-      document.getElementById("tdwNextButton").className = "tdwButton";
+      document.getElementById('tdwNextButton').className = 'tdwButton';
       nextEnabled = true;
     }
 
     // Hide the previous page
-    document.getElementById("tdw" + activePage + "Wizard").className =
-      "tdwInactivePage";
-    var button = document.getElementById("tdw" + activePage + "WizardButton");
-    if (button.src.indexOf("Hover.png") >= 0) {
-      button.src = skinDirectory + "chwTaskCompletedHover.png";
+    document.getElementById('tdw' + activePage + 'Wizard').className = 'tdwInactivePage';
+    var button = document.getElementById('tdw' + activePage + 'WizardButton');
+    if (button.src.indexOf('Hover.png') >= 0) {
+      button.src = skinDirectory + 'chwTaskCompletedHover.png';
     } else {
-      button.src = skinDirectory + "chwTaskCompleted.png";
+      button.src = skinDirectory + 'chwTaskCompleted.png';
     }
 
     activePage = newPage;
-    if (activePage == "Range" && !hasValidSelection) {
+    if (activePage == 'Range' && !hasValidSelection) {
       disableNext();
     }
 
@@ -200,7 +197,7 @@ function tdwWizard() {
     var currentPage = getPageIndex(activePage);
     if (currentPage == 0) {
       // Disable the Back button
-      document.getElementById("tdwBackButton").className = "tdwButtonDisabled";
+      document.getElementById('tdwBackButton').className = 'tdwButtonDisabled';
       backEnabled = false;
       enableNext();
     }
@@ -208,18 +205,17 @@ function tdwWizard() {
     var nextPage = getNextPageIndex(currentPage);
     if (nextPage == -1) {
       // Disable the Next button
-      document.getElementById("tdwNextButton").className = "tdwButtonDisabled";
+      document.getElementById('tdwNextButton').className = 'tdwButtonDisabled';
       nextEnabled = false;
     }
 
     // Show the selected page
-    document.getElementById("tdw" + activePage + "Wizard").className =
-      "tdwActivePage";
-    button = document.getElementById("tdw" + activePage + "WizardButton");
-    if (button.src.indexOf("Hover.png") >= 0) {
-      button.src = skinDirectory + "chwTaskCompletingHover.png";
+    document.getElementById('tdw' + activePage + 'Wizard').className = 'tdwActivePage';
+    button = document.getElementById('tdw' + activePage + 'WizardButton');
+    if (button.src.indexOf('Hover.png') >= 0) {
+      button.src = skinDirectory + 'chwTaskCompletingHover.png';
     } else {
-      button.src = skinDirectory + "chwTaskCompleting.png";
+      button.src = skinDirectory + 'chwTaskCompleting.png';
     }
   };
 
@@ -228,7 +224,7 @@ function tdwWizard() {
     if (!nextEnabled) return false;
     var currentPage = getPageIndex(activePage);
     if (currentPage == 0) {
-      this.getTablesFromPage(document.getElementById("tdwPageInput").value);
+      this.getTablesFromPage(document.getElementById('tdwPageInput').value);
     }
     var nextPage = getNextPageIndex(currentPage);
     nextPage = pageOrder[nextPage];
@@ -249,63 +245,56 @@ function tdwWizard() {
   };
 
   this.change = function () {
-    disablePage("Range");
-    disablePage("Extra");
+    disablePage('Range');
+    disablePage('Extra');
     disableFinish();
     enableNext();
   };
 
   this.flipVisible = function (elementName, visible) {
-    var element = document.getElementById("tdw" + elementName + "Div");
+    var element = document.getElementById('tdw' + elementName + 'Div');
     if (visible) {
-      element.className = "tdwVisible";
+      element.className = 'tdwVisible';
     } else {
-      element.className = "tdwHidden";
+      element.className = 'tdwHidden';
     }
   };
 
   var getRange = function () {
     switch (selectionType) {
-      case "table":
-        return "*";
-      case "columns":
+      case 'table':
+        return '*';
+      case 'columns':
         return (
           String.fromCharCode(64 + startColumnIndex) +
-          "-" +
+          '-' +
           String.fromCharCode(64 + endColumnIndex)
         );
-      case "rows":
-        return startRowIndex + "-" + endRowIndex;
-      case "cells":
+      case 'rows':
+        return startRowIndex + '-' + endRowIndex;
+      case 'cells':
         return (
           String.fromCharCode(64 + startColumnIndex) +
           startRowIndex +
-          "-" +
+          '-' +
           String.fromCharCode(64 + endColumnIndex) +
           endRowIndex
         );
     }
-    return "*";
+    return '*';
   };
 
   this.finish = function () {
     if (!finishEnabled) return false;
     if (!window.opener) return false;
-    if (document.getElementById("tdwSaveInput").checked) {
-      if (document.getElementById("tdwSaveNameInput").value == "") {
-        if (
-          !confirm(
-            document.getElementById("tdwSaveNoNameMsg").firstChild.nodeValue,
-          )
-        )
+    if (document.getElementById('tdwSaveInput').checked) {
+      if (document.getElementById('tdwSaveNameInput').value == '') {
+        if (!confirm(document.getElementById('tdwSaveNoNameMsg').firstChild.nodeValue))
           return false;
       }
       if (saveObject()) {
         window.opener.wizard.setValidDatasource(
-          "type:object;doc:" +
-            doc +
-            ";class:TableDataSource;object_number:" +
-            objectNumber,
+          'type:object;doc:' + doc + ';class:TableDataSource;object_number:' + objectNumber,
         );
       } else {
         return false;
@@ -317,22 +306,20 @@ function tdwWizard() {
       //alert(window.opener.wizard);
       // this fails in IE (only under Wine)
       window.opener.wizard.setValidDatasource(
-        "type:table;doc:" +
+        'type:table;doc:' +
           doc +
-          ";table_number:" +
+          ';table_number:' +
           table +
-          ";range:" +
+          ';range:' +
           getRange() +
-          ";has_header_row:" +
-          document.getElementById("tdwRowHeaderInput").checked +
-          ";has_header_column:" +
-          document.getElementById("tdwColumnHeaderInput").checked +
-          ";ignore_alpha:" +
-          document.getElementById("tdwIgnoreAlphaInput").checked +
-          ";decimal_symbol:" +
-          (document.getElementById("tdwDecimalSymbolInput").checked
-            ? "comma"
-            : "period"),
+          ';has_header_row:' +
+          document.getElementById('tdwRowHeaderInput').checked +
+          ';has_header_column:' +
+          document.getElementById('tdwColumnHeaderInput').checked +
+          ';ignore_alpha:' +
+          document.getElementById('tdwIgnoreAlphaInput').checked +
+          ';decimal_symbol:' +
+          (document.getElementById('tdwDecimalSymbolInput').checked ? 'comma' : 'period'),
       );
     }
     window.close();
@@ -342,41 +329,41 @@ function tdwWizard() {
   /** Highlight the navigation button when the mouse moves over it */
   this.enterButton = function (elementName) {
     if (!enabledPages[elementName]) return false;
-    var element = document.getElementById("tdw" + elementName + "WizardButton");
+    var element = document.getElementById('tdw' + elementName + 'WizardButton');
     var src = element.src;
-    if (src.indexOf("Hover.png") >= 0) return;
-    src = src.substring(0, src.indexOf(".png")) + "Hover.png";
+    if (src.indexOf('Hover.png') >= 0) return;
+    src = src.substring(0, src.indexOf('.png')) + 'Hover.png';
     element.src = src;
   };
 
   /** Dehighlight the navigation button when the mouse moves out of it */
   this.leaveButton = function (elementName) {
     if (!enabledPages[elementName]) return;
-    var element = document.getElementById("tdw" + elementName + "WizardButton");
+    var element = document.getElementById('tdw' + elementName + 'WizardButton');
     var src = element.src;
-    if (src.indexOf("Hover.png") < 0) return;
-    src = src.substring(0, src.indexOf("Hover.png")) + ".png";
+    if (src.indexOf('Hover.png') < 0) return;
+    src = src.substring(0, src.indexOf('Hover.png')) + '.png';
     element.src = src;
   };
 
   // Obtain the table, row and column number from a table cell's id
   var parseId = function (id) {
     var table = getTableIndex(id);
-    var row = id.substring(id.indexOf("R") + 1, id.indexOf("C")) - 0;
-    var column = id.substring(id.indexOf("C") + 1) - 0;
+    var row = id.substring(id.indexOf('R') + 1, id.indexOf('C')) - 0;
+    var column = id.substring(id.indexOf('C') + 1) - 0;
     return [table, row, column];
   };
   // Obtain the table index from a table cell's id
   var getTableIndex = function (id) {
-    return id.substring(id.indexOf("T") + 1, id.indexOf("R")) - 0;
+    return id.substring(id.indexOf('T') + 1, id.indexOf('R')) - 0;
   };
   // Obtain the row index from a table cell's id
   var getRowIndex = function (id) {
-    return id.substring(id.indexOf("R") + 1, id.indexOf("C")) - 0;
+    return id.substring(id.indexOf('R') + 1, id.indexOf('C')) - 0;
   };
   // Obtain the column index from a table cell's id
   var getColumnIndex = function (id) {
-    return id.substring(id.indexOf("C") + 1) - 0;
+    return id.substring(id.indexOf('C') + 1) - 0;
   };
 
   /*
@@ -394,30 +381,27 @@ function tdwWizard() {
   // Remove previous selection when another selection is starting
   var unselect = function () {
     switch (selectionType) {
-      case "none":
+      case 'none':
         break;
-      case "table":
-        document.getElementById("T" + table).className = "tdwUnselectedTable";
+      case 'table':
+        document.getElementById('T' + table).className = 'tdwUnselectedTable';
         break;
-      case "rows":
+      case 'rows':
         for (var i = startRowIndex; i <= endRowIndex; i++) {
-          document.getElementById("T" + table + "R" + i).className =
-            "tdwUnselectedRow";
+          document.getElementById('T' + table + 'R' + i).className = 'tdwUnselectedRow';
         }
         break;
-      case "columns":
+      case 'columns':
         for (var i = startColumnIndex; i <= endColumnIndex; i++) {
-          document.getElementById("T" + table + "C" + i).className =
-            "tdwUnselectedColumn";
-          document.getElementById("T" + table + "R0C" + i).className =
-            "tdwUnselectedCell";
+          document.getElementById('T' + table + 'C' + i).className = 'tdwUnselectedColumn';
+          document.getElementById('T' + table + 'R0C' + i).className = 'tdwUnselectedCell';
         }
         break;
-      case "cells":
+      case 'cells':
         for (var i = startRowIndex; i <= endRowIndex; i++) {
           for (var j = startColumnIndex; j <= endColumnIndex; j++) {
-            document.getElementById("T" + table + "R" + i + "C" + j).className =
-              "tdwUnselectedCell";
+            document.getElementById('T' + table + 'R' + i + 'C' + j).className =
+              'tdwUnselectedCell';
           }
         }
         break;
@@ -432,39 +416,35 @@ function tdwWizard() {
   var onMouseDownCommon = function (id) {
     unselect();
     hasValidSelection = false;
-    selectionState = "none";
+    selectionState = 'none';
     var tidx = getTableIndex(id);
     var ridx = getRowIndex(id);
     var cidx = getColumnIndex(id);
     if (ridx == 0) {
       if (cidx == 0) {
         // The whole table is selected
-        document.getElementById("T" + tidx).className = "tdwSelectedTable";
-        selectionType = "table";
+        document.getElementById('T' + tidx).className = 'tdwSelectedTable';
+        selectionType = 'table';
         enableNext();
         enableFinish();
         hasValidSelection = true;
       } else {
         // A whole column is selected
-        document.getElementById("T" + tidx + "C" + cidx).className =
-          "tdwSelectedColumn";
-        document.getElementById("T" + tidx + "R0C" + cidx).className =
-          "tdwSelectedCell";
-        selectionState = "columns";
-        selectionType = "columns";
+        document.getElementById('T' + tidx + 'C' + cidx).className = 'tdwSelectedColumn';
+        document.getElementById('T' + tidx + 'R0C' + cidx).className = 'tdwSelectedCell';
+        selectionState = 'columns';
+        selectionType = 'columns';
       }
     } else if (cidx == 0) {
       // A whole row is selected
-      document.getElementById("T" + tidx + "R" + ridx).className =
-        "tdwSelectedRow";
-      selectionState = "rows";
-      selectionType = "rows";
+      document.getElementById('T' + tidx + 'R' + ridx).className = 'tdwSelectedRow';
+      selectionState = 'rows';
+      selectionType = 'rows';
     } else {
       // Cellblock selection
-      document.getElementById("T" + tidx + "R" + ridx + "C" + cidx).className =
-        "tdwSelectedCell";
-      selectionState = "cells";
-      selectionType = "cells";
+      document.getElementById('T' + tidx + 'R' + ridx + 'C' + cidx).className = 'tdwSelectedCell';
+      selectionState = 'cells';
+      selectionType = 'cells';
     }
     table = tidx;
     startRowIndex = ridx;
@@ -474,7 +454,7 @@ function tdwWizard() {
     if (!hasValidSelection) {
       disableNext();
       disableFinish();
-      disablePage("Extra");
+      disablePage('Extra');
     }
   };
 
@@ -485,7 +465,7 @@ function tdwWizard() {
     if (evt.button != 0) {
       return true;
     }
-    if (selectionState != "none") {
+    if (selectionState != 'none') {
       onMouseUp(evt);
     }
     onMouseDownCommon(evt.target.id);
@@ -501,7 +481,7 @@ function tdwWizard() {
     if (evt.button != 1) {
       return true;
     }
-    if (selectionState != "none") {
+    if (selectionState != 'none') {
       onMouseUpIE();
     }
     onMouseDownCommon(evt.srcElement.id);
@@ -519,7 +499,7 @@ function tdwWizard() {
      - update the (visual) selection state of the involved cells
    */
   var onMouseOverCommon = function (id) {
-    if (selectionState == "none") {
+    if (selectionState == 'none') {
       return;
     }
     var tidx = getTableIndex(id);
@@ -531,7 +511,7 @@ function tdwWizard() {
     }
 
     switch (selectionState) {
-      case "rows":
+      case 'rows':
         if (ridx == 0) {
           ridx = 1;
         }
@@ -542,81 +522,55 @@ function tdwWizard() {
         ) {
           var sign = signum(ridx - endRowIndex);
           for (var i = endRowIndex + sign; (ridx - i) * sign >= 0; i += sign) {
-            document.getElementById("T" + tidx + "R" + i).className =
-              "tdwSelectedRow";
+            document.getElementById('T' + tidx + 'R' + i).className = 'tdwSelectedRow';
           }
         } else {
           var sign = signum(endRowIndex - startRowIndex);
           var start =
-            (startRowIndex +
-              ridx +
-              sign * signum(startRowIndex - ridx) * (startRowIndex - ridx)) /
+            (startRowIndex + ridx + sign * signum(startRowIndex - ridx) * (startRowIndex - ridx)) /
               2 +
             sign;
           for (var i = start; (endRowIndex - i) * sign >= 0; i += sign) {
-            document.getElementById("T" + tidx + "R" + i).className =
-              "tdwUnSelectedRow";
+            document.getElementById('T' + tidx + 'R' + i).className = 'tdwUnSelectedRow';
           }
-          for (
-            var i = startRowIndex - sign;
-            (ridx - i) * sign <= 0;
-            i -= sign
-          ) {
-            document.getElementById("T" + tidx + "R" + i).className =
-              "tdwSelectedRow";
+          for (var i = startRowIndex - sign; (ridx - i) * sign <= 0; i -= sign) {
+            document.getElementById('T' + tidx + 'R' + i).className = 'tdwSelectedRow';
           }
         }
         break;
-      case "columns":
+      case 'columns':
         if (cidx == 0) {
           cidx = 1;
         }
         if (endColumnIndex == cidx) break;
         if (
           startColumnIndex == endColumnIndex ||
-          signum(endColumnIndex - startColumnIndex) ==
-            signum(cidx - endColumnIndex)
+          signum(endColumnIndex - startColumnIndex) == signum(cidx - endColumnIndex)
         ) {
           var sign = signum(cidx - endColumnIndex);
-          for (
-            var i = endColumnIndex + sign;
-            (cidx - i) * sign >= 0;
-            i += sign
-          ) {
-            document.getElementById("T" + tidx + "C" + i).className =
-              "tdwSelectedColumn";
-            document.getElementById("T" + tidx + "R0C" + i).className =
-              "tdwSelectedCell";
+          for (var i = endColumnIndex + sign; (cidx - i) * sign >= 0; i += sign) {
+            document.getElementById('T' + tidx + 'C' + i).className = 'tdwSelectedColumn';
+            document.getElementById('T' + tidx + 'R0C' + i).className = 'tdwSelectedCell';
           }
         } else {
           var sign = signum(endColumnIndex - startColumnIndex);
           var start =
             (startColumnIndex +
               cidx +
-              sign *
-                signum(startColumnIndex - cidx) *
-                (startColumnIndex - cidx)) /
+              sign * signum(startColumnIndex - cidx) * (startColumnIndex - cidx)) /
               2 +
             sign;
           for (var i = start; (endColumnIndex - i) * sign >= 0; i += sign) {
-            document.getElementById("T" + tidx + "C" + i).className =
-              "tdwUnSelectedColumn";
-            document.getElementById("T" + tidx + "R0C" + i).className =
-              "tdwUnselectedCell";
+            document.getElementById('T' + tidx + 'C' + i).className = 'tdwUnSelectedColumn';
+            document.getElementById('T' + tidx + 'R0C' + i).className = 'tdwUnselectedCell';
           }
-          for (
-            var i = startColumnIndex - sign;
-            (cidx - i) * sign <= 0;
-            i -= sign
-          ) {
-            document.getElementById("T" + tidx + "C" + i).className =
-              "tdwSelectedColumn";
-            document.getElementById("T" + tidx + "R0C" + i).className =
-              "tdwSelectedCell";
+          for (var i = startColumnIndex - sign; (cidx - i) * sign <= 0; i -= sign) {
+            document.getElementById('T' + tidx + 'C' + i).className = 'tdwSelectedColumn';
+            document.getElementById('T' + tidx + 'R0C' + i).className = 'tdwSelectedCell';
           }
         }
         break;
-      case "cells":
+      case 'cells':
         if (ridx == 0) {
           ridx = 1;
         }
@@ -629,14 +583,8 @@ function tdwWizard() {
           var csign = signum(endColumnIndex - startColumnIndex);
           if (csign == 0) csign = 1;
           for (var i = endRowIndex + sign; (ridx - i) * sign >= 0; i += sign) {
-            for (
-              var j = startColumnIndex;
-              (endColumnIndex - j) * csign >= 0;
-              j += csign
-            ) {
-              document.getElementById(
-                "T" + tidx + "R" + i + "C" + j,
-              ).className = "tdwSelectedCell";
+            for (var j = startColumnIndex; (endColumnIndex - j) * csign >= 0; j += csign) {
+              document.getElementById('T' + tidx + 'R' + i + 'C' + j).className = 'tdwSelectedCell';
             }
           }
         } else {
@@ -644,35 +592,18 @@ function tdwWizard() {
           var csign = signum(endColumnIndex - startColumnIndex);
           if (csign == 0) csign = 1;
           var start =
-            (startRowIndex +
-              ridx +
-              sign * signum(startRowIndex - ridx) * (startRowIndex - ridx)) /
+            (startRowIndex + ridx + sign * signum(startRowIndex - ridx) * (startRowIndex - ridx)) /
               2 +
             sign;
           for (var i = start; (endRowIndex - i) * sign >= 0; i += sign) {
-            for (
-              var j = startColumnIndex;
-              (endColumnIndex - j) * csign >= 0;
-              j += csign
-            ) {
-              document.getElementById(
-                "T" + tidx + "R" + i + "C" + j,
-              ).className = "tdwUnselectedCell";
+            for (var j = startColumnIndex; (endColumnIndex - j) * csign >= 0; j += csign) {
+              document.getElementById('T' + tidx + 'R' + i + 'C' + j).className =
+                'tdwUnselectedCell';
             }
           }
-          for (
-            var i = startRowIndex - sign;
-            (ridx - i) * sign <= 0;
-            i -= sign
-          ) {
-            for (
-              var j = startColumnIndex;
-              (endColumnIndex - j) * csign >= 0;
-              j += csign
-            ) {
-              document.getElementById(
-                "T" + tidx + "R" + i + "C" + j,
-              ).className = "tdwSelectedCell";
+          for (var i = startRowIndex - sign; (ridx - i) * sign <= 0; i -= sign) {
+            for (var j = startColumnIndex; (endColumnIndex - j) * csign >= 0; j += csign) {
+              document.getElementById('T' + tidx + 'R' + i + 'C' + j).className = 'tdwSelectedCell';
             }
           }
         }
@@ -683,21 +614,14 @@ function tdwWizard() {
           break;
         } else if (
           startColumnIndex == endColumnIndex ||
-          signum(endColumnIndex - startColumnIndex) ==
-            signum(cidx - endColumnIndex)
+          signum(endColumnIndex - startColumnIndex) == signum(cidx - endColumnIndex)
         ) {
           var sign = signum(cidx - endColumnIndex);
           var rsign = signum(ridx - startRowIndex);
           if (rsign == 0) rsign = 1;
-          for (
-            var i = endColumnIndex + sign;
-            (cidx - i) * sign >= 0;
-            i += sign
-          ) {
+          for (var i = endColumnIndex + sign; (cidx - i) * sign >= 0; i += sign) {
             for (var j = startRowIndex; (ridx - j) * rsign >= 0; j += rsign) {
-              document.getElementById(
-                "T" + tidx + "R" + j + "C" + i,
-              ).className = "tdwSelectedCell";
+              document.getElementById('T' + tidx + 'R' + j + 'C' + i).className = 'tdwSelectedCell';
             }
           }
         } else {
@@ -707,27 +631,18 @@ function tdwWizard() {
           var start =
             (startColumnIndex +
               cidx +
-              sign *
-                signum(startColumnIndex - cidx) *
-                (startColumnIndex - cidx)) /
+              sign * signum(startColumnIndex - cidx) * (startColumnIndex - cidx)) /
               2 +
             sign;
           for (var i = start; (endColumnIndex - i) * sign >= 0; i += sign) {
             for (var j = startRowIndex; (ridx - j) * rsign >= 0; j += rsign) {
-              document.getElementById(
-                "T" + tidx + "R" + j + "C" + i,
-              ).className = "tdwUnselectedCell";
+              document.getElementById('T' + tidx + 'R' + j + 'C' + i).className =
+                'tdwUnselectedCell';
             }
           }
-          for (
-            var i = startColumnIndex - sign;
-            (cidx - i) * sign <= 0;
-            i -= sign
-          ) {
+          for (var i = startColumnIndex - sign; (cidx - i) * sign <= 0; i -= sign) {
             for (var j = startRowIndex; (ridx - j) * rsign >= 0; j += rsign) {
-              document.getElementById(
-                "T" + tidx + "R" + j + "C" + i,
-              ).className = "tdwSelectedCell";
+              document.getElementById('T' + tidx + 'R' + j + 'C' + i).className = 'tdwSelectedCell';
             }
           }
         }
@@ -776,7 +691,7 @@ function tdwWizard() {
      - "sort" the selected area's bounds;
   */
   var onMouseUpCommon = function (evt) {
-    selectionState = "none";
+    selectionState = 'none';
     if (startRowIndex > endRowIndex) {
       var tmp = startRowIndex;
       startRowIndex = endRowIndex;
@@ -794,7 +709,7 @@ function tdwWizard() {
 
   // Left button released wrapper for most browsers...
   var onMouseUp = function (evt) {
-    if (evt.button != 0 || selectionState == "none") {
+    if (evt.button != 0 || selectionState == 'none') {
       return true;
     }
     onMouseUpCommon();
@@ -806,7 +721,7 @@ function tdwWizard() {
   // Left button released wrapper for IE...
   var onMouseUpIE = function () {
     var evt = window.event;
-    if (evt.button != 1 || selectionState == "none") {
+    if (evt.button != 1 || selectionState == 'none') {
       return true;
     }
     onMouseUpCommon();
@@ -855,19 +770,19 @@ function tdwWizard() {
         for (var cidx = 0; cidx < row.childNodes.length; cidx++) {
           var cell = row.childNodes.item(cidx);
           if (cell.nodeType != 1) continue;
-          cell.className = "tdwUnselectedTableCell";
+          cell.className = 'tdwUnselectedTableCell';
           if (cell.addEventListener) {
-            cell.addEventListener("mousedown", onMouseDown, true);
-            cell.addEventListener("mousemove", onMouseMove, true);
-            cell.addEventListener("mouseover", onMouseOver, true);
-            cell.addEventListener("mouseup", onMouseUp, true);
+            cell.addEventListener('mousedown', onMouseDown, true);
+            cell.addEventListener('mousemove', onMouseMove, true);
+            cell.addEventListener('mouseover', onMouseOver, true);
+            cell.addEventListener('mouseup', onMouseUp, true);
           } else {
-            cell.attachEvent("onmousedown", onMouseDownIE);
-            cell.attachEvent("onmousemove", onMouseMoveIE);
-            cell.attachEvent("onmouseover", onMouseOverIE);
-            cell.attachEvent("onmouseup", onMouseUpIE);
-            cell.attachEvent("onselectstart", onSelectStartIE);
-            cell.attachEvent("onselect", onSelectIE);
+            cell.attachEvent('onmousedown', onMouseDownIE);
+            cell.attachEvent('onmousemove', onMouseMoveIE);
+            cell.attachEvent('onmouseover', onMouseOverIE);
+            cell.attachEvent('onmouseup', onMouseUpIE);
+            cell.attachEvent('onselectstart', onSelectStartIE);
+            cell.attachEvent('onselect', onSelectIE);
           }
         }
       }
@@ -889,41 +804,36 @@ function tdwWizard() {
      Save the object by sending an ObjectAd request
    */
   var saveObject = function () {
-    var objectData = "classname=XWiki.TableDataSource";
+    var objectData = 'classname=XWiki.TableDataSource';
     objectData +=
-      "&XWiki.TableDataSource_datasource_name=" +
-      encodeURI(document.getElementById("tdwSaveNameInput").value);
-    objectData += "&XWiki.TableDataSource_table_number=" + table;
-    objectData += "&XWiki.TableDataSource_range=" + getRange();
+      '&XWiki.TableDataSource_datasource_name=' +
+      encodeURI(document.getElementById('tdwSaveNameInput').value);
+    objectData += '&XWiki.TableDataSource_table_number=' + table;
+    objectData += '&XWiki.TableDataSource_range=' + getRange();
     objectData +=
-      "&XWiki.TableDataSource_has_header_row=" +
-      (document.getElementById("tdwRowHeaderInput").checked ? "1" : "0");
+      '&XWiki.TableDataSource_has_header_row=' +
+      (document.getElementById('tdwRowHeaderInput').checked ? '1' : '0');
     objectData +=
-      "&XWiki.TableDataSource_has_header_column=" +
-      (document.getElementById("tdwColumnHeaderInput").checked ? "1" : "0");
+      '&XWiki.TableDataSource_has_header_column=' +
+      (document.getElementById('tdwColumnHeaderInput').checked ? '1' : '0');
     objectData +=
-      "&XWiki.TableDataSource_ignore_alpha=" +
-      (document.getElementById("tdwIgnoreAlphaInput").checked ? "1" : "0");
+      '&XWiki.TableDataSource_ignore_alpha=' +
+      (document.getElementById('tdwIgnoreAlphaInput').checked ? '1' : '0');
     objectData +=
-      "&XWiki.TableDataSource_decimal_symbol=" +
-      (document.getElementById("tdwDecimalSymbolInput").checked
-        ? "comma"
-        : "period");
+      '&XWiki.TableDataSource_decimal_symbol=' +
+      (document.getElementById('tdwDecimalSymbolInput').checked ? 'comma' : 'period');
 
     if (window.XMLHttpRequest) {
       request = new XMLHttpRequest();
     } else {
-      request = new ActiveXObject("Microsoft.XMLHTTP");
+      request = new ActiveXObject('Microsoft.XMLHTTP');
     }
-    request.open("POST", saveAddress + doc.replace(".", "/"), false);
-    request.setRequestHeader(
-      "Content-Type",
-      "application/x-www-form-urlencoded; charset=UTF-8",
-    );
+    request.open('POST', saveAddress + doc.replace('.', '/'), false);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     try {
       request.send(objectData);
     } catch (ex) {
-      alert("Object could not be saved due to a connection problem.\n\n" + ex);
+      alert('Object could not be saved due to a connection problem.\n\n' + ex);
       return false;
     }
     return true;
@@ -932,25 +842,25 @@ function tdwWizard() {
      Request the table data
   */
   this.getTablesFromPage = function (page) {
-    requestErrorMsg.className = "tdwHidden";
-    notablesMsg.className = "tdwHidden";
-    selectMsg.className = "tdwHidden";
-    container.className = "tdwHidden";
-    waitingMsg.className = "tdwMessage";
+    requestErrorMsg.className = 'tdwHidden';
+    notablesMsg.className = 'tdwHidden';
+    selectMsg.className = 'tdwHidden';
+    container.className = 'tdwHidden';
+    waitingMsg.className = 'tdwMessage';
     hasValidSelection = false;
-    doc = page.replace("/", ".");
-    selectionType = "none";
-    selectionState = "none";
-    disablePage("Extra");
+    doc = page.replace('/', '.');
+    selectionType = 'none';
+    selectionState = 'none';
+    disablePage('Extra');
     disableNext();
     disableFinish();
     if (window.XMLHttpRequest) {
       request = new XMLHttpRequest();
     } else {
-      request = new ActiveXObject("Microsoft.XMLHTTP");
+      request = new ActiveXObject('Microsoft.XMLHTTP');
     }
-    page = page.replace(".", "/");
-    request.open("GET", baseAddress + page, true);
+    page = page.replace('.', '/');
+    request.open('GET', baseAddress + page, true);
     request.onreadystatechange = this.handleRequest;
     request.send(null);
   };
@@ -960,40 +870,32 @@ function tdwWizard() {
   */
   this.handleRequest = function () {
     if (request.readyState == 4) {
-      waitingMsg.className = "tdwHidden";
+      waitingMsg.className = 'tdwHidden';
       try {
         if (request.status !== 200) {
-          requestErrorMsg.className = "tdwErrorMessage";
+          requestErrorMsg.className = 'tdwErrorMessage';
           return;
         }
       } catch (e) {
-        requestErrorMsg.className = "tdwErrorMessage";
+        requestErrorMsg.className = 'tdwErrorMessage';
         return;
       }
       if (request.responseXML) {
         try {
           if (
-            request.responseXML
-              .getElementsByTagName("div")
-              .item(0)
-              .getAttribute("id") != "tdwEnvelope"
+            request.responseXML.getElementsByTagName('div').item(0).getAttribute('id') !=
+            'tdwEnvelope'
           ) {
-            document.getElementById("tdwNoTablePageName").firstChild.nodeValue =
-              doc;
-            notablesMsg.className = "tdwErrorMessage";
+            document.getElementById('tdwNoTablePageName').firstChild.nodeValue = doc;
+            notablesMsg.className = 'tdwErrorMessage';
             return;
           } else {
-            var envelope = request.responseXML
-              .getElementsByTagName("div")
-              .item(0);
-            objectNumber = request.responseXML
-              .getElementsByTagName("div")
-              .item(1).firstChild.nodeValue;
-            if (envelope.getElementsByTagName("table").length == 0) {
-              document.getElementById(
-                "tdwNoTablePageName",
-              ).firstChild.nodeValue = doc;
-              notablesMsg.className = "tdwErrorMessage";
+            var envelope = request.responseXML.getElementsByTagName('div').item(0);
+            objectNumber = request.responseXML.getElementsByTagName('div').item(1)
+              .firstChild.nodeValue;
+            if (envelope.getElementsByTagName('table').length == 0) {
+              document.getElementById('tdwNoTablePageName').firstChild.nodeValue = doc;
+              notablesMsg.className = 'tdwErrorMessage';
               return;
             }
             clearOldTables();
@@ -1002,22 +904,21 @@ function tdwWizard() {
               prepareTables(container);
             } catch (e) {
               container.innerHTML = request.responseText.substring(
-                request.responseText.indexOf("<table"),
-                request.responseText.indexOf("</div>"),
+                request.responseText.indexOf('<table'),
+                request.responseText.indexOf('</div>'),
               );
               prepareTables(container);
             }
-            selectMsg.className = "tdwMessage";
-            container.className = "tdwTables";
+            selectMsg.className = 'tdwMessage';
+            container.className = 'tdwTables';
             return;
           }
         } catch (e) {
-          document.getElementById("tdwNoTablePageName").firstChild.nodeValue =
-            doc;
-          notablesMsg.className = "tdwErrorMessage";
+          document.getElementById('tdwNoTablePageName').firstChild.nodeValue = doc;
+          notablesMsg.className = 'tdwErrorMessage';
         }
       } else {
-        requestErrorMsg.className = "tdwErrorMessage";
+        requestErrorMsg.className = 'tdwErrorMessage';
         return;
       }
     }

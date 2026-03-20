@@ -198,9 +198,7 @@ body > div#celements2_menu_bar {
 }
 
 /* Keep the rightmost dropdowns within the viewport by opening them to the left. */
-#celements2_menu_bar
-  .celements2_menu_bar_header_item:nth-last-child(-n + 3)
-  .celements2_menu_bar_submenu {
+#celements2_menu_bar .celements2_menu_bar_header_item:nth-last-child(-n + 3) .celements2_menu_bar_submenu {
   left: auto;
   right: 0px;
 }
@@ -690,11 +688,7 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
   margin-top: 15px;
 }
 
-.celements3_tabMenu
-  #tabMenuPanel
-  .celementsEditorBlocker
-  .celButtons
-  .celbutton {
+.celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons .celbutton {
   padding: 6px;
   padding-left: 10px;
   padding-right: 10px;
@@ -749,42 +743,20 @@ body > .cel_reorderNodes_proxy {
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li.cel_nav_even,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_even,
-.yui-panel-container
-  .cel_contentTab
-  ul.cel_presentation_reorder
-  li.cel_nav_even {
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_even {
   background-color: #e1e1e1;
 }
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li.cel_nav_odd,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_nav_odd,
-.yui-panel-container
-  .cel_contentTab
-  ul.cel_presentation_reorder
-  li.cel_nav_odd {
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_nav_odd {
   background-color: white;
 }
 
-.generalOverlay
-  #cel_overlaybody
-  .reorderMode
-  ul.cel_presentation_reorder
-  li.cel_nav_even,
-.yui-panel-container
-  .cel_contentTab
-  .reorderMode
-  ul.cel_presentation_reorder
-  li.cel_nav_even,
-.generalOverlay
-  #cel_overlaybody
-  .reorderMode
-  ul.cel_presentation_reorder
-  li.cel_nav_odd,
-.yui-panel-container
-  .cel_contentTab
-  .reorderMode
-  ul.cel_presentation_reorder
-  li.cel_nav_odd {
+.generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
+.yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_even,
+.generalOverlay #cel_overlaybody .reorderMode ul.cel_presentation_reorder li.cel_nav_odd,
+.yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_odd {
   background-color: transparent;
 }
 
@@ -804,16 +776,8 @@ body > .cel_reorderNodes_proxy {
 }
 
 body > .cel_reorderNodes_proxy .docLangs,
-.generalOverlay
-  #cel_overlaybody
-  ul.cel_presentation_reorder
-  li.cel_reorderNodes_placeholder
-  .docLangs,
-.yui-panel-container
-  .cel_contentTab
-  ul.cel_presentation_reorder
-  li.cel_reorderNodes_placeholder
-  .docLangs {
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs {
   display: none;
 }
 
@@ -835,54 +799,23 @@ body > .cel_reorderNodes_proxy .docLangs,
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a + a,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a + a,
-.yui-panel-container
-  .cel_contentTab
-  ul.cel_presentation_reorder
-  .docLangs
-  a
-  + a,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a + a,
 .celements3_tabMenu #con_langBar .docLangs a + a,
 .celements3_tabMenu #con_langBar .docLangs span + span {
   margin-left: 1px;
 }
 
-.generalOverlay
-  #cel_overlaybody
-  .sitemapOutsideStructure
-  ul
-  .docLangs
-  a.defaultLanguage,
-.generalOverlay
-  #cel_overlaybody
-  ul.cel_presentation_reorder
-  .docLangs
-  a.defaultLanguage,
-.yui-panel-container
-  .cel_contentTab
-  ul.cel_presentation_reorder
-  .docLangs
-  a.defaultLanguage,
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.defaultLanguage,
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.defaultLanguage,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.defaultLanguage,
 .celements3_tabMenu #con_langBar .docLangs a.defaultLanguage,
 .celements3_tabMenu #con_langBar .docLangs span.defaultLanguage {
   font-weight: bold;
 }
 
-.generalOverlay
-  #cel_overlaybody
-  .sitemapOutsideStructure
-  ul
-  .docLangs
-  a.transNotExists,
-.generalOverlay
-  #cel_overlaybody
-  ul.cel_presentation_reorder
-  .docLangs
-  a.transNotExists,
-.yui-panel-container
-  .cel_contentTab
-  ul.cel_presentation_reorder
-  .docLangs
-  a.transNotExists,
+.generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.transNotExists,
+.generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.transNotExists,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.transNotExists,
 .celements3_tabMenu #con_langBar .docLangs a.transNotExists,
 .celements3_tabMenu #con_langBar .docLangs span.transNotExists {
   background-color: white;
@@ -891,11 +824,7 @@ body > .cel_reorderNodes_proxy .docLangs,
 
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a:hover,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a:hover,
-.yui-panel-container
-  .cel_contentTab
-  ul.cel_presentation_reorder
-  .docLangs
-  a:hover,
+.yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a:hover,
 .celements3_tabMenu #con_langBar .docLangs a:hover {
   background-color: #ccc;
 }
@@ -1042,8 +971,8 @@ img.cel_fluidresizeHeight {
  * Box layouting / Flex support
  **/
 .cel_displayflex {
-  display: box;  /** old browsers **/
-  display: flexbox;  /** for IE10 **/
+  display: box; /** old browsers **/
+  display: flexbox; /** for IE10 **/
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;

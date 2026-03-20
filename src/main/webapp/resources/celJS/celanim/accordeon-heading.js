@@ -22,10 +22,10 @@
  * Accordeon Heading
  * This is the Accordeon effect
  */
-if (typeof CELEMENTS == "undefined") {
+if (typeof CELEMENTS == 'undefined') {
   var CELEMENTS = {};
 }
-if (typeof CELEMENTS.anim == "undefined") {
+if (typeof CELEMENTS.anim == 'undefined') {
   CELEMENTS.anim = {};
 }
 
@@ -54,14 +54,9 @@ if (typeof CELEMENTS.anim == "undefined") {
           _me._hideAllBlocksAfter();
           _me._registerOpeningListeners();
           _me.openOnlyOnePerLevel = false;
-          _me.htmlElem.fire(
-            "celanim_accordeon-heading:initFinished",
-            _me.htmlElem,
-          );
+          _me.htmlElem.fire('celanim_accordeon-heading:initFinished', _me.htmlElem);
         } else {
-          console.warn(
-            'Failed to initialize accordeon-heading for id "' + elemId + '".',
-          );
+          console.warn('Failed to initialize accordeon-heading for id "' + elemId + '".');
         }
       },
 
@@ -73,23 +68,18 @@ if (typeof CELEMENTS.anim == "undefined") {
       _hideAllBlocksAfter: function () {
         var _me = this;
         if (!_me.htmlElem) return;
-        _me.htmlElem
-          .select(_me._getHeadings("h6"))
-          .each(function (headingBlock) {
-            if (
-              headingBlock.visible() &&
-              headingBlock.hasClassName("accordeon")
-            ) {
-              _me.getAllSiblings(headingBlock, true).each(function (elem) {
-                elem.hide();
-              });
-            }
-          });
+        _me.htmlElem.select(_me._getHeadings('h6')).each(function (headingBlock) {
+          if (headingBlock.visible() && headingBlock.hasClassName('accordeon')) {
+            _me.getAllSiblings(headingBlock, true).each(function (elem) {
+              elem.hide();
+            });
+          }
+        });
       },
 
       _headingGetLevel: function (headingElem) {
         var headingName = headingElem.tagName || headingElem;
-        var startLevel = headingName.toLowerCase().replace(/^h/, "");
+        var startLevel = headingName.toLowerCase().replace(/^h/, '');
         return parseInt(startLevel) || 7;
       },
 
@@ -98,7 +88,7 @@ if (typeof CELEMENTS.anim == "undefined") {
         if (maxSubHeading) {
           var headingLevel = _me._headingGetLevel(maxSubHeading);
           var greaterHeadings = [1, 2, 3, 4, 5, 6].slice(0, headingLevel);
-          greaterHeadings = "h" + greaterHeadings.join(", h");
+          greaterHeadings = 'h' + greaterHeadings.join(', h');
         }
         return greaterHeadings;
       },
@@ -114,11 +104,9 @@ if (typeof CELEMENTS.anim == "undefined") {
           var isAccordeonHeading = false;
           currentElem = currentElem.next(_me._getHeadings(onlySubHeadings));
           if (currentElem) {
-            isHeading = currentElem.tagName.toLowerCase().startsWith("h");
-            isAccordeonHeading =
-              isHeading && currentElem.hasClassName("accordeon");
-            var nextSubHeadingFound =
-              _me._headingGetLevel(currentElem) > startLevel;
+            isHeading = currentElem.tagName.toLowerCase().startsWith('h');
+            isAccordeonHeading = isHeading && currentElem.hasClassName('accordeon');
+            var nextSubHeadingFound = _me._headingGetLevel(currentElem) > startLevel;
             if (isHeading) {
               if (nextSubHeadingFound) {
                 resultArray.push(currentElem);
@@ -140,14 +128,14 @@ if (typeof CELEMENTS.anim == "undefined") {
         var _me = this;
         if (!_me.htmlElem) return;
         _me.htmlElem
-          .select("h1.accordeon")
-          .concat(_me.htmlElem.select("h2.accordeon"))
-          .concat(_me.htmlElem.select("h3.accordeon"))
-          .concat(_me.htmlElem.select("h4.accordeon"))
-          .concat(_me.htmlElem.select("h5.accordeon"))
-          .concat(_me.htmlElem.select("h6.accordeon"))
+          .select('h1.accordeon')
+          .concat(_me.htmlElem.select('h2.accordeon'))
+          .concat(_me.htmlElem.select('h3.accordeon'))
+          .concat(_me.htmlElem.select('h4.accordeon'))
+          .concat(_me.htmlElem.select('h5.accordeon'))
+          .concat(_me.htmlElem.select('h6.accordeon'))
           .each(function (heading) {
-            heading.observe("click", _me._toggleHeadingPart.bind(_me));
+            heading.observe('click', _me._toggleHeadingPart.bind(_me));
           });
       },
 
@@ -177,7 +165,7 @@ if (typeof CELEMENTS.anim == "undefined") {
           transition: Effect.Transitions.sinoidal,
           afterFinish: function () {
             origElem.hide();
-            origElem.removeClassName("active");
+            origElem.removeClassName('active');
             theWrapDiv.replace(elem);
           },
           sync: true,
@@ -201,17 +189,11 @@ if (typeof CELEMENTS.anim == "undefined") {
         var _me = this;
         if (!_me.htmlElem) return;
         if (isVisible) {
-          clickedHeading.removeClassName("active");
-          _me.htmlElem.fire(
-            "celanim_accordeon-heading:dropActive",
-            clickedHeading,
-          );
+          clickedHeading.removeClassName('active');
+          _me.htmlElem.fire('celanim_accordeon-heading:dropActive', clickedHeading);
         } else {
-          clickedHeading.addClassName("active");
-          _me.htmlElem.fire(
-            "celanim_accordeon-heading:addActive",
-            clickedHeading,
-          );
+          clickedHeading.addClassName('active');
+          _me.htmlElem.fire('celanim_accordeon-heading:addActive', clickedHeading);
         }
       },
 
@@ -220,17 +202,12 @@ if (typeof CELEMENTS.anim == "undefined") {
         if (!_me.htmlElem) return;
         parallelEffects = [];
         if (!isVisible && _me.openOnlyOnePerLevel) {
-          _me.htmlElem
-            .select(clickedHeading.tagName + ".active")
-            .each(function (activElem) {
-              parallelEffects.concat(
-                _me._getEffectsForElements(
-                  _me.getAllSiblings(activElem, true),
-                  true,
-                ),
-              );
-              _me._updateClickedHeading(true, activElem);
-            });
+          _me.htmlElem.select(clickedHeading.tagName + '.active').each(function (activElem) {
+            parallelEffects.concat(
+              _me._getEffectsForElements(_me.getAllSiblings(activElem, true), true),
+            );
+            _me._updateClickedHeading(true, activElem);
+          });
         }
         return parallelEffects;
       },
@@ -240,7 +217,7 @@ if (typeof CELEMENTS.anim == "undefined") {
         parallelEffects = [];
         allElems.each(function (elem) {
           if (elem.visible() == isVisible) {
-            var wrapDiv = elem.wrap("div");
+            var wrapDiv = elem.wrap('div');
             if (isVisible) {
               parallelEffects.push(_me._getHideEffect(wrapDiv, elem));
             } else {
@@ -256,20 +233,13 @@ if (typeof CELEMENTS.anim == "undefined") {
       toggleAll: function (allElems, clickedHeading) {
         var _me = this;
         if (allElems.size() > 0) {
-          allElems.last().addClassName("accordeonLast");
+          allElems.last().addClassName('accordeonLast');
           allElems
             .last()
-            .addClassName(
-              "accordeon_" + clickedHeading.tagName.toLowerCase() + "Last",
-            );
+            .addClassName('accordeon_' + clickedHeading.tagName.toLowerCase() + 'Last');
           var isVisible = allElems[0].visible();
-          var parallelEffects = _me._checkCloseBeforeOpen(
-            clickedHeading,
-            isVisible,
-          );
-          parallelEffects = parallelEffects.concat(
-            _me._getEffectsForElements(allElems, isVisible),
-          );
+          var parallelEffects = _me._checkCloseBeforeOpen(clickedHeading, isVisible);
+          parallelEffects = parallelEffects.concat(_me._getEffectsForElements(allElems, isVisible));
           new Effect.Parallel(parallelEffects, {
             duration: 1.0,
             afterFinish: function () {

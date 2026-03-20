@@ -58,7 +58,7 @@
   border-collapse: collapse;
   font-size: 13px;
   line-height: 15px;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   width: 450px;
 }
 #loginForm fieldset.xwikimessage table.xwikilogintable th {
@@ -69,12 +69,12 @@
 #loginForm fieldset.xwikimessage table.xwikilogintable td {
   font-size: 13px;
   line-height: 15px;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
   color: #333333;
 }
 #loginForm fieldset legend {
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
   color: #333333;
 }

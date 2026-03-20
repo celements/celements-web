@@ -43,7 +43,7 @@ body {
   cursor: pointer;
 }
 .cel_closebutton:hover {
-  background-image: url("/file/resources/celRes/close-hover.png");
+  background-image: url('/file/resources/celRes/close-hover.png');
 }
 
 .main.layoutsubsection {
@@ -76,7 +76,7 @@ body.celementsmenubarvisible .main.layoutsubsection {
   line-height: 21px;
   margin-left: 0;
   margin-bottom: 25px;
-  font-family: "Open Sans", Tahoma, Geneva, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   font-style: normal;
   color: black;
 }

@@ -115,7 +115,7 @@
   overflow: auto;
 }
 
-#lb input[type="text"],
+#lb input[type='text'],
 #lb textarea {
   cursor: text;
 }
@@ -171,7 +171,7 @@
   padding-top: 0;
 }
 
-*+html #lb-top .roundedlight,
+* + html #lb-top .roundedlight,
 * html #lb-top .roundedlight {
   margin-top: -1em;
 }
@@ -180,7 +180,7 @@
   margin-top: -1em;
 }
 
-*+html #lb-top .rounded,
+* + html #lb-top .rounded,
 * html #lb-top .rounded {
   margin-top: -1em;
 }
@@ -189,16 +189,16 @@
   margin-top: 0;
 }
 
-*+html #lb-top .rounded .b1,
+* + html #lb-top .rounded .b1,
 * html #lb-top .rounded .b1,
-*+html #lb-top .roundedlight .b1,
+* + html #lb-top .roundedlight .b1,
 * html #lb-top .roundedlight .b1 {
   margin-bottom: -0.15em;
 }
 
-*+html #lb-bottom .rounded .b12b,
+* + html #lb-bottom .rounded .b12b,
 * html #lb-bottom .rounded .b12b,
-*+html #lb-bottom .roundedlight .b4b,
+* + html #lb-bottom .roundedlight .b4b,
 * html #lb-bottom .roundedlight .b4b {
   margin-bottom: -0.1em;
 }

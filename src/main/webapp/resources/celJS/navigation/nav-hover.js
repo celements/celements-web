@@ -24,10 +24,10 @@
  * and shows them on hover over first level navigation items.
  *
  */
-if (typeof CELEMENTS == "undefined") {
+if (typeof CELEMENTS == 'undefined') {
   var CELEMENTS = {};
 }
-if (typeof CELEMENTS.navigation == "undefined") {
+if (typeof CELEMENTS.navigation == 'undefined') {
   CELEMENTS.navigation = {};
 }
 
@@ -98,11 +98,8 @@ if (typeof CELEMENTS.navigation == "undefined") {
       _hideAllNotActiveSubNavigations: function (skipSubNav) {
         var _me = this;
         $$(_me._secondMenuLevelCssSelector).each(function (subNav) {
-          var mainLi = subNav.up("li");
-          if (
-            !mainLi.hasClassName("active") &&
-            (!skipSubNav || skipSubNav != subNav)
-          ) {
+          var mainLi = subNav.up('li');
+          if (!mainLi.hasClassName('active') && (!skipSubNav || skipSubNav != subNav)) {
             _me._cancelDelayedHide(subNav);
             subNav.hide();
           }
@@ -112,9 +109,9 @@ if (typeof CELEMENTS.navigation == "undefined") {
       _registerNavigationHover: function () {
         var _me = this;
         $$(_me._secondMenuLevelCssSelector).each(function (subNav) {
-          var mainLi = subNav.up("li");
-          if (!mainLi.hasClassName("active")) {
-            mainLi.observe("mouseover", _me._mainNavMouseOverBind);
+          var mainLi = subNav.up('li');
+          if (!mainLi.hasClassName('active')) {
+            mainLi.observe('mouseover', _me._mainNavMouseOverBind);
           }
         });
       },
@@ -122,33 +119,30 @@ if (typeof CELEMENTS.navigation == "undefined") {
       _mainNavMouseOver: function (myself, event) {
         var _me = myself;
         var mainLi = this;
-        var subNav = mainLi.down("ul");
+        var subNav = mainLi.down('ul');
         _me._cancelDelayedHide(subNav);
         _me._hideAllNotActiveSubNavigations(subNav);
         if (subNav.visible()) {
-          subNav.setStyle({ opacity: "1" });
+          subNav.setStyle({ opacity: '1' });
         } else {
-          subNav.addClassName("navHover");
+          subNav.addClassName('navHover');
           subNav.appear({ duration: 0.2 });
         }
-        mainLi.stopObserving("mouseout", _me._mainNavMouseOutBind);
-        mainLi.observe("mouseout", _me._mainNavMouseOutBind);
+        mainLi.stopObserving('mouseout', _me._mainNavMouseOutBind);
+        mainLi.observe('mouseout', _me._mainNavMouseOutBind);
       },
 
       _mainNavMouseOut: function (myself, event) {
         var _me = myself;
         var mainLi = this;
         var relTarg = event.relatedTarget || event.toElement;
-        var menuElem = relTarg.up("ul ul") || relTarg;
-        var insideMainLi = menuElem.up("li");
+        var menuElem = relTarg.up('ul ul') || relTarg;
+        var insideMainLi = menuElem.up('li');
         if (!(insideMainLi === mainLi)) {
-          var subNav = mainLi.down("ul");
-          _me._scheduledHide.set(
-            subNav.id,
-            _me._delayedHide.delay(0.5, myself, subNav),
-          );
-          subNav.setStyle({ opacity: "0.8" });
-          mainLi.stopObserving("mouseout", _me._mainNavMouseOutBind);
+          var subNav = mainLi.down('ul');
+          _me._scheduledHide.set(subNav.id, _me._delayedHide.delay(0.5, myself, subNav));
+          subNav.setStyle({ opacity: '0.8' });
+          mainLi.stopObserving('mouseout', _me._mainNavMouseOutBind);
         }
       },
 
@@ -158,7 +152,7 @@ if (typeof CELEMENTS.navigation == "undefined") {
         subNav.fade({
           duration: 0.2,
           afterFinish: function () {
-            subNav.removeClassName("navHover");
+            subNav.removeClassName('navHover');
           },
         });
       },

@@ -6,7 +6,7 @@
  * Author: Kevin P Miller
  * License: Accordion is freely distributable under the terms of an MIT-style license.
  */
-if (typeof Effect == "undefined")
+if (typeof Effect == 'undefined')
   throw "accordion.js requires including script.aculo.us' effects.js library!";
 
 var accordion = Class.create({
@@ -32,46 +32,39 @@ var accordion = Class.create({
       {
         resizeSpeed: 8,
         classNames: {
-          toggle: "accordion_toggle",
-          toggleActive: "accordion_toggle_active",
-          content: "accordion_content",
+          toggle: 'accordion_toggle',
+          toggleActive: 'accordion_toggle_active',
+          content: 'accordion_content',
         },
         defaultSize: {
           height: null,
           width: null,
         },
-        direction: "vertical",
-        onEvent: "click",
+        direction: 'vertical',
+        onEvent: 'click',
       },
       options || {},
     );
 
     this.duration = (11 - this.options.resizeSpeed) * 0.15;
 
-    var accordions = $$(
-      "#" + container + " ." + this.options.classNames.toggle,
-    );
+    var accordions = $$('#' + container + ' .' + this.options.classNames.toggle);
 
     accordions.each(
       function (accordion) {
-        Event.observe(
-          accordion,
-          this.options.onEvent,
-          this.activate.bind(this, accordion),
-          false,
-        );
-        if (this.options.onEvent == "click") {
+        Event.observe(accordion, this.options.onEvent, this.activate.bind(this, accordion), false);
+        if (this.options.onEvent == 'click') {
           accordion.onclick = function () {
             return false;
           };
         }
         //EVE: it was option.merge({width: '0px'}); but is deprecated in prototype 1.6 and would have a strange behaviour so replaced by Object.extend
-        if (this.options.direction == "horizontal") {
-          var options = { width: "0px" };
+        if (this.options.direction == 'horizontal') {
+          var options = { width: '0px' };
         } else {
-          var options = { height: "0px" };
+          var options = { height: '0px' };
         }
-        Object.extend(options, { display: "none" });
+        Object.extend(options, { display: 'none' });
 
         this.currentAccordion = $(accordion.next(0)).setStyle(options);
       }.bind(this),
@@ -91,14 +84,12 @@ var accordion = Class.create({
     this.currentAccordion = $(accordion.next(0));
 
     this.currentAccordion.setStyle({
-      display: "block",
+      display: 'block',
     });
 
-    this.currentAccordion
-      .previous(0)
-      .addClassName(this.options.classNames.toggleActive);
+    this.currentAccordion.previous(0).addClassName(this.options.classNames.toggleActive);
 
-    if (this.options.direction == "horizontal") {
+    if (this.options.direction == 'horizontal') {
       this.scaling = {
         scaleX: true,
         scaleY: false,
@@ -124,8 +115,8 @@ var accordion = Class.create({
       scaleContent: false,
       transition: Effect.Transitions.sinoidal,
       queue: {
-        position: "end",
-        scope: "accordionAnimation",
+        position: 'end',
+        scope: 'accordionAnimation',
       },
       scaleMode: {
         originalHeight: this.options.defaultSize.height
@@ -137,8 +128,8 @@ var accordion = Class.create({
       },
       afterFinish: function () {
         this.showAccordion.setStyle({
-          height: "0px", //EVE: it was height: auto; but flickered when opening content second time
-          display: "none",
+          height: '0px', //EVE: it was height: auto; but flickered when opening content second time
+          display: 'none',
         });
         this.showAccordion = null;
         this.animating = false;
@@ -146,9 +137,7 @@ var accordion = Class.create({
     };
     Object.extend(options, this.scaling);
 
-    this.showAccordion
-      .previous(0)
-      .removeClassName(this.options.classNames.toggleActive);
+    this.showAccordion.previous(0).removeClassName(this.options.classNames.toggleActive);
 
     new Effect.Scale(this.showAccordion, 0, options);
   },
@@ -176,9 +165,7 @@ var accordion = Class.create({
     this.effects.push(new Effect.Scale(this.currentAccordion, 100, options));
 
     if (this.showAccordion) {
-      this.showAccordion
-        .previous(0)
-        .removeClassName(this.options.classNames.toggleActive);
+      this.showAccordion.previous(0).removeClassName(this.options.classNames.toggleActive);
 
       options = {
         sync: true,
@@ -193,8 +180,8 @@ var accordion = Class.create({
     new Effect.Parallel(this.effects, {
       duration: this.duration,
       queue: {
-        position: "end",
-        scope: "accordionAnimation",
+        position: 'end',
+        scope: 'accordionAnimation',
       },
       beforeStart: function () {
         this.animating = true;
@@ -202,7 +189,7 @@ var accordion = Class.create({
       afterFinish: function () {
         if (this.showAccordion) {
           this.showAccordion.setStyle({
-            display: "none",
+            display: 'none',
           });
         }
         /*$(this.currentAccordion).setStyle({
@@ -226,13 +213,13 @@ function createAccordion(params) {
   var acc = new accordion(params.div, {
     resizeSpeed: 10,
     classNames: {
-      toggle: "accordionTabTitleBar",
-      content: "accordionTabContentBox",
+      toggle: 'accordionTabTitleBar',
+      content: 'accordionTabContentBox',
     },
     defaultSize: {
-      width: "width" in params ? params.width : null,
-      height: "height" in params ? params.height : null,
+      width: 'width' in params ? params.width : null,
+      height: 'height' in params ? params.height : null,
     },
   });
-  acc.activate($$("#" + params.div + " .accordionTabTitleBar")[params.no]);
+  acc.activate($$('#' + params.div + ' .accordionTabTitleBar')[params.no]);
 }

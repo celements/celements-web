@@ -13,7 +13,7 @@
 }
 
 .filebasePicker #attachments.celDropOverActive::after {
-  content: "drop files here";
+  content: 'drop files here';
   position: absolute;
   align-items: center;
   display: block;

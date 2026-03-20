@@ -9,13 +9,13 @@
 ********************************/
 
 body #cel_layout_editor #cel_skin_editor_reorder_tree {
-	width: 580px;
+  width: 580px;
 }
 
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul {
-	min-height: 4px;
-	padding-left: 20px;
-	padding-bottom: 2px;
+  min-height: 4px;
+  padding-left: 20px;
+  padding-bottom: 2px;
 }
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul li {
   list-style-image: url(/file/resources/celRes/document.gif);
@@ -28,7 +28,7 @@ body #cel_layout_editor #cel_skin_editor_reorder_tree ul li {
 }
 
 body #cel_layout_editor #cel_skin_editor_reorder_tree.reorderMode {
-	border: 1px dashed gray;
+  border: 1px dashed gray;
 }
 body #cel_layout_editor #cel_skin_editor_reorder_tree.reorderMode ul li {
   cursor: move;

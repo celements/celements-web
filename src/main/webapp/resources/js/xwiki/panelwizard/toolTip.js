@@ -3,31 +3,31 @@ var offsetypoint = 20; //Customize y offset of tooltip
 var ie = document.all;
 var ns6 = document.getElementById && !document.all;
 var enabletip = false;
-var tipobj = $("dhtmltooltip");
+var tipobj = $('dhtmltooltip');
 var tippedNode = undefined;
 
 function ietruebody() {
-  return document.compatMode && document.compatMode != "BackCompat"
+  return document.compatMode && document.compatMode != 'BackCompat'
     ? document.documentElement
     : document.body;
 }
 
 function showtip(node, txt, w, align) {
-  Event.observe(document, "mousemove", positionTip);
-  Event.observe(node, "mouseout", hideTip);
+  Event.observe(document, 'mousemove', positionTip);
+  Event.observe(node, 'mouseout', hideTip);
   if (align) {
     tipobj.style.textAlign = align;
   }
   tippedNode = node;
-  tipobj.style.visibility = "hidden";
-  tipobj.style.display = "block";
-  tipobj.style.width = "auto";
+  tipobj.style.visibility = 'hidden';
+  tipobj.style.display = 'block';
+  tipobj.style.width = 'auto';
   tipobj.innerHTML = txt;
   if (tipobj.offsetWidth > w) {
-    tipobj.style.width = w + "px";
+    tipobj.style.width = w + 'px';
   }
-  tipobj.style.display = "none";
-  tipobj.style.visibility = "visible";
+  tipobj.style.display = 'none';
+  tipobj.style.visibility = 'visible';
   enabletip = true;
   return false;
 }
@@ -52,31 +52,23 @@ function positionTip(e) {
     if (rightedge < tipobj.offsetWidth) {
       //move the horizontal position of the menu to the left by it's width
       tipobj.style.left = ie
-        ? ietruebody().scrollLeft + event.clientX - tipobj.offsetWidth + "px"
-        : window.pageXOffset + e.clientX - tipobj.offsetWidth + "px";
+        ? ietruebody().scrollLeft + event.clientX - tipobj.offsetWidth + 'px'
+        : window.pageXOffset + e.clientX - tipobj.offsetWidth + 'px';
     } else if (curX < leftedge) {
-      tipobj.style.left = "5px";
+      tipobj.style.left = '5px';
     } else {
       //position the horizontal position of the menu where the mouse is positioned
-      tipobj.style.left = curX + offsetxpoint + "px";
+      tipobj.style.left = curX + offsetxpoint + 'px';
     }
     //same concept with the vertical position
     if (bottomedge < tipobj.offsetHeight) {
       tipobj.style.top = ie
-        ? ietruebody().scrollTop +
-          event.clientY -
-          tipobj.offsetHeight -
-          offsetypoint +
-          "px"
-        : window.pageYOffset +
-          e.clientY -
-          tipobj.offsetHeight -
-          offsetypoint +
-          "px";
+        ? ietruebody().scrollTop + event.clientY - tipobj.offsetHeight - offsetypoint + 'px'
+        : window.pageYOffset + e.clientY - tipobj.offsetHeight - offsetypoint + 'px';
     } else {
-      tipobj.style.top = curY + offsetypoint + "px";
+      tipobj.style.top = curY + offsetypoint + 'px';
     }
-    tipobj.style.display = "block";
+    tipobj.style.display = 'block';
   }
 }
 
@@ -84,10 +76,10 @@ function hideTip(e) {
   if (!window.enabletip) {
     return;
   }
-  Event.stopObserving(document, "mousemove", positionTip);
+  Event.stopObserving(document, 'mousemove', positionTip);
   enabletip = false;
-  tipobj.style.display = "none";
+  tipobj.style.display = 'none';
 }
-Event.observe(window, "load", function () {
-  $("body").appendChild(tipobj);
+Event.observe(window, 'load', function () {
+  $('body').appendChild(tipobj);
 });

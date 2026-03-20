@@ -23,27 +23,27 @@
  *
  **/
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
-  Event.observe(window, "load", function () {
+  Event.observe(window, 'load', function () {
     getCelementsTabEditor().addAfterInitListener(startResizeObservers);
   });
 
   function startResizeObservers() {
-    Event.observe(window, "resize", resize);
-    $$(".celements3_tabMenu .bd").each(function (tabMenu) {
-      tabMenu.observe("tabedit:tabchange", resize);
-      tabMenu.observe("tabedit:after-tabshow", resize);
+    Event.observe(window, 'resize', resize);
+    $$('.celements3_tabMenu .bd').each(function (tabMenu) {
+      tabMenu.observe('tabedit:tabchange', resize);
+      tabMenu.observe('tabedit:after-tabshow', resize);
     });
-    $("tabMenuPanel").observe("tabedit:afterDisplayNow", resize);
+    $('tabMenuPanel').observe('tabedit:afterDisplayNow', resize);
     resize();
   }
 
   var getActiveEditorTabs = function () {
     var activeTabs = new Array();
-    $$(".celements3_tabMenu .bd .menuTab").each(function (tab) {
+    $$('.celements3_tabMenu .bd .menuTab').each(function (tab) {
       if (tab.visible()) {
-        console.log("getActiveEditorTabs: found active tab ", tab.id);
+        console.log('getActiveEditorTabs: found active tab ', tab.id);
         activeTabs.push(tab);
       }
     });
@@ -52,10 +52,10 @@
 
   var getInnerMostScrollableElement = function (tab) {
     var elementFound = null;
-    var elements = tab.select(".c3_scrollable");
-    if (tab.down("form#edit") && elements.size() == 0) {
-      elements.push($("edit"));
-      if (typeof console != "undefined" && typeof console.warn != "undefined") {
+    var elements = tab.select('.c3_scrollable');
+    if (tab.down('form#edit') && elements.size() == 0) {
+      elements.push($('edit'));
+      if (typeof console != 'undefined' && typeof console.warn != 'undefined') {
         console.warn('Deprecated usage of resize on form "edit".');
       }
     }
@@ -85,27 +85,24 @@
     // getStyle('overflow-y') returns null for 'auto'
     getScrollboxes().each(function (scrollbox) {
       if (
-        scrollbox.getStyle("overflow-y") != null &&
-        scrollbox.getStyle("overflow-y") != "scroll"
+        scrollbox.getStyle('overflow-y') != null &&
+        scrollbox.getStyle('overflow-y') != 'scroll'
       ) {
-        scrollbox.setStyle({ overflowY: "auto" }); //IE6 only supports overflowY
+        scrollbox.setStyle({ overflowY: 'auto' }); //IE6 only supports overflowY
       }
     });
   };
 
   var resize = function () {
-    console.log("resize: start");
+    console.log('resize: start');
     setOverflow();
-    var box = $("tabMenuPanel");
+    var box = $('tabMenuPanel');
     var bottomBorder = 15;
 
     var winHeight = 0;
-    if (typeof window.innerWidth == "number") {
+    if (typeof window.innerWidth == 'number') {
       winHeight = window.innerHeight;
-    } else if (
-      document.documentElement &&
-      document.documentElement.clientHeight
-    ) {
+    } else if (document.documentElement && document.documentElement.clientHeight) {
       winHeight = document.documentElement.clientHeight;
     } else if (document.body && document.body.clientHeight) {
       winHeight = document.body.clientHeight;
@@ -117,16 +114,16 @@
       //counting margin-auto offsets. Thus we need to use jquery.offset
       var scrollableSize = boxSize - $j(scrollbox).offset().top - bottomBorder;
       console.log(
-        "resize: scrollableSize ",
+        'resize: scrollableSize ',
         boxSize,
         $j(scrollbox).offset().top,
         bottomBorder,
         scrollableSize,
       );
-      box.setStyle({ height: Math.max(50, boxSize) + "px" });
-      scrollbox.setStyle({ height: Math.max(50, scrollableSize) + "px" });
-      console.log("resize: set height ", boxSize, scrollableSize, scrollbox);
+      box.setStyle({ height: Math.max(50, boxSize) + 'px' });
+      scrollbox.setStyle({ height: Math.max(50, scrollableSize) + 'px' });
+      console.log('resize: set height ', boxSize, scrollableSize, scrollbox);
     });
-    console.log("resize: finish");
+    console.log('resize: finish');
   };
 })(window);

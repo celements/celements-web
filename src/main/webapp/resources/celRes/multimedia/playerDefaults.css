@@ -85,13 +85,13 @@ body div.mask.celmultimedia_inoverlay {
   right: -15px;
   width: 30px;
   height: 30px;
-  background-image: url("../close.png");
+  background-image: url('../close.png');
   background-repeat: no-repeat;
   background-position: top right;
   cursor: pointer;
 }
 .celmultimedia_inoverlay .container-close:hover {
-  background-image: url("../close-hover.png");
+  background-image: url('../close-hover.png');
 }
 .celmultimedia_inoverlay .container-close:focus {
   border: 0px solid black;

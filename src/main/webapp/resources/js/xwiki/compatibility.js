@@ -5,7 +5,7 @@
  * moving to new code.
  */
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
   var XWiki = window.XWiki ?? {};
   var widgets = XWiki.widgets ?? {};
@@ -15,7 +15,7 @@
    * If not, does nothing.
    */
   function warn(message) {
-    if (typeof console != "undefined" && typeof console.warn == "function") {
+    if (typeof console != 'undefined' && typeof console.warn == 'function') {
       console.warn(message);
     }
   }
@@ -25,7 +25,7 @@
    */
   window.displayDocExtra = XWiki.displayDocExtra.wrap(function () {
     warn(
-      "window.displayDocExtra is deprecated since XWiki 1.9M2. Use XWiki.displayDocExtra instead.",
+      'window.displayDocExtra is deprecated since XWiki 1.9M2. Use XWiki.displayDocExtra instead.',
     );
     var args = $A(arguments),
       proceed = args.shift();
@@ -36,10 +36,7 @@
    * window.ASSTable
    * Deprecated since 1.9M2
    */
-  if (
-    typeof XWiki.widgets == "object" &&
-    typeof XWiki.widgets.LiveTable == "function"
-  ) {
+  if (typeof XWiki.widgets == 'object' && typeof XWiki.widgets.LiveTable == 'function') {
     window.ASSTable = Class.create(XWiki.widgets.LiveTable, {
       initialize: function (
         $super,
@@ -54,40 +51,40 @@
       ) {
         // warn developers they are using deprecated code.
         warn(
-          "window.ASSTable is deprecated since XWiki 1.9M2. Use XWiki.widgets.LiveTable instead.",
+          'window.ASSTable is deprecated since XWiki 1.9M2. Use XWiki.widgets.LiveTable instead.',
         );
 
-        if ($("showLimits")) {
+        if ($('showLimits')) {
           // inject an element for pagination since the scroller has been removed.
-          if ($("showLimits").up("tr")) {
-            $("showLimits")
-              .up("tr")
+          if ($('showLimits').up('tr')) {
+            $('showLimits')
+              .up('tr')
               .insert({
-                after: new Element("tr").update(
-                  new Element("td").update(
-                    new Element("div", {
-                      id: domNode + "-pagination",
-                      class: "xwiki-grid-pagination-content",
+                after: new Element('tr').update(
+                  new Element('td').update(
+                    new Element('div', {
+                      id: domNode + '-pagination',
+                      class: 'xwiki-grid-pagination-content',
                     }),
                   ),
                 ),
               });
           }
           // replace the id of the limits element by the one expected by convention by the new LiveTable widget
-          $("showLimits").id = domNode + "-limits";
+          $('showLimits').id = domNode + '-limits';
         }
 
-        if ($("scrollbar1") && $("scrollbar1").up("td")) {
+        if ($('scrollbar1') && $('scrollbar1').up('td')) {
           // if it present, remove that annoying pseudo-scroll, the new widget support normal pagination.
-          if ($("scrollbar1").up("td").next()) {
-            $("scrollbar1").up("td").next().remove(); // remove the buff td
+          if ($('scrollbar1').up('td').next()) {
+            $('scrollbar1').up('td').next().remove(); // remove the buff td
           }
-          $("scrollbar1").up("td").remove(); // remove the td that holds the scrollbar
+          $('scrollbar1').up('td').remove(); // remove the td that holds the scrollbar
         }
 
-        if ($("table-filters")) {
+        if ($('table-filters')) {
           // replace the id of the filters container by the one expected by convention by the new LiveTable widget
-          $("table-filters").id = domNode + "-filters";
+          $('table-filters').id = domNode + '-filters';
         }
 
         // Ouf, that should be all for compatibility code, now we call father initialize method of new widget.
@@ -106,9 +103,9 @@
    */
   window.hideForm = function (form) {
     warn(
-      "window.hideForm is deprecated since XWiki 2.6RC1. Use a CSS selector + Element#toggleClassName instead.",
+      'window.hideForm is deprecated since XWiki 2.6RC1. Use a CSS selector + Element#toggleClassName instead.',
     );
-    form.getElementsByTagName("fieldset").item(0).className = "collapsed";
+    form.getElementsByTagName('fieldset').item(0).className = 'collapsed';
   };
 
   /**
@@ -120,13 +117,13 @@
    */
   window.toggleForm = function (form) {
     warn(
-      "window.toggleForm is deprecated since XWiki 2.6RC1. Use a CSS selector + Element#toggleClassName instead.",
+      'window.toggleForm is deprecated since XWiki 2.6RC1. Use a CSS selector + Element#toggleClassName instead.',
     );
-    var fieldset = form.getElementsByTagName("fieldset").item(0);
-    if (fieldset.className == "collapsed") {
-      fieldset.className = "expanded";
+    var fieldset = form.getElementsByTagName('fieldset').item(0);
+    if (fieldset.className == 'collapsed') {
+      fieldset.className = 'expanded';
     } else {
-      fieldset.className = "collapsed";
+      fieldset.className = 'collapsed';
     }
   };
 
@@ -134,9 +131,7 @@
    * Deprecated since 2.6RC1
    */
   window.createCookie = XWiki.cookies.create.wrap(function () {
-    warn(
-      "window.createCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.create instead.",
-    );
+    warn('window.createCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.create instead.');
     var args = $A(arguments),
       proceed = args.shift();
     return proceed.apply(window, args);
@@ -146,9 +141,7 @@
    * Deprecated since 2.6RC1
    */
   window.readCookie = XWiki.cookies.read.wrap(function () {
-    warn(
-      "window.readCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.read instead.",
-    );
+    warn('window.readCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.read instead.');
     var args = $A(arguments),
       proceed = args.shift();
     return proceed.apply(window, args);
@@ -158,9 +151,7 @@
    * Deprecated since 2.6RC1
    */
   window.eraseCookie = XWiki.cookies.erase.wrap(function () {
-    warn(
-      "window.eraseCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.erase instead.",
-    );
+    warn('window.eraseCookie is deprecated since XWiki 2.6RC1. Use XWiki.cookies.erase instead.');
     var args = $A(arguments),
       proceed = args.shift();
     return proceed.apply(window, args);
@@ -171,7 +162,7 @@
    */
   window.togglePanelVisibility = XWiki.togglePanelVisibility.wrap(function () {
     warn(
-      "window.togglePanelVisibility is deprecated since XWiki 2.6RC1. Use XWiki.togglePanelVisibility instead.",
+      'window.togglePanelVisibility is deprecated since XWiki 2.6RC1. Use XWiki.togglePanelVisibility instead.',
     );
     var args = $A(arguments),
       proceed = args.shift();

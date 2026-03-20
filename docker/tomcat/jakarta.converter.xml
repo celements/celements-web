@@ -1,4 +1,4 @@
-<!-- Run legacy javax.* on Tomcat 10  -->
+<!-- Run legacy javax.* on Tomcat 10 -->
 <Context>
   <Loader jakartaConverter="TOMCAT" />
 </Context>

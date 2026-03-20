@@ -122,7 +122,7 @@ table.xwiki-livetable {
   border-bottom-color: #ccc;
 }
 
-html>body .xwiki-livetable-display td {
+html > body .xwiki-livetable-display td {
   border: 0;
 }
 
@@ -157,13 +157,11 @@ thead.xwiki-livetable-display-header th.sortable {
 }
 
 thead.xwiki-livetable-display-header th.desc {
-  background: #ddd url(/file/resources/icons/silk/bullet_arrow_down.gif)
-    no-repeat scroll right center;
+  background: #ddd url(/file/resources/icons/silk/bullet_arrow_down.gif) no-repeat scroll right center;
 }
 
 thead.xwiki-livetable-display-header th.asc {
-  background: #ddd url(/file/resources/icons/silk/bullet_arrow_up.gif) no-repeat
-    scroll right center;
+  background: #ddd url(/file/resources/icons/silk/bullet_arrow_up.gif) no-repeat scroll right center;
 }
 
 thead.xwiki-livetable-display-header th.selected {
@@ -175,7 +173,7 @@ thead.xwiki-livetable-display-header td.xwiki-livetable-display-header-filter {
   padding: 1px;
 }
 
-html>body thead.xwiki-livetable-display-header td.xwiki-livetable-display-header-filter {
+html > body thead.xwiki-livetable-display-header td.xwiki-livetable-display-header-filter {
   padding: 2px 5px 2px 0;
   border-color: transparent;
 }
@@ -221,15 +219,13 @@ tbody.xwiki-livetable-display-body td.editableCellHover.linkeditor a {
 }
 
 tbody.xwiki-livetable-display-body td:hover.linkeditor {
-  background: lemonChiffon url(/file/resources/pencil.gif) no-repeat scroll
-    right center;
+  background: lemonChiffon url(/file/resources/pencil.gif) no-repeat scroll right center;
   cursor: pointer;
 }
 
 tbody.xwiki-livetable-display-body td.linkeditor a.editableCellHover {
   display: block;
-  background: lemonChiffon url(/file/resources/pencil.gif) no-repeat scroll
-    right center;
+  background: lemonChiffon url(/file/resources/pencil.gif) no-repeat scroll right center;
   cursor: pointer;
   color: #4d4d4d;
   padding-right: 16px;
