@@ -12,7 +12,6 @@ body div.celements3_tabMenu {
   position: relative;
   z-index: 99; /** needed because cel_overlay is on z-index: 99; **/
 }
-
 body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
 .celements3_tabMenu .celementsLoadingIndicator {
   font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
@@ -23,26 +22,22 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   text-transform: none;
   color: #3e3e3e;
 }
-
 .celements3_tabMenu .celementsLoadingIndicator {
   background-color: #f0f0f0;
   position: absolute;
   top: 0;
 }
-
 .celements3_tabMenu #celementsLoadingIndicator,
 .celements3_tabMenu .celementsLoadingIndicator > div {
   padding-top: 100px;
   padding-bottom: 100px;
 }
-
 /* main panel */
 /* and panel header */
 .celements3_tabMenu #tabMenuPanel,
 .celements3_tabMenu .hd {
   background-color: transparent;
 }
-
 /* tab buttons */
 .celements3_tabMenu .tabButton {
   margin: 0px;
@@ -52,7 +47,6 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   vertical-align: bottom;
   float: left;
 }
-
 .celements3_tabMenu .tabButton .yui-button button,
 .celements3_tabMenu .tabButton .cel-button-active button {
   background-color: #4c4c4c;
@@ -70,32 +64,27 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   line-height: 13px;
   font-weight: 400;
 }
-
 .celements3_tabMenu .tabButton .yui-button button:hover {
   background-color: #ff9900;
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
-
 .celements3_tabMenu .tabButton .cel-button-active button {
   background-color: #f0f0f0;
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
-
 .celements3_tabMenu .tabButton .cel-button-focus button {
   background: none;
   background-color: #f0f0f0;
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
-
 .yui-skin-sam .yui-dialog .ft span.default button {
   font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   background-color: #ff9900;
   color: #333333 !important;
 }
-
 /* save buttons */
 .celements3_tabMenu .saveButton .yui-button button,
 .celements3_tabMenu .saveButton .cel-button-active button {
@@ -114,20 +103,17 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   line-height: 10px;
   font-weight: 400;
 }
-
 .celements3_tabMenu .saveButton .yui-button button:hover {
   background-color: #ff9900;
   border-bottom: 1px solid #f0f0f0;
   color: #333333 !important;
 }
-
 .celements3_tabMenu .saveButton .cel-button-active button {
   font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   background-color: #f0f0f0;
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
-
 .celements3_tabMenu .saveButton .cel-button-focus button {
   font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   background: none;
@@ -135,7 +121,6 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
-
 /* panel body */
 .celements3_tabMenu .bd {
   background-color: #f0f0f0;
@@ -151,7 +136,6 @@ fp 15.12.2011
 **/
   width: auto;
 }
-
 .celements3_tabMenu .titleblock,
 .celements3_tabMenu .celementsLoadingIndicator p,
 body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
@@ -164,12 +148,10 @@ body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
   padding-top: 18px;
   font-weight: bold;
 }
-
 .celements3_tabMenu .celementsLoadingIndicator p,
 body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
   text-align: center;
 }
-
 .celements3_tabMenu .editblock {
   display: block;
   padding: 10px;
@@ -177,7 +159,6 @@ body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
   padding-right: 13px;
   border-bottom: 1px solid #c5c5c5;
 }
-
 .celements3_tabMenu .editgrouptitle {
   display: block;
   padding: 10px;
@@ -186,7 +167,6 @@ body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
   font-size: 13px;
   background-color: #b0b0b0;
 }
-
 /* form elements */
 .celements3_tabMenu input,
 .celements3_tabMenu select,
@@ -201,11 +181,9 @@ because characters with underline (e.g. 'g') get chopped in input field on chrom
   line-height: 14px;
   padding: 1px;
 }
-
 .celements3_tabMenu input.fullwidth {
   width: 590px;
 }
-
 .celements3_tabMenu .clear {
   clear: both;
   display: block;
@@ -215,7 +193,6 @@ because characters with underline (e.g. 'g') get chopped in input field on chrom
   margin: 0pt;
   padding: 0pt;
 }
-
 /* overlay */
 #cel_overlay,
 div.mask {
@@ -231,17 +208,14 @@ div.mask {
   left: 0px;
   z-index: 99;
 }
-
 /* focus buttons/tabs/fields */
 .celements3_tabMenu .editblock:hover,
 .celements3_tabMenu .focus {
   background-color: #f5f5f5;
 }
-
 .celements3_tabMenu .xwikiobjects dl {
   margin: 0px;
 }
-
 .celements3_tabMenu .xwikiobjects h6 {
   margin-top: 5px;
   padding-left: 5px;
@@ -249,11 +223,9 @@ div.mask {
   display: block;
   font-size: 12px;
 }
-
 .yui-skin-sam .yui-dialog .ft span.default button {
   color: white;
 }
-
 /* panel close button */
 .celements3_tabMenu .container-close {
   position: absolute;
@@ -268,7 +240,6 @@ div.mask {
   font-weight: 400;
   font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
 }
-
 .celements3_tabMenu #tabMenuPanel .hd .actionButton,
 .celements3_tabMenu .container-close {
   padding: 6px;
@@ -286,7 +257,6 @@ div.mask {
   background-color: #ff9900;
   font-weight: 400;
 }
-
 .celements3_tabMenu #tabMenuPanel .hd .actionButton {
   float: right;
   display: block;
@@ -294,26 +264,21 @@ div.mask {
   padding-left: 10px;
   padding-right: 10px;
 }
-
 .celements3_tabMenu #tabMenuPanel .hd .actionButton:hover {
   background-color: #ff9900;
 }
-
 .celements3_tabMenu #tabMenuPanel .hd div.clearbuttons {
   clear: both;
 }
-
 /* modal dialog */
 body .yui-skin-sam .yui-simple-dialog {
   font-size: 14px;
   line-height: 16px;
   width: 400px;
 }
-
 .celements3_tabMenu #tabMenuPanel #con_langBar {
   position: relative;
 }
-
 /**
 Ask Toolbar for google chrome leads to problems. Thus we hide it in editor mode!
 **/
@@ -321,72 +286,59 @@ Ask Toolbar for google chrome leads to problems. Thus we hide it in editor mode!
 iframe.apn-toolbar {
   display: none !important;
 }
-
 body #cel_overlay {
   top: 0px !important;
 }
-
 /* Publikationsdatum & DocumentExtract  */
 #publicationForm h6,
 #nav_extractEdit h6 {
   margin-bottom: 5px;
 }
-
 #publicationForm .editblock label {
   float: left;
   padding: 3px 0px;
 }
-
 #publicationForm .editblock dd {
   margin-left: 210px;
 }
-
 #nav_extractEdit .editblock .editblock,
 #nav_extractEdit .editblock .editblock dd {
   margin: 0px;
   padding: 0px;
 }
-
 .celements3_tabMenu #navigation_form #nav_menunameEdit input {
   width: 300px;
 }
-
 .celements3_tabMenu #tabMenuPanel .bd h1 {
   font-size: 24px;
   line-height: 30px;
   font-weight: 700;
 }
-
 .celements3_tabMenu #tabMenuPanel .bd h2 {
   font-size: 22px;
   line-height: 25px;
   font-weight: 700;
 }
-
 .celements3_tabMenu #tabMenuPanel .bd h3 {
   font-size: 20px;
   line-height: 22px;
   font-weight: 700;
 }
-
 .celements3_tabMenu #tabMenuPanel .bd h4 {
   font-size: 17px;
   line-height: 19px;
   font-weight: 700;
 }
-
 .celements3_tabMenu #tabMenuPanel .bd h5 {
   font-size: 14px;
   line-height: 16px;
   font-weight: 700;
 }
-
 .celements3_tabMenu #tabMenuPanel .bd h6 {
   font-size: 12px;
   line-height: 17px;
   font-weight: 700;
 }
-
 .celements3_tabMenu #tabMenuPanel .bd p,
 .celements3_tabMenu #tabMenuPanel .bd td,
 .celements3_tabMenu #tabMenuPanel .bd th,
@@ -395,12 +347,10 @@ body #cel_overlay {
   line-height: 17px;
   font-weight: 400;
 }
-
 #editablecode_container {
   position: relative;
   padding-right: 20px;
 }
-
 #editablecode_container textarea {
   width: 100%;
 }
