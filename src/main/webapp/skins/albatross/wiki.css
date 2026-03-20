@@ -1,10 +1,15 @@
 #doctitle {
-	font-size: 2.8em;
-	line-height: 1.1em;
-	margin: 0 0 30px 0;
+  font-size: 2.8em;
+  line-height: 1.1em;
+  margin: 0 0 30px 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #000;
   background-color: inherit;
   clear: both;
@@ -16,8 +21,8 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 2.31em;
-  margin: .15em 0 30px;
-  padding-top: .85em;
+  margin: 0.15em 0 30px;
+  padding-top: 0.85em;
   border-bottom: 0px solid;
 }
 #document-title h1 {
@@ -29,7 +34,7 @@ h2 {
   margin: 0 0 15px 0;
   padding-top: 1em;
   border-bottom: 1px solid;
-  font-weight:bold;
+  font-weight: bold;
 }
 
 h3 {
@@ -54,12 +59,12 @@ h6 {
   font-size: 1.15em;
 }
 
-blockquote { 
-    padding: 0.3em 0 0 1em;
-    quotes: none;
-    background:#FAFAF6 none repeat scroll 0 0;
-    border-left:2px solid #DDDDCC;
-    display:block;
+blockquote {
+  padding: 0.3em 0 0 1em;
+  quotes: none;
+  background: #fafaf6 none repeat scroll 0 0;
+  border-left: 2px solid #ddddcc;
+  display: block;
 }
 
 .quote {
@@ -70,7 +75,8 @@ blockquote {
   font-size: inherit;
 }
 
-.box, .code {
+.box,
+.code {
   margin-top: 4px;
   margin-bottom: 4px;
   padding: 5px 5px 5px 5px;
@@ -84,14 +90,17 @@ blockquote {
   overflow: auto;
 }
 .code {
-  font-family: courier, courier new, monospace;
+  font-family:
+    courier,
+    courier new,
+    monospace;
 }
 
 /* Special case for code macro used inline */
 span.code {
-    display: inline-block;
-    vertical-align: top;
-    margin: 0 0;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0;
 }
 
 .java-keyword {
@@ -124,15 +133,15 @@ span.code {
   margin: 20px auto;
   empty-cells: show;
   width: 80%;
-  font-size:100%;
-  text-align:left;
-  border: 20px solid #E5F0FE !important;
-  background-color: #E5F0FE;
+  font-size: 100%;
+  text-align: left;
+  border: 20px solid #e5f0fe !important;
+  background-color: #e5f0fe;
 }
 
 .wiki-table td {
   padding: 8px;
-  text-align:left;
+  text-align: left;
 }
 
 .wiki-table th {
@@ -142,13 +151,12 @@ span.code {
   font-weight: 100;
   font-size: 160%;
   padding: 8px;
-  background-color: #E5F0FE;
+  background-color: #e5f0fe;
 }
 
-.wiki-table .table-head td{
+.wiki-table .table-head td {
   font-weight: 100 !important;
   font-size: 160% !important;
-
 }
 
 .wiki-table .table-odd {
@@ -175,14 +183,30 @@ span.code {
 
 /* wiki lists */
 
-ul.minus { list-style-type: square; }
-ul.star { list-style-type: circle; }
-ol.roman { list-style-type: lower-roman; }
-ol.ROMAN { list-style-type: upper-roman; }
-ol.alpha { list-style-type: lower-alpha; }
-ol.ALPHA { list-style-type: upper-alpha; }
-ol.greek { list-style-type: lower-greek; }
-ol.GREEK { list-style-type: upper-greek; }
+ul.minus {
+  list-style-type: square;
+}
+ul.star {
+  list-style-type: circle;
+}
+ol.roman {
+  list-style-type: lower-roman;
+}
+ol.ROMAN {
+  list-style-type: upper-roman;
+}
+ol.alpha {
+  list-style-type: lower-alpha;
+}
+ol.ALPHA {
+  list-style-type: upper-alpha;
+}
+ol.greek {
+  list-style-type: lower-greek;
+}
+ol.GREEK {
+  list-style-type: upper-greek;
+}
 /* Disabled until they become valid CSS (in 3.0)
 ol.hiragana { list-style-type: hiragana; }
 ol.HIRAGANA { list-style-type: hiragana-iroha; }
@@ -217,24 +241,24 @@ ol.HEBREW { list-style-type: hebrew; }
 span.wikicreatelink a {
   text-decoration: underline;
   color: black;
-  background:transparent url(qm-blue.png) no-repeat scroll right center;
-  padding-right:13px;
+  background: transparent url(qm-blue.png) no-repeat scroll right center;
+  padding-right: 13px;
 }
 
-.wiki-calendar-table *{
+.wiki-calendar-table * {
   text-align: center;
   border-collapse: collapse;
   border-spacing: 0px;
 }
-.wiki-calendar-table div{
+.wiki-calendar-table div {
   font-size: 90%;
   margin: 2px 0px;
 }
-* html .wiki-calendar-table div{
+* html .wiki-calendar-table div {
   font-size: 80%;
 }
 .wiki-calendar-table {
-  border: 4px solid #C0D4E7;
+  border: 4px solid #c0d4e7;
   font-size: 100%;
   margin: auto;
 }
@@ -242,37 +266,38 @@ span.wikicreatelink a {
   vertical-align: top;
 }
 .wiki-calendar-table th {
-  background-color: #FFF;
+  background-color: #fff;
 }
-.wiki-calendar-table td, .wiki-calendar-table th {
+.wiki-calendar-table td,
+.wiki-calendar-table th {
   text-align: center;
-  border: 1px #C0D4E7 solid;
+  border: 1px #c0d4e7 solid;
   height: 60px;
   width: 90px;
   padding-top: 0px !important;
 }
-.wiki-calendar-daynotinmonth{
- color: #BBBBBB;
- background-color: #E5E5E5;
+.wiki-calendar-daynotinmonth {
+  color: #bbbbbb;
+  background-color: #e5e5e5;
 }
-.wiki-calendar-today{
-  background-color: #C0D4E7;
+.wiki-calendar-today {
+  background-color: #c0d4e7;
 }
-.wiki-calendar-today-notinmonth{
- background-color: #D9E0E7;
- color: #BBBBBB;
+.wiki-calendar-today-notinmonth {
+  background-color: #d9e0e7;
+  color: #bbbbbb;
 }
 .wiki-calendar-daynamerow {
-  background-color: #C0D4E7 !important;
+  background-color: #c0d4e7 !important;
 }
-.wiki-calendar-daynamerow th{
-  background-color: #C0D4E7 !important;
+.wiki-calendar-daynamerow th {
+  background-color: #c0d4e7 !important;
   color: #fff;
   font-weight: 900;
   height: 1.8em;
 }
 .wiki-calendar-daytitle {
-  background-color: #E8EEF7;
+  background-color: #e8eef7;
   font-size: 75% !important;
   padding: 0px 5px;
   margin: 0px !important;
@@ -287,72 +312,73 @@ span.wikicreatelink a {
   background-color: transparent !important;
 }
 
-.wiki-calendar-today-notinmonth a, .wiki-calendar-daynotinmonth a{
-  color: #BBB !important;
+.wiki-calendar-today-notinmonth a,
+.wiki-calendar-daynotinmonth a {
+  color: #bbb !important;
 }
 .wiki-calendar-monthyearrow {
   font-size: 140%;
   font-weight: 100;
   font-variant: small-caps;
-  color: #C0D4E7;
+  color: #c0d4e7;
   border: none !important;
   width: auto !important;
 }
-.wiki-calendar-month-nav{
+.wiki-calendar-month-nav {
   border: none !important;
 }
-.wiki-calendar-month-nav *{
+.wiki-calendar-month-nav * {
   font-size: 140%;
   font-weight: bold;
-  color: #C0D4E7 !important;
+  color: #c0d4e7 !important;
   text-decoration: none;
 }
-.wiki-calendar-month-nav .disabled{
+.wiki-calendar-month-nav .disabled {
   color: #aaa !important;
 }
-.wiki-calendar-month-nav a:hover{
+.wiki-calendar-month-nav a:hover {
   text-decoration: none !important;
   color: #38c !important;
 }
-#body .prev-month{
+#body .prev-month {
   text-align: left;
   padding-left: 8px;
 }
-#body .next-month{
+#body .next-month {
   text-align: right;
   padding-right: 8px;
 }
 
-.underline{
+.underline {
   text-decoration: underline;
 }
 
 .workshop {
-  background-color: #FED;
+  background-color: #fed;
 }
 .event .username {
   font-size: 80%;
 }
 
 .article_title {
- font-size: 120%;
- border-bottom: 1px;
+  font-size: 120%;
+  border-bottom: 1px;
 }
 
 .article_content {
- padding: 10px;
+  padding: 10px;
 }
 
 .article_date {
- font-size: 120%;
- border-bottom: 1px solid;
+  font-size: 120%;
+  border-bottom: 1px solid;
 }
 
 .article_footer {
- border-top: 1px dotted;
- font-size: 75%;
- font-weight: bold;
- color: gray;
+  border-top: 1px dotted;
+  font-size: 75%;
+  font-weight: bold;
+  color: gray;
 }
 
 /* Footnotes */
@@ -367,12 +393,14 @@ span.wikicreatelink a {
   margin: 0;
   list-style-position: inside;
 }
-.footnoteRef a, .footnoteBackRef {
+.footnoteRef a,
+.footnoteBackRef {
   text-decoration: none;
 }
-.footnoteRef:target, .footnotes *:target {
+.footnoteRef:target,
+.footnotes *:target {
   border: 1px dotted #888;
-  background: #FFD;
+  background: #ffd;
 }
 
 /* Pagination (deprecated) */
@@ -381,27 +409,27 @@ span.wikicreatelink a {
   padding: 8px 0px;
   margin: auto;
 }
-.pagedNavigation span{
+.pagedNavigation span {
   padding: 0px 8px;
 }
-.pagedNavigation .pagedLink{
-  background-color: #E5F0FE;
+.pagedNavigation .pagedLink {
+  background-color: #e5f0fe;
 }
-.pagedNavigation .inactive{
-  color: #CCC;
+.pagedNavigation .inactive {
+  color: #ccc;
 }
-.pagedNavigation .pagedLink a{
+.pagedNavigation .pagedLink a {
   text-decoration: none;
-  color: #2E5A87 !important;
+  color: #2e5a87 !important;
 }
-.pagedNavigation .pagedLink a:hover{
-  color: #D70 !important;
+.pagedNavigation .pagedLink a:hover {
+  color: #d70 !important;
 }
 
 /* Used to signify a rendering error in the rendered page. Valid only with new rendering */
 .xwikirenderingerror {
-  background-color: #eee; 
-  background-image: url($xwiki.getSkinFile("icons/silk/exclamation.gif", true));
+  background-color: #eee;
+  background-image: url($xwiki.getSkinFile('icons/silk/exclamation.gif', true));
   background-position: 2px 50%;
   background-repeat: no-repeat;
   color: #e14726;
@@ -413,10 +441,10 @@ span.wikicreatelink a {
   background-color: #eee;
   clear: both;
   display: block;
-  font-family: georgia,verdana,arial;
+  font-family: georgia, verdana, arial;
   padding: 5px;
   font-size: 80%;
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
-  overflow:auto;
+  overflow: auto;
 }

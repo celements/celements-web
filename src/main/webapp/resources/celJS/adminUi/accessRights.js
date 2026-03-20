@@ -18,14 +18,16 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-var saveAccessRights = function() {
-  getCelementsTabEditor().saveAndContinueAjax('accessRightForm', { onSuccess : function() {
-    getCelementsTabEditor().getTab('tbrights', true);
-  }});
+var saveAccessRights = function () {
+  getCelementsTabEditor().saveAndContinueAjax('accessRightForm', {
+    onSuccess: function () {
+      getCelementsTabEditor().getTab('tbrights', true);
+    },
+  });
 };
 
-var registerChangeListener = function() {
-  $$('.cel_rightsSelect').each(function(elem) {
+var registerChangeListener = function () {
+  $$('.cel_rightsSelect').each(function (elem) {
     elem.stopObserving('change', saveAccessRights);
     elem.observe('change', saveAccessRights);
   });
@@ -33,4 +35,4 @@ var registerChangeListener = function() {
 
 registerChangeListener();
 
- $('tbrights-tab').observe('tabedit:tabchange', registerChangeListener);
+$('tbrights-tab').observe('tabedit:tabchange', registerChangeListener);

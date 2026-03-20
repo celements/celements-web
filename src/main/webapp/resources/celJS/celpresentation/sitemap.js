@@ -18,32 +18,37 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-(function(window, undefined) {
-  "use strict";
+(function (window, undefined) {
+  'use strict';
 
-  const checkReorderModeBrowseAway = function(theLink) {
+  const checkReorderModeBrowseAway = function (theLink) {
     const parentDiv = theLink.up('ul').up();
     const isInReorderMode = parentDiv.hasClassName('reorderMode');
-    return (!isInReorderMode || confirm('Sie sind am neu ordnen der Knoten.'
-      + ' Nicht gespeicherte Änderungen gehen verloren.'));
+    return (
+      !isInReorderMode ||
+      confirm(
+        'Sie sind am neu ordnen der Knoten.' + ' Nicht gespeicherte Änderungen gehen verloren.',
+      )
+    );
   };
 
-  const checkIsCreateTrans = function(theLink) {
+  const checkIsCreateTrans = function (theLink) {
     const langName = theLink.innerHTML;
-    return (!theLink.hasClassName('transNotExists')
-      || confirm('Möchten Sie wirklich eine Übersetzung für \'' + langName
-        + '\' erstellen?'));
+    return (
+      !theLink.hasClassName('transNotExists') ||
+      confirm("Möchten Sie wirklich eine Übersetzung für '" + langName + "' erstellen?")
+    );
   };
 
-  const pageLinkClickHandler = function(event) {
+  const pageLinkClickHandler = function (event) {
     event.stop();
     const theLink = this;
     let linkUrl = theLink.href;
     if (!theLink.up('.docLangs')) {
       window.open(linkUrl);
     } else if (checkIsCreateTrans(theLink) && checkReorderModeBrowseAway(theLink)) {
-      const xredirect = 'xredirect=' + encodeURIComponent(
-        window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
+      const xredirect =
+        'xredirect=' + encodeURIComponent(window.location.href.replace(/^(?:\/\/|[^\/]+)*\//, '/'));
       if (!linkUrl.match(/\?/)) {
         linkUrl += '?' + xredirect;
       } else {
@@ -58,7 +63,7 @@
   };
 
   const registerOnSiteEditLinks = () => {
-    $$('.presentation_order_edit ul li a').each(function(pageLink) {
+    $$('.presentation_order_edit ul li a').each(function (pageLink) {
       pageLink.observe('click', pageLinkClickHandler);
     });
   };
@@ -68,11 +73,11 @@
   /****
    * Space selector
    */
-  const spaceSelectorChangeHandler = function(event) {
+  const spaceSelectorChangeHandler = function (event) {
     window.location.href = this.value;
   };
 
-  document.addEventListener('DOMContentLoaded', () => 
-    $('spaceSelector').observe('change', spaceSelectorChangeHandler));
-
+  document.addEventListener('DOMContentLoaded', () =>
+    $('spaceSelector').observe('change', spaceSelectorChangeHandler),
+  );
 })(window);

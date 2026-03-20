@@ -23,9 +23,12 @@
  * This is the Celements presentation Slideshow controller.
  */
 (function (window, undefined) {
-
-  if (typeof window.CELEMENTS == "undefined") { window.CELEMENTS = {}; }
-  if (typeof window.CELEMENTS.presentation == "undefined") { window.CELEMENTS.presentation = {}; }
+  if (typeof window.CELEMENTS == 'undefined') {
+    window.CELEMENTS = {};
+  }
+  if (typeof window.CELEMENTS.presentation == 'undefined') {
+    window.CELEMENTS.presentation = {};
+  }
 
   let CPCY_SlideShowObj = undefined;
 
@@ -40,8 +43,10 @@
     if (!CPCY_SlideShowObj) {
       CPCY_SlideShowObj = new CELEMENTS.presentation.SlideShow();
     }
-    $(document.body).observe('cel_yuiOverlay:afterShowDialog_General',
-      CPCY_SlideShowObj._registerOnOpenOverlayCheckerBind);
+    $(document.body).observe(
+      'cel_yuiOverlay:afterShowDialog_General',
+      CPCY_SlideShowObj._registerOnOpenOverlayCheckerBind,
+    );
   });
 
   //////////////////////////////////////////////////////////////////////////////
@@ -88,14 +93,15 @@
         _me._preloadingImageQueue = [];
         _me._htmlContainerId = containerId || 'yuiOverlayContainer';
         _me._htmlContainer = $(_me._htmlContainerId);
-        _me._navObj = new CELEMENTS.presentation.Navigation(_me._preloadSlide.bind(_me),
-          _me._showSlide.bind(_me), _me._waitingLoad.bind(_me));
+        _me._navObj = new CELEMENTS.presentation.Navigation(
+          _me._preloadSlide.bind(_me),
+          _me._showSlide.bind(_me),
+          _me._waitingLoad.bind(_me),
+        );
         _me._nextSlideBind = _me._nextSlideClickHandler.bind(_me);
         _me._prevSlideBind = _me._prevSlideClickHandler.bind(_me);
-        _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(
-          _me);
-        _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(
-          _me);
+        _me._registerOnOpenOverlayCheckerBind = _me._registerOnOpenOverlayChecker.bind(_me);
+        _me._imgLoadedResizeAndCenterSlideBind = _me._imgLoadedResizeAndCenterSlide.bind(_me);
         _me._cleanupSlideTransitionBind = _me._cleanupSlideTransition.bind(_me);
         _me._gotoSlideClickHandlerBind = _me._gotoSlideClickHandler.bind(_me);
       },
@@ -126,12 +132,11 @@
         const _me = this;
         const celOverlayObj = event.memo;
         const checkRegisterEvent = $(document.body).fire('cel_slideShow:shouldRegister', {
-          'origEvent': event,
-          'slideShow': _me,
-          'celOverlay': celOverlayObj
+          origEvent: event,
+          slideShow: _me,
+          celOverlay: celOverlayObj,
         });
-        if (checkRegisterEvent.stopped
-          && (_me._htmlContainerId === celOverlayObj.getContainerId())) {
+        if (checkRegisterEvent.stopped && _me._htmlContainerId === celOverlayObj.getContainerId()) {
           _me._htmlContainer = null;
           _me.register();
         }
@@ -151,8 +156,10 @@
             });
             _me._htmlContainer.removeClassName('cel_slideShow_loadingNext');
           }
-          _me._htmlContainer.fire('cel_slideShow:waitingNextLoad-'
-            + waitingObj.waitingState, waitingObj);
+          _me._htmlContainer.fire(
+            'cel_slideShow:waitingNextLoad-' + waitingObj.waitingState,
+            waitingObj,
+          );
         } else if (waitingObj.waitingMode == 'prev') {
           if (waitingObj.waitingState == 'start') {
             _me._nextElements.each(function (nextElem) {
@@ -165,8 +172,10 @@
             });
             _me._htmlContainer.removeClassName('cel_slideShow_loadingPrev');
           }
-          _me._htmlContainer.fire('cel_slideShow:waitingPrevLoad-'
-            + waitingObj.waitingState, waitingObj);
+          _me._htmlContainer.fire(
+            'cel_slideShow:waitingPrevLoad-' + waitingObj.waitingState,
+            waitingObj,
+          );
         } else {
           if (waitingObj.waitingState == 'start') {
             _me._nextElements.each(function (nextElem) {
@@ -179,8 +188,10 @@
             });
             _me._htmlContainer.removeClassName('cel_slideShow_loading');
           }
-          _me._htmlContainer.fire('cel_slideShow:waitingLoad-' + waitingObj.waitingState,
-            waitingObj);
+          _me._htmlContainer.fire(
+            'cel_slideShow:waitingLoad-' + waitingObj.waitingState,
+            waitingObj,
+          );
         }
       },
 
@@ -191,25 +202,29 @@
           _me._htmlContainer.update(_me._addWrapperElements(oldContent));
           const slideWrapper = _me._getSlideWrapper();
           slideWrapper.down().setStyle({
-            'position': '',
-            'top': '',
-            'left': '',
-            'right': '',
-            'bottom': ''
+            position: '',
+            top: '',
+            left: '',
+            right: '',
+            bottom: '',
           });
         }
         _me._preloadImagesAndResizeCenterSlide(_me._getSlideWrapper());
       },
 
       _addWrapperElements: function (slideContent) {
-        const slideWrapperElem = new Element('div').addClassName(
-          'cel_slideShow_slideWrapper').setStyle({
-            'position': 'relative'
-          }).update(slideContent);
-        const slideRootElem = new Element('div').addClassName(
-          'cel_slideShow_slideRoot').setStyle({
-            'position': 'absolute'
-          }).update(slideWrapperElem);
+        const slideWrapperElem = new Element('div')
+          .addClassName('cel_slideShow_slideWrapper')
+          .setStyle({
+            position: 'relative',
+          })
+          .update(slideContent);
+        const slideRootElem = new Element('div')
+          .addClassName('cel_slideShow_slideRoot')
+          .setStyle({
+            position: 'absolute',
+          })
+          .update(slideWrapperElem);
         return slideRootElem;
       },
 
@@ -222,24 +237,34 @@
         if (_me._htmlContainer) {
           _me._addContentWrapper();
           if (typeof initContextMenuAsync !== 'undefined') {
-            _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
-              initContextMenuAsync);
+            _me._htmlContainer.observe('cel_yuiOverlay:contentChanged', initContextMenuAsync);
             initContextMenuAsync();
           }
-          _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
-            _me._registerDynamicProviderAfterContentChanged.bind(_me));
-          _me._htmlContainer.observe('cel_yuiOverlay:afterSlideInsert',
-            _me._registerNavLinks.bind(_me));
+          _me._htmlContainer.observe(
+            'cel_yuiOverlay:contentChanged',
+            _me._registerDynamicProviderAfterContentChanged.bind(_me),
+          );
+          _me._htmlContainer.observe(
+            'cel_yuiOverlay:afterSlideInsert',
+            _me._registerNavLinks.bind(_me),
+          );
           _me._registerNavLinks();
-          _me._htmlContainer.observe('cel_yuiOverlay:afterSlideInsert',
-            _me._updateSlideCounterHandler.bind(_me));
-          _me._htmlContainer.observe('cel_slideShow:preloadContentFinished',
-            _me._preloadSlideImages.bind(_me));
+          _me._htmlContainer.observe(
+            'cel_yuiOverlay:afterSlideInsert',
+            _me._updateSlideCounterHandler.bind(_me),
+          );
+          _me._htmlContainer.observe(
+            'cel_slideShow:preloadContentFinished',
+            _me._preloadSlideImages.bind(_me),
+          );
           $(document.body).observe('cel_yuiOverlay:hideEvent', _me._resetContainerElem.bind(_me));
         } else {
-          if ((typeof console != 'undefined') && (typeof console.warn != 'undefined')) {
-            console.warn('register slideshow failed. Reason: container with id "'
-              + _me._htmlContainerId + '" not found!');
+          if (typeof console != 'undefined' && typeof console.warn != 'undefined') {
+            console.warn(
+              'register slideshow failed. Reason: container with id "' +
+                _me._htmlContainerId +
+                '" not found!',
+            );
           }
         }
       },
@@ -248,11 +273,12 @@
         const _me = this;
         //TODO move to independent CelementsSlideShowMovieExtender
         if (typeof registerCelAnimMoviePlayerInsideParent !== 'undefined') {
-          _me._htmlContainer.observe('cel_yuiOverlay:contentChanged',
-            registerCelAnimMoviePlayerInsideParent.curry(_me._htmlContainer));
+          _me._htmlContainer.observe(
+            'cel_yuiOverlay:contentChanged',
+            registerCelAnimMoviePlayerInsideParent.curry(_me._htmlContainer),
+          );
         }
-        $(document.body).fire('cel_slideShow:registerAfterContentChanged',
-          _me._htmlContainer);
+        $(document.body).fire('cel_slideShow:registerAfterContentChanged', _me._htmlContainer);
       },
 
       _resetContainerElem: function (event) {
@@ -273,13 +299,13 @@
 
       loadAndAddMainSlides: function (spaceName, callbackFN) {
         const _me = this;
-        callbackFN = callbackFN || function (jsonObj) { };
+        callbackFN = callbackFN || function (jsonObj) {};
         new Ajax.Request(getCelHost(), {
           method: 'post',
           parameters: {
-            'xpage': 'celements_ajax',
-            'ajax_mode': 'getMainSlides',
-            'spaceName': spaceName
+            xpage: 'celements_ajax',
+            ajax_mode: 'getMainSlides',
+            spaceName: spaceName,
           },
           onSuccess: function (transport) {
             if (transport.responseText.isJSON()) {
@@ -287,34 +313,32 @@
               _me._navObj._addSlides(jsonObj);
               callbackFN(jsonObj);
             } else {
-              if ((typeof console != 'undefined')
-                && (typeof console.error != 'undefined')) {
-                console.error('loadAndAddMainSlides returns no Json: ',
-                  transport.responseText);
+              if (typeof console != 'undefined' && typeof console.error != 'undefined') {
+                console.error('loadAndAddMainSlides returns no Json: ', transport.responseText);
               }
             }
           },
           onFailure: function (transport) {
             console.warn('loadAndAddMainSlides failed for: ', spaceName);
-          }
+          },
         });
       },
 
       loadMainSlides: function (spaceName, startAtIndexOrName, callbackFN) {
         const _me = this;
-        callbackFN = callbackFN || function (jsonObj) { };
+        callbackFN = callbackFN || function (jsonObj) {};
         new Ajax.Request(getCelHost(), {
           method: 'post',
           parameters: {
-            'xpage': 'celements_ajax',
-            'ajax_mode': 'getMainSlides',
-            'spaceName': spaceName
+            xpage: 'celements_ajax',
+            ajax_mode: 'getMainSlides',
+            spaceName: spaceName,
           },
           onSuccess: function (transport) {
             if (transport.responseText.isJSON()) {
               const jsonObj = transport.responseText.evalJSON();
               let startAtIndex = startAtIndexOrName;
-              if (typeof (startAtIndexOrName) === 'string') {
+              if (typeof startAtIndexOrName === 'string') {
                 if (startAtIndexOrName === '!RANDOM!') {
                   startAtIndex = Math.floor(Math.random() * (jsonObj.length - 1));
                 } else {
@@ -324,26 +348,25 @@
               _me._navObj._setAllSlides(jsonObj, startAtIndex);
               callbackFN(jsonObj);
             } else {
-              if ((typeof console != 'undefined')
-                && (typeof console.error != 'undefined')) {
+              if (typeof console != 'undefined' && typeof console.error != 'undefined') {
                 console.error('loadMainSlides returns no Json: ', transport.responseText);
               }
             }
           },
           onFailure: function (transport) {
             console.warn('loadMainSlides failed for: ', spaceName, startAtIndexOrName);
-          }
+          },
         });
       },
 
       loadAndAddSubSlides: function (parentFN, callbackFN) {
         const _me = this;
-        callbackFN = callbackFN || function (jsonObj) { };
+        callbackFN = callbackFN || function (jsonObj) {};
         new Ajax.Request(_me._convertFullNameToViewURL(parentFN), {
           method: 'post',
           parameters: {
-            'xpage': 'celements_ajax',
-            'ajax_mode': 'getSubSlides'
+            xpage: 'celements_ajax',
+            ajax_mode: 'getSubSlides',
           },
           onSuccess: function (transport) {
             if (transport.responseText.isJSON()) {
@@ -351,27 +374,25 @@
               _me._navObj._addSlides(jsonObj);
               callbackFN(jsonObj);
             } else {
-              if ((typeof console != 'undefined')
-                && (typeof console.error != 'undefined')) {
-                console.error('loadAndAddSubSlides returns no Json: ',
-                  transport.responseText);
+              if (typeof console != 'undefined' && typeof console.error != 'undefined') {
+                console.error('loadAndAddSubSlides returns no Json: ', transport.responseText);
               }
             }
           },
           onFailure: function (transport) {
             console.warn('loadAndAddSubSlides failed for: ', parentFN);
-          }
+          },
         });
       },
 
       loadSubSlides: function (parentFN, startAtIndex, callbackFN) {
         const _me = this;
-        callbackFN = callbackFN || function (jsonObj) { };
+        callbackFN = callbackFN || function (jsonObj) {};
         new Ajax.Request(_me._convertFullNameToViewURL(parentFN), {
           method: 'post',
           parameters: {
-            'xpage': 'celements_ajax',
-            'ajax_mode': 'getSubSlides'
+            xpage: 'celements_ajax',
+            ajax_mode: 'getSubSlides',
           },
           onSuccess: function (transport) {
             if (transport.responseText.isJSON()) {
@@ -379,15 +400,14 @@
               _me._navObj._setAllSlides(jsonObj, startAtIndex);
               callbackFN(jsonObj);
             } else {
-              if ((typeof console != 'undefined')
-                && (typeof console.error != 'undefined')) {
+              if (typeof console != 'undefined' && typeof console.error != 'undefined') {
                 console.error('loadSubSlides returns no Json: ', transport.responseText);
               }
             }
           },
           onFailure: function (transport) {
             console.warn('loadSubSlides failed for: ', parentFN, startAtIndex);
-          }
+          },
         });
       },
 
@@ -400,11 +420,15 @@
         const _me = this;
         const numSlides = _me._navObj.getNumSlides();
         if (_me._debug) {
-          console.debug('_updateSlideCounter: ', numSlides, _me._htmlContainer.select(
-            '.celPresSlideShow_countSlideNum'));
+          console.debug(
+            '_updateSlideCounter: ',
+            numSlides,
+            _me._htmlContainer.select('.celPresSlideShow_countSlideNum'),
+          );
         }
-        _me._htmlContainer.select('.celPresSlideShow_countSlideNum').each(
-          function (countSlideElem) {
+        _me._htmlContainer
+          .select('.celPresSlideShow_countSlideNum')
+          .each(function (countSlideElem) {
             countSlideElem.update(numSlides);
           });
         let currentSlideNum = _me._navObj.getCurrentSlideNum();
@@ -412,13 +436,14 @@
           currentSlideNum = '0000000000' + currentSlideNum;
           currentSlideNum = currentSlideNum.substring(
             currentSlideNum.length - numSlides.toString().length,
-            currentSlideNum.length);
+            currentSlideNum.length,
+          );
         }
-        _me._htmlContainer.select(
-          '.celPresSlideShow_currentSlideNum').each(
-            function (currentSlideElem) {
-              currentSlideElem.update(currentSlideNum);
-            });
+        _me._htmlContainer
+          .select('.celPresSlideShow_currentSlideNum')
+          .each(function (currentSlideElem) {
+            currentSlideElem.update(currentSlideNum);
+          });
       },
 
       _registerNavLinks: function () {
@@ -464,23 +489,24 @@
       _gotoSlideClickHandler: function (event) {
         const _me = this;
         let fullName = event.element().id.split(':')[2];
-        if ((typeof fullName === 'undefined') && event.findElement('a')) {
+        if (typeof fullName === 'undefined' && event.findElement('a')) {
           fullName = event.findElement('a').id.split(':')[2];
         }
         if (_me.gotoSlide(fullName)) {
           event.stop();
         } else {
-          const nonSlideClickEvent = _me._htmlContainer.fire('cel_slideShow:nonSlideClick',
-            {
-              'theSlideShow': _me,
-              'fullName': fullName,
-              'clickEvent': event
-            });
+          const nonSlideClickEvent = _me._htmlContainer.fire('cel_slideShow:nonSlideClick', {
+            theSlideShow: _me,
+            fullName: fullName,
+            clickEvent: event,
+          });
           if (!nonSlideClickEvent.stopped) {
-            if ((typeof console != 'undefined')
-              && (typeof console.error != 'undefined')) {
-              console.error('_gotoSlideClickHandler failed. Index not found for: ',
-                fullName, ' and cel_slideShow:nonSlideClick event not handled');
+            if (typeof console != 'undefined' && typeof console.error != 'undefined') {
+              console.error(
+                '_gotoSlideClickHandler failed. Index not found for: ',
+                fullName,
+                ' and cel_slideShow:nonSlideClick event not handled',
+              );
             }
           }
         }
@@ -530,11 +556,11 @@
 
       _preloadSlide: function (slideFN, callbackFN) {
         const _me = this;
-        callbackFN = callbackFN || function (newSlideContent) { };
+        callbackFN = callbackFN || function (newSlideContent) {};
         let params = {
-          'xpage': 'celements_ajax',
-          'ajax_mode': 'pageTypeWithLayout',
-          'ajax': '1'
+          xpage: 'celements_ajax',
+          ajax_mode: 'pageTypeWithLayout',
+          ajax: '1',
         };
         if (_me._htmlContainer) {
           params['maxHeight'] = _me._htmlContainer.getHeight();
@@ -552,45 +578,51 @@
           parameters: params,
           onSuccess: function (transport) {
             const jsonObj = transport.headerJSON;
-            if (jsonObj && jsonObj.redirectFN && (jsonObj.redirectFN != '')
-              && (jsonObj.redirectFN != slideFN)) {
+            if (
+              jsonObj &&
+              jsonObj.redirectFN &&
+              jsonObj.redirectFN != '' &&
+              jsonObj.redirectFN != slideFN
+            ) {
               const beforeRedirEvent = _me._htmlContainer.fire(
-                'cel_slideShow:preloadContentBeforeRedirect', {
-                'theSlideShow': _me,
-                'slideFN': slideFN,
-                'jsonObj': jsonObj
-              });
+                'cel_slideShow:preloadContentBeforeRedirect',
+                {
+                  theSlideShow: _me,
+                  slideFN: slideFN,
+                  jsonObj: jsonObj,
+                },
+              );
               if (!beforeRedirEvent.stopped) {
                 if (!_me.gotoSlide(jsonObj.redirectFN)) {
                   _me._htmlContainer.fire('cel_slideShow:preloadContentRedirectFailed', {
-                    'theSlideShow': _me,
-                    'slideFN': slideFN,
-                    'jsonObj': jsonObj
+                    theSlideShow: _me,
+                    slideFN: slideFN,
+                    jsonObj: jsonObj,
                   });
                 }
               }
             } else {
               _me._htmlContainer.fire('cel_slideShow:preloadContentFinished', {
-                'theSlideShow': _me,
-                'slideFN': slideFN,
-                'responseText': transport.responseText
+                theSlideShow: _me,
+                slideFN: slideFN,
+                responseText: transport.responseText,
               });
               callbackFN(transport.responseText);
               _me._htmlContainer.fire('cel_slideShow:preloadFinished', {
-                'theSlideShow': _me,
-                'slideFN': slideFN,
-                'responseText': transport.responseText
+                theSlideShow: _me,
+                slideFN: slideFN,
+                responseText: transport.responseText,
               });
             }
           },
           onFailure: function (transport) {
             console.warn('_preloadSlide failed for: ', slideFN);
             _me._htmlContainer.fire('cel_slideShow:preloadContentFailed', {
-              'theSlideShow': _me,
-              'slideFN': slideFN,
-              'responseText': transport.responseText
+              theSlideShow: _me,
+              slideFN: slideFN,
+              responseText: transport.responseText,
             });
-          }
+          },
         });
       },
 
@@ -602,12 +634,11 @@
           const imgsArray = preloadElem.select('img');
           _me._preloadSlideImagesHash.set(preLoadSlide.slideFN, preloadElem);
           _me._htmlContainer.fire('cel_slideShow:afterPreloadImages', {
-            'theSlideShow': _me,
-            'slideFN': preLoadSlide.slideFN,
-            'images': imgsArray.toArray()
+            theSlideShow: _me,
+            slideFN: preLoadSlide.slideFN,
+            images: imgsArray.toArray(),
           });
         }
-
       },
 
       _getSlideWrapper: function () {
@@ -625,7 +656,7 @@
        * we need an additional div between the slideWrapper and the _htmlContainer
        * to get the reduced dimensions of the slide. This intermediate div must
        * present the .cel_slideShow_slideRoot css class.
-       * 
+       *
        * prerequisite: slideWrapper MUST have a height and width asigned (e.g. by resize)
        * @TODO move to CelementsSlides js class.
        */
@@ -643,21 +674,33 @@
         });
         //ensure that the width is not influenced by the parents by setting position to absolute
         slideRoot.setStyle({
-          'position': 'absolute'
+          position: 'absolute',
         });
         //use scrollWidth and scrollHeight, because it works correctly inside iframes.
         const slideOuterHeight = slideRoot.scrollHeight;
         const slideOuterWidth = slideRoot.scrollWidth;
         if (_me._debug) {
-          console.debug('_centerCurrentSlide slideRoot dim: ', _me._htmlContainerId, slideOuterWidth,
-            slideOuterHeight, slideRoot.getStyle('position'), slideRoot);
+          console.debug(
+            '_centerCurrentSlide slideRoot dim: ',
+            _me._htmlContainerId,
+            slideOuterWidth,
+            slideOuterHeight,
+            slideRoot.getStyle('position'),
+            slideRoot,
+          );
         }
         const parentDiv = _me._htmlContainer;
         const parentHeight = parentDiv.getHeight();
         const parentWidth = parentDiv.getWidth();
         if (_me._debug) {
-          console.debug('_centerCurrentSlide parentDiv dim: ', _me._htmlContainerId, parentWidth,
-            parentHeight, parentDiv.scrollWidth, parentDiv.scrollHeight);
+          console.debug(
+            '_centerCurrentSlide parentDiv dim: ',
+            _me._htmlContainerId,
+            parentWidth,
+            parentHeight,
+            parentDiv.scrollWidth,
+            parentDiv.scrollHeight,
+          );
         }
         //FIXED: why slideOuterHeight? !!! FP; 2/1/2014
         //--> it must be slideOuterHeight to get correct size of scaled down slides.
@@ -666,16 +709,16 @@
         const leftPos = (parentWidth - slideOuterWidth) / 2;
         hiddenParentElems.each(Element.hide);
         slideWrapper.setStyle({
-          'position': 'relative',
-          'margin': '0'
+          position: 'relative',
+          margin: '0',
         });
         // horizontal centering with absolut left position needed, because FF gets
         // conflict with transform-origin and margin auto
         slideRoot.setStyle({
-          'position': 'absolute',
-          'left': leftPos + 'px',
-          'top': topPos + 'px',
-          'margin': '0'
+          position: 'absolute',
+          left: leftPos + 'px',
+          top: topPos + 'px',
+          margin: '0',
         });
       },
 
@@ -685,17 +728,24 @@
         imgElem.stopObserving('error', _me._imgLoadedResizeAndCenterSlideBind);
         imgElem.stopObserving('abort', _me._imgLoadedResizeAndCenterSlideBind);
         if (_me._debug) {
-          console.debug('_imgLoadedResizeAndCenterSlide: preloading finished for ',
-            imgElem.inspect());
+          console.debug(
+            '_imgLoadedResizeAndCenterSlide: preloading finished for ',
+            imgElem.inspect(),
+          );
         }
         _me._preloadingImageQueue = _me._preloadingImageQueue.without(imgElem);
         if (_me._preloadingImageQueue.length == 0) {
           if (_me._debug) {
-            console.log('_imgLoadedResizeAndCenterSlide before _resizeAndCenterSlidefor ',
-              slideWrapper);
+            console.log(
+              '_imgLoadedResizeAndCenterSlide before _resizeAndCenterSlidefor ',
+              slideWrapper,
+            );
             slideWrapper.select('img').each(function (imgElem) {
-              console.debug('_imgLoadedResizeAndCenterSlide: img loaded ', imgElem.inspect(),
-                imgElem.complete);
+              console.debug(
+                '_imgLoadedResizeAndCenterSlide: img loaded ',
+                imgElem.inspect(),
+                imgElem.complete,
+              );
             });
           }
           _me._resizeAndCenterSlide(slideWrapper);
@@ -708,19 +758,22 @@
       _resizeAndCenterSlide: function (slideWrapper) {
         const _me = this;
         if (_me._debug) {
-          console.debug('_resizeAndCenterSlide: ', slideWrapper, _me._resizeSlide,
-            _me._centerSlide);
+          console.debug(
+            '_resizeAndCenterSlide: ',
+            slideWrapper,
+            _me._resizeSlide,
+            _me._centerSlide,
+          );
         }
         slideWrapper.select('img').each(function (imgElem) {
           //reset possible image css 'possition' : absolute settings
           imgElem.setStyle({
-            'position': 'relative'
+            position: 'relative',
           });
         });
         _me._htmlContainer.fire('cel_slideShow:beforeResizeAndCenterSlide', _me);
         if (_me._resizeSlide) {
-          const resizeSlideEvent = _me._htmlContainer.fire('cel_slideShow:resizeSlide',
-            _me);
+          const resizeSlideEvent = _me._htmlContainer.fire('cel_slideShow:resizeSlide', _me);
           if (!resizeSlideEvent.stopped) {
             _me._resizeCurrentSlide(slideWrapper);
           } else {
@@ -728,8 +781,7 @@
           }
         }
         if (_me._centerSlide) {
-          const centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide',
-            _me);
+          const centerSlideEvent = _me._htmlContainer.fire('cel_slideShow:centerSlide', _me);
           if (!centerSlideEvent.stopped) {
             _me._centerCurrentSlide(slideWrapper);
           } else {
@@ -739,7 +791,7 @@
         slideWrapper.select('img').each(function (imgElem) {
           //reset img elem position values
           imgElem.setStyle({
-            'position': ''
+            position: '',
           });
         });
         _me._htmlContainer.fire('cel_slideShow:afterResizeAndCenterSlide', _me);
@@ -754,32 +806,43 @@
         const _me = this;
         const slideWrapper = slideWrapperIn || _me._getSlideWrapper();
         const zoomFactorObj = _me._computeZoomFactor(slideWrapper);
-        if ((_me._autoresize) && (zoomFactorObj.zoomFactor <= 1)) {
+        if (_me._autoresize && zoomFactorObj.zoomFactor <= 1) {
           const eventMemo = {
-            'fullWidth': zoomFactorObj.oldWidth,
-            'fullHeight': zoomFactorObj.oldHeight,
-            'zoomFactor': zoomFactorObj.zoomFactor,
-            'newWidth': zoomFactorObj.newWidth,
-            'newHeight': zoomFactorObj.newHeight
+            fullWidth: zoomFactorObj.oldWidth,
+            fullHeight: zoomFactorObj.oldHeight,
+            zoomFactor: zoomFactorObj.zoomFactor,
+            newWidth: zoomFactorObj.newWidth,
+            newHeight: zoomFactorObj.newHeight,
           };
           if (_me._debug) {
             console.log('final resize factor: ', _me._htmlContainer, eventMemo);
           }
           const resizeEvent = _me._htmlContainer.fire(
-            'cel_slideShow:resizeSlideContent', eventMemo);
+            'cel_slideShow:resizeSlideContent',
+            eventMemo,
+          );
           if (!resizeEvent.stopped) {
-            slideWrapper.setStyle(_me.getZoomStyles(zoomFactorObj.zoomFactor,
-              zoomFactorObj.oldWidth, zoomFactorObj.oldHeight));
+            slideWrapper.setStyle(
+              _me.getZoomStyles(
+                zoomFactorObj.zoomFactor,
+                zoomFactorObj.oldWidth,
+                zoomFactorObj.oldHeight,
+              ),
+            );
           }
           const parentDiv = _me._getSlideRootElem(slideWrapper);
           if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
             if (_me._debug) {
-              console.debug('_resizeCurrentSlide: setting rootElem new size ', _me._htmlContainerId,
-                zoomFactorObj.newWidth, zoomFactorObj.newHeight);
+              console.debug(
+                '_resizeCurrentSlide: setting rootElem new size ',
+                _me._htmlContainerId,
+                zoomFactorObj.newWidth,
+                zoomFactorObj.newHeight,
+              );
             }
             parentDiv.setStyle({
-              'width': zoomFactorObj.newWidth + 'px',
-              'height': zoomFactorObj.newHeight + 'px'
+              width: zoomFactorObj.newWidth + 'px',
+              height: zoomFactorObj.newHeight + 'px',
             });
           }
         } else {
@@ -787,28 +850,36 @@
             console.log('no resize needed.', zoomFactorObj.zoomFactor);
           } else {
             console.log('resize skipped.', {
-              'zoomFactor': zoomFactorObj.zoomFactor,
-              '_autoresize': _me._autoresize, 'zoomFactorObj': zoomFactorObj
+              zoomFactor: zoomFactorObj.zoomFactor,
+              _autoresize: _me._autoresize,
+              zoomFactorObj: zoomFactorObj,
             });
           }
           //set sizes without zoom too. Important for centering
           if (_me._debug) {
-            console.debug('_resizeCurrentSlide: setting wrapper size ',
-              zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
+            console.debug(
+              '_resizeCurrentSlide: setting wrapper size ',
+              zoomFactorObj.oldWidth,
+              zoomFactorObj.oldHeight,
+            );
           }
           slideWrapper.setStyle({
-            'height': zoomFactorObj.oldHeight + 'px',
-            'width': zoomFactorObj.oldWidth + 'px'
+            height: zoomFactorObj.oldHeight + 'px',
+            width: zoomFactorObj.oldWidth + 'px',
           });
           const parentDiv = _me._getSlideRootElem(slideWrapper);
           if (parentDiv.hasClassName('cel_slideShow_slideRoot')) {
             if (_me._debug) {
-              console.debug('_resizeCurrentSlide: setting rootElem old size ', _me._htmlContainerId,
-                zoomFactorObj.oldWidth, zoomFactorObj.oldHeight);
+              console.debug(
+                '_resizeCurrentSlide: setting rootElem old size ',
+                _me._htmlContainerId,
+                zoomFactorObj.oldWidth,
+                zoomFactorObj.oldHeight,
+              );
             }
             parentDiv.setStyle({
-              'width': zoomFactorObj.oldWidth + 'px',
-              'height': zoomFactorObj.oldHeight + 'px'
+              width: zoomFactorObj.oldWidth + 'px',
+              height: zoomFactorObj.oldHeight + 'px',
             });
           }
         }
@@ -820,8 +891,8 @@
         const slideRoot = _me._getSlideRootElem(slideWrapper);
         const rootPositionValue = slideRoot.getStyle('position');
         slideRoot.setStyle({
-          'position': 'absolute',
-          'visibility': 'hidden'
+          position: 'absolute',
+          visibility: 'hidden',
         });
         const hiddenParentElems = [];
         slideWrapper.ancestors().each(function (parentElem) {
@@ -849,16 +920,16 @@
           zoomFactor = zoomWidthFactor;
         }
         slideRoot.setStyle({
-          'position': rootPositionValue,
-          'visibility': ''
+          position: rootPositionValue,
+          visibility: '',
         });
         hiddenParentElems.each(Element.hide);
         return {
-          'zoomFactor': zoomFactor,
-          'oldHeight': oldHeight,
-          'oldWidth': oldWidth,
-          'newHeight': oldHeight * zoomFactor,
-          'newWidth': oldWidth * zoomFactor
+          zoomFactor: zoomFactor,
+          oldHeight: oldHeight,
+          oldWidth: oldWidth,
+          newHeight: oldHeight * zoomFactor,
+          newWidth: oldWidth * zoomFactor,
         };
       },
 
@@ -875,29 +946,34 @@
         const slideRootElem = _me._addWrapperElements(slideContent).hide();
         const slideWrapperElem = slideRootElem.down('.cel_slideShow_slideWrapper');
         if (_me._debug) {
-          console.debug('_showSlide: before cel_yuiOverlay:beforeSlideInsert ',
-            _me._htmlContainer);
+          console.debug('_showSlide: before cel_yuiOverlay:beforeSlideInsert ', _me._htmlContainer);
         }
         _me._htmlContainer.fire('cel_yuiOverlay:beforeSlideInsert', {
-          'celSlideShow': _me,
-          'newSlideWrapperElem': slideWrapperElem,
-          'newSlideRootElem': slideRootElem
+          celSlideShow: _me,
+          newSlideWrapperElem: slideWrapperElem,
+          newSlideRootElem: slideRootElem,
         });
         _me.getHtmlContainer().insert({ bottom: slideRootElem });
         if (_me._debug) {
-          console.debug('_showSlide: before cel_yuiOverlay:afterSlideInsert event ',
-            _me.getHtmlContainer());
+          console.debug(
+            '_showSlide: before cel_yuiOverlay:afterSlideInsert event ',
+            _me.getHtmlContainer(),
+          );
         }
         _me._htmlContainer.fire('cel_yuiOverlay:afterSlideInsert', {
-          'celSlideShow': _me,
-          'newSlideWrapperElem': slideWrapperElem,
-          'newSlideRootElem': slideRootElem
+          celSlideShow: _me,
+          newSlideWrapperElem: slideWrapperElem,
+          newSlideRootElem: slideRootElem,
         });
         const resizeAndCenterSlideEvent = _me._htmlContainer.fire(
-          'cel_slideShow:resizeAndCenterSlide', _me);
+          'cel_slideShow:resizeAndCenterSlide',
+          _me,
+        );
         if (!resizeAndCenterSlideEvent.stopped) {
-          _me._preloadImagesAndResizeCenterSlide(slideWrapperElem,
-            _me._showSlideAfterPreloadingImg.bind(_me));
+          _me._preloadImagesAndResizeCenterSlide(
+            slideWrapperElem,
+            _me._showSlideAfterPreloadingImg.bind(_me),
+          );
         } else {
           _me._showSlideAfterPreloadingImg();
         }
@@ -909,27 +985,39 @@
         slideWrapperElem.select('img').each(function (imgElem) {
           if (!imgElem.complete) {
             const finishFnc = _me._imgLoadedResizeAndCenterSlideBind.curry(
-              imgElem, slideWrapperElem, callbackFN);
+              imgElem,
+              slideWrapperElem,
+              callbackFN,
+            );
             imgElem.observe('load', finishFnc);
             imgElem.observe('error', finishFnc);
             imgElem.observe('abort', finishFnc);
             _me._preloadingImageQueue.push(imgElem);
             if (_me._debug) {
-              console.debug('_preloadImagesAndResizeCenterSlide: preloading started for ',
-                imgElem.inspect());
+              console.debug(
+                '_preloadImagesAndResizeCenterSlide: preloading started for ',
+                imgElem.inspect(),
+              );
             }
           } else if (_me._debug) {
-            console.log('_preloadImagesAndResizeCenterSlide: NO preloading for ',
-              imgElem.inspect());
+            console.log(
+              '_preloadImagesAndResizeCenterSlide: NO preloading for ',
+              imgElem.inspect(),
+            );
           }
         });
         if (_me._preloadingImageQueue.size() == 0) {
           if (_me._debug) {
-            console.log('_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide'
-              + 'for ', slideWrapperElem);
+            console.log(
+              '_preloadImagesAndResizeCenterSlide before _resizeAndCenterSlide' + 'for ',
+              slideWrapperElem,
+            );
             slideWrapperElem.select('img').each(function (imgElem) {
-              console.debug('_preloadImagesAndResizeCenterSlide: img loaded ', imgElem.inspect(),
-                imgElem.complete);
+              console.debug(
+                '_preloadImagesAndResizeCenterSlide: img loaded ',
+                imgElem.inspect(),
+                imgElem.complete,
+              );
             });
           }
           _me._resizeAndCenterSlide(slideWrapperElem);
@@ -949,8 +1037,8 @@
         const newWidth = newMaxWidth || currentWidth;
         const newHeight = newMaxHeight || currentHeight;
         _me.getHtmlContainer().setStyle({
-          'height': newHeight + 'px',
-          'width': newWidth + 'px'
+          height: newHeight + 'px',
+          width: newWidth + 'px',
         });
         _me._getAllSlideWrappers().each(function (slideWrapper) {
           _me._resizeAndCenterSlide(slideWrapper);
@@ -960,13 +1048,17 @@
       _showSlideAfterPreloadingImg: function () {
         const _me = this;
         const slides = _me.getHtmlContainer().select('> .cel_slideShow_slideRoot');
-        _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
-          _me._cleanupSlideTransitionBind);
-        _me._htmlContainer.observe('cel_slideShow:slideTransitionFinished',
-          _me._cleanupSlideTransitionBind);
+        _me._htmlContainer.stopObserving(
+          'cel_slideShow:slideTransitionFinished',
+          _me._cleanupSlideTransitionBind,
+        );
+        _me._htmlContainer.observe(
+          'cel_slideShow:slideTransitionFinished',
+          _me._cleanupSlideTransitionBind,
+        );
         const contentChangeEvent = _me._htmlContainer.fire('cel_yuiOverlay:changeContent', {
-          'slideShowObj': _me,
-          'slides': slides
+          slideShowObj: _me,
+          slides: slides,
         });
         if (!contentChangeEvent.stopped) {
           if (slides.length > 1) {
@@ -981,8 +1073,10 @@
 
       _cleanupSlideTransition: function () {
         const _me = this;
-        _me._htmlContainer.stopObserving('cel_slideShow:slideTransitionFinished',
-          _me._cleanupSlideTransitionBind);
+        _me._htmlContainer.stopObserving(
+          'cel_slideShow:slideTransitionFinished',
+          _me._cleanupSlideTransitionBind,
+        );
         const slides = _me.getHtmlContainer().select('> .cel_slideShow_slideRoot');
         slides.each(function (slideElem) {
           if (!slideElem.visible()) {
@@ -1002,8 +1096,7 @@
       getCurrentSlideURL: function () {
         const _me = this;
         return _me._convertFullNameToViewURL(_me.getCurrentSlideFN());
-      }
-
+      },
     });
   }
 
@@ -1036,9 +1129,9 @@
         _me._waitingPrevSlide = false;
         _me._hasSlidePreload = true;
         _me._allSlides = new Array();
-        _me._preloadFunc = preloadFunc || function () { };
-        _me._showFunc = showFunc || function () { };
-        _me._waitingFunc = waitingFunc || function () { };
+        _me._preloadFunc = preloadFunc || function () {};
+        _me._showFunc = showFunc || function () {};
+        _me._waitingFunc = waitingFunc || function () {};
       },
 
       _convertFullNameToViewURL: function (fullName) {
@@ -1049,7 +1142,7 @@
         const _me = this;
         _me._allSlides = $A(slidesFNarray);
         if (_me._allSlides.size() > 0) {
-          const maxIndex = (_me._allSlides.size() - 1);
+          const maxIndex = _me._allSlides.size() - 1;
           startIndex = startIndex || 0;
           if (startIndex < 0) {
             startIndex = 0;
@@ -1083,12 +1176,10 @@
         _me._currContent = newCurrContent;
         _me._showFunc(_me._currContent);
         if (_me._hasSlidePreload && !_me._preloadNext) {
-          _me._preloadFunc(_me._allSlides[_me.getNextIndex()],
-            _me._updateNextContent.bind(_me));
+          _me._preloadFunc(_me._allSlides[_me.getNextIndex()], _me._updateNextContent.bind(_me));
         }
         if (_me._hasSlidePreload && !_me._preloadPrev) {
-          _me._preloadFunc(_me._allSlides[_me.getPrevIndex()],
-            _me._updatePrevContent.bind(_me));
+          _me._preloadFunc(_me._allSlides[_me.getPrevIndex()], _me._updatePrevContent.bind(_me));
         }
       },
 
@@ -1098,8 +1189,8 @@
         if (_me._waitingNextSlide) {
           _me._waitingNextSlide = false;
           _me._waitingFunc({
-            'waitingMode': 'next',
-            'waitingState': 'finished'
+            waitingMode: 'next',
+            waitingState: 'finished',
           });
           _me.nextSlide();
         }
@@ -1111,8 +1202,8 @@
         if (_me._waitingPrevSlide) {
           _me._waitingPrevSlide = false;
           _me._waitingFunc({
-            'waitingMode': 'prev',
-            'waitingState': 'finished'
+            waitingMode: 'prev',
+            waitingState: 'finished',
           });
           _me.prevSlide();
         }
@@ -1126,9 +1217,9 @@
       getNextIndex: function () {
         const _me = this;
         const newNextIdx = _me._currIndex + 1;
-        if ((newNextIdx < _me._allSlides.size()) && (newNextIdx >= 0)) {
+        if (newNextIdx < _me._allSlides.size() && newNextIdx >= 0) {
           _me._nextIndex = newNextIdx;
-        } else if (_me._loop && (newNextIdx >= _me._allSlides.size())) {
+        } else if (_me._loop && newNextIdx >= _me._allSlides.size()) {
           _me._nextIndex = 0;
         } else {
           _me._nextIndex = undefined;
@@ -1139,9 +1230,9 @@
       getPrevIndex: function () {
         const _me = this;
         const newPrevIdx = _me._currIndex - 1;
-        if ((newPrevIdx < _me._allSlides.size()) && (newPrevIdx >= 0)) {
+        if (newPrevIdx < _me._allSlides.size() && newPrevIdx >= 0) {
           _me._prevIndex = newPrevIdx;
-        } else if (_me._loop && (newPrevIdx < 0)) {
+        } else if (_me._loop && newPrevIdx < 0) {
           _me._prevIndex = _me._allSlides.size() - 1;
         } else {
           _me._prevIndex = undefined;
@@ -1163,8 +1254,8 @@
         const _me = this;
         if (_me._waitingNextSlide) {
           _me._waitingFunc({
-            'waitingMode': 'next',
-            'waitingState': 'cancel'
+            waitingMode: 'next',
+            waitingState: 'cancel',
           });
           _me._waitingNextSlide = false;
         }
@@ -1174,8 +1265,8 @@
         const _me = this;
         if (_me._waitingPrevSlide) {
           _me._waitingFunc({
-            'waitingMode': 'prev',
-            'waitingState': 'cancel'
+            waitingMode: 'prev',
+            waitingState: 'cancel',
           });
           _me._waitingPrevSlide = false;
         }
@@ -1196,8 +1287,8 @@
         } else if (!_me._waitingNextSlide) {
           _me._waitingNextSlide = true;
           _me._waitingFunc({
-            'waitingMode': 'next',
-            'waitingState': 'start'
+            waitingMode: 'next',
+            waitingState: 'start',
           });
         }
       },
@@ -1217,8 +1308,8 @@
         } else if (!_me._waitingPrevSlide) {
           _me._waitingPrevSlide = true;
           _me._waitingFunc({
-            'waitingMode': 'prev',
-            'waitingState': 'start'
+            waitingMode: 'prev',
+            waitingState: 'start',
           });
         }
       },
@@ -1228,18 +1319,16 @@
         gotoIndex = gotoIndex || 0;
         _me._cancelWaitingPrev();
         _me._cancelWaitingNext();
-        if ((gotoIndex < _me._allSlides.size()) && (gotoIndex >= 0)) {
+        if (gotoIndex < _me._allSlides.size() && gotoIndex >= 0) {
           _me._currIndex = gotoIndex;
           _me._nextIndex = null;
           _me._prevIndex = null;
           _me._currContent = null;
           _me._preloadNext = null;
           _me._preloadPrev = null;
-          _me._preloadFunc(_me._allSlides[_me._currIndex],
-            _me._updateCurrentContent.bind(_me));
+          _me._preloadFunc(_me._allSlides[_me._currIndex], _me._updateCurrentContent.bind(_me));
         }
-      }
-
+      },
     });
   }
 })(window);
