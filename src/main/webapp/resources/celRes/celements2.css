@@ -160,7 +160,6 @@ body > div#celements2_menu_bar {
   padding-left: 8px;
   padding-right: 8px;
   position: relative;
-
   & > *:first-child {
     height: 100%;
     display: flex;
