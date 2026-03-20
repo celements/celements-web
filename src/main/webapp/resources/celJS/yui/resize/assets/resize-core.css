@@ -12,9 +12,11 @@ version: 2.9.0
 .yui-resize-wrap {
     zoom: 1;
 }
+
 .yui-draggable {
     cursor: move;
 }
+
 .yui-resize .yui-resize-handle {
     position: absolute;
     z-index: 1;
@@ -34,6 +36,7 @@ version: 2.9.0
     z-index: 2;
     zoom: 1;
 }
+
 .yui-resize .yui-resize-handle-bl {
     height: 5px;
     width: 5px;
@@ -43,6 +46,7 @@ version: 2.9.0
     z-index: 2;
     zoom: 1;
 }
+
 .yui-resize .yui-resize-handle-tl {
     height: 5px;
     width: 5px;
@@ -52,6 +56,7 @@ version: 2.9.0
     z-index: 2;
     zoom: 1;
 }
+
 .yui-resize .yui-resize-handle-tr {
     height: 5px;
     width: 5px;
@@ -61,6 +66,7 @@ version: 2.9.0
     z-index: 2;
     zoom: 1;
 }
+
 .yui-resize .yui-resize-handle-r {
     width: 5px;
     height: 100%;
@@ -69,6 +75,7 @@ version: 2.9.0
     cursor: e-resize;
     zoom: 1;
 }
+
 .yui-resize .yui-resize-handle-l {
     height: 100%;
     width: 5px;
@@ -77,6 +84,7 @@ version: 2.9.0
     cursor: w-resize;
     zoom: 1;
 }
+
 .yui-resize .yui-resize-handle-b {
     width: 100%;
     height: 5px;
@@ -99,6 +107,7 @@ version: 2.9.0
     visibility: hidden;
     z-index: 1000;
 }
+
 .yui-resize-hover .yui-resize-handle,
 .yui-resize-hidden .yui-resize-handle {
     opacity: 0;
@@ -108,6 +117,7 @@ version: 2.9.0
     opacity: .5;
     filter: alpha(opacity=50);
 }
+
 .yui-resize-knob .yui-resize-handle {
     height: 6px;
     width: 6px;
@@ -144,6 +154,7 @@ version: 2.9.0
     left: 45%;
     bottom: -3px;
 }
+
 .yui-resize-status {
     position: absolute;
     top: -999px;

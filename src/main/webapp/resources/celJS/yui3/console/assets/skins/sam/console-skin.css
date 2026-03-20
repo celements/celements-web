@@ -10,6 +10,7 @@ http://yuilibrary.com/license/
     top:1em;
     z-index:999;
 }
+
 .yui3-skin-sam .yui3-console-inline {
     /* xbrowser inline-block styles */
     display: -moz-inline-stack; /* FF2 */
@@ -21,6 +22,7 @@ http://yuilibrary.com/license/
 .yui3-skin-sam .yui3-console-inline .yui3-console-content {
     position: relative;
 }
+
 .yui3-skin-sam .yui3-console-content {
     background: #777;
     _background: #D8D8DA url(bg.png) repeat-x 0 0;
@@ -32,15 +34,18 @@ http://yuilibrary.com/license/
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
 }
+
 .yui3-skin-sam .yui3-console-hd,
 .yui3-skin-sam .yui3-console-bd,
 .yui3-skin-sam .yui3-console-ft {
     position: relative;
 }
+
 .yui3-skin-sam .yui3-console-hd,
 .yui3-skin-sam .yui3-console-ft .yui3-console-controls {
     text-align: right;
 }
+
 .yui3-skin-sam .yui3-console-hd {
     background: #D8D8DA url(bg.png) repeat-x 0 0;
     padding: 1ex;
@@ -54,6 +59,7 @@ http://yuilibrary.com/license/
     -webkit-border-top-right-radius: 10px;
     -webkit-border-top-left-radius: 10px;
 }
+
 .yui3-skin-sam .yui3-console-bd {
     background: #fff;
     border-top: 1px solid #777;
@@ -65,6 +71,7 @@ http://yuilibrary.com/license/
     overflow-y: scroll;
     _width: 100%;
 }
+
 .yui3-skin-sam .yui3-console-ft {
     background: #D8D8DA url(bg.png) repeat-x 0 0;
 
@@ -77,10 +84,12 @@ http://yuilibrary.com/license/
     -webkit-border-bottom-right-radius: 10px;
     -webkit-border-bottom-left-radius: 10px;
 }
+
 .yui3-skin-sam .yui3-console-controls {
     padding: 4px 1ex;
     zoom: 1;
 }
+
 .yui3-skin-sam .yui3-console-title {
     color: #000;
     display: inline;
@@ -92,12 +101,14 @@ http://yuilibrary.com/license/
     margin: 0;
     padding-left: 1ex;
 }
+
 .yui3-skin-sam .yui3-console-pause-label {
     float: left;
 }
 .yui3-skin-sam .yui3-console-button {
     line-height: 1.3;
 }
+
 .yui3-skin-sam .yui3-console-collapsed .yui3-console-bd,
 .yui3-skin-sam .yui3-console-collapsed .yui3-console-ft {
     display: none;
@@ -110,22 +121,26 @@ http://yuilibrary.com/license/
     -moz-border-radius: 10px;
     -webkit-border-radius: 0;
 }
+
 /* Log entries */
 .yui3-skin-sam .yui3-console-entry {
     border-bottom: 1px solid #aaa;
     min-height: 32px;
     _height: 32px;
 }
+
 .yui3-skin-sam .yui3-console-entry-meta {
     margin: 0;
     overflow: hidden;
 }
+
 .yui3-skin-sam .yui3-console-entry-content {
     margin: 0;
     padding: 0 1ex;
     white-space: pre-wrap;
     word-wrap: break-word;
 }
+
 .yui3-skin-sam .yui3-console-entry-meta .yui3-console-entry-src {
     color: #000;
     font-style: italic;
@@ -140,6 +155,7 @@ http://yuilibrary.com/license/
 .yui3-skin-sam .yui3-console-entry-warn .yui3-console-entry-meta .yui3-console-entry-time {
     color: #555;
 }
+
 .yui3-skin-sam .yui3-console-entry-info .yui3-console-entry-meta .yui3-console-entry-cat,
 .yui3-skin-sam .yui3-console-entry-warn .yui3-console-entry-meta .yui3-console-entry-cat,
 .yui3-skin-sam .yui3-console-entry-error .yui3-console-entry-meta .yui3-console-entry-cat {
@@ -171,4 +187,5 @@ http://yuilibrary.com/license/
     background-color: #b00;
     color: #fff;
 }
+
 .yui3-skin-sam .yui3-console-hidden { display: none; }

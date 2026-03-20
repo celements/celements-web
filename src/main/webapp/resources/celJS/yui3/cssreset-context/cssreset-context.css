@@ -70,10 +70,12 @@ http://yuilibrary.com/license/
 	font-style:normal;
 	font-weight:normal;
 }
+
 .yui3-cssreset ol,
 .yui3-cssreset ul {
 	list-style:none;
 }
+
 .yui3-cssreset caption,
 .yui3-cssreset th {
 	text-align:left;

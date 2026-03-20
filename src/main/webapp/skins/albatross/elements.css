@@ -44,6 +44,7 @@ h6 {
 }
 address {
 }
+
 /* Section 9: Text */
 /* 9.2: Structured text */
 em {
@@ -89,6 +90,7 @@ ins {
 }
 del {
 }
+
 /* Section 10: Lists */
 ul {
   margin: 1em 0;
@@ -117,6 +119,7 @@ dt {
 }
 dd {
 }
+
 /* Section 11: Tables */
 table {
 }
@@ -139,6 +142,7 @@ th {
 }
 td {
 }
+
 /* Section 12.2:  The A element */
 a:link {
   color: #000;
@@ -156,6 +160,7 @@ a:focus {
 }
 a:focus:hover {
 }
+
 /* Section 13: Objects, Images, and Applets */
 img {
   border: none;
@@ -164,6 +169,7 @@ object {
 }
 applet {
 }
+
 /* Section 15: Alignment, font styles, and horizontal rules */
 /* 15.2: Fonts "[...] their use is discouraged in favor of style sheets." */
 tt {
@@ -182,9 +188,11 @@ small {
 /* End of 15.2 */
 hr {
 }
+
 /* Section 16: Frames */
 iframe {
 }
+
 /* Section 17: Forms */
 form {
   margin: 0px;
@@ -218,6 +226,7 @@ fieldset {
 }
 legend {
 }
+
 /*
   [1] All calculations are based on the assumption that 1em is 12px.
   [2] If you specify a font-size, also consider to specify a line-height property.

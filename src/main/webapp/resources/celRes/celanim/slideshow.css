@@ -12,9 +12,11 @@ DEPRECATED since 2.80 instead use images/slideshow.css in image-web module
   line-height: 0px;
   overflow: hidden;
 }
+
 .highslide-html div.celanim_slideshow_wrapper .highslide-image {
   border: none;
 }
+
 #yuiOverlayContainer .celPresSlideShow_countSlideNum,
 .celimage_slideshow_wrapper .celPresSlideShow_countSlideNum {
   display: block;
@@ -80,10 +82,12 @@ DEPRECATED since 2.80 instead use images/slideshow.css in image-web module
   z-index: 2;
   cursor: pointer;
 }
+
 #yuiOverlayContainer .slideshowButton:hover,
 .celimage_slideshow_wrapper .slideshowButton:hover {
   background-image: url(buttons500-hover.png);
 }
+
 .celimage_overlay {
   cursor: pointer;
 }

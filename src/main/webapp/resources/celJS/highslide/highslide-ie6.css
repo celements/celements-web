@@ -6,6 +6,7 @@
 	background: none;
 	cursor: hand;
 }
+
 /* Viewport fixed hack */
 .highslide-viewport {
 	position: absolute;
@@ -14,6 +15,7 @@
 	width: expression( ( ( ignoreMe3 = document.documentElement.clientWidth ? document.documentElement.clientWidth : document.body.clientWidth ) ) + 'px' );
 	height: expression( ( ( ignoreMe4 = document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight ) ) + 'px' );
 }
+
 /* Thumbstrip PNG fix */
 .highslide-scroll-down, .highslide-scroll-up {
 	position: relative;
@@ -39,6 +41,7 @@
 .highslide-thumbstrip-vertical .highslide-scroll-down div {
 	top: -50px;
 }
+
 /* Thumbstrip marker arrow trasparent background fix */
 .highslide-thumbstrip .highslide-marker {
 	border-color: white; /* match the background */
@@ -52,6 +55,7 @@
 .highslide-thumbstrip {
 	float: left;
 }
+
 /* Positioning fixes for the control bar */
 .text-controls .highslide-controls {
 	width: 480px;

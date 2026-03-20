@@ -11,12 +11,14 @@ version: 2.9.0
     vertical-align: text-bottom;
     
 }
+
 .yui-button .first-child {
 
     display: block;
     *display: inline-block; /* IE */
 
 }
+
 .yui-button button,
 .yui-button a {
 
@@ -26,6 +28,7 @@ version: 2.9.0
     margin: 0;
 
 }
+
 .yui-button button {
 
     background-color: transparent;
@@ -33,6 +36,7 @@ version: 2.9.0
     cursor: pointer;
 
 }
+
 .yui-button a {
 
     text-decoration: none;

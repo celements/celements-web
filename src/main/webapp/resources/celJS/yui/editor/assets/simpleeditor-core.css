@@ -36,6 +36,7 @@ version: 2.9.0
     line-height: 0;
     padding: 0;
 }
+
 /* Setup the container with some padding and zoom it for IE's hasLayout */
 .yui-toolbar-container .yui-toolbar-subcont {
     padding: .25em 0;
@@ -47,6 +48,7 @@ version: 2.9.0
 }
 /* Setup the :after so that compliant browsers don't loose the bounding box */
 .yui-toolbar-container .yui-toolbar-subcont:after { display: block; clear: both; visibility: hidden; content: '.'; height: 0;}
+
 /* Drag handle for the toolbar's draggable property */
 .yui-toolbar-container span.yui-toolbar-draghandle {
     cursor: move;
@@ -87,6 +89,7 @@ version: 2.9.0
 .yui-toolbar-container.yui-toolbar-grouped span.yui-toolbar-draghandle {
     height: 40px;
 }
+
 /* Float the groups so they position nicely and zoom them for IE */
 .yui-toolbar-container .yui-toolbar-group {
     float: left;
@@ -116,11 +119,13 @@ version: 2.9.0
     height: 45px;
     *height: 50px;
 }
+
 /* Reset the height of a separator inside of a group */
 .yui-toolbar-container.yui-toolbar-grouped .yui-toolbar-group span.yui-toolbar-separator {
     height: 18px;
     display: block;
 }
+
 /* Kill the default styles of the list */
 .yui-toolbar-container ul li {
     margin: 0;
@@ -131,6 +136,7 @@ version: 2.9.0
 .yui-toolbar-container .yui-toolbar-nogrouplabels h3 {
     display: none;
 }
+
 /* Setup the default style of a button in the toolbar */
 .yui-toolbar-container .yui-push-button,
 .yui-toolbar-container .yui-color-button,
@@ -139,6 +145,7 @@ version: 2.9.0
     position: relative;
     cursor: pointer;
 }
+
 /* setup the default style of the A inside of the toolbar button */
 .yui-toolbar-container .yui-button .first-child, .yui-toolbar-container .yui-button .first-child a {
     height: 100%;
@@ -146,6 +153,7 @@ version: 2.9.0
     overflow: hidden;
     font-size: 0px;
 }
+
 /* Setup the disabled state of a button */
 .yui-toolbar-container .yui-button-disabled {
     cursor: default;
@@ -165,10 +173,12 @@ version: 2.9.0
 .yui-toolbar-container .yui-button a {
     overflow: hidden;
 }
+
 /* Override the default Button style for select menu*/
 .yui-toolbar-container .yui-toolbar-select .first-child a {
     cursor: pointer;
 }
+
 /* Font Family Menu Style - This styles the menu items and the selected menu item */
 .yui-toolbar-fontname-arial { font-family: Arial; }
 .yui-toolbar-fontname-arial-black { font-family: Arial Black; }
@@ -180,15 +190,18 @@ version: 2.9.0
 .yui-toolbar-fontname-lucida-console { font-family: Lucida Console; }
 .yui-toolbar-fontname-tahoma { font-family: Tahoma; }
 .yui-toolbar-fontname-trebuchet-ms { font-family: Trebuchet MS; }
+
 /* Spin Button */
 .yui-toolbar-container .yui-toolbar-spinbutton {
     position: relative;
 }
+
 /* Setup the default style for the A */
 .yui-toolbar-container .yui-toolbar-spinbutton .first-child a {
     z-index: 0;
     opacity: 1;
 }
+
 /* Setup the position and style for the up and down arrows */
 .yui-toolbar-container .yui-toolbar-spinbutton a.up, .yui-toolbar-container .yui-toolbar-spinbutton a.down {
     position: absolute;
@@ -208,10 +221,12 @@ version: 2.9.0
     margin: 0;
     list-style-type: none;
 }
+
 /* Reset the z-index of the toolbar container so that menu's appear over the iframe in IE and Safari */
 .yui-toolbar-container {
     z-index: 1;
 }
+
 /* The div around the iFrame */
 .yui-editor-container .yui-editor-editable-container {
     position: relative;
@@ -257,6 +272,7 @@ version: 2.9.0
     padding: 0.25em 0pt 0.25em 0.25em;
     margin: 0;
 }
+
 /* set it to relative so we can position the close button - Zoom it for IE */
 .yui-editor-panel .bd {
     width: 100%;
@@ -272,8 +288,10 @@ version: 2.9.0
 .yui-editor-panel .bd .gecko form {
     overflow: auto;
 }
+
 /* Setup the :after so that compliant browsers don't loose the bounding box */
 .yui-editor-panel .bd div.yui-editor-body-cont:after { display: block; clear: both; visibility: hidden; content: '.'; height: 0;}
+
 /* style the footer of the property editor */
 .yui-editor-panel .ft {
     text-align: right;
@@ -281,6 +299,7 @@ version: 2.9.0
     float: left;
     clear: both;
 }
+
 /* Style the "tip" icon */
 .yui-editor-panel .ft span.tip {
     display: block;
@@ -289,6 +308,7 @@ version: 2.9.0
     text-align:left;
     zoom: 1;
 }
+
 
 /* setup some form fields */
 .yui-editor-panel label {
@@ -308,28 +328,35 @@ version: 2.9.0
     float: left;
     width: 6em;
 }
+
 /* The remove link in the Link Property Editor */
 .yui-editor-panel .removeLink {
     width: 80%;
     text-align: right;
 }
+
 /* More form styling */
 .yui-editor-panel label input {
     margin-left: .25em;
     float: left;
 }
+
 .yui-editor-panel .yui-toolbar-group {
     margin-bottom: 0.75em;
 }
+
 /* Image Padding in the Property Editor */
 .yui-editor-panel .yui-toolbar-group-padding {
 }
+
 /* Image Border in the Property Editor */
 .yui-editor-panel .yui-toolbar-group-border {
 }
+
 /* Image Text Flow in the Property Editor */
 .yui-editor-panel .yui-toolbar-group-textflow {
 }
+
 /* Image Height/Width in the Property Editor */
 .yui-editor-panel .height-width {
     float: left;
@@ -350,14 +377,17 @@ version: 2.9.0
     margin-top: 3px;
     float: none;
 }
+
 /* Border Size/Type button widths */
 .yui-editor-panel .yui-toolbar-bordersize, .yui-editor-panel .yui-toolbar-bordertype {
     font-size: 75%;
 }
+
 /* Kill the separators in the Property Editor */
 .yui-editor-panel .yui-toolbar-container span.yui-toolbar-separator {
     border: none;
 }
+
 /* Border Type solid */
 .yui-editor-panel .yui-toolbar-bordersize span a span,
 .yui-editor-panel .yui-toolbar-bordertype span a span {
@@ -415,6 +445,7 @@ version: 2.9.0
     *top: -5px;
     border-bottom: 5px solid black;
 }
+
 /* Border Size menu size */
 .yui-toolbar-container .yui-toolbar-bordersize-menu,
 .yui-toolbar-container .yui-toolbar-bordertype-menu {
@@ -432,6 +463,7 @@ version: 2.9.0
     *top: 14px;
     *left: 0px;
 }
+
 /* Border Size 1 - Menu Item */
 .yui-toolbar-bordersize-menu li.yui-toolbar-bordersize-1 a {
     border-bottom: 1px solid black;
@@ -458,6 +490,7 @@ version: 2.9.0
     height: 14px;
 }
 
+
 /* Border Type Solid - Menu Item */
 .yui-toolbar-bordertype-menu li.yui-toolbar-bordertype-solid a {
     border-bottom: 1px solid black;
@@ -473,6 +506,7 @@ version: 2.9.0
     border-bottom: 1px dotted black;
     height: 14px;
 }
+
 /* Hidden Headers for Accessibility */
 h2.yui-editor-skipheader, h3.yui-editor-skipheader {
     height: 0;
@@ -483,6 +517,7 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
     overflow: hidden;
     position: absolute;
 }
+
 /* Setup the default look of a color menu and Zoom it for IE */
 .yui-toolbar-colors {
     width: 133px;
@@ -491,6 +526,7 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
     z-index: 100;
     overflow: hidden;
 }
+
 /* Setup the :after so that compliant browsers don't loose the bounding box */
 .yui-toolbar-colors:after { display: block; clear: both; visibility: hidden; content: '.'; height: 0;}
 /* Style all of the A's so the float properly */
@@ -509,11 +545,13 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
 .yui-toolbar-colors a:hover {
     border: 1px solid black;
 }
+
 /* Smash the inhertited Menu style */
 .yui-color-button-menu {
     overflow: visible;
     background-color: transparent;
 }
+
 /* This is the preview box at the bottom of the menu - Zoom it for IE */
 .yui-toolbar-colors span {
     position: relative;
@@ -526,6 +564,7 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
 }
 /* Setup the :after so that compliant browsers don't loose the bounding box */
 .yui-toolbar-colors span:after { display: block; clear: both; visibility: hidden; content: '.'; height: 0;}
+
 /* This is the box with the color preview in it */
 .yui-toolbar-colors span em {
     height: 35px;
@@ -537,6 +576,7 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
     margin: 0.75px;
     border: 1px solid black;
 }
+
 /* The container for the name and hex code */
 .yui-toolbar-colors span strong {
     font-weight: normal;
@@ -546,6 +586,7 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
     float: left;
     width: 65%;
 }
+
 
 .yui-toolbar-group-undoredo h3,
 .yui-toolbar-group-insertitem h3,
@@ -558,3 +599,4 @@ h2.yui-editor-skipheader, h3.yui-editor-skipheader {
 .yui-toolbar-group-alignment h3 {
     width: 130px;
 }
+

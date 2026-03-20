@@ -7,6 +7,7 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-dial {    
 	color:#fff;
 }
+
 .yui3-skin-night .yui3-dial-handle{ /*container. top left corner used for trig positioning*/
 	background:#439EDE;
 	opacity:0.3;

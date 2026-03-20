@@ -63,6 +63,7 @@ p,
   vertical-align: top;
   padding: 8px 8px 16px 8px;
 }
+
 .langselect {
   border-width: 1px;
   border-style: solid;
@@ -170,6 +171,7 @@ span.buttonwrapper {
   color: #d10000 !important; /* Hack for RTE in Firefox: important must be added in a-tag css ruls for firefox */
   border-bottom: 1px dotted #d10000;
 }
+
 /*Medialib-temporary-quickfix*/
 .content_area .c2_ml_label0,
 .content_area .c2_ml_label0:visited {

@@ -50,6 +50,7 @@
   /* Rounding errors with 33.3%, might end up with one more pixel which pushes the column down. */
   width: 33.2%;
 }
+
 .avatar_30 {
   max-widht: 30px;
   max-height: 30px;

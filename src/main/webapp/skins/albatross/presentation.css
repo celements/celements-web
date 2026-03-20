@@ -5,6 +5,7 @@
 .main-content {
   margin: 0.5em;
 }
+
 /* dom-tree */
 .dom-tree {
   padding: 0 0 0 1.5em;
@@ -33,6 +34,7 @@
 .dom-tree dd {
   font-style: italic;
 }
+
 /*
 ---------------------------------------
 Global header
@@ -41,14 +43,17 @@ Global header
 #globalmenu a {
   text-decoration: none;
 }
+
 #companylogo img {
   text-decoration: none;
   border: none;
 }
+
 .breadcrumbspace {
   font-weight: bold;
   font-variant: small-caps;
 }
+
 input[type='submit'],
 input[type='reset'],
 input[type='button'] {
@@ -97,6 +102,7 @@ table.xwikidatatable td {
   padding: 2px 8px;
   vertical-align: middle;
 }
+
 /*
 ---------------------------------------
 Menu
@@ -110,6 +116,7 @@ Menu
 .leftmenu {
   padding-right: 2em;
 }
+
 /*
 ---------------------------------------
 Panels
@@ -122,6 +129,7 @@ Panels
   background: url('icons/black-less.png') no-repeat right center;
   cursor: pointer;
 }
+
 .collapsed .xwikipaneltitle {
   background-image: url('icons/black-more-3.png');
 }
@@ -134,6 +142,7 @@ Panels
 .xwikipanelcontents {
   padding: 4px;
 }
+
 .xwikilogintable {
   margin: auto;
 }
@@ -144,10 +153,12 @@ Panels
 .xwikilogintable td {
   text-align: left;
 }
+
 .xwikitabbar li.active {
   border: 1px solid;
   border-bottom: 3px solid;
 }
+
 #xwikirightstable {
   width: 624px;
   margin: 5px 0px;
@@ -174,6 +185,7 @@ Panels
   padding: 2px 8px;
   margin-left: 8px;
 }
+
 /*
 ---------------------------------------
 Articles
@@ -183,18 +195,22 @@ Articles
   font-size: 120%;
   border-bottom: 1px;
 }
+
 .article_content {
   padding: 10px;
 }
+
 .article_date {
   font-size: 120%;
   border-bottom: 1px solid;
 }
+
 .article_footer {
   border-top: 1px solid;
   font-size: 75%;
   font-weight: bold;
 }
+
 /*
 ---------------------------------------
 Messages
@@ -203,15 +219,18 @@ Messages
 .error {
   color: #f00;
 }
+
 .fatalerror {
   background-color: #f00;
   color: #fff;
   font-weight: bold;
   font-size: 120%;
 }
+
 .warning {
   color: #c82;
 }
+
 .errormessage,
 .warningmessage,
 .infomessage,
@@ -222,6 +241,7 @@ Messages
   background: #f5f5f5 url(icons/msg.png) 8px 8px no-repeat;
   text-align: left;
 }
+
 .infomessage {
   background-image: url(icons/msginfo.png);
   color: #369;
@@ -238,6 +258,7 @@ Messages
   background-image: url(icons/msgerror.png);
   color: #f00;
 }
+
 span.errormessage,
 span.warningmessage,
 span.infomessage,
@@ -248,9 +269,11 @@ span.plainmessage {
   white-space: normal;
   font-size: 100%;
 }
+
 span.messagetype {
   display: none;
 }
+
 div.floatinginfobox,
 fieldset.floatinginfobox {
   width: 200px;
@@ -260,6 +283,7 @@ fieldset.floatinginfobox {
   padding: 4px;
   margin: 4px;
 }
+
 /*
 ---------------------------------------
 Images
@@ -294,6 +318,7 @@ Misc
   background-color: #e5e5e5;
   padding: 8px;
 }
+
 .specialmenu ul {
   padding: 0px;
   margin: 0px;
@@ -308,20 +333,24 @@ Misc
   vertical-align: middle;
   width: 32px;
 }
+
 #body .specialmenu a {
   color: #000;
 }
 #body .specialmenu a:hover {
   color: #c82;
 }
+
 .currentspace a {
   text-decoration: none !important;
   padding: 2px;
 }
+
 span.floatleft {
   display: block;
   float: left;
 }
+
 a#adduser,
 a#modifygroup {
   background: transparent url(icons/black-register.png) center no-repeat;
@@ -332,19 +361,23 @@ a#modifygroup {
   border: 1px solid #000;
   margin-left: 8px;
 }
+
 a#modifygroup {
   background-image: url(icons/black-edit.png);
   border: none;
 }
+
 .small {
   font-size: 75%;
 }
+
 .smaller {
   font-size: 60%;
 }
 .smallest {
   font-size: 50%;
 }
+
 .pagingLinks {
   font-variant: small-caps;
   font-size: 90%;
@@ -359,6 +392,7 @@ a#modifygroup {
 .pagingLinks .nextPage {
   float: right;
 }
+
 /*
 ---------------------------------
 Diffs

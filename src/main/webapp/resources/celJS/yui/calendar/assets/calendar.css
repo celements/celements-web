@@ -12,6 +12,7 @@ version: 2.9.0
 	float:left;
 	_overflow:hidden; /* IE6 only, to clip iframe shim */
 }
+
 .yui-calcontainer iframe {
 	position:absolute;
 	border:none;
@@ -22,6 +23,7 @@ version: 2.9.0
 	left:0px;
 	top:0px;
 }
+
 /* IE6 only */
 .yui-calcontainer iframe.fixedsize {
 	width:50em;
@@ -29,9 +31,11 @@ version: 2.9.0
 	top:-1px;
 	left:-1px;
 }
+
 .yui-calcontainer.multi {
 	padding:0;
 }
+
 .yui-calcontainer.multi .groupcal {
 	padding:5px;
 	background-color:transparent;
@@ -40,6 +44,7 @@ version: 2.9.0
 	position:relative;
 	border:none;
 }
+
 .yui-calcontainer .title {
 	font:100% sans-serif;
 	color:#000;
@@ -50,6 +55,7 @@ version: 2.9.0
 	top:3px;left:5px;
 	z-index:1;
 }
+
 .yui-calcontainer .close-icon {
 	position:absolute;
 	overflow:hidden;
@@ -59,12 +65,14 @@ version: 2.9.0
 	border:none;
 	z-index:1;
 }
+
 .yui-calcontainer .calclose {
 	background: url("calx.gif") no-repeat;
 	width:17px;
 	height:13px;
 	cursor:pointer;	
 }
+
 /* Calendar element styles */
 
 .yui-calendar {
@@ -74,9 +82,11 @@ version: 2.9.0
 	border-collapse:separate;
 	position:relative;
 }
+
 .yui-calcontainer.withtitle {
 	padding-top:1.5em;
 }
+
 .yui-calendar .calnavleft {
 	position:absolute;
 	overflow:hidden;
@@ -90,6 +100,7 @@ version: 2.9.0
 	z-index:1;
 	background: url("callt.gif") no-repeat;
 }
+
 .yui-calendar .calnavright {
 	position:absolute;
 	overflow:hidden;
@@ -103,70 +114,86 @@ version: 2.9.0
 	z-index:1;
 	background: url("calrt.gif") no-repeat;
 }
+
 .yui-calendar td.calcell {
 	padding:.1em .2em;
 	border:1px solid #E0E0E0;
 	text-align:center;
 }
+
 .yui-calendar td.calcell a {
 	color:#003DB8;
 	text-decoration:none;
 }
+
 .yui-calendar td.calcell.today {
 	border:1px solid #000;
 }
+
 .yui-calendar td.calcell.oom {
 	cursor:default;
 	color:#999;
 	background-color:#EEE;
 	border:1px solid #E0E0E0;
 }
+
 .yui-calendar td.calcell.selected {
 	color:#003DB8;
 	background-color:#FFF19F;
 	border:1px solid #FF9900;
 }
+
 .yui-calendar td.calcell.calcellhover {
 	cursor:pointer;
 	color:#FFF;
 	background-color:#FF9900;
 	border:1px solid #FF9900;
 }
+
 .yui-calendar td.calcell.calcellhover a {
 	color:#FFF;
 }
+
 .yui-calendar td.calcell.restricted {
 	text-decoration:line-through;
 }
+
 .yui-calendar td.calcell.previous {
 	color:#CCC;
 }
+
 .yui-calendar td.calcell.highlight1 { background-color:#CCFF99; }
 .yui-calendar td.calcell.highlight2 { background-color:#99CCFF; }
 .yui-calendar td.calcell.highlight3 { background-color:#FFCCCC; }
 .yui-calendar td.calcell.highlight4 { background-color:#CCFF99; }
+
 .yui-calendar .calhead {
 	border:1px solid #E0E0E0;
 	vertical-align:middle;
 	background-color:#FFF;
 }
+
 .yui-calendar .calheader {
 	position:relative;
 	width:100%;
 	text-align:center;
 }
+
 .yui-calendar .calheader img {
 	border:none;
 }
+
 .yui-calendar .calweekdaycell {
 	color:#666;
 	font-weight:normal;
 	text-align:center;
 	width:1.5em;
 }
+
 .yui-calendar .calfoot {
 	background-color:#EEE;
 }
+
 .yui-calendar .calrowhead, .yui-calendar .calrowfoot {
 	color:#666;
 	font-size:9px;
@@ -174,9 +201,11 @@ version: 2.9.0
 	font-weight:normal;
 	width:15px;
 }
+
 .yui-calendar .calrowhead {
 	border-right-width:2px;
 }
+
 /* CalendarNavigator */
 .yui-calendar a.calnav {
 	_position:relative;
@@ -185,6 +214,7 @@ version: 2.9.0
 	text-decoration:none;
 	color:#000;
 }
+
 .yui-calendar a.calnav:hover {
 	border:1px solid #003366;
 	background-color:#6699cc;
@@ -192,6 +222,7 @@ version: 2.9.0
 	color:#fff;
 	cursor:pointer;
 }
+
 .yui-calcontainer .yui-cal-nav-mask {
 	position:absolute;
 	z-index:2;
@@ -211,6 +242,7 @@ version: 2.9.0
 	opacity:0.25;
 	*filter:alpha(opacity=25);
 }
+
 .yui-calcontainer .yui-cal-nav {
 	position:absolute;
 	z-index:3;
@@ -226,17 +258,21 @@ version: 2.9.0
 	background-color:#F7F9FB;
 	font-size:93%;
 }
+
 .yui-calcontainer.withtitle .yui-cal-nav {
 	top:3.5em;
 }
+
 .yui-calcontainer .yui-cal-nav-y,
 .yui-calcontainer .yui-cal-nav-m,
 .yui-calcontainer .yui-cal-nav-b {
 	padding:2px 5px 2px 5px;
 }
+
 .yui-calcontainer .yui-cal-nav-b {
 	text-align:center;
 }
+
 .yui-calcontainer .yui-cal-nav-e {
 	margin-top:2px;
 	padding:2px;
@@ -244,21 +280,26 @@ version: 2.9.0
 	border-top:1px solid black;
 	display:none;
 }
+
 .yui-calcontainer .yui-cal-nav label {
 	display:block;
 	font-weight:bold;
 }
+
 .yui-calcontainer .yui-cal-nav-mc {
 	width:100%;
 	_width:auto; /* IE6 doesn't like width 100% */
 }
+
 .yui-calcontainer .yui-cal-nav-y input.yui-invalid {
 	background-color:#FFEE69;
 	border: 1px solid #000;
 }
+
 .yui-calcontainer .yui-cal-nav-yc {
 	width:3em;
 }
+
 .yui-calcontainer .yui-cal-nav-b button {
 	font-size:93%;
 	text-decoration:none;
@@ -269,9 +310,11 @@ version: 2.9.0
 	border-left-color:#FFF;
 	margin:1px;
 }
+
 .yui-calcontainer .yui-cal-nav-b .yui-default button {
 	/* not implemented */
 }
+
 /* Specific changes for calendar running under fonts/reset */
 .yui-calendar .calbody a:hover {background:inherit;}
 p#clear {clear:left; padding-top:10px;}

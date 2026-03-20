@@ -12,23 +12,27 @@ version: 2.9.0
     left: -999em;
 
 }
+
 .yuimenubar {
 
     position: static;
 
 }
+
 .yuimenu .yuimenu,
 .yuimenubar .yuimenu {
 
     position: absolute;
 
 }
+
 .yuimenubar li, 
 .yuimenu li {
 
     list-style-type: none;    
 
 }
+
 .yuimenubar ul, 
 .yuimenu ul,
 .yuimenubar li, 
@@ -40,6 +44,7 @@ version: 2.9.0
     padding: 0;
 
 }
+
 .yuimenuitemlabel,
 .yuimenubaritemlabel {
 
@@ -47,6 +52,7 @@ version: 2.9.0
     white-space: nowrap;
 
 }
+
 
 /* 
     The following style rule trigger the "hasLayout" property in 
@@ -61,6 +67,7 @@ version: 2.9.0
 
 }
 
+
 /* 
     Remove the "hasLayout" trigger for submenus of MenuBar instances as it 
     is unnecessary. 
@@ -71,6 +78,7 @@ version: 2.9.0
     *zoom: normal;
 
 }
+
 /*
     The following style rule allows a MenuBar instance's <ul> element to clear
     its floated <li> elements in Firefox, Safari and and Opera.
@@ -86,17 +94,20 @@ version: 2.9.0
     line-height: 0;
 
 }
+
 .yuimenubaritem {
 
     float: left;
 
 }
+
 .yuimenubaritemlabel,
 .yuimenuitemlabel {
 
     display: block;
 
 }
+
 .yuimenuitemlabel .helptext {
 
     font-style: normal;
@@ -111,6 +122,7 @@ version: 2.9.0
     margin: -1em 0 0 10em;
     
 }
+
 /*
     PLEASE NOTE: The <div> element used for a menu's shadow is appended 
     to its root element via JavaScript once it has been rendered.  The 
@@ -127,6 +139,7 @@ version: 2.9.0
     z-index: -1;
 
 }
+
 .yui-menu-shadow-visible {
 
     top: 2px;
@@ -136,6 +149,7 @@ version: 2.9.0
     visibility: visible;
 
 }
+
 
 /*
 
@@ -184,11 +198,13 @@ PLEASE NOTE:
 	overflow: hidden;
 
 }
+
 .hide-scrollbars select {
 
 	display: none;
 
 }
+
 
 /*
 
@@ -206,18 +222,21 @@ when one of its submenus is visible.
 	overflow: visible; 
 
 }
+
 .yuimenu.hide-scrollbars .yui-menu-shadow,
 .yuimenubar.hide-scrollbars .yui-menu-shadow {
 
     overflow: hidden;
 
 }
+
 .yuimenu.show-scrollbars .yui-menu-shadow,
 .yuimenubar.show-scrollbars .yui-menu-shadow {
 
     overflow: auto;
 
 }
+
 
 /* MenuBar style rules */
 
@@ -226,6 +245,7 @@ when one of its submenus is visible.
     background-color: #f6f7ee;
     
 }
+
 
 
 /* Menu style rules */
@@ -237,11 +257,13 @@ when one of its submenus is visible.
     padding: 1px;
     
 }
+
 .yui-menu-shadow {
 
     display: none;
 
 }
+
 .yuimenu ul {
 
     border: solid 1px #c4c4be;
@@ -249,11 +271,13 @@ when one of its submenus is visible.
     padding: 10px 0;
 
 }
+
 .yuimenu .yui-menu-body-scrolled {
 
     overflow: hidden;
 
 }
+
 
 /* Group titles */
 
@@ -266,6 +290,7 @@ when one of its submenus is visible.
     color: #b9b9b9;    
 
 }
+
 .yuimenubar h6 {
 
     float: left;
@@ -273,17 +298,20 @@ when one of its submenus is visible.
     border-width: 0 1px 0 0;
 
 }
+
 .yuimenubar .yuimenu h6 {
 
     float: none;
 
 }
+
 .yuimenu h6 {
 
     border-width: 1px 0 0 0;
     padding: 5px 10px 0 10px;
 
 }
+
 .yuimenu ul.first-of-type, 
 .yuimenu ul.hastitle,
 .yuimenu h6.first-of-type {
@@ -291,6 +319,7 @@ when one of its submenus is visible.
     border-width: 0;
 
 }
+
 
 
 /* Top and bottom scroll controls */
@@ -303,26 +332,31 @@ when one of its submenus is visible.
     background-repeat: no-repeat;
 
 }
+
 .yuimenu .topscrollbar {
 
     background-image: url(menu_up_arrow.png);
 
 }
+
 .yuimenu .topscrollbar_disabled {
 
     background-image: url(menu_up_arrow_disabled.png);
 
 }
+
 .yuimenu .bottomscrollbar {
 
     background-image: url(menu_down_arrow.png);
 
 }
+
 .yuimenu .bottomscrollbar_disabled {
 
     background-image: url(menu_down_arrow_disabled.png);
 
 }
+
 
 /* MenuItem and MenuBarItem styles */
 
@@ -337,6 +371,7 @@ when one of its submenus is visible.
     *border-bottom: solid 1px #f6f7ee;
 
 }
+
 .yuimenuitemlabel,
 .yuimenuitemlabel:visited,
 .yuimenubaritemlabel,
@@ -347,11 +382,13 @@ when one of its submenus is visible.
     text-decoration: none;
 
 }
+
 .yuimenuitemlabel {
 
     padding: 2px 24px;
     
 }
+
 .yuimenubaritemlabel {
 
     border-width: 0 0 0 1px;
@@ -360,32 +397,38 @@ when one of its submenus is visible.
     padding: 4px 24px;
 
 }
+
 .yuimenubar li.first-of-type .yuimenubaritemlabel {
 
     border-width: 0;
 
 }
+
 .yuimenubaritem-hassubmenu {
 
     background: url(menubaritem_submenuindicator.png) right center no-repeat;
 
 }
+
 .yuimenuitem-hassubmenu {
 
     background: url(menuitem_submenuindicator.png) right center no-repeat;
 
 }
+
 .yuimenuitem-checked {
 
     background: url(menuitem_checkbox.png) left center no-repeat;
 
 }
+
 .yuimenuitemlabel .helptext {
 
     margin-top: -1.1em;
     *margin-top: -1.2em;  /* For IE*/
     
 }
+
 
 
 /* MenuItem states */
@@ -399,6 +442,7 @@ when one of its submenus is visible.
     background-color: #8c8ad0;
 
 }
+
 .yuimenubaritemlabel-selected,
 .yuimenubaritemlabel-selected:visited,
 .yuimenuitemlabel-selected,
@@ -408,21 +452,25 @@ when one of its submenus is visible.
     color: #fff;
 
 }
+
 .yuimenubaritem-hassubmenu-selected {
 
     background-image: url(menubaritem_submenuindicator_selected.png);
 
 }
+
 .yuimenuitem-hassubmenu-selected {
 
     background-image: url(menuitem_submenuindicator_selected.png);
 
 }
+
 .yuimenuitem-checked-selected {
 
     background-image: url(menuitem_checkbox_selected.png);
 
 }
+
 
 /* Disabled MenuItem */
 
@@ -435,16 +483,19 @@ when one of its submenus is visible.
     color: #b9b9b9;
 
 }
+
 .yuimenubaritem-hassubmenu-disabled {
 
     background-image: url(menubaritem_submenuindicator_disabled.png);
 
 }
+
 .yuimenuitem-hassubmenu-disabled {
 
     background-image: url(menuitem_submenuindicator_disabled.png);
 
 }
+
 .yuimenuitem-checked-disabled {
 
     background-image: url(menuitem_checkbox_disabled.png);

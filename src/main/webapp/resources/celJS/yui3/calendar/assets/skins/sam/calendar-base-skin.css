@@ -21,21 +21,26 @@ http://yuilibrary.com/license/
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
+
 .yui3-skin-sam .yui3-calendar-grid {
     padding:5px;
     border-collapse: collapse;
 }
+
 .yui3-skin-sam .yui3-calendar-header {
     padding-bottom:10px;
 }
+
 .yui3-skin-sam .yui3-calendar-header-label h4 {
     margin: 0;
     font-size: 1em;
     font-weight: bold;
 }
+
 .yui3-skin-sam .yui3-calendar-selection-disabled {
   color: #555555;
 }
+
 .yui3-skin-sam .yui3-calendar-day,
 .yui3-skin-sam .yui3-calendar-prevmonth-day, 
 .yui3-skin-sam .yui3-calendar-nextmonth-day {
@@ -43,26 +48,33 @@ http://yuilibrary.com/license/
     background: #FFFFFF;
     text-align:center;
 }
+
 .yui3-skin-sam .yui3-calendar-day:hover {
     background: #0066CC;
     color: #FFFFFF;
 }
+
 .yui3-skin-sam .yui3-calendar-selection-disabled,
 .yui3-skin-sam .yui3-calendar-selection-disabled:hover {
   color: #A6A6A6;
   background: #CCCCCC;
 }
+
 .yui3-skin-sam .yui3-calendar-weekday {
 	font-weight: bold;
 }
+
 .yui3-skin-sam .yui3-calendar-prevmonth-day, .yui3-calendar-nextmonth-day {
   color: #A6A6A6;
 }
+
 .yui3-skin-sam .yui3-calendar-day {
 	font-weight: bold;
 }
+
 .yui3-skin-sam .yui3-calendar-day-selected {
 	background-color: #B3D4FF;
 	color: #000000;
 
 }
+

@@ -115,12 +115,14 @@
   margin-right: 5px;
   margin-bottom: 3px;
 }
+
 #c3_import_button_div {
   display: block;
   position: absolute;
   top: 10px;
   right: 10px;
 }
+
 .c3_import_checkbox_all_none {
   display: block;
   font-size: 13px;

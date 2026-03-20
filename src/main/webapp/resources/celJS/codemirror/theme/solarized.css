@@ -24,6 +24,7 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
 .solarized.solar-blue { color: #268bd2; }
 .solarized.solar-cyan { color: #2aa198; }
 .solarized.solar-green { color: #859900; }
+
 /* Color scheme for code-mirror */
 
 .cm-s-solarized {
@@ -42,22 +43,29 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
   color: #657b83;
   text-shadow: #eee8d5 0 1px;
 }
+
 .cm-s-solarized .CodeMirror-widget {
   text-shadow: none;
 }
+
 
 .cm-s-solarized .cm-keyword { color: #cb4b16 }
 .cm-s-solarized .cm-atom { color: #d33682; }
 .cm-s-solarized .cm-number { color: #d33682; }
 .cm-s-solarized .cm-def { color: #2aa198; }
+
 .cm-s-solarized .cm-variable { color: #268bd2; }
 .cm-s-solarized .cm-variable-2 { color: #b58900; }
 .cm-s-solarized .cm-variable-3 { color: #6c71c4; }
+
 .cm-s-solarized .cm-property { color: #2aa198; }
 .cm-s-solarized .cm-operator {color: #6c71c4;}
+
 .cm-s-solarized .cm-comment { color: #586e75; font-style:italic; }
+
 .cm-s-solarized .cm-string { color: #859900; }
 .cm-s-solarized .cm-string-2 { color: #b58900; }
+
 .cm-s-solarized .cm-meta { color: #859900; }
 .cm-s-solarized .cm-error,
 .cm-s-solarized .cm-invalidchar {
@@ -90,28 +98,35 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
   content: "➤";   /*visualize tab character*/
   color: #586e75;
 }
+
 .cm-s-solarized.cm-s-dark .CodeMirror-focused .CodeMirror-selected {
   background: #386774;
   color: inherit;
 }
+
 .cm-s-solarized.cm-s-dark ::selection {
   background: #386774;
   color: inherit;
 }
+
 .cm-s-solarized.cm-s-dark .CodeMirror-selected {
   background: #586e75;
 }
+
 .cm-s-solarized.cm-s-light .CodeMirror-focused .CodeMirror-selected {
   background: #eee8d5;
   color: inherit;
 }
+
 .cm-s-solarized.cm-s-light ::selection {
   background: #eee8d5;
   color: inherit;
 }
+
 .cm-s-solarized.cm-s-light .CodeMirror-selected {
   background: #93a1a1;
 }
+
 
 
 /* Editor styling */
@@ -124,12 +139,14 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
   -webkit-box-shadow: inset 7px 0 12px -6px #000;
   box-shadow: inset 7px 0 12px -6px #000;
 }
+
 /* Gutter border and some shadow from it  */
 .cm-s-solarized .CodeMirror-gutters {
   padding: 0 15px 0 10px;
   box-shadow: 0 10px 20px black;
   border-right: 1px solid;
 }
+
 /* Gutter colors and line number styling based of color scheme (dark / light) */
 
 /* Dark */
@@ -137,27 +154,34 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
   background-color: #073642;
   border-color: #00232c;
 }
+
 .cm-s-solarized.cm-s-dark .CodeMirror-linenumber {
   text-shadow: #021014 0 -1px;
 }
+
 /* Light */
 .cm-s-solarized.cm-s-light .CodeMirror-gutters {
   background-color: #eee8d5;
   border-color: #eee8d5;
 }
+
 /* Common */
 .cm-s-solarized .CodeMirror-linenumber {
   color: #586e75;
 }
+
 .cm-s-solarized .CodeMirror-gutter .CodeMirror-gutter-text {
   color: #586e75;
 }
+
 .cm-s-solarized .CodeMirror-lines {
   padding-left: 5px;
 }
+
 .cm-s-solarized .CodeMirror-lines .CodeMirror-cursor {
   border-left: 1px solid #819090;
 }
+
 /*
 Active line. Negative margin compensates left padding of the text in the
 view-port
@@ -165,6 +189,7 @@ view-port
 .cm-s-solarized .activeline {
   margin-left: -20px;
 }
+
 .cm-s-solarized.cm-s-dark .activeline {
   background: rgba(255, 255, 255, 0.05);
 
@@ -172,6 +197,7 @@ view-port
 .cm-s-solarized.cm-s-light .activeline {
   background: rgba(0, 0, 0, 0.05);
 }
+
 /*
 View-port and gutter both get little noise background to give it a real feel.
 */

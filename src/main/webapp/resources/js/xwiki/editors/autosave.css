@@ -11,6 +11,7 @@
   padding-bottom: 0;
   width: 2em;
 }
+
 /** Override Toucan styles */
 #body #autosaveControl label {
   display: inline;

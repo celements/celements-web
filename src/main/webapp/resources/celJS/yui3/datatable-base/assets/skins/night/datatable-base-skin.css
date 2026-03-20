@@ -27,6 +27,7 @@ http://yuilibrary.com/license/
     padding:1em 0;
     text-align:center;
 }
+
 .yui3-skin-night .yui3-datatable th {
     background-color:#3b3c3d;
 
@@ -45,6 +46,7 @@ http://yuilibrary.com/license/
         to(#2C2D2F)     
     );
 }
+
 .yui3-skin-night .yui3-datatable th,
 .yui3-skin-night .yui3-datatable th a {
     font-weight:normal;text-decoration:none;color:#eee; /* header text */
@@ -83,16 +85,19 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-datatable-resizer {
     width:6px;
 }
+
 /* mask */
 .yui3-skin-night .yui3-datatable-mask {
     background-color: #000;
     opacity: .25;
     filter: alpha(opacity=25);  /* Set opacity in IE */
 }
+
 /* messaging */
 .yui3-skin-night .yui3-datatable-message  {
     background-color:#FFF;
 }
+
 /* scrolling */
 
 
@@ -100,6 +105,7 @@ http://yuilibrary.com/license/
 .yui3-skin-night .yui3-datatable-scrollable thead .yui3-datatable-first th:last-child div{
 	border-right:solid 30px #2F3031;	
 }
+
 .yui3-skin-night .yui3-datatable-scrollable table {border:none;}
 .yui3-skin-night .yui3-datatable-scrollable .yui3-datatable-hd {
 	border-left:1px solid #303030;
@@ -113,6 +119,7 @@ http://yuilibrary.com/license/
 	background-color:#000;/*FFF*/
 }
 .yui3-skin-night .yui3-datatable-scrollable .yui3-datatable-data tr.yui3-datatable-last td {border-bottom:1px solid #303030;}
+
 /* sortable columns */
 .yui3-skin-night th.yui3-datatable-asc,
 .yui3-skin-night th.yui3-datatable-desc {
@@ -142,6 +149,7 @@ http://yuilibrary.com/license/
 .yui3-skin-night th.yui3-datatable-desc .yui3-datatable-liner {
     background:url(dt-arrow-dn.png) no-repeat right; /* down arrow */
 }
+
 /* editing */
 tbody .yui3-datatable-editable {
     cursor:pointer;
@@ -178,6 +186,7 @@ tbody .yui3-datatable-editable {
     background:url(../../../../assets/skins/sam/sprite.png) repeat-x 0 -1700px;
     color:#000;
 }
+
 /* striping */
 .yui3-skin-night .yui3-datatable td { background-color:transparent; } /* none */
 .yui3-skin-night tr.yui3-datatable-even td { background-color:#0E0E0E; } /* darkest bkg even*/
@@ -208,6 +217,7 @@ tbody .yui3-datatable-editable {
     cursor:pointer;
     background-color:#B2D2FF; /* med blue hover */
 }
+
 /* enable highlighting in list mode */
 .yui3-skin-night .yui3-datatable-list th.yui3-datatable-highlighted,
 .yui3-skin-night .yui3-datatable-list th.yui3-datatable-highlighted a {
@@ -221,6 +231,7 @@ tbody .yui3-datatable-editable {
     cursor:pointer;
     background-color:#B2D2FF; /* med blue  hover */
 }
+
 /* selection */
 .yui3-skin-night th.yui3-datatable-selected,
 .yui3-skin-night th.yui3-datatable-selected a {
@@ -237,6 +248,7 @@ tbody .yui3-datatable-editable {
     background-color:#446CD7; /* bright blue selected cell */
     color:#FFF;
 }
+
 /* enable selection in list mode */
 .yui3-skin-night .yui3-datatable-list th.yui3-datatable-selected,
 .yui3-skin-night .yui3-datatable-list th.yui3-datatable-selected a {
@@ -253,6 +265,7 @@ tbody .yui3-datatable-editable {
     background-color:#446CD7; /* bright blue selected cell */
     color:#FFF;
 }
+
 /* pagination */
 .yui3-skin-night .yui3-datatable-paginator {
     display:block;margin:6px 0;white-space:nowrap;

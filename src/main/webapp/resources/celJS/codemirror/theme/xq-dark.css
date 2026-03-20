@@ -25,6 +25,7 @@ THE SOFTWARE.
 .cm-s-xq-dark .CodeMirror-gutters { background: #0a001f; border-right: 1px solid #aaa; }
 .cm-s-xq-dark .CodeMirror-linenumber { color: #f8f8f8; }
 .cm-s-xq-dark .CodeMirror-cursor { border-left: 1px solid white !important; }
+
 .cm-s-xq-dark span.cm-keyword {color: #FFBD40;}
 .cm-s-xq-dark span.cm-atom {color: #6C8CD5;}
 .cm-s-xq-dark span.cm-number {color: #164;}

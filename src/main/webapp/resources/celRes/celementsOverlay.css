@@ -51,6 +51,7 @@ body {
   position: relative;
   width: 800px;
 }
+
 /* Newsletter */
 
 .NewsletterAddressList .main.layoutsubsection {
@@ -68,6 +69,7 @@ newsletter_send_answer {
   margin-top: 5px;
   text-decoration: underline;
 }
+
 #newsletter_send_answer .cel_newsletter_receivers_groups {
   width: 370px;
   height: 100px;
@@ -139,6 +141,7 @@ form#newsletter_send span#testResultBoxSpan {
   margin-left: 545px;
   margin-top: 25px;
 }
+
 /* User admin */
 
 .UserAdminSheet form#update {
@@ -203,6 +206,7 @@ form#newsletter_send span#testResultBoxSpan {
   width: 190px;
   display: block;
 }
+
 .UserAdminSheet form#update .editblock dl {
   margin: 0px;
 }
@@ -258,6 +262,7 @@ form#newsletter_send span#testResultBoxSpan {
   font-size: 14px;
   line-height: 17px;
 }
+
 .generalOverlay .layoutsubsection #cel_overlaybody .changePassword h2 {
   font-size: 15px;
   line-height: 18px;
@@ -274,6 +279,7 @@ form#newsletter_send span#testResultBoxSpan {
   font-style: normal;
   color: black;
 }
+
 /* Tables */
 .generalOverlay #cel_overlaybody #AttachmentHistory table,
 .generalOverlay #cel_overlaybody #recylceBinList table,
@@ -313,6 +319,7 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody table.cel_whatsnew_table tr:hover td {
   background-color: #eeeeee;
 }
+
 /* WIDTH for Attachment History */
 .generalOverlay #cel_overlaybody #AttachmentHistory table .column_image {
   width: 90px;
@@ -329,6 +336,7 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #AttachmentHistory table .column_date {
   width: 200px;
 }
+
 /* WIDTH for Attachment Recycle Bin */
 .FullAttRecylceBin .main.layoutsubsection {
   width: 900px;
@@ -353,6 +361,7 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #recylceBinAttachmentList table .column_actions {
   width: 120px;
 }
+
 /* WIDTH for Document Recycle Bin */
 .generalOverlay #cel_overlaybody #recylceBinList table .column_docName {
   width: 220px;
@@ -367,6 +376,7 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #recylceBinList table .column_actions {
   width: 215px;
 }
+
 /* fix for password change form in baseskin */
 .generalOverlay .changePassword dl {
   margin: 0px;
@@ -377,9 +387,11 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay .changePassword dl dd input#xwikipassword {
   margin: 0px;
 }
+
 #cel_pwdrecovery_process_description {
   padding: 0 0 20px;
 }
+
 .generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description form,
 .generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description button,
 .generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description input,
@@ -387,6 +399,7 @@ form#newsletter_send span#testResultBoxSpan {
 .generalOverlay #cel_overlaybody #cel_pwdrecovery_process_description textarea {
   margin: 5px;
 }
+
 /* MOBILE LANDSCAPE */
 
 @media only screen and (max-width: 800px) {
@@ -394,10 +407,12 @@ form#newsletter_send span#testResultBoxSpan {
     position: relative;
     width: 75%;
   }
+
   #cel_pwdrecovery_process_description {
     padding: 0 0 20px;
   }
 }
+
 /* MOBILE PORTRAIT 
 
 @media only screen and (max-width: 560px) { 

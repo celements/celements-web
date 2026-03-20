@@ -37,6 +37,7 @@ Subsection: General
 	width: 57.69em;
 	*width: 56.25em; /* doc1*/
 }
+
 .yui3-cssgrids .yui3-t1,
 .yui3-cssgrids .yui3-t2,
 .yui3-cssgrids .yui3-t3,
@@ -47,6 +48,7 @@ Subsection: General
 	text-align: left;
 	width: 100%;
 }
+
 /*
 Subsection: 100% (doc)
 */
@@ -61,6 +63,7 @@ Subsection: 100% (doc)
 .yui3-cssgrids .yui3-d0f {
 	width: 100%;
 }
+
 /*
 Subsection: 950 Centered (doc2)
 */
@@ -115,6 +118,7 @@ Subsection: General
 	/* IE: preserve layout at narrow widths */
 	margin-right: -25em;
 }
+
 /* Subsection: For Specific Template Presets */
 
 /**
@@ -184,10 +188,12 @@ TODO Create t1-6's that are based on fixed widths
 	margin-right: 24.0769em;
 	*margin-right: 23.475em;
 }
+
 .yui3-cssgrids .yui3-main .yui3-b {
 	float: none;
 	width: auto;
 }
+
 /*
 Section: Grids and Nesting Grids
 */
@@ -209,6 +215,7 @@ Subsection: Children generally take half the available space
 .yui3-cssgrids .yui3-gd .yui3-u {
 	float: left;
 }
+
 /*Float units (and sub grids) to the right */
 .yui3-cssgrids .yui3-g .yui3-u,
 .yui3-cssgrids .yui3-g .yui3-g,
@@ -226,6 +233,7 @@ Subsection: Children generally take half the available space
 .yui3-cssgrids .yui3-gf .yui3-u {
 	float: right;
 }
+
 /*Float units (and sub grids) to the left */
 .yui3-cssgrids .yui3-g div.first,
 .yui3-cssgrids .yui3-gb div.first,
@@ -238,6 +246,7 @@ Subsection: Children generally take half the available space
 .yui3-cssgrids .yui3-gc div.first div.first {
 	float: left;
 }
+
 .yui3-cssgrids .yui3-g .yui3-u,
 .yui3-cssgrids .yui3-g .yui3-g,
 .yui3-cssgrids .yui3-g .yui3-gb,
@@ -247,6 +256,7 @@ Subsection: Children generally take half the available space
 .yui3-cssgrids .yui3-g .yui3-gf {
 	width: 49.1%;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-u,
 .yui3-cssgrids .yui3-g .yui3-gb .yui3-u,
 .yui3-cssgrids .yui3-gb .yui3-g,
@@ -261,11 +271,13 @@ Subsection: Children generally take half the available space
 	width: 32%;
 	margin-left: 2.0%;
 }
+
 /* Give IE some extra breathing room for 1/3-based rounding issues */
 .yui3-cssgrids .yui3-gb .yui3-u {
 	*width: 31.8%;
 	*margin-left: 1.9%;
 }
+
 .yui3-cssgrids .yui3-gc div.first,
 .yui3-cssgrids .yui3-gd .yui3-u {
 	width: 66%;
@@ -275,22 +287,26 @@ Subsection: Children generally take half the available space
 	width: 32%;
 	_width: 31.5%;
 }
+
 .yui3-cssgrids .yui3-ge div.first,
 .yui3-cssgrids .yui3-gf .yui3-u {
 	width: 74.2%;
 	_width: 74%;
 }
+
 .yui3-cssgrids .yui3-ge .yui3-u,
 .yui3-cssgrids .yui3-gf div.first {
 	width: 24%;
 	_width: 23.8%;
 }
+
 .yui3-cssgrids .yui3-g .yui3-gb div.first,
 .yui3-cssgrids .yui3-gb div.first,
 .yui3-cssgrids .yui3-gc div.first,
 .yui3-cssgrids .yui3-gd div.first {
 	margin-left: 0;
 }
+
 /*
 Section: Deep Nesting
 */
@@ -304,32 +320,39 @@ Section: Deep Nesting
 	*width: 48.1%;
 	*margin-left: 0;
 }
+
 .yui3-cssgrids .yui3-g .yui3-gb div.first,
 .yui3-cssgrids .yui3-gb .yui3-gb div.first {
 	*margin-right: 0;
 	*width: 32%;
 	_width: 31.7%;
 }
+
 .yui3-cssgrids .yui3-g .yui3-gc div.first,
 .yui3-cssgrids .yui3-gd .yui3-g {
 	width: 66%;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-g div.first {
 	*margin-right: 4%;
 	_margin-right: 1.3%;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-gc div.first,
 .yui3-cssgrids .yui3-gb .yui3-gd div.first {
 	*margin-right: 0;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-gb .yui3-u,
 .yui3-cssgrids .yui3-gb .yui3-gc .yui3-u {
 	*margin-left: 1.8%;
 	_margin-left: 4%;
 }
+
 .yui3-cssgrids .yui3-g .yui3-gb .yui3-u {
 	_margin-left: 1.0%;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-gd .yui3-u {
 	*width: 66%;
 	_width: 61.2%;
@@ -338,6 +361,7 @@ Section: Deep Nesting
 	*width: 31%;
 	_width: 29.5%;
 }
+
 .yui3-cssgrids .yui3-g .yui3-gc .yui3-u,
 .yui3-cssgrids .yui3-gb .yui3-gc .yui3-u {
 	width: 32%;
@@ -350,34 +374,41 @@ Section: Deep Nesting
 	*float: left;
 	*margin-left: 0;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-ge .yui3-u,
 .yui3-cssgrids .yui3-gb .yui3-gf .yui3-u {
 	margin: 0;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-gb .yui3-u {
 	_margin-left: .7%;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-g div.first,
 .yui3-cssgrids .yui3-gb .yui3-gb div.first {
 	*margin-left:0;
 }
+
 .yui3-cssgrids .yui3-gc .yui3-g .yui3-u,
 .yui3-cssgrids .yui3-gd .yui3-g .yui3-u {
 	*width: 48.1%;
 	*margin-left: 0;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-gd div.first {
 	width: 32%;
 }
 .yui3-cssgrids .yui3-g .yui3-gd div.first {
 	_width: 29.9%;
 }
+
 .yui3-cssgrids .yui3-ge .yui3-g {
 	width: 24%;
 }
 .yui3-cssgrids .yui3-gf .yui3-g {
 	width: 74.2%;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-ge div.yui3-u,
 .yui3-cssgrids .yui3-gb .yui3-gf div.yui3-u {
 	float: right;
@@ -386,26 +417,31 @@ Section: Deep Nesting
 .yui3-cssgrids .yui3-gb .yui3-gf div.first {
 	float: left;
 }
+
 /* Width Accommodation for Nested Contexts */
 .yui3-cssgrids .yui3-gb .yui3-ge .yui3-u,
 .yui3-cssgrids .yui3-gb .yui3-gf div.first {
 	*width: 24%;
 	_width: 20%;
 }
+
 /* Width Accommodation for Nested Contexts */
 
 .yui3-cssgrids .yui3-gc .yui3-gf .yui3-u {
 	width: 74%;
 	_width: 73%;
 }
+
 .yui3-cssgrids .yui3-gc .yui3-gf div.first {
 	width: 24%;
 }
+
 .yui3-cssgrids .yui3-gb .yui3-ge div.first,
 .yui3-cssgrids .yui3-gb .yui3-gf .yui3-u {
 	*width: 73.5%;
 	_width: 65.5%;
 }
+
 /* Patch for GD within GE */
 .yui3-cssgrids .yui3-ge div.first .yui3-gd .yui3-u {
 	width: 65%;
@@ -413,6 +449,7 @@ Section: Deep Nesting
 .yui3-cssgrids .yui3-ge div.first .yui3-gd div.first {
 	width: 32%;
 }
+
 /*
 Section: Clearing. zoom for IE, :after for others
 */

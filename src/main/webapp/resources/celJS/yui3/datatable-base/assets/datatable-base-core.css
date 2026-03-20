@@ -11,11 +11,13 @@ http://yuilibrary.com/license/
     position:absolute;
     z-index:9500;
 }
+
 /* scrollable */
 .yui3-datatable-tmp {
     position:absolute;
     left:-9000px;
 }
+
 .yui3-datatable-scrollable .yui3-datatable-bd {
     overflow:auto;
 }
@@ -29,14 +31,17 @@ http://yuilibrary.com/license/
     position:absolute;
     left:-1500px;
 }
+
 .yui3-datatable-scrollable tbody {
     -moz-outline:none;
 }
+
 /* sortable columns */
 
 .yui3-skin-sam thead .yui3-datatable-sortable {
     cursor:pointer;
 }
+
 /* draggable columns */
 .yui3-skin-sam thead .yui3-datatable-draggable {
     cursor: move;
@@ -45,6 +50,7 @@ http://yuilibrary.com/license/
     position: absolute;
     z-index: 999;
 }
+
 /* resizeable columns */
 .yui3-datatable-hd {
     zoom:1; 
@@ -67,6 +73,7 @@ th.yui3-datatable-resizeable .yui3-datatable-resizerliner {
     z-index:9000;
     background-color:#CCC;opacity:0;filter: alpha(opacity=0); /* Bug 1952811: IE transparency z-index */
 }
+
 /* hidden columns */
 th.yui3-datatable-hidden .yui3-datatable-liner, 
 td.yui3-datatable-hidden .yui3-datatable-liner,
@@ -79,6 +86,7 @@ th.yui3-datatable-hidden .yui3-datatable-resizer {
     overflow:hidden;*/
     display:none;
 }
+
 /* editing */
 .yui3-datatable-editor, .yui3-datatable-editor-shim {
     position:absolute;z-index:9000;

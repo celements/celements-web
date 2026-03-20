@@ -4,6 +4,7 @@ h3,
 h4 {
   color: #369;
 }
+
 /*
 ---------------------------------------
 Space header, footer
@@ -34,20 +35,24 @@ ul.xwikiintra {
   border-bottom-color: #ddd;
   background-color: #eee;
 }
+
 .xwikiintra li {
   background-color: #bbb;
   border-color: #ccc;
   border-right-color: #aaa;
 }
+
 .xwikiintra li a,
 .xwikiintra li.active a {
   color: #000;
 }
+
 .xwikiintra li.active {
   background-color: #fff !important;
   border-bottom-color: #fff;
   border-top-color: #ddd;
 }
+
 table.xwikidatatable,
 table.xwikidatatable th {
   border-color: #ddd;
@@ -57,13 +62,16 @@ table.xwikidatatable th {
   background-color: #369;
   border-color: #369;
 }
+
 .xwikiintracontent legend,
 .xwikiintracontent fieldset {
   border-color: #ddd;
 }
+
 .xwikiintracontent fieldset.collapsed legend {
   background-color: #eee;
 }
+
 /*
 ---------------------------------------
 Menu
@@ -74,6 +82,7 @@ Menu
   border-color: #ddd;
   border-top-color: white;
 }
+
 /*
 ---------------------------------------------
 "Message Boxes"
@@ -83,10 +92,12 @@ fieldset.xwikimessage {
   border-color: #bbb;
   background-color: #f5f5f5;
 }
+
 fieldset.xwikimessage legend {
   background-color: #bbb;
   color: #fff;
 }
+
 input.button,
 button.button {
   background-color: #eee;
@@ -116,23 +127,27 @@ Editors
   border-left-color: #ddf;
   border-top-color: #ddf;
 }
+
 .xwikitabbar li a {
   color: #000 !important;
 }
 .xwikitabbar li.active a {
   color: #000 !important;
 }
+
 .xwikitabbar li.active {
   background-color: #fff !important;
   border-color: #ddd;
   border-bottom-color: #fff;
 }
+
 /*
 --
 */
 #xwikicontentedit {
   border-color: #ddd;
 }
+
 /*
 ---------------------------------------
 Panels
@@ -142,12 +157,14 @@ Panels
   background-color: #eee;
   border-color: #e5e5e5;
 }
+
 .panel {
   border-color: #ddd;
 }
 .xwikipaneltitle {
   background-color: #cdf;
 }
+
 /*
 ----------------------------------
 Rico Acordeon -- Sintax Help Panel
@@ -157,12 +174,14 @@ Rico Acordeon -- Sintax Help Panel
   background-color: #fff;
   border-bottom-color: #ddd;
 }
+
 .accordionTabTitleBar {
   border-color: #fff;
   border-bottom-color: #ddd;
   border-right-color: #ddd;
   background-color: #eee;
 }
+
 /*
 ----------------------------------
 Misc
@@ -172,18 +191,22 @@ Misc
 td.label {
   color: #777;
 }
+
 #xwikiclassproperties,
 #xwikiobjects {
   border-color: #ddd !important;
 }
+
 #xwikihelpsyntax {
   border-top-color: #ddd;
 }
+
 .editactions a {
   background-color: #eee;
   color: #000;
   border-color: #dcdcdc;
 }
+
 .editactions a:hover {
   background-color: #ffd;
 }
@@ -195,10 +218,12 @@ td.label {
 fieldset.xwikimessage {
   border-color: #658bb2;
 }
+
 fieldset.xwikimessage legend {
   background-color: #658bb2;
   color: #fff;
 }
+
 tr.row.odd {
   background-color: #eee;
 }
@@ -208,12 +233,14 @@ tr.row.even {
 tr th {
   background-color: #eee;
 }
+
 a:link {
   color: #369;
 }
 a:visited {
   color: #777;
 }
+
 tr.row.odd {
   background-color: #cdf;
 }
@@ -223,6 +250,7 @@ tr.row.even {
 th {
   background-color: #cdf;
 }
+
 .xwikibuttonlink a {
   background-color: #369;
   color: #fff;
@@ -235,6 +263,7 @@ th {
   border-color: #ddd;
   border-bottom-color: #fff;
 }
+
 #xwikirightstable {
   border-color: #ddd;
 }
@@ -248,10 +277,12 @@ th {
 #xwikirightstable tr {
   border-color: #ddd;
 }
+
 .article_footer {
   color: #777;
   border-color: #777;
 }
+
 .xwikiuserblog .rssfeed {
   border-top-color: #ddd;
   border-left-color: #ddd;
@@ -261,6 +292,7 @@ th {
 .rsschanneltitle {
   background-color: transparent;
 }
+
 /*
 ------------------------------------------------------------
 */
@@ -270,22 +302,27 @@ th {
   margin-right: -5px;
   border-bottom: 1px solid #ddd;
 }
+
 #panelEditorSteps li {
   background-color: transparent;
   border: none;
 }
+
 #panelEditorSteps li.active {
   background-color: transparent;
   border: 1px solid #ddd;
   border-bottom: 1px solid #fff;
 }
+
 #panelEditorSteps li.active a,
 #panelEditorSteps a:hover {
   color: #369 !important;
 }
+
 #panelEditorSteps li a {
   color: #aaa !important;
 }
+
 /*------------------------------------*/
 /*------------------------------------*/
 /*------------------------------------*/

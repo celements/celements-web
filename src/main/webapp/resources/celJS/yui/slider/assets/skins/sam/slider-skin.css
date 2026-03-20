@@ -12,6 +12,7 @@ version: 2.9.0
 .yui-skin-sam .yui-h-slider .yui-slider-thumb {
     top: 4px;
 }
+
 .yui-skin-sam .yui-v-slider {
     background: url(bg-v.gif) no-repeat 12px 0;
     height: 228px;

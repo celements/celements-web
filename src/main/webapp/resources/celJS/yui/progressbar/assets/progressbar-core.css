@@ -27,6 +27,7 @@ version: 2.9.0
 
 	text-align:left;
 }
+
 /* mask */
 
 .yui-pb-mask {
@@ -36,6 +37,7 @@ version: 2.9.0
 
 	z-index:2;
 }
+
 .yui-pb-mask div {
 	width:50%;
 	height:50%;
@@ -43,6 +45,7 @@ version: 2.9.0
 	padding:0;
 	position: absolute;
 }
+
 .yui-pb-tl {
 	background-position: top left;
 }
@@ -59,6 +62,7 @@ version: 2.9.0
 	left:50%;
 	top:50%;
 }
+
 /* bar */
 .yui-pb-bar {
 	margin:0;
@@ -67,12 +71,15 @@ version: 2.9.0
 	top:0;
 	z-index:1;
 }
+
 .yui-pb-ltr .yui-pb-bar {
 	_position:static
 }
+
 .yui-pb-rtl .yui-pb-bar {
 	background-position:right;
 }
+
 .yui-pb-btt .yui-pb-bar {
 	background-position:left bottom;
 }

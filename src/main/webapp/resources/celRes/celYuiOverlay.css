@@ -14,6 +14,7 @@ body div.mask.cel-YuiOverlay {
   left: 0px;
   z-index: 99;
 }
+
 .cel-YuiOverlay .yui-panel .hd {
   height: 0px;
 }
@@ -64,6 +65,7 @@ body div.mask.cel-YuiOverlay {
   bottom: 0px;
   display: none;
 }
+
 .cel-YuiOverlay .yui-panel .bd .cel_slideShow_slideRoot {
   overflow: hidden;
 }

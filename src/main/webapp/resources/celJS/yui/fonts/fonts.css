@@ -22,6 +22,7 @@ body {
 	/* for IE Quirks Mode */
 	*font:x-small; 
 }
+
 /**
  * Nudge down to get to 13px equivalent for these form elements
  */ 
@@ -31,6 +32,7 @@ textarea,
 button {
 	font:99% arial,helvetica,clean,sans-serif;
 }
+
 /**
  * To help tables remember to inherit
  */
@@ -38,6 +40,7 @@ table {
 	font-size:inherit;
 	font:100%;
 }
+
 /**
  * Bump up IE to get to 13px equivalent for these fixed-width elements
  */

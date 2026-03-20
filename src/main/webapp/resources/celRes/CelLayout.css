@@ -11,6 +11,7 @@
 body #cel_layout_editor #cel_skin_editor_reorder_tree {
   width: 580px;
 }
+
 body #cel_layout_editor #cel_skin_editor_reorder_tree ul {
   min-height: 4px;
   padding-left: 20px;
@@ -25,6 +26,7 @@ body #cel_layout_editor #cel_skin_editor_reorder_tree ul li {
   font-size: 12px;
   border-left: 1px dotted gray;
 }
+
 body #cel_layout_editor #cel_skin_editor_reorder_tree.reorderMode {
   border: 1px dashed gray;
 }
@@ -34,6 +36,7 @@ body #cel_layout_editor #cel_skin_editor_reorder_tree.reorderMode ul li {
 #pagelayoutlist {
   font-family: Tahoma, Geneva, Helvetica, Arial, sans-serif;
 }
+
 #pagelayoutlist h1,
 #pagelayoutlist h2 {
   margin-left: 0px;
@@ -59,6 +62,7 @@ body #cel_layout_editor #cel_skin_editor_reorder_tree.reorderMode ul li {
   margin-bottom: 15px;
   border-collapse: collapse;
 }
+
 #pagelayoutlist th,
 #pagelayoutlist td {
   text-align: left;
@@ -71,6 +75,7 @@ body #cel_layout_editor #cel_skin_editor_reorder_tree.reorderMode ul li {
 #pagelayoutlist th {
   border-bottom: 1px solid #000000;
 }
+
 .cel_contentTab h1 {
   font-family: Tahoma, Geneva, Helvetica, Arial, sans-serif;
   margin: 0px;
@@ -113,6 +118,7 @@ body #cel_layout_editor #cel_skin_editor_reorder_tree ul li.GroupCell {
 #cel_layout_editor {
   font-family: Tahoma, Geneva, Helvetica, Arial, sans-serif;
 }
+
 #cel_layout_editor h1,
 #cel_layout_editor h2 {
   margin-left: 0px;
