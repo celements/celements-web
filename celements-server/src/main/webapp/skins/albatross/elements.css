@@ -11,7 +11,7 @@ body {
   line-height: 1.25em; /* 18px [2] */
   background: white;
   color: black;
-  font-family: "Arial", "Lucida", "Trebuchet MS", "Luxi Sans", "Helvetica", sans-serif;
+  font-family: 'Arial', 'Lucida', 'Trebuchet MS', 'Luxi Sans', 'Helvetica', sans-serif;
 }
 h1 {
   font-size: 1.5em; /* 18px */
@@ -28,47 +28,68 @@ h3 {
   font-style: italic;
   margin: 1.33em 0; /* 16px 0 */
 }
-h4, h5, h6 {
-  font-size: .75em; /* 9px */
+h4,
+h5,
+h6 {
+  font-size: 0.75em; /* 9px */
   line-height: 2em; /* 18px */
   margin: 1.56em 0; /* 14px 0 */
 }
-h4 {}
-h5 {}
+h4 {
+}
+h5 {
+}
 h6 {
   font-style: italic;
 }
-address {}
+address {
+}
 
 /* Section 9: Text */
 /* 9.2: Structured text */
-em {}
-strong {}
-dfn {}
+em {
+}
+strong {
+}
+dfn {
+}
 code {
-  font-family: "Bitstream Vera Sans Mono", "Courier New", Monaco, Courier, monospace;  /* [3] */
+  font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monaco, Courier, monospace; /* [3] */
   overflow: auto;
-  background-color: #EEE;
-  border: 1px solid #DDD;
+  background-color: #eee;
+  border: 1px solid #ddd;
   padding: 4px;
 }
 code pre {
-  font-family: "Bitstream Vera Sans Mono", "Courier New", Monaco, Courier, monospace;  /* [3] */
+  font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monaco, Courier, monospace; /* [3] */
 }
-samp {}
-kbd {}
-var {}
-cite {}
-abbr {}
-acronym {}
-blockquote {}
-q {}
-sub {}
-sup {}
+samp {
+}
+kbd {
+}
+var {
+}
+cite {
+}
+abbr {
+}
+acronym {
+}
+blockquote {
+}
+q {
+}
+sub {
+}
+sup {
+}
 /* End of 9.2 */
-p {}
-ins {}
-del {}
+p {
+}
+ins {
+}
+del {
+}
 
 /* Section 10: Lists */
 ul {
@@ -83,32 +104,44 @@ ol {
   margin: 1em;
   padding: 0 2em;
 }
-ol ol, ol ul, ul ol {
+ol ol,
+ol ul,
+ul ol {
   margin: 0;
 }
 li {
   margin: 0;
   padding: 0;
 }
-dl {}
-dt {}
-dd {}
+dl {
+}
+dt {
+}
+dd {
+}
 
 /* Section 11: Tables */
 table {
-
 }
 caption {
   margin: auto;
 }
-thead {}
-tfoot {}
-tbody {}
-colgroup {}
-col {}
-tr {}
-th {}
-td {}
+thead {
+}
+tfoot {
+}
+tbody {
+}
+colgroup {
+}
+col {
+}
+tr {
+}
+th {
+}
+td {
+}
 
 /* Section 12.2:  The A element */
 a:link {
@@ -117,53 +150,82 @@ a:link {
 a:visited {
   color: #777;
 }
-a:link:hover {} /* [4] */
-a:visited:hover {}
-a:active {}
-a:focus {}
-a:focus:hover {}
+a:link:hover {
+} /* [4] */
+a:visited:hover {
+}
+a:active {
+}
+a:focus {
+}
+a:focus:hover {
+}
 
 /* Section 13: Objects, Images, and Applets */
 img {
   border: none;
 }
-object {}
-applet {}
+object {
+}
+applet {
+}
 
 /* Section 15: Alignment, font styles, and horizontal rules */
 /* 15.2: Fonts "[...] their use is discouraged in favor of style sheets." */
-tt {}
-tt.wikimodel-verbatim {
-  font-family: "Arial", "Lucida", "Trebuchet MS", "Luxi Sans", "Helvetica", sans-serif;
+tt {
 }
-i {}
-b {}
-big {}
-small {}
+tt.wikimodel-verbatim {
+  font-family: 'Arial', 'Lucida', 'Trebuchet MS', 'Luxi Sans', 'Helvetica', sans-serif;
+}
+i {
+}
+b {
+}
+big {
+}
+small {
+}
 /* End of 15.2 */
-hr {}
+hr {
+}
 
 /* Section 16: Frames */
-iframe {}
+iframe {
+}
 
 /* Section 17: Forms */
-form { margin: 0px; }
-input {}
-.button{
+form {
+  margin: 0px;
+}
+input {
+}
+.button {
   font-size: 1em;
 }
-input:focus {}
-button {}
-button:focus {}
-select {}
-select:focus {}
-optgroup {}
-option {}
-textarea {}
-textarea:focus {}
-label {}
-fieldset {}
-legend {}
+input:focus {
+}
+button {
+}
+button:focus {
+}
+select {
+}
+select:focus {
+}
+optgroup {
+}
+option {
+}
+textarea {
+}
+textarea:focus {
+}
+label {
+}
+fieldset {
+}
+legend {
+}
 
 /*
   [1] All calculations are based on the assumption that 1em is 12px.

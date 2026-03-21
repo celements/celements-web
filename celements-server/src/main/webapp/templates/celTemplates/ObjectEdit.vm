@@ -181,16 +181,18 @@
 #else
   #set($properties = $class.properties)
 #end
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
 #foreach($prop in $properties)
 #set($classRef = $services.model.resolveDocument($class.getName()))
 #if($services.editorsupport.getSuggestBaseClass($classRef, "$!prop.getName()").isPicker())
-$services.javascript.addExtJSfileOnce(':celJS/prototype.js')
-$services.javascript.addExtJSfileOnce(':js/xwiki/xwiki.js', 'file')
-$services.javascript.addExtJSfileOnce(':uicomponents/widgets/list/xlist.js', 'file')
-<-- ajaxSuggest loaded ?? -->
-$services.javascript.addExtJSfileOnce(':js/xwiki/suggest/ajaxSuggest.js', 'file')
-$services.javascript.addExtJSfileOnce(':js/scriptaculous/effects.js', 'file')
-$services.javascript.addExtJSfileOnce(':celJS/addSuggest.js', 'file')
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/prototype.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/initCelements.min.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js', 'file'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js', 'file'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/suggest/ajaxSuggest.js', 'file'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js', 'file'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/addSuggest.js', 'file'))##
 #end
 #if($cel_embedded_editobj)
 #set($cel_editobj_validationClass = '')

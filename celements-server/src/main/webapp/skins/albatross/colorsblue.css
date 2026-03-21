@@ -1,4 +1,7 @@
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: #369;
 }
 
@@ -8,7 +11,8 @@ Space header, footer
 ---------------------------------------
 */
 
-#headerspace hr, #footerglobal hr{
+#headerspace hr,
+#footerglobal hr {
   background-color: #000;
 }
 /*
@@ -17,50 +21,55 @@ Content
 ---------------------------------------
 */
 
-#xwikieditor.layoutsection, .layoutsubsection, #xwikidatacontents{
-  border-color: #DDD;
+#xwikieditor.layoutsection,
+.layoutsubsection,
+#xwikidatacontents {
+  border-color: #ddd;
 }
 /*
 ---------------------------------------
 Zone for Comments, attachments, History... 
 ---------------------------------------
 */
-ul.xwikiintra{
-  border-bottom-color: #DDD;
-  background-color: #EEE;
+ul.xwikiintra {
+  border-bottom-color: #ddd;
+  background-color: #eee;
 }
 
-.xwikiintra li{
-  background-color: #BBB;
-  border-color: #CCC;
-  border-right-color: #AAA;
+.xwikiintra li {
+  background-color: #bbb;
+  border-color: #ccc;
+  border-right-color: #aaa;
 }
 
-.xwikiintra li a, .xwikiintra li.active a{
+.xwikiintra li a,
+.xwikiintra li.active a {
   color: #000;
 }
 
-.xwikiintra li.active{
-  background-color: #FFF !important;
-  border-bottom-color: #FFF;
-  border-top-color: #DDD;
+.xwikiintra li.active {
+  background-color: #fff !important;
+  border-bottom-color: #fff;
+  border-top-color: #ddd;
 }
 
-table.xwikidatatable, table.xwikidatatable th{
-  border-color: #DDD;
+table.xwikidatatable,
+table.xwikidatatable th {
+  border-color: #ddd;
 }
-table.xwikidatatable th{
-  color: #CDF;
+table.xwikidatatable th {
+  color: #cdf;
   background-color: #369;
   border-color: #369;
 }
 
-.xwikiintracontent legend, .xwikiintracontent fieldset{
+.xwikiintracontent legend,
+.xwikiintracontent fieldset {
   border-color: #ddd;
 }
 
-.xwikiintracontent fieldset.collapsed legend{
-  background-color: #EEE;
+.xwikiintracontent fieldset.collapsed legend {
+  background-color: #eee;
 }
 
 /*
@@ -68,7 +77,7 @@ table.xwikidatatable th{
 Menu
 ---------------------------------------
 */
-.submenu{
+.submenu {
   background-color: white;
   border-color: #ddd;
   border-top-color: white;
@@ -79,27 +88,30 @@ Menu
 "Message Boxes"
 ---------------------------------------------
 */
-fieldset.xwikimessage{
-  border-color: #BBB;
-  background-color: #F5F5F5;
+fieldset.xwikimessage {
+  border-color: #bbb;
+  background-color: #f5f5f5;
 }
 
-fieldset.xwikimessage legend{
-  background-color: #BBB;
-  color: #FFF;
+fieldset.xwikimessage legend {
+  background-color: #bbb;
+  color: #fff;
 }
 
-input.button, button.button{
-  background-color: #EEE;
+input.button,
+button.button {
+  background-color: #eee;
 }
-input.button:hover, button.button:hover{
-  background-color: #CDF;
+input.button:hover,
+button.button:hover {
+  background-color: #cdf;
   color: #369;
 }
-.topbuttons button, .bottombuttons button{
+.topbuttons button,
+.bottombuttons button {
   background-color: #369;
-  color: #FFF;
-  border: 1px solid #EEE;
+  color: #fff;
+  border: 1px solid #eee;
   padding: 2px 4px;
 }
 /*
@@ -108,31 +120,31 @@ Editors
 ---------------------------------------
 */
 
-.xwikitabbar li{
-  background-color: #CDF;
-  border-color: #ACF;
-  border-bottom-color: #CCC;
-  border-left-color: #DDF;
-  border-top-color: #DDF;
+.xwikitabbar li {
+  background-color: #cdf;
+  border-color: #acf;
+  border-bottom-color: #ccc;
+  border-left-color: #ddf;
+  border-top-color: #ddf;
 }
 
-.xwikitabbar li a{
+.xwikitabbar li a {
   color: #000 !important;
 }
-.xwikitabbar li.active a{
+.xwikitabbar li.active a {
   color: #000 !important;
 }
 
-.xwikitabbar li.active{
-  background-color: #FFF !important;
-  border-color: #DDD;
-  border-bottom-color: #FFF;
+.xwikitabbar li.active {
+  background-color: #fff !important;
+  border-color: #ddd;
+  border-bottom-color: #fff;
 }
 
 /*
 --
 */
-#xwikicontentedit{
+#xwikicontentedit {
   border-color: #ddd;
 }
 
@@ -141,34 +153,33 @@ Editors
 Panels
 ---------------------------------------
 */
-.fakepanel{
-  background-color: #EEE;
-  border-color: #E5E5E5;
+.fakepanel {
+  background-color: #eee;
+  border-color: #e5e5e5;
 }
 
-.panel{
-  border-color: #DDD;
+.panel {
+  border-color: #ddd;
 }
-.xwikipaneltitle{
-  background-color: #CDF;
+.xwikipaneltitle {
+  background-color: #cdf;
 }
-
 
 /*
 ----------------------------------
 Rico Acordeon -- Sintax Help Panel
 ----------------------------------
 */
-.accordionTabContentBox table th{
-  background-color: #FFF;
-  border-bottom-color: #DDD;
+.accordionTabContentBox table th {
+  background-color: #fff;
+  border-bottom-color: #ddd;
 }
 
-.accordionTabTitleBar{
-  border-color: #FFF;
-  border-bottom-color: #DDD;
-  border-right-color: #DDD;
-  background-color: #EEE;
+.accordionTabTitleBar {
+  border-color: #fff;
+  border-bottom-color: #ddd;
+  border-right-color: #ddd;
+  background-color: #eee;
 }
 
 /*
@@ -177,94 +188,94 @@ Misc
 ----------------------------------
 */
 
-td.label{
+td.label {
   color: #777;
 }
 
-#xwikiclassproperties, #xwikiobjects{
-  border-color: #DDD !important;
+#xwikiclassproperties,
+#xwikiobjects {
+  border-color: #ddd !important;
 }
 
-#xwikihelpsyntax{
-  border-top-color: #DDD;
+#xwikihelpsyntax {
+  border-top-color: #ddd;
 }
 
-.editactions a{
-  background-color: #EEE;
+.editactions a {
+  background-color: #eee;
   color: #000;
-  border-color: #DCDCDC;
+  border-color: #dcdcdc;
 }
 
-.editactions a:hover{
-  background-color: #FFD;
+.editactions a:hover {
+  background-color: #ffd;
 }
 /*
 ---------------------------------------------
 "Message Boxes"
 ---------------------------------------------
 */
-fieldset.xwikimessage{
-  border-color:#658BB2;
+fieldset.xwikimessage {
+  border-color: #658bb2;
 }
 
-fieldset.xwikimessage legend{
-  background-color: #658BB2;
-  color: #FFF;
+fieldset.xwikimessage legend {
+  background-color: #658bb2;
+  color: #fff;
 }
 
-
-
-tr.row.odd{
-  background-color: #EEE;
+tr.row.odd {
+  background-color: #eee;
 }
-tr.row.even{
-  background-color: #FFF;
+tr.row.even {
+  background-color: #fff;
 }
-tr th{
-  background-color: #EEE;
+tr th {
+  background-color: #eee;
 }
 
-a:link{
+a:link {
   color: #369;
 }
-a:visited{
+a:visited {
   color: #777;
 }
 
-tr.row.odd{
-  background-color: #CDF;
+tr.row.odd {
+  background-color: #cdf;
 }
-tr.row.even{
-  background-color: #FFF;
+tr.row.even {
+  background-color: #fff;
 }
-th{
-  background-color: #CDF;
+th {
+  background-color: #cdf;
 }
 
-.xwikibuttonlink a{
+.xwikibuttonlink a {
   background-color: #369;
   color: #fff;
 }
-.xwikibuttonlink a:hover{
-  background-color: #CDF;
+.xwikibuttonlink a:hover {
+  background-color: #cdf;
   color: #369;
 }
-.xwikitabbar li.active{
-  border-color: #DDD;
-  border-bottom-color: #FFF;
+.xwikitabbar li.active {
+  border-color: #ddd;
+  border-bottom-color: #fff;
 }
 
-#xwikirightstable{
-  border-color: #DDD;
+#xwikirightstable {
+  border-color: #ddd;
 }
-#xwikirightstable th{
-  border-top-color: #DDF;
-  border-right-color: #ACF;
-  border-bottom-color: #CCC;
-  border-left-color: #DDF;
+#xwikirightstable th {
+  border-top-color: #ddf;
+  border-right-color: #acf;
+  border-bottom-color: #ccc;
+  border-left-color: #ddf;
 }
-#xwikirightstable td, #xwikirightstable tr{
-  border-color: #DDD;
+#xwikirightstable td,
+#xwikirightstable tr {
+  border-color: #ddd;
 }
 
 .article_footer {
@@ -273,48 +284,42 @@ th{
 }
 
 .xwikiuserblog .rssfeed {
-  border-top-color: #DDD;
-  border-left-color: #DDD;
-  border-bottom-color: #EEE;
-  border-right-color: #EEE;
+  border-top-color: #ddd;
+  border-left-color: #ddd;
+  border-bottom-color: #eee;
+  border-right-color: #eee;
 }
-.rsschanneltitle{
+.rsschanneltitle {
   background-color: transparent;
 }
-
-
-
-
-
-
 
 /*
 ------------------------------------------------------------
 */
 
-#panelEditorSteps{
+#panelEditorSteps {
   margin-left: -5px;
   margin-right: -5px;
   border-bottom: 1px solid #ddd;
 }
 
-#panelEditorSteps li{
+#panelEditorSteps li {
   background-color: transparent;
   border: none;
 }
 
-#panelEditorSteps li.active{
+#panelEditorSteps li.active {
   background-color: transparent;
   border: 1px solid #ddd;
   border-bottom: 1px solid #fff;
 }
 
-#panelEditorSteps li.active a, #panelEditorSteps a:hover{
+#panelEditorSteps li.active a,
+#panelEditorSteps a:hover {
   color: #369 !important;
 }
 
-
-#panelEditorSteps li a{
+#panelEditorSteps li a {
   color: #aaa !important;
 }
 

@@ -18,19 +18,19 @@
   top: 0;
   height: 100%;
   width: 13px;
-  background: rgba(152,152,152,0.2);
+  background: rgba(152, 152, 152, 0.2);
 }
 .swiper-scrollbar:hover {
   opacity: 1 !important;
 }
 .swiper-scrollbar .swiper-scrollbar-drag {
-  background: rgba(152,152,152,0.4);
+  background: rgba(152, 152, 152, 0.4);
 }
 .swiper-scrollbar .swiper-scrollbar-drag:hover {
-  background: rgba(152,152,152,0.7);
+  background: rgba(152, 152, 152, 0.7);
 }
 .swiper-scrollbar .swiper-scrollbar-drag:active {
-  background: rgba(152,152,152,1);
+  background: rgba(152, 152, 152, 1);
 }
 .scrollbarPDC {
   z-index: 3;

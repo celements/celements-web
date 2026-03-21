@@ -4,6 +4,7 @@
 <hibernate-configuration>
   <session-factory>
 
+    <!-- spotless:off -->
     <!-- Please refer to the installation guide on
          http://platform.xwiki.org/xwiki/bin/view/AdminGuide/Installation for configuring your
          database. You'll need to do 2 things:
@@ -11,6 +12,7 @@
          2) Uncomment the properties below for your specific DB (and comment the default 
             database configuration if it doesn't match your DB)
     -->
+    <!-- spotless:on -->
 
     <!-- Generic parameters common to all Databases -->
 
@@ -27,9 +29,9 @@
     <property name="dbcp.ps.maxWait">120000</property>
     <property name="dbcp.ps.maxIdle">20</property>
 
-    
+
     <!-- database configuration -->
-    
+
     <property name="connection.url">${hibernate.cfg.xml.connection.url}</property>
     <property name="connection.username">${hibernate.cfg.xml.connection.username}</property>
     <property name="connection.password">${hibernate.cfg.xml.connection.password}</property>
@@ -38,12 +40,12 @@
     <property name="connection.provider_class">${hibernate.cfg.xml.connection.provider_class}</property>
     <property name="connection.pool_size">${hibernate.cfg.xml.connection.pool_size}</property>
     <property name="statement_cache.size">${hibernate.cfg.xml.statement_cache.size}</property>
-    <mapping resource="xwiki.celements.hbm.xml"/>
-    <mapping resource="event_class.hbm.xml"/>
-    <mapping resource="celements.hbm.xml"/>
-    <mapping resource="config_type_class.hbm.xml"/>
-    <mapping resource="config_type_properties_class.hbm.xml"/>
+    <mapping resource="xwiki.celements.hbm.xml" />
+    <mapping resource="event_class.hbm.xml" />
+    <mapping resource="celements.hbm.xml" />
+    <mapping resource="config_type_class.hbm.xml" />
+    <mapping resource="config_type_properties_class.hbm.xml" />
     <mapping resource="celements_blog.hbm.xml" />
-    
+
   </session-factory>
 </hibernate-configuration>

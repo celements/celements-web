@@ -19,7 +19,7 @@
  */
 
 (function (window, undefined) {
-  "use strict";
+  'use strict';
 
   /**
    * START: patch for missing window.console object or methods
@@ -49,11 +49,14 @@
   /**
    * A generic javascript Object observer pattern
    */
-  if (typeof window.CELEMENTS === "undefined") { window.CELEMENTS = {}; }
-  if (typeof window.CELEMENTS.mixins === "undefined") { window.CELEMENTS.mixins = {}; }
+  if (typeof window.CELEMENTS === 'undefined') {
+    window.CELEMENTS = {};
+  }
+  if (typeof window.CELEMENTS.mixins === 'undefined') {
+    window.CELEMENTS.mixins = {};
+  }
   if (typeof window.CELEMENTS.mixins.Event === 'undefined') {
     window.CELEMENTS.mixins.Event = Class.create({
-
       memo: undefined,
       stopped: undefined,
       eventName: undefined,
@@ -90,8 +93,7 @@
       // PrototypeJS compatibility
       findElement: function () {
         return this.target;
-      }
-
+      },
     });
   }
   if (typeof window.CELEMENTS.mixins.Observable === 'undefined') {
@@ -114,7 +116,7 @@
       celObserve: function (eventKey, callbackFN) {
         console.debug('cel celObserve:', eventKey, callbackFN);
         if (!eventKey) {
-          throw "undefined eventKey in celObserve call";
+          throw 'undefined eventKey in celObserve call';
         }
         this._getCelEventMap(eventKey).push(callbackFN);
       },
@@ -122,15 +124,19 @@
       celStopObserving: function (eventKey, callbackFN) {
         console.debug('cel celStopObserving:', eventKey, callbackFN);
         if (!eventKey) {
-          throw "undefined eventKey in celStopObserving call";
+          throw 'undefined eventKey in celStopObserving call';
         }
-        this._getCelEventMap().set(eventKey, this._getCelEventMap(eventKey)
-          .filter(function (fn) { return fn !== callbackFN; }));
+        this._getCelEventMap().set(
+          eventKey,
+          this._getCelEventMap(eventKey).filter(function (fn) {
+            return fn !== callbackFN;
+          }),
+        );
       },
 
       celFire: function (eventKey, memo) {
         if (!eventKey) {
-          throw "undefined eventKey in celFire call";
+          throw 'undefined eventKey in celFire call';
         }
         const event = new CELEMENTS.mixins.Event(eventKey, memo, this);
         const listeners = this._getCelEventMap(eventKey);
@@ -143,7 +149,7 @@
           }
         });
         return event;
-      }
+      },
     };
   }
 
@@ -157,8 +163,11 @@
    * Instead register a listener on "DOMContentLoaded"
    */
   window.celAddOnBeforeLoadListener = function (listenerFunc) {
-    console.warn('celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022.'
-      + ' Instead register a listener on "DOMContentLoaded"', listenerFunc);
+    console.warn(
+      'celAddOnBeforeLoad is deprecated since open-celements 5.4 / January 2022.' +
+        ' Instead register a listener on "DOMContentLoaded"',
+      listenerFunc,
+    );
     celOnBeforeLoadListenerArray.push(listenerFunc);
   };
 
@@ -222,16 +231,21 @@
           loaderType = 'ajax-loader-' + isSmallOrPxSize + 'px';
         }
         if (!_me._loadingImg.get(loaderType)) {
-          _me._loadingImg.set(loaderType, new Element('img', {
-            'src': CELEMENTS.getUtils().getPathPrefix() + '/file/resources/celRes/spinner/'
-              + loaderType + '.png',
-            'class': 'editorLoading',
-            'alt': 'loading...'
-          }));
+          _me._loadingImg.set(
+            loaderType,
+            new Element('img', {
+              src:
+                CELEMENTS.getUtils().getPathPrefix() +
+                '/file/resources/celRes/spinner/' +
+                loaderType +
+                '.png',
+              class: 'editorLoading',
+              alt: 'loading...',
+            }),
+          );
         }
         return _me._loadingImg.get(loaderType).clone();
-      }
-
+      },
     });
   }
 
@@ -245,7 +259,9 @@
           let srcOriginHost = null;
           const scripts = document.getElementsByTagName('script');
           let len = scripts.length;
-          const re = new RegExp('(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements(.min)?\\.js(\\?.*)?$');
+          const re = new RegExp(
+            '(https?://[^/]*)/(([^/]*/)*)resources/celJS/initCelements(.min)?\\.js(\\?.*)?$',
+          );
           let src;
           while (len--) {
             src = scripts[len].src;
@@ -269,10 +285,10 @@
 
       convertFullNameToViewURL: function (fullName) {
         const _me = this;
-        return _me.getPathPrefix()
-          + ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/');
-      }
-
+        return (
+          _me.getPathPrefix() + ('/' + fullName.replace(/\./, '/')).replace(/\/Content\//, '/')
+        );
+      },
     });
 
     const globalUtilsInstance = new window.CELEMENTS.Utils();
@@ -288,8 +304,10 @@
    */
   if (typeof window.CELEMENTS.getPathPrefix === 'undefined') {
     window.CELEMENTS.getPathPrefix = function () {
-      console.warn('deprecated call of window.CELEMENTS.getPathPrefix.'
-        + ' Instead use window.CELEMENTS.getUtils().getPathPrefix()');
+      console.warn(
+        'deprecated call of window.CELEMENTS.getPathPrefix.' +
+          ' Instead use window.CELEMENTS.getUtils().getPathPrefix()',
+      );
       return window.CELEMENTS.getUtils().getPathPrefix();
     };
   }
@@ -311,7 +329,9 @@
     };
   }
 
-  if (typeof window.CELEMENTS.Ajax === "undefined") { window.CELEMENTS.Ajax = {}; }
+  if (typeof window.CELEMENTS.Ajax === 'undefined') {
+    window.CELEMENTS.Ajax = {};
+  }
   if (typeof window.CELEMENTS.Ajax.Reconnector === 'undefined') {
     window.CELEMENTS.Ajax.Reconnector = Class.create({
       _htmlElem: undefined,
@@ -365,7 +385,7 @@
         if (_me._reconnectWait == 0) {
           _me._reconnectorExecuter.stop();
           if (!_me._fireAjaxRecconectTrying().stopped && !_me._configObj.skipRetryMsg) {
-            let mesg = "Trying...";
+            let mesg = 'Trying...';
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryNotice;
             }
@@ -374,7 +394,7 @@
           _me._connectionTester();
         } else {
           if (!_me._fireAjaxRecconectTrying().stopped && !_me._configObj.skipRetryMsg) {
-            let mesg = "Retrying in {} seconds.";
+            let mesg = 'Retrying in {} seconds.';
             if (window.celMessages && window.celMessages.Reconnector) {
               mesg = window.celMessages.Reconnector.retryDelayNotice;
             }
@@ -400,27 +420,25 @@
       _connectionTester: function () {
         const _me = this;
         const connectionTestAjax = new Ajax.Request(_me._url, {
-          'parameters': {
-            'ajax': 1,
-            'xpage': 'celements_ajax',
-            'ajax_mode': 'pageTypeWithLayout',
-            'overwriteLayout': 'SimpleLayout'
+          parameters: {
+            ajax: 1,
+            xpage: 'celements_ajax',
+            ajax_mode: 'pageTypeWithLayout',
+            overwriteLayout: 'SimpleLayout',
           },
-          'onSuccess': function () {
+          onSuccess: function () {
             _me._reset();
             _me._reconnectorExecuter = null;
             _me._callbackOnSuccess();
             _me._htmlElem.fire('celements:AjaxReconnectSuccess');
           },
-          'onFailure': function () {
-            _me._reconnectWaitStart = Math.min(_me._reconnectWaitStart * 2,
-              _me._maxReconnectWait);
+          onFailure: function () {
+            _me._reconnectWaitStart = Math.min(_me._reconnectWaitStart * 2, _me._maxReconnectWait);
             _me.start();
-          }
+          },
         });
         _me._cancelAjaxOnTimeoutBind.delay(10, connectionTestAjax);
-      }
-
+      },
     });
   }
 
@@ -428,7 +446,7 @@
     getParams: function (search) {
       const _me = this;
       search = search || window.location.search;
-      const paramSplit = search.split(new RegExp('[?&]'))
+      const paramSplit = search.split(new RegExp('[?&]'));
       paramSplit.unshift(new Hash()); // add initial param as first array element
       return paramSplit.reduce(_me._splitUriSearch.bind(_me)) || new Hash();
     },
@@ -436,7 +454,9 @@
     joinParams: function (hash) {
       let paramsArray = [];
       $H(hash).each(function (pair) {
-        const pairMapped = pair.value.map(function (elem) { return pair.key + '=' + encodeURI(elem) });
+        const pairMapped = pair.value.map(function (elem) {
+          return pair.key + '=' + encodeURI(elem);
+        });
         paramsArray = paramsArray.concat(pairMapped);
       });
       return paramsArray.join('&');
@@ -444,7 +464,7 @@
 
     _splitUriSearch: function (paramHash, elem) {
       let key = elem.split('=', 1);
-      if ((key.length > 0) && (key[0].length > 0)) {
+      if (key.length > 0 && key[0].length > 0) {
         key = key[0];
         const val = decodeURI(elem.substring(key.length + 1));
         if (!paramHash.get(key)) {
@@ -454,7 +474,7 @@
         }
       }
       return paramHash;
-    }
+    },
   });
 
   /**
@@ -468,7 +488,7 @@
       method: 'post',
       parameters: {
         xpage: 'celements_ajax',
-        ajax_mode: 'Messages'
+        ajax_mode: 'Messages',
       },
       onSuccess: function (transport) {
         if (transport.responseText.isJSON()) {
@@ -487,7 +507,7 @@
         } else {
           console.error('noJSON!!! ', transport.responseText);
         }
-      }
+      },
     });
   } catch (exp) {
     console.error('Failed to get Cel-Messages async!', exp);
@@ -519,7 +539,14 @@
       _conditionFunction: undefined,
       _actionHandlerBind: undefined,
 
-      initialize: function (htmlElement, eventName, cssSelector, className, actionFunction, condition) {
+      initialize: function (
+        htmlElement,
+        eventName,
+        cssSelector,
+        className,
+        actionFunction,
+        condition,
+      ) {
         const _me = this;
         _me._htmlElement = $(htmlElement);
         _me._eventName = eventName;
@@ -537,8 +564,14 @@
         const _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
         Event.observe(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
-        console.debug('EventHandler - register: ', _me._eventName, _me._cssSelector,
-          _me._className, _me._actionFunction.name, _me._htmlElement);
+        console.debug(
+          'EventHandler - register: ',
+          _me._eventName,
+          _me._cssSelector,
+          _me._className,
+          _me._actionFunction.name,
+          _me._htmlElement,
+        );
       },
 
       _actionHandler: function (event) {
@@ -546,21 +579,34 @@
         _me._getTargetElements().each(function (targetElement) {
           if (!_me._conditionFunction || _me._conditionFunction(targetElement, _me._htmlElement)) {
             _me._actionFunction(targetElement, _me._className);
-            console.debug('EventHandler -  upon', _me._eventName, 'action [',
-              _me._actionFunction.name, _me._className, '] executed on', targetElement);
+            console.debug(
+              'EventHandler -  upon',
+              _me._eventName,
+              'action [',
+              _me._actionFunction.name,
+              _me._className,
+              '] executed on',
+              targetElement,
+            );
           } else {
-            console.debug('EventHandler - action skipped for failed condition [',
-              _me._conditionFunction, '] on ', targetElement);
+            console.debug(
+              'EventHandler - action skipped for failed condition [',
+              _me._conditionFunction,
+              '] on ',
+              targetElement,
+            );
           }
         });
       },
 
       _getTargetElements: function () {
         const _me = this;
-        if (_me._cssSelector.startsWith('^')) { // match up the DOM from origin
+        if (_me._cssSelector.startsWith('^')) {
+          // match up the DOM from origin
           parent = _me._htmlElement.up(_me._cssSelector.substring(1));
           return parent ? [parent] : [];
-        } else { // match in the whole DOM
+        } else {
+          // match in the whole DOM
           return $$(_me._cssSelector);
         }
       },
@@ -568,10 +614,15 @@
       unregister: function () {
         const _me = this;
         Event.stopObserving(_me._htmlElement, _me._eventName, _me._actionHandlerBind);
-        console.debug('EventHandler - unregister: ', _me._eventName, _me._cssSelector,
-          _me._className, _me._actionFunction.name, _me._htmlElement);
-      }
-
+        console.debug(
+          'EventHandler - unregister: ',
+          _me._eventName,
+          _me._cssSelector,
+          _me._className,
+          _me._actionFunction.name,
+          _me._htmlElement,
+        );
+      },
     });
   }
 
@@ -582,7 +633,7 @@
         // map may be extendend. also extend second group in instructionRegex accordingly
         '+': Element.addClassName,
         '-': Element.removeClassName,
-        '%': Element.toggleClassName
+        '%': Element.toggleClassName,
       },
       _eventElements: undefined,
       _eventElemCounter: undefined,
@@ -598,9 +649,12 @@
         _me._interpretDataCelEventBind = _me._interpretDataCelEvent.bind(_me);
         _me._contentChangedHandlerBind = _me._contentChangedHandler.bind(_me);
         try {
-          _me._intersectionObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(_me._handleIntersection.bind(_me));
-          }, { threshold: [0, 0.5, 1] });
+          _me._intersectionObserver = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(_me._handleIntersection.bind(_me));
+            },
+            { threshold: [0, 0.5, 1] },
+          );
         } catch (exp) {
           console.warn('EventManager - initialize: IntersectionObserver not available', exp);
         }
@@ -623,7 +677,7 @@
           action: parts[2],
           className: parts[3],
           cssSelector: parts[4],
-          condition: parts[5]
+          condition: parts[5],
         };
         if (data.eventName && data.action && data.className && data.cssSelector) {
           return data;
@@ -637,13 +691,25 @@
         const data = _me._parseEventInstruction(instruction);
         const actionFunction = _me._actionFunctionMap[data.action];
         if (actionFunction) {
-          if (_me._intersectionObserver && (data.eventName.startsWith('cel:enter')
-            || data.eventName.startsWith('cel:leave'))) {
+          if (
+            _me._intersectionObserver &&
+            (data.eventName.startsWith('cel:enter') || data.eventName.startsWith('cel:leave'))
+          ) {
             _me._intersectionObserver.observe(htmlElem);
-            console.debug('EventManager - observing intersection', htmlElem.dataset.celEventNb, data);
+            console.debug(
+              'EventManager - observing intersection',
+              htmlElem.dataset.celEventNb,
+              data,
+            );
           }
-          return new window.CELEMENTS.CssClassEventHandler(htmlElem, data.eventName,
-            data.cssSelector, data.className, actionFunction, data.condition);
+          return new window.CELEMENTS.CssClassEventHandler(
+            htmlElem,
+            data.eventName,
+            data.cssSelector,
+            data.className,
+            actionFunction,
+            data.condition,
+          );
         } else {
           throw "createEventHandler: unknown action '" + data.action + '"';
         }
@@ -653,15 +719,18 @@
         const _me = this;
         const dataValue = htmlElem.dataset.celEvent;
         return {
-          'htmlElem': htmlElem,
-          'dataValue': dataValue,
-          'eventHandlers': _me._splitDataCelEventList(dataValue).map(function (instruction) {
-            try {
-              return _me._createEventHandler(htmlElem, instruction);
-            } catch (exp) {
-              console.error('EventManager - interpretData: invalid instruction ', exp, htmlElem);
-            }
-          }).filter(Boolean)
+          htmlElem: htmlElem,
+          dataValue: dataValue,
+          eventHandlers: _me
+            ._splitDataCelEventList(dataValue)
+            .map(function (instruction) {
+              try {
+                return _me._createEventHandler(htmlElem, instruction);
+              } catch (exp) {
+                console.error('EventManager - interpretData: invalid instruction ', exp, htmlElem);
+              }
+            })
+            .filter(Boolean),
         };
       },
 
@@ -689,29 +758,36 @@
         const _me = this;
         const htmlElem = entry.target;
         const eventNb = htmlElem.dataset.celEventNb;
-        const previous = _me._intersectionValues[eventNb]
-          || Object.freeze({ y: Number.MAX_SAFE_INTEGER, ratio: 0 });
+        const previous =
+          _me._intersectionValues[eventNb] ||
+          Object.freeze({ y: Number.MAX_SAFE_INTEGER, ratio: 0 });
         const current = Object.freeze({
           y: entry.boundingClientRect.y,
-          ratio: entry.intersectionRatio
+          ratio: entry.intersectionRatio,
         });
-        const direction = (current.y > previous.y) ? 'up' : 'down';
-        const type = (entry.isIntersecting && current.ratio >= previous.ratio) ? 'enter' : 'leave';
-        const ratioA = (type === 'enter') ? current.ratio : previous.ratio;
-        const ratioB = (type === 'leave') ? current.ratio : previous.ratio;
+        const direction = current.y > previous.y ? 'up' : 'down';
+        const type = entry.isIntersecting && current.ratio >= previous.ratio ? 'enter' : 'leave';
+        const ratioA = type === 'enter' ? current.ratio : previous.ratio;
+        const ratioB = type === 'leave' ? current.ratio : previous.ratio;
         const steps = [];
         if (ratioA >= 1 && ratioB < 1) steps.push(':full');
         if (ratioA >= 0.5 && ratioB < 0.5) steps.push(':half');
         if (ratioA > 0 && ratioB <= 0) steps.push('');
         steps.forEach(function (step) {
-          [
-            'cel:' + type + step,
-            'cel:' + type + step + ':' + direction
-          ].forEach(function (eventName) {
-            console.debug('EventManager - intersect', eventName, 'on', eventNb,
-              previous, '->', current);
-            htmlElem.fire(eventName);
-          })
+          ['cel:' + type + step, 'cel:' + type + step + ':' + direction].forEach(
+            function (eventName) {
+              console.debug(
+                'EventManager - intersect',
+                eventName,
+                'on',
+                eventNb,
+                previous,
+                '->',
+                current,
+              );
+              htmlElem.fire(eventName);
+            },
+          );
         });
         _me._intersectionValues[eventNb] = current;
       },
@@ -729,9 +805,12 @@
       updateCelEventHandlers: function (htmlContainer) {
         const _me = this;
         const rootElem = htmlContainer || document.body;
-        Event.stopObserving($(document.body), "celements:contentChanged",
-          _me._contentChangedHandlerBind);
-        Event.observe($(document.body), "celements:contentChanged", _me._contentChangedHandlerBind);
+        Event.stopObserving(
+          $(document.body),
+          'celements:contentChanged',
+          _me._contentChangedHandlerBind,
+        );
+        Event.observe($(document.body), 'celements:contentChanged', _me._contentChangedHandlerBind);
         _me._removeDisappearedElems();
         rootElem.querySelectorAll('.celOnEvent').forEach(_me._interpretDataCelEventBind);
       },
@@ -741,21 +820,28 @@
         for (let i = _me._eventElements.length - 1; i >= 0; i--) {
           const elem = _me._eventElements[i];
           const isInBody = $(document.body).contains(elem.htmlElem);
-          const changedDataValue = (elem.htmlElem.dataset.celEvent !== elem.dataValue);
-          if (!isInBody || changedDataValue || !elem.htmlElem.classList.contains('celOnEventInit')) {
-            elem.eventHandlers.forEach(function (handler) { handler.unregister(); });
+          const changedDataValue = elem.htmlElem.dataset.celEvent !== elem.dataValue;
+          if (
+            !isInBody ||
+            changedDataValue ||
+            !elem.htmlElem.classList.contains('celOnEventInit')
+          ) {
+            elem.eventHandlers.forEach(function (handler) {
+              handler.unregister();
+            });
             _me._eventElements.splice(i, 1);
             elem.htmlElem.classList.remove('celOnEventInit');
             console.debug('EventManager - removeDisappearedElem: ', elem);
           }
         }
-      }
-
+      },
     });
 
     window.CELEMENTS.globalEventManager = new window.CELEMENTS.EventManager();
-    document.addEventListener('DOMContentLoaded',
-      window.CELEMENTS.globalEventManager._contentChangedHandlerBind);
+    document.addEventListener(
+      'DOMContentLoaded',
+      window.CELEMENTS.globalEventManager._contentChangedHandlerBind,
+    );
   }
   /**
    *  END: celEventManager
@@ -771,7 +857,7 @@
       const valid = new Validation(formElem, {
         immediate: true,
         useTitles: true,
-        stopOnFirst: false
+        stopOnFirst: false,
       });
       formValidations.set(formElem.id, valid);
     } else {
@@ -798,14 +884,22 @@
   window.celAddOnFinishHeaderListener(function () {
     //get google Account Number from Meta-Tags
     const metas = $$('meta[name="cel-GAA-Num"]');
-    if ((metas.size() > 0) && (metas[0].content != '')) {
+    if (metas.size() > 0 && metas[0].content != '') {
       const gaaNum = metas[0].content;
-      if (gaaNum.startsWith('UA-')) { // deprecated Universal Analytics (obsolete by 1.7.2023)
+      if (gaaNum.startsWith('UA-')) {
+        // deprecated Universal Analytics (obsolete by 1.7.2023)
         (function (i, s, o, g, r, a, m) {
-          i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments);
-          }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+          i['GoogleAnalyticsObject'] = r;
+          ((i[r] =
+            i[r] ||
+            function () {
+              (i[r].q = i[r].q || []).push(arguments);
+            }),
+            (i[r].l = 1 * new Date()));
+          ((a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]));
+          a.async = 1;
+          a.src = g;
+          m.parentNode.insertBefore(a, m);
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
         ga('create', gaaNum, window.getCelDomain());
         ga('set', 'anonymizeIp', true);
@@ -813,11 +907,16 @@
         console.log('finish initalizing google universal analytics.', gaaNum);
       } else {
         (function (d, o, g, s, m) {
-          s = d.createElement(o); m = d.getElementsByTagName(o)[0];
-          s.async = 1; s.src = g; m.parentNode.insertBefore(s, m);
+          s = d.createElement(o);
+          m = d.getElementsByTagName(o)[0];
+          s.async = 1;
+          s.src = g;
+          m.parentNode.insertBefore(s, m);
         })(document, 'script', 'https://www.googletagmanager.com/gtag/js?id=' + gaaNum);
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+        function gtag() {
+          dataLayer.push(arguments);
+        }
         gtag('js', new Date());
         gtag('config', gaaNum);
         console.log('finish initalizing google analytics v4.', gaaNum);
@@ -838,11 +937,17 @@
    * Register default overlay opener for .cel_yuiOverlay cssSelector
    */
   document.addEventListener('DOMContentLoaded', function () {
-    if (CELEMENTS && CELEMENTS.presentation && CELEMENTS.presentation.getOverlayObj
-      && CELEMENTS.presentation.getOverlayObj()) {
-      CELEMENTS.presentation.getOverlayObj({
-        'overlayLayout': 'SimpleLayout'
-      }).registerOpenHandler();
+    if (
+      CELEMENTS &&
+      CELEMENTS.presentation &&
+      CELEMENTS.presentation.getOverlayObj &&
+      CELEMENTS.presentation.getOverlayObj()
+    ) {
+      CELEMENTS.presentation
+        .getOverlayObj({
+          overlayLayout: 'SimpleLayout',
+        })
+        .registerOpenHandler();
     }
   });
 
@@ -865,8 +970,8 @@
   document.addEventListener('DOMContentLoaded', function () {
     if (CELEMENTS && CELEMENTS.mobile && CELEMENTS.mobile.Dimensions) {
       mobileDim = new CELEMENTS.mobile.Dimensions();
-      Event.stopObserving(window, "orientationchange", cel_updateOrientationCSSclasses);
-      Event.observe(window, "orientationchange", cel_updateOrientationCSSclasses);
+      Event.stopObserving(window, 'orientationchange', cel_updateOrientationCSSclasses);
+      Event.observe(window, 'orientationchange', cel_updateOrientationCSSclasses);
     }
   });
 
@@ -876,12 +981,14 @@
   const cel_initAllMultiselect = function (event) {
     console.debug('initAllMultiselect');
     if ($j().multiselect != undefined) {
-      $j('.celBootstrap,.celMultiselect').filter(":visible,.celForceMultiselect").each(function (index, element) {
-        if (!$(element).up('.cel_template')) {
-          console.debug('initAllMultiselect: ', element);
-          cel_initAllMultiselect_element(element);
-        }
-      });
+      $j('.celBootstrap,.celMultiselect')
+        .filter(':visible,.celForceMultiselect')
+        .each(function (index, element) {
+          if (!$(element).up('.cel_template')) {
+            console.debug('initAllMultiselect: ', element);
+            cel_initAllMultiselect_element(element);
+          }
+        });
     } else {
       console.debug('initAllMultiselect: bootstrap multiselect undefined');
     }
@@ -895,7 +1002,7 @@
     let params = {
       numberDisplayed: 3,
       onDropdownHidden: cel_initAllMultiselect_onDropdownHidden,
-      onChange: cel_initAllMultiselect_onChange
+      onChange: cel_initAllMultiselect_onChange,
     };
     let bootstrapCfg = element.getAttribute('data-bootstrapConfig');
     // check deprecated data-multiselectAttr for backwards compatibility
@@ -908,7 +1015,7 @@
     }
     const multiselect = $j(element).multiselect(params);
     $(document.body).fire('cel:multiselectInitialized', {
-      'multiselect': multiselect
+      multiselect: multiselect,
     });
   };
 
@@ -918,7 +1025,7 @@
      * this code is just a workaround, it set the box visible again
      */
     $j(event.target).css('display', '');
-    event.target.fire("cel:multiselectOnDropdownHidden");
+    event.target.fire('cel:multiselectOnDropdownHidden');
     /*
      * E.g. to read selected values:
        event.target.previous().select('option:selected').each(function(ele) {
@@ -930,19 +1037,21 @@
   const cel_initAllMultiselect_onChange = function (option, checked, select) {
     const multiselectElement = this;
     console.debug('fire cel:multiselectOnChange on: ', multiselectElement);
-    $(option[0]).fire("cel:multiselectOnChange", {
-      'multiselect': multiselectElement,
-      'checked': checked,
-      'select': select
+    $(option[0]).fire('cel:multiselectOnChange', {
+      multiselect: multiselectElement,
+      checked: checked,
+      select: select,
     });
   };
 
   const cel_initAllMultiselect_tabMenuPanel = function (event) {
-    $('tabMenuPanel').select('.celBootstrap,.celMultiselect').each(function (element) {
-      if (element.visible()) {
-        element.addClassName('celForceMultiselect');
-      }
-    });
+    $('tabMenuPanel')
+      .select('.celBootstrap,.celMultiselect')
+      .each(function (element) {
+        if (element.visible()) {
+          element.addClassName('celForceMultiselect');
+        }
+      });
     cel_initAllMultiselect(event);
   };
 
@@ -950,26 +1059,29 @@
    * Initialize Bootstrap Multiselect
    */
   document.addEventListener('DOMContentLoaded', function () {
-    $(document.body).stopObserving("cel:initMultiselect", cel_initAllMultiselect);
-    $(document.body).stopObserving("celements:contentChanged", cel_initAllMultiselect);
-    $(document.body).observe("cel:initMultiselect", cel_initAllMultiselect);
-    $(document.body).observe("celements:contentChanged", cel_initAllMultiselect);
+    $(document.body).stopObserving('cel:initMultiselect', cel_initAllMultiselect);
+    $(document.body).stopObserving('celements:contentChanged', cel_initAllMultiselect);
+    $(document.body).observe('cel:initMultiselect', cel_initAllMultiselect);
+    $(document.body).observe('celements:contentChanged', cel_initAllMultiselect);
     if ($('tabMenuPanel')) {
-      $('tabMenuPanel').stopObserving("tabedit:tabLoadingFinished", cel_initAllMultiselect_tabMenuPanel);
-      $('tabMenuPanel').observe("tabedit:tabLoadingFinished", cel_initAllMultiselect_tabMenuPanel);
+      $('tabMenuPanel').stopObserving(
+        'tabedit:tabLoadingFinished',
+        cel_initAllMultiselect_tabMenuPanel,
+      );
+      $('tabMenuPanel').observe('tabedit:tabLoadingFinished', cel_initAllMultiselect_tabMenuPanel);
     }
     $(document.body).fire('cel:initMultiselect');
   });
 
   const cel_addMaxDimToFluidImg = function (event) {
-    $$("img.cel_fluidresizeWidth").each(function (imgElem) {
+    $$('img.cel_fluidresizeWidth').each(function (imgElem) {
       imgElem.setStyle({
-        'maxWidth': imgElem.readAttribute('width') + 'px'
+        maxWidth: imgElem.readAttribute('width') + 'px',
       });
     });
-    $$("img.cel_fluidresizeHeight").each(function (imgElem) {
+    $$('img.cel_fluidresizeHeight').each(function (imgElem) {
       imgElem.setStyle({
-        'maxHeight': imgElem.readAttribute('height') + 'px'
+        maxHeight: imgElem.readAttribute('height') + 'px',
       });
     });
   };
@@ -978,19 +1090,19 @@
    * Initialize fluid image
    */
   document.addEventListener('DOMContentLoaded', function () {
-    $(document.body).stopObserving("cel:initFluidImage", cel_addMaxDimToFluidImg);
-    $(document.body).stopObserving("celements:contentChanged", cel_addMaxDimToFluidImg);
-    $(document.body).observe("cel:initFluidImage", cel_addMaxDimToFluidImg);
-    $(document.body).observe("celements:contentChanged", cel_addMaxDimToFluidImg);
+    $(document.body).stopObserving('cel:initFluidImage', cel_addMaxDimToFluidImg);
+    $(document.body).stopObserving('celements:contentChanged', cel_addMaxDimToFluidImg);
+    $(document.body).observe('cel:initFluidImage', cel_addMaxDimToFluidImg);
+    $(document.body).observe('celements:contentChanged', cel_addMaxDimToFluidImg);
   });
 
   /**
    * Initialize close Window on Overlay CloseButton
    */
   document.addEventListener('DOMContentLoaded', function () {
-    $$(".generalOverlayWrapper .generalOverlay .exitOnClose").each(function (elem) {
-      elem.stopObserving("click", cel_closeOverlayWindow)
-      elem.observe("click", cel_closeOverlayWindow)
+    $$('.generalOverlayWrapper .generalOverlay .exitOnClose').each(function (elem) {
+      elem.stopObserving('click', cel_closeOverlayWindow);
+      elem.observe('click', cel_closeOverlayWindow);
     });
   });
 
@@ -1005,7 +1117,7 @@
 
   const updateCelMessages = function () {
     if (typeof $j.format !== 'undefined') {
-      $j.format.locale({ 'date': celMessages.jqueryFormater });
+      $j.format.locale({ date: celMessages.jqueryFormater });
     }
   };
 
@@ -1016,5 +1128,4 @@
       $(document.body).observe('cel:messagesLoaded', updateCelMessages);
     }
   });
-
 })(window);

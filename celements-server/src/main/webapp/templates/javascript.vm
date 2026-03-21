@@ -11,6 +11,7 @@
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/prototype.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery.min.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery-noconflict.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/initCelements.min.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
@@ -24,6 +25,14 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notifi
 $services.css.includeCSSPage(':uicomponents/widgets/notification.css')##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/suggest.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki-misc.js'))##
+#if($hasedit || $isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0))
+  $!services.css.includeCSSPage(':celRes/celements2.css')##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/moofx/moo.fx.js'))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/moofx/moo.fx.utils.js'))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/adminUi/admininterface.js'))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/adminUi/menubar.js'))
+#end
 #if($xwiki.exists('XWiki.SearchSuggestConfig'))
   ## Hook to request the search suggest script if search suggest configuration is present.
   ## We can't just have it as a always-use SSX yet since we compute a hash to be sure to refresh
@@ -43,6 +52,13 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/sugges
    $services.css.includeCSSPage(':uicomponents/search/searchSuggest.css')##
   #end
 #end
+#if (($xcontext.action=="inline") || ($xcontext.action=="edit") || ($xcontext.action=="admin"))
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
+  $!services.css.includeCSSPage(':uicomponents/widgets/validation/livevalidation.css')##
+#end
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/compatibility.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
+$!services.javascript.getAllExternalJavaScriptFiles()
 <script type="text/javascript">
 // <![CDATA[
 XWiki.webapppath = "${xwiki.webAppPath}";
@@ -67,13 +83,8 @@ window.docsaveurl = "${doc.getURL('save')}";
 window.docgeturl = "${doc.getURL('get')}";
 // ]]>
 </script>
-#if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
-$xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', true)
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/compatibility.js'))##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':celDynJS/DynamicLoader/celLazyLoader.mjs'))##
-$!services.javascript.getAllExternalJavaScriptFiles()
 ##
+#if (($xcontext.action=="inline") || ($xcontext.action=="edit") || ($xcontext.action=="admin"))
 <script type="text/javascript">
 // <![CDATA[
 var cancelEditNextOnunload;
