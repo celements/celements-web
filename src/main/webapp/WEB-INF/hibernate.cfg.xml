@@ -4,10 +4,15 @@
 <hibernate-configuration>
   <session-factory>
 
-    <!-- Please refer to the installation guide on http://platform.xwiki.org/xwiki/bin/view/AdminGuide/Installation for configuring 
-      your database. You'll need to do 2 things: 1) Copy your database driver JAR in WEB-INF/lib or in some shared lib directory 
-      2) Uncomment the properties below for your specific DB (and comment the default database configuration if it doesn't match 
-      your DB) -->
+    <!-- spotless:off -->
+    <!-- Please refer to the installation guide on
+         http://platform.xwiki.org/xwiki/bin/view/AdminGuide/Installation for configuring your
+         database. You'll need to do 2 things:
+         1) Copy your database driver JAR in WEB-INF/lib or in some shared lib directory
+         2) Uncomment the properties below for your specific DB (and comment the default 
+            database configuration if it doesn't match your DB)
+    -->
+    <!-- spotless:on -->
 
     <!-- Generic parameters common to all Databases -->
 
