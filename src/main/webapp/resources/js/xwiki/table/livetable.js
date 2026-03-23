@@ -81,7 +81,6 @@
       }
 
       this.action = options.action || 'view'; // FIXME check if this can be removed safely.
-      this.action = options.action || 'view'; // FIXME check if this can be removed safely.
 
       // Initialize table params that are used for permalinks
       this.limit = options.limit || 10;
@@ -97,9 +96,6 @@
       // Initialize the throttling delay, that is the delay a user can type a second filter key after a first one without
       // sending an AJAX request to the server.
       this.throttlingDelay = options.throttlingDelay || 0.5;
-      // Initialize the throttling delay, that is the delay a user can type a second filter key after a first one without
-      // sending an AJAX request to the server.
-      this.throttlingDelay = options.throttlingDelay || 0.5;
 
       // If permalinks is enable, load initial hash, using the URL hash if available or the default above
       this.permalinks = new LiveTableHash(
@@ -107,9 +103,6 @@
         typeof options.permalinks == 'undefined' || options.permalinks,
       );
 
-      // Get params from permalinks
-      this.limit = this.permalinks.getLimit();
-      var initialPage = this.permalinks.getPage();
       // Get params from permalinks
       this.limit = this.permalinks.getLimit();
       var initialPage = this.permalinks.getPage();
@@ -194,11 +187,6 @@
         window.clearTimeout(this.nextRequestTimeoutId);
         delete this.nextRequestTimeoutId;
       }
-      if (this.nextRequestTimeoutId) {
-        // If a request was queued previously, cancel it
-        window.clearTimeout(this.nextRequestTimeoutId);
-        delete this.nextRequestTimeoutId;
-      }
 
       var doRequest = function () {
         var url =
@@ -222,7 +210,6 @@
         }
         url += self.getSortURLFragment();
 
-        self.loadingStatus.removeClassName('hidden');
         self.loadingStatus.removeClassName('hidden');
 
         // Let code know the table is about to load new entries.
@@ -255,18 +242,10 @@
             if (res.reqNo < self.sendReqNo) {
               return;
             }
-            if (res.reqNo < self.sendReqNo) {
-              return;
-            }
 
             self.recvReqNo = res.reqNo;
             self.loadingStatus.addClassName('hidden');
-            self.recvReqNo = res.reqNo;
-            self.loadingStatus.addClassName('hidden');
 
-            if (self.tagCloud && res.matchingtags) {
-              self.tagCloud.updateTagCloud(res.tags, res.matchingtags);
-            }
             if (self.tagCloud && res.matchingtags) {
               self.tagCloud.updateTagCloud(res.tags, res.matchingtags);
             }
@@ -384,8 +363,6 @@
 
       // Update permalinks
       this.permalinks.update();
-      // Update permalinks
-      this.permalinks.update();
 
       // This is some debugging string.
       var buff = 'request to display rows ' + offset + ' to ' + (offset + limit) + ' <br />\n';
@@ -397,9 +374,6 @@
         return buff;
       }
 
-      // Make a range of required rows
-      var min = -1;
-      var max = -1;
       // Make a range of required rows
       var min = -1;
       var max = -1;
@@ -619,7 +593,6 @@
       this.params = this.getTableParams();
       this.filters = new Object();
 
-      if (!this.enable) return;
       if (!this.enable) return;
 
       var hashString = window.location.hash.substring(1);
@@ -919,7 +892,6 @@
       this.inputs = this.filterNodes.invoke('select', 'input').flatten();
       this.selects = this.filterNodes.invoke('select', 'select').flatten();
 
-      this.initializeFilters();
       this.initializeFilters();
 
       this.attachEventHandlers();
