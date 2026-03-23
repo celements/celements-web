@@ -130,7 +130,7 @@
 ## Output JavaScript validation code
 ## ---------------------------------------------------------------------------------------------------------
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
-$services.css.includeCSSPage(':uicomponents/widgets/validation/livevalidation.css')##
+$!services.css.includeCSSPage(':uicomponents/widgets/validation/livevalidation.css')##
 <script type="text/javascript">
 //<![CDATA[
   XWiki.createPage = {
