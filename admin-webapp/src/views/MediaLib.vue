@@ -62,6 +62,15 @@ const driver = new RemoteDriver({
   baseURL: '/api/files',
 });
 
+const originalGetDownloadUrl = driver.getDownloadUrl.bind(driver);
+
+driver.getDownloadUrl = (file: any) => {
+  if (file && file.url) {
+    return file.url;
+  }
+  return originalGetDownloadUrl(file);
+};
+
 // const customUploader = (uppy: any) => {
 //   const originalAddFile = uppy.addFile.bind(uppy);
 
