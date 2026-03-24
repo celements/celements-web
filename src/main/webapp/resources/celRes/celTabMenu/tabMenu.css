@@ -1,8 +1,9 @@
-@import url(google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
+@import url(/file/resources/celRes/google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
+@import url(/file/resources/celRes/google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
 /* tabMenu.css:
- * tabMenu layout
- * 2008 - 2011 synventis gmbh
- */
+* tabMenu layout
+* 2008 - 2011 synventis gmbh
+*/
 
 /* over all tab menu styles */
 body div.celements3_tabMenu {
@@ -37,7 +38,6 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
 .celements3_tabMenu .hd {
   background-color: transparent;
 }
-
 /* tab buttons */
 .celements3_tabMenu .tabButton {
   margin: 0px;
@@ -80,13 +80,11 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
   border-bottom: 1px solid #f0f0f0;
   color: #3e3e3e;
 }
-
 .yui-skin-sam .yui-dialog .ft span.default button {
   font-family: 'Open Sans', Tahoma, Geneva, Helvetica, Arial, sans-serif;
   background-color: #ff9900;
   color: #333333 !important;
 }
-
 /* save buttons */
 .celements3_tabMenu .saveButton .yui-button button,
 .celements3_tabMenu .saveButton .cel-button-active button {
@@ -132,10 +130,10 @@ body div.celements3_tabMenu div.yui-panel-container div#tabMenuPanel,
 /* menu tabs */
 .celements3_tabMenu #tabMenuPanel .menuTab {
   /**
-	width: 630px;
-	why do we need a fixed width? the menuTab must grow with the editor_width!
-	fp 15.12.2011
-	**/
+width: 630px;
+why do we need a fixed width? the menuTab must grow with the editor_width!
+fp 15.12.2011
+**/
   width: auto;
 }
 .celements3_tabMenu .titleblock,
@@ -169,7 +167,6 @@ body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
   font-size: 13px;
   background-color: #b0b0b0;
 }
-
 /* form elements */
 .celements3_tabMenu input,
 .celements3_tabMenu select,
@@ -179,8 +176,8 @@ body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
   border: 1px solid #c5c5c5;
   font-size: 11px;
   /** do not reduce line-height for font-size:11px below 14px,
-	 because characters with underline (e.g. 'g') get chopped in input field on chrome.
-	**/
+because characters with underline (e.g. 'g') get chopped in input field on chrome.
+**/
   line-height: 14px;
   padding: 1px;
 }
@@ -196,7 +193,6 @@ body .celements3_tabMenu #tabMenuPanel .bd .celementsLoadingIndicator p {
   margin: 0pt;
   padding: 0pt;
 }
-
 /* overlay */
 #cel_overlay,
 div.mask {
@@ -212,7 +208,6 @@ div.mask {
   left: 0px;
   z-index: 99;
 }
-
 /* focus buttons/tabs/fields */
 .celements3_tabMenu .editblock:hover,
 .celements3_tabMenu .focus {
@@ -281,23 +276,19 @@ body .yui-skin-sam .yui-simple-dialog {
   line-height: 16px;
   width: 400px;
 }
-
 .celements3_tabMenu #tabMenuPanel #con_langBar {
   position: relative;
 }
-
 /**
-  Ask Toolbar for google chrome leads to problems. Thus we hide it in editor mode!
- **/
+Ask Toolbar for google chrome leads to problems. Thus we hide it in editor mode!
+**/
 
 iframe.apn-toolbar {
   display: none !important;
 }
-
 body #cel_overlay {
   top: 0px !important;
 }
-
 /* Publikationsdatum & DocumentExtract  */
 #publicationForm h6,
 #nav_extractEdit h6 {
@@ -318,7 +309,6 @@ body #cel_overlay {
 .celements3_tabMenu #navigation_form #nav_menunameEdit input {
   width: 300px;
 }
-
 .celements3_tabMenu #tabMenuPanel .bd h1 {
   font-size: 24px;
   line-height: 30px;

@@ -36,6 +36,7 @@ resetting programming rights for celements2web: $services.celementsweb.resetProg
   #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
   #set($extJsParam = $extJsParam.setLazyLoad(true))
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
+  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki-misc.js'))##
 #**
 <script type="text/javascript">
 // <![CDATA[
@@ -61,13 +62,11 @@ window.docsaveurl = "/save/XWiki/Import";
 window.docgeturl = "/get/XWiki/Import";
 // ]]>
 </script>
-<script type='text/javascript' src='/skin/skins/albatross/uicomponents/suggest/suggest.js' defer='defer'></script>
 **#
 
 <link rel="stylesheet" media="all" type="text/css" href="$services.celementsweb.getSkinFile(':js/xwiki/importer/import.css', 'file')" />
 <link rel="stylesheet" media="all" type="text/css" href="$services.celementsweb.getSkinFile(':celRes/font-awesome-v6/css/all.css', 'file')" />
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
-  $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/jumpToPage.js'))##
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmationBox.js'))##
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmedAjaxRequest.js'))##
   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notification.js'))##

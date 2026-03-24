@@ -1,0 +1,27 @@
+:root {
+  --pageBackgroundColor: #dddddd;
+  --pageHeaderBackgroundColor: #ffffff;
+  --pageContentBackgroundColor: #ffffff;
+  --textColor: #000000;
+  --textPrimaryColor: #888888;
+  --textSecondaryColor: #b3b3b3;
+  --titleColor: #888888;
+  --borderColor: #cccccc;
+  --linkColor: #0089dc;
+  --highlightColor: #ffffdd;
+  --menuBackgroundColor: #cccccc;
+  --menuLinkColor: #ffffff;
+  --menuSelectedEntryBackgroundColor: #efefef;
+  --menuSelectedEntryLinkColor: #888888;
+  --panelBackgroundColor: #ffffff;
+  --panelHeaderBackgroundColor: #ffffff;
+  --panelHeaderTextColor: #888888;
+  --panelTextColor: #000000;
+  --panelCollapsedBackgroundColor: #cccccc;
+  --panelCollapsedTextColor: #ffffff;
+  --buttonPrimaryBackgroundColor: #0089dc;
+  --buttonPrimaryTextColor: #ffffff;
+  --buttonSecondaryBackgroundColor: #ffffff;
+  --buttonSecondaryTextColor: #0089dc;
+  --backgroundSecondaryColor: #efefef;
+}

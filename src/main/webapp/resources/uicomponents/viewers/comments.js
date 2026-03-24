@@ -1,13 +1,22 @@
 var XWiki = (function (XWiki) {
   // Start XWiki augmentation.
   var viewers = (XWiki.viewers = XWiki.viewers || {});
+
   /**
    * Javascript enhancements for the comments viewer.
    */
   viewers.Comments = Class.create({
+    translations: translations,
     xcommentSelector: '.xwikicomment',
     /** Constructor. Adds all the JS improvements of the Comments area. */
     initialize: function () {
+      if (window.celExecOnceAfterMessagesLoaded) {
+        window.celExecOnceAfterMessagesLoaded(
+          (celMessages) => (this.translations = celMessages.comments),
+        );
+      } else {
+        console.warn('celExecOnceAfterMessagesLoaded not available!');
+      }
       if ($('commentscontent')) {
         // If the comments area is already visible, enhance it.
         this.startup();
@@ -89,9 +98,7 @@ var XWiki = (function (XWiki) {
                         this.resetForm();
                       }
                       // Replace the comment with a "deleted comment" placeholder
-                      comment.replace(
-                        this.createNotification("$msg.get('core.viewers.comments.commentDeleted')"),
-                      );
+                      comment.replace(this.createNotification(this.translations.commentDeleted));
                       this.updateCount();
                     }.bind(this),
                     onComplete: function () {
@@ -101,10 +108,10 @@ var XWiki = (function (XWiki) {
                   },
                   /* Interaction parameters */
                   {
-                    confirmationText: "$msg.get('core.viewers.comments.delete.confirm')",
-                    progressMessageText: "$msg.get('core.viewers.comments.delete.inProgress')",
-                    successMessageText: "$msg.get('core.viewers.comments.delete.done')",
-                    failureMessageText: "$msg.get('core.viewers.comments.delete.failed')",
+                    confirmationText: this.translations.deleteConfirm,
+                    progressMessageText: this.translations.deleteInProgress,
+                    successMessageText: this.translations.deleteDone,
+                    failureMessageText: this.translations.deleteFailed,
                   },
                 );
               }
@@ -152,7 +159,7 @@ var XWiki = (function (XWiki) {
                       // Disable the button, to avoid a cascade of clicks from impatient users
                       item.disabled = true;
                       item._x_notification = new XWiki.widgets.Notification(
-                        "$msg.get('core.viewers.comments.editForm.fetch.inProgress')",
+                        this.translations.editFormFetchInProgress,
                         'inprogress',
                       );
                     },
@@ -185,7 +192,7 @@ var XWiki = (function (XWiki) {
                       }
                       item._x_notification.replace(
                         new XWiki.widgets.Notification(
-                          "$msg.get('core.viewers.comments.editForm.fetch.failed')" + failureReason,
+                          this.translations.editFormFetchFailed + failureReason,
                           'error',
                         ),
                       );
@@ -291,7 +298,7 @@ var XWiki = (function (XWiki) {
               formData.unset('action_cancel');
               // Create a notification message to display to the user when the submit is being sent
               form._x_notification = new XWiki.widgets.Notification(
-                "$msg.get('core.viewers.comments.add.inProgress')",
+                this.translations.addInProgress,
                 'inprogress',
               );
               form.disable();
@@ -303,10 +310,7 @@ var XWiki = (function (XWiki) {
                   this.restartNeeded = true;
                   this.editing = false;
                   form._x_notification.replace(
-                    new XWiki.widgets.Notification(
-                      "$msg.get('core.viewers.comments.add.done')",
-                      'done',
-                    ),
+                    new XWiki.widgets.Notification(this.translations.addDone, 'done'),
                   );
                 }.bind(this),
                 onFailure: function (response) {
@@ -319,7 +323,7 @@ var XWiki = (function (XWiki) {
                   }
                   form._x_notification.replace(
                     new XWiki.widgets.Notification(
-                      "$msg.get('core.viewers.comments.add.failed')" + failureReason,
+                      this.translations.addFailed + failureReason,
                       'error',
                     ),
                   );
@@ -363,7 +367,7 @@ var XWiki = (function (XWiki) {
       if (!form) {
         return;
       }
-      var previewURL = "$xwiki.getURL('__space__.__page__', 'preview')"
+      var previewURL = '/preview/__space__/__page__'
         .replace('__space__', encodeURIComponent($$('meta[name=space]')[0].content))
         .replace('__page__', encodeURIComponent($$('meta[name=page]')[0].content));
       form.commentElt = form.down('textarea');
@@ -374,7 +378,7 @@ var XWiki = (function (XWiki) {
         new Element('input', {
           type: 'button',
           class: 'button',
-          value: "$msg.get('core.viewers.comments.preview.button.preview')",
+          value: this.translations.previewButtonPreview,
         }),
       );
       form.previewButton._x_modePreview = false;
@@ -390,7 +394,7 @@ var XWiki = (function (XWiki) {
           if (!form.previewButton._x_modePreview && !form.previewButton.disabled) {
             form.previewButton.disabled = true;
             var notification = new XWiki.widgets.Notification(
-              "$msg.get('core.viewers.comments.preview.inProgress')",
+              this.translations.previewInProgress,
               'inprogress',
             );
             new Ajax.Request(previewURL, {
@@ -416,7 +420,7 @@ var XWiki = (function (XWiki) {
                 }
                 notification.replace(
                   new XWiki.widgets.Notification(
-                    "$msg.get('core.viewers.comments.preview.failed')" + failureReason,
+                    this.translations.previewFailed + failureReason,
                     'error',
                   ),
                 );
@@ -445,8 +449,7 @@ var XWiki = (function (XWiki) {
       form.previewContent.update(content);
       form.previewContent.show();
       form.commentElt.hide();
-      form.previewButton.down('input').value =
-        "$msg.get('core.viewers.comments.preview.button.back')";
+      form.previewButton.down('input').value = this.translations.previewButtonBack;
     },
     /**
      * Display the comment textarea instead of the comment preview.
@@ -458,8 +461,7 @@ var XWiki = (function (XWiki) {
       form.previewContent.hide();
       form.previewContent.update('');
       form.commentElt.show();
-      form.previewButton.down('input').value =
-        "$msg.get('core.viewers.comments.preview.button.preview')";
+      form.previewButton.down('input').value = this.translations.previewButtonPreview;
     },
     resetForm: function (event) {
       if (event) {
@@ -484,20 +486,14 @@ var XWiki = (function (XWiki) {
         $('Commentstab')
           .down('.itemCount')
           .update(
-            "$msg.get('docextra.extranb', ['__number__'])".replace(
-              '__number__',
-              $$(this.xcommentSelector).size(),
-            ),
+            this.translations['extranb'].replace('__number__', $$(this.xcommentSelector).size()),
           );
       }
       if ($('commentsshortcut') && $('commentsshortcut').down('.itemCount')) {
         $('commentsshortcut')
           .down('.itemCount')
           .update(
-            "$msg.get('docextra.extranb', ['__number__'])".replace(
-              '__number__',
-              $$(this.xcommentSelector).size(),
-            ),
+            this.translations['extranb'].replace('__number__', $$(this.xcommentSelector).size()),
           );
       }
     },

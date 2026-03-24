@@ -1,4 +1,13 @@
+// this is minified code reformatted
 $j(document).ready(function () {
+  let translations = {};
+  if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+      (celMessages) => (translations = celMessages.dataeditors),
+    );
+  } else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+  }
   $$('#xwikiobjects a.delete').each(function (B) {
     B.observe(
       'click',
@@ -25,10 +34,10 @@ $j(document).ready(function () {
               },
             },
             {
-              confirmationText: "$msg.get('core.editors.object.delete.confirm')",
-              progressMessageText: "$msg.get('core.editors.object.delete.inProgress')",
-              successMessageText: "$msg.get('core.editors.object.delete.done')",
-              failureMessageText: "$msg.get('core.editors.object.delete.failed')",
+              confirmationText: translations.confirmationText,
+              progressMessageText: translations.progressMessageText,
+              successMessageText: translations.successMessageText,
+              failureMessageText: translations.failureMessageText,
             },
           );
         }
@@ -115,6 +124,86 @@ $j(document).ready(function () {
     );
   });
 });
+if (typeof XWiki == 'undefined') {
+  XWiki = new Object();
+}
+if (typeof XWiki.editors == 'undefined') {
+  XWiki.editors = new Object();
+}
+XWiki.editors.XPropertyOrdering = Class.create({
+  initialize: function () {
+    $$('.xproperty-content').each(function (A) {
+      A.select('input').each(function (B) {
+        if (B.id.endsWith('_number')) {
+          A.numberProperty = B;
+          B.up().hide();
+          if (B.up().previous('dt')) {
+            B.up().previous('dt').hide();
+          }
+        }
+      });
+    });
+    if ($$('.xproperty').size() <= 1) {
+      return;
+    }
+    $$('.xproperty-title').each(function (B) {
+      var A = new Element('img', {
+        src: '/file/resources/icons/datamodel/move.png',
+        class: 'move',
+        alt: 'move',
+        title: 'Drag and drop to change the order',
+      });
+      B.makePositioned();
+      B.appendChild(A);
+      A.observe(
+        'click',
+        function (C) {
+          C.stop();
+        }.bindAsEventListener(),
+      );
+    });
+    Sortable.create('xclassContent', {
+      tag: 'div',
+      only: 'xproperty',
+      handle: 'move',
+      starteffect: this.startDrag.bind(this),
+      endeffect: this.endDrag.bind(this),
+      onUpdate: this.updateOrder.bind(this),
+    });
+  },
+  updateOrder: function (A) {
+    var C = A.childElements();
+    for (var B = 0; B < C.size(); ++B) {
+      var D = C[B].down('.xproperty-content');
+      D.numberProperty.value = B + 1;
+    }
+  },
+  startDrag: function (A) {
+    A.addClassName('dragged');
+    $('xclassContent')
+      .childElements()
+      .each(function (B) {
+        B._expandedBeforeDrag = !B.hasClassName('collapsed');
+        B.addClassName('collapsed');
+      });
+  },
+  endDrag: function (A) {
+    A.removeClassName('dragged');
+    $('xclassContent')
+      .childElements()
+      .each(function (B) {
+        if (B._expandedBeforeDrag) {
+          B.removeClassName('collapsed');
+        }
+      });
+  },
+});
+$j(document).ready(function () {
+  if ($('xclassContent')) {
+    new XWiki.editors.XPropertyOrdering();
+  }
+});
+
 if (typeof XWiki == 'undefined') {
   XWiki = new Object();
 }

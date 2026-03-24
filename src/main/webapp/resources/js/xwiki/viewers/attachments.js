@@ -1,4 +1,12 @@
 var XWiki = (function (XWiki) {
+  let translations = {};
+  if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded(
+      (celMessages) => (translations = celMessages.attachments),
+    );
+  } else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+  }
   // Start XWiki augmentation.
   var viewers = (XWiki.viewers = XWiki.viewers || {});
   /**
@@ -58,10 +66,10 @@ var XWiki = (function (XWiki) {
                   },
                   /* Interaction parameters */
                   {
-                    confirmationText: "$msg.get('core.viewers.attachments.delete.confirm')",
-                    progressMessageText: "$msg.get('core.viewers.attachments.delete.inProgress')",
-                    successMessageText: "$msg.get('core.viewers.attachments.delete.done')",
-                    failureMessageText: "$msg.get('core.viewers.attachments.delete.failed')",
+                    confirmationText: translations.deleteConfirm,
+                    progressMessageText: translations.deleteInProgress,
+                    successMessageText: translations.deleteDone,
+                    failureMessageText: translations.deleteFailed,
                   },
                 );
               }
@@ -75,7 +83,7 @@ var XWiki = (function (XWiki) {
         $('Attachmentstab')
           .down('.itemCount')
           .update(
-            "$msg.get('docextra.extranb', ['__number__'])".replace(
+            translations['extranb'].replace(
               '__number__',
               $('Attachmentspane').select('.attachment').size(),
             ),
@@ -85,7 +93,7 @@ var XWiki = (function (XWiki) {
         $('attachmentsshortcut')
           .down('.itemCount')
           .update(
-            "$msg.get('docextra.extranb', ['__number__'])".replace(
+            translations['extranb'].replace(
               '__number__',
               $('Attachmentspane').select('.attachment').size(),
             ),
@@ -113,7 +121,7 @@ var XWiki = (function (XWiki) {
     addAddButton: function () {
       var addButton = new Element('input', {
         type: 'button',
-        value: "$msg.get('core.viewers.attachments.upload.addFileInput')",
+        value: translations.addFileInput,
         className: 'attachmentActionButton add-file-input',
       });
       this.addDiv = new Element('div');
@@ -159,8 +167,8 @@ var XWiki = (function (XWiki) {
     createRemoveButton: function () {
       var removeButton = new Element('input', {
         type: 'button',
-        value: "$msg.get('core.viewers.attachments.upload.removeFileInput')",
-        title: "$msg.get('core.viewers.attachments.upload.removeFileInput.title')",
+        value: translations.removeFileInput,
+        title: translations.removeFileInputTitle,
         className: 'attachmentActionButton remove-file-input',
       });
       Event.observe(removeButton, 'click', this.removeField.bindAsEventListener(this));

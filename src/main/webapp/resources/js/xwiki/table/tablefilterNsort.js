@@ -1,7 +1,7 @@
 var image_path = '';
-var image_up = "$xwiki.getSkinFile('icons/table/arrow-up.gif', true)";
-var image_down = "$xwiki.getSkinFile('js/xwiki/table/img/arrow-down.gif', true)";
-var image_none = "$xwiki.getSkinFile('js/xwiki/table/img/arrow-none.gif', true)";
+var image_up = '/file/resources/icons/table/arrow-up.gif';
+var image_down = '/file/resources/js/xwiki/table/img/arrow-down.gif';
+var image_none = '/file/resources/js/xwiki/table/img/arrow-none.gif';
 var TblId, StartRow, SearchFlt, ModFn, ModFnId;
 ((TblId = new Array()), (StartRow = new Array()));
 ((ModFn = new Array()), (ModFnId = new Array()));

@@ -1,5 +1,6 @@
-@import url(google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
-@import url(google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
+@import url(/file/resources/celRes/google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
+@import url(/file/resources/celRes/google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
+
 /* Floating Windows Classes */
 .sheet {
   position: absolute;
@@ -14,7 +15,6 @@
   border: 0px;
   cursor: move;
 }
-
 .wmwindow_selected {
   position: absolute;
   padding-top: 14px;
@@ -25,7 +25,6 @@
   border: 0px;
   cursor: move;
 }
-
 .close {
   position: absolute;
   font:
@@ -42,7 +41,6 @@
   margin: 0px;
   cursor: pointer;
 }
-
 .resize {
   position: absolute;
   border: 0px;
@@ -112,7 +110,6 @@
   text-align: left;
   color: #cccccc;
 }
-
 /* Menu Bar Classes */
 div#celements2_menu_bar {
   position: absolute;
@@ -229,7 +226,6 @@ body > div#celements2_menu_bar {
   text-decoration: none !important;
   white-space: nowrap;
 }
-
 /* Context Menu Classes */
 .contextMenu {
   position: absolute;
@@ -337,7 +333,6 @@ body > div#celements2_menu_bar {
 .cel_outline {
   z-index: 99;
 }
-
 /* Form Validation Classes */
 .validation-advice {
   width: 152px;
@@ -356,7 +351,6 @@ body > div#celements2_menu_bar {
   color: #ff0000;
   margin-bottom: 10px;
 }
-
 table.celements2_table,
 .celements3_tabMenu .tabMenuPanel .bd .menuTab table {
   width: 100%;
@@ -485,21 +479,17 @@ table.celements2_table td,
 .celements2_line {
   border-bottom: 1px solid #000000;
 }
-
 div.menuTab .editblock ul.column_config_options {
   text-transform: none;
 }
-
 div.menuTab .editblock ul.column_config_options li {
   display: inline;
   padding-left: 30px;
 }
-
 div.menuTab .editblock.cel_cal_overview_column_config input,
 div.menuTab .editblock.cel_cal_event_column_config input {
   width: 400px;
 }
-
 .UserAdminInfos table.block td {
   position: relative;
 }
@@ -520,7 +510,6 @@ div.mask {
   left: 0px;
   z-index: 99;
 }
-
 .cel_newsletterImport h1 {
   color: black;
   font-size: 16px;
@@ -531,13 +520,11 @@ div.mask {
   padding-left: auto;
   padding-top: auto;
 }
-
 .cel_newsletterImport h2 {
   color: black;
   font-size: 12px;
   font-weight: auto;
 }
-
 .cel_newsletterImport th {
   color: black;
   background-color: auto;
@@ -549,7 +536,6 @@ div.mask {
 .cel_cm_blog_article .future {
   background-color: #ff9999;
 }
-
 .celements3_tabMenu .cel_rightsTab table.cel_rightsTable {
   table-layout: fixed;
   border-collapse: collapse;
@@ -600,11 +586,9 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
 .celdocpath_Celements2\.FileBaseTags {
   background-color: white !important;
 }
-
 .cel_whatsnew_table {
   width: 100%;
 }
-
 /**********************************
   Editor blocker
 ***********************************/
@@ -615,27 +599,22 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
   line-height: 13px;
   font-weight: 400;
 }
-
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker fieldset {
   margin: 0px;
   padding: 6px;
 }
-
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker p.xwikimessage {
   margin-top: 10px;
   margin-bottom: 20px;
 }
-
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker {
   background: white;
   background-color: white;
   padding: 10px;
 }
-
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons {
   margin-top: 15px;
 }
-
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons .celbutton {
   padding: 6px;
   padding-left: 10px;
@@ -653,11 +632,9 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
   font-weight: 400;
   display: inline-block;
 }
-
 .celements3_tabMenu #tabMenuPanel .celementsEditorBlocker .celButtons .cancel {
   float: right;
 }
-
 /* CSS for Sitemap */
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder,
@@ -670,7 +647,6 @@ div#celements2_menu_bar div#celements2_logo span.websuffix {
   width: auto;
   padding-left: 18px;
 }
-
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul li,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder li,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li,
@@ -703,7 +679,6 @@ body > .cel_reorderNodes_proxy {
 .yui-panel-container .cel_contentTab .reorderMode ul.cel_presentation_reorder li.cel_nav_odd {
   background-color: transparent;
 }
-
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs,
@@ -722,7 +697,6 @@ body > .cel_reorderNodes_proxy .docLangs,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder li.cel_reorderNodes_placeholder .docLangs {
   display: none;
 }
-
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a,
@@ -745,7 +719,6 @@ body > .cel_reorderNodes_proxy .docLangs,
 .celements3_tabMenu #con_langBar .docLangs span + span {
   margin-left: 1px;
 }
-
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.defaultLanguage,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.defaultLanguage,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.defaultLanguage,
@@ -753,7 +726,6 @@ body > .cel_reorderNodes_proxy .docLangs,
 .celements3_tabMenu #con_langBar .docLangs span.defaultLanguage {
   font-weight: bold;
 }
-
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a.transNotExists,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a.transNotExists,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a.transNotExists,
@@ -762,25 +734,21 @@ body > .cel_reorderNodes_proxy .docLangs,
   background-color: white;
   color: black;
 }
-
 .generalOverlay #cel_overlaybody .sitemapOutsideStructure ul .docLangs a:hover,
 .generalOverlay #cel_overlaybody ul.cel_presentation_reorder .docLangs a:hover,
 .yui-panel-container .cel_contentTab ul.cel_presentation_reorder .docLangs a:hover,
 .celements3_tabMenu #con_langBar .docLangs a:hover {
   background-color: #ccc;
 }
-
 .generalOverlay #cel_overlaybody .cel_presentation_addslide a,
 .yui-panel-container .cel_contentTab .cel_presentation_addslide a {
   display: flex;
   width: fit-content;
   gap: 5px;
 }
-
 body div.mask {
   z-index: 100 !important;
 }
-
 /** CSS for .cel_content_part **/
 body #sitecontainer .cel_content_part {
   background: white;
@@ -806,7 +774,6 @@ body #sitecontainer .cel_content_part table th,
 body #sitecontainer .cel_content_part table td {
   text-align: left;
 }
-
 /* Import Manager */
 .cel_contentTab .editGallery_box input[type='submit'],
 #cel_overlaybody #check_none,
@@ -814,7 +781,6 @@ body #sitecontainer .cel_content_part table td {
 #cel_overlaybody #c3_import_button {
   cursor: pointer;
 }
-
 /* Search results */
 #sitecontainer #websearch .results ul {
   list-style-type: none;
@@ -860,7 +826,6 @@ body #sitecontainer .cel_content_part table td {
 #sitecontainer #websearch .clearright {
   clear: right;
 }
-
 /**
   Ask Toolbar for google chrome leads to problems. Thus we hide it generally by default.
  **/
@@ -869,19 +834,15 @@ html[lang] {
   padding-top: 0px !important;
   border-top: none;
 }
-
 iframe.apn-toolbar {
   display: none !important;
 }
-
 iframe.apn-toolbar + body #celements2_menu_bar {
   top: 0px !important;
 }
-
 [data-apn-myc3-v7c-toolbar_set='bottom'] {
   bottom: 0px !important;
 }
-
 /**
  * Fluid design auto resize images
  **/
@@ -889,12 +850,10 @@ img.cel_fluidresizeWidth {
   width: 100%;
   height: auto;
 }
-
 img.cel_fluidresizeHeight {
   width: auto;
   height: 100%;
 }
-
 /**
  * Box layouting / Flex support
  **/
@@ -936,9 +895,8 @@ div.presentationList > div.navigation-clear {
 }
 #sitecontainer li.cel_nav_restricted_rights > div {
   opacity: 0.75;
-  filter: alpha(opacity = 75);
+  filter: alpha(opacity=75);
 }
-
 .cel_template {
   display: none;
 }

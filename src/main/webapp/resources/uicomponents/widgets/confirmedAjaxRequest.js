@@ -48,17 +48,24 @@ if (
     },
     /** Constructor. Registers the key listener that pops up the dialog. */
     initialize: function ($super, requestUrl, ajaxRequestParameters, interactionParameters) {
-      this.interactionParameters = Object.extend(
-        {
-          displayProgressMessage: true,
-          progressMessageText: "$msg.get('core.widgets.confirmationBox.notification.inProgress')",
-          displaySuccessMessage: true,
-          successMessageText: "$msg.get('core.widgets.confirmationBox.notification.done')",
-          displayFailureMessage: true,
-          failureMessageText: "$msg.get('core.widgets.confirmationBox.notification.failed')",
-        },
-        interactionParameters || {},
-      );
+      if (window.celExecOnceAfterMessagesLoaded) {
+        window.celExecOnceAfterMessagesLoaded(
+          (celMessages) =>
+            (this.interactionParameters = Object.extend(
+              {
+                displayProgressMessage: true,
+                progressMessageText: celMessages.confirmedAjaxRequest.notificationInProgress,
+                displaySuccessMessage: true,
+                successMessageText: celMessages.confirmedAjaxRequest.notificationDone,
+                displayFailureMessage: true,
+                failureMessageText: celMessages.confirmedAjaxRequest.notificationFailed,
+              },
+              interactionParameters || {},
+            )),
+        );
+      } else {
+        console.warn('celExecOnceAfterMessagesLoaded not available!');
+      }
       this.requestUrl = requestUrl;
       this.ajaxRequestParameters = Object.extend(
         Object.clone(this.defaultAjaxRequestParameters),

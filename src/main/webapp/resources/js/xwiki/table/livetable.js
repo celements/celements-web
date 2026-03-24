@@ -1,4 +1,11 @@
 (function () {
+  let translations = {};
+  if (window.celExecOnceAfterMessagesLoaded) {
+    window.celExecOnceAfterMessagesLoaded((celMessages) => (translations = celMessages.livetable));
+  } else {
+    console.warn('celExecOnceAfterMessagesLoaded not available!');
+  }
+
   /**
    * XWiki namespace
    */
@@ -306,12 +313,14 @@
         off +
         '</strong> - <strong>' +
         f +
-        "</strong> $msg.get('xe.pagination.results.of') <strong>" +
+        '</strong> ' +
+        translations.resultsOf +
+        ' <strong>' +
         this.totalRows +
         '</strong>';
       msg = msg.toLowerCase();
 
-      this.limitsDisplay.innerHTML = "$msg.get('xe.pagination.results') " + msg;
+      this.limitsDisplay.innerHTML = translations.results + ' ' + msg;
       this.clearDisplay();
 
       for (var i = off; i <= f; i++) {
@@ -1176,21 +1185,4 @@
       return popularityMap;
     },
   });
-
-  /**
-   * The Ugly: Fix IE6
-   * Add specific classes when mouse is over table rows, since it cannot be handled in CSS.
-   */
-  if (browser.isIE6x) {
-    // get notified of all new rows created by live tables.
-    document.observe('xwiki:livetable:newrow', function (ev) {
-      // Add events listeners to mouse over/out on the <tr>
-      Event.observe(ev.memo.row, 'mouseover', function (event) {
-        event.element().up('tr').addClassName('rowHover');
-      });
-      Event.observe(ev.memo.row, 'mouseout', function (event) {
-        event.element().up('tr').removeClassName('rowHover');
-      });
-    });
-  }
 })();

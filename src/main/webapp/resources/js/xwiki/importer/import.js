@@ -10,12 +10,6 @@ var XWiki = (function (XWiki) {
     console.warn('celExecOnceAfterMessagesLoaded not available!');
   }
 
-  // FIXME: we should have those images outside SmartClient library to lessen the dependency towards the library
-  var expandFolderImagePath =
-    "$xwiki.getSkinFile('js/smartclient/skins/Enterprise/images/TreeGrid/opener_closed.png', true)";
-  var collapseFolderImagePath =
-    "$xwiki.getSkinFile('js/smartclient/skins/Enterprise/images/TreeGrid/opener_opened.png', true)";
-
   /**
    * Initialization hook for the rich UI.
    * We hijack clicks on package names links, to display the rich importer UI since javascript is available.

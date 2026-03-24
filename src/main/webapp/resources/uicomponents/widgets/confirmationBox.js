@@ -11,12 +11,24 @@ if (
   XWiki.widgets.ConfirmationBox = Class.create(XWiki.widgets.ModalPopup, {
     /** Default displayed texts */
     defaultInteractionParameters: {
-      confirmationText: "$msg.get('core.widgets.confirmationBox.defaultQuestion')",
-      yesButtonText: "$msg.get('core.widgets.confirmationBox.button.yes')",
-      noButtonText: "$msg.get('core.widgets.confirmationBox.button.no')",
+      confirmationText: '?',
+      yesButtonText: 'yes',
+      noButtonText: 'no',
     },
     /** Constructor. Registers the key listener that pops up the dialog. */
     initialize: function ($super, behavior, interactionParameters) {
+      if (window.celExecOnceAfterMessagesLoaded) {
+        window.celExecOnceAfterMessagesLoaded(
+          (celMessages) =>
+            (this.defaultInteractionParameters = {
+              confirmationText: celMessages.confirmationBox.defaultQuestion,
+              yesButtonText: celMessages.confirmationBox.yes,
+              noButtonText: celMessages.confirmationBox.no,
+            }),
+        );
+      } else {
+        console.warn('celExecOnceAfterMessagesLoaded not available!');
+      }
       this.interactionParameters = Object.extend(
         Object.clone(this.defaultInteractionParameters),
         interactionParameters || {},

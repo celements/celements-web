@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
-                             http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
   version="3.1">
 
   <display-name>celements-web</display-name>
@@ -230,22 +229,6 @@
     <url-pattern>/api/*</url-pattern>
   </servlet-mapping>
 
-  <!-- We override the mime type definition for javascript, javascript module and css files, as some containers don't provide 
-    it, causing problems for javascript files containg velocity code, like fullscreenEdit.js -->
-  <mime-mapping>
-    <extension>js</extension>
-    <mime-type>text/javascript</mime-type>
-  </mime-mapping>
-
-  <mime-mapping>
-    <extension>mjs</extension>
-    <mime-type>text/javascript</mime-type>
-  </mime-mapping>
-
-  <mime-mapping>
-    <extension>css</extension>
-    <mime-type>text/css</mime-type>
-  </mime-mapping>
 
   <!-- In order to properly work, HTML Components MUST have the proper MIME type starting with XP SP2 -->
   <mime-mapping>

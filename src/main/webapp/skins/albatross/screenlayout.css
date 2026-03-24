@@ -1,5 +1,5 @@
-@import url(google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
-@import url(google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
+@import url(/file/resources/celRes/google-fonts/Terminal-Dosis/Terminal-Dosis-200,300,400,500,600,700,800.css);
+@import url(/file/resources/celRes/google-fonts/Open-Sans/Open-Sans-300italic,400italic,600italic,700italic,800italic,300,400,600,700,800.css);
 /**
 
 General layout of the page
@@ -175,10 +175,10 @@ Space header, footer
   margin-left: 4px;
 }
 .edit-meta-tools a.edit-parent {
-  background-image: url("$xwiki.getSkinFile('icons/xwiki/parent_edit.gif')");
+  background-image: url(/file/resources/icons/xwiki/parent_edit.gif);
 }
 .edit-meta-tools a.hide-edit-parent {
-  background-image: url("$xwiki.getSkinFile('icons/silk/chart_organisation.gif')");
+  background-image: url(/file/resources/icons/silk/chart_organisation.gif);
 }
 
 /* Parent editing area */
@@ -267,8 +267,6 @@ Content
 #xwikieditcontent textarea#content {
   width: 100%;
 }
-.layoutsubsection {
-}
 
 .layoutsubsection.about {
   border: none;
@@ -295,8 +293,6 @@ Zone for Comments, attachments, History...
 #xwikidata {
   padding: 0px;
   border: none;
-}
-.xwikiintratitle {
 }
 .xwikiintracontent {
   margin: 0px;
@@ -355,8 +351,6 @@ fieldset.xwikimessage .buttons a {
 Comments
 ----------------------------------------------
 */
-.xwikicomment {
-}
 
 #xwikidata #commentscontent {
   background: #e5f0fe url('icons/black-bg-comments-left.png') left top no-repeat;
@@ -429,8 +423,6 @@ Comments
 .commentauthor a {
   text-decoration: none;
   color: #000 !important;
-}
-.commentcontent {
 }
 
 .xwikibuttonlink a {
@@ -517,7 +509,9 @@ html > body #actionmenu {
   left: 0;
   width: 100%;
 }
-
+html > body.celementsmenubarvisible #actionmenu {
+  top: 28px;
+}
 #actionmenu a {
   text-decoration: none;
 }
@@ -715,8 +709,6 @@ Panels
   margin-left: -200px;
 }
 
-.panels {
-}
 html > body .panels {
   margin-top: 0px;
 }
@@ -918,9 +910,6 @@ html > body .xwikidatatable {
   overflow: hidden;
   height: 24px;
   width: 24px;
-  /*  position: relative;
-  top: -4em;
-*/
 }
 .edit_section a {
   visibility: visible;
@@ -1001,9 +990,6 @@ div.pagelayoutoptions > table {
 div.pagelayoutoptions td {
   padding: 2px;
   vertical-align: bottom;
-}
-
-#selectedoption {
 }
 
 #selectedoption .lmcontentcolumn {

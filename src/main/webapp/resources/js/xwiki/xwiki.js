@@ -7,6 +7,10 @@ var XWiki = (function (XWiki) {
    */
 
   Object.extend(XWiki, {
+    messages: {
+      translations: {},
+      celMeta: {},
+    },
     constants: {
       /**
        * Character that separates wiki from space in a page fullName (example: xwiki:Main.WebHome).
@@ -338,7 +342,7 @@ var XWiki = (function (XWiki) {
             error.next().hasClassName('xwikirenderingerrordescription')
           ) {
             error.style.cursor = 'pointer';
-            error.title = "$msg.get('platform.core.rendering.error.readTechnicalInformation')";
+            error.title = this.messages.translations.readTechnicalInformation;
             Event.observe(error, 'click', function (event) {
               event.element().next().toggleClassName('hidden');
             });
@@ -376,49 +380,6 @@ var XWiki = (function (XWiki) {
                 break;
               }
             }
-          }
-        }
-      }
-    },
-
-    /**
-     * Insert a link for editing sections.
-     */
-    insertSectionEditLinks: function () {
-      // Insert links only in view mode and for xwiki/2.0 documents.
-      if (XWiki.docsyntax == 'xwiki/2.0' && XWiki.contextaction == 'view' && XWiki.hasEdit) {
-        // Section count starts at one, not zero.
-        var sectioncount = 1;
-
-        // We can't use element.select() since it does not keep the order of the elements in the flow.
-        var nodes = $('xwikicontent');
-        if (!nodes) {
-          return;
-        }
-        nodes = nodes.childNodes;
-
-        // Only allow section editing for the specified depth level (2 by default)
-        var headerPattern = new RegExp('H[1-' + $xwiki.getSectionEditingDepth() + ']');
-
-        // For all non-generated headers, add a SPAN and A element in order to be able to edit the section.
-        for (var i = 0; i < nodes.length; i++) {
-          var node = $(nodes[i]);
-
-          if (
-            headerPattern.test(node.nodeName) &&
-            node.className.include('wikigeneratedheader') == false
-          ) {
-            var editspan = document.createElement('SPAN');
-            var editlink = document.createElement('A');
-
-            editlink.href = window.docediturl + '?section=' + sectioncount;
-            editlink.style.textDecoration = 'none';
-            editlink.innerHTML = "$msg.get('edit')";
-            editspan.className = 'edit_section';
-
-            editspan.appendChild(editlink);
-            node.insert({ after: editspan });
-            sectioncount++;
           }
         }
       }
@@ -467,9 +428,11 @@ var XWiki = (function (XWiki) {
                 }
               },
               onFailure: function () {
-                new XWiki.widgets.Notification("$msg.get('core.create.ajax.error')", 'error', {
-                  inactive: true,
-                }).show();
+                new XWiki.widgets.Notification(
+                  this.messages.translations.createAjaxError,
+                  'error',
+                  { inactive: true },
+                ).show();
               },
             });
             event.stop();
@@ -629,15 +592,20 @@ var XWiki = (function (XWiki) {
       // It would fire the custom dom:loaded event twice, which could make their observers misbehave.
       if (typeof this.isInitialized == 'undefined' || this.isInitialized == false) {
         this.isInitialized = true;
-        document.fire('xwiki:dom:loading');
-
-        this.makeRenderingErrorsExpandable();
-        this.fixLinksTargetAttribute();
-        this.insertSectionEditLinks();
-        this.insertCreatePageFromTemplateModalBoxes();
-        this.watchlist.initialize();
-
-        document.fire('xwiki:dom:loaded');
+        if (window.celExecOnceAfterMessagesLoaded) {
+          window.celExecOnceAfterMessagesLoaded((celMessages) => {
+            this.messages.translations = celMessages.xwiki;
+            this.messages.celMeta = celMessages.celmeta;
+            document.fire('xwiki:dom:loading');
+            this.makeRenderingErrorsExpandable();
+            this.fixLinksTargetAttribute();
+            this.insertCreatePageFromTemplateModalBoxes();
+            this.watchlist.initialize();
+            document.fire('xwiki:dom:loaded');
+          });
+        } else {
+          console.warn('celExecOnceAfterMessagesLoaded not available!');
+        }
       }
     },
   });
@@ -1362,12 +1330,13 @@ document.observe('xwiki:dom:loading', function () {
     $$('meta[name=space]').length > 0 ? $$('meta[name=space]')[0].content : 'Main';
   XWiki.Document.currentPage =
     $$('meta[name=page]').length > 0 ? $$('meta[name=page]')[0].content : 'WebHome';
-  XWiki.Document.URLTemplate = "$xwiki.getURL('__space__.__page__', '__action__')";
+  XWiki.Document.URLTemplate = '/__action__/__space__/__page__';
   XWiki.Document.RestURLTemplate =
-    '${request.contextPath}/rest/wikis/__wiki__/spaces/__space__/pages/__page__';
-  XWiki.Document.WikiSearchURLStub = '${request.contextPath}/rest/wikis/__wiki__/search';
+    XWiki.messages.celMeta.contextPath + '/rest/wikis/__wiki__/spaces/__space__/pages/__page__';
+  XWiki.Document.WikiSearchURLStub =
+    XWiki.messages.celMeta.contextPath + '/rest/wikis/__wiki__/search';
   XWiki.Document.SpaceSearchURLStub =
-    '${request.contextPath}/rest/wikis/__wiki__/spaces/__space__/search';
+    XWiki.messages.celMeta.contextPath + '/rest/wikis/__wiki__/spaces/__space__/search';
   XWiki.Document.getRestSearchURL = function (queryString, space, wiki) {
     wiki = wiki || XWiki.Document.currentWiki;
     var url;
