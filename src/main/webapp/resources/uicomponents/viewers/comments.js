@@ -6,7 +6,7 @@ var XWiki = (function (XWiki) {
    * Javascript enhancements for the comments viewer.
    */
   viewers.Comments = Class.create({
-    translations: translations,
+    translations: {},
     xcommentSelector: '.xwikicomment',
     /** Constructor. Adds all the JS improvements of the Comments area. */
     initialize: function () {
