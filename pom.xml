@@ -122,7 +122,7 @@
       <!-- [CELDEV-1013] required by xwiki-plugin-wiki-manager -->
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
-      <version>3.0.24</version>
+      <version>4.0.3</version>
     </dependency>
     <!-- celements module-web dependencies -->
     <dependency>
