@@ -1,4 +1,8 @@
 <link rel="stylesheet" media="all" type="text/css" href="$celementsweb.getSkinFile(':celRes/userAdmin/main.css', 'file')" />
+#set($jsService = $services.javascript)
+#set($extJsParamSync = $!jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind.js'))
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind.config.js'))
 
 #set($requestHost = "$!context.getRequest().getHeader('host')")
 #if($requestHost.startsWith('localhost'))
