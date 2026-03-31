@@ -18,7 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
- const lastPromiseOfLoadingType = {};
+const lastPromiseOfLoadingType = {};
 
 class CelLazyLoaderUtils {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
@@ -26,13 +26,14 @@ class CelLazyLoaderUtils {
   #startupTimeStamp;
   #loadTimeStamp;
   */
-  
+
   constructor() {
     this._loadTimeStamp = new Date().getTime();
     this._startupTimeStamp = this._loadTimeStamp;
     if (window.celExecOnceAfterMessagesLoaded) {
       window.celExecOnceAfterMessagesLoaded(
-         celMessages => this._startupTimeStamp = celMessages.celmeta.startupTimeStamp);
+        (celMessages) => (this._startupTimeStamp = celMessages.celmeta.startupTimeStamp),
+      );
     }
   }
 
@@ -44,10 +45,10 @@ class CelLazyLoaderUtils {
       } else {
         scriptPath += '?';
       }
-      if ((scriptPath.split('/').length > 4) && scriptPath.includes('/resources/')) {
-        scriptPath += "version=" + this._startupTimeStamp;
+      if (scriptPath.split('/').length > 4 && scriptPath.includes('/resources/')) {
+        scriptPath += 'version=' + this._startupTimeStamp;
       } else {
-        scriptPath += "version=" + this._loadTimeStamp;
+        scriptPath += 'version=' + this._loadTimeStamp;
       }
     }
     return scriptPath;
@@ -57,17 +58,18 @@ class CelLazyLoaderUtils {
     const loadedArray = [...loadedTags];
     const newURLLink = new URL(url, window.location.href);
     const isLoaded = loadedArray.some(
-      loadedElem => (loadedElem.src ?? loadedElem.href) === newURLLink.href);
+      (loadedElem) => (loadedElem.src ?? loadedElem.href) === newURLLink.href,
+    );
     console.debug('checkIsLoaded: return ', isLoaded, url);
     return isLoaded;
   }
 
   jsIsLoaded(scriptURL) {
-    return this._checkIsLoaded(scriptURL, document.getElementsByTagName('script'))
+    return this._checkIsLoaded(scriptURL, document.getElementsByTagName('script'));
   }
 
   cssIsLoaded(cssURL) {
-    return this._checkIsLoaded(cssURL, document.querySelectorAll('link[rel=stylesheet]'))
+    return this._checkIsLoaded(cssURL, document.querySelectorAll('link[rel=stylesheet]'));
   }
 
   fireLoaded(item, eventName) {
@@ -75,16 +77,16 @@ class CelLazyLoaderUtils {
     item._isSuccessfullLoaded = true;
     console.debug('fireLoaded', eventName, item);
     this.fireEvent(item, eventName, {
-      'fileSrc' : item.getAttribute('src'),
-      'successful' : true
+      fileSrc: item.getAttribute('src'),
+      successful: true,
     });
   }
 
   fireEvent(item, eventName, detail) {
     const event = new CustomEvent(eventName, {
-      'bubbles' : true,
-      'cancelable' : true,
-      'detail' : detail
+      bubbles: true,
+      cancelable: true,
+      detail: detail,
     });
     event.stopped = !item.dispatchEvent(event);
     return event;
@@ -94,12 +96,12 @@ class CelLazyLoaderUtils {
     item._reayState = 2;
     item._isSuccessfullLoaded = false;
     this.fireEvent(item, eventName, {
-       'fileSrc' : source,
-       'successful' : false,
-       'message' : message,
-       'lineno' : lineno,
-       'colno' : colno,
-       'error' : error
+      fileSrc: source,
+      successful: false,
+      message: message,
+      lineno: lineno,
+      colno: colno,
+      error: error,
     });
   }
 
@@ -110,8 +112,7 @@ class CelLazyLoaderUtils {
         resolve();
       });
       elem.addEventListener('error', (message, source, lineno, colno, error) => {
-      this.fireLoadedErr(
-        customElem, eventName, message, source, lineno, colno, error);
+        this.fireLoadedErr(customElem, eventName, message, source, lineno, colno, error);
         reject();
       });
     });
@@ -124,7 +125,7 @@ class CelLazyLoaderUtils {
   }
 
   _loadScriptElem(customElem, elemType, isLoadedFn, createElemFn, eventName) {
-    const fileSrc = this.getScriptPath(customElem.getAttribute('src'))
+    const fileSrc = this.getScriptPath(customElem.getAttribute('src'));
     if (!isLoadedFn(fileSrc)) {
       const newElem = createElemFn(fileSrc);
       const loadedPromise = this.addRefireOnLoadedOrError(customElem, newElem, eventName);
@@ -143,7 +144,6 @@ class CelLazyLoaderUtils {
       return Promise.resolve();
     }
   }
-
 }
 
 /************************************************************
@@ -156,7 +156,7 @@ class CelLazyLoaderJs extends HTMLElement {
   #readyState  // 0 = initalized , 1 = loading , 2 = loaded
   #isSuccessfullLoaded
   */
-  
+
   constructor() {
     super();
     this._lazyLoadUtils = new CelLazyLoaderUtils();
@@ -169,12 +169,12 @@ class CelLazyLoaderJs extends HTMLElement {
     if (jsFileUrl.pathname.endsWith('.mjs')) {
       return 'module';
     }
-    return (this.getAttribute('type') || 'text/javascript');
+    return this.getAttribute('type') || 'text/javascript';
   }
 
   _addLoadMode(newEle) {
     const loadMode = this.getAttribute('loadMode');
-    if (loadMode && (loadMode !== 'sync')) {
+    if (loadMode && loadMode !== 'sync') {
       newEle.setAttribute(loadMode, '');
     }
     return newEle;
@@ -189,10 +189,13 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   _loadJsScript() {
-    this._lazyLoadUtils._loadScriptElem(this, 'javascript',
-      jsFileSrc => this._lazyLoadUtils.jsIsLoaded(jsFileSrc),
-      jsFileSrc => this._createJsElement(jsFileSrc),
-      'celements:jsFileLoaded');
+    this._lazyLoadUtils._loadScriptElem(
+      this,
+      'javascript',
+      (jsFileSrc) => this._lazyLoadUtils.jsIsLoaded(jsFileSrc),
+      (jsFileSrc) => this._createJsElement(jsFileSrc),
+      'celements:jsFileLoaded',
+    );
   }
 
   connectedCallback() {
@@ -216,7 +219,7 @@ class CelLazyLoaderCss extends HTMLElement {
   #readyState  // 0 = initalized , 1 = loading , 2 = loaded
   #isSuccessfullLoaded
   */
-  
+
   constructor() {
     super();
     this._lazyLoadUtils = new CelLazyLoaderUtils();
@@ -228,16 +231,19 @@ class CelLazyLoaderCss extends HTMLElement {
     const newEle = document.createElement('link');
     newEle.rel = 'stylesheet';
     newEle.href = cssFileSrc;
-    newEle.type = (this.getAttribute('type') || 'text/css');
-    newEle.media = (this.getAttribute('media') || 'screen');
+    newEle.type = this.getAttribute('type') || 'text/css';
+    newEle.media = this.getAttribute('media') || 'screen';
     return newEle;
   }
 
   _loadCssScript() {
-    this._lazyLoadUtils._loadScriptElem(this, 'css',
-      cssFileSrc => this._lazyLoadUtils.cssIsLoaded(cssFileSrc),
-      cssFileSrc => this._createCssElement(cssFileSrc),
-      'celements:cssFileLoaded');
+    this._lazyLoadUtils._loadScriptElem(
+      this,
+      'css',
+      (cssFileSrc) => this._lazyLoadUtils.cssIsLoaded(cssFileSrc),
+      (cssFileSrc) => this._createCssElement(cssFileSrc),
+      'celements:cssFileLoaded',
+    );
   }
 
   connectedCallback() {
@@ -260,7 +266,7 @@ class CelLazyLoader extends HTMLElement {
 
   #abortController;
 
-  constructor () {
+  constructor() {
     super();
     this.#abortController = new AbortController();
   }
@@ -277,6 +283,7 @@ class CelLazyLoader extends HTMLElement {
     this.#attachLoadingIndicator();
     const html = await this.fetchHtml();
     const nodes = this.#parseHTML(html ?? '');
+    this.#addLazyLoadToImages(nodes);
     await this.#updateContent(nodes);
   }
 
@@ -286,16 +293,28 @@ class CelLazyLoader extends HTMLElement {
     return [...template.childNodes];
   }
 
+  #addLazyLoadToImages(nodes) {
+    nodes.forEach((node) => {
+      if (node.nodeType !== Node.ELEMENT_NODE) return;
+      node
+        .querySelectorAll('img:not([loading])')
+        .forEach((img) => img.setAttribute('loading', 'lazy'));
+      if (node.matches('img') && !node.hasAttribute('loading')) {
+        node.setAttribute('loading', 'lazy');
+      }
+    });
+  }
+
   async #updateContent(newChildNodes) {
     if (!this.parentNode) return; // element still attached ?
     await this.#animateRemoval();
-      const parent = this.parentNode;
+    const parent = this.parentNode;
     if (!parent) return; // element still attached ?
     try {
       const fragment = new DocumentFragment();
       fragment.replaceChildren(...newChildNodes);
       parent.replaceChild(fragment, this);
-      new CelLazyLoaderUtils().fireEvent(parent, 'celements:contentChanged', { 'htmlElem': parent });
+      new CelLazyLoaderUtils().fireEvent(parent, 'celements:contentChanged', { htmlElem: parent });
     } catch (exp) {
       console.error('updateContent failed on', parent, exp);
     }
@@ -310,7 +329,7 @@ class CelLazyLoader extends HTMLElement {
     } finally {
       this.classList.remove(CelLazyLoader.CSS_CLASSES.REMOVING);
     }
-  } 
+  }
 
   #attachLoadingIndicator() {
     if (!window.CELEMENTS?.LoadingIndicator || !this.loaderSize) return;
@@ -321,7 +340,7 @@ class CelLazyLoader extends HTMLElement {
       loaderImg.style.marginLeft = 'auto';
       loaderImg.style.marginRight = 'auto';
       if (!this.shadowRoot) {
-        this.attachShadow({ 'mode' : 'open' });
+        this.attachShadow({ mode: 'open' });
       }
       this.shadowRoot.appendChild(loaderImg);
     } catch (exp) {
