@@ -55,6 +55,7 @@ export class CelFilePicker {
       }
       const imgThmb = document.createElement('img');
       imgThmb.src = thmbImgSrc;
+      imgThmb.setAttribute('loading', 'lazy');
       const imgContainerDiv = document.createElement('div');
       imgContainerDiv.classList.add(...cssClasses);
       imgContainerDiv.appendChild(imgThmb);
