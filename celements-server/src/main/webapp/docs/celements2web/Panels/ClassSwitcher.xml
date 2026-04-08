@@ -105,7 +105,6 @@
 </property>
 <property>
 <content>#largepanelheader('Class Switcher')
-##$xwiki.jsx.use('Panels.ClassSwitcher')##
 &lt;div&gt;
 &lt;form id="changeclass" method="post" action="$doc.getURL("redirect")"&gt;
 &lt;div&gt;
@@ -118,25 +117,26 @@
 #set($prevSpace = "")
 #set($optGroupOpen = false)
 #foreach ($classname in $xwiki.classList)
-  #if($!xwiki.hasAccessLevel("edit", $classname))
-    #set($classdoc = $xwiki.getDocument($classname))
-    #if($classdoc.space != $prevSpace)
-      #if($optGroupOpen)
-        &lt;/optgroup&gt;
-      #else
-        #set($optGroupOpen = true)
-      #end
-          &lt;optgroup label="$classdoc.space"&gt;
-      #set($prevSpace = $classdoc.space)
-    #end
-    &lt;option value="$classdoc.getURL("edit", "editor=class")"&gt;$classdoc.name&lt;/option&gt;
-  #end
+#if($!xwiki.hasAccessLevel("edit", $classname))
+#set($classdoc = $xwiki.getDocument($classname))
+#if($classdoc.space != $prevSpace)
+#if($optGroupOpen)
+&lt;/optgroup&gt;
+#else
+#set($optGroupOpen = true)
+#end
+&lt;optgroup label="$classdoc.space"&gt;
+#set($prevSpace = $classdoc.space)
+#end
+&lt;option value="$classdoc.getURL("edit", "editor=class")"&gt;$classdoc.name&lt;/option&gt;
+#end
 #end
 #if($optGroupOpen)
-        &lt;/optgroup&gt;
+&lt;/optgroup&gt;
 #end
 &lt;/select&gt;
-&lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" value="$msg.get("changeclass")"/&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit"
+value="$msg.get("changeclass")"/&gt;&lt;/span&gt;&lt;/div&gt;
 #warning($msg.get('xe.panels.classedit.unsavedchanges'))
 &lt;/form&gt;
 &lt;/div&gt;
@@ -152,108 +152,5 @@
 <type>edit</type>
 </property>
 </object>
-<object>
-<class>
-<name>XWiki.JavaScriptExtension</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<cache>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<multiSelect>0</multiSelect>
-<name>cache</name>
-<number>5</number>
-<prettyName>Caching policy</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>1</size>
-<unmodifiable>0</unmodifiable>
-<values>long|short|default|forbid</values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</cache>
-<code>
-<disabled>0</disabled>
-<name>code</name>
-<number>2</number>
-<prettyName>Code</prettyName>
-<rows>20</rows>
-<size>50</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-</code>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-<parse>
-<disabled>0</disabled>
-<displayFormType>select</displayFormType>
-<displayType>yesno</displayType>
-<name>parse</name>
-<number>4</number>
-<prettyName>Parse content</prettyName>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-</parse>
-<use>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<multiSelect>0</multiSelect>
-<name>use</name>
-<number>3</number>
-<prettyName>Use this extension</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>1</size>
-<unmodifiable>0</unmodifiable>
-<values>onDemand=On demand|always=Always</values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</use>
-</class>
-<name>Panels.ClassSwitcher</name>
-<number>0</number>
-<className>XWiki.JavaScriptExtension</className>
-<guid>951b5864-df3e-46d0-bdbe-bac923e58dc8</guid>
-<property>
-<cache>long</cache>
-</property>
-<property>
-<code>document.observe('dom:loaded', function() {
-  var switcher = $('classname');
-  if(typeof (switcher) != 'undefined') {
-    switcher.observe('change', function() {
-      var value = this.options[this.selectedIndex].value;
-      if (value != '-') {
-        window.self.location = value;
-      }
-    }.bindAsEventListener(switcher));
-    switcher.up('form').down("input[type='submit']").hide();
-  }
-});
-</code>
-</property>
-<property>
-<name>Instant class switcher</name>
-</property>
-<property>
-<parse>0</parse>
-</property>
-<property>
-<use>onDemand</use>
-</property>
-</object>
-<content>#includeForm("Panels.PanelSheet")</content></xwikidoc>
+<content>#includeForm("Panels.PanelSheet")</content>
+</xwikidoc>

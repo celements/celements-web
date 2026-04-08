@@ -1,5 +1,6 @@
-#template('colorThemeInit.vm') .meta-versionSummary label {
-  color: $theme.textSecondaryColor;
+@import '/file/resources/celRes/theme/defaultColors.css';
+.meta-versionSummary label {
+  color: var(--textSecondaryColor);
   display: block;
   font-size: 0.85em;
   font-weight: 700;

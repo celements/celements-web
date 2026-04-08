@@ -443,7 +443,7 @@ external js-files
         'cel_yuiOverlay:loadFirstContent',
         _me._dialogConfig,
       );
-      if (!loadContentEvent.stopped) {
+      if (!loadContentEvent.defaultPrevented && !loadContentEvent.stopped) {
         var params = {
           xpage: 'celements_ajax',
           ajax_mode: 'pageTypeWithLayout',

@@ -1,7 +1,6 @@
 ##
 ## CSS files related to JS libraries.
 ##
-<link href="$xwiki.getSkinFile("uicomponents/suggest/suggest.css", true)" rel="stylesheet" type="text/css" />
 <link href="$xwiki.getSkinFile("js/xwiki/lightbox/lightbox.css", true)" rel="stylesheet" type="text/css" />
 ##
 ## JS Libraries.
@@ -13,18 +12,16 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery.min.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/jquery-noconflict.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':celJS/initCelements.min.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki.js'))##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/effects.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/modalPopup.js'))##
 $services.css.includeCSSPage(':js/xwiki/widgets/modalPopup.css')##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/widgets/jumpToPage.js'))##
-##$xwiki.ssfx.use('js/xwiki/widgets/jumpToPage.css', {'forceSkinAction' : true, 'language' : $context.language})
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmationBox.js'))##
 $services.css.includeCSSPage(':uicomponents/widgets/confirmationBox.css')##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/confirmedAjaxRequest.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/notification.js'))##
 $services.css.includeCSSPage(':uicomponents/widgets/notification.css')##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/list/xlist.js'))##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/suggest/suggest.js'))##
 $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki-misc.js'))##
 #if($hasedit || $isContentEditor || $isAdmin || ($services.celMenu.getMenuHeaders().size() > 0))
   $!services.css.includeCSSPage(':celRes/celements2.css')##
@@ -48,8 +45,6 @@ $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/xwiki-misc.js'))##
        #set($searchSuggestConfigHash = "${searchSuggestConfigHash}|${sourceId}")
      #end
    #end
-   $!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/search/searchSuggest.js'))##
-   $services.css.includeCSSPage(':uicomponents/search/searchSuggest.css')##
   #end
 #end
 #if (($xcontext.action=="inline") || ($xcontext.action=="edit") || ($xcontext.action=="admin"))
@@ -84,58 +79,58 @@ window.docgeturl = "${doc.getURL('get')}";
 // ]]>
 </script>
 ##
-#if (($xcontext.action=="inline") || ($xcontext.action=="edit") || ($xcontext.action=="admin"))
-<script type="text/javascript">
-// <![CDATA[
-var cancelEditNextOnunload;
-var cancelCancelEditFlag = true;
-var lockEditFlag = false;
+#if(($xcontext.action=="inline")||($xcontext.action=="edit") || ($xcontext.action=="admin"))
+  <script type="text/javascript">
+  // <![CDATA[
+  var cancelEditNextOnunload;
+  var cancelCancelEditFlag = true;
+  var lockEditFlag = false;
 
-function cancelEditResponse() {
-}
+  function cancelEditResponse() {
+  }
 
-function cancelEdit() {
-  if (cancelCancelEditFlag) {
-    var surl = "$doc.getExternalURL('cancel', 'ajax=1')";
-    var myAjax = new Ajax.Request(surl, {
-      method: 'get',
-      parameters: "",
-      asynchronous: true,
-      discardResponse: true
-    });
+  function cancelEdit() {
+    if (cancelCancelEditFlag) {
+      var surl = "$doc.getExternalURL('cancel', 'ajax=1')";
+      var myAjax = new Ajax.Request(surl, {
+        method: 'get',
+        parameters: "",
+        asynchronous: true,
+        discardResponse: true
+      });
+      cancelCancelEditFlag = false;
+    }
+    if (cancelEditNextOnunload) {
+      cancelEditNextOnunload();
+    }
+  }
+
+  function lockEdit() {
+    if (!lockEditFlag) {
+  #if ($xcontext.action == 'inline')
+      var surl = "$doc.getExternalURL('lock', "action=inline&ajax=1&${docvariant.replace('&amp;', '&')}")";
+  #else
+      var surl = "$doc.getExternalURL('lock', "ajax=1&${docvariant.replace('&amp;', '&')}")";
+  #end
+      var myAjax = new Ajax.Request(surl, {
+        method: 'get',
+        parameters: "",
+        asynchronous: true
+      });
+      lockEditFlag = false;
+    }
+  }
+
+  function prepareCancelEdit() {
+    lockEdit();
+  }
+  function cancelCancelEdit() {
     cancelCancelEditFlag = false;
   }
-  if (cancelEditNextOnunload) {
-    cancelEditNextOnunload();
-  }
-}
-
-function lockEdit() {
-  if (!lockEditFlag) {
-#if ($xcontext.action == 'inline')
-    var surl = "$doc.getExternalURL('lock', "action=inline&ajax=1&${docvariant.replace('&amp;', '&')}")";
-#else
-    var surl = "$doc.getExternalURL('lock', "ajax=1&${docvariant.replace('&amp;', '&')}")";
-#end
-    var myAjax = new Ajax.Request(surl, {
-      method: 'get',
-      parameters: "",
-      asynchronous: true
-    });
-    lockEditFlag = false;
-  }
-}
-
-function prepareCancelEdit() {
-  lockEdit();
-}
-function cancelCancelEdit() {
-  cancelCancelEditFlag = false;
-}
-Event.observe(window, "unload", cancelEdit);
-Event.observe(window, "pagehide", cancelEdit);
-$j(document).ready(prepareCancelEdit);
-// ]]>
-</script>
+  Event.observe(window, "unload", cancelEdit);
+  Event.observe(window, "pagehide", cancelEdit);
+  $j(document).ready(prepareCancelEdit);
+  // ]]>
+  </script>
 #end
 ##

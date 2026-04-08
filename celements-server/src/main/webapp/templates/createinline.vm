@@ -1,3 +1,5 @@
+#set($jsService = $services.javascript)
+#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
 ## ---------------------------------------------------------------------------------------------------------
 ## Since this template can be used for creating a Page or a Space, check the passed "tocreate" parameter
 ## which can be either "page" or "space". If no "tocreate" parameter is passed then we default to creating a Page.
@@ -127,8 +129,8 @@
 ## ---------------------------------------------------------------------------------------------------------
 ## Output JavaScript validation code
 ## ---------------------------------------------------------------------------------------------------------
-$xwiki.get('jsfx').use('uicomponents/widgets/validation/livevalidation_prototype.js')##
-$xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css')##
+$!jsService.includeExtJsFile($extJsParam.setJsFile(':uicomponents/widgets/validation/livevalidation_prototype.js'))##
+$!services.css.includeCSSPage(':uicomponents/widgets/validation/livevalidation.css')##
 <script type="text/javascript">
 //<![CDATA[
   XWiki.createPage = {

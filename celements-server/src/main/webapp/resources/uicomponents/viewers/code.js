@@ -11,11 +11,19 @@ if (typeof XWiki.viewers == 'undefined') {
  * JavaScript snippet that toggles line numbers on code view.
  */
 XWiki.viewers.Code = Class.create({
+  translations: {},
   initialize: function (initialShowLineNumbers) {
+    if (window.celExecOnceAfterMessagesLoaded) {
+      window.celExecOnceAfterMessagesLoaded(
+        (celMessages) => (this.translations = celMessages.code),
+      );
+    } else {
+      console.warn('celExecOnceAfterMessagesLoaded not available!');
+    }
     this.showingLineNumbers = initialShowLineNumbers;
     this.toggleLink = $('toggleLineNumbers');
-    this.showText = "$msg.get('core.viewers.code.showLineNumbers')";
-    this.hideText = "$msg.get('core.viewers.code.hideLineNumbers')";
+    this.showText = this.translations.showLineNumbers;
+    this.hideText = this.translations.hideLineNumbers;
     if (this.toggleLink) {
       this.textarea = this.toggleLink.up().down('textarea');
       if (this.textarea) {
