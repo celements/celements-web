@@ -32,6 +32,15 @@ function colorForIndex(index: number): string {
   return COLOR_PALETTE[index % COLOR_PALETTE.length];
 }
 
+/**
+ * Converts a bare filename (as returned by /api/files/tags/files) to the
+ * full VueFinder path used as keys in fileTagMap and for file selection.
+ * e.g. "foo.jpg" → "local://foo.jpg"
+ */
+function toVueFinderPath(filename: string): string {
+  if (filename.includes('://')) return filename; // already a full path
+  return `local://${filename}`;
+}
 
 
 // ---------------------------------------------------------------------------
@@ -123,15 +132,17 @@ export const useTagStore = defineStore('tags', () => {
       }));
       availableTags.value = tags;
 
-      // Build fileTagMap: for each tag fetch which files carry it
+      // Build fileTagMap: for each tag fetch which files carry it.
+      // Keys must match VueFinder's file.path format: "local://<filename>"
       const newMap: Record<string, Tag[]> = {};
       await Promise.all(
         tags.map(async (tag) => {
           try {
             const filenames = await apiFetchFilesForTag(tag.id);
             for (const filename of filenames) {
-              if (!newMap[filename]) newMap[filename] = [];
-              newMap[filename].push(tag);
+              const path = toVueFinderPath(filename);
+              if (!newMap[path]) newMap[path] = [];
+              newMap[path].push(tag);
             }
           } catch (err) {
             console.warn(`[TagStore] Could not load files for tag "${tag.id}":`, err);
