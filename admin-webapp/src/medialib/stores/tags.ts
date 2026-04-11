@@ -1,33 +1,91 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
+import type { Tag, TagDto } from '@/types/medialib';
 
-export interface Tag {
-  id: string;
-  label: string;
-  color: string; // tailwind bg-color class, e.g. 'bg-teal-500'
+export type { Tag } from '@/types/medialib';
+
+// ---------------------------------------------------------------------------
+// API base path – matches the VueFinder RemoteDriver base URL
+// ---------------------------------------------------------------------------
+const API_BASE = '/api/files';
+
+// ---------------------------------------------------------------------------
+// Deterministic color palette assigned by tag index
+// (backend has no color concept – we assign a stable color client-side)
+// ---------------------------------------------------------------------------
+const COLOR_PALETTE = [
+  'bg-teal-500',
+  'bg-blue-500',
+  'bg-amber-500',
+  'bg-violet-500',
+  'bg-slate-500',
+  'bg-rose-500',
+  'bg-emerald-500',
+  'bg-cyan-500',
+  'bg-orange-500',
+  'bg-pink-500',
+  'bg-lime-500',
+  'bg-indigo-500',
+];
+
+function colorForIndex(index: number): string {
+  return COLOR_PALETTE[index % COLOR_PALETTE.length];
+}
+
+
+
+// ---------------------------------------------------------------------------
+// Internal API helpers
+// ---------------------------------------------------------------------------
+async function apiFetchTags(): Promise<TagDto[]> {
+  const res = await fetch(`${API_BASE}/tags`);
+  if (!res.ok) throw new Error(`GET ${API_BASE}/tags failed: ${res.status}`);
+  return res.json() as Promise<TagDto[]>;
+}
+
+async function apiFetchFilesForTag(tagId: string): Promise<string[]> {
+  const res = await fetch(`${API_BASE}/tags/files?tagId=${encodeURIComponent(tagId)}`);
+  if (!res.ok)
+    throw new Error(`GET ${API_BASE}/tags/files?tagId=${tagId} failed: ${res.status}`);
+  return res.json() as Promise<string[]>;
+}
+
+async function apiAssignTag(tagId: string, filePaths: string[]): Promise<void> {
+  const res = await fetch(`${API_BASE}/tags/assign`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tagId, filePaths }),
+  });
+  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/assign failed: ${res.status}`);
+}
+
+async function apiRemoveTag(tagId: string, filePaths: string[]): Promise<void> {
+  const res = await fetch(`${API_BASE}/tags/remove`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tagId, filePaths }),
+  });
+  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/remove failed: ${res.status}`);
 }
 
 // ---------------------------------------------------------------------------
-// Hardcoded available tags – replace with API call later
+// Store
 // ---------------------------------------------------------------------------
-const HARDCODED_TAGS: Tag[] = [
-  { id: 'finance', label: 'Finance', color: 'bg-emerald-500' },
-  { id: 'contracts', label: 'Contracts', color: 'bg-blue-500' },
-  { id: 'to-review', label: 'To Review', color: 'bg-amber-500' },
-  { id: 'press', label: 'Press', color: 'bg-violet-500' },
-  { id: 'archive', label: 'Archive', color: 'bg-slate-500' },
-  { id: 'marketing', label: 'Marketing', color: 'bg-rose-500' },
-];
-
 export const useTagStore = defineStore('tags', () => {
   // ----- state ----------------------------------------------------------------
-  const availableTags = ref<Tag[]>(HARDCODED_TAGS);
+  const availableTags = ref<Tag[]>([]);
 
   /** filePath → Tag[] */
   const fileTagMap = ref<Record<string, Tag[]>>({});
 
   /** Tags currently active in the sidebar filter (multi-select) */
   const activeFilter = ref<Tag[]>([]);
+
+  /** True while the initial tags+mappings load is in progress */
+  const loading = ref(false);
+
+  /** Error message if the initial load failed */
+  const error = ref<string | null>(null);
 
   // ----- getters --------------------------------------------------------------
 
@@ -47,6 +105,48 @@ export const useTagStore = defineStore('tags', () => {
 
   // ----- actions --------------------------------------------------------------
 
+  /**
+   * Load all tags from the backend and populate fileTagMap.
+   * Designed to be called once on app mount / store initialisation.
+   */
+  async function loadTags(): Promise<void> {
+    loading.value = true;
+    error.value = null;
+    try {
+      const dtos = await apiFetchTags();
+
+      // Map DTOs → Tag objects with deterministic colors
+      const tags: Tag[] = dtos.map((dto, index) => ({
+        id: dto.id,
+        label: dto.prettyName || dto.id,
+        color: colorForIndex(index),
+      }));
+      availableTags.value = tags;
+
+      // Build fileTagMap: for each tag fetch which files carry it
+      const newMap: Record<string, Tag[]> = {};
+      await Promise.all(
+        tags.map(async (tag) => {
+          try {
+            const filenames = await apiFetchFilesForTag(tag.id);
+            for (const filename of filenames) {
+              if (!newMap[filename]) newMap[filename] = [];
+              newMap[filename].push(tag);
+            }
+          } catch (err) {
+            console.warn(`[TagStore] Could not load files for tag "${tag.id}":`, err);
+          }
+        }),
+      );
+      fileTagMap.value = newMap;
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : String(err);
+      console.error('[TagStore] loadTags failed:', err);
+    } finally {
+      loading.value = false;
+    }
+  }
+
   function toggleFilterTag(tag: Tag) {
     const idx = activeFilter.value.findIndex((t) => t.id === tag.id);
     if (idx === -1) {
@@ -64,31 +164,64 @@ export const useTagStore = defineStore('tags', () => {
     return fileTagMap.value[filePath] ?? [];
   }
 
-  function assignTag(filePath: string, tag: Tag) {
+  /**
+   * Assign a tag to a file. Calls the backend and updates local state on success.
+   */
+  async function assignTag(filePath: string, tag: Tag): Promise<void> {
     const current = fileTagMap.value[filePath] ?? [];
-    if (!current.some((t) => t.id === tag.id)) {
+    if (current.some((t) => t.id === tag.id)) return; // already assigned
+
+    // Optimistic update
+    fileTagMap.value = {
+      ...fileTagMap.value,
+      [filePath]: [...current, tag],
+    };
+
+    try {
+      await apiAssignTag(tag.id, [filePath]);
+    } catch (err) {
+      // Roll back
+      console.error('[TagStore] assignTag failed, rolling back:', err);
       fileTagMap.value = {
         ...fileTagMap.value,
-        [filePath]: [...current, tag],
+        [filePath]: fileTagMap.value[filePath].filter((t) => t.id !== tag.id),
       };
+      throw err;
     }
   }
 
-  function removeTag(filePath: string, tag: Tag) {
+  /**
+   * Remove a tag from a file. Calls the backend and updates local state on success.
+   */
+  async function removeTag(filePath: string, tag: Tag): Promise<void> {
     const current = fileTagMap.value[filePath] ?? [];
+
+    // Optimistic update
     fileTagMap.value = {
       ...fileTagMap.value,
       [filePath]: current.filter((t) => t.id !== tag.id),
     };
+
+    try {
+      await apiRemoveTag(tag.id, [filePath]);
+    } catch (err) {
+      // Roll back
+      console.error('[TagStore] removeTag failed, rolling back:', err);
+      fileTagMap.value = {
+        ...fileTagMap.value,
+        [filePath]: [...(fileTagMap.value[filePath] ?? []), tag],
+      };
+      throw err;
+    }
   }
 
   /** Toggle: assign if absent, remove if present – convenience for the UI */
-  function toggleFileTag(filePath: string, tag: Tag) {
+  async function toggleFileTag(filePath: string, tag: Tag): Promise<void> {
     const current = fileTagMap.value[filePath] ?? [];
     if (current.some((t) => t.id === tag.id)) {
-      removeTag(filePath, tag);
+      await removeTag(filePath, tag);
     } else {
-      assignTag(filePath, tag);
+      await assignTag(filePath, tag);
     }
   }
 
@@ -98,6 +231,9 @@ export const useTagStore = defineStore('tags', () => {
     activeFilter,
     filteredPaths,
     isFilterActive,
+    loading,
+    error,
+    loadTags,
     toggleFilterTag,
     clearFilter,
     getTagsForFile,

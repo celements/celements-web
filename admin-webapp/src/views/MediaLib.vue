@@ -47,11 +47,13 @@
 <script lang="ts" setup>
 import { useLogger } from '@/utils/logger';
 import { RemoteDriver, VueFinder } from 'vuefinder';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import TagSidebar from '@/medialib/components/TagSidebar.vue';
 import TagStatusBar from '@/medialib/components/TagStatusBar.vue';
+import { useTagStore } from '@/medialib/stores/tags';
 
 const logger = useLogger('VueFinder');
+const tagStore = useTagStore();
 
 const selectedFiles = ref<any[]>([]);
 
@@ -74,4 +76,8 @@ driver.getDownloadUrl = (file: any) => {
 };
 
 logger.log('driver setup');
+
+onMounted(() => {
+  tagStore.loadTags();
+});
 </script>
