@@ -106,6 +106,30 @@
         _me._gotoSlideClickHandlerBind = _me._gotoSlideClickHandler.bind(_me);
       },
 
+      /**
+       * Shows an element regardless of whether it was hidden via display:none
+       * or the HTML `hidden` attribute.
+       * Prototype 1.7.3 visible() returns false for both, but show() only
+       * removes display:none, so we must also remove the hidden attribute.
+       */
+      _showElem: function (elem) {
+        elem.removeAttribute('hidden');
+        elem.show();
+      },
+
+      /**
+       * Hides an element and restores it to exactly the same hidden state it
+       * was in before a paired _showElem call.
+       * Pass the `wasHiddenAttr` flag that was captured before _showElem was
+       * called to decide whether the hidden attribute must be put back.
+       */
+      _hideElem: function (elem, wasHiddenAttr) {
+        elem.hide();
+        if (wasHiddenAttr) {
+          elem.writeAttribute('hidden', true);
+        }
+      },
+
       setCounterLeadingZeros: function (useLeadingZeros) {
         const _me = this;
         _me._counterLeadingZeros = useLeadingZeros;
@@ -664,12 +688,15 @@
         const _me = this;
         const slideWrapper = slideWrapperIn || _me._getSlideWrapper();
         const slideRoot = _me._getSlideRootElem(slideWrapper);
-        //we cannot read element dimension if any parent is hidden (display:none)
+        //we cannot read element dimension if any parent is hidden
         const hiddenParentElems = [];
         slideWrapper.ancestors().each(function (parentElem) {
           if (!parentElem.visible()) {
-            hiddenParentElems.push(parentElem);
-            parentElem.show();
+            hiddenParentElems.push({
+              elem: parentElem,
+              wasHiddenAttr: parentElem.readAttribute('hidden') !== null,
+            });
+            _me._showElem(parentElem);
           }
         });
         //ensure that the width is not influenced by the parents by setting position to absolute
@@ -707,7 +734,9 @@
         //--> see method comment
         const topPos = (parentHeight - slideOuterHeight) / 2;
         const leftPos = (parentWidth - slideOuterWidth) / 2;
-        hiddenParentElems.each(Element.hide);
+        hiddenParentElems.each(function (entry) {
+          _me._hideElem(entry.elem, entry.wasHiddenAttr);
+        });
         slideWrapper.setStyle({
           position: 'relative',
           margin: '0',
@@ -897,8 +926,11 @@
         const hiddenParentElems = [];
         slideWrapper.ancestors().each(function (parentElem) {
           if (!parentElem.visible()) {
-            hiddenParentElems.push(parentElem);
-            parentElem.show();
+            hiddenParentElems.push({
+              elem: parentElem,
+              wasHiddenAttr: parentElem.readAttribute('hidden') !== null,
+            });
+            _me._showElem(parentElem);
           }
         });
         const oldWidth = parseInt(slideWrapper.getWidth());
@@ -923,7 +955,9 @@
           position: rootPositionValue,
           visibility: '',
         });
-        hiddenParentElems.each(Element.hide);
+        hiddenParentElems.each(function (entry) {
+          _me._hideElem(entry.elem, entry.wasHiddenAttr);
+        });
         return {
           zoomFactor: zoomFactor,
           oldHeight: oldHeight,
