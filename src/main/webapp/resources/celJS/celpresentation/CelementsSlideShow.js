@@ -116,7 +116,7 @@
         const elemHideInfo = {
           elem: elem,
           wasHiddenAttr: elem.readAttribute('hidden') !== null,
-          wasDisplayNone: elem.getStyle('display') === 'none',
+          wasDisplayNone: elem.style.display === 'none',
         };
         elem.removeAttribute('hidden');
         elem.show();
@@ -131,12 +131,10 @@
        */
       _hideElem: function (elemHideInfo) {
         const elem = elemHideInfo.elem;
-        const wasHiddenAttr = elemHideInfo.wasHiddenAttr;
-        const wasDisplayNone = elemHideInfo.wasDisplayNone;
-        if (wasHiddenAttr) {
+        if (elemHideInfo.wasHiddenAttr) {
           elem.writeAttribute('hidden', true);
         }
-        if (wasDisplayNone) {
+        if (elemHideInfo.wasDisplayNone) {
           elem.hide();
         }
       },
