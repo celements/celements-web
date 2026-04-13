@@ -113,8 +113,14 @@
        * removes display:none, so we must also remove the hidden attribute.
        */
       _showElem: function (elem) {
+        const elemHideInfo = {
+          elem: elem,
+          wasHiddenAttr: elem.readAttribute('hidden') !== null,
+          wasDisplayNone: elem.getStyle('display') === 'none',
+        };
         elem.removeAttribute('hidden');
         elem.show();
+        return elemHideInfo;
       },
 
       /**
@@ -123,10 +129,15 @@
        * Pass the `wasHiddenAttr` flag that was captured before _showElem was
        * called to decide whether the hidden attribute must be put back.
        */
-      _hideElem: function (elem, wasHiddenAttr) {
-        elem.hide();
+      _hideElem: function (elemHideInfo) {
+        const elem = elemHideInfo.elem;
+        const wasHiddenAttr = elemHideInfo.wasHiddenAttr;
+        const wasDisplayNone = elemHideInfo.wasDisplayNone;
         if (wasHiddenAttr) {
           elem.writeAttribute('hidden', true);
+        }
+        if (wasDisplayNone) {
+          elem.hide();
         }
       },
 
@@ -692,11 +703,7 @@
         const hiddenParentElems = [];
         slideWrapper.ancestors().each(function (parentElem) {
           if (!parentElem.visible()) {
-            hiddenParentElems.push({
-              elem: parentElem,
-              wasHiddenAttr: parentElem.readAttribute('hidden') !== null,
-            });
-            _me._showElem(parentElem);
+            hiddenParentElems.push(_me._showElem(parentElem));
           }
         });
         //ensure that the width is not influenced by the parents by setting position to absolute
@@ -734,9 +741,7 @@
         //--> see method comment
         const topPos = (parentHeight - slideOuterHeight) / 2;
         const leftPos = (parentWidth - slideOuterWidth) / 2;
-        hiddenParentElems.each(function (entry) {
-          _me._hideElem(entry.elem, entry.wasHiddenAttr);
-        });
+        hiddenParentElems.each(_me._hideElem);
         slideWrapper.setStyle({
           position: 'relative',
           margin: '0',
@@ -926,11 +931,7 @@
         const hiddenParentElems = [];
         slideWrapper.ancestors().each(function (parentElem) {
           if (!parentElem.visible()) {
-            hiddenParentElems.push({
-              elem: parentElem,
-              wasHiddenAttr: parentElem.readAttribute('hidden') !== null,
-            });
-            _me._showElem(parentElem);
+            hiddenParentElems.push(_me._showElem(parentElem));
           }
         });
         const oldWidth = parseInt(slideWrapper.getWidth());
@@ -955,9 +956,7 @@
           position: rootPositionValue,
           visibility: '',
         });
-        hiddenParentElems.each(function (entry) {
-          _me._hideElem(entry.elem, entry.wasHiddenAttr);
-        });
+        hiddenParentElems.each(_me._hideElem);
         return {
           zoomFactor: zoomFactor,
           oldHeight: oldHeight,
