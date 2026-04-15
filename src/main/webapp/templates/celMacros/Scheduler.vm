@@ -101,13 +101,13 @@ $services.javascript.addExtJSfileOnce(':js/xwiki/xwiki.js')
   #end
  #end
 #end
-$adminMsg.get('xe.scheduler.welcome')
-<h2>$adminMsg.get('xe.scheduler.jobs.list')</h2>
+<p>$adminMsg.get('xe.scheduler.welcome')</p>
 <p>
 Scheduler
 <b>#if($xwiki.scheduler != $null) enabled #else disabled #end</b>
 on node $!services.celementsweb.nodeName
 </p>
+<h2>$adminMsg.get('xe.scheduler.jobs.list')</h2>
 ##
 ## Retrieve all scheduler jobs living in this space
 ## Display their name, status, possible next fire time, and available actions
