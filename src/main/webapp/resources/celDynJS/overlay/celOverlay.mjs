@@ -18,8 +18,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-import { CelOverlayResize } from "./overlayResize.mjs?version=202212031733";
-import "../DynamicLoader/celLazyLoader.mjs?version=202301052318";
+import { CelOverlayResize } from './overlayResize.mjs?version=202212031733';
+import '../DynamicLoader/celLazyLoader.mjs?version=202301052318';
 
 export class CelOverlay {
   /** class field definition and private fields only works for > Safari 14.5, Dec 2021,
@@ -39,13 +39,15 @@ export class CelOverlay {
     Object.assign(this, window.CELEMENTS.mixins.Observable);
     this._isOpen = false;
     this._loadingIndicator = new window.CELEMENTS.LoadingIndicator();
-    this.idPrefix = idPrefix || "celOverlay_";
+    this.idPrefix = idPrefix || 'celOverlay_';
     this._id = this._generateNextId(this.idPrefix);
     this._closeBind = this.close.bind(this);
     this._escapeHandlerBind = this._escapeHandler.bind(this);
-    const cssFiles = [{
-        'src' : '/file/resources/celRes/overlay/celementsOverlayV2.css'
-      }];
+    const cssFiles = [
+      {
+        src: '/file/resources/celRes/overlay/celementsOverlayV2.css',
+      },
+    ];
     if (customCssFiles) {
       cssFiles.push(...customCssFiles);
     }
@@ -80,7 +82,7 @@ export class CelOverlay {
 
   _getOverlayResizer() {
     if (!this._overlayResizer) {
-      this._overlayResizer= new CelOverlayResize(this);
+      this._overlayResizer = new CelOverlayResize(this);
     }
     return this._overlayResizer;
   }
@@ -142,8 +144,8 @@ export class CelOverlay {
       document.body.appendChild(overlayElem);
       this._overlayElem = overlayElem;
       this.celFire('celOverlay:afterRender', {
-        'overlayElem' : overlayElem,
-        'overlay' : this
+        overlayElem: overlayElem,
+        overlay: this,
       });
     }
     return this._overlayElem;
@@ -166,7 +168,7 @@ export class CelOverlay {
   }
 
   _escapeHandler(ev) {
-    if(ev.key === "Escape"){
+    if (ev.key === 'Escape') {
       ev.preventDefault();
       ev.stopPropagation();
       this.close();
@@ -196,18 +198,18 @@ export class CelOverlay {
       console.warn('skip "open" because overlay is already opened. Call "close" first');
     }
   }
-  
+
   async openCelementsPage(url) {
     this.open();
     if (url) {
       await this._loadContentAsync({
-       'url' : url,
-        'responseField' : 'celrenderedcontent',
-        'title' : data => (data.title || data.name)
+        url: url,
+        responseField: 'celrenderedcontent',
+        title: (data) => data.title || data.name,
       });
     }
   }
-  
+
   _parseHTML(html) {
     const elem = document.createElement('div');
     elem.insertAdjacentHTML('afterbegin', html);
@@ -221,10 +223,10 @@ export class CelOverlay {
       const response = await fetch(loadObj.url, {
         method: 'POST',
         redirect: 'follow',
-        body: params
+        body: params,
       });
       if (response.ok) {
-        const data = await response.json() ?? {};
+        const data = (await response.json()) ?? {};
         this.updateContent(this._parseHTML(data[loadObj.responseField]));
         this.title = loadObj.title(data);
       } else {
@@ -232,8 +234,8 @@ export class CelOverlay {
       }
     } catch (error) {
       const event = this.celFire('celOverlay:asyncLoadFailed', {
-        'overlay' : this,
-        'error' : err
+        overlay: this,
+        error: error,
       });
       if (!event.stopped) {
         this.updateContent(this._parseHTML('<p class="celErrMessage">Loading failed.</p>'));
@@ -241,13 +243,13 @@ export class CelOverlay {
       }
     }
   }
-  
+
   _getLoadingImg() {
     const loaderimg = this._loadingIndicator.getLoadingIndicator(64);
     Object.assign(loaderimg.style, {
-      display : 'block',
-      marginLeft : 'auto',
-      marginRight : 'auto'
+      display: 'block',
+      marginLeft: 'auto',
+      marginRight: 'auto',
     });
     return loaderimg;
   }
@@ -278,7 +280,6 @@ export class CelOverlay {
       console.warn('skip "close" because overlay is already closed. Call "open" first');
     }
   }
-
 }
 
 // For non module javascripts
