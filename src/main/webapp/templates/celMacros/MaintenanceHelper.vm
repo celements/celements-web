@@ -2,6 +2,7 @@
   #set($url = $services.url.getURL($doc.documentReference, 'view', 'xpage=overlay&conf=MaintenanceHelper'))
   <div id="maintenanceHelper">
     <h1>Helper for maintenance tasks</h1>
+    <p><b>Node:</b> $!services.celementsweb.nodeName</p>
     <p>
     <a href="$url&flushCache=true">Flush MenuItem Cache</a>
     #if("$!request.flushCache" == 'true')
