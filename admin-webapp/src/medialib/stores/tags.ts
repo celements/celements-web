@@ -77,12 +77,48 @@ async function apiRemoveTag(tagId: string, filePaths: string[]): Promise<void> {
   if (!res.ok) throw new Error(`POST ${API_BASE}/tags/remove failed: ${res.status}`);
 }
 
+async function apiCreateTag(label: string): Promise<TagDto> {
+  const res = await fetch(`${API_BASE}/tags/create`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ label }),
+  });
+  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/create failed: ${res.status}`);
+  return res.json() as Promise<TagDto>;
+}
+
+async function apiDeleteTag(tagId: string): Promise<void> {
+  const res = await fetch(`${API_BASE}/tags/delete`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tagId }),
+  });
+  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/delete failed: ${res.status}`);
+}
+
+async function apiRenameTag(tagId: string, newLabel: string): Promise<void> {
+  const res = await fetch(`${API_BASE}/tags/rename`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tagId, newLabel }),
+  });
+  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/rename failed: ${res.status}`);
+}
+
+async function apiCanManageTags(): Promise<boolean> {
+  const res = await fetch(`${API_BASE}/tags/can-manage`);
+  if (!res.ok) return false;
+  const data = await res.json();
+  return !!data.canManage;
+}
+
 // ---------------------------------------------------------------------------
 // Store
 // ---------------------------------------------------------------------------
 export const useTagStore = defineStore('tags', () => {
   // ----- state ----------------------------------------------------------------
   const availableTags = ref<Tag[]>([]);
+  const canManageTags = ref<boolean>(false);
 
   /** filePath → Tag[] */
   const fileTagMap = ref<Record<string, Tag[]>>({});
@@ -122,6 +158,7 @@ export const useTagStore = defineStore('tags', () => {
     loading.value = true;
     error.value = null;
     try {
+      canManageTags.value = await apiCanManageTags();
       const dtos = await apiFetchTags();
 
       // Map DTOs → Tag objects with deterministic colors
@@ -236,6 +273,53 @@ export const useTagStore = defineStore('tags', () => {
     }
   }
 
+  async function createTag(label: string): Promise<void> {
+    const backupTags = [...availableTags.value];
+    const newId = `temp-${Date.now()}`;
+    const newTag: Tag = { id: newId, label, color: colorForIndex(availableTags.value.length) };
+    availableTags.value.push(newTag);
+    try {
+      const dto = await apiCreateTag(label);
+      const tagIndex = availableTags.value.findIndex(t => t.id === newId);
+      if (tagIndex !== -1) {
+        availableTags.value[tagIndex].id = dto.id;
+        availableTags.value[tagIndex].label = dto.prettyName || dto.id;
+      }
+    } catch(err) {
+      availableTags.value = backupTags;
+      throw err;
+    }
+  }
+
+  async function deleteTag(tag: Tag): Promise<void> {
+    const backupTags = [...availableTags.value];
+    const backupMap = { ...fileTagMap.value };
+    availableTags.value = availableTags.value.filter(t => t.id !== tag.id);
+    activeFilter.value = activeFilter.value.filter(t => t.id !== tag.id);
+    // Remove tag from file maps
+    for (const path in fileTagMap.value) {
+      fileTagMap.value[path] = fileTagMap.value[path].filter(t => t.id !== tag.id);
+    }
+    try {
+      await apiDeleteTag(tag.id);
+    } catch(err) {
+      availableTags.value = backupTags;
+      fileTagMap.value = backupMap;
+      throw err;
+    }
+  }
+
+  async function renameTag(tag: Tag, newLabel: string): Promise<void> {
+    const prevLabel = tag.label;
+    tag.label = newLabel;
+    try {
+      await apiRenameTag(tag.id, newLabel);
+    } catch(err) {
+      tag.label = prevLabel;
+      throw err;
+    }
+  }
+
   return {
     availableTags,
     fileTagMap,
@@ -251,5 +335,9 @@ export const useTagStore = defineStore('tags', () => {
     assignTag,
     removeTag,
     toggleFileTag,
+    canManageTags,
+    createTag,
+    deleteTag,
+    renameTag,
   };
 });

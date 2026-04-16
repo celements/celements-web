@@ -60,7 +60,7 @@
       </span>
 
       <!-- Add tag dropdown trigger -->
-      <div class="relative ml-auto" ref="dropdownRef">
+      <div ref="dropdownRef" class="relative ml-auto">
         <button
           class="flex items-center gap-1.5 rounded-md border border-[var(--p-content-border-color)] px-2.5 py-1 text-xs text-[var(--p-text-color)] transition hover:bg-[var(--p-content-hover-background)]"
           @click="dropdownOpen = !dropdownOpen"
