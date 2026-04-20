@@ -290,6 +290,11 @@
       <artifactId>celements-keycloak</artifactId>
       <version>7.1-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-s3</artifactId>
+      <version>7.0-SNAPSHOT</version>
+    </dependency>
 
     <!-- Spring -->
     <dependency>
@@ -375,7 +380,7 @@
   </dependencies>
   <dependencyManagement>
     <dependencies>
-      <!-- Align ALL Spring 5.3.x artifacts -->
+      <!-- Align Spring artifacts -->
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-framework-bom</artifactId>
@@ -383,8 +388,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
-      <!-- Align ALL Jackson 2.x artifacts (core, databind, annotations, dataformats, datatype-*) -->
+      <!-- Align Jackson artifacts -->
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
@@ -392,12 +396,20 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
-      <!-- Force the newer JTA for old Hibernate transitive -->
+      <!-- internal conflict between hibernate:jar:3.2.6.ga and hibernate-core:jar:3.3.2.GA -->
       <dependency>
         <groupId>javax.transaction</groupId>
         <artifactId>jta</artifactId>
         <version>1.1</version>
+      </dependency>
+      <!--
+        aws-sdk internal conflict because they don't enforce dependency convergence, see
+        https://github.com/aws/aws-sdk-java-v2/issues/2669
+      -->
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpcore</artifactId>
+        <version>4.4.16</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
