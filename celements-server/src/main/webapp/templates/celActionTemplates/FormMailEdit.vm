@@ -1,0 +1,29 @@
+<form id="update" method="post" action="$xwiki.getURL($doc.getFullName(),'save')">
+<input type="hidden" name="xredirect" value="$xwiki.getURL($doc.getFullName(),'view')" />
+<input type="hidden" name="Celements2.ReceiverEMail_nb"   value="$cur_doc.getObjectNumbers('Celements2.ReceiverEMail')" />
+<div class="celements2_box">
+#set($i = 1)
+#if($doc.getObjects('Celements2.ReceiverEMail').size() <= 0)
+No receivers.
+#else
+ <table class="celements2_table">
+#foreach($receiver in $doc.getObjects('Celements2.ReceiverEMail'))
+  <tr>
+  <td width="20%">Receiver #${i}:</td>
+  <td width="60%"><input size='30' value='$receiver.getProperty("email").getValue()' name='Celements2.ReceiverEMail_${receiver.getNumber()}_email' type='text' class="celements2_input" style="float:left"/></td>
+  <td width="20%"><a href="$xwiki.getURL($doc.getFullName(),'objectremove')?classname=Celements2.ReceiverEMail&classid=${receiver.getNumber()}&xredirect=$xwiki.getURL($doc.getFullName(),'edit')" onclick="return confirm('Are you sure you want to remove this receiver?')">
+    remove</a>
+  </tr>
+ #set($i = $i + 1)
+#end
+ </table>
+#end
+<br />
+<br />
+<input type="button" value="Add receiver" class="celements2_input_button" onclick="javascript:window.location.href='$xwiki.getURL($doc.getFullName(),'objectadd')?classname=Celements2.ReceiverEMail&xredirect=$xwiki.getURL($doc.getFullName(),'edit')'" />
+</div>
+<div class="celements2_align_right">
+<input type="button" value="Cancel" onclick="javascript:window.location.href='$xwiki.getURL($doc.getFullName(),'view')'" class="celements2_input_button" />
+<input type="submit" value="Save" class="celements2_input_button"/> 
+</div>
+</form>
