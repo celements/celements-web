@@ -1,0 +1,22 @@
+#set($jsonBuilder = $services.json.newBuilder())##
+$jsonBuilder.openDictionary()##
+## defaults
+$jsonBuilder.openDictionary('defaults')##
+$jsonBuilder.addProperty('defaultCss', "$!services.celementsweb.getSkinFile(':celRes/multimedia/playerDefaults.css', 'file')")##
+$jsonBuilder.closeDictionary()##
+## flowplayerConf
+$jsonBuilder.openDictionary('flowplayerConf')##
+## flowplayer path to the js resource
+$jsonBuilder.addProperty('flowplayerPath', "$!services.celementsweb.getSkinFile(':celJS/flowplayer/flowplayer-3.2.6.swf', 'file')")##
+$jsonBuilder.addProperty('flowplayerContentPath', "$!services.celementsweb.getSkinFile(':celJS/flowplayer/flowplayer.content-3.2.0.swf', 'file')")
+#set($jsonInclude = true)##
+#parse('celAjax/multimedia/_flowplayerConfig.vm')##
+$jsonBuilder.addProperty('flowplayerLookConf', $!jsonBuilderIntern)##
+$jsonBuilder.closeDictionary()##
+## externalVideoMapping
+#set($jsonInclude = true)##
+#parse('celAjax/multimedia/_externalVideoMapping.vm')##
+$jsonBuilder.addProperty('externalVideoMapping', $!jsonBuilderIntern)##
+##
+$jsonBuilder.closeDictionary()##
+$jsonBuilder.getJSON()

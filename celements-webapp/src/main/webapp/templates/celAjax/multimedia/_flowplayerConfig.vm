@@ -1,0 +1,33 @@
+#set($jsonBuilderIntern = $services.json.newBuilder())##
+$jsonBuilderIntern.openDictionary()##
+## defaults
+$jsonBuilderIntern.openDictionary('defaults')##
+$jsonBuilderIntern.addProperty('autoPlay', true)##
+$jsonBuilderIntern.addProperty('autoBuffering', true)##
+$jsonBuilderIntern.addProperty('accelerated', true)##
+$jsonBuilderIntern.addProperty('fadeInSpeed', 500)##
+$jsonBuilderIntern.addProperty('fadeOutSpeed', 500)##
+$jsonBuilderIntern.addProperty('replayLabel', "")##
+$jsonBuilderIntern.closeDictionary()##
+## skins
+$jsonBuilderIntern.openDictionary('skins')##
+$jsonBuilderIntern.openDictionary('dark')##
+$jsonBuilderIntern.addProperty('playlist', false)##
+$jsonBuilderIntern.addProperty('stop', false)##
+$jsonBuilderIntern.addProperty('time', false)##
+$jsonBuilderIntern.addProperty('fullscreen', true)##
+$jsonBuilderIntern.addProperty('opacity', $util.parseFloat("1.0"))##
+$jsonBuilderIntern.addProperty('progressGradient', 'none')##
+$jsonBuilderIntern.addProperty('sliderGradient', 'none')##
+$jsonBuilderIntern.addProperty('bufferColor', '#333333')##
+$jsonBuilderIntern.addProperty('backgroundColor', '#000000')##
+$jsonBuilderIntern.addProperty('buttonColor', '#666666')##
+$jsonBuilderIntern.addProperty('volumeSliderProgressColor', '#333333')##
+$jsonBuilderIntern.addProperty('progressColor', '#333333')##
+$jsonBuilderIntern.closeDictionary()##
+$jsonBuilderIntern.closeDictionary()##
+##
+$jsonBuilderIntern.closeDictionary()##
+#if(!$jsonInclude)##
+$jsonBuilderIntern.getJSON()
+#end##
