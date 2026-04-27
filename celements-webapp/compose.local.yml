@@ -1,3 +1,4 @@
+name: celements-web
 services:
 
   webserver: 
