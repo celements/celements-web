@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-3xl sm:text-4xl mb-6 mt-4;
+  }
+  h2 {
+    @apply text-2xl mb-2;
+  }
+  h3 {
+    @apply text-xl mb-2;
+  }
+  h4 {
+    @apply mb-2;
+  }
+}
+
+/* Primary and Surface Palettes */
+:root {
+  --p-primary-50: #cce7ea; /*türkis-20*/
+  --p-primary-100: #cce7ea; /*türkis-20*/
+  --p-primary-200: #99d7d7; /*türkis-40*/
+  --p-primary-300: #99d7d7; /*türkis-40*/
+  --p-primary-400: #66c7c9; /*türkis-60*/
+  --p-primary-500: #66c7c9; /*türkis-60*/
+  --p-primary-600: #66c7c9; /*türkis-60*/
+  --p-primary-700: #33b8bd; /*türkis-80*/
+  --p-primary-800: #33b8bd; /*türkis-80*/
+  --p-primary-900: #00a8b1; /*türkis-100*/
+  --p-primary-950: #00a8b1; /*türkis-100*/
+  --p-surface-0: #ffffff;
+  --p-surface-50: #f1f1f1; /*grau-20*/
+  --p-surface-100: #ebebeb; /*grau-40*/
+  --p-surface-200: #e6e6e6; /*grau-60*/
+  --p-surface-300: #e0e0e0; /*grau-80*/
+  --p-surface-400: #dedede; /*grau-100*/
+  --p-surface-500: #a6a6a6; /*schattengrau*/
+  --p-surface-600: #cccccc; /*schwarz-20*/
+  --p-surface-700: #999999; /*schwarz-40*/
+  --p-surface-800: #666666; /*schwarz-60*/
+  --p-surface-900: #333333; /*schwarz-80*/
+  --p-surface-950: #000000; /*schwarz-100*/
+  --p-content-border-radius: 6px;
+}
+
+/* Light Mode */
+:root {
+  --p-primary-color: var(--p-primary-900);
+  --p-primary-contrast-color: var(--p-surface-0);
+  --p-primary-hover-color: var(--p-primary-600);
+  --p-primary-active-color: var(--p-primary-700);
+  --p-content-border-color: var(--p-surface-200);
+  --p-content-hover-background: var(--p-surface-100);
+  --p-content-hover-color: var(--p-surface-800);
+  --p-highlight-background: var(--p-primary-50);
+  --p-highlight-color: var(--p-primary-700);
+  --p-highlight-focus-background: var(--p-primary-100);
+  --p-highlight-focus-color: var(--p-primary-800);
+  --p-text-color: var(--p-surface-950);
+  --p-text-hover-color: var(--p-surface-800);
+  --p-text-muted-color: var(--p-surface-500);
+  --p-text-hover-muted-color: var(--p-surface-600);
+}
+
+/* 
+* Dark Mode
+* Change the .p-dark to match the darkMode in tailwind.config.
+* For example; 
+*  darkMode: ['selector', '[class*="app-dark"]'] 
+*  should match;
+* :root.app-dark
+*/
+:root.p-dark {
+  --p-primary-color: var(--p-primary-400);
+  --p-primary-contrast-color: var(--p-surface-900);
+  --p-primary-hover-color: var(--p-primary-300);
+  --p-primary-active-color: var(--p-primary-200);
+  --p-content-border-color: var(--p-surface-700);
+  --p-content-hover-background: var(--p-surface-800);
+  --p-content-hover-color: var(--p-surface-0);
+  --p-highlight-background: mix(in srgb, var(--p-primary-400), transparent 84%);
+  --p-highlight-color: rgba(255, 255, 255, 0.87);
+  --p-highlight-focus-background: color-mix(in srgb, var(--p-primary-400), transparent 76%);
+  --p-highlight-focus-color: rgba(255, 255, 255, 0.87);
+  --p-text-color: var(--p-surface-0);
+  --p-text-hover-color: var(--p-surface-0);
+  --p-text-muted-color: var(--p-surface-400);
+  --p-text-hover-muted-color: var(--p-surface-300);
+}
+
+/*Helvetia Farben*/
+:root {
+  /* Primärfarben */
+  --schwarz-100: 0 0 0;
+  --schwarz-80: 51 51 51;
+  --schwarz-60: 102 102 102;
+  --schwarz-40: 153 153 153;
+  --schwarz-20: 204 204 204;
+
+  --tuerkis-100: 0 168 177;
+  --tuerkis-80: 51 184 189;
+  --tuerkis-60: 102 199 201;
+  --tuerkis-40: 153 215 215;
+  --tuerkis-20: 204 231 234;
+
+  --schattentuerkis-100: 0 126 128;
+  --schattentuerkis-80: 51 153 153;
+  --schattentuerkis-60: 102 179 179;
+  --schattentuerkis-40: 153 204 204;
+  --schattentuerkis-20: 204 230 230;
+
+  --violett-100: 136 89 161;
+  --violett-80: 163 121 179;
+  --violett-60: 189 153 196;
+  --violett-40: 216 185 214;
+  --violett-20: 242 217 232;
+
+  --schattenviolett-100: 112 70 134;
+  --schattenviolett-80: 143 103 163;
+  --schattenviolett-60: 173 136 191;
+  --schattenviolett-40: 204 169 220;
+  --schattenviolett-20: 234 202 232;
+
+  --rot-100: 230 0 3;
+  --rot-80: 230 51 51;
+  --rot-60: 230 102 102;
+  --rot-40: 230 153 153;
+  --rot-20: 230 204 204;
+
+  --schattenrot-100: 189 0 6;
+  --schattenrot-80: 194 51 51;
+  --schattenrot-60: 199 102 102;
+  --schattenrot-40: 204 153 153;
+  --schattenrot-20: 209 204 204;
+
+  /* Sekundärfarben: ergänzen Primärfarben für Akzente */
+  --grau-100: 222 222 222;
+  --grau-80: 224 224 224;
+  --grau-60: 230 230 230;
+  --grau-40: 235 235 235;
+  --grau-20: 241 241 241;
+  --grau-10: 248 248 248;
+
+  --warmgrau-100: 213 201 182;
+  --warmgrau-80: 216 207 192;
+  --warmgrau-60: 221 215 203;
+  --warmgrau-40: 226 223 214;
+  --warmgrau-20: 232 231 225;
+
+  --rosa-100: 240 135 181;
+  --rosa-80: 242 159 196;
+  --rosa-60: 245 184 211;
+  --rosa-40: 247 208 225;
+  --rosa-20: 250 232 240;
+
+  --orange-100: 249 176 0;
+  --orange-80: 249 192 51;
+  --orange-60: 250 192 102;
+  --orange-40: 251 208 153;
+  --orange-20: 252 224 204;
+
+  --gelb-100: 255 221 0;
+  --gelb-80: 255 224 51;
+  --gelb-60: 255 230 102;
+  --gelb-40: 255 235 153;
+  --gelb-20: 255 241 204;
+
+  --gruen-100: 175 202 0;
+  --gruen-80: 191 211 51;
+  --gruen-60: 207 219 102;
+  --gruen-40: 223 228 153;
+  --gruen-20: 239 237 204;
+
+  --blau-100: 90 197 242;
+  --blau-80: 122 209 244;
+  --blau-60: 155 220 246;
+  --blau-40: 187 232 249;
+  --blau-20: 220 243 251;
+
+  /* abgedunkelte Sekundärfarben: für farbige Texte zur Erhöhung der Lesbarkeit */
+  --schattengrau: 166 166 166;
+  --schattenwarmgrau: 177 155 119;
+  --schattenrosa: 230 52 130;
+  --schattenorange: 187 132 0;
+  --schattengelb: 191 166 0;
+  --schattengruen: 131 151 0;
+  --schattenblau: 18 168 231;
+}
