@@ -1,5 +1,5 @@
 import Home from '@/views/Home.vue';
-import VueFinder from '@/views/VueFinder.vue';
+import MediaLib from '@/views/MediaLib.vue';
 import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/MediaLib',
     name: 'MediaLib',
-    component: VueFinder,
+    component: MediaLib,
     meta: {
 //      requiresAuth: true,
     }

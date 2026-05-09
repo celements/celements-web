@@ -10,6 +10,8 @@ import { useLogger } from '@/utils/logger';
 import { createApp, type App as VueApp } from 'vue';
 import VueFinder from 'vuefinder';
 import 'vuefinder/dist/style.css';
+import PrimeVue from 'primevue/config';
+import Button from 'primevue/button';
 
 export type CelementsAdminMountOptions = {
   /**
@@ -25,9 +27,10 @@ export type CelementsAdminMountOptions = {
   localDev?: boolean;
 };
 
-export function createCelementsAdminApp(
-  options: CelementsAdminMountOptions = {},
-): { app: VueApp; mount: (el: Element | string) => unknown } {
+export function createCelementsAdminApp(options: CelementsAdminMountOptions = {}): {
+  app: VueApp;
+  mount: (el: Element | string) => unknown;
+} {
   const logger = useLogger('Celements-Admin');
 
   const app = createApp(App);
@@ -35,6 +38,9 @@ export function createCelementsAdminApp(
   app.config.errorHandler = (err, instance, info) => {
     logger.error(err as string, instance, info);
   };
+
+  app.use(PrimeVue, { unstyled: true });
+  app.component('Button', Button);
 
   app.use(Store);
 
@@ -58,8 +64,7 @@ export function createCelementsAdminApp(
   });
 
   const localDev =
-    options.localDev ??
-    ((import.meta.env.VITE_ENABLE_LOCAL_DEVELOPMENT ?? 'true') === 'true');
+    options.localDev ?? (import.meta.env.VITE_ENABLE_LOCAL_DEVELOPMENT ?? 'true') === 'true';
 
   app.provide('localDev', localDev);
 
