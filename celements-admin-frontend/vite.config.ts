@@ -24,6 +24,10 @@ export const getViteConfig = (mode: string) => {
     },
     server: {
       proxy: {
+        '^/api': {
+          target: env.VITE_CEL_API_URL,
+          changeOrigin: true,
+        },
         '^/download': {
           target: env.VITE_CEL_API_URL,
           changeOrigin: true,
