@@ -1,22 +1,19 @@
 tailwind.config = {
   theme: {
     fontFamily: {
-      /* 3 Schriftschnitte der Futura für freien Einsatz. */
-      'futuraBold': ['FuturaLTW05-Bold', 'Arial', 'sansSerif'],
-      'futuraMedium': ['FuturaLTW05-Medium', 'Arial', 'sansSerif'],
-      'futuraBook': ['FuturaLTW05-Book', 'Arial', 'sansSerif'],
-      /* Gemäss Font StyleGuide momentan auf Webseiten nicht im Einsatz. */
-      'futuraLight': ['FuturaLTW05-Light', 'Arial', 'sansSerif'],
+      /* Fonts used in celements2.css */
+      'openSans': ['Open Sans', 'Tahoma', 'Geneva', 'Helvetica', 'Arial', 'sans-serif'],
+      'terminalDosis': ['Terminal Dosis', 'Open Sans', 'Arial', 'sans-serif'],
     },
     extend: {
       colors: {
-        /* Primärfarben */
+        /* Primary colors */
         schwarz: {
           100: '#000000ff',
-          80: '#000000cc',
-          60: '#00000099',
-          40: '#00000066',
-          20: '#00000033',
+          80: '#333333ff',
+          60: '#666666ff',
+          40: '#999999ff',
+          20: '#ccccccff',
         },
         türkis: {
           100: '#00a8b1ff',
@@ -60,13 +57,14 @@ tailwind.config = {
           40: '#bd000666',
           20: '#bd000633',
         },
-        /* Sekundärfarben: ergänzen Primärfarben für Akzente */
+        /* Secondary colors: complement primary colors for accents */
         grau: {
           100: '#dededeff',
-          80: '#dededecc',
-          60: '#dedede99',
-          40: '#dedede66',
-          20: '#dedede33',
+          80: '#e0e0e0cc',
+          60: '#e6e6e699',
+          40: '#ebebeb66',
+          20: '#f1f1f133',
+          10: '#f8f8f81a',
         },
         warmgrau: {
           100: '#d5c9b6ff',
@@ -110,7 +108,7 @@ tailwind.config = {
           40: '#5ac5f266',
           20: '#5ac5f233',
         },
-        /* abgedunkelte Sekundärfarben: für farbige Texte zur Erhöhung der Lesbarkeit */
+        /* Darkened secondary colors: for colored text to improve readability */
         schattengrau: '#a6a6a6',
         schattenwarmgrau: '#b19b77',
         schattenrosa: '#e63482',
@@ -125,4 +123,3 @@ tailwind.config = {
     },
   },
 }
-
