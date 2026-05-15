@@ -1,6 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/presets/alu/index.js"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "exclude": ["test/**/*.ts"],
   "compilerOptions": {
     "composite": true,
