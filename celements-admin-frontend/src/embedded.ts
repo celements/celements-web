@@ -11,10 +11,10 @@ class CelAdminElement extends HTMLElement {
   connectedCallback() {
     if (this.mounted) return;
 
-    const locale = this.getAttribute('locale') ?? undefined;
+    const locale = this.dataset.locale ?? undefined;
 
-    // local-dev: presence means "true" unless explicitly "false"
-    const localDevAttr = this.getAttribute('local-dev');
+    // data-local-dev: presence means "true" unless explicitly "false"
+    const localDevAttr = this.dataset.localDev;
     const localDev = localDevAttr == null ? undefined : localDevAttr.toLowerCase() !== 'false';
 
     // Create + mount into this custom element

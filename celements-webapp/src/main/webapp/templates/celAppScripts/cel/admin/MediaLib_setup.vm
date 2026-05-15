@@ -1,0 +1,5 @@
+#if($services.rightsAccess.isLoggedIn())
+  #set($overwriteLayoutRef = $services.reference.create().space("SimpleLayout").build())
+#else
+  #set($overwriteRenderDocument = 'celInlineTemplates/login.vm')
+#end

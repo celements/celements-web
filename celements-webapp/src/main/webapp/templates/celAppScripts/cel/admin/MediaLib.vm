@@ -5,7 +5,7 @@ $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind.config.js'))
 
 #set($requestHost = "$!context.getRequest().getHeader('host')")
-#if($requestHost.startsWith('localhost'))
+#if($requestHost.indexOf('localhost') != -1)
 <script type="module" src="http://localhost:5173/@vite/client"></script>
 <script type="module" src="http://localhost:5173/src/embedded.ts"></script>
 #else

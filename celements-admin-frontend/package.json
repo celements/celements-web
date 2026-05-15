@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"npm:type-check-watch\" \"npm:test-watch\"",
+    "dev": "concurrently \"vite --mode dev\" \"npm:type-check-watch\" \"npm:test-watch\"",
     "build": "npm run type-check && npm run test && vite build",
     "preview": "vite preview",
     "test": "vitest run",
