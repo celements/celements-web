@@ -18,18 +18,18 @@ The **Media Library** (powered by [VueFinder](https://github.com/n1crack/vuefind
 
 ## 🛠️ Tech Stack
 
-| Category        | Technology                                                                 |
-|-----------------|----------------------------------------------------------------------------|
-| Framework       | [Vue 3](https://vuejs.org/) + [TypeScript](https://www.typescriptlang.org/) |
-| Build Tool      | [Vite 8](https://vite.dev/)                                                |
-| State           | [Pinia](https://pinia.vuejs.org/)                                          |
-| Router          | [Vue Router 5](https://router.vuejs.org/)                                  |
-| UI Components   | [PrimeVue 4](https://primevue.org/) (unstyled / pass-through)              |
-| Styling         | [Tailwind CSS 4](https://tailwindcss.com/) + [tailwindcss-primeui](https://github.com/primefaces/tailwindcss-primeui) |
-| Testing         | [Vitest](https://vitest.dev/) + [Vue Test Utils](https://test-utils.vuejs.org/) |
-| Linting         | [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)           |
-| Media Library   | [VueFinder](https://github.com/n1crack/vuefinder)                          |
-| Icons           | [Font Awesome 7](https://fontawesome.com/)                                 |
+| Category      | Technology                                                                                                            |
+| ------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Framework     | [Vue 3](https://vuejs.org/) + [TypeScript](https://www.typescriptlang.org/)                                           |
+| Build Tool    | [Vite 8](https://vite.dev/)                                                                                           |
+| State         | [Pinia](https://pinia.vuejs.org/)                                                                                     |
+| Router        | [Vue Router 5](https://router.vuejs.org/)                                                                             |
+| UI Components | [PrimeVue 4](https://primevue.org/) (unstyled / pass-through)                                                         |
+| Styling       | [Tailwind CSS 4](https://tailwindcss.com/) + [tailwindcss-primeui](https://github.com/primefaces/tailwindcss-primeui) |
+| Testing       | [Vitest](https://vitest.dev/) + [Vue Test Utils](https://test-utils.vuejs.org/)                                       |
+| Linting       | [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)                                                      |
+| Media Library | [VueFinder](https://github.com/n1crack/vuefinder)                                                                     |
+| Icons         | [Font Awesome 7](https://fontawesome.com/)                                                                            |
 
 ---
 
@@ -50,11 +50,11 @@ npm install
 
 The project uses environment-specific `.env` files. Copy the appropriate file for your setup:
 
-| File         | Description                    |
-|--------------|--------------------------------|
-| `.env.dev`   | Local development configuration |
-| `.env.int`   | Integration / staging environment |
-| `.env.prod`  | Production environment         |
+| File        | Description                       |
+| ----------- | --------------------------------- |
+| `.env.dev`  | Local development configuration   |
+| `.env.int`  | Integration / staging environment |
+| `.env.prod` | Production environment            |
 
 Key variables:
 
@@ -63,7 +63,6 @@ VITE_ENABLE_LOCAL_DEVELOPMENT=true        # Enables local dev features
 VITE_APP_BASE_URL=http://localhost:5173   # Frontend base URL
 
 # API endpoints
-VITE_PROGON_API_URL=https://...
 VITE_CEL_API_URL=http://...
 
 # Keycloak / OIDC configuration
@@ -76,19 +75,19 @@ VITE_KEYCLOAK_CLIENT_ID=<client-id>
 
 ## 📜 Scripts
 
-| Command                   | Description                                                        |
-|---------------------------|--------------------------------------------------------------------|
-| `npm run dev`             | Start dev server with concurrent type-checking and test watching   |
-| `npm run build`           | Type-check + run tests + build production bundle                   |
-| `npm run preview`         | Preview the production build locally                               |
-| `npm run test`            | Run unit tests once with Vitest                                    |
-| `npm run test-watch`      | Run unit tests in watch mode                                       |
-| `npm run type-check`      | Type-check `.vue` files with `vue-tsc`                             |
-| `npm run lint`            | Lint source files with ESLint                                      |
-| `npm run lint-fix`        | Auto-fix ESLint issues                                             |
-| `npm run format`          | Check code formatting with Prettier                                |
-| `npm run format-fix`      | Auto-fix code formatting with Prettier                             |
-| `npm run pre-commit`      | Run type-check, format check and lint (recommended as a git hook)  |
+| Command              | Description                                                       |
+| -------------------- | ----------------------------------------------------------------- |
+| `npm run dev`        | Start dev server with concurrent type-checking and test watching  |
+| `npm run build`      | Type-check + run tests + build production bundle                  |
+| `npm run preview`    | Preview the production build locally                              |
+| `npm run test`       | Run unit tests once with Vitest                                   |
+| `npm run test-watch` | Run unit tests in watch mode                                      |
+| `npm run type-check` | Type-check `.vue` files with `vue-tsc`                            |
+| `npm run lint`       | Lint source files with ESLint                                     |
+| `npm run lint-fix`   | Auto-fix ESLint issues                                            |
+| `npm run format`     | Check code formatting with Prettier                               |
+| `npm run format-fix` | Auto-fix code formatting with Prettier                            |
+| `npm run pre-commit` | Run type-check, format check and lint (recommended as a git hook) |
 
 ---
 
