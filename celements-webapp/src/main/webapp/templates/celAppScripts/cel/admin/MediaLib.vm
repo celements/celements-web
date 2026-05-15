@@ -9,10 +9,8 @@ $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind
 <script type="module" src="http://localhost:5173/@vite/client"></script>
 <script type="module" src="http://localhost:5173/src/embedded.ts"></script>
 #else
-<div>
-  <p>requestHost: $requestHost</p>
-  <p>TODO production: include scripts form dist/.vite/manifest.json</p>
-</div>
+<link rel="stylesheet" href="/static/assets/embedded.css" />
+<script type="module" src="/static/assets/embedded.js"></script>
 #end
 
 <div class="cel_cell" id="userAdmin">

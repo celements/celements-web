@@ -21,6 +21,16 @@ export const getViteConfig = (mode: string) => {
     ],
     build: {
       manifest: true,
+      rollupOptions: {
+        input: {
+          embedded: 'src/embedded.ts',
+        },
+        output: {
+          entryFileNames: 'assets/[name].js',
+          chunkFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: 'assets/[name][extname]',
+        },
+      },
     },
     server: {
       proxy: {
