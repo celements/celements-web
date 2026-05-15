@@ -21,6 +21,7 @@ export const getViteConfig = (mode: string) => {
     ],
     build: {
       manifest: true,
+      chunkSizeWarningLimit: 1500,
       rollupOptions: {
         input: {
           embedded: 'src/embedded.ts',
@@ -29,6 +30,11 @@ export const getViteConfig = (mode: string) => {
           entryFileNames: 'assets/[name].js',
           chunkFileNames: 'assets/[name]-[hash].js',
           assetFileNames: 'assets/[name][extname]',
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          },
         },
       },
     },
