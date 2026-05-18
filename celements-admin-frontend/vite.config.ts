@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import { defineConfig, loadEnv } from 'vite';
 
 // https://vite.dev/config/
-export default defineConfig(({mode}) =>  getViteConfig(mode));
+export default defineConfig(({ mode }) => getViteConfig(mode));
 
 // Export a function to resolve the config manually for Vitest
 export const getViteConfig = (mode: string) => {
@@ -12,11 +12,11 @@ export const getViteConfig = (mode: string) => {
   return defineConfig({
     plugins: [
       vue({
-        template:{
-          compilerOptions:{
-            isCustomElement: (tag) => tag.includes('-')
-          }
-        }
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag) => tag.includes('-'),
+          },
+        },
       }),
     ],
     build: {
@@ -56,11 +56,11 @@ export const getViteConfig = (mode: string) => {
     },
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
     preview: {
-      allowedHosts: ['alumni.appint.demospace.ch', 'localhost'],
+      allowedHosts: ['localhost'],
     },
   });
 };

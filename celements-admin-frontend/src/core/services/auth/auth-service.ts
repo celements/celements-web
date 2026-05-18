@@ -32,7 +32,7 @@ export class AuthService {
       silent_redirect_uri: `${options.appBaseUrl}/silent-sign-in-callback`,
       post_logout_redirect_uri: `${options.appBaseUrl}/`,
       response_type: 'code',
-      scope: 'openid profile email alumni_roles',
+      scope: 'openid profile email',
     };
     this.#manager = new UserManager(openIdcSettings);
     this.#config = openIdcSettings;
@@ -133,9 +133,7 @@ export class AuthService {
       lastName: user.profile.family_name,
       firstName: user.profile.given_name,
       username: user.profile.preferred_username,
-      isAdmin: Array.isArray(user.profile.alumniRoles)
-        ? user.profile.alumniRoles.includes('alumni-admin')
-        : false,
+      isAdmin: false,
     };
   }
 
