@@ -28,7 +28,7 @@ FROM caddy:2 AS execute
 
 WORKDIR /srv
 
-COPY --from=builder /app/dist /srv
+COPY --from=build /app/dist /srv
 COPY Caddyfile /etc/caddy/Caddyfile
 RUN caddy fmt /etc/caddy/Caddyfile --overwrite
 
