@@ -154,39 +154,43 @@ export const useTagStore = defineStore('tags', () => {
    * Load all tags from the backend and populate fileTagMap.
    * Designed to be called once on app mount / store initialisation.
    */
+  function dtosToTags(dtos: TagDto[]): Tag[] {
+    return dtos.map((dto, index) => ({
+      id: dto.id,
+      label: dto.prettyName || dto.id,
+      color: colorForIndex(index),
+    }));
+  }
+
+  async function buildFileTagMap(tags: Tag[]): Promise<Record<string, Tag[]>> {
+    // Keys must match VueFinder's file.path format: "local://<filename>"
+    const newMap: Record<string, Tag[]> = {};
+    await Promise.all(
+      tags.map(async (tag) => {
+        try {
+          const filenames = await apiFetchFilesForTag(tag.id);
+          for (const filename of filenames) {
+            const path = toVueFinderPath(filename);
+            if (!newMap[path]) newMap[path] = [];
+            newMap[path].push(tag);
+          }
+        } catch (err) {
+          console.warn(`[TagStore] Could not load files for tag "${tag.id}":`, err);
+        }
+      }),
+    );
+    return newMap;
+  }
+
   async function loadTags(): Promise<void> {
     loading.value = true;
     error.value = null;
     try {
       canManageTags.value = await apiCanManageTags();
       const dtos = await apiFetchTags();
-
-      // Map DTOs → Tag objects with deterministic colors
-      const tags: Tag[] = dtos.map((dto, index) => ({
-        id: dto.id,
-        label: dto.prettyName || dto.id,
-        color: colorForIndex(index),
-      }));
+      const tags = dtosToTags(dtos);
       availableTags.value = tags;
-
-      // Build fileTagMap: for each tag fetch which files carry it.
-      // Keys must match VueFinder's file.path format: "local://<filename>"
-      const newMap: Record<string, Tag[]> = {};
-      await Promise.all(
-        tags.map(async (tag) => {
-          try {
-            const filenames = await apiFetchFilesForTag(tag.id);
-            for (const filename of filenames) {
-              const path = toVueFinderPath(filename);
-              if (!newMap[path]) newMap[path] = [];
-              newMap[path].push(tag);
-            }
-          } catch (err) {
-            console.warn(`[TagStore] Could not load files for tag "${tag.id}":`, err);
-          }
-        }),
-      );
-      fileTagMap.value = newMap;
+      fileTagMap.value = await buildFileTagMap(tags);
     } catch (err) {
       error.value = err instanceof Error ? err.message : String(err);
       console.error('[TagStore] loadTags failed:', err);
@@ -215,25 +219,29 @@ export const useTagStore = defineStore('tags', () => {
   /**
    * Assign a tag to a file. Calls the backend and updates local state on success.
    */
-  async function assignTag(filePath: string, tag: Tag): Promise<void> {
-    const current = fileTagMap.value[filePath] ?? [];
-    if (current.some((t) => t.id === tag.id)) return; // already assigned
-
-    // Optimistic update
+  function optimisticallyAssignTag(filePath: string, tag: Tag, current: Tag[]): void {
     fileTagMap.value = {
       ...fileTagMap.value,
       [filePath]: [...current, tag],
     };
+  }
 
+  function rollbackAssignTag(filePath: string, tag: Tag): void {
+    fileTagMap.value = {
+      ...fileTagMap.value,
+      [filePath]: fileTagMap.value[filePath].filter((t) => t.id !== tag.id),
+    };
+  }
+
+  async function assignTag(filePath: string, tag: Tag): Promise<void> {
+    const current = fileTagMap.value[filePath] ?? [];
+    if (current.some((t) => t.id === tag.id)) return; // already assigned
+    optimisticallyAssignTag(filePath, tag, current);
     try {
       await apiAssignTag(tag.id, [filePath]);
     } catch (err) {
-      // Roll back
       console.error('[TagStore] assignTag failed, rolling back:', err);
-      fileTagMap.value = {
-        ...fileTagMap.value,
-        [filePath]: fileTagMap.value[filePath].filter((t) => t.id !== tag.id),
-      };
+      rollbackAssignTag(filePath, tag);
       throw err;
     }
   }
@@ -241,24 +249,28 @@ export const useTagStore = defineStore('tags', () => {
   /**
    * Remove a tag from a file. Calls the backend and updates local state on success.
    */
-  async function removeTag(filePath: string, tag: Tag): Promise<void> {
-    const current = fileTagMap.value[filePath] ?? [];
-
-    // Optimistic update
+  function optimisticallyRemoveTag(filePath: string, tag: Tag, current: Tag[]): void {
     fileTagMap.value = {
       ...fileTagMap.value,
       [filePath]: current.filter((t) => t.id !== tag.id),
     };
+  }
 
+  function rollbackRemoveTag(filePath: string, tag: Tag): void {
+    fileTagMap.value = {
+      ...fileTagMap.value,
+      [filePath]: [...(fileTagMap.value[filePath] ?? []), tag],
+    };
+  }
+
+  async function removeTag(filePath: string, tag: Tag): Promise<void> {
+    const current = fileTagMap.value[filePath] ?? [];
+    optimisticallyRemoveTag(filePath, tag, current);
     try {
       await apiRemoveTag(tag.id, [filePath]);
     } catch (err) {
-      // Roll back
       console.error('[TagStore] removeTag failed, rolling back:', err);
-      fileTagMap.value = {
-        ...fileTagMap.value,
-        [filePath]: [...(fileTagMap.value[filePath] ?? []), tag],
-      };
+      rollbackRemoveTag(filePath, tag);
       throw err;
     }
   }
@@ -273,36 +285,49 @@ export const useTagStore = defineStore('tags', () => {
     }
   }
 
-  async function createTag(label: string): Promise<void> {
+  function optimisticallyCreateTag(label: string): { newId: string; backupTags: Tag[] } {
     const backupTags = [...availableTags.value];
     const newId = `temp-${Date.now()}`;
     const newTag: Tag = { id: newId, label, color: colorForIndex(availableTags.value.length) };
     availableTags.value.push(newTag);
+    return { newId, backupTags };
+  }
+
+  function finalizeCreatedTag(newId: string, dto: TagDto): void {
+    const tagIndex = availableTags.value.findIndex((t) => t.id === newId);
+    if (tagIndex !== -1) {
+      availableTags.value[tagIndex].id = dto.id;
+      availableTags.value[tagIndex].label = dto.prettyName || dto.id;
+    }
+  }
+
+  async function createTag(label: string): Promise<void> {
+    const { newId, backupTags } = optimisticallyCreateTag(label);
     try {
       const dto = await apiCreateTag(label);
-      const tagIndex = availableTags.value.findIndex(t => t.id === newId);
-      if (tagIndex !== -1) {
-        availableTags.value[tagIndex].id = dto.id;
-        availableTags.value[tagIndex].label = dto.prettyName || dto.id;
-      }
-    } catch(err) {
+      finalizeCreatedTag(newId, dto);
+    } catch (err) {
       availableTags.value = backupTags;
       throw err;
     }
   }
 
-  async function deleteTag(tag: Tag): Promise<void> {
+  function optimisticallyDeleteTag(tag: Tag): { backupTags: Tag[]; backupMap: Record<string, Tag[]> } {
     const backupTags = [...availableTags.value];
     const backupMap = { ...fileTagMap.value };
-    availableTags.value = availableTags.value.filter(t => t.id !== tag.id);
-    activeFilter.value = activeFilter.value.filter(t => t.id !== tag.id);
-    // Remove tag from file maps
+    availableTags.value = availableTags.value.filter((t) => t.id !== tag.id);
+    activeFilter.value = activeFilter.value.filter((t) => t.id !== tag.id);
     for (const path in fileTagMap.value) {
-      fileTagMap.value[path] = fileTagMap.value[path].filter(t => t.id !== tag.id);
+      fileTagMap.value[path] = fileTagMap.value[path].filter((t) => t.id !== tag.id);
     }
+    return { backupTags, backupMap };
+  }
+
+  async function deleteTag(tag: Tag): Promise<void> {
+    const { backupTags, backupMap } = optimisticallyDeleteTag(tag);
     try {
       await apiDeleteTag(tag.id);
-    } catch(err) {
+    } catch (err) {
       availableTags.value = backupTags;
       fileTagMap.value = backupMap;
       throw err;
