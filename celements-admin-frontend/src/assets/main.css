@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer base {
   h1 {
@@ -17,17 +17,6 @@
 
 /* Primary and Surface Palettes */
 :root {
-  --p-primary-50: #cce7ea; /*türkis-20*/
-  --p-primary-100: #cce7ea; /*türkis-20*/
-  --p-primary-200: #99d7d7; /*türkis-40*/
-  --p-primary-300: #99d7d7; /*türkis-40*/
-  --p-primary-400: #66c7c9; /*türkis-60*/
-  --p-primary-500: #66c7c9; /*türkis-60*/
-  --p-primary-600: #66c7c9; /*türkis-60*/
-  --p-primary-700: #33b8bd; /*türkis-80*/
-  --p-primary-800: #33b8bd; /*türkis-80*/
-  --p-primary-900: #00a8b1; /*türkis-100*/
-  --p-primary-950: #00a8b1; /*türkis-100*/
   --p-surface-0: #ffffff;
   --p-surface-50: #f1f1f1; /*grau-20*/
   --p-surface-100: #ebebeb; /*grau-40*/
@@ -88,38 +77,13 @@
   --p-text-hover-muted-color: var(--p-surface-300);
 }
 
-/*Helvetia Farben*/
 :root {
-  /* Primärfarben */
+  /* Primary Palettes */
   --schwarz-100: 0 0 0;
   --schwarz-80: 51 51 51;
   --schwarz-60: 102 102 102;
   --schwarz-40: 153 153 153;
   --schwarz-20: 204 204 204;
-
-  --tuerkis-100: 0 168 177;
-  --tuerkis-80: 51 184 189;
-  --tuerkis-60: 102 199 201;
-  --tuerkis-40: 153 215 215;
-  --tuerkis-20: 204 231 234;
-
-  --schattentuerkis-100: 0 126 128;
-  --schattentuerkis-80: 51 153 153;
-  --schattentuerkis-60: 102 179 179;
-  --schattentuerkis-40: 153 204 204;
-  --schattentuerkis-20: 204 230 230;
-
-  --violett-100: 136 89 161;
-  --violett-80: 163 121 179;
-  --violett-60: 189 153 196;
-  --violett-40: 216 185 214;
-  --violett-20: 242 217 232;
-
-  --schattenviolett-100: 112 70 134;
-  --schattenviolett-80: 143 103 163;
-  --schattenviolett-60: 173 136 191;
-  --schattenviolett-40: 204 169 220;
-  --schattenviolett-20: 234 202 232;
 
   --rot-100: 230 0 3;
   --rot-80: 230 51 51;
@@ -133,7 +97,7 @@
   --schattenrot-40: 204 153 153;
   --schattenrot-20: 209 204 204;
 
-  /* Sekundärfarben: ergänzen Primärfarben für Akzente */
+  /* Surface Palettes */
   --grau-100: 222 222 222;
   --grau-80: 224 224 224;
   --grau-60: 230 230 230;
@@ -146,18 +110,6 @@
   --warmgrau-60: 221 215 203;
   --warmgrau-40: 226 223 214;
   --warmgrau-20: 232 231 225;
-
-  --rosa-100: 240 135 181;
-  --rosa-80: 242 159 196;
-  --rosa-60: 245 184 211;
-  --rosa-40: 247 208 225;
-  --rosa-20: 250 232 240;
-
-  --orange-100: 249 176 0;
-  --orange-80: 249 192 51;
-  --orange-60: 250 192 102;
-  --orange-40: 251 208 153;
-  --orange-20: 252 224 204;
 
   --gelb-100: 255 221 0;
   --gelb-80: 255 224 51;
@@ -177,11 +129,9 @@
   --blau-40: 187 232 249;
   --blau-20: 220 243 251;
 
-  /* abgedunkelte Sekundärfarben: für farbige Texte zur Erhöhung der Lesbarkeit */
+  /* Darkened Colors for Text Visibility */
   --schattengrau: 166 166 166;
   --schattenwarmgrau: 177 155 119;
-  --schattenrosa: 230 52 130;
-  --schattenorange: 187 132 0;
   --schattengelb: 191 166 0;
   --schattengruen: 131 151 0;
   --schattenblau: 18 168 231;

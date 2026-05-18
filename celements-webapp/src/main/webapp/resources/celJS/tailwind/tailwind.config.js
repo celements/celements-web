@@ -2,8 +2,8 @@ tailwind.config = {
   theme: {
     fontFamily: {
       /* Fonts used in celements2.css */
-      'openSans': ['Open Sans', 'Tahoma', 'Geneva', 'Helvetica', 'Arial', 'sans-serif'],
-      'terminalDosis': ['Terminal Dosis', 'Open Sans', 'Arial', 'sans-serif'],
+      openSans: ['Open Sans', 'Tahoma', 'Geneva', 'Helvetica', 'Arial', 'sans-serif'],
+      terminalDosis: ['Terminal Dosis', 'Open Sans', 'Arial', 'sans-serif'],
     },
     extend: {
       colors: {
@@ -14,34 +14,6 @@ tailwind.config = {
           60: '#666666ff',
           40: '#999999ff',
           20: '#ccccccff',
-        },
-        türkis: {
-          100: '#00a8b1ff',
-          80: '#00a8b1cc',
-          60: '#00a8b199',
-          40: '#00a8b166',
-          20: '#00a8b133',
-        },
-        schattentürkis: {
-          100: '#007e80ff',
-          80: '#007e80cc',
-          60: '#007e8099',
-          40: '#007e8066',
-          20: '#007e8033',
-        },
-        violett: {
-          100: '#8859a1ff',
-          80: '#8859a1cc',
-          60: '#8859a199',
-          40: '#8859a166',
-          20: '#8859a133',
-        },
-        schattenviolett: {
-          100: '#704686ff',
-          80: '#704686cc',
-          60: '#70468699',
-          40: '#70468666',
-          20: '#70468633',
         },
         rot: {
           100: '#e60003ff',
@@ -122,4 +94,4 @@ tailwind.config = {
       },
     },
   },
-}
+};
