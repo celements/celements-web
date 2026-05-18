@@ -54,6 +54,7 @@
 <script lang="ts" setup>
 import { useLogger } from '@/utils/logger';
 import { RemoteDriver, VueFinder } from 'vuefinder';
+import type { DirEntry } from 'vuefinder';
 import { computed, onMounted, ref } from 'vue';
 import TagSidebar from '@/medialib/components/TagSidebar.vue';
 import TagStatusBar from '@/medialib/components/TagStatusBar.vue';
@@ -62,9 +63,9 @@ import { useTagStore } from '@/medialib/stores/tags';
 const logger = useLogger('VueFinder');
 const tagStore = useTagStore();
 
-const selectedFiles = ref<any[]>([]);
+const selectedFiles = ref<DirEntry[]>([]);
 
-const handleSelect = (files: any[]) => {
+const handleSelect = (files: DirEntry[]) => {
   selectedFiles.value = files;
   logger.log('selected files', files);
 };
@@ -74,7 +75,7 @@ const driver = new RemoteDriver({
 });
 
 const originalGetDownloadUrl = driver.getDownloadUrl.bind(driver);
-driver.getDownloadUrl = (file: any) => {
+driver.getDownloadUrl = (file: DirEntry & { url?: string }) => {
   if (file && file.url) {
     return file.url;
   }
@@ -88,7 +89,7 @@ const originalList = driver.list.bind(driver);
 driver.list = async (...args: Parameters<typeof originalList>) => {
   const result = await originalList(...args);
   if (tagStore.isFilterActive && result?.files) {
-    result.files = result.files.filter((f: any) =>
+    result.files = result.files.filter((f: DirEntry) =>
       tagStore.filteredPaths.has(f.path),
     );
   }

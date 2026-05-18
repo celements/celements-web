@@ -11,7 +11,7 @@ import { createApp, type App as VueApp } from 'vue';
 import VueFinder from 'vuefinder';
 import 'vuefinder/dist/style.css';
 import PrimeVue from 'primevue/config';
-import Button from 'primevue/button';
+import Button, { type ButtonProps } from 'primevue/button';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPlus, faTrashCan, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -43,40 +43,63 @@ export function createCelementsAdminApp(options: CelementsAdminMountOptions = {}
     logger.error(err as string, instance, info);
   };
 
-  app.use(PrimeVue, { 
+  app.use(PrimeVue, {
     unstyled: true,
     pt: {
       dialog: {
-        root: { class: 'bg-[var(--p-surface-0)] rounded-lg shadow-lg border border-[var(--p-content-border-color)] overflow-hidden flex flex-col w-[25rem] max-w-[90vw]' },
-        header: { class: 'flex items-center justify-between px-4 py-3 border-b border-[var(--p-content-border-color)]' },
+        root: {
+          class:
+            'bg-[var(--p-surface-0)] rounded-lg shadow-lg border border-[var(--p-content-border-color)] overflow-hidden flex flex-col w-[25rem] max-w-[90vw]',
+        },
+        header: {
+          class:
+            'flex items-center justify-between px-4 py-3 border-b border-[var(--p-content-border-color)]',
+        },
         title: { class: 'text-lg font-semibold' },
         content: { class: 'p-4' },
-        footer: { class: 'flex justify-end gap-2 px-4 py-3 border-t border-[var(--p-content-border-color)] bg-[var(--p-surface-50)]' },
-        mask: { class: 'bg-black/50 fixed inset-0 flex items-center justify-center z-50' }
+        footer: {
+          class:
+            'flex justify-end gap-2 px-4 py-3 border-t border-[var(--p-content-border-color)] bg-[var(--p-surface-50)]',
+        },
+        mask: { class: 'bg-black/50 fixed inset-0 flex items-center justify-center z-50' },
       },
       confirmdialog: {
-        root: { class: 'bg-[var(--p-surface-0)] rounded-lg shadow-lg border border-[var(--p-content-border-color)] overflow-hidden w-[25rem] max-w-[90vw]' },
-        header: { class: 'flex items-center gap-3 px-4 py-3 border-b border-[var(--p-content-border-color)]' },
+        root: {
+          class:
+            'bg-[var(--p-surface-0)] rounded-lg shadow-lg border border-[var(--p-content-border-color)] overflow-hidden w-[25rem] max-w-[90vw]',
+        },
+        header: {
+          class:
+            'flex items-center gap-3 px-4 py-3 border-b border-[var(--p-content-border-color)]',
+        },
         title: { class: 'text-lg font-semibold' },
         content: { class: 'p-4 flex items-center gap-3' },
         icon: { class: 'text-2xl text-[var(--p-text-muted-color)]' },
         message: { class: 'text-[var(--p-text-color)]' },
-        footer: { class: 'flex justify-end gap-2 px-4 py-3 border-t border-[var(--p-content-border-color)] bg-[var(--p-surface-50)]' },
+        footer: {
+          class:
+            'flex justify-end gap-2 px-4 py-3 border-t border-[var(--p-content-border-color)] bg-[var(--p-surface-50)]',
+        },
         mask: { class: 'bg-black/50 fixed inset-0 flex items-center justify-center z-50' },
       },
       inputtext: {
-        root: { class: 'px-3 py-2 border border-[var(--p-content-border-color)] rounded-md w-full focus:outline-hidden focus:ring-2 focus:ring-[var(--p-primary-color)] text-[var(--p-text-color)] bg-[var(--p-surface-0)]' }
+        root: {
+          class:
+            'px-3 py-2 border border-[var(--p-content-border-color)] rounded-md w-full focus:outline-hidden focus:ring-2 focus:ring-[var(--p-primary-color)] text-[var(--p-text-color)] bg-[var(--p-surface-0)]',
+        },
       },
       button: {
-        root: ({ props }: any) => ({
+        root: ({ props }: { props: ButtonProps }) => ({
           class: [
             'px-3 py-1.5 rounded-md font-semibold transition-colors focus:ring-2 focus:ring-offset-1 focus:outline-hidden',
-            props.severity === 'secondary' ? 'text-[var(--p-text-color)] hover:bg-[var(--p-content-hover-background)]' : 'bg-[var(--p-primary-color)] text-white hover:opacity-80 ring-[var(--p-primary-color)]',
-            props.disabled ? 'opacity-50 cursor-not-allowed' : ''
-          ]
-        })
-      }
-    }
+            props.severity === 'secondary'
+              ? 'text-[var(--p-text-color)] hover:bg-[var(--p-content-hover-background)]'
+              : 'bg-[var(--p-primary-color)] text-white hover:opacity-80 ring-[var(--p-primary-color)]',
+            props.disabled ? 'opacity-50 cursor-not-allowed' : '',
+          ],
+        }),
+      },
+    },
   });
   app.use(ConfirmationService);
   app.component('Button', Button);
