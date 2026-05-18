@@ -20,6 +20,7 @@ RUN npm install --legacy-peer-deps
 
 # Layer: package
 COPY . .
+ARG PROFILE_ACTIVE=dev
 RUN mv .env.${PROFILE_ACTIVE} .env; \
   npm run build
 
