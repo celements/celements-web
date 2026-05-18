@@ -1,120 +1,20 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import type { Tag, TagDto } from '@/types/medialib';
+import {
+  apiAssignTag,
+  apiCanManageTags,
+  apiCreateTag,
+  apiDeleteTag,
+  apiFetchFilesForTag,
+  apiFetchTags,
+  apiRemoveTag,
+  apiRenameTag,
+} from './tagApi';
+import { colorForIndex, toVueFinderPath } from './tagColors';
 
 export type { Tag } from '@/types/medialib';
 
-// ---------------------------------------------------------------------------
-// API base path – matches the VueFinder RemoteDriver base URL
-// ---------------------------------------------------------------------------
-const API_BASE = '/api/files';
-
-// ---------------------------------------------------------------------------
-// Deterministic color palette assigned by tag index
-// (backend has no color concept – we assign a stable color client-side)
-// ---------------------------------------------------------------------------
-const COLOR_PALETTE = [
-  'bg-teal-500',
-  'bg-blue-500',
-  'bg-amber-500',
-  'bg-violet-500',
-  'bg-slate-500',
-  'bg-rose-500',
-  'bg-emerald-500',
-  'bg-cyan-500',
-  'bg-orange-500',
-  'bg-pink-500',
-  'bg-lime-500',
-  'bg-indigo-500',
-];
-
-function colorForIndex(index: number): string {
-  return COLOR_PALETTE[index % COLOR_PALETTE.length];
-}
-
-/**
- * Converts a bare filename (as returned by /api/files/tags/files) to the
- * full VueFinder path used as keys in fileTagMap and for file selection.
- * e.g. "foo.jpg" → "local://foo.jpg"
- */
-function toVueFinderPath(filename: string): string {
-  if (filename.includes('://')) return filename; // already a full path
-  return `local://${filename}`;
-}
-
-
-// ---------------------------------------------------------------------------
-// Internal API helpers
-// ---------------------------------------------------------------------------
-async function apiFetchTags(): Promise<TagDto[]> {
-  const res = await fetch(`${API_BASE}/tags`);
-  if (!res.ok) throw new Error(`GET ${API_BASE}/tags failed: ${res.status}`);
-  return res.json() as Promise<TagDto[]>;
-}
-
-async function apiFetchFilesForTag(tagId: string): Promise<string[]> {
-  const res = await fetch(`${API_BASE}/tags/files?tagId=${encodeURIComponent(tagId)}`);
-  if (!res.ok)
-    throw new Error(`GET ${API_BASE}/tags/files?tagId=${tagId} failed: ${res.status}`);
-  return res.json() as Promise<string[]>;
-}
-
-async function apiAssignTag(tagId: string, filePaths: string[]): Promise<void> {
-  const res = await fetch(`${API_BASE}/tags/assign`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tagId, filePaths }),
-  });
-  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/assign failed: ${res.status}`);
-}
-
-async function apiRemoveTag(tagId: string, filePaths: string[]): Promise<void> {
-  const res = await fetch(`${API_BASE}/tags/remove`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tagId, filePaths }),
-  });
-  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/remove failed: ${res.status}`);
-}
-
-async function apiCreateTag(label: string): Promise<TagDto> {
-  const res = await fetch(`${API_BASE}/tags/create`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ label }),
-  });
-  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/create failed: ${res.status}`);
-  return res.json() as Promise<TagDto>;
-}
-
-async function apiDeleteTag(tagId: string): Promise<void> {
-  const res = await fetch(`${API_BASE}/tags/delete`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tagId }),
-  });
-  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/delete failed: ${res.status}`);
-}
-
-async function apiRenameTag(tagId: string, newLabel: string): Promise<void> {
-  const res = await fetch(`${API_BASE}/tags/rename`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tagId, newLabel }),
-  });
-  if (!res.ok) throw new Error(`POST ${API_BASE}/tags/rename failed: ${res.status}`);
-}
-
-async function apiCanManageTags(): Promise<boolean> {
-  const res = await fetch(`${API_BASE}/tags/can-manage`);
-  if (!res.ok) return false;
-  const data = await res.json();
-  return !!data.canManage;
-}
-
-// ---------------------------------------------------------------------------
-// Store
-// ---------------------------------------------------------------------------
 export const useTagStore = defineStore('tags', () => {
   // ----- state ----------------------------------------------------------------
   const availableTags = ref<Tag[]>([]);
@@ -150,10 +50,6 @@ export const useTagStore = defineStore('tags', () => {
 
   // ----- actions --------------------------------------------------------------
 
-  /**
-   * Load all tags from the backend and populate fileTagMap.
-   * Designed to be called once on app mount / store initialisation.
-   */
   function dtosToTags(dtos: TagDto[]): Tag[] {
     return dtos.map((dto, index) => ({
       id: dto.id,
@@ -182,6 +78,10 @@ export const useTagStore = defineStore('tags', () => {
     return newMap;
   }
 
+  /**
+   * Load all tags from the backend and populate fileTagMap.
+   * Designed to be called once on app mount / store initialisation.
+   */
   async function loadTags(): Promise<void> {
     loading.value = true;
     error.value = null;
@@ -216,9 +116,6 @@ export const useTagStore = defineStore('tags', () => {
     return fileTagMap.value[filePath] ?? [];
   }
 
-  /**
-   * Assign a tag to a file. Calls the backend and updates local state on success.
-   */
   function optimisticallyAssignTag(filePath: string, tag: Tag, current: Tag[]): void {
     fileTagMap.value = {
       ...fileTagMap.value,
@@ -233,6 +130,9 @@ export const useTagStore = defineStore('tags', () => {
     };
   }
 
+  /**
+   * Assign a tag to a file. Calls the backend and updates local state on success.
+   */
   async function assignTag(filePath: string, tag: Tag): Promise<void> {
     const current = fileTagMap.value[filePath] ?? [];
     if (current.some((t) => t.id === tag.id)) return; // already assigned
@@ -246,9 +146,6 @@ export const useTagStore = defineStore('tags', () => {
     }
   }
 
-  /**
-   * Remove a tag from a file. Calls the backend and updates local state on success.
-   */
   function optimisticallyRemoveTag(filePath: string, tag: Tag, current: Tag[]): void {
     fileTagMap.value = {
       ...fileTagMap.value,
@@ -263,6 +160,9 @@ export const useTagStore = defineStore('tags', () => {
     };
   }
 
+  /**
+   * Remove a tag from a file. Calls the backend and updates local state on success.
+   */
   async function removeTag(filePath: string, tag: Tag): Promise<void> {
     const current = fileTagMap.value[filePath] ?? [];
     optimisticallyRemoveTag(filePath, tag, current);
@@ -339,7 +239,7 @@ export const useTagStore = defineStore('tags', () => {
     tag.label = newLabel;
     try {
       await apiRenameTag(tag.id, newLabel);
-    } catch(err) {
+    } catch (err) {
       tag.label = prevLabel;
       throw err;
     }
