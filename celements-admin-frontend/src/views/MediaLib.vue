@@ -23,10 +23,10 @@
         :features="{
           search: true,
           preview: true,
-          rename: true,
           upload: true,
           delete: true,
           download: true,
+          rename: false,
           newfolder: false,
           newfile: false,
           move: false,
