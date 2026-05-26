@@ -192,6 +192,11 @@
       <param-value>org.springframework.web.context.WebApplicationContext.ROOT</param-value>
     </init-param>
     <load-on-startup>3</load-on-startup>
+    <multipart-config>
+      <max-file-size>104857600</max-file-size> <!-- 100MB -->
+      <max-request-size>104857600</max-request-size>
+      <file-size-threshold>0</file-size-threshold>
+    </multipart-config>
   </servlet>
 
   <servlet-mapping>
