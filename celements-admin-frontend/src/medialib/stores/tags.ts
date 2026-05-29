@@ -10,45 +10,17 @@ import {
   apiFetchTags,
   apiRemoveTag,
   apiRenameTag,
-} from './tagApi';
-import { colorForIndex, toVueFinderPath } from './tagColors';
+} from '@/medialib/api/tagApi';
+import { colorForIndex, toVueFinderPath } from '@/medialib/utils/tagColors';
 
 export type { Tag } from '@/types/medialib';
 
 export const useTagStore = defineStore('tags', () => {
-  // ----- state ----------------------------------------------------------------
+  // ----- 1. Initial Load & General State -----
   const availableTags = ref<Tag[]>([]);
   const canManageTags = ref<boolean>(false);
-
-  /** filePath → Tag[] */
-  const fileTagMap = ref<Record<string, Tag[]>>({});
-
-  /** Tags currently active in the sidebar filter (multi-select) */
-  const activeFilter = ref<Tag[]>([]);
-
-  /** True while the initial tags+mappings load is in progress */
   const loading = ref(false);
-
-  /** Error message if the initial load failed */
   const error = ref<string | null>(null);
-
-  // ----- getters --------------------------------------------------------------
-
-  /** Paths that carry ALL currently active filter tags (AND logic) */
-  const filteredPaths = computed<Set<string>>(() => {
-    if (activeFilter.value.length === 0) return new Set();
-    return new Set(
-      Object.entries(fileTagMap.value)
-        .filter(([, tags]) =>
-          activeFilter.value.every((ft) => tags.some((t) => t.id === ft.id)),
-        )
-        .map(([path]) => path),
-    );
-  });
-
-  const isFilterActive = computed(() => activeFilter.value.length > 0);
-
-  // ----- actions --------------------------------------------------------------
 
   function dtosToTags(dtos: TagDto[]): Tag[] {
     return dtos.map((dto, index) => ({
@@ -57,6 +29,27 @@ export const useTagStore = defineStore('tags', () => {
       color: colorForIndex(index),
     }));
   }
+
+  async function loadTags(): Promise<void> {
+    loading.value = true;
+    error.value = null;
+    try {
+      canManageTags.value = await apiCanManageTags();
+      const dtos = await apiFetchTags();
+      const tags = dtosToTags(dtos);
+      availableTags.value = tags;
+      fileTagMap.value = await buildFileTagMap(tags);
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : String(err);
+      console.error('[TagStore] loadTags failed:', err);
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  // ----- 2. File Tag Mappings -----
+  /** filePath → Tag[] */
+  const fileTagMap = ref<Record<string, Tag[]>>({});
 
   async function buildFileTagMap(tags: Tag[]): Promise<Record<string, Tag[]>> {
     // Keys must match VueFinder's file.path format: "local://<filename>"
@@ -78,26 +71,27 @@ export const useTagStore = defineStore('tags', () => {
     return newMap;
   }
 
-  /**
-   * Load all tags from the backend and populate fileTagMap.
-   * Designed to be called once on app mount / store initialisation.
-   */
-  async function loadTags(): Promise<void> {
-    loading.value = true;
-    error.value = null;
-    try {
-      canManageTags.value = await apiCanManageTags();
-      const dtos = await apiFetchTags();
-      const tags = dtosToTags(dtos);
-      availableTags.value = tags;
-      fileTagMap.value = await buildFileTagMap(tags);
-    } catch (err) {
-      error.value = err instanceof Error ? err.message : String(err);
-      console.error('[TagStore] loadTags failed:', err);
-    } finally {
-      loading.value = false;
-    }
+  function getTagsForFile(filePath: string): Tag[] {
+    return fileTagMap.value[filePath] ?? [];
   }
+
+  // ----- 3. Sidebar Filtering -----
+  /** Tags currently active in the sidebar filter (multi-select) */
+  const activeFilter = ref<Tag[]>([]);
+
+  /** Paths that carry ALL currently active filter tags (AND logic) */
+  const filteredPaths = computed<Set<string>>(() => {
+    if (activeFilter.value.length === 0) return new Set();
+    return new Set(
+      Object.entries(fileTagMap.value)
+        .filter(([, tags]) =>
+          activeFilter.value.every((ft) => tags.some((t) => t.id === ft.id)),
+        )
+        .map(([path]) => path),
+    );
+  });
+
+  const isFilterActive = computed(() => activeFilter.value.length > 0);
 
   function toggleFilterTag(tag: Tag) {
     const idx = activeFilter.value.findIndex((t) => t.id === tag.id);
@@ -112,10 +106,7 @@ export const useTagStore = defineStore('tags', () => {
     activeFilter.value = [];
   }
 
-  function getTagsForFile(filePath: string): Tag[] {
-    return fileTagMap.value[filePath] ?? [];
-  }
-
+  // ----- 4. File Tag Operations (Assign/Remove) -----
   function optimisticallyAssignTag(filePath: string, tag: Tag, current: Tag[]): void {
     fileTagMap.value = {
       ...fileTagMap.value,
@@ -185,6 +176,7 @@ export const useTagStore = defineStore('tags', () => {
     }
   }
 
+  // ----- 5. Tag Management (Create/Delete/Rename) -----
   function optimisticallyCreateTag(label: string): { newId: string; backupTags: Tag[] } {
     const backupTags = [...availableTags.value];
     const newId = `temp-${Date.now()}`;
