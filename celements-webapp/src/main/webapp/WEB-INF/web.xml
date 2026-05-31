@@ -116,7 +116,7 @@
 
   <filter-mapping>
     <filter-name>ActionDispatcher</filter-name>
-    <url-pattern>/*</url-pattern>
+    <servlet-name>action</servlet-name>
   </filter-mapping>
 
   <listener>
