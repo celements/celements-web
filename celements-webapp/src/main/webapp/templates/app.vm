@@ -5,15 +5,9 @@
   #parse($services.appscript.getAppScriptTemplatePath("$!celAppScriptSetup"))
 #else
   #set($celAppScript = $services.appscript.getScriptNameFromURL())
-  #set($appRecursiveScript = $services.appscript.getAppRecursiveScript("$!celAppScript"))
-  #if($appRecursiveScript)
-    #set($indexOfPlus = $appRecursiveScript.lastIndexOf("++"))
-    #if($indexOfPlus > 0)
-      #set($recSetupName = "${appRecursiveScript.substring(0, $indexOfPlus)}_setup++")
-      #if($services.appscript.isAppScriptAvailable($recSetupName))
-        #parse($services.appscript.getAppScriptTemplatePath($recSetupName))
-      #end
-    #end
+  #set($recSetupName = $services.appscript.getAppRecursiveSetupScript("$!celAppScript"))
+  #if($recSetupName)
+    #parse($services.appscript.getAppScriptTemplatePath($recSetupName))
   #end
 #end
 $xwiki.parseTemplate("frameheader.vm")
