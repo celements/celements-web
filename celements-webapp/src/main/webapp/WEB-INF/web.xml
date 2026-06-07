@@ -116,7 +116,7 @@
 
   <filter-mapping>
     <filter-name>ActionDispatcher</filter-name>
-    <url-pattern>/*</url-pattern>
+    <servlet-name>action</servlet-name>
   </filter-mapping>
 
   <listener>
@@ -192,6 +192,11 @@
       <param-value>org.springframework.web.context.WebApplicationContext.ROOT</param-value>
     </init-param>
     <load-on-startup>3</load-on-startup>
+    <multipart-config>
+      <max-file-size>104857600</max-file-size> <!-- 100MB -->
+      <max-request-size>104857600</max-request-size>
+      <file-size-threshold>0</file-size-threshold>
+    </multipart-config>
   </servlet>
 
   <servlet-mapping>
