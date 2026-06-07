@@ -290,6 +290,11 @@
       <artifactId>celements-keycloak</artifactId>
       <version>7.1-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-filebase</artifactId>
+      <version>7.1-SNAPSHOT</version>
+    </dependency>
 
     <!-- Spring -->
     <dependency>

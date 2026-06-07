@@ -1,0 +1,24 @@
+<link rel="stylesheet" media="all" type="text/css" href="$celementsweb.getSkinFile(':celRes/userAdmin/main.css', 'file')" />
+#set($jsService = $services.javascript)
+#set($extJsParamSync = $!jsService.createExtJSParam().setAction('file'))
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind.js'))
+$!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind.config.js'))
+
+#set($requestHost = "$!context.getRequest().getHeader('host')")
+#if($requestHost.indexOf('localhost') != -1)
+<script type="module" src="http://localhost:5173/@vite/client"></script>
+<script type="module" src="http://localhost:5173/src/embedded.ts"></script>
+#else
+<link rel="stylesheet" href="/static/assets/embedded.css" />
+<script type="module" src="/static/assets/embedded.js"></script>
+#end
+
+<div class="cel_cell" id="userAdmin">
+  <div class="cel_cell" id="content">
+    <div class="cel_cell" id="titleWrapper">
+      <h1 class="cel_cell">Datei Manager</h1>
+      <div class="cel_cell"><a href="/"><i class="fa fa-xmark"></i></a></div>
+    </div>
+    <cel-admin data-locale="de" data-local-dev="false"></cel-admin>
+  </div>
+</div>

@@ -1,0 +1,4 @@
+dist
+.github
+src/__generated__/
+src/presets/

@@ -348,4 +348,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+### Vite ###
+# Vite cache directory
+.vite/
+.vite
+
 # End of https://www.toptal.com/developers/gitignore/api/java,linux,macos,maven,eclipse,windows,visualstudiocode,node
