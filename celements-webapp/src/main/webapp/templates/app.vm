@@ -2,7 +2,13 @@
 #set($overwriteRenderDocument = 'celInlineTemplates/app.vm')
 #set($celAppScriptSetup = "$!{services.appscript.getScriptNameFromURL()}_setup")
 #if($services.appscript.isAppScriptAvailable("$!celAppScriptSetup"))
-#parse($services.appscript.getAppScriptTemplatePath("$!celAppScriptSetup"))
+  #parse($services.appscript.getAppScriptTemplatePath("$!celAppScriptSetup"))
+#else
+  #set($celAppScript = $services.appscript.getScriptNameFromURL())
+  #set($recSetupName = $services.appscript.getAppRecursiveSetupScript("$!celAppScript"))
+  #if($recSetupName)
+    #parse($services.appscript.getAppScriptTemplatePath($recSetupName))
+  #end
 #end
 $xwiki.parseTemplate("frameheader.vm")
 #if(!$contextIsFinished)
