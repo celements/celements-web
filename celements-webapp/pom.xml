@@ -454,40 +454,6 @@
       <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>install-node-and-npm-admin-frontend</id>
-            <goals>
-              <goal>install-node-and-npm</goal>
-            </goals>
-            <phase>generate-resources</phase>
-            <configuration>
-              <workingDirectory>../celements-admin-frontend</workingDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>npm-install-admin-frontend</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <phase>generate-resources</phase>
-            <configuration>
-              <workingDirectory>../celements-admin-frontend</workingDirectory>
-              <arguments>install --legacy-peer-deps</arguments>
-            </configuration>
-          </execution>
-          <execution>
-            <id>npm-build-admin-frontend</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <phase>generate-resources</phase>
-            <configuration>
-              <workingDirectory>../celements-admin-frontend</workingDirectory>
-              <arguments>run build</arguments>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>com.jarslab.maven</groupId>
