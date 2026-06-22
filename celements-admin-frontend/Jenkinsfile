@@ -1,0 +1,69 @@
+def appImage
+
+pipeline {
+    agent { label 'docker' }
+
+    environment {
+        REGISTRY = 'ghcr.io'
+        ORG_NAME = 'celements'
+        APP_DIR = 'celements-admin-frontend'
+        IMAGE_NAME = 'celements-admin-frontend'
+        DOCKER_BUILDKIT = '1'
+    }
+
+    options {
+        disableConcurrentBuilds()
+        skipDefaultCheckout(true)
+        timestamps()
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Prepare Build') {
+            steps {
+                dir(APP_DIR) {
+                    script {
+                        env.GIT_REV = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
+                        env.GIT_SHA = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+                        env.VERSION = sh(
+                            script: 'node -p "require(\'./package.json\').version"',
+                            returnStdout: true
+                        ).trim()
+                        env.IMAGE_REF = "${REGISTRY}/${ORG_NAME}/${IMAGE_NAME}:${VERSION}"
+                    }
+                }
+            }
+        }
+
+        stage('Build Frontend Docker Image') {
+            steps {
+                dir(APP_DIR) {
+                    script {
+                        appImage = docker.build(
+                            IMAGE_REF,
+                            "--build-arg VERSION=${VERSION} " +
+                            "--build-arg REVISION=${GIT_REV} " +
+                            "--load ."
+                        )
+                    }
+                }
+            }
+        }
+
+        stage('Push to GHCR') {
+            steps {
+                script {
+                    docker.withRegistry("https://${REGISTRY}", 'ghcr-credentials') {
+                        appImage.push()
+                        appImage.push("${VERSION}-${GIT_SHA}")
+                    }
+                }
+            }
+        }
+    }
+}
