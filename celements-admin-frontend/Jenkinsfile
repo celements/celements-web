@@ -2,7 +2,6 @@ def appImage
 
 pipeline {
     agent { label 'docker' }
-
     environment {
         REGISTRY = 'ghcr.io'
         ORG_NAME = 'celements'
@@ -10,20 +9,17 @@ pipeline {
         IMAGE_NAME = 'celements-admin-frontend'
         DOCKER_BUILDKIT = '1'
     }
-
     options {
         disableConcurrentBuilds()
         skipDefaultCheckout(true)
         timestamps()
     }
-
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-
         stage('Prepare Build') {
             steps {
                 dir(APP_DIR) {
@@ -39,7 +35,6 @@ pipeline {
                 }
             }
         }
-
         stage('Build Frontend Docker Image') {
             steps {
                 dir(APP_DIR) {
@@ -54,7 +49,6 @@ pipeline {
                 }
             }
         }
-
         stage('Push to GHCR') {
             steps {
                 script {
