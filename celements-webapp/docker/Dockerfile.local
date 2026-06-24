@@ -17,8 +17,8 @@ ENV CATALINA_XMX="2g"
 ENV JPDA_ADDRESS="8000"
 ENV JPDA_TRANSPORT="dt_socket"
 
-# copy configurations / scripts
-COPY docker/tomcat ${CONF_DIR}
+# copy configurations
+COPY docker/tomcat/conf ${CONF_DIR}
 
 # installs and setup
 RUN mkdir -p \

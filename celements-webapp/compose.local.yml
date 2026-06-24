@@ -1,19 +1,19 @@
 name: celements-web
 services:
 
-  webserver: 
+  webserver:
     container_name: celements-web
     image: celements-dev:latest
     build:
       context: .
-      dockerfile: docker/Dockerfile-local
+      dockerfile: docker/Dockerfile.local
     ports:
       - "2080:8080" # tomcat
       - "2000:8000" # remote debugging
-    env_file: ./.env
+    env_file: .env
     volumes:
       - ./target/celements-web:/usr/local/tomcat/webapps/ROOT:ro
-      - ./docker/tomcat/log4j2.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j2.properties:ro
+      - ./docker/tomcat/conf/log4j2.local.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j2.properties:ro
     restart: unless-stopped
     networks:
       - celements
@@ -27,7 +27,7 @@ services:
     image: mariadb:10.1
     ports:
       - "2306:3306" # for direct client access
-    env_file: ./.env
+    env_file: .env
     environment:
       - "MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:?}"
     volumes:

@@ -23,7 +23,9 @@
 -->
 <!-- spotless:on -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <url>https://github.com/celements/celements-web</url>
   <parent>
     <groupId>com.celements</groupId>
@@ -56,7 +58,6 @@
     <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
     <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
-    <xwiki.plugins.lucene.indexdir>/usr/local/celements/lucene</xwiki.plugins.lucene.indexdir>
   </properties>
   <profiles>
     <profile>
@@ -74,7 +75,6 @@
         <celements.store.docCache.capacityDoc>10000</celements.store.docCache.capacityDoc>
         <celements.store.docCache.capacityExists>100000</celements.store.docCache.capacityExists>
         <log4j.properties.monitorInterval>10</log4j.properties.monitorInterval>
-        <xwiki.plugins.lucene.indexdir>${dotenv.CELEMENTS_DATA}/lucene</xwiki.plugins.lucene.indexdir>
       </properties>
     </profile>
   </profiles>
