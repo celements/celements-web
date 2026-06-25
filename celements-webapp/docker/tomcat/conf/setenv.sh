@@ -7,6 +7,8 @@ if [ -z "$CATALINA_XMX" ]; then
   xmx_kb=$((total_memory_kb * 80 / 100)) # use 80% of memory
   xmx_kb_max=$((total_memory_kb - 716800)) # make sure at least 700m left
   [ $xmx_kb -gt $xmx_kb_max ] && xmx_kb=$xmx_kb_max
+  xmx_kb_min=$((1024 * 1024)) # minimum 1GB heap
+  [ $xmx_kb -lt $xmx_kb_min ] && echo "ERROR: at least 1GB heap required" >&2 && exit 1
   CATALINA_XMX="$((xmx_kb / 1024))m"
 fi
 
@@ -21,7 +23,6 @@ CATALINA_OPTS="${CATALINA_OPTS}\
  -Dorg.apache.activeio.journal.active.DisableLocking=true\
  -Dfile.encoding=UTF-8\
  -Djava.net.preferIPv4Stack=true\
- -Djava.net.preferIPv4Addresses\
 "
 
 if [ -n "$GC_LOG_VERBOSE" ]; then
