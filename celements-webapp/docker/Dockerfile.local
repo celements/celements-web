@@ -9,7 +9,7 @@ FROM tomcat:10-jdk21-temurin
 
 # environment variables, may be overridden from the .env file
 # celements
-ENV CELEMENTS_DATA=/usr/local/celements
+ENV APP_DATA=/usr/local/celements
 ENV CONF_DIR=/usr/local/conf
 # tomcat
 ENV CATALINA_XMX="2g"
@@ -22,7 +22,7 @@ COPY docker/tomcat/conf ${CONF_DIR}
 
 # installs and setup
 RUN mkdir -p \
-    ${CELEMENTS_DATA} \
+    ${APP_DATA} \
     ${CATALINA_HOME}/temp \
     ${CATALINA_HOME}/conf/Catalina/localhost \
   && cp ${CONF_DIR}/setenv.sh ${CATALINA_HOME}/bin/ \

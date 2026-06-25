@@ -25,7 +25,7 @@ LABEL org.opencontainers.image.source="https://github.com/celements/celements-we
   org.opencontainers.image.version="${VERSION}" \
   org.opencontainers.image.revision="${REVISION}"
 
-ENV CELEMENTS_DATA=/usr/local/celements \
+ENV APP_DATA=/usr/local/celements \
   CONF_DIR=/usr/local/conf
 
 COPY docker/tomcat/entrypoint.sh /usr/local/bin/start
@@ -36,7 +36,7 @@ RUN apt-get update \
     gettext-base \
   && rm -rf /var/lib/apt/lists/* "${CATALINA_HOME}/webapps/"* \
   && mkdir -p \
-    "${CELEMENTS_DATA}" \
+    "${APP_DATA}" \
     "${CATALINA_HOME}/temp" \
     "${CATALINA_HOME}/conf/Catalina/localhost" \
   && cp "${CONF_DIR}/setenv.sh" "${CATALINA_HOME}/bin/" \
