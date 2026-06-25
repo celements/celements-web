@@ -40,7 +40,7 @@
       </Realm>
 
       <Host name="localhost" appBase="webapps"
-            unpackWARs="true" autoDeploy="true">
+            unpackWARs="false" autoDeploy="true">
         <Valve className="org.apache.catalina.valves.RemoteIpValve"
                internalProxies=".*"/>
         <Valve className="org.apache.catalina.valves.HealthCheckValve"/>

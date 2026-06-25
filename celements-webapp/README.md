@@ -41,7 +41,7 @@ docker compose -f compose.build.yml build
 ```
 
 This builds the same image shape as Jenkins: Maven build stage, Tomcat runtime stage, and
-`target/celements-web.war` copied into `webapps/ROOT.war`.
+the exploded `target/celements-web/` webapp copied into `webapps/ROOT/`.
 
 ## Image builds
 

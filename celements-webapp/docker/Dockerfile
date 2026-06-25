@@ -13,7 +13,7 @@ RUN --mount=type=secret,id=mvnsettings,required=true,dst=/root/.m2/settings.xml 
 
 # Layer: package
 COPY . .
-RUN mvn -B clean package
+RUN mvn -B clean prepare-package war:exploded
 
 FROM tomcat:10-jdk21-temurin AS execute
 
@@ -43,7 +43,7 @@ RUN apt-get update \
   && cp "${CONF_DIR}/jakarta.converter.xml" "${CATALINA_HOME}/conf/Catalina/localhost/ROOT.xml" \
   && chmod +x /usr/local/bin/start
 
-COPY --from=build /app/target/celements-web.war "${CATALINA_HOME}/webapps/ROOT.war"
+COPY --from=build /app/target/celements-web/ "${CATALINA_HOME}/webapps/ROOT/"
 
 EXPOSE 8080 9090
 
