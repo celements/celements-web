@@ -1,0 +1,15 @@
+#set($scriptName = $services.appscript.getScriptNameFromURL())
+#set($parts = $scriptName.split("/"))
+#if($parts.size() >= 5)
+  #set($spaceName = $parts.get(3))
+  #set($docName = $parts.get(4))
+  #set($targetDocRef = $services.reference.create().space($spaceName).doc($docName).build())
+#else
+  #set($targetDocRef = $doc.documentReference)
+#end
+#set($viewLevel = $services.rightsAccess.getEAccessLevel('view'))
+#if($services.rightsAccess.hasAccessLevel($targetDocRef, $viewLevel))
+  #set($overwriteLayoutRef = $services.reference.create().space("SimpleLayout").build())
+#else
+  #set($overwriteRenderDocument = 'celInlineTemplates/login.vm')
+#end
