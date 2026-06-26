@@ -7,7 +7,7 @@
 Create the local runtime configuration:
 
 ```sh
-cp sample.env .env && vim .env
+cp .env.sample .env.local && vim .env.local
 ```
 
 Build the exploded WAR for the local mounted-webapp setup:
