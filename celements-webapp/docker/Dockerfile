@@ -1,19 +1,19 @@
+# syntax=docker/dockerfile:1
+
 FROM maven:3-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-# Layer: dependencies
 ARG MVN_CACHE_KEY=none
-COPY pom.xml ./
-RUN --mount=type=secret,id=mvnsettings,required=true,dst=/root/.m2/settings.xml \
-  echo "MVN_CACHE_KEY: ${MVN_CACHE_KEY}" && \
-  mvn -B -U dependency:go-offline && \
-  find /root/.m2/repository -name "*.lastUpdated" -delete && \
-  find /root/.m2/repository -name "_remote.repositories" -delete
 
-# Layer: package
 COPY . .
-RUN mvn -B clean prepare-package war:exploded
+RUN --mount=type=secret,id=mvnsettings,required=true,target=/root/.m2/settings.xml \
+  --mount=type=cache,id=mvnrepo,target=/root/.m2/repository,sharing=locked \
+  echo "MVN_CACHE_KEY: ${MVN_CACHE_KEY}" && \
+  mvn -B -U \
+    -s /root/.m2/settings.xml \
+    -Dmaven.repo.local=/root/.m2/repository \
+    clean prepare-package war:exploded
 
 FROM tomcat:10-jdk21-temurin AS execute
 
