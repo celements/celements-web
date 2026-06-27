@@ -72,8 +72,6 @@
         <hibernate.cfg.xml.connection.driver_class>${dotenv.DB_DRIVER}</hibernate.cfg.xml.connection.driver_class>
         <xwiki.cfg.xwiki.db>${dotenv.DB_MAIN}</xwiki.cfg.xwiki.db>
         <xwiki.cfg.xwiki.db.prefix>${dotenv.DB_PREFIX}_</xwiki.cfg.xwiki.db.prefix>
-        <celements.store.docCache.capacityDoc>10000</celements.store.docCache.capacityDoc>
-        <celements.store.docCache.capacityExists>100000</celements.store.docCache.capacityExists>
         <log4j.properties.monitorInterval>10</log4j.properties.monitorInterval>
       </properties>
     </profile>
