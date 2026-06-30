@@ -4,6 +4,14 @@
 
 ## Local Development
 
+Log in to GHCR once so Docker can pull shared images Use your GitHub username and a classic token
+(https://github.com/settings/tokens) with `read:packages` scope as the password.
+
+```sh
+docker login ghcr.io
+```
+
+
 Create the local runtime configuration:
 
 ```sh
