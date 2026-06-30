@@ -15,7 +15,7 @@ RUN --mount=type=secret,id=mvnsettings,required=true,target=/root/.m2/settings.x
     -Dmaven.repo.local=/root/.m2/repository \
     clean prepare-package war:exploded
 
-FROM tomcat:10-jdk21-temurin AS execute
+FROM ghcr.io/synventis-infra/tomcat:release AS execute
 
 ARG VERSION
 ARG REVISION
@@ -25,27 +25,4 @@ LABEL org.opencontainers.image.source="https://github.com/celements/celements-we
   org.opencontainers.image.version="${VERSION}" \
   org.opencontainers.image.revision="${REVISION}"
 
-ENV APP_DATA=/usr/local/celements \
-  CONF_DIR=/usr/local/conf
-
-COPY docker/tomcat/entrypoint.sh /usr/local/bin/start
-COPY docker/tomcat/conf "${CONF_DIR}"
-
-RUN apt-get update \
-  && apt-get --no-install-recommends -y install \
-    gettext-base \
-  && rm -rf /var/lib/apt/lists/* "${CATALINA_HOME}/webapps/"* \
-  && mkdir -p \
-    "${APP_DATA}" \
-    "${CATALINA_HOME}/temp" \
-    "${CATALINA_HOME}/conf/Catalina/localhost" \
-  && cp "${CONF_DIR}/setenv.sh" "${CATALINA_HOME}/bin/" \
-  && cp "${CONF_DIR}/jakarta.converter.xml" "${CATALINA_HOME}/conf/Catalina/localhost/ROOT.xml" \
-  && chmod +x /usr/local/bin/start
-
 COPY --from=build /app/target/celements-web/ "${CATALINA_HOME}/webapps/ROOT/"
-
-EXPOSE 8080 9090
-
-ENTRYPOINT ["start"]
-CMD ["catalina.sh", "run"]

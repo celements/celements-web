@@ -7,6 +7,5 @@
 compose.local.yml
 compose.build.yml
 docker/sqlserver
-docker/Dockerfile.local
 node_modules
 target

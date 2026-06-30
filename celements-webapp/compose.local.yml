@@ -3,17 +3,14 @@ services:
 
   webserver:
     container_name: celements-web
-    image: celements-dev:latest
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.local
+    image: ghcr.io/synventis-infra/tomcat:release
     ports:
       - "${TOMCAT_PORT:-2080}:8080" # tomcat
       - "${JPDA_PORT:-2000}:8000" # remote debugging
     env_file: .env
     volumes:
       - ./target/celements-web:/usr/local/tomcat/webapps/ROOT:ro
-      - ./docker/tomcat/conf/log4j2.local.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j2.properties:ro
+      - ./docker/tomcat/log4j2.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j2.properties:ro
     restart: unless-stopped
     networks:
       - celements
