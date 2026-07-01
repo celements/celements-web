@@ -27,13 +27,12 @@
   <url>https://github.com/celements/celements-web</url>
   <parent>
     <groupId>com.celements</groupId>
-    <artifactId>celementsweb</artifactId>
+    <artifactId>celements-parent</artifactId>
     <version>7.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
   <packaging>war</packaging>
-  <version>7.1-SNAPSHOT</version>
   <name>Celements Webapplication</name>
   <licenses>
     <license>
@@ -51,11 +50,27 @@
   <properties>
     <catalina.port>10081</catalina.port>
     <catalina.home>${env.CATALINA_HOME}</catalina.home>
+    <xwiki.cfg.xwiki.db>main</xwiki.cfg.xwiki.db>
+    <xwiki.cfg.xwiki.db.prefix />
+    <xwiki.cfg.xwiki.url.protocol>http</xwiki.cfg.xwiki.url.protocol>
+    <hibernate.cfg.xml.connection.scheme>jdbc:mysql</hibernate.cfg.xml.connection.scheme>
+    <hibernate.cfg.xml.connection.host>localhost</hibernate.cfg.xml.connection.host>
+    <hibernate.cfg.xml.connection.port />
+    <hibernate.cfg.xml.connection.query>
+      ?useServerPrepStmts=false&amp;amp;useUnicode=true&amp;amp;characterEncoding=UTF-8&amp;amp;sessionVariables=sql_mode=''&amp;amp;usePipelineAuth=false&amp;amp;disablePipeline=true</hibernate.cfg.xml.connection.query>
+    <hibernate.cfg.xml.connection.url>
+      ${hibernate.cfg.xml.connection.scheme}://${hibernate.cfg.xml.connection.host}${hibernate.cfg.xml.connection.port}/${xwiki.cfg.xwiki.db.prefix}${xwiki.cfg.xwiki.db}${hibernate.cfg.xml.connection.query}</hibernate.cfg.xml.connection.url>
+    <hibernate.cfg.xml.connection.username>xwiki</hibernate.cfg.xml.connection.username>
+    <hibernate.cfg.xml.connection.password>xwiki</hibernate.cfg.xml.connection.password>
+    <hibernate.cfg.xml.connection.driver_class>com.mysql.jdbc.Driver</hibernate.cfg.xml.connection.driver_class>
+    <hibernate.cfg.xml.dialect>com.celements.query.CelMySQLDialect</hibernate.cfg.xml.dialect>
+    <hibernate.cfg.xml.connection.provider_class>com.xpn.xwiki.store.DBCPConnectionProvider</hibernate.cfg.xml.connection.provider_class>
+    <hibernate.cfg.xml.connection.pool_size>2</hibernate.cfg.xml.connection.pool_size>
+    <hibernate.cfg.xml.statement_cache.size>2</hibernate.cfg.xml.statement_cache.size>
+    <log4j.properties.monitorInterval>60</log4j.properties.monitorInterval>
     <log4j.properties.logger.config />
-    <selenium.browserURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserURL.celementsweb-platform>
-    <selenium.browserURL.celementsweb>${selenium.browserURL.celementsweb-platform}</selenium.browserURL.celementsweb>
-    <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
-    <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
+    <webapp.surefire.skip>true</webapp.surefire.skip>
+    <webapp.surefire.skipTests>true</webapp.surefire.skipTests>
     <xwiki.plugins.lucene.indexdir>/usr/local/celements/lucene</xwiki.plugins.lucene.indexdir>
   </properties>
   <profiles>
@@ -77,8 +92,36 @@
         <xwiki.plugins.lucene.indexdir>${dotenv.CELEMENTS_DATA}/lucene</xwiki.plugins.lucene.indexdir>
       </properties>
     </profile>
+    <profile>
+      <id>deploy</id>
+      <properties>
+        <maven.test.skip>true</maven.test.skip>
+      </properties>
+    </profile>
   </profiles>
   <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
     <!-- START xwiki-web-standard war -->
@@ -101,12 +144,10 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-scheduler</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-mailsender</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -127,19 +168,16 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>blog-web</artifactId>
-      <version>7.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>calendar-web</artifactId>
-      <version>7.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>image-web</artifactId>
-      <version>7.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -151,19 +189,16 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tinymce-langs-v4</artifactId>
-      <version>7.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tinymce-langs-v6</artifactId>
-      <version>7.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-richtext-web</artifactId>
-      <version>7.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
@@ -173,19 +208,16 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-wiki-manager-web</artifactId>
-      <version>7.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-user-manager-web</artifactId>
-      <version>7.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-layout-web</artifactId>
-      <version>7.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
 
@@ -193,107 +225,86 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-commons</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-core</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-velocity</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-rendering-api</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-xwiki-xml</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-global-redirect</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-component</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-reference</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-observation</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-servlet</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source-api</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-config-source</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-search</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-captcha</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-subsystem-migration-manager</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-mvc</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-spring-security</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-keycloak</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-filebase</artifactId>
-      <version>7.1-SNAPSHOT</version>
     </dependency>
 
     <!-- Spring -->
@@ -312,7 +323,6 @@
     <dependency>
       <groupId>org.springframework.kafka</groupId>
       <artifactId>spring-kafka</artifactId>
-      <version>${spring.kafka.version}</version>
     </dependency>
     <!-- other dependencies -->
     <dependency>
@@ -380,24 +390,6 @@
   </dependencies>
   <dependencyManagement>
     <dependencies>
-      <!-- Align ALL Spring 5.3.x artifacts -->
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-framework-bom</artifactId>
-        <version>${spring.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <!-- Align ALL Jackson 2.x artifacts (core, databind, annotations, dataformats, datatype-*) -->
-      <dependency>
-        <groupId>com.fasterxml.jackson</groupId>
-        <artifactId>jackson-bom</artifactId>
-        <version>${jackson.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
       <!-- Force the newer JTA for old Hibernate transitive -->
       <dependency>
         <groupId>javax.transaction</groupId>
@@ -452,6 +444,10 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+      <plugin>
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
       </plugin>
@@ -462,7 +458,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.6.2</version>
         <executions>
           <execution>
             <id>enforce-dependency-convergence</id>
