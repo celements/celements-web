@@ -58,7 +58,7 @@
 </property>
 </object>
 <content>#if("$context.user" != 'XWiki.XWikiGuest')
-* &lt;a href="cel/admin/WikiManager/ServerList"&gt;WikiManager&lt;/a&gt;&lt;br/&gt;
+* &lt;a href="/app/cel/admin/WikiManager/ServerList"&gt;WikiManager&lt;/a&gt;&lt;br/&gt;
 * [Settings&gt;XWiki.XWikiPreferences]
 * &lt;a href="/import/XWiki/Import?section=Import"&gt;Import&lt;/a&gt;&lt;br/&gt;
 * &lt;a href="/XApp/"&gt;XApp&lt;/a&gt;
