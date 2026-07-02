@@ -18,10 +18,12 @@ Create the local runtime configuration:
 cp .env.sample .env.local && vim .env.local
 ```
 
+`.env.tomcat` derives the Tomcat runtime configuration from those local DB values.
+
 Build the exploded WAR for the local mounted-webapp setup:
 
 ```sh
-mvn clean install -P local
+mvn clean install
 ```
 
 Start the sqlserver first, then the rest:

@@ -59,23 +59,6 @@
     <selenium.browserFirstRunURL.celementsweb-platform>http://localhost:${catalina.port}/</selenium.browserFirstRunURL.celementsweb-platform>
     <selenium.browserFirstRunURL.celementsweb>${selenium.browserFirstRunURL.celementsweb-platform}</selenium.browserFirstRunURL.celementsweb>
   </properties>
-  <profiles>
-    <profile>
-      <id>local</id>
-      <properties>
-        <maven.test.skip>true</maven.test.skip>
-        <hibernate.cfg.xml.connection.scheme>${dotenv.DB_SCHEME}</hibernate.cfg.xml.connection.scheme>
-        <hibernate.cfg.xml.connection.host>${dotenv.DB_HOST}</hibernate.cfg.xml.connection.host>
-        <hibernate.cfg.xml.connection.port>:${dotenv.DB_PORT}</hibernate.cfg.xml.connection.port>
-        <hibernate.cfg.xml.connection.username>${dotenv.DB_USER}</hibernate.cfg.xml.connection.username>
-        <hibernate.cfg.xml.connection.password>${dotenv.DB_PASSWORD}</hibernate.cfg.xml.connection.password>
-        <hibernate.cfg.xml.connection.driver_class>${dotenv.DB_DRIVER}</hibernate.cfg.xml.connection.driver_class>
-        <xwiki.cfg.xwiki.db>${dotenv.DB_MAIN}</xwiki.cfg.xwiki.db>
-        <xwiki.cfg.xwiki.db.prefix>${dotenv.DB_PREFIX}_</xwiki.cfg.xwiki.db.prefix>
-        <log4j.properties.monitorInterval>10</log4j.properties.monitorInterval>
-      </properties>
-    </profile>
-  </profiles>
   <dependencies>
     <!-- xwiki platform dependencies -->
     <!-- START xwiki-enterprise-web war -->
@@ -407,26 +390,6 @@
   <build>
     <finalName>celements-web</finalName>
     <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>properties-maven-plugin</artifactId>
-        <version>1.2.1</version>
-        <executions>
-          <execution>
-            <phase>initialize</phase>
-            <goals>
-              <goal>read-project-properties</goal>
-            </goals>
-            <configuration>
-              <files>
-                <file>.env</file>
-              </files>
-              <keyPrefix>dotenv.</keyPrefix>
-              <quiet>true</quiet>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>

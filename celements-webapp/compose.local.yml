@@ -7,7 +7,9 @@ services:
     ports:
       - "${TOMCAT_PORT:-2080}:8080" # tomcat
       - "${JPDA_PORT:-2000}:8000" # remote debugging
-    env_file: .env
+    env_file:
+      - .env
+      - .env.tomcat
     volumes:
       - ./target/celements-web:/usr/local/tomcat/webapps/ROOT:ro
       - ./docker/tomcat/log4j2.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j2.properties:ro
