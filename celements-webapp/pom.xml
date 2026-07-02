@@ -23,7 +23,9 @@
 -->
 <!-- spotless:on -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <url>https://github.com/celements/celements-web</url>
   <parent>
     <groupId>com.celements</groupId>
@@ -69,36 +71,7 @@
     <hibernate.cfg.xml.statement_cache.size>2</hibernate.cfg.xml.statement_cache.size>
     <log4j.properties.monitorInterval>60</log4j.properties.monitorInterval>
     <log4j.properties.logger.config />
-    <webapp.surefire.skip>true</webapp.surefire.skip>
-    <webapp.surefire.skipTests>true</webapp.surefire.skipTests>
-    <xwiki.plugins.lucene.indexdir>/usr/local/celements/lucene</xwiki.plugins.lucene.indexdir>
   </properties>
-  <profiles>
-    <profile>
-      <id>local</id>
-      <properties>
-        <maven.test.skip>true</maven.test.skip>
-        <hibernate.cfg.xml.connection.scheme>${dotenv.DB_SCHEME}</hibernate.cfg.xml.connection.scheme>
-        <hibernate.cfg.xml.connection.host>${dotenv.DB_HOST}</hibernate.cfg.xml.connection.host>
-        <hibernate.cfg.xml.connection.port>:${dotenv.DB_PORT}</hibernate.cfg.xml.connection.port>
-        <hibernate.cfg.xml.connection.username>${dotenv.DB_USER}</hibernate.cfg.xml.connection.username>
-        <hibernate.cfg.xml.connection.password>${dotenv.DB_PASSWORD}</hibernate.cfg.xml.connection.password>
-        <hibernate.cfg.xml.connection.driver_class>${dotenv.DB_DRIVER}</hibernate.cfg.xml.connection.driver_class>
-        <xwiki.cfg.xwiki.db>${dotenv.DB_MAIN}</xwiki.cfg.xwiki.db>
-        <xwiki.cfg.xwiki.db.prefix>${dotenv.DB_PREFIX}_</xwiki.cfg.xwiki.db.prefix>
-        <celements.store.docCache.capacityDoc>10000</celements.store.docCache.capacityDoc>
-        <celements.store.docCache.capacityExists>100000</celements.store.docCache.capacityExists>
-        <log4j.properties.monitorInterval>10</log4j.properties.monitorInterval>
-        <xwiki.plugins.lucene.indexdir>${dotenv.CELEMENTS_DATA}/lucene</xwiki.plugins.lucene.indexdir>
-      </properties>
-    </profile>
-    <profile>
-      <id>deploy</id>
-      <properties>
-        <maven.test.skip>true</maven.test.skip>
-      </properties>
-    </profile>
-  </profiles>
   <dependencies>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -401,26 +374,6 @@
   <build>
     <finalName>celements-web</finalName>
     <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>properties-maven-plugin</artifactId>
-        <version>1.2.1</version>
-        <executions>
-          <execution>
-            <phase>initialize</phase>
-            <goals>
-              <goal>read-project-properties</goal>
-            </goals>
-            <configuration>
-              <files>
-                <file>.env</file>
-              </files>
-              <keyPrefix>dotenv.</keyPrefix>
-              <quiet>true</quiet>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>

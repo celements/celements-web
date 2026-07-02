@@ -1,0 +1,14 @@
+services:
+  webserver:
+    image: celements-webapp
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        MVN_CACHE_KEY: "${MVN_CACHE_KEY:-none}"
+      secrets:
+        - mvnsettings
+
+secrets:
+  mvnsettings:
+    file: ./mvn-settings.xml
