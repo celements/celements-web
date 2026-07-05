@@ -7,19 +7,19 @@
 <translation>0</translation>
 <parent>XWiki.XWikiClasses</parent>
 <creator>XWiki.XWikiGuest</creator>
-<author>xwiki:XWiki.fpichler</author>
+<author>XWiki.XWikiGuest</author>
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.fpichler</contentAuthor>
 <creationDate>1539796347000</creationDate>
-<date>1697917998000</date>
+<date>1733713186000</date>
 <contentUpdateDate>1697917998000</contentUpdateDate>
-<version>21.8</version>
+<version>22.1</version>
 <title>XWiki Preferences</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
-<comment></comment>
-<minorEdit>true</minorEdit>
+<comment>autocreate mandatory CelementsXWikiPreferences</comment>
+<minorEdit>false</minorEdit>
 <syntaxId>xwiki/1.0</syntaxId>
 <hidden>false</hidden>
 <class>
@@ -2790,7 +2790,7 @@
 <tags></tags>
 </property>
 <property>
-<title></title>
+<title>Celements</title>
 </property>
 <property>
 <upload_maxsize>104857600</upload_maxsize>

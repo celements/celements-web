@@ -3,7 +3,7 @@
 <web>CelementsContextMenu</web>
 <name>cel_cm_celleditor_menuitem</name>
 <language></language>
-<defaultLanguage>en</defaultLanguage>
+<defaultLanguage></defaultLanguage>
 <translation>0</translation>
 <parent></parent>
 <creator>xwiki:XWiki.fpichler</creator>
@@ -647,9 +647,13 @@ window.location.href=&amp;quot;${cmenu_pageLink}&amp;quot;##
 <cmi_link>#if("$!elemId" != '')
 #set($menuItemDoc = $xwiki.getDocument($elemId))
 #set($docFullName = $menuItemDoc.fullName)
+#if("$celementsweb.getVersionMode()" == "celements3")
 #set($cmenu_pageLink = $xwiki.getURL("$docFullName", 'edit', 'tab=3'))
+#else
+#set($cmenu_pageLink = $xwiki.getURL("$docFullName", 'attach'))
+#end
 #set($attachmentDocSpace = $docFullName.substring(0, $docFullName.indexOf('.')))
-#if(!(("$!context.getXWiki().getWebPreference('cel_centralfilebase', '$attachmentDocSpace', '', $context.getContext())" != '')))
+#if(!(("$celementsweb.getVersionMode()" == "celements3") &amp;&amp; ("$!context.getXWiki().getWebPreference('cel_centralfilebase', '$attachmentDocSpace', '', $context.getContext())" != '')))
 window.location.href=&amp;quot;${cmenu_pageLink}&amp;quot;##
 #end#end</cmi_link>
 </property>

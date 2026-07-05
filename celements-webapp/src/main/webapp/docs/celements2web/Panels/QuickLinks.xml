@@ -3,7 +3,7 @@
 <web>Panels</web>
 <name>QuickLinks</name>
 <language></language>
-<defaultLanguage>en</defaultLanguage>
+<defaultLanguage></defaultLanguage>
 <translation>0</translation>
 <parent>Panels.WebHome</parent>
 <creator>XWiki.Admin</creator>

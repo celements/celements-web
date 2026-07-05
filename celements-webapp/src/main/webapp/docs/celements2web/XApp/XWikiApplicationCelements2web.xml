@@ -7,13 +7,13 @@
 <translation>0</translation>
 <parent>XAppManager.WebHome</parent>
 <creator>xwiki:XWiki.fpichler</creator>
-<author>xwiki:XWiki.cpichler</author>
+<author>xwiki:XWiki.fpichler</author>
 <customClass></customClass>
-<contentAuthor>xwiki:XWiki.cpichler</contentAuthor>
+<contentAuthor>xwiki:XWiki.fpichler</contentAuthor>
 <creationDate>1346348923000</creationDate>
-<date>1716793410000</date>
-<contentUpdateDate>1716793410000</contentUpdateDate>
-<version>20.1</version>
+<date>1776090380000</date>
+<contentUpdateDate>1776090380000</contentUpdateDate>
+<version>26.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -239,7 +239,7 @@
 <className>XAppClasses.XWikiApplicationClass</className>
 <guid>bd746b5e-63ee-4de4-bfd7-69d542694c2a</guid>
 <property>
-<appauthors>synventis 2007 - 2024</appauthors>
+<appauthors>synventis 2007 - 2026</appauthors>
 </property>
 <property>
 <applications/>
@@ -251,7 +251,7 @@
 <appprettyname>Celements2web Central DB Application</appprettyname>
 </property>
 <property>
-<appversion>6.4</appversion>
+<appversion>7.0</appversion>
 </property>
 <property>
 <dependencies/>
@@ -283,9 +283,9 @@
 <value>[UserAdminSearch.%]</value>
 <value>[TableHeader.%]</value>
 <value>[TableRow.%]</value>
-<value>[OptionsDropdown.%]</value>
 <value>[UserAdminEdit.%]</value>
 <value>[UserAdminForm.%]</value>
+<value>[Templates.User]</value>
 </documents>
 </property>
 <property>

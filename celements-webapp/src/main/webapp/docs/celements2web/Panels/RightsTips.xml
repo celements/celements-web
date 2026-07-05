@@ -143,11 +143,8 @@ $msg.get("xe.panels.rights.bannedgroup")
 &lt;/div&gt;
 #panelfooter()
 &lt;/div&gt;
-#set($jsService = $services.javascript)
-#set($extJsParam = $jsService.createExtJSParam().setAction('file'))
-#set($extJsParam = $extJsParam.setLazyLoad(true))
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
-$!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/accordion/accordion.js'))##
+$xwiki.jsfx.use("js/scriptaculous/scriptaculous.js")
+$xwiki.jsfx.use("js/xwiki/accordion/accordion.js")
 &lt;script type="text/javascript"&gt;
 var obj = {div:'xwikirightstips',no:0,height:250};
 var acc = createAccordion(obj);

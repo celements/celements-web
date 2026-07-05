@@ -352,14 +352,11 @@ dG8WUcuijwAAAABJRU5ErkJggg==
       #else
         #set($ajaxurl = $xwiki.getDocument("Panels.PanelLayoutUpdate").getURL("view", "xpage=plain&amp;prefsdoc=${currentDoc}"))
       #end
-      #set($jsService = $services.javascript)
-      #set($extJsParam = $jsService.createExtJSParam().setAction('file'))
-      #set($extJsParam = $extJsParam.setLazyLoad(true))
-      $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/scriptaculous/scriptaculous.js'))##
-      $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/accordion/accordion.js'))##
-      $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/panelwizard/Drag.js'))##
-      $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/panelwizard/ieemu.js'))##
-      $!jsService.includeExtJsFile($extJsParam.setJsFile(':js/xwiki/panelwizard/toolTip.js'))##
+      $xwiki.jsfx.use("js/scriptaculous/scriptaculous.js")
+      $xwiki.jsfx.use("js/xwiki/accordion/accordion.js")
+      $xwiki.jsfx.use("js/xwiki/panelwizard/Drag.js")
+      $xwiki.jsfx.use("js/xwiki/panelwizard/ieemu.js")
+      $xwiki.jsfx.use("js/xwiki/panelwizard/toolTip.js")
       &lt;script type="text/javascript"&gt;
       //&lt;![CDATA[
       window.ajaxurl = "$ajaxurl";

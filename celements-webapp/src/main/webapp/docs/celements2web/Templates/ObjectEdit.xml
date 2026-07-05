@@ -60,7 +60,7 @@
 <content>{pre}
 ## Deprecated !!! please use the following parseTemplate line instead!
 ## #parse("celTemplates/ObjectEdit.vm")
-$services.deprecated.logVelocityScript('celements2web:Templates.ObjectEdit.vm')
+$celementsweb.logDeprecatedVelocityScript('celements2web:Templates.ObjectEdit.vm')
 ## !!! Please do not use #parse("celTemplates/ObjectEdit.vm") here !!!
 ## !!! inline mode with document templates will not work with #parse used here !!!
 ## !!! yet it IS save to use #parse("celTemplates/ObjectEdit.vm") directly in the !!!

@@ -7,18 +7,18 @@
 <translation>0</translation>
 <parent>Panels.WebHome</parent>
 <creator>XWiki.Admin</creator>
-<author>xwiki:XWiki.msladek</author>
+<author>xwiki:XWiki.fpichler</author>
 <customClass></customClass>
-<contentAuthor>xwiki:XWiki.msladek</contentAuthor>
+<contentAuthor>xwiki:XWiki.fpichler</contentAuthor>
 <creationDate>1154086211000</creationDate>
-<date>1539796412000</date>
-<contentUpdateDate>1539796412000</contentUpdateDate>
-<version>1.1</version>
+<date>1773158719000</date>
+<contentUpdateDate>1773158719000</contentUpdateDate>
+<version>3.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
-<comment>Imported from XAR</comment>
+<comment></comment>
 <minorEdit>false</minorEdit>
 <syntaxId>xwiki/1.0</syntaxId>
 <hidden>false</hidden>
@@ -104,8 +104,9 @@
 <category>Information</category>
 </property>
 <property>
-<content>#largepanelheader($msg.get("classEditorIntro")) <p>$msg.get("xe.panels.classedit.youare") <strong>
-${doc.fullName}</strong>. $msg.get("xe.panels.classedit.chooseproperty")</p> #panelfooter()</content>
+<content>#largepanelheader($msg.get("classEditorIntro"))
+&lt;p&gt;$msg.get("xe.panels.classedit.youare") &lt;strong&gt;${doc.fullName}&lt;/strong&gt;. $msg.get("xe.panels.classedit.chooseproperty")&lt;/p&gt;
+#panelfooter()</content>
 </property>
 <property>
 <description>Class Editor welcome and brief information message.</description>
@@ -117,5 +118,4 @@ ${doc.fullName}</strong>. $msg.get("xe.panels.classedit.chooseproperty")</p> #pa
 <type>edit</type>
 </property>
 </object>
-<content>#includeForm("Panels.PanelSheet")</content>
-</xwikidoc>
+<content>#includeForm("Panels.PanelSheet")</content></xwikidoc>
