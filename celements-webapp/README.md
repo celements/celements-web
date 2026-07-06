@@ -55,7 +55,7 @@ the exploded `target/celements-web/` webapp copied into `webapps/ROOT/`.
 
 ## Image builds
 
-The image is published by `Jenkinsfile`.
+The image is published by `Jenkinsfile.image`.
 
 The pipeline extracts the Maven project version from `pom.xml` and publishes:
 
