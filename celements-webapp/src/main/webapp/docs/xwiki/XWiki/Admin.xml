@@ -453,7 +453,7 @@
 <accessibility></accessibility>
 </property>
 <property>
-<active>1</active>
+<active>0</active>
 </property>
 <property>
 <address></address>
@@ -465,16 +465,16 @@
 <avatar></avatar>
 </property>
 <property>
-<blog>http://www.xwiki.org/xwiki/bin/view/Blog/WebHome</blog>
+<blog></blog>
 </property>
 <property>
-<blogfeed>http://www.xwiki.org/xwiki/bin/view/Blog/BlogRss?xpage=plain</blogfeed>
+<blogfeed></blogfeed>
 </property>
 <property>
-<comment>Admin is the default Wiki Admin.</comment>
+<comment></comment>
 </property>
 <property>
-<company>XWiki.org</company>
+<company></company>
 </property>
 <property>
 <default_language></default_language>
@@ -483,10 +483,10 @@
 <editor>---</editor>
 </property>
 <property>
-<email>webmaster@xwiki.org</email>
+<email></email>
 </property>
 <property>
-<first_name>Administrator</first_name>
+<first_name>Admin</first_name>
 </property>
 <property>
 <force_pwd_change></force_pwd_change>
@@ -519,4 +519,4 @@
 <validkey>hash:SHA-512:cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e</validkey>
 </property>
 </object>
-<content>{{include document="XWiki.XWikiUserSheet"/}}</content></xwikidoc>
+<content></content></xwikidoc>
