@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eu
+set -euo pipefail
 
 escape_js_string() {
   printf '%s' "$1" | sed \
