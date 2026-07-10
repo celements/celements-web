@@ -16,9 +16,12 @@ $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind
 <div class="cel_cell" id="userAdmin">
   <div class="cel_cell" id="content">
     <div class="cel_cell" id="titleWrapper">
-      <h1 class="cel_cell">Datei Manager</h1>
+      <h1 class="cel_cell">Page Attachments</h1>
       <div class="cel_cell"><a href="/"><i class="fa fa-xmark"></i></a></div>
     </div>
-    <cel-admin data-locale="de" data-local-dev="false"></cel-admin>
+    <cel-admin
+      data-locale="$!{language}"
+      data-local-dev="false"
+    ></cel-admin>
   </div>
 </div>

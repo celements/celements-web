@@ -1,0 +1,8 @@
+@Library('synventis') _
+
+dockerImagePipeline(
+  org: 'celements',
+  image: 'celements-webapp',
+  appDir: 'celements-webapp',
+  mode: 'mvn'
+)

@@ -1,0 +1,12 @@
+.env
+.env.tomcat
+*.local
+.git
+.gitignore
+.settings
+.vscode
+compose.local.yml
+compose.build.yml
+docker/sqlserver
+node_modules
+target

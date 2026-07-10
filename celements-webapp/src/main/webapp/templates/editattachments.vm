@@ -1,2 +1,3 @@
-## Deprecated, attachments should be used in view mode only.
-#template('attachments.vm')
+#set($spaceName = $doc.getSpace())
+#set($docName = $doc.getName())
+$response.sendRedirect("/app/cel/admin/PageAttachments/${spaceName}/${docName}")

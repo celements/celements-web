@@ -78,7 +78,7 @@
   <!-- setup execution context -->
   <filter>
     <filter-name>executionContextFilter</filter-name>
-    <filter-class>com.celements.init.ExecutionContextFilter</filter-class>
+    <filter-class>com.celements.init.request.ExecutionContextFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>executionContextFilter</filter-name>
