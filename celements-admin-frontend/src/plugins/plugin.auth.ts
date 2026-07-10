@@ -10,11 +10,7 @@ import type { Router } from 'vue-router';
 const logger = useLogger('AuthPlugin');
 
 // Get keycloak specific data from config
-const appBaseUrl = appConfig.appBaseUrl;
-const authBaseUrl = appConfig.keycloakBaseUrl;
-const realm = appConfig.keycloakRealm;
-const clientId = appConfig.keycloakClientId;
-const clientSecret = appConfig.keycloakClientSecret;
+const { appBaseUrl, authBaseUrl, realm, clientId, clientSecret }  = appConfig.appBaseUrl;
 
 const createAuthPlugin = (router: Router, authStore: Store<'auth', AuthState>) => {
   const options: AuthOptions = {
