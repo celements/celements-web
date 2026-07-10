@@ -1,0 +1,8 @@
+@Library('synventis') _
+
+dockerImagePipeline(
+  org: 'celements',
+  image: 'celements-admin-frontend',
+  appDir: 'celements-admin-frontend',
+  mode: 'node'
+)
