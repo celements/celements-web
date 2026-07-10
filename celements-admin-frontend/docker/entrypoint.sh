@@ -14,8 +14,7 @@ window.__APP_CONFIG__ = {
   keycloakRealm: '$(escape_js_string "${KEYCLOAK_REALM}")',
   keycloakClientId: '$(escape_js_string "${KEYCLOAK_CLIENT_ID}")',
   keycloakClientSecret: '$(escape_js_string "${KEYCLOAK_CLIENT_SECRET}")',
-  defaultLocale: '$(escape_js_string "${DEFAULT_LOCALE:-de}")',
-  enableLocalDevelopment: ${ENABLE_LOCAL_DEVELOPMENT:-false}
+  defaultLocale: '$(escape_js_string "${DEFAULT_LOCALE:-de}")'
 };
 EOF
 

@@ -5,7 +5,6 @@ export interface AppConfig {
   keycloakClientId: string;
   keycloakClientSecret: string;
   defaultLocale: string;
-  enableLocalDevelopment: boolean;
 }
 
 declare global {
@@ -21,7 +20,4 @@ export const appConfig: Readonly<AppConfig> = {
   keycloakClientId: window.__APP_CONFIG__?.keycloakClientId || (import.meta.env.VITE_KEYCLOAK_CLIENT_ID as string) || '',
   keycloakClientSecret: window.__APP_CONFIG__?.keycloakClientSecret || (import.meta.env.VITE_KEYCLOAK_CLIENT_SECRET as string) || '',
   defaultLocale: window.__APP_CONFIG__?.defaultLocale || (import.meta.env.VITE_DEFAULT_LOCALE as string) || 'de',
-  enableLocalDevelopment: window.__APP_CONFIG__?.enableLocalDevelopment !== undefined
-    ? window.__APP_CONFIG__.enableLocalDevelopment
-    : (import.meta.env.VITE_ENABLE_LOCAL_DEVELOPMENT ?? 'true') === 'true',
 };

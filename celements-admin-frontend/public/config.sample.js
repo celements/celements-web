@@ -4,6 +4,5 @@ window.__APP_CONFIG__ = {
   keycloakRealm: 'celdev',
   keycloakClientId: 'celdev',
   keycloakClientSecret: '',
-  defaultLocale: 'de',
-  enableLocalDevelopment: false
+  defaultLocale: 'de'
 };

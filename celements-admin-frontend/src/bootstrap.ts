@@ -27,7 +27,7 @@ export type CelementsAdminMountOptions = {
 
   /**
    * Whether local development features should be enabled.
-   * If omitted, falls back to VITE_ENABLE_LOCAL_DEVELOPMENT (default "true").
+   * If omitted, enabled only in Vite development mode.
    */
   localDev?: boolean;
 };
@@ -128,8 +128,7 @@ export function createCelementsAdminApp(options: CelementsAdminMountOptions = {}
     },
   });
 
-  const localDev =
-    options.localDev ?? appConfig.enableLocalDevelopment;
+  const localDev = options.localDev ?? import.meta.env.DEV;
 
   app.provide('localDev', localDev);
 
