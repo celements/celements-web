@@ -38,3 +38,4 @@ volumes:
   web-data:
   db-data:
     name: ${APP_NAME}-web_db-data # preserve legacy volume name
+    external: true
