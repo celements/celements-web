@@ -1,8 +1,7 @@
-name: celements-web
+name: ${APP_NAME}
 services:
 
-  webserver:
-    container_name: celements-web
+  web:
     image: ghcr.io/synventis-infra/tomcat:release
     ports:
       - "${TOMCAT_PORT:-2080}:8080" # tomcat
@@ -11,18 +10,16 @@ services:
       - .env
       - .env.tomcat
     volumes:
-      - ./target/celements-web:/usr/local/tomcat/webapps/ROOT:ro
+      - web-data:${APP_DATA}:rw
+      - ./target/${APP_NAME}-web:/usr/local/tomcat/webapps/ROOT:ro
       - ./docker/tomcat/log4j2.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j2.properties:ro
     restart: unless-stopped
-    networks:
-      - celements
     logging:
       driver: journald
     depends_on:
-      - sqlserver
+      - db
 
-  sqlserver:
-    container_name: celements-db
+  db:
     image: mariadb:10.1
     ports:
       - "${DB_HOST_PORT:-2306}:3306" # for direct client access
@@ -31,17 +28,13 @@ services:
       - "MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:?}"
     volumes:
       - db-data:/var/lib/mysql
-      - ./docker/sqlserver/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
-      - ./docker/sqlserver/init:/docker-entrypoint-initdb.d:ro
+      - ./docker/mariadb/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
+      - ./docker/mariadb/init:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped
-    networks:
-      - celements
     logging:
       driver: journald
 
 volumes:
+  web-data:
   db-data:
-
-networks:
-  celements:
-    driver: bridge
+    name: ${APP_NAME}-web_db-data # preserve legacy volume name
