@@ -46,29 +46,18 @@ The **Media Library** (powered by [VueFinder](https://github.com/n1crack/vuefind
 npm install
 ```
 
-### Environment Configuration
+### Configuration
 
-The project uses environment-specific `.env` files. Copy the appropriate file for your setup:
-
-| File        | Description                       |
-| ----------- | --------------------------------- |
-| `.env.dev`  | Local development configuration   |
-| `.env.int`  | Integration / staging environment |
-| `.env.prod` | Production environment            |
-
-Key variables:
+For local development, copy the browser configuration and adjust it for your environment:
 
 ```sh
-VITE_ENABLE_LOCAL_DEVELOPMENT=true        # Enables local dev features
-VITE_APP_BASE_URL=http://localhost:5173   # Frontend base URL
+cp public/config.sample.js public/config.js
+```
 
-# API endpoints
+The container generates `config.js` from its runtime environment. The local Vite dev server uses `.env.dev` for its API proxy:
+
+```sh
 VITE_CEL_API_URL=http://...
-
-# Keycloak / OIDC configuration
-VITE_KEYCLOAK_BASE_URL=https://iam.example.com
-VITE_KEYCLOAK_REALM=<realm>
-VITE_KEYCLOAK_CLIENT_ID=<client-id>
 ```
 
 ---

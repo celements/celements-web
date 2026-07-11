@@ -1,6 +1,7 @@
 import '@/assets/main.css';
 
 import App from '@/App.vue';
+import { appConfig } from '@/conf/app';
 import { useAuthStore } from '@/core/stores/auth';
 import { createI18n } from '@/plugins/i18n';
 import { createAuthPlugin } from '@/plugins/plugin.auth';
@@ -26,7 +27,7 @@ export type CelementsAdminMountOptions = {
 
   /**
    * Whether local development features should be enabled.
-   * If omitted, falls back to VITE_ENABLE_LOCAL_DEVELOPMENT (default "true").
+   * If omitted, enabled only in Vite development mode.
    */
   localDev?: boolean;
 };
@@ -112,7 +113,7 @@ export function createCelementsAdminApp(options: CelementsAdminMountOptions = {}
   const authStore = useAuthStore();
   const Auth = createAuthPlugin(Router, authStore);
 
-  const locale = options.locale ?? import.meta.env.VITE_DEFAULT_LOCALE;
+  const locale = options.locale ?? appConfig.defaultLocale;
 
   app.use(Router);
   app.use(createI18n({ locale }));
@@ -127,8 +128,7 @@ export function createCelementsAdminApp(options: CelementsAdminMountOptions = {}
     },
   });
 
-  const localDev =
-    options.localDev ?? (import.meta.env.VITE_ENABLE_LOCAL_DEVELOPMENT ?? 'true') === 'true';
+  const localDev = options.localDev ?? import.meta.env.DEV;
 
   app.provide('localDev', localDev);
 
