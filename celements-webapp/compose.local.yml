@@ -2,7 +2,7 @@ name: ${APP_NAME}
 services:
 
   web:
-    image: ghcr.io/synventis-infra/tomcat:release
+    image: forge.celhosting.ch/synventis-infra/tomcat:release
     ports:
       - "${TOMCAT_PORT:-2080}:8080" # tomcat
       - "${JPDA_PORT:-2000}:8000" # remote debugging
