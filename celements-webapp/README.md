@@ -26,10 +26,10 @@ Build the exploded WAR for the local mounted-webapp setup:
 mvn clean install
 ```
 
-Start the sqlserver first, then the rest:
+Start the database first, then the rest:
 
 ```sh
-docker compose up -d sqlserver
+docker compose up -d db
 docker compose up -d
 ```
 

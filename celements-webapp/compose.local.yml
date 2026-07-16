@@ -4,8 +4,8 @@ services:
   web:
     image: forge.celhosting.ch/synventis-infra/tomcat:release
     ports:
-      - "${TOMCAT_PORT:-2080}:8080" # tomcat
-      - "${JPDA_PORT:-2000}:8000" # remote debugging
+      - "127.0.0.1:${TOMCAT_PORT:-2080}:8080" # tomcat
+      - "127.0.0.1:${JPDA_PORT:-2000}:8000" # remote debugging
     env_file:
       - .env
       - .env.tomcat
@@ -22,7 +22,7 @@ services:
   db:
     image: mariadb:10.1
     ports:
-      - "${DB_HOST_PORT:-2306}:3306" # for direct client access
+      - "127.0.0.1:${DB_HOST_PORT:-2306}:3306" # for direct client access
     env_file: .env
     environment:
       - "MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:?}"
