@@ -1,8 +1,11 @@
 {
-  "name": "open-celements-admin",
+  "name": "@celements/admin-frontend",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "type": "module",
+  "exports": {
+    "./src/*": "./src/*"
+  },
   "scripts": {
     "dev": "concurrently \"vite --mode dev\" \"npm:type-check-watch\" \"npm:test-watch\"",
     "build": "npm run type-check && npm run test && vite build",

@@ -1,4 +1,4 @@
-# Open-Celements Admin Frontend
+# Celements Admin Frontend
 
 A modern, modular Vue 3 frontend for the Open-Celements administration interface. Built with Vite and TypeScript, this application serves as the central hub for all Celements administration screens and functionality.
 
