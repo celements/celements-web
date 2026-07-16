@@ -4,11 +4,11 @@
 
 ## Local Development
 
-Log in to GHCR once so Docker can pull shared images Use your GitHub username and a classic token
-(https://github.com/settings/tokens) with `read:packages` scope as the password.
+Log in to the forge once so Docker can pull shared images. Generate an access token
+(https://forge.celhosting.ch/user/settings/applications) with `package: Read` permission.
 
 ```sh
-docker login ghcr.io
+docker login forge.celhosting.ch
 ```
 
 
@@ -26,10 +26,10 @@ Build the exploded WAR for the local mounted-webapp setup:
 mvn clean install
 ```
 
-Start the sqlserver first, then the rest:
+Start the database first, then the rest:
 
 ```sh
-docker compose up -d sqlserver
+docker compose up -d db
 docker compose up -d
 ```
 
@@ -59,5 +59,5 @@ The image is published by `Jenkinsfile.image`.
 
 The pipeline extracts the Maven project version from `pom.xml` and publishes:
 
-- `ghcr.io/celements/celements-webapp:<version>`
-- `ghcr.io/celements/celements-webapp:<version>-<git-sha>`
+- `forge.celhosting.ch/celements/celements-webapp:<version>`
+- `forge.celhosting.ch/celements/celements-webapp:<version>-<git-sha>`

@@ -48,17 +48,14 @@ npm install
 
 ### Configuration
 
-For local development, copy the browser configuration and adjust it for your environment:
+For local development, copy the browser and Vite proxy configurations and adjust them for your environment:
 
 ```sh
 cp public/config.sample.js public/config.js
+cp .env.local.sample .env.local
 ```
 
-The container generates `config.js` from its runtime environment. The local Vite dev server uses `.env.dev` for its API proxy:
-
-```sh
-VITE_CEL_API_URL=http://...
-```
+The container generates `config.js` from its runtime environment. `.env.local` is used only by the local Vite dev server to configure its API proxy.
 
 ---
 

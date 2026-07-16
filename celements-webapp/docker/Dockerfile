@@ -15,7 +15,7 @@ RUN --mount=type=secret,id=mvnsettings,required=true,target=/root/.m2/settings.x
     -Dmaven.repo.local=/root/.m2/repository \
     clean prepare-package war:exploded
 
-FROM ghcr.io/synventis-infra/tomcat:release AS execute
+FROM forge.celhosting.ch/synventis-infra/tomcat:release AS execute
 
 ARG VERSION
 ARG REVISION
