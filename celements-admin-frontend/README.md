@@ -9,7 +9,7 @@ The **Media Library** (powered by [VueFinder](https://github.com/n1crack/vuefind
 ## ✨ Features
 
 - 🗂️ **Media Library** — First admin entrypoint, a full-featured file/media manager built on VueFinder.
-- 🔐 **Authentication** — OIDC-based authentication via [oidc-client-ts](https://github.com/authts/oidc-client-ts) (e.g. Keycloak).
+- 🔐 **Authentication** — Uses the existing Celements login session for same-origin API requests.
 - 🌍 **Internationalization** — Multi-language support (EN, DE, FR, IT) via [vue-i18n](https://vue-i18n.intlify.dev/).
 - 📊 **Analytics** — Optional [Matomo](https://matomo.org/) integration via vue-matomo.
 - 🧩 **Extensible** — Architecture designed for adding more admin views and routes as the platform evolves.
@@ -85,9 +85,9 @@ src/
 ├── conf/
 │   └── routes/     # Vue Router route definitions
 ├── core/
-│   └── stores/     # Pinia stores (e.g. auth)
+│   └── types/      # Shared core types
 ├── medialib/       # Media Library feature components
-├── plugins/        # Vue plugin setup (PrimeVue, Router, Pinia, i18n, Auth)
+├── plugins/        # Vue plugin setup (PrimeVue, Router, Pinia, i18n)
 ├── types/          # Global TypeScript types
 ├── utils/          # Shared utilities (logger, etc.)
 ├── views/          # Page-level Vue components (one per route)
