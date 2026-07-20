@@ -2,9 +2,7 @@ import '@/assets/main.css';
 
 import App from '@/App.vue';
 import { appConfig } from '@/conf/app';
-import { useAuthStore } from '@/core/stores/auth';
 import { createI18n } from '@/plugins/i18n';
-import { createAuthPlugin } from '@/plugins/plugin.auth';
 import Store from '@/plugins/plugin.pinia';
 import Router from '@/plugins/plugin.router';
 import { useLogger } from '@/utils/logger';
@@ -109,15 +107,10 @@ export function createCelementsAdminApp(options: CelementsAdminMountOptions = {}
 
   app.use(Store);
 
-  // register auth plugin with router and store
-  const authStore = useAuthStore();
-  const Auth = createAuthPlugin(Router, authStore);
-
   const locale = options.locale ?? appConfig.defaultLocale;
 
   app.use(Router);
   app.use(createI18n({ locale }));
-  app.use(Auth);
 
   app.use(VueFinder, {
     i18n: {
