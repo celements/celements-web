@@ -34,7 +34,6 @@
 <file defaultAction="0" language="">Templates.ObjectEdit</file>
 <file defaultAction="0" language="">UserAdminEdit.title</file>
 <file defaultAction="0" language="">Celements2.AdminMenu</file>
-<file defaultAction="0" language="">PageTypes.RichTextCell</file>
 <file defaultAction="0" language="">UserAdminForm.pwdResetWrapper</file>
 <file defaultAction="0" language="">UserAdminSearch.WebHome</file>
 <file defaultAction="0" language="">CelementsContextMenu.cel_cm_gallery_view</file>
@@ -43,8 +42,6 @@
 <file defaultAction="0" language="">PageTypes.PageContentCell</file>
 <file defaultAction="0" language="">Panels.BlogCategories</file>
 <file defaultAction="0" language="">TableHeader.vorname</file>
-<file defaultAction="0" language="">PageTypes.RichText</file>
-<file defaultAction="0" language="">PageTypes.Code</file>
 <file defaultAction="0" language="">UserAdminForm.roleWrapper</file>
 <file defaultAction="0" language="">UserAdminEdit.page</file>
 <file defaultAction="0" language="">UserAdminForm.personalien</file>
@@ -92,7 +89,6 @@
 <file defaultAction="0" language="">PageTypes.RedirectToFirstChild</file>
 <file defaultAction="0" language="">UserAdminForm.roleslabel</file>
 <file defaultAction="0" language="">TableRow.activ</file>
-<file defaultAction="0" language="">PageTypes.BannerCell</file>
 <file defaultAction="0" language="">Panels.RightsHelp</file>
 <file defaultAction="0" language="">TableHeader.email</file>
 <file defaultAction="0" language="">UserAdminForm.passwordWrapper</file>
@@ -179,20 +175,17 @@
 <file defaultAction="0" language="">PageTypes.GroupCell</file>
 <file defaultAction="0" language="">PageTypes.NoEdit</file>
 <file defaultAction="0" language="">Panels.OrphanedPages</file>
-<file defaultAction="0" language="">Panels.SyntaxHelp</file>
 <file defaultAction="0" language="">UserAdminForm.WebHome</file>
 <file defaultAction="0" language="">CelementsContextMenu.cel_cm_pagedependent_content</file>
 <file defaultAction="0" language="">TableHeader.company</file>
 <file defaultAction="0" language="">UserAdminEdit.WebHome</file>
 <file defaultAction="0" language="">Celements2.LayoutMenu</file>
 <file defaultAction="0" language="">Panels.XWikiSyntax</file>
-<file defaultAction="0" language="">PageTypes.DirectLinks</file>
 <file defaultAction="0" language="">UserAdmin.searchform</file>
 <file defaultAction="0" language="">UserAdminForm.languageWrapper</file>
 <file defaultAction="0" language="">BlogTemplates.ArticleClassTemplate</file>
 <file defaultAction="0" language="">CelementsContextMenu.cel_cm_blog_article</file>
 <file defaultAction="0" language="">UserAdminEdit.WebPreferences</file>
 <file defaultAction="0" language="">UserAdminForm.form</file>
-<file defaultAction="0" language="">PageTypes.TranslationBoxCell</file>
 <file defaultAction="0" language="">TableRow.mail_action</file>
 <file defaultAction="0" language="">CelementsContextMenu.cel_cm_gallery</file></files></package>
