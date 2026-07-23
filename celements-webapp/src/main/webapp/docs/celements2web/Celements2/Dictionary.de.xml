@@ -11,9 +11,9 @@
 <customClass></customClass>
 <contentAuthor>xwiki:XWiki.cpichler</contentAuthor>
 <creationDate>1680773607000</creationDate>
-<date>1720776136000</date>
-<contentUpdateDate>1720776136000</contentUpdateDate>
-<version>2.10</version>
+<date>1771346183000</date>
+<contentUpdateDate>1771346183000</contentUpdateDate>
+<version>2.16</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -641,6 +641,7 @@ cel_useradmin_edit_user=Benutzer editieren/registrieren
 cel_useradmin_title=Benutzer: {0}
 cel_useradmin_userdata=Benutzer Daten
 cel_useradmin_groupdata=Mitglied der Gruppen
+cel_useradmin_noGroupdata=Keine Gruppen gefunden
 cel_useradmin_password_change=Passwort ändern
 cel_useradmin_edit_active=Aktiv
 cel_useradmin_edit_suspended=Suspendiert
@@ -661,7 +662,6 @@ cel_useradmin_emailNotUnique=Diese E-Mail-Adresse existiert bereits. Bitte geben
 cel_useradmin_noRegisterRights=Sie haben keine Berechtigung um neue Benutzer zu erstellen.
 cel_useradmin_invalidRequest=Ungültiger Request.
 cel_useradmin_missingEmail=Die E-Mail-Adresse fehlt. Bitte geben Sie eine gültige E-Mail-Adresse ein.
-cel_useradmin_severalEmails=Es sind zuviele E-Mail-Adressen. Bitte geben Sie nur eine ein.
 ## Group Names
 cel_groupname_XWikiAdminGroup=Administrator
 cel_groupname_ContentEditorsGroup=Content Editor
@@ -867,10 +867,9 @@ cel_reconnector_retryDelayNotice=Erneuter Versuch in {} Sekunden.
 cel_pagetype_prettyname_StructuredDataEditor=Struct-Editor
 cel_struct_autocomplete_placeholder_default=Bitte auswählen...
 cel_struct_autocomplete_UrlToNewElementEditorButtonText_default=Neues hinzufügen
-## ADD PAGE
-cel_addpage_insert_pos=Einfügeposition
-cel_addpage_insert_bottom=Unten einfügen
-cel_addpage_insert_top=Oben einfügen
+cel_struct_col_edit=Bearbeiten
+cel_struct_col_delete=Löschen
+struct_table_nodata=Keine Daten gefunden
 ## SelectTag Options
 cel_yes=Ja
 cel_no=Nein

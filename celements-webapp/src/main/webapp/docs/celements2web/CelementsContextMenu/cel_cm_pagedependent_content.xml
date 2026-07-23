@@ -3,7 +3,7 @@
 <web>CelementsContextMenu</web>
 <name>cel_cm_pagedependent_content</name>
 <language></language>
-<defaultLanguage>en</defaultLanguage>
+<defaultLanguage></defaultLanguage>
 <translation>0</translation>
 <parent></parent>
 <creator>xwiki:XWiki.fpichler</creator>
