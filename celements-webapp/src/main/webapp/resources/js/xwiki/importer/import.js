@@ -1,14 +1,7 @@
 var XWiki = (function (XWiki) {
   var importer = (XWiki.importer = XWiki.importer || {});
 
-  let translations = {};
-  if (window.celExecOnceAfterMessagesLoaded) {
-    window.celExecOnceAfterMessagesLoaded(
-      (celMessages) => (translations = celMessages.celAdminImport),
-    );
-  } else {
-    console.warn('celExecOnceAfterMessagesLoaded not available!');
-  }
+  let translations;
 
   /**
    * Initialization hook for the rich UI.
@@ -34,7 +27,10 @@ var XWiki = (function (XWiki) {
 
           // Create a package explorer widget to let the user browse
           // and select/unselect the documents he wants.
-          new importer.PackageExplorer('packagecontainer', decodeURIComponent(file));
+          window.celExecOnceAfterMessagesLoaded((celMessages) => {
+            translations = celMessages.celAdminImport;
+            new importer.PackageExplorer('packagecontainer', decodeURIComponent(file));
+          });
         },
       );
     });
