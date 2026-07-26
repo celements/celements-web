@@ -9,8 +9,8 @@ $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind
 <script type="module" src="http://localhost:5173/@vite/client"></script>
 <script type="module" src="http://localhost:5173/src/embedded.ts"></script>
 #else
-<link rel="stylesheet" href="/static/assets/embedded.css" />
-<script type="module" src="/static/assets/embedded.js"></script>
+<link rel="stylesheet" href="/static/assets/embedded.css?ver=${services.celementsweb.getLastStartupTimeStamp()}" />
+<script type="module" src="/static/assets/embedded.js?ver=${services.celementsweb.getLastStartupTimeStamp()}"></script>
 #end
 
 <div class="cel_cell" id="userAdmin">
