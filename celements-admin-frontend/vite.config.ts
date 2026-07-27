@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => getViteConfig(mode));
 export const getViteConfig = (mode: string) => {
   const env = loadEnv(mode, process.cwd());
   return defineConfig({
+    base: mode === 'production' ? '/static/' : '/',
     plugins: [
       vue({
         template: {
