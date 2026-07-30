@@ -20,7 +20,7 @@ $!services.metatag.displayCollectedMetaTags()## cel-GAA-Num is needed in initCel
 <title>##
 $services.celementsweb.getDocHeaderTitle($doc.documentReference)##
 </title>
-<link rel="canonical" href="$services.url.getExternalURL()" />
+<link rel="canonical" href="$!services.url.getExternalURL()" />
 #set($layoutName = $services.layout.getPageLayoutForDoc($doc.documentReference))##
 #set($layoutWebHomeDoc = '')##
 #if("$!layoutName" != '')##
