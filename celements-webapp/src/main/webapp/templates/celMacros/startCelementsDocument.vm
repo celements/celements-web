@@ -29,6 +29,7 @@
 #end
 <head>
 #if($!withoutDefaultHeaders == false)
+  <meta name="document-view-url" content="$!services.url.getExternalURL()" />
   <link rel="canonical" href="$!services.url.getExternalURL()" />
   #template("celMacros/includeDefaultHeader.vm")
 #end

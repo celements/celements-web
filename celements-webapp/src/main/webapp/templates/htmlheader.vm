@@ -62,6 +62,7 @@
     ## For example, to pass it to the server side using an Ajax query.
     ## Usage example: var name = $$("meta[name='page']")[0].content;
     ## ---------------------------------------------------------------------------------------------------------------
+    <meta name="document-view-url" content="$!services.url.getExternalURL()" />
     <meta name="document" content="$escapetool.xml($doc.fullName)"/>
     <meta name="wiki" content="$escapetool.xml($doc.wiki)"/>
     <meta name="space" content="$escapetool.xml($doc.space)"/>

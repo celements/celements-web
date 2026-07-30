@@ -484,7 +484,7 @@
   window.celMessages.isLoaded = false;
 
   try {
-    new Ajax.Request(document.querySelector('link[rel="canonical"]').href, {
+    new Ajax.Request(document.querySelector('meta[name="document-view-url"]').content, {
       method: 'post',
       parameters: {
         xpage: 'celements_ajax',
