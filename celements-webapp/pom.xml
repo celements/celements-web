@@ -226,6 +226,10 @@
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
+      <artifactId>celements-navigation-rest</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
       <artifactId>celements-core</artifactId>
     </dependency>
     <dependency>
