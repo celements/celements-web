@@ -539,7 +539,7 @@
     ['validate-docname', null, Validator.methods.validDocName],
   ];
 
-  new Ajax.Request(getCelHost(), {
+  new Ajax.Request(document.querySelector('link[rel="canonical"]').href, {
     method: 'post',
     parameters: {
       xpage: 'celements_ajax',
