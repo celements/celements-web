@@ -246,6 +246,10 @@
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
+      <artifactId>celements-web-component</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
       <artifactId>celements-spring-security</artifactId>
     </dependency>
     <dependency>

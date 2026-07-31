@@ -484,12 +484,8 @@
   window.celMessages.isLoaded = false;
 
   try {
-    new Ajax.Request(window.getCelHost(), {
-      method: 'post',
-      parameters: {
-        xpage: 'celements_ajax',
-        ajax_mode: 'Messages',
-      },
+    new Ajax.Request(document.querySelector('meta[name="celements-messages-url"]').content, {
+      method: 'get',
       onSuccess: function (transport) {
         if (transport.responseText.isJSON()) {
           const newMessages = transport.responseText.evalJSON();

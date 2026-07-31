@@ -68,6 +68,8 @@
     <meta name="page" content="$escapetool.xml($doc.name)"/>
     <meta name="version" content="$doc.version"/>
     <meta name="restURL" content="${request.contextPath}/rest/wikis/${xcontext.database}/spaces/$escapetool.url(${doc.space})/pages/$escapetool.url(${doc.name})"/>
+    <meta name="celements-messages-url" content="${request.contextPath}/api/v1/messages"/>
+    <meta name="celements-validation-messages-url" content="${request.contextPath}/api/v1/messages/validation"/>
     ## ---------------------------------------------------------------------------------------------------------------
     ## Localize GWT applications.
     ## ---------------------------------------------------------------------------------------------------------------

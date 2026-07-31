@@ -539,12 +539,8 @@
     ['validate-docname', null, Validator.methods.validDocName],
   ];
 
-  new Ajax.Request(getCelHost(), {
-    method: 'post',
-    parameters: {
-      xpage: 'celements_ajax',
-      ajax_mode: 'ValidationMessages',
-    },
+  new Ajax.Request(document.querySelector('meta[name="celements-validation-messages-url"]').content, {
+    method: 'get',
     onSuccess: function (transport) {
       if (transport.responseText.isJSON()) {
         Validation.messages = Validation.messages.merge(transport.responseText.evalJSON());
