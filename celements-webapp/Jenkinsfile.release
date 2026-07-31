@@ -60,6 +60,7 @@ releasePipeline(manifest: [
     'celements-crm-place-web',
     'celements-image-web',
     'celements-payment-jar',
+    'celements-importer-jar',
     'celements-struct-web',
     'celements-ticker-web',
     'celements-rte-tiny4-war',
