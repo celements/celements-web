@@ -8,7 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
-  <version>7.1-RC1</version>
+  <version>7.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Celements Webapplication</name>
   <licenses>
@@ -22,7 +22,7 @@
     <connection>scm:git:git://github.com/celements/celements-web</connection>
     <developerConnection>scm:git:git@github.com:celements/celements-web.git</developerConnection>
     <url>https://github.com/celements/celements-web</url>
-    <tag>celements-web-7.1-RC1</tag>
+    <tag>HEAD</tag>
   </scm>
   <properties>
     <catalina.port>10081</catalina.port>
