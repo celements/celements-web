@@ -18,7 +18,6 @@ releasePipeline(manifest: [
     'celements-xwiki-rendering-api-jar',
     'celements-xwiki-core-jar',
     'celements-common-test-jar',
-    'celements-common-test-deprecated-jar',
     'celements-migration-jar',
     'celements-mailsender-jar',
     'celements-model-jar',
