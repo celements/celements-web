@@ -29,7 +29,5 @@
 #end
 <head>
 #if($!withoutDefaultHeaders == false)
-  <meta name="celements-messages-url" content="${request.contextPath}/api/v1/messages"/>
-  <meta name="celements-validation-messages-url" content="${request.contextPath}/api/v1/messages/validation"/>
   #template("celMacros/includeDefaultHeader.vm")
 #end

@@ -539,7 +539,7 @@
     ['validate-docname', null, Validator.methods.validDocName],
   ];
 
-  new Ajax.Request(document.querySelector('meta[name="celements-validation-messages-url"]').content, {
+  new Ajax.Request('/api/v1/messages/validation', {
     method: 'get',
     onSuccess: function (transport) {
       if (transport.responseText.isJSON()) {

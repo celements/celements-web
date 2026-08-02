@@ -67,7 +67,8 @@ releasePipeline(manifest: [
     'celements-rte-tiny6-war',
     'celements-rte-langs-tiny4-war',
     'celements-rte-langs-tiny6-war',
-    'celements-web-component-jar',
+    'celements-messages-jar',
+    'celements-messages-web',
     'celements-webapp-war',
   ],
 ])

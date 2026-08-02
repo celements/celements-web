@@ -484,7 +484,7 @@
   window.celMessages.isLoaded = false;
 
   try {
-    new Ajax.Request(document.querySelector('meta[name="celements-messages-url"]').content, {
+    new Ajax.Request('/api/v1/messages', {
       method: 'get',
       onSuccess: function (transport) {
         if (transport.responseText.isJSON()) {
