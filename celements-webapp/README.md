@@ -11,6 +11,10 @@ Log in to the forge once so Docker can pull shared images. Generate an access to
 docker login forge.celhosting.ch
 ```
 
+Go to your git celements-web/celements-webapp folder (or clone celements-web if not yet done). The following commands sould be run in that folder.
+```sh
+cd celements-web/celements-webapp
+```
 
 Create the local runtime configuration:
 
