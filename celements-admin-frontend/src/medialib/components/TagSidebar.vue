@@ -1,10 +1,10 @@
 <template>
-  <aside
-    class="flex h-full w-56 shrink-0 flex-col gap-1 bg-[var(--p-surface-0)] px-3 py-4"
-  >
+  <aside class="flex h-full w-56 shrink-0 flex-col gap-1 bg-[var(--p-surface-0)] px-3 py-4">
     <!-- Header -->
     <div class="mb-2 flex items-center justify-between">
-      <span class="text-xs font-semibold uppercase tracking-widest text-[var(--p-text-muted-color)]">
+      <span
+        class="text-xs font-semibold uppercase tracking-widest text-[var(--p-text-muted-color)]"
+      >
         Labels
       </span>
       <div class="flex gap-1">
@@ -55,16 +55,26 @@
               {{ fileCountForTag(tag) }}
             </span>
           </button>
-          
+
           <!-- Management Buttons -->
           <div
             v-if="tagStore.canManageTags"
             class="hidden group-hover:flex items-center absolute right-1 gap-1 rounded bg-[var(--p-surface-0)] opacity-95 px-1 py-0.5 shadow-sm border border-[var(--p-content-border-color)]"
           >
-            <button class="p-1 rounded text-[var(--p-text-muted-color)] hover:text-[var(--p-primary-color)] transition" title="Rename" aria-label="Rename" @click.stop="openRenameDialog(tag)">
+            <button
+              class="p-1 rounded text-[var(--p-text-muted-color)] hover:text-[var(--p-primary-color)] transition"
+              title="Rename"
+              aria-label="Rename"
+              @click.stop="openRenameDialog(tag)"
+            >
               <FontAwesomeIcon :icon="faPencil" class="text-xs" />
             </button>
-            <button class="p-1 rounded text-[var(--p-text-muted-color)] hover:text-red-500 transition" title="Delete" aria-label="Delete" @click.stop="confirmDelete(tag)">
+            <button
+              class="p-1 rounded text-[var(--p-text-muted-color)] hover:text-red-500 transition"
+              title="Delete"
+              aria-label="Delete"
+              @click.stop="confirmDelete(tag)"
+            >
               <FontAwesomeIcon :icon="faTrashCan" class="text-xs" />
             </button>
           </div>
@@ -77,7 +87,9 @@
       v-if="tagStore.isFilterActive"
       class="mt-3 rounded-md border border-[var(--p-content-border-color)] bg-[var(--p-surface-50)] p-2"
     >
-      <p class="mb-1 text-[10px] font-semibold uppercase tracking-widest text-[var(--p-text-muted-color)]">
+      <p
+        class="mb-1 text-[10px] font-semibold uppercase tracking-widest text-[var(--p-text-muted-color)]"
+      >
         Active filter
       </p>
       <div class="flex flex-wrap gap-1">
@@ -102,10 +114,22 @@
     </div>
 
     <!-- Modals -->
-    <Dialog v-model:visible="isAddModalOpen" header="Add Tag" :modal="true" :style="{ width: '25rem' }">
+    <Dialog
+      v-model:visible="isAddModalOpen"
+      header="Add Tag"
+      :modal="true"
+      :style="{ width: '25rem' }"
+    >
       <div class="flex flex-col gap-3 py-2">
         <label for="newTagName" class="font-semibold text-sm">Label</label>
-        <InputText id="newTagName" v-model="modalLabel" class="w-full" autocomplete="off" autofocus @keyup.enter="confirmAdd" />
+        <InputText
+          id="newTagName"
+          v-model="modalLabel"
+          class="w-full"
+          autocomplete="off"
+          autofocus
+          @keyup.enter="confirmAdd"
+        />
       </div>
       <template #footer>
         <Button label="Cancel" text severity="secondary" @click="isAddModalOpen = false" />
@@ -113,17 +137,28 @@
       </template>
     </Dialog>
 
-    <Dialog v-model:visible="isRenameModalOpen" header="Rename Tag" :modal="true" :style="{ width: '25rem' }">
+    <Dialog
+      v-model:visible="isRenameModalOpen"
+      header="Rename Tag"
+      :modal="true"
+      :style="{ width: '25rem' }"
+    >
       <div class="flex flex-col gap-3 py-2">
         <label for="renameTagName" class="font-semibold text-sm">Label</label>
-        <InputText id="renameTagName" v-model="modalLabel" class="w-full" autocomplete="off" autofocus @keyup.enter="confirmRename" />
+        <InputText
+          id="renameTagName"
+          v-model="modalLabel"
+          class="w-full"
+          autocomplete="off"
+          autofocus
+          @keyup.enter="confirmRename"
+        />
       </div>
       <template #footer>
         <Button label="Cancel" text severity="secondary" @click="isRenameModalOpen = false" />
         <Button label="Rename" :disabled="!modalLabel.trim()" autofocus @click="confirmRename" />
       </template>
     </Dialog>
-
   </aside>
 </template>
 
@@ -182,8 +217,7 @@ function isActive(tag: Tag): boolean {
 }
 
 function fileCountForTag(tag: Tag): number {
-  return Object.values(tagStore.fileTagMap).filter((tags) =>
-    tags.some((t) => t.id === tag.id),
-  ).length;
+  return Object.values(tagStore.fileTagMap).filter((tags) => tags.some((t) => t.id === tag.id))
+    .length;
 }
 </script>

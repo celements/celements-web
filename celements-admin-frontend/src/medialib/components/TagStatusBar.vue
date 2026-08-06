@@ -1,15 +1,10 @@
 <template>
   <div class="flex h-full w-full items-center gap-3 px-3 py-1.5 text-sm text-[var(--p-text-color)]">
-
     <!-- ── No file selected: show active filter summary ── -->
     <template v-if="selectedFiles.length === 0">
       <span class="text-[var(--p-text-muted-color)]">
-        <template v-if="tagStore.isFilterActive">
-          Showing files tagged with:
-        </template>
-        <template v-else>
-          No filter active · select file(s) to manage labels
-        </template>
+        <template v-if="tagStore.isFilterActive"> Showing files tagged with: </template>
+        <template v-else> No filter active · select file(s) to manage labels </template>
       </span>
       <div v-if="tagStore.isFilterActive" class="flex flex-wrap gap-1">
         <span
@@ -55,9 +50,7 @@
       </div>
 
       <!-- Multi-file: show merged tags info -->
-      <span v-else class="text-xs text-[var(--p-text-muted-color)]">
-        (mixed selection)
-      </span>
+      <span v-else class="text-xs text-[var(--p-text-muted-color)]"> (mixed selection) </span>
 
       <!-- Add tag dropdown trigger -->
       <div ref="dropdownRef" class="relative ml-auto">
@@ -84,7 +77,9 @@
             >
               <span :class="['h-2 w-2 rounded-full shrink-0', tag.color]" />
               <span class="flex-1 text-left text-[var(--p-text-color)]">{{ tag.label }}</span>
-              <span v-if="isTagOnAll(tag)" class="text-[10px] text-[var(--p-text-muted-color)]">✓</span>
+              <span v-if="isTagOnAll(tag)" class="text-[10px] text-[var(--p-text-muted-color)]"
+                >✓</span
+              >
             </button>
           </div>
         </Transition>
@@ -117,9 +112,12 @@ onClickOutside(dropdownRef, () => {
 });
 
 // Close dropdown when selection changes
-watch(() => props.selectedFiles, () => {
-  dropdownOpen.value = false;
-});
+watch(
+  () => props.selectedFiles,
+  () => {
+    dropdownOpen.value = false;
+  }
+);
 
 /** Tags on the single selected file */
 const currentTags = computed<Tag[]>(() => {
@@ -130,7 +128,7 @@ const currentTags = computed<Tag[]>(() => {
 /** Whether a tag is already assigned to ALL selected files */
 function isTagOnAll(tag: Tag): boolean {
   return props.selectedFiles.every((f) =>
-    tagStore.getTagsForFile(f.path).some((t) => t.id === tag.id),
+    tagStore.getTagsForFile(f.path).some((t) => t.id === tag.id)
   );
 }
 

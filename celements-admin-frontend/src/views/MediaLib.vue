@@ -89,9 +89,7 @@ const originalList = driver.list.bind(driver);
 driver.list = async (...args: Parameters<typeof originalList>) => {
   const result = await originalList(...args);
   if (tagStore.isFilterActive && result?.files) {
-    result.files = result.files.filter((f: DirEntry) =>
-      tagStore.filteredPaths.has(f.path),
-    );
+    result.files = result.files.filter((f: DirEntry) => tagStore.filteredPaths.has(f.path));
   }
   return result;
 };
@@ -104,7 +102,7 @@ const filterKey = computed(() =>
   tagStore.activeFilter
     .map((t) => t.id)
     .sort()
-    .join(','),
+    .join(',')
 );
 
 logger.log('driver setup');

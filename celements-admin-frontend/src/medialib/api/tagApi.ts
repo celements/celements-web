@@ -11,8 +11,7 @@ export async function apiFetchTags(): Promise<TagDto[]> {
 
 export async function apiFetchFilesForTag(tagId: string): Promise<string[]> {
   const res = await fetch(`${API_BASE}/tags/files?tagId=${encodeURIComponent(tagId)}`);
-  if (!res.ok)
-    throw new Error(`GET ${API_BASE}/tags/files?tagId=${tagId} failed: ${res.status}`);
+  if (!res.ok) throw new Error(`GET ${API_BASE}/tags/files?tagId=${tagId} failed: ${res.status}`);
   return res.json() as Promise<string[]>;
 }
 

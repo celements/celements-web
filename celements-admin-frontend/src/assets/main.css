@@ -1,22 +1,26 @@
-@import 'tailwindcss';
+@layer theme, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+@config '../../tailwind.config.js';
 
 @layer base {
-  h1 {
+  .cel-admin-surface h1 {
     @apply text-3xl sm:text-4xl mb-6 mt-4;
   }
-  h2 {
+  .cel-admin-surface h2 {
     @apply text-2xl mb-2;
   }
-  h3 {
+  .cel-admin-surface h3 {
     @apply text-xl mb-2;
   }
-  h4 {
+  .cel-admin-surface h4 {
     @apply mb-2;
   }
 }
 
 /* Primary and Surface Palettes */
-:root {
+.cel-admin-surface,
+.cel-admin-teleport {
   --p-surface-0: #ffffff;
   --p-surface-50: #f1f1f1; /*grau-20*/
   --p-surface-100: #ebebeb; /*grau-40*/
@@ -33,7 +37,8 @@
 }
 
 /* Light Mode */
-:root {
+.cel-admin-surface,
+.cel-admin-teleport {
   --p-primary-color: var(--p-primary-900);
   --p-primary-contrast-color: var(--p-surface-0);
   --p-primary-hover-color: var(--p-primary-600);
@@ -59,7 +64,8 @@
 *  should match;
 * :root.app-dark
 */
-:root.p-dark {
+.cel-admin-surface.p-dark,
+.cel-admin-teleport.p-dark {
   --p-primary-color: var(--p-primary-400);
   --p-primary-contrast-color: var(--p-surface-900);
   --p-primary-hover-color: var(--p-primary-300);
@@ -77,7 +83,8 @@
   --p-text-hover-muted-color: var(--p-surface-300);
 }
 
-:root {
+.cel-admin-surface,
+.cel-admin-teleport {
   /* Primary Palettes */
   --schwarz-100: 0 0 0;
   --schwarz-80: 51 51 51;

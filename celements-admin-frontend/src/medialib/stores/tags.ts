@@ -66,7 +66,7 @@ export const useTagStore = defineStore('tags', () => {
         } catch (err) {
           console.warn(`[TagStore] Could not load files for tag "${tag.id}":`, err);
         }
-      }),
+      })
     );
     return newMap;
   }
@@ -84,10 +84,8 @@ export const useTagStore = defineStore('tags', () => {
     if (activeFilter.value.length === 0) return new Set();
     return new Set(
       Object.entries(fileTagMap.value)
-        .filter(([, tags]) =>
-          activeFilter.value.every((ft) => tags.some((t) => t.id === ft.id)),
-        )
-        .map(([path]) => path),
+        .filter(([, tags]) => activeFilter.value.every((ft) => tags.some((t) => t.id === ft.id)))
+        .map(([path]) => path)
     );
   });
 
@@ -204,7 +202,10 @@ export const useTagStore = defineStore('tags', () => {
     }
   }
 
-  function optimisticallyDeleteTag(tag: Tag): { backupTags: Tag[]; backupMap: Record<string, Tag[]> } {
+  function optimisticallyDeleteTag(tag: Tag): {
+    backupTags: Tag[];
+    backupMap: Record<string, Tag[]>;
+  } {
     const backupTags = [...availableTags.value];
     const backupMap = { ...fileTagMap.value };
     availableTags.value = availableTags.value.filter((t) => t.id !== tag.id);

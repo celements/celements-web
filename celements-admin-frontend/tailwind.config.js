@@ -4,8 +4,12 @@ import primeui from 'tailwindcss-primeui';
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
+    "./src/**/*.{vue,ts,tsx}",
   ],
+  important: ':where(.cel-admin-surface, .cel-admin-teleport)',
+  corePlugins: {
+    preflight: false,
+  },
   darkMode: ['selector', 'none'],
   plugins: [primeui],
   theme: {

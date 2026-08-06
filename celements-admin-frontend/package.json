@@ -3,12 +3,33 @@
   "version": "0.1.0-SNAPSHOT",
   "private": false,
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "exports": {
-    "./src/*": "./src/*"
+    ".": {
+      "types": "./dist/types/public/runtime.d.ts",
+      "import": "./dist/package/runtime.js"
+    },
+    "./runtime": {
+      "types": "./dist/types/public/runtime.d.ts",
+      "import": "./dist/package/runtime.js"
+    },
+    "./page-attachments": {
+      "types": "./dist/types/public/page-attachments.d.ts",
+      "import": "./dist/package/page-attachments.js"
+    },
+    "./page-attachments-island": {
+      "types": "./dist/types/public/page-attachments-island.d.ts",
+      "import": "./dist/package/page-attachments-island.js"
+    },
+    "./styles.css": "./dist/package/styles.css"
   },
   "scripts": {
     "dev": "concurrently \"vite\" \"npm:type-check-watch\" \"npm:test-watch\"",
-    "build": "npm run type-check && npm run test && vite build",
+    "build": "npm run type-check && npm run test && vite build && npm run build:package && npm run build:types",
+    "build:package": "vite build --config vite.library.config.ts",
+    "build:types": "vue-tsc -p tsconfig.app.json --declaration --emitDeclarationOnly --noEmit false --outDir dist/types --composite false",
     "preview": "vite preview",
     "test": "vitest run",
     "test-watch": "vitest",
@@ -30,18 +51,20 @@
     "findandreplacedomtext": "^0.4.6",
     "lodash": "^4.17.23",
     "luxon": "^3.7.2",
-    "pinia": "^3.0.4",
-    "primevue": "^4.5.4",
     "tailwind-merge": "^3.5.0",
     "tailwindcss-primeui": "^0.6.1",
-    "vue": "^3.5.30",
     "vue-dompurify-html": "^5.3.0",
-    "vue-i18n": "^11.3.0",
     "vue-matomo": "^4.2.0",
-    "vue-router": "^5.0.4",
     "vue3-spinners": "^1.3.3",
-    "vuefinder": "^4.1.1",
     "zod": "^4.3.6"
+  },
+  "peerDependencies": {
+    "pinia": "^3.0.4",
+    "primevue": "^4.5.4",
+    "vue": "^3.5.30",
+    "vue-i18n": "^11.3.0",
+    "vue-router": "^5.0.4",
+    "vuefinder": "^4.1.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.2",
@@ -62,12 +85,18 @@
     "eslint-plugin-vue": "^10.8.0",
     "jsdom": "^29.0.1",
     "npm-run-all2": "^8.0.4",
+    "pinia": "^3.0.4",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
+    "primevue": "^4.5.4",
     "tailwindcss": "^4.2.2",
     "typescript": "~5.9.3",
     "vite": "^8.0.1",
     "vitest": "^4.1.0",
+    "vue": "^3.5.30",
+    "vue-i18n": "^11.3.0",
+    "vue-router": "^5.0.4",
+    "vuefinder": "^4.1.1",
     "vue-tsc": "^3.2.6"
   },
   "browserslist": [

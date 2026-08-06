@@ -39,6 +39,45 @@ function conditionalTailwind() {
 }
 conditionalTailwind.postcss = true;
 
+const adminScope = ':where(.cel-admin-surface, .cel-admin-teleport)';
+const globalSelectors = new Set([
+  '*',
+  ':after',
+  ':before',
+  '::after',
+  '::backdrop',
+  '::before',
+  '::file-selector-button',
+]);
+
+function scopeAdminStyles() {
+  return {
+    postcssPlugin: 'scope-celements-admin-styles',
+    OnceExit(root, helpers) {
+      const from = helpers?.result?.opts?.from || root?.source?.input?.file || '';
+      const isApplicationStyles = from.includes('/src/assets/main.css');
+      if (!isApplicationStyles && !from.includes('/node_modules/vuefinder/')) return;
+      root.walkRules((rule) => {
+        if (rule.parent?.type === 'atrule' && rule.parent.name.includes('keyframes')) return;
+        rule.selectors = rule.selectors.map((selector) => {
+          const trimmed = selector.trim();
+          if (trimmed === ':root' || trimmed === ':host') return adminScope;
+          if (globalSelectors.has(trimmed)) return `${adminScope} ${trimmed}`;
+          if (
+            isApplicationStyles &&
+            !trimmed.includes('.cel-admin-surface') &&
+            !trimmed.includes('.cel-admin-teleport')
+          ) {
+            return `${adminScope} ${trimmed}, ${adminScope}${trimmed}`;
+          }
+          return selector;
+        });
+      });
+    },
+  };
+}
+scopeAdminStyles.postcss = true;
+
 export default {
-  plugins: [conditionalTailwind(), autoprefixer()],
+  plugins: [conditionalTailwind(), scopeAdminStyles(), autoprefixer()],
 };

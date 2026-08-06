@@ -97,7 +97,24 @@ src/
 └── main.ts         # Standalone development entry
 ```
 
-The app exposes a `createCelementsAdminApp()` factory function from `bootstrap.ts` that allows the frontend to be embedded in a host application or run standalone.
+The SPA bootstrap owns Vue Router. Shared feature components and islands use the router-independent
+application runtime, which creates a separate Pinia instance for every mounted Vue application.
+
+## Public package API
+
+The supported `@celements/admin-frontend` entry points are:
+
+- `@celements/admin-frontend/runtime` for `createCelementsApplication()`.
+- `@celements/admin-frontend/page-attachments` for the router-free `PageAttachments` component and
+  its typed props, selection event, and `attachment-actions` slot contract.
+- `@celements/admin-frontend/page-attachments-island` for the guarded
+  `<cel-page-attachments>` custom-element registration.
+- `@celements/admin-frontend/styles.css` for downstream Vue applications using the feature component.
+
+The custom element accepts `space-name`, `doc-name`, `locale`, and `local-dev`. It dispatches the
+bubbling `attachment-selection-change` event. Framework packages are peer dependencies so a
+downstream application supplies one Vue, Pinia, PrimeVue, vue-i18n, Vue Router, and VueFinder
+runtime.
 
 ---
 
