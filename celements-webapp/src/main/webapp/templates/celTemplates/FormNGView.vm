@@ -70,7 +70,7 @@ $xwiki.includeForm("celements2web:Macros.getActionTypeAndActionTemplateDoc", fal
   #set($oneComplete = false)
   #if("$!{formActionObj.getProperty('completeRuleSnippet').getValue()}" != "")
     #set($H = '#') #set($d = '$')
-    #set($execStr = "${H}set(${d}oneComplete = $!{formActionObj.completeRuleSnippet})")
+    #set($execStr = "${H}set(${d}oneComplete = $!{formActionObj.getProperty('completeRuleSnippet').getValue()})")
     #set($!res = $!xwiki.renderText($execStr, $doc))
   #else
     #set($oneComplete = $filled)
