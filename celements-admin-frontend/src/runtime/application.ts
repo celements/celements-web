@@ -5,8 +5,7 @@ import { useLogger } from '@/utils/logger';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPencil, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { createApp, type Component } from 'vue';
-import type { Router } from 'vue-router';
+import { createApp, type Component, type Plugin } from 'vue';
 import VueFinder from 'vuefinder';
 import Button, { type ButtonProps } from 'primevue/button';
 import PrimeVue from 'primevue/config';
@@ -15,7 +14,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 export interface CelementsApplicationOptions {
   locale?: string;
   localDev?: boolean;
-  router?: Router;
+  router?: Plugin;
 }
 
 export function createCelementsApplication(

@@ -73,9 +73,16 @@ The supported `@celements/admin-frontend` imports are:
 
 Internal `src/*` paths are not public API.
 
-Vue, Pinia, PrimeVue, vue-i18n, Vue Router, and VueFinder are peer dependencies for the published
-library. The deployable SPA/island assets remain self-contained, while a separate library build
-externalizes these peers so downstream consumers do not load a second Vue runtime.
+Vue, Pinia, PrimeVue, vue-i18n, and VueFinder are peer dependencies for the published library. Vue
+Router remains a development dependency for the deployable SPA shell and is not a package peer
+because no public feature, island, or runtime entry imports it. The deployable SPA/island assets
+remain self-contained, while a separate library build externalizes peer JavaScript so downstream
+consumers do not load a second Vue runtime.
+
+The `styles.css` entry is a complete stylesheet contract: it contains the scoped Celements
+application/Tailwind styles and processed VueFinder CSS. VueFinder JavaScript remains external, but
+its CSS is deliberately bundled so consumers never need an internal or undocumented stylesheet
+import.
 
 ### Use a dedicated custom element for the attachment island
 
@@ -112,9 +119,44 @@ dialogs and overlays outside the component subtree; Shadow DOM would separate th
 required styles and tokens.
 
 Tailwind preflight is excluded. Application utility selectors, heading rules, theme tokens, and
-generic vendor reset selectors are scoped to `.cel-admin-surface` and `.cel-admin-teleport`.
-VueFinder's namespaced selectors remain available for its teleported UI. Application styles must not
-introduce unscoped `:root`, heading, or generic reset rules into surrounding legacy markup.
+generic vendor reset/selectors are scoped to `.cel-admin-surface` and `.cel-admin-teleport`.
+Generic VueFinder rules also cover the known namespaced teleport roots `.vuefinder__themer`,
+`.vuefinder__modal-layout`, and `[data-sonner-toaster]` so modals, dropdowns, notifications, and
+transitions retain their styling outside the feature subtree.
+
+Only this deliberate vendor namespace allowlist remains global:
+
+- `.vuefinder*` and `.vf-*`;
+- Vue Advanced Cropper's specific `vue-*` component prefixes;
+- `.os-*` and `[data-overlayscrollbars*]`;
+- `.sonner-*` and `[data-sonner-*]`;
+- `.uppy-*`.
+
+Everything else from VueFinder, including `.disabled`, `.fade-*`, `.cropper-viewers`, utility
+classes, raw document selectors, and reset selectors, is rewritten through an admin or known
+teleport boundary. Vue component selectors carrying a compiler-generated `data-v-*` attribute are
+also contained by that unique component attribute. Built-artifact tests apply the same allowlist to
+both the package stylesheet and the deployable vendor stylesheet. Neither artifact may introduce
+unscoped `:root`, heading, document, generic reset, or generic transition rules into surrounding
+legacy markup.
+
+### Publish immutable packages through Forge npm
+
+The published scope is `@celements` at
+`https://forge.celhosting.ch/api/packages/celements/npm/`. Consumers and CI authenticate with a
+Forge access token through `FORGE_TOKEN`. Jenkins obtains it from the existing
+`forge-credentials` username/password credential, using the password value as the token.
+
+Docker delivery and npm delivery remain separate pipelines. The existing `Jenkinsfile` publishes
+the deployable image; `celements-admin-frontend/Jenkinsfile.npm` is the package release path.
+Snapshot source versions are converted to unique
+`x.y.z-snapshot.<BUILD_NUMBER>.<GIT_SHA>` versions and published with the `snapshot` dist-tag.
+Release versions require the exact `admin-frontend-vx.y.z` Git tag and use `latest`. The publish
+script checks the registry and refuses to overwrite an existing version.
+
+CI operations must configure a separate Jenkins job with
+`celements-admin-frontend/Jenkinsfile.npm` as its script path. Adding that job is an explicit
+infrastructure dependency; the existing Docker job does not discover or execute the npm pipeline.
 
 ## Consequences
 

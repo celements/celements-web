@@ -84,15 +84,17 @@ describe('PageAttachments feature', () => {
     const wrapper = mount(PageAttachments, {
       props: { spaceName: 'Space', docName: 'Page' },
       slots: {
-        'attachment-actions': ({ document, selectedAttachments }) =>
+        'attachment-actions': ({ document, path, count, selectedAttachments }) =>
           h(
             'button',
             { class: 'downstream-action' },
-            `${document.spaceName}.${document.docName}:${selectedAttachments[0].basename}`
+            `${document.spaceName}.${document.docName}:${path}:${count}:${selectedAttachments[0].basename}`
           ),
       },
     });
-    expect(wrapper.get('.downstream-action').text()).toBe('Space.Page:image.jpg');
+    expect(wrapper.get('.downstream-action').text()).toBe(
+      'Space.Page:attachments://Space/Page:1:image.jpg'
+    );
     await wrapper.get('.select').trigger('click');
     expect(wrapper.emitted('selectionChange')?.[0]?.[0]).toEqual({
       document: { spaceName: 'Space', docName: 'Page' },
@@ -158,6 +160,23 @@ describe('cel-page-attachments island', () => {
     const secondApp = createCelementsApplication({ render: () => h('div') });
     expect(firstApp.pinia).not.toBe(secondApp.pinia);
   });
+
+  test('remounts with updated document attributes', () => {
+    const element = document.createElement(
+      PAGE_ATTACHMENTS_ELEMENT_NAME
+    ) as CelPageAttachmentsElement;
+    element.spaceName = 'Space';
+    element.docName = 'One';
+    document.body.append(element);
+    const firstFinderId = element.querySelector<HTMLElement>('[data-finder-id]')?.dataset.finderId;
+    element.docName = 'Two';
+    expect(element.querySelector('[data-driver]')?.getAttribute('data-driver')).toBe(
+      '/api/attachments/Space/Two'
+    );
+    expect(element.querySelector<HTMLElement>('[data-finder-id]')?.dataset.finderId).not.toBe(
+      firstFinderId
+    );
+  });
 });
 
 test('registration, build entries, and CSS containment are explicit', () => {
@@ -178,4 +197,20 @@ test('registration, build entries, and CSS containment are explicit', () => {
   ensureCelementsAdminStyles('https://static.example/assets/', true);
   expect(document.head.querySelectorAll('#celements-admin-vendor-styles')).toHaveLength(1);
   expect(document.head.querySelectorAll('#celements-admin-application-styles')).toHaveLength(1);
+});
+
+test('PageAttachments and the island runtime remain router-independent', () => {
+  const feature = readFileSync(
+    resolve(process.cwd(), 'src/features/page-attachments/PageAttachments.vue'),
+    'utf8'
+  );
+  const island = readFileSync(
+    resolve(process.cwd(), 'src/islands/page-attachments-element.ts'),
+    'utf8'
+  );
+  const runtime = readFileSync(resolve(process.cwd(), 'src/runtime/application.ts'), 'utf8');
+  expect(feature).not.toContain('vue-router');
+  expect(feature).not.toContain('useRoute');
+  expect(island).not.toContain('vue-router');
+  expect(runtime).not.toContain('vue-router');
 });

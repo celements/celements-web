@@ -6,6 +6,9 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://forge.celhosting.ch/api/packages/celements/npm/"
+  },
   "exports": {
     ".": {
       "types": "./dist/types/public/runtime.d.ts",
@@ -27,11 +30,13 @@
   },
   "scripts": {
     "dev": "concurrently \"vite\" \"npm:type-check-watch\" \"npm:test-watch\"",
-    "build": "npm run type-check && npm run test && vite build && npm run build:package && npm run build:types",
+    "build": "npm run type-check && npm run build:deployable && npm run build:package && npm run build:types && npm run test:unit",
+    "build:deployable": "vite build",
     "build:package": "vite build --config vite.library.config.ts",
     "build:types": "vue-tsc -p tsconfig.app.json --declaration --emitDeclarationOnly --noEmit false --outDir dist/types --composite false",
     "preview": "vite preview",
-    "test": "vitest run",
+    "test": "npm run build:deployable && npm run build:package && npm run build:types && npm run test:unit",
+    "test:unit": "vitest run",
     "test-watch": "vitest",
     "type-check": "vue-tsc --build --force",
     "type-check-watch": "vue-tsc --build --force --watch --preserveWatchOutput",
@@ -39,7 +44,9 @@
     "lint-fix": "eslint . --fix",
     "format": "prettier --check src test",
     "format-fix": "prettier --write src test",
-    "pre-commit": "npm run type-check && npm run format && npm run lint"
+    "pre-commit": "npm run type-check && npm run format && npm run lint",
+    "publish:check": "npm run build && npm pack --dry-run --json",
+    "publish:forge": "./scripts/publish-forge-package.sh"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -63,7 +70,6 @@
     "primevue": "^4.5.4",
     "vue": "^3.5.30",
     "vue-i18n": "^11.3.0",
-    "vue-router": "^5.0.4",
     "vuefinder": "^4.1.1"
   },
   "devDependencies": {
