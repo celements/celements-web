@@ -290,6 +290,7 @@ class CelLazyLoader extends HTMLElement {
     if (this.#abortController.signal.aborted) {
       this.#abortController = new AbortController();
     }
+    this.#attachLoadingIndicator();
     CelLazyLoader.#observer.observe(this);
   }
 
@@ -313,7 +314,6 @@ class CelLazyLoader extends HTMLElement {
     if (!this.isConnected || token !== this.#loadState) return;
     this.#loadState = true;
     CelLazyLoader.#observer.unobserve(this);
-    this.#attachLoadingIndicator();
     const signal = this.#abortController.signal;
     const html = await this.fetchHtml();
     if (signal.aborted) return;
