@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <url>https://github.com/celements/celements-web</url>
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celements-parent</artifactId>
-    <version>7.1-SNAPSHOT</version>
+    <version>7.2-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
-  <version>7.1-SNAPSHOT</version>
+  <version>7.2-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Celements Webapplication</name>
   <licenses>
@@ -133,7 +131,7 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>tinymce-langs</artifactId>
-      <version>3.4.3.2-celRTE-b3-SNAPSHOT</version>
+      <version>3.4.3.2-celRTE-b2</version>
       <type>war</type>
     </dependency>
     <dependency>
