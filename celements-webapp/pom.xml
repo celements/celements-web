@@ -244,6 +244,11 @@
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
+      <artifactId>celements-messages-web</artifactId>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
       <artifactId>celements-spring-security</artifactId>
     </dependency>
     <dependency>
