@@ -264,12 +264,19 @@ class CelLazyLoader extends HTMLElement {
     REMOVING: 'cel-lazy-removing',
   });
 
-  #abortController;
+  static #observer = new IntersectionObserver(
+    (entries) => entries.forEach(entry => entry.target.#handleIntersection(entry)),
+    { rootMargin: '300px 0px' }
+  );
 
-  constructor() {
-    super();
-    this.#abortController = new AbortController();
-  }
+  static #loadQueues = Array(6).fill(Promise.resolve()); // 5 parallel fg workers, 1 bg worker
+  static #loadQueueIdx = 0;
+  static #bgQueueIdx = this.#loadQueues.length - 1;
+  static get #fgQueueIdx() { return this.#loadQueueIdx++ % this.#bgQueueIdx; }
+  static get #fgLoads() { return Promise.all(this.#loadQueues.slice(0, this.#bgQueueIdx)); }
+
+  #abortController = new AbortController();
+  #loadState = false;
 
   get src() {
     return this.getAttribute('src');
@@ -279,9 +286,37 @@ class CelLazyLoader extends HTMLElement {
     return parseInt(this.getAttribute('loader-size')) || parseInt(this.getAttribute('size'));
   }
 
-  async connectedCallback() {
+  connectedCallback() {
+    if (this.#abortController.signal.aborted) {
+      this.#abortController = new AbortController();
+    }
     this.#attachLoadingIndicator();
+    CelLazyLoader.#observer.observe(this);
+  }
+
+  #handleIntersection(entry) {
+    if (entry.isIntersecting) CelLazyLoader.#observer.unobserve(this);
+    if (this.#loadState === true) return; // already loading
+    const token = this.#loadState || {};
+    this.#loadState = token;
+    this.#queue(token, entry.isIntersecting);
+  }
+
+  #queue(token, hasPriority) {
+    const idx = hasPriority ? CelLazyLoader.#fgQueueIdx : CelLazyLoader.#bgQueueIdx;
+    CelLazyLoader.#loadQueues[idx] = CelLazyLoader.#loadQueues[idx]
+      .then(() => hasPriority ? undefined : CelLazyLoader.#fgLoads)
+      .then(() => this.#trigger(token))
+      .catch(error => console.error('lazy load failed', error));
+  }
+
+  async #trigger(token) {
+    if (!this.isConnected || token !== this.#loadState) return;
+    this.#loadState = true;
+    CelLazyLoader.#observer.unobserve(this);
+    const signal = this.#abortController.signal;
     const html = await this.fetchHtml();
+    if (signal.aborted) return;
     const nodes = this.#parseHTML(html ?? '');
     this.#addLazyLoadToImages(nodes);
     await this.#updateContent(nodes);
@@ -366,7 +401,9 @@ class CelLazyLoader extends HTMLElement {
   }
 
   disconnectedCallback() {
+    this.#loadState = false;
     this.#abortController.abort();
+    CelLazyLoader.#observer.unobserve(this);
   }
 }
 
