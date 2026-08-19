@@ -7,7 +7,7 @@ escape_js_string() {
     -e "s/'/\\\\'/g"
 }
 
-cat > /srv/config.js <<EOF
+cat > /srv/admin/config.js <<EOF
 window.__APP_CONFIG__ = {
   defaultLocale: '$(escape_js_string "${DEFAULT_LOCALE:-de}")'
 };
