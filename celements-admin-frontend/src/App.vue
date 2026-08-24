@@ -1,5 +1,5 @@
 <template>
-  <div class="cel-admin-surface h-full w-full">
+  <div class="cel-admin-surface tw:h-full tw:w-full">
     <ConfirmDialog />
     <RouterView />
   </div>

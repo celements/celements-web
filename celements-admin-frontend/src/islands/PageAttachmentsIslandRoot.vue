@@ -1,9 +1,11 @@
 <template>
-  <div class="cel-admin-surface min-h-[20rem] h-full w-full">
+  <div class="cel-admin-surface tw:min-h-[20rem] tw:h-full tw:w-full">
     <PageAttachments
       :space-name="spaceName"
       :doc-name="docName"
       :locale="locale"
+      :can-upload="canUpload"
+      :can-delete="canDelete"
       @selection-change="$emit('selectionChange', $event)"
     />
   </div>

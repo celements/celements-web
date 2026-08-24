@@ -11,7 +11,6 @@ The **Media Library** (powered by [VueFinder](https://github.com/n1crack/vuefind
 - 🗂️ **Media Library** — First admin entrypoint, a full-featured file/media manager built on VueFinder.
 - 🔐 **Authentication** — Uses the existing Celements login session for same-origin API requests.
 - 🌍 **Internationalization** — Multi-language support (EN, DE, FR, IT) via [vue-i18n](https://vue-i18n.intlify.dev/).
-- 📊 **Analytics** — Optional [Matomo](https://matomo.org/) integration via vue-matomo.
 - 🧩 **Extensible** — Architecture designed for adding more admin views and routes as the platform evolves.
 
 ---
@@ -75,7 +74,6 @@ The container generates `config.js` from its runtime environment. `.env.local` i
 | `npm run format-fix`    | Auto-fix code formatting with Prettier                            |
 | `npm run pre-commit`    | Run type-check, format check and lint (recommended as a git hook) |
 | `npm run publish:check` | Build and inspect the package without publishing                  |
-| `npm run publish:forge` | Publish an immutable version to the Forge npm registry            |
 
 ---
 
@@ -132,9 +130,9 @@ https://forge.celhosting.ch/api/packages/celements/npm/
 ```
 
 The checked-in `.npmrc` maps only the `@celements` scope to Forge. It reads `FORGE_TOKEN`, which
-must be an access token with package read access for consumers and package write access for
-publication. The npm Jenkins job uses the established `forge-credentials` username/password
-credential and exposes its password as `FORGE_TOKEN`.
+must be an access token with package read access for consumers. Publication is performed only by
+the shared `npmPackagePipeline` from `synventis/server-tools`; its Jenkins credential is injected
+without logging it.
 
 Install an immutable package version and its required peers (the example pins release `0.1.0`):
 
@@ -154,7 +152,7 @@ import '@celements/admin-frontend/styles.css';
 ```
 
 `Jenkinsfile` continues to publish only the Docker image. Package publication is a separate Jenkins
-job using `Jenkinsfile.npm`:
+job using `Jenkinsfile.npm`, which calls `npmPackagePipeline(appDir: 'celements-admin-frontend')`:
 
 - a declared `x.y.z-SNAPSHOT` version becomes the unique immutable
   `x.y.z-snapshot.<BUILD_NUMBER>.<GIT_SHA>` version and receives the `snapshot` dist-tag;
@@ -172,11 +170,6 @@ Build and inspect the publishable package locally without credentials or publica
 npm run publish:check
 ```
 
-From a clean, correctly versioned release checkout, the release job ultimately runs:
-
-```sh
-FORGE_TOKEN='<package-write-token>' NPM_DIST_TAG=latest npm run publish:forge
-```
 
 ---
 

@@ -8,8 +8,8 @@ const tw = tailwindcss();
  * vendor CSS from node_modules is skipped while all other files are
  * processed normally.
  */
-function wrapOnce(originalOnce) {
-  return function (root, helpers) {
+const wrapOnce = (originalOnce) => {
+  return (root, helpers) => {
     const from =
       helpers?.result?.opts?.from || root?.source?.input?.file || root?.source?.input?.from || '';
     if (from.includes('/node_modules/')) {
@@ -19,7 +19,7 @@ function wrapOnce(originalOnce) {
   };
 }
 
-function conditionalTailwind() {
+const conditionalTailwind = () => {
   // Tailwind v4 exposes a composite plugin with a `plugins` array
   if (Array.isArray(tw.plugins)) {
     return {
@@ -64,11 +64,11 @@ const vueFinderGlobalSelectorAllowlist = [
   /^:where\(\.vuefinder/,
 ];
 
-function isExplicitlyNamespacedVueFinderSelector(selector) {
+const isExplicitlyNamespacedVueFinderSelector = (selector) => {
   return vueFinderGlobalSelectorAllowlist.some((pattern) => pattern.test(selector));
 }
 
-function replaceDocumentRoot(selector, scope) {
+const replaceDocumentRoot = (selector, scope) => {
   const directionMatch = selector.match(/^html\[dir=(ltr|rtl)\]/);
   if (directionMatch) {
     return selector.replace(directionMatch[0], `${scope}:dir(${directionMatch[1]})`);
@@ -79,7 +79,7 @@ function replaceDocumentRoot(selector, scope) {
     .replace(/^body/, scope);
 }
 
-function scopeSelector(selector, scope) {
+const scopeSelector = (selector, scope) => {
   if (selector === ':root' || selector === ':host') return scope;
   if (/^(?:html|body)(?:\b|\[|:|\s|>)/.test(selector)) {
     return replaceDocumentRoot(selector, scope);
@@ -89,13 +89,13 @@ function scopeSelector(selector, scope) {
   return descendant;
 }
 
-function scopeVueFinderSelector(selector) {
+const scopeVueFinderSelector = (selector) => {
   return [adminScope, vueFinderTeleportScope]
     .map((scope) => scopeSelector(selector, scope))
     .join(', ');
 }
 
-function scopeAdminStyles() {
+const scopeAdminStyles = () => {
   return {
     postcssPlugin: 'scope-celements-admin-styles',
     OnceExit(root, helpers) {

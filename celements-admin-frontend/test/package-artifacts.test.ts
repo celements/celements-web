@@ -69,6 +69,10 @@ describe.skipIf(!builtArtifactsAvailable)('published stylesheet', () => {
         .nodes.some((node) => node.type === 'atrule' && node.name === 'import')
     ).toBe(false);
     expect(readFileSync(projectFile('dist/package/styles.js'), 'utf8')).not.toContain('vuefinder');
+    expect(packageCss).toMatch(/\.tw\\:flex[^}]*!important/);
+    expect(packageCss).toMatch(/\.tw\\:fixed[^}]*!important/);
+    expect(selectors(deployableApplicationCss)).not.toContain('.flex');
+    expect(selectors(deployableApplicationCss)).not.toContain('.fixed');
   });
 
   test('contains generic vendor and reset selectors within an admin boundary', () => {
@@ -87,7 +91,7 @@ describe.skipIf(!builtArtifactsAvailable)('published stylesheet', () => {
     ).toBe(true);
     expect(
       builtSelectors.some(
-        (selector) => selector.includes('.cel-admin-teleport') && selector.includes('.fixed')
+        (selector) => selector.includes('.cel-admin-teleport') && selector.includes('.tw\\:fixed')
       )
     ).toBe(true);
     expect(builtSelectors.some((selector) => selector.startsWith('[data-sonner-toaster]'))).toBe(
@@ -126,6 +130,17 @@ test.skipIf(!builtArtifactsAvailable)(
     }
   }
 );
+
+test('package manifest publishes only package and type artifacts', () => {
+  const packageJson = JSON.parse(readFileSync(projectFile('package.json'), 'utf8')) as {
+    files: string[];
+  };
+  expect(packageJson.files).toEqual(['dist/package', 'dist/types']);
+  expect(packageJson.files).not.toContain('dist/assets');
+  expect(packageJson.files).not.toContain('dist/.vite');
+  expect(existsSync(projectFile('dist/package/runtime.js'))).toBe(true);
+  expect(existsSync(projectFile('dist/types/public/runtime.d.ts'))).toBe(true);
+});
 
 test('legacy attachment templates retain island and asynchronous loading paths', () => {
   const templateRoot = projectFile('..', 'celements-webapp/src/main/webapp/templates');

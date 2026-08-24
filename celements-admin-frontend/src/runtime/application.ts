@@ -17,16 +17,16 @@ export interface CelementsApplicationOptions {
   router?: Plugin;
 }
 
-export function createCelementsApplication(
+export const createCelementsApplication = (
   rootComponent: Component,
   rootProps: Record<string, unknown> = {},
   options: CelementsApplicationOptions = {}
-) {
+) => {
   const logger = useLogger('Celements-Admin');
   const app = createApp(rootComponent, rootProps);
   const pinia = createCelementsPinia();
   app.config.errorHandler = (err, instance, info) => {
-    logger.error(err as string, instance, info);
+    logger.error(err, instance, info);
   };
   app.use(PrimeVue, {
     unstyled: true,
@@ -34,59 +34,59 @@ export function createCelementsApplication(
       dialog: {
         root: {
           class:
-            'cel-admin-teleport bg-[var(--p-surface-0)] rounded-lg shadow-lg border border-[var(--p-content-border-color)] overflow-hidden flex flex-col w-[25rem] max-w-[90vw]',
+            'cel-admin-teleport tw:bg-[var(--p-surface-0)] tw:rounded-lg tw:shadow-lg tw:border tw:border-[var(--p-content-border-color)] tw:overflow-hidden tw:flex tw:flex-col tw:w-[25rem] tw:max-w-[90vw]',
         },
         header: {
           class:
-            'flex items-center justify-between px-4 py-3 border-b border-[var(--p-content-border-color)]',
+            'tw:flex tw:items-center tw:justify-between tw:px-4 tw:py-3 tw:border-b tw:border-[var(--p-content-border-color)]',
         },
-        title: { class: 'text-lg font-semibold' },
-        content: { class: 'p-4' },
+        title: { class: 'tw:text-lg tw:font-semibold' },
+        content: { class: 'tw:p-4' },
         footer: {
           class:
-            'flex justify-end gap-2 px-4 py-3 border-t border-[var(--p-content-border-color)] bg-[var(--p-surface-50)]',
+            'tw:flex tw:justify-end tw:gap-2 tw:px-4 tw:py-3 tw:border-t tw:border-[var(--p-content-border-color)] tw:bg-[var(--p-surface-50)]',
         },
         mask: {
           class:
-            'cel-admin-teleport bg-black/50 fixed inset-0 flex items-center justify-center z-50',
+            'cel-admin-teleport tw:bg-black/50 tw:fixed tw:inset-0 tw:flex tw:items-center tw:justify-center tw:z-50',
         },
       },
       confirmdialog: {
         root: {
           class:
-            'cel-admin-teleport bg-[var(--p-surface-0)] rounded-lg shadow-lg border border-[var(--p-content-border-color)] overflow-hidden w-[25rem] max-w-[90vw]',
+            'cel-admin-teleport tw:bg-[var(--p-surface-0)] tw:rounded-lg tw:shadow-lg tw:border tw:border-[var(--p-content-border-color)] tw:overflow-hidden tw:w-[25rem] tw:max-w-[90vw]',
         },
         header: {
           class:
-            'flex items-center gap-3 px-4 py-3 border-b border-[var(--p-content-border-color)]',
+            'tw:flex tw:items-center tw:gap-3 tw:px-4 tw:py-3 tw:border-b tw:border-[var(--p-content-border-color)]',
         },
-        title: { class: 'text-lg font-semibold' },
-        content: { class: 'p-4 flex items-center gap-3' },
-        icon: { class: 'text-2xl text-[var(--p-text-muted-color)]' },
-        message: { class: 'text-[var(--p-text-color)]' },
+        title: { class: 'tw:text-lg tw:font-semibold' },
+        content: { class: 'tw:p-4 tw:flex tw:items-center tw:gap-3' },
+        icon: { class: 'tw:text-2xl tw:text-[var(--p-text-muted-color)]' },
+        message: { class: 'tw:text-[var(--p-text-color)]' },
         footer: {
           class:
-            'flex justify-end gap-2 px-4 py-3 border-t border-[var(--p-content-border-color)] bg-[var(--p-surface-50)]',
+            'tw:flex tw:justify-end tw:gap-2 tw:px-4 tw:py-3 tw:border-t tw:border-[var(--p-content-border-color)] tw:bg-[var(--p-surface-50)]',
         },
         mask: {
           class:
-            'cel-admin-teleport bg-black/50 fixed inset-0 flex items-center justify-center z-50',
+            'cel-admin-teleport tw:bg-black/50 tw:fixed tw:inset-0 tw:flex tw:items-center tw:justify-center tw:z-50',
         },
       },
       inputtext: {
         root: {
           class:
-            'px-3 py-2 border border-[var(--p-content-border-color)] rounded-md w-full focus:outline-hidden focus:ring-2 focus:ring-[var(--p-primary-color)] text-[var(--p-text-color)] bg-[var(--p-surface-0)]',
+            'tw:px-3 tw:py-2 tw:border tw:border-[var(--p-content-border-color)] tw:rounded-md tw:w-full tw:focus:outline-hidden tw:focus:ring-2 tw:focus:ring-[var(--p-primary-color)] tw:text-[var(--p-text-color)] tw:bg-[var(--p-surface-0)]',
         },
       },
       button: {
         root: ({ props }: { props: ButtonProps }) => ({
           class: [
-            'px-3 py-1.5 rounded-md font-semibold transition-colors focus:ring-2 focus:ring-offset-1 focus:outline-hidden',
+            'tw:px-3 tw:py-1.5 tw:rounded-md tw:font-semibold tw:transition-colors tw:focus:ring-2 tw:focus:ring-offset-1 tw:focus:outline-hidden',
             props.severity === 'secondary'
-              ? 'text-[var(--p-text-color)] hover:bg-[var(--p-content-hover-background)]'
-              : 'bg-[var(--p-primary-color)] text-white hover:opacity-80 ring-[var(--p-primary-color)]',
-            props.disabled ? 'opacity-50 cursor-not-allowed' : '',
+              ? 'tw:text-[var(--p-text-color)] tw:hover:bg-[var(--p-content-hover-background)]'
+              : 'tw:bg-[var(--p-primary-color)] tw:text-white tw:hover:opacity-80 tw:ring-[var(--p-primary-color)]',
+            props.disabled ? 'tw:opacity-50 tw:cursor-not-allowed' : '',
           ],
         }),
       },
@@ -127,4 +127,4 @@ export function createCelementsApplication(
       return result;
     },
   };
-}
+};

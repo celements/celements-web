@@ -10,6 +10,6 @@ import {
 
 export type CelementsAdminMountOptions = CelementsApplicationOptions;
 
-export function createCelementsAdminApp(options: CelementsAdminMountOptions = {}) {
+export const createCelementsAdminApp = (options: CelementsAdminMountOptions = {}) => {
   return createCelementsApplication(App, {}, { ...options, router: createAdminRouter() });
-}
+};

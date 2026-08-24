@@ -1,20 +1,21 @@
-@layer theme, utilities;
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/utilities.css' layer(utilities);
+@import 'tailwindcss/theme.css' layer(theme) prefix(tw);
+@import 'tailwindcss/utilities.css' layer(utilities) prefix(tw) important source(none);
+@source '..';
+@source '../../index.html';
 @config '../../tailwind.config.js';
 
 @layer base {
   .cel-admin-surface h1 {
-    @apply text-3xl sm:text-4xl mb-6 mt-4;
+    @apply tw:text-3xl tw:sm:text-4xl tw:mb-6 tw:mt-4;
   }
   .cel-admin-surface h2 {
-    @apply text-2xl mb-2;
+    @apply tw:text-2xl tw:mb-2;
   }
   .cel-admin-surface h3 {
-    @apply text-xl mb-2;
+    @apply tw:text-xl tw:mb-2;
   }
   .cel-admin-surface h4 {
-    @apply mb-2;
+    @apply tw:mb-2;
   }
 }
 

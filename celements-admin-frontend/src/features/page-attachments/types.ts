@@ -7,6 +7,8 @@ export interface PageAttachmentsDocument {
 
 export interface PageAttachmentsProps extends PageAttachmentsDocument {
   locale?: string;
+  canUpload: boolean;
+  canDelete: boolean;
 }
 
 export interface PageAttachmentsActionContext {

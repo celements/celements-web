@@ -1,5 +1,10 @@
 <template>
-  <PageAttachments :space-name="spaceName" :doc-name="docName" />
+  <PageAttachments
+    :space-name="spaceName"
+    :doc-name="docName"
+    :can-upload="true"
+    :can-delete="true"
+  />
 </template>
 
 <script setup lang="ts">

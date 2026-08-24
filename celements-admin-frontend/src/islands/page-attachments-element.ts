@@ -5,7 +5,14 @@ import type { PageAttachmentsSelectionDetail } from '@/features/page-attachments
 export const PAGE_ATTACHMENTS_ELEMENT_NAME = 'cel-page-attachments';
 
 export class CelPageAttachmentsElement extends HTMLElement {
-  static observedAttributes = ['space-name', 'doc-name', 'locale', 'local-dev'];
+  static observedAttributes = [
+    'space-name',
+    'doc-name',
+    'locale',
+    'local-dev',
+    'can-upload',
+    'can-delete',
+  ];
   private application: ReturnType<typeof createCelementsApplication> | null = null;
 
   get spaceName() {
@@ -35,6 +42,18 @@ export class CelPageAttachmentsElement extends HTMLElement {
     if (value == null) this.removeAttribute('local-dev');
     else this.setAttribute('local-dev', String(value));
   }
+  get canUpload() {
+    return this.getAttribute('can-upload') === 'true';
+  }
+  set canUpload(value: boolean) {
+    this.setAttribute('can-upload', String(value));
+  }
+  get canDelete() {
+    return this.getAttribute('can-delete') === 'true';
+  }
+  set canDelete(value: boolean) {
+    this.setAttribute('can-delete', String(value));
+  }
   connectedCallback() {
     if (this.application) return;
     if (!this.spaceName || !this.docName) return;
@@ -44,6 +63,8 @@ export class CelPageAttachmentsElement extends HTMLElement {
         spaceName: this.spaceName,
         docName: this.docName,
         locale: this.locale,
+        canUpload: this.canUpload,
+        canDelete: this.canDelete,
         onSelectionChange: (detail: PageAttachmentsSelectionDetail) => {
           this.dispatchEvent(
             new CustomEvent<PageAttachmentsSelectionDetail>('attachment-selection-change', {

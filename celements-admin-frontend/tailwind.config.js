@@ -6,7 +6,6 @@ export default {
     "./index.html",
     "./src/**/*.{vue,ts,tsx}",
   ],
-  important: ':where(.cel-admin-surface, .cel-admin-teleport)',
   corePlugins: {
     preflight: false,
   },

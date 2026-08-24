@@ -3,19 +3,38 @@ import { resolve } from 'node:path';
 
 import { mount } from '@vue/test-utils';
 import { defineComponent, h } from 'vue';
+import { createI18n } from 'vue-i18n';
 import { afterEach, beforeAll, describe, expect, test, vi } from 'vitest';
+
+const navigation = vi.hoisted(() => ({ navigateTo: vi.fn() }));
+vi.mock('@/utils/navigation', () => navigation);
 
 const attachment = {
   dir: 'attachments://Space/Page',
   basename: 'image.jpg',
   extension: 'jpg',
   path: 'attachments://Space/Page/image.jpg',
+  historyUrl: '/xwiki/bin/viewattachrev/Space/Page/image.jpg',
   storage: 'attachments',
   type: 'file' as const,
   file_size: 123,
   last_modified: 1,
   mime_type: 'image/jpeg',
   visibility: 'public',
+};
+type TestAttachment = Omit<typeof attachment, 'type'> & { type: 'file' | 'dir' };
+const i18n = createI18n({
+  legacy: false,
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: { en: { common: { pageAttachments: { revisionHistory: 'Revision history' } } } },
+});
+
+const finderCapabilities = (element: ParentNode) => {
+  const features = JSON.parse(
+    element.querySelector('[data-finder-id]')?.getAttribute('data-features') ?? '{}'
+  ) as Record<string, boolean>;
+  return { upload: features.upload, delete: features.delete };
 };
 
 vi.mock('vuefinder', () => {
@@ -33,18 +52,28 @@ vi.mock('vuefinder', () => {
     props: {
       id: { type: String, required: true },
       driver: { type: Object, required: true },
+      contextMenuItems: { type: Array, default: () => [] },
+      features: { type: Object, default: () => ({}) },
     },
     emits: ['select'],
     setup(props, { emit, slots }) {
       return () =>
-        h('div', { 'data-finder-id': props.id, 'data-driver': props.driver.baseURL }, [
-          h('button', { class: 'select', onClick: () => emit('select', [attachment]) }, 'select'),
-          slots['status-bar']?.({
-            path: 'attachments://Space/Page',
-            count: 1,
-            selected: [attachment],
-          }),
-        ]);
+        h(
+          'div',
+          {
+            'data-finder-id': props.id,
+            'data-driver': props.driver.baseURL,
+            'data-features': JSON.stringify(props.features),
+          },
+          [
+            h('button', { class: 'select', onClick: () => emit('select', [attachment]) }, 'select'),
+            slots['status-bar']?.({
+              path: 'attachments://Space/Page',
+              count: 1,
+              selected: [attachment],
+            }),
+          ]
+        );
     },
   });
   return {
@@ -73,16 +102,19 @@ afterEach(() => {
 describe('PageAttachments feature', () => {
   test('mounts without Vue Router and keeps the attachment REST contract', () => {
     const wrapper = mount(PageAttachments, {
-      props: { spaceName: 'My Space', docName: 'Page' },
+      props: { spaceName: 'My Space', docName: 'Page', canUpload: false, canDelete: false },
+      global: { plugins: [i18n] },
     });
     expect(wrapper.find('[data-driver]').attributes('data-driver')).toBe(
       '/api/attachments/My%20Space/Page'
     );
+    expect(finderCapabilities(wrapper.element)).toEqual({ upload: false, delete: false });
   });
 
   test('exposes selection and a typed attachment action slot', async () => {
     const wrapper = mount(PageAttachments, {
-      props: { spaceName: 'Space', docName: 'Page' },
+      props: { spaceName: 'Space', docName: 'Page', canUpload: true, canDelete: false },
+      global: { plugins: [i18n] },
       slots: {
         'attachment-actions': ({ document, path, count, selectedAttachments }) =>
           h(
@@ -100,7 +132,47 @@ describe('PageAttachments feature', () => {
       document: { spaceName: 'Space', docName: 'Page' },
       selectedAttachments: [attachment],
     });
+    expect(finderCapabilities(wrapper.element)).toEqual({ upload: true, delete: false });
   });
+
+  test('keeps delete enabled when upload is disabled', () => {
+    const wrapper = mount(PageAttachments, {
+      props: { spaceName: 'Space', docName: 'Page', canUpload: false, canDelete: true },
+      global: { plugins: [i18n] },
+    });
+    expect(finderCapabilities(wrapper.element)).toEqual({ upload: false, delete: true });
+  });
+});
+
+test('history menu is localized, selective, and navigates to the supplied URL', () => {
+  const wrapper = mount(PageAttachments, {
+    props: { spaceName: 'Space', docName: 'Page', canUpload: false, canDelete: true },
+    global: { plugins: [i18n] },
+  });
+  const [item] = wrapper.findComponent({ name: 'VueFinder' }).props('contextMenuItems') as Array<{
+    title: () => string;
+    show: (app: unknown, context: { items: TestAttachment[]; target: TestAttachment }) => boolean;
+    action: (app: unknown, items: TestAttachment[]) => void;
+  }>;
+  expect(item.title()).toBe('Revision history');
+  expect(item.show({}, { items: [attachment], target: attachment })).toBe(true);
+  expect(
+    item.show(
+      {},
+      { items: [{ ...attachment, historyUrl: '' }], target: { ...attachment, historyUrl: '' } }
+    )
+  ).toBe(false);
+  expect(
+    item.show(
+      {},
+      { items: [{ ...attachment, type: 'dir' }], target: { ...attachment, type: 'dir' } }
+    )
+  ).toBe(false);
+  expect(item.show({}, { items: [attachment, attachment], target: attachment })).toBe(false);
+  item.action({}, [attachment]);
+  expect(navigation.navigateTo).toHaveBeenCalledWith(
+    '/xwiki/bin/viewattachrev/Space/Page/image.jpg'
+  );
 });
 
 test('the SPA route converts route params to feature props', () => {
@@ -114,7 +186,7 @@ test('the SPA route converts route params to feature props', () => {
 });
 
 describe('cel-page-attachments island', () => {
-  test('maps attributes and properties and forwards selection as a DOM event', async () => {
+  test('maps literal capability attributes into rendered features and forwards selection', async () => {
     const element = document.createElement(
       PAGE_ATTACHMENTS_ELEMENT_NAME
     ) as CelPageAttachmentsElement;
@@ -122,12 +194,17 @@ describe('cel-page-attachments island', () => {
     element.docName = 'Page';
     element.locale = 'de';
     element.localDev = false;
+    element.setAttribute('can-upload', 'false');
+    element.setAttribute('can-delete', 'true');
     const listener = vi.fn();
     element.addEventListener('attachment-selection-change', listener);
     document.body.append(element);
     expect(element.getAttribute('space-name')).toBe('Space');
     expect(element.getAttribute('doc-name')).toBe('Page');
     expect(element.locale).toBe('de');
+    expect(element.canUpload).toBe(false);
+    expect(element.canDelete).toBe(true);
+    expect(finderCapabilities(element)).toEqual({ upload: false, delete: true });
     await element.querySelector<HTMLButtonElement>('.select')?.click();
     expect(listener).toHaveBeenCalledOnce();
     expect((listener.mock.calls[0][0] as CustomEvent).detail.selectedAttachments).toEqual([
@@ -177,6 +254,24 @@ describe('cel-page-attachments island', () => {
       firstFinderId
     );
   });
+
+  test('remounts when capabilities change and preserves explicit false', () => {
+    const element = document.createElement(
+      PAGE_ATTACHMENTS_ELEMENT_NAME
+    ) as CelPageAttachmentsElement;
+    element.spaceName = 'Space';
+    element.docName = 'Page';
+    element.setAttribute('can-upload', 'false');
+    element.setAttribute('can-delete', 'true');
+    document.body.append(element);
+    const firstFinderId = element.querySelector('[data-finder-id]')?.getAttribute('data-finder-id');
+    element.setAttribute('can-upload', 'true');
+    element.setAttribute('can-delete', 'false');
+    expect(element.querySelector('[data-finder-id]')?.getAttribute('data-finder-id')).not.toBe(
+      firstFinderId
+    );
+    expect(finderCapabilities(element)).toEqual({ upload: true, delete: false });
+  });
 });
 
 test('registration, build entries, and CSS containment are explicit', () => {
@@ -190,9 +285,23 @@ test('registration, build entries, and CSS containment are explicit', () => {
   );
   const css = readFileSync(resolve(process.cwd(), 'src/assets/main.css'), 'utf8');
   expect(css).not.toMatch(/(^|\n):root/);
-  expect(css).not.toContain("@import 'tailwindcss';");
-  expect(css).toContain("@import 'tailwindcss/utilities.css' layer(utilities)");
+  expect(css).toContain("@import 'tailwindcss/theme.css' layer(theme) prefix(tw);");
+  expect(css).toContain(
+    "@import 'tailwindcss/utilities.css' layer(utilities) prefix(tw) important source(none);"
+  );
+  expect(css).toContain("@source '..';");
+  expect(css).toContain("@source '../../index.html';");
+  expect(css).toContain("@config '../../tailwind.config.js';");
   expect(css).toContain('.cel-admin-surface h1');
+  const islandTemplate = readFileSync(
+    resolve(
+      process.cwd(),
+      '../celements-webapp/src/main/webapp/templates/celTemplates/pageAttachmentsIsland.vm'
+    ),
+    'utf8'
+  );
+  expect(islandTemplate).toContain('cel-page-attachments { display: block; width: 100%; }');
+  expect(css).not.toContain('cel-page-attachments');
   ensureCelementsAdminStyles('https://static.example/assets/', true);
   ensureCelementsAdminStyles('https://static.example/assets/', true);
   expect(document.head.querySelectorAll('#celements-admin-vendor-styles')).toHaveLength(1);

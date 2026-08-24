@@ -1,10 +1,10 @@
 <template>
-  <div class="flex h-full w-full overflow-hidden">
-    <div class="flex min-w-0 flex-1 flex-col w-full">
+  <div class="tw:flex tw:h-full tw:w-full tw:overflow-hidden">
+    <div class="tw:flex tw:min-w-0 tw:flex-1 tw:flex-col tw:w-full">
       <VueFinder
         :id="finderId"
         :key="documentKey"
-        class="flex-1"
+        class="tw:flex-1"
         :driver="driver"
         :locale="locale"
         :config="{
@@ -12,6 +12,7 @@
           persist: false,
         }"
         :features="features"
+        :context-menu-items="contextMenuItems"
         @select="handleSelect"
       >
         <template #status-bar="{ path, count, selected }">
@@ -36,8 +37,16 @@ import type {
   PageAttachmentsSelectionDetail,
 } from './types';
 import { useLogger } from '@/utils/logger';
-import { computed, ref } from 'vue';
-import { RemoteDriver, VueFinder, type DirEntry, type FeaturesConfig } from 'vuefinder';
+import { navigateTo } from '@/utils/navigation';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import {
+  RemoteDriver,
+  VueFinder,
+  type DirEntry,
+  type FeaturesConfig,
+  type VueFinderProps,
+} from 'vuefinder';
 
 const props = defineProps<PageAttachmentsProps>();
 const emit = defineEmits<{
@@ -48,19 +57,19 @@ defineSlots<{
 }>();
 
 const logger = useLogger('VueFinder-Attachments');
-const instanceId = ref(`page_attachments_${crypto.randomUUID()}`);
-const finderId = computed(() => instanceId.value);
+const { t } = useI18n();
+const finderId = `page_attachments_${crypto.randomUUID()}`;
 const document = computed<PageAttachmentsDocument>(() => ({
   spaceName: props.spaceName,
   docName: props.docName,
 }));
 const documentKey = computed(() => `${props.spaceName}/${props.docName}`);
-const features: FeaturesConfig = {
+const features = computed<FeaturesConfig>(() => ({
   search: true,
   preview: true,
   rename: false,
-  upload: true,
-  delete: true,
+  upload: props.canUpload,
+  delete: props.canDelete,
   download: true,
   newfolder: false,
   newfile: false,
@@ -74,7 +83,7 @@ const features: FeaturesConfig = {
   history: false,
   theme: false,
   pinned: false,
-};
+}));
 const driver = computed(() => {
   const remoteDriver = new RemoteDriver({
     baseURL: `/api/attachments/${encodeURIComponent(props.spaceName)}/${encodeURIComponent(props.docName)}`,
@@ -84,6 +93,20 @@ const driver = computed(() => {
     file?.url ?? originalGetDownloadUrl(file);
   return remoteDriver;
 });
+const contextMenuItems: NonNullable<VueFinderProps['contextMenuItems']> = [
+  {
+    id: 'celements-revision-history',
+    title: () => t('common.pageAttachments.revisionHistory'),
+    action: (_app, items) => {
+      const historyUrl = (items[0] as DirEntry & { historyUrl?: string })?.historyUrl;
+      if (historyUrl) navigateTo(historyUrl);
+    },
+    show: (_app, { items, target }) =>
+      items.length === 1 &&
+      target?.type === 'file' &&
+      Boolean((target as DirEntry & { historyUrl?: string }).historyUrl),
+  },
+];
 
 const handleSelect = (selectedAttachments: DirEntry[]) => {
   const detail = { document: document.value, selectedAttachments };
