@@ -159,7 +159,6 @@ class CelLazyLoaderJs extends HTMLElement {
 
   constructor() {
     super();
-    this.hidden = true;
     this._lazyLoadUtils = new CelLazyLoaderUtils();
     this._reayState = 0;
     this._isSuccessfullLoaded = null;
@@ -200,6 +199,7 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   connectedCallback() {
+    this.hidden = true;
     this._loadJsScript();
   }
 }
@@ -223,7 +223,6 @@ class CelLazyLoaderCss extends HTMLElement {
 
   constructor() {
     super();
-    this.hidden = true;
     this._lazyLoadUtils = new CelLazyLoaderUtils();
     this._reayState = 0;
     this._isSuccessfullLoaded = null;
@@ -249,6 +248,7 @@ class CelLazyLoaderCss extends HTMLElement {
   }
 
   connectedCallback() {
+    this.hidden = true;
     this._loadCssScript();
   }
 }
