@@ -34,6 +34,7 @@ releasePipeline(manifest: [
     'celements-product-jar',
     'celements-ticker-jar',
     'celements-spring-security-jar',
+    'celements-navigation-rest-jar',
     'celements-wiki-manager-jar',
     'celements-captcha-jar',
     'celements-keycloak-jar',
