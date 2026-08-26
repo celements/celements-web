@@ -199,6 +199,7 @@ class CelLazyLoaderJs extends HTMLElement {
   }
 
   connectedCallback() {
+    this.hidden = true;
     this._loadJsScript();
   }
 }
@@ -247,6 +248,7 @@ class CelLazyLoaderCss extends HTMLElement {
   }
 
   connectedCallback() {
+    this.hidden = true;
     this._loadCssScript();
   }
 }
@@ -262,6 +264,7 @@ class CelLazyLoader extends HTMLElement {
   static CSS_CLASSES = Object.freeze({
     LOADING: 'cel-lazy-loading',
     REMOVING: 'cel-lazy-removing',
+    ERROR: 'cel-lazy-load-error',
   });
 
   static #observer = new IntersectionObserver(
@@ -284,6 +287,10 @@ class CelLazyLoader extends HTMLElement {
 
   get loaderSize() {
     return parseInt(this.getAttribute('loader-size')) || parseInt(this.getAttribute('size'));
+  }
+
+  get errorMsg() {
+    return this.getAttribute('error-msg');
   }
 
   connectedCallback() {
@@ -315,10 +322,17 @@ class CelLazyLoader extends HTMLElement {
     this.#loadState = true;
     CelLazyLoader.#observer.unobserve(this);
     const signal = this.#abortController.signal;
-    const html = await this.fetchHtml();
-    if (signal.aborted) return;
-    const nodes = this.#parseHTML(html ?? '');
-    this.#addLazyLoadToImages(nodes);
+    let nodes;
+    try {
+      const html = await this.fetchHtml();
+      if (signal.aborted) return;
+      nodes = this.#parseHTML(html);
+      this.#addLazyLoadToImages(nodes);
+    } catch (exp) {
+      if (signal.aborted || exp.name === 'AbortError') return;
+      console.error('lazy load failed', exp);
+      nodes = this.#createErrorNodes();
+    }
     await this.#updateContent(nodes);
   }
 
@@ -338,6 +352,17 @@ class CelLazyLoader extends HTMLElement {
         node.setAttribute('loading', 'lazy');
       }
     });
+  }
+
+  #createErrorNodes() {
+    const nodes = [];
+    if (this.errorMsg) {
+      const elem = document.createElement('div');
+      elem.classList.add(CelLazyLoader.CSS_CLASSES.ERROR);
+      elem.textContent = this.errorMsg;
+      nodes.push(elem);
+    }
+    return nodes;
   }
 
   async #updateContent(newChildNodes) {
@@ -384,17 +409,15 @@ class CelLazyLoader extends HTMLElement {
   }
 
   async fetchHtml() {
-    if (!this.src) return;
+    if (!this.src) throw new Error('missing src');
     try {
       this.classList.add(CelLazyLoader.CSS_CLASSES.LOADING);
       const response = await fetch(this.src, { signal: this.#abortController.signal });
       if (response.ok) {
         return await response.text();
       } else {
-        console.error('fetch failed', response);
+        throw new Error(`${response.status} ${response.statusText}`);
       }
-    } catch (exp) {
-      if (exp.name !== 'AbortError') console.error('fetch error', exp);
     } finally {
       this.classList.remove(CelLazyLoader.CSS_CLASSES.LOADING);
     }
