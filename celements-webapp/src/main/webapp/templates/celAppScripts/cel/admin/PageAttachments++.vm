@@ -4,15 +4,9 @@
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind.js'))
 $!jsService.includeExtJsFile($extJsParamSync.setJsFile(':celJS/tailwind/tailwind.config.js'))
 
-#set($requestHost = "$!context.getRequest().getHeader('host')")
-#if($requestHost.indexOf('localhost') != -1)
-<script type="module" src="http://localhost:5173/@vite/client"></script>
-<script type="module" src="http://localhost:5173/src/embedded.ts"></script>
-#else
-<link rel="stylesheet" href="/static/assets/embedded.css?ver=$!{services.celementsweb.getLastStartupTimeStamp()}" />
-<link rel="stylesheet" href="/static/assets/vendor.css?ver=$!{services.celementsweb.getLastStartupTimeStamp()}" />
-<script type="module" src="/static/assets/embedded.js?ver=$!{services.celementsweb.getLastStartupTimeStamp()}"></script>
-#end
+<link rel="stylesheet" href="/static/admin/assets/embedded.css?ver=$!{services.celementsweb.getLastStartupTimeStamp()}" />
+<link rel="stylesheet" href="/static/admin/assets/vendor.css?ver=$!{services.celementsweb.getLastStartupTimeStamp()}" />
+<script type="module" src="/static/admin/assets/embedded.js?ver=$!{services.celementsweb.getLastStartupTimeStamp()}"></script>
 
 <div class="cel_cell" id="userAdmin">
   <div class="cel_cell" id="content">
