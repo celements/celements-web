@@ -1,4 +1,8 @@
 import { createCelementsAdminApp } from '@/bootstrap';
+import { registerPageAttachmentsElement } from '@/islands/page-attachments-element';
+import { ensureCelementsAdminStyles } from '@/runtime/styles';
+
+ensureCelementsAdminStyles();
 
 class CelAdminElement extends HTMLElement {
   private vueApp: ReturnType<typeof createCelementsAdminApp> | null = null;
@@ -46,3 +50,5 @@ class CelAdminElement extends HTMLElement {
 if (!customElements.get('cel-admin')) {
   customElements.define('cel-admin', CelAdminElement);
 }
+
+registerPageAttachmentsElement();
