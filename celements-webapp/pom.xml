@@ -168,6 +168,11 @@
       <artifactId>celements-layout-web</artifactId>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-presentation-web</artifactId>
+      <type>war</type>
+    </dependency>
 
     <!-- celements dependencies -->
     <dependency>
@@ -332,6 +337,11 @@
           <artifactId>xml-apis</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <!-- JDBC connector -->
