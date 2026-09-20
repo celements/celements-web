@@ -23,7 +23,11 @@ public class PresentationApiDeploymentTest {
   private Document webXml;
 
   @Before
-  public void readWebXml() throws Exception {
+  public void prepareTest() throws Exception {
+    webXml = parseXml("src/main/webapp/WEB-INF/web.xml");
+  }
+
+  private Document parseXml(String fileName) throws Exception {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
     factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
@@ -31,28 +35,38 @@ public class PresentationApiDeploymentTest {
     factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     factory.setXIncludeAware(false);
     factory.setExpandEntityReferences(false);
-    webXml = factory.newDocumentBuilder().parse(new File("src/main/webapp/WEB-INF/web.xml"));
+    return factory.newDocumentBuilder().parse(new File(fileName));
   }
 
   @Test
-  public void springDispatcherDeploysControllersBelowApi() throws Exception {
+  public void test_descriptorMapsPresentationApiWithoutPermissiveCors() throws Exception {
     assertEquals("org.springframework.web.servlet.DispatcherServlet",
-        evaluate("string(/*[local-name()='web-app']/*[local-name()='servlet']"
+        evaluate(webXml, "string(/*[local-name()='web-app']/*[local-name()='servlet']"
             + "[*[local-name()='servlet-name']='spring-dispatcher']"
             + "/*[local-name()='servlet-class'])"));
     assertEquals("org.springframework.web.context.WebApplicationContext.ROOT",
-        evaluate("string(/*[local-name()='web-app']/*[local-name()='servlet']"
+        evaluate(webXml, "string(/*[local-name()='web-app']/*[local-name()='servlet']"
             + "[*[local-name()='servlet-name']='spring-dispatcher']"
             + "/*[local-name()='init-param'][*[local-name()='param-name']='contextAttribute']"
             + "/*[local-name()='param-value'])"));
     assertEquals("/api/*",
-        evaluate("string(/*[local-name()='web-app']/*[local-name()='servlet-mapping']"
+        evaluate(webXml, "string(/*[local-name()='web-app']/*[local-name()='servlet-mapping']"
             + "[*[local-name()='servlet-name']='spring-dispatcher']"
+            + "/*[local-name()='url-pattern'])"));
+    assertEquals("action", evaluate(webXml,
+        "string(/*[local-name()='web-app']/*[local-name()='filter-mapping']"
+            + "[*[local-name()='filter-name']='CorsFilter']/*[local-name()='servlet-name'])"));
+    assertEquals("", evaluate(webXml,
+        "string(/*[local-name()='web-app']/*[local-name()='filter-mapping']"
+            + "[*[local-name()='filter-name']='CorsFilter']/*[local-name()='url-pattern'])"));
+    assertEquals("/*", evaluate(webXml,
+        "string(/*[local-name()='web-app']/*[local-name()='filter-mapping']"
+            + "[*[local-name()='filter-name']='executionContextFilter']"
             + "/*[local-name()='url-pattern'])"));
   }
 
-  private String evaluate(String expression) throws Exception {
-    return (String) XPathFactory.newInstance().newXPath().evaluate(expression, webXml,
+  private String evaluate(Document document, String expression) throws Exception {
+    return (String) XPathFactory.newInstance().newXPath().evaluate(expression, document,
         XPathConstants.STRING);
   }
 
