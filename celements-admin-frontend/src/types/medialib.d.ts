@@ -4,7 +4,7 @@
 export interface Tag {
   id: string;
   label: string;
-  color: string; // tailwind bg-color class, e.g. 'bg-teal-500'
+  color: string; // Tailwind background utility, e.g. 'tw:bg-teal-500'
 }
 
 /**

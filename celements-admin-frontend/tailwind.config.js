@@ -4,8 +4,11 @@ import primeui from 'tailwindcss-primeui';
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
+    "./src/**/*.{vue,ts,tsx}",
   ],
+  corePlugins: {
+    preflight: false,
+  },
   darkMode: ['selector', 'none'],
   plugins: [primeui],
   theme: {
