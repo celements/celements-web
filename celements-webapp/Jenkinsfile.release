@@ -40,6 +40,8 @@ releasePipeline(manifest: [
     'celements-keycloak-jar',
     'celements-layout-jar',
     'celements-layout-web',
+    'celements-presentation-jar',
+    'celements-presentation-web',
     'celements-search-jar',
     'celements-calendar-jar',
     'celements-calendar-web',
