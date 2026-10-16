@@ -1,5 +1,5 @@
 import MediaLib from '@/views/MediaLib.vue';
-import PageAttachments from '@/views/PageAttachments.vue';
+import PageAttachmentsRoute from '@/spa/PageAttachmentsRoute.vue';
 import type { RouteRecordRaw } from 'vue-router';
 
 const routes: RouteRecordRaw[] = [
@@ -15,7 +15,11 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/PageAttachments/:spaceName/:docName',
     name: 'PageAttachments',
-    component: PageAttachments,
+    component: PageAttachmentsRoute,
+    props: (route) => ({
+      spaceName: String(route.params.spaceName),
+      docName: String(route.params.docName),
+    }),
   },
 ];
 

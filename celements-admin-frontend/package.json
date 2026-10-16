@@ -3,14 +3,42 @@
   "version": "0.2.0-SNAPSHOT",
   "private": false,
   "type": "module",
+  "files": [
+    "dist/package",
+    "dist/types"
+  ],
+  "publishConfig": {
+    "registry": "https://forge.celhosting.ch/api/packages/celements/npm/"
+  },
   "exports": {
-    "./src/*": "./src/*"
+    ".": {
+      "types": "./dist/types/public/runtime.d.ts",
+      "import": "./dist/package/runtime.js"
+    },
+    "./runtime": {
+      "types": "./dist/types/public/runtime.d.ts",
+      "import": "./dist/package/runtime.js"
+    },
+    "./page-attachments": {
+      "types": "./dist/types/public/page-attachments.d.ts",
+      "import": "./dist/package/page-attachments.js"
+    },
+    "./page-attachments-island": {
+      "types": "./dist/types/public/page-attachments-island.d.ts",
+      "import": "./dist/package/page-attachments-island.js"
+    },
+    "./styles.css": "./dist/package/styles.css"
   },
   "scripts": {
     "dev": "concurrently \"vite\" \"npm:type-check-watch\" \"npm:test-watch\"",
-    "build": "npm run type-check && npm run test && vite build",
+    "build": "npm run type-check && npm run build:deployable && npm run build:package && npm run build:types && npm run test:unit && npm run validate:pack-manifest",
+    "build:deployable": "vite build",
+    "build:package": "vite build --config vite.library.config.ts",
+    "build:types": "vue-tsc -p tsconfig.app.json --declaration --emitDeclarationOnly --noEmit false --outDir dist/types --composite false",
     "preview": "vite preview",
-    "test": "vitest run",
+    "test": "npm run build:deployable && npm run build:package && npm run build:types && npm run test:unit",
+    "test:unit": "vitest run",
+    "test:pack-manifest": "vitest run pack-manifest.test.ts",
     "test-watch": "vitest",
     "type-check": "vue-tsc --build --force",
     "type-check-watch": "vue-tsc --build --force --watch --preserveWatchOutput",
@@ -18,36 +46,29 @@
     "lint-fix": "eslint . --fix",
     "format": "prettier --check src test",
     "format-fix": "prettier --write src test",
-    "pre-commit": "npm run type-check && npm run format && npm run lint"
+    "validate:pack-manifest": "sh scripts/validate-pack-manifest.sh",
+    "pre-commit": "npm run type-check && npm run format && npm run lint",
+    "publish:check": "npm run build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/vue-fontawesome": "^3.2.0",
-    "@primeuix/themes": "^2.0.3",
     "@vueuse/core": "^14.2.1",
     "consola": "^3.4.2",
-    "findandreplacedomtext": "^0.4.6",
-    "lodash": "^4.17.23",
-    "luxon": "^3.7.2",
+    "luxon": "^3.7.2"
+  },
+  "peerDependencies": {
     "pinia": "^3.0.4",
     "primevue": "^4.5.4",
-    "tailwind-merge": "^3.5.0",
-    "tailwindcss-primeui": "^0.6.1",
     "vue": "^3.5.30",
-    "vue-dompurify-html": "^5.3.0",
     "vue-i18n": "^11.3.0",
-    "vue-matomo": "^4.2.0",
-    "vue-router": "^5.0.4",
-    "vue3-spinners": "^1.3.3",
-    "vuefinder": "^4.1.1",
-    "zod": "^4.3.6"
+    "vuefinder": "^4.1.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.2",
     "@tsconfig/node20": "^20.1.9",
     "@types/jsdom": "^28.0.1",
-    "@types/lodash": "^4.17.24",
     "@types/luxon": "^3.7.1",
     "@types/node": "^25.5.0",
     "@vitejs/plugin-vue": "^6.0.5",
@@ -62,12 +83,19 @@
     "eslint-plugin-vue": "^10.8.0",
     "jsdom": "^29.0.1",
     "npm-run-all2": "^8.0.4",
+    "pinia": "^3.0.4",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
+    "primevue": "^4.5.4",
     "tailwindcss": "^4.2.2",
+    "tailwindcss-primeui": "^0.6.1",
     "typescript": "~5.9.3",
     "vite": "^8.0.1",
     "vitest": "^4.1.0",
+    "vue": "^3.5.30",
+    "vue-i18n": "^11.3.0",
+    "vue-router": "^5.0.4",
+    "vuefinder": "^4.1.1",
     "vue-tsc": "^3.2.6"
   },
   "browserslist": [

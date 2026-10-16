@@ -1,6 +1,8 @@
 <template>
-  <ConfirmDialog />
-  <RouterView />
+  <div class="cel-admin-surface tw:h-full tw:w-full">
+    <ConfirmDialog />
+    <RouterView />
+  </div>
 </template>
 
 <script setup lang="ts">
