@@ -34,7 +34,20 @@
 </div>
 ## Admin Info
 #if($isSuperAdmin)
-<div id="celements2_admin_info">$!services.celementsweb.nodeName</div>
+<div id="celements2_admin_info">
+  <span class="server_node">$!services.celementsweb.nodeName</span>
+  <span class="fes_node"></span>
+</div>
+<script>
+(() => {
+  const elem = document.querySelector('#celements2_admin_info .fes_node');
+  const fesNode = window?.performance
+      ?.getEntriesByType?.('navigation')?.[0]
+      ?.serverTiming?.find(x => x.name === 'fes')
+      ?.description;
+  if (elem && fesNode) elem.textContent = ' / ' + fesNode;
+})();
+</script>
 #end
 ## Menu
 <div id="celements2_menu_bar_header">
