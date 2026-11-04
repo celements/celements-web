@@ -16,7 +16,7 @@ innodb_flush_log_at_trx_commit  = 1
 
 open-files-limit                = 2048
 table_cache                     = 512
-max_allowed_packet              = 64M
+max_allowed_packet              = 256M
 
 [mysql]
 default-character-set           = utf8
