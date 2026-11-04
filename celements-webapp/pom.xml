@@ -4,11 +4,11 @@
   <parent>
     <groupId>com.celements</groupId>
     <artifactId>celements-parent</artifactId>
-    <version>7.2-SNAPSHOT</version>
+    <version>7.4-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>celements-web</artifactId>
-  <version>7.2-SNAPSHOT</version>
+  <version>7.4-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Celements Webapplication</name>
   <licenses>
@@ -168,6 +168,11 @@
       <artifactId>celements-layout-web</artifactId>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-presentation-web</artifactId>
+      <type>war</type>
+    </dependency>
 
     <!-- celements dependencies -->
     <dependency>
@@ -221,6 +226,10 @@
     <dependency>
       <groupId>com.celements</groupId>
       <artifactId>celements-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-navigation-rest</artifactId>
     </dependency>
     <dependency>
       <groupId>com.celements</groupId>
@@ -329,6 +338,31 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-presentation</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.celements</groupId>
+      <artifactId>celements-shared-tests</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <scope>test</scope>
+    </dependency>
 
     <!-- JDBC connector -->
     <dependency>
@@ -375,6 +409,19 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>3.5.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>com.github.eirslett</groupId>

@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       args:
-        MVN_CACHE_KEY: "${MVN_CACHE_KEY:-none}"
+        MAVEN_CACHE_BUST: "${MAVEN_CACHE_BUST:-none}"
       secrets:
         - mvnsettings
 

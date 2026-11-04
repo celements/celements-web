@@ -54,7 +54,7 @@
   </filter>
   <filter-mapping>
     <filter-name>CorsFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <servlet-name>action</servlet-name>
   </filter-mapping>
 
   <!-- A filter that allows requests to be saved and reused later. For example when the current request contains an expired 
