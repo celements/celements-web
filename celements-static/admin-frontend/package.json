@@ -7,7 +7,8 @@
     "./src/*": "./src/*"
   },
   "scripts": {
-    "dev": "concurrently \"vite\" \"npm:type-check-watch\" \"npm:test-watch\"",
+    "dev": "vite build --watch --outDir ../../celements-webapp/target/celements-web/static/admin",
+    "dev:standalone": "concurrently \"vite\" \"npm:type-check-watch\" \"npm:test-watch\"",
     "build": "npm run type-check && npm run test && vite build",
     "preview": "vite preview",
     "test": "vitest run",

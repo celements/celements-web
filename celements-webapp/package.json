@@ -5,8 +5,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite build --watch",
-    "build": "tsc && vite build"
+    "dev": "vite build --watch --outDir target/celements-web/resources/dist",
+    "build": "npm run type-check && vite build",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@babel/standalone": "^7.0.0",
