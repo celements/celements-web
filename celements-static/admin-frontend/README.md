@@ -104,14 +104,7 @@ The app exposes a `createCelementsAdminApp()` factory function from `bootstrap.t
 
 ## 🐳 Deployment
 
-The parent `celements-static` image builds and serves this frontend via [Caddy](https://caddyserver.com/).
-Run these commands from the repository root:
-
-```sh
-docker build -t celements-static celements-static
-
-docker run -p 80:80 celements-static
-```
+For image builds and deployment, see [Celements static](../README.md).
 
 ---
 

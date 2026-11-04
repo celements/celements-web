@@ -3,10 +3,10 @@
 This image serves the static Celements applications. `admin-frontend` is its first payload.
 The local `package.json` versions the assembled image independently of its payloads.
 
-Build it from the repository root:
+Build it from the `celements-static` root:
 
 ```sh
-docker build -t celements-static celements-static
+docker build -f docker/Dockerfile -t celements-static .
 ```
 
 ## Potential improvements
