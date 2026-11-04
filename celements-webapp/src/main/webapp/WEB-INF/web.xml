@@ -235,6 +235,22 @@
   </servlet-mapping>
 
 
+  <!-- Ensure JavaScript, modules and CSS have consistent MIME types across servlet containers. -->
+  <mime-mapping>
+    <extension>js</extension>
+    <mime-type>text/javascript</mime-type>
+  </mime-mapping>
+
+  <mime-mapping>
+    <extension>mjs</extension>
+    <mime-type>text/javascript</mime-type>
+  </mime-mapping>
+
+  <mime-mapping>
+    <extension>css</extension>
+    <mime-type>text/css</mime-type>
+  </mime-mapping>
+
   <!-- In order to properly work, HTML Components MUST have the proper MIME type starting with XP SP2 -->
   <mime-mapping>
     <extension>htc</extension>
