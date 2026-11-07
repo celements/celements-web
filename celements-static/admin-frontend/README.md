@@ -63,7 +63,8 @@ The container generates `config.js` from its runtime environment. `.env.local` i
 
 | Command              | Description                                                       |
 | -------------------- | ----------------------------------------------------------------- |
-| `npm run dev`        | Start dev server with concurrent type-checking and test watching  |
+| `npm run dev`        | Build-watch into the local celements-webapp Tomcat target        |
+| `npm run dev:standalone` | Start the standalone Vite server with type-checking and test watching |
 | `npm run build`      | Type-check + run tests + build production bundle                  |
 | `npm run preview`    | Preview the production build locally                              |
 | `npm run test`       | Run unit tests once with Vitest                                   |
@@ -103,15 +104,7 @@ The app exposes a `createCelementsAdminApp()` factory function from `bootstrap.t
 
 ## 🐳 Deployment
 
-The project ships with a multi-stage `Dockerfile` that builds the static assets and serves them via [Caddy](https://caddyserver.com/).
-
-```sh
-# Build the Docker image (pass the active profile to select the correct .env file)
-docker build --build-arg PROFILE_ACTIVE=prod -t celements-admin-frontend .
-
-# Run the container
-docker run -p 80:80 celements-admin-frontend
-```
+For image builds and deployment, see [Celements static](../README.md).
 
 ---
 

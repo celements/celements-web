@@ -4,13 +4,13 @@ import vue from '@vitejs/plugin-vue';
 import { defineConfig, loadEnv } from 'vite';
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => getViteConfig(mode));
+export default defineConfig(({ mode, command }) => getViteConfig(mode, command));
 
 // Export a function to resolve the config manually for Vitest
-export const getViteConfig = (mode: string) => {
+export const getViteConfig = (mode: string, command: 'build' | 'serve' = 'serve') => {
   const env = loadEnv(mode, process.cwd());
   return defineConfig({
-    base: mode === 'production' ? '/static/' : '/',
+    base: command === 'build' ? '/static/admin/' : '/',
     plugins: [
       vue({
         template: {
@@ -22,6 +22,7 @@ export const getViteConfig = (mode: string) => {
     ],
     build: {
       manifest: true,
+      emptyOutDir: true,
       chunkSizeWarningLimit: 1500,
       rollupOptions: {
         input: {

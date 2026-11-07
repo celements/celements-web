@@ -1,0 +1,13 @@
+:80 {
+  root * /srv
+
+  handle /health {
+    respond 200
+  }
+
+  handle {
+    @config path */config.js
+    header @config Cache-Control "no-store, no-cache, must-revalidate"
+    file_server
+  }
+}
