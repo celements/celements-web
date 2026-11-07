@@ -1,10 +1,10 @@
 <template>
-  <div class="flex h-full w-full overflow-hidden">
+  <div class="tw:flex tw:h-full tw:w-full tw:overflow-hidden">
     <!-- ── Left: Tag filter sidebar ── -->
     <TagSidebar />
 
     <!-- ── Right: VueFinder + status-bar slot ── -->
-    <div class="flex min-w-0 flex-1 flex-col w-full">
+    <div class="tw:flex tw:min-w-0 tw:flex-1 tw:flex-col tw:w-full">
       <!--
         :key="filterKey" re-mounts VueFinder when the active tag filter changes.
         VueFinder restores the current folder from localStorage (persist:true),
@@ -14,7 +14,7 @@
       <VueFinder
         id="my_vuefinder"
         :key="filterKey"
-        class="flex-1"
+        class="tw:flex-1"
         :driver="driver"
         :config="{
           initialPath: 'local://public',
@@ -89,9 +89,7 @@ const originalList = driver.list.bind(driver);
 driver.list = async (...args: Parameters<typeof originalList>) => {
   const result = await originalList(...args);
   if (tagStore.isFilterActive && result?.files) {
-    result.files = result.files.filter((f: DirEntry) =>
-      tagStore.filteredPaths.has(f.path),
-    );
+    result.files = result.files.filter((f: DirEntry) => tagStore.filteredPaths.has(f.path));
   }
   return result;
 };
@@ -104,7 +102,7 @@ const filterKey = computed(() =>
   tagStore.activeFilter
     .map((t) => t.id)
     .sort()
-    .join(','),
+    .join(',')
 );
 
 logger.log('driver setup');

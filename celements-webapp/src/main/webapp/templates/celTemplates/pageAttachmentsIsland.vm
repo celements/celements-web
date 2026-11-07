@@ -1,0 +1,19 @@
+#set($pageAttachmentsVersion = $!services.celementsweb.getLastStartupTimeStamp())
+#set($pageAttachmentsHost = "$!context.getRequest().getHeader('host')")
+#if($pageAttachmentsHost.indexOf('localhost') != -1)
+  #set($pageAttachmentsModule = 'http://localhost:5173/src/public/page-attachments-island.ts')
+#else
+  #set($pageAttachmentsModule = "/static/assets/page-attachments-island.js?ver=${pageAttachmentsVersion}")
+#end
+<script type="module" src="$pageAttachmentsModule"></script>
+<span class="cel_lazyloadJS_exec" style="display:none">import('$pageAttachmentsModule')</span>
+<style>cel-page-attachments { display: block; width: 100%; }</style>
+#set($editAccess = $services.rightsAccess.getEAccessLevel('edit'))
+#set($deleteAccess = $services.rightsAccess.getEAccessLevel('delete'))
+<cel-page-attachments
+  space-name="$!escapetool.xml($doc.space)"
+  doc-name="$!escapetool.xml($doc.name)"
+  locale="$!escapetool.xml($xcontext.language)"
+  can-upload="$services.rightsAccess.hasAccessLevel($doc.documentReference, $editAccess)"
+  can-delete="$services.rightsAccess.hasAccessLevel($doc.documentReference, $deleteAccess)"
+></cel-page-attachments>
