@@ -1,10 +1,5 @@
 #set($pageAttachmentsVersion = $!services.celementsweb.getLastStartupTimeStamp())
-#set($pageAttachmentsHost = "$!context.getRequest().getHeader('host')")
-#if($pageAttachmentsHost.indexOf('localhost') != -1)
-  #set($pageAttachmentsModule = 'http://localhost:5173/src/public/page-attachments-island.ts')
-#else
-  #set($pageAttachmentsModule = "/static/assets/page-attachments-island.js?ver=${pageAttachmentsVersion}")
-#end
+#set($pageAttachmentsModule = "/static/admin/assets/page-attachments-island.js?ver=${pageAttachmentsVersion}")
 <script type="module" src="$pageAttachmentsModule"></script>
 <span class="cel_lazyloadJS_exec" style="display:none">import('$pageAttachmentsModule')</span>
 <style>cel-page-attachments { display: block; width: 100%; }</style>

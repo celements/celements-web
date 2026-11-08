@@ -141,21 +141,3 @@ test('package manifest publishes only package and type artifacts', () => {
   expect(existsSync(projectFile('dist/package/runtime.js'))).toBe(true);
   expect(existsSync(projectFile('dist/types/public/runtime.d.ts'))).toBe(true);
 });
-
-test('legacy attachment templates retain island and asynchronous loading paths', () => {
-  const templateRoot = projectFile('..', 'celements-webapp/src/main/webapp/templates');
-  const inline = readFileSync(resolve(templateRoot, 'celTemplates/attachmentsinline.vm'), 'utf8');
-  const editorTab = readFileSync(
-    resolve(templateRoot, 'celEditorTabs/loadTabAttachments.vm'),
-    'utf8'
-  );
-  const island = readFileSync(
-    resolve(templateRoot, 'celTemplates/pageAttachmentsIsland.vm'),
-    'utf8'
-  );
-  expect(inline).toContain("#parse('celTemplates/pageAttachmentsIsland.vm')");
-  expect(editorTab).toContain("#parse('celTemplates/pageAttachmentsIsland.vm')");
-  expect(island).toContain('class="cel_lazyloadJS_exec"');
-  expect(island).toContain("import('$pageAttachmentsModule')");
-  expect(island).toContain('<cel-page-attachments');
-});

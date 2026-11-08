@@ -1,6 +1,6 @@
 {
   "name": "@celements/admin-frontend",
-  "version": "0.1.0-SNAPSHOT",
+  "version": "0.2.0-SNAPSHOT",
   "private": false,
   "type": "module",
   "files": [
@@ -30,7 +30,8 @@
     "./styles.css": "./dist/package/styles.css"
   },
   "scripts": {
-    "dev": "concurrently \"vite\" \"npm:type-check-watch\" \"npm:test-watch\"",
+    "dev": "vite build --watch --outDir ../../celements-webapp/target/celements-web/static/admin",
+    "dev:standalone": "concurrently \"vite\" \"npm:type-check-watch\" \"npm:test-watch\"",
     "build": "npm run type-check && npm run build:deployable && npm run build:package && npm run build:types && npm run test:unit && npm run validate:pack-manifest",
     "build:deployable": "vite build",
     "build:package": "vite build --config vite.library.config.ts",

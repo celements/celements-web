@@ -4,16 +4,14 @@ FROM maven:3-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-ARG MVN_CACHE_KEY=none
+ARG MAVEN_ARGS
+ARG MAVEN_CACHE_BUST=none
 
 COPY . .
 RUN --mount=type=secret,id=mvnsettings,required=true,target=/root/.m2/settings.xml \
   --mount=type=cache,id=mvnrepo,target=/root/.m2/repository,sharing=locked \
-  echo "MVN_CACHE_KEY: ${MVN_CACHE_KEY}" && \
-  mvn -B -U \
-    -s /root/.m2/settings.xml \
-    -Dmaven.repo.local=/root/.m2/repository \
-    clean prepare-package war:exploded
+  echo "MAVEN_CACHE_BUST: ${MAVEN_CACHE_BUST}" && \
+  mvn -U clean prepare-package war:exploded
 
 FROM forge.celhosting.ch/synventis-infra/tomcat:release AS execute
 

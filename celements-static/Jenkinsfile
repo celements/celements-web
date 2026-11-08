@@ -2,7 +2,7 @@
 
 dockerImagePipeline(
   org: 'celements',
-  image: 'celements-admin-frontend',
-  appDir: 'celements-admin-frontend',
+  image: 'celements-static',
+  appDir: 'celements-static',
   mode: 'node'
 )

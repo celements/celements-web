@@ -60,20 +60,21 @@ The container generates `config.js` from its runtime environment. `.env.local` i
 
 ## 📜 Scripts
 
-| Command                 | Description                                                       |
-| ----------------------- | ----------------------------------------------------------------- |
-| `npm run dev`           | Start dev server with concurrent type-checking and test watching  |
-| `npm run build`         | Type-check + run tests + build production bundle                  |
-| `npm run preview`       | Preview the production build locally                              |
-| `npm run test`          | Run unit tests once with Vitest                                   |
-| `npm run test-watch`    | Run unit tests in watch mode                                      |
-| `npm run type-check`    | Type-check `.vue` files with `vue-tsc`                            |
-| `npm run lint`          | Lint source files with ESLint                                     |
-| `npm run lint-fix`      | Auto-fix ESLint issues                                            |
-| `npm run format`        | Check code formatting with Prettier                               |
-| `npm run format-fix`    | Auto-fix code formatting with Prettier                            |
-| `npm run pre-commit`    | Run type-check, format check and lint (recommended as a git hook) |
-| `npm run publish:check` | Build and inspect the package without publishing                  |
+| Command                  | Description                                                                         |
+| ------------------------ | ----------------------------------------------------------------------------------- |
+| `npm run dev`            | Build-watch into the local celements-webapp Tomcat target                           |
+| `npm run dev:standalone` | Start the standalone Vite server with type-checking and test watching               |
+| `npm run build`          | Type-check, build deployable/package/types, run tests and validate package contents |
+| `npm run preview`        | Preview the production build locally                                                |
+| `npm run test`           | Build deployable/package/types and run unit tests                                   |
+| `npm run test-watch`     | Run unit tests in watch mode                                                        |
+| `npm run type-check`     | Type-check `.vue` files with `vue-tsc`                                              |
+| `npm run lint`           | Lint source files with ESLint                                                       |
+| `npm run lint-fix`       | Auto-fix ESLint issues                                                              |
+| `npm run format`         | Check code formatting with Prettier                                                 |
+| `npm run format-fix`     | Auto-fix code formatting with Prettier                                              |
+| `npm run pre-commit`     | Run type-check, format check and lint (recommended as a git hook)                   |
+| `npm run publish:check`  | Build and inspect the package without publishing                                    |
 
 ---
 
@@ -151,8 +152,8 @@ import { createCelementsApplication } from '@celements/admin-frontend/runtime';
 import '@celements/admin-frontend/styles.css';
 ```
 
-`Jenkinsfile` continues to publish only the Docker image. Package publication is a separate Jenkins
-job using `Jenkinsfile.npm`, which calls `npmPackagePipeline(appDir: 'celements-admin-frontend')`:
+`../Jenkinsfile` continues to publish only the Docker image. Package publication is a separate Jenkins
+job using `Jenkinsfile.npm`, which calls `npmPackagePipeline(appDir: 'celements-static/admin-frontend')`:
 
 - a declared `x.y.z-SNAPSHOT` version becomes the unique immutable
   `x.y.z-snapshot.<BUILD_NUMBER>.<GIT_SHA>` version and receives the `snapshot` dist-tag;
@@ -161,7 +162,7 @@ job using `Jenkinsfile.npm`, which calls `npmPackagePipeline(appDir: 'celements-
 - publication checks Forge first and refuses to overwrite an existing package version.
 
 Repository code cannot create that Jenkins job. CI operations must configure a job whose script
-path is `celements-admin-frontend/Jenkinsfile.npm`; until that infrastructure step exists, the
+path is `celements-static/admin-frontend/Jenkinsfile.npm`; until that infrastructure step exists, the
 repository has a verifiable publication path but no package is published automatically.
 
 Build and inspect the publishable package locally without credentials or publication:
@@ -175,15 +176,7 @@ npm run publish:check
 
 ## 🐳 Deployment
 
-The project ships with a multi-stage `Dockerfile` that builds the static assets and serves them via [Caddy](https://caddyserver.com/).
-
-```sh
-# Build the Docker image (pass the active profile to select the correct .env file)
-docker build --build-arg PROFILE_ACTIVE=prod -t celements-admin-frontend .
-
-# Run the container
-docker run -p 80:80 celements-admin-frontend
-```
+For image builds and deployment, see [Celements static](../README.md).
 
 ---
 

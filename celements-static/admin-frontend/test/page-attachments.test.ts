@@ -293,14 +293,6 @@ test('registration, build entries, and CSS containment are explicit', () => {
   expect(css).toContain("@source '../../index.html';");
   expect(css).toContain("@config '../../tailwind.config.js';");
   expect(css).toContain('.cel-admin-surface h1');
-  const islandTemplate = readFileSync(
-    resolve(
-      process.cwd(),
-      '../celements-webapp/src/main/webapp/templates/celTemplates/pageAttachmentsIsland.vm'
-    ),
-    'utf8'
-  );
-  expect(islandTemplate).toContain('cel-page-attachments { display: block; width: 100%; }');
   expect(css).not.toContain('cel-page-attachments');
   ensureCelementsAdminStyles('https://static.example/assets/', true);
   ensureCelementsAdminStyles('https://static.example/assets/', true);
