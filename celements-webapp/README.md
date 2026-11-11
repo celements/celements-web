@@ -30,10 +30,9 @@ Build the exploded WAR for the local mounted-webapp setup:
 mvn clean install
 ```
 
-Start the database first, then the rest:
+Start the containers:
 
 ```sh
-docker compose up -d db
 docker compose up -d
 ```
 
@@ -65,3 +64,64 @@ The pipeline extracts the Maven project version from `pom.xml` and publishes:
 
 - `forge.celhosting.ch/celements/celements-webapp:<version>`
 - `forge.celhosting.ch/celements/celements-webapp:<version>-<git-sha>`
+
+## Shared Commands
+
+Install/symlink the shared commands in your path (e.g. `/usr/local/bin`) and run from `celements-webapp`:
+
+```sh
+sudo ln -s synventis-tools/webapp/up.sh /usr/local/bin/webapp-up
+sudo ln -s synventis-tools/webapp/mysql.sh /usr/local/bin/webapp-mysql
+```
+
+### webapp-up
+
+Builds the exploded WAR, starts Compose and watches backend/frontend sources.
+
+```sh
+webapp-up
+webapp-up --mvn-startup="-U install"
+```
+
+### webapp-mysql
+
+Root DB access using the container's `MYSQL_ROOT_PASSWORD`; `upgrade` runs `mariadb-upgrade`.
+
+```sh
+webapp-mysql
+webapp-mysql -e "SHOW DATABASES"
+webapp-mysql upgrade
+```
+
+## Migrating a Local Database from MariaDB 10.1
+
+Use `synventis-tools/webapp/mysql.sh`, linked as `webapp-mysql`.
+
+Remove all existing containers:
+
+```sh
+docker compose down --timeout 300
+```
+
+git pull the most recent state and start the db container:
+
+```sh
+git switch dev
+git pull
+docker compose up -d db
+docker compose logs -f db
+```
+
+Once it reports `ready for connections` run the upgrade command:
+
+```sh
+webapp-mysql upgrade
+```
+
+Then create the missing healthcheck account and restart:
+
+```sh
+webapp-mysql -e "CREATE USER IF NOT EXISTS 'mysql'@'localhost' IDENTIFIED VIA unix_socket;"
+docker compose restart db
+docker compose up -d --wait
+```
