@@ -13,6 +13,7 @@
   <filter>
     <filter-name>Set Character Encoding</filter-name>
     <filter-class>org.xwiki.container.servlet.filters.internal.SetCharacterEncodingFilter</filter-class>
+    <async-supported>true</async-supported>
     <!-- The encoding to use. This must be the same as the one in xwiki.cfg (hopefully only one encoding will be used later). -->
     <init-param>
       <param-name>encoding</param-name>
@@ -33,6 +34,7 @@
   <filter>
     <filter-name>CorsFilter</filter-name>
     <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+    <async-supported>true</async-supported>
     <init-param>
       <!-- any origin is default value -->
       <param-name>cors.allowed.origins</param-name>
@@ -64,6 +66,7 @@
   <filter>
     <filter-name>RequestRestorer</filter-name>
     <filter-class>org.xwiki.container.servlet.filters.internal.SavedRequestRestorerFilter</filter-class>
+    <async-supported>true</async-supported>
   </filter>
 
   <!-- A filter that dispatches requests to the right action depending on the button pressed in the editing form. This is 
@@ -78,7 +81,8 @@
   <!-- setup execution context -->
   <filter>
     <filter-name>executionContextFilter</filter-name>
-    <filter-class>com.celements.init.request.ExecutionContextFilter</filter-class>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <async-supported>true</async-supported>
   </filter>
   <filter-mapping>
     <filter-name>executionContextFilter</filter-name>
@@ -89,6 +93,7 @@
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <async-supported>true</async-supported>
   </filter>
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
@@ -192,6 +197,7 @@
       <param-value>org.springframework.web.context.WebApplicationContext.ROOT</param-value>
     </init-param>
     <load-on-startup>3</load-on-startup>
+    <async-supported>true</async-supported>
     <multipart-config>
       <max-file-size>104857600</max-file-size> <!-- 100MB -->
       <max-request-size>104857600</max-request-size>
