@@ -53,7 +53,7 @@ public class PresentationApiRequestFilterTest extends AbstractComponentTest {
     beanFactory.removeBeanDefinition(CelementsRequestFilter.class.getName());
     beanFactory.registerSingleton("celementsRequestFilter", requestFilter);
     mockMvc = MockMvcBuilders.standaloneSetup(new PresentationController(presentationService))
-        .addFilters(new ExecutionContextFilter()).build();
+        .addFilters(getBeanFactory().getBean(ExecutionContextFilter.class)).build();
   }
 
   @Test

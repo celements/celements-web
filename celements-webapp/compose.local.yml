@@ -5,6 +5,7 @@ services:
     image: forge.celhosting.ch/synventis-infra/tomcat:release
     ports:
       - "127.0.0.1:${TOMCAT_PORT:-2080}:8080" # tomcat
+      - "127.0.0.1:${HEALTH_PORT:-2090}:9090" # health
       - "127.0.0.1:${JPDA_PORT:-2000}:8000" # remote debugging
     env_file:
       - .env
